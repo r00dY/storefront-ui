@@ -1,6 +1,6 @@
 {
-    "name": "ecommerce",
-    "description": "e-commerce experimental single page app UI",
+    "name": "@storefront-ui/storefront-ui",
+    "description": "React PWA (single page application) e-commerce UI framework",
     "main": "dist/bundle.js",
     "scripts": {
         "dev": "next",
