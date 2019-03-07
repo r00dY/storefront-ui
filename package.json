@@ -1,5 +1,5 @@
 {
-    "name": "@storefront-ui/storefront-ui",
+    "name": "storefront-ui",
     "description": "React PWA (single page application) e-commerce UI framework",
     "main": "dist/bundle.js",
     "scripts": {
