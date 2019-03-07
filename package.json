@@ -62,5 +62,6 @@
         "hooks": {
             "pre-commit": "./node_modules/.bin/pretty-quick --staged"
         }
-    }
+    },
+    "version": "0.0.1"
 }
