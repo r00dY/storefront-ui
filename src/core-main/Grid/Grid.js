@@ -102,10 +102,10 @@ Grid.propTypes = {
     gutter: PropTypes.any.isRequired,
     colNumber: PropTypes.number.isRequired
 };
-
-Grid.defaultProps = {
-    gutter: Layout.main.gutter,
-    colNumber: Layout.main.colNumber
-};
+//
+// Grid.defaultProps = {
+//     gutter: Layout.main.gutter,
+//     colNumber: Layout.main.colNumber
+// };
 
 export { Grid, GridItem };

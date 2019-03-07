@@ -1,6 +1,7 @@
 import { configure } from "@storybook/react";
 import { RangeSet, rs, rssv } from "responsive-helpers";
 import Layout from "../src/core-main/Layout";
+import Container from "../src/core-main/Container/Container";
 
 const req = require.context("../src/core-main", true, /story\.js$/);
 
@@ -30,6 +31,10 @@ function loadStories() {
             xl: 25
         })
     });
+
+    Container.defaultProps = {
+        width: Layout.main.container
+    };
 
     req.keys().forEach(req);
 

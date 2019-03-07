@@ -19,9 +19,9 @@ const Container = props => {
     );
 };
 
-Container.defaultProps = {
-    width: Layout.main.container
-};
+// Container.defaultProps = {
+//     width: Layout.main.container
+// };
 
 Container.propTypes = {
     width:
