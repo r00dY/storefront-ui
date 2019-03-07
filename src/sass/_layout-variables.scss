@@ -1,0 +1,30 @@
+@import "../core/LayoutVariables.json";
+
+// GRID SETTINGS
+$grid-columns: $columns;
+$grid-gutter-widths: $gutters;
+$grid-breakpoints: $breakpoints;
+$grid-margins: $margins;
+$grid-container-max-width: $container-max-width;
+
+// VERTICAL SPACINGS //initial values, may be changed later
+$resolution-range-bottom: sm; // map-get($grid-breakpoints, sm);
+$resolution-range-top: xxl; // map-get($grid-breakpoints, xxl);
+
+$MENUBAR_HEIGHT: 80px;
+$NOTIFICATIONBAR_HEIGHT: 37px;
+
+// mobile (bottom in vs)
+$VS1m: 10px;
+$VS2m: 20px;
+$VS3m: 50px;
+$VS4m: 80px;
+$VS5m: 100px;
+
+// desktop (top in vs)
+$VS1d: 20px;
+$VS2d: 30px;
+$VS3d: 50px;
+$VS4d: 80px;
+$VS5d: 100px;
+$VS6d: 180px;

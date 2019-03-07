@@ -1,0 +1,22 @@
+@import "../../../sass/style";
+
+.EditorialHeadline {
+    &__title {
+        @include font-editorial-heading;
+    }
+    &__paragraph {
+        @include vs(margin-top, $VS1m, $VS1d);
+        @include font-editorial-3;
+    }
+    @include media-breakpoint-up(md) {
+        &--alignCenter {
+            text-align: center;
+        }
+        &--alignRight {
+            text-align: right;
+        }
+    }
+    &--themeWhite {
+        color: white;
+    }
+}

@@ -1,0 +1,73 @@
+@import "../../sass/style.scss";
+
+.ColumnLayout {
+    &__left,
+    &__right,
+    &__main {
+        @include make-col-ready;
+    }
+
+    &__left {
+        @include media-breakpoint-down(sm) {
+            order: 2;
+            padding-top: 30px;
+            .ThumbnailsList {
+                @include escape-grid;
+            }
+        }
+        @include media-breakpoint-up(md) {
+            @include make-col(3);
+            .ThumbnailsList {
+                position: sticky;
+                top: calc(#{$VS3d} + #{$MENUBAR_HEIGHT});
+            }
+        }
+        @include media-breakpoint-up(lg) {
+            @include make-col(2);
+        }
+    }
+
+    &__main {
+        @include media-breakpoint-down(sm) {
+            order: 1;
+            .TwoCols {
+                @include escape-grid;
+            }
+        }
+        @include media-breakpoint-up(md) {
+            @include make-col(12);
+        }
+        @include media-breakpoint-up(lg) {
+            @include make-col-offset(1);
+            @include make-col-offset-after(2);
+            @include make-col(12);
+        }
+    }
+
+    &__right {
+        @include media-breakpoint-down(sm) {
+            padding-top: 30px;
+            order: 3;
+        }
+        @include media-breakpoint-up(md) {
+            @include make-col(9);
+            & > div {
+                position: sticky;
+                top: calc(#{$VS3d} + #{$MENUBAR_HEIGHT});
+            }
+        }
+        @include media-breakpoint-up(lg) {
+            @include make-col(7);
+        }
+    }
+
+    &--isNike {
+        .ColumnLayout__main {
+            @include media-breakpoint-up(lg) {
+                @include make-col-offset(0);
+                @include make-col-offset-after(2);
+                @include make-col(15);
+            }
+        }
+    }
+}

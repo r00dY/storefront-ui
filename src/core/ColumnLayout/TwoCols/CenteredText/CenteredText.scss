@@ -1,0 +1,15 @@
+@import "../../../../sass/style.scss";
+
+.CenteredText {
+    text-align: center;
+    @include vs(padding-bottom, $VS4m, $VS4d);
+    @include vs(padding-top, $VS4m, $VS4d);
+
+    &__title {
+        @include font-heading-1;
+    }
+    &__text {
+        @include vs(margin-top, $VS2m, $VS2d);
+        @include font-text-2;
+    }
+}

@@ -1,0 +1,38 @@
+@import "../../../sass/style.scss";
+
+.TwoCols {
+    @include media-breakpoint-down(sm) {
+        //overflow-x: auto;
+        overflow: hidden;
+    }
+    &__inner {
+        position: relative;
+        display: grid;
+        @include media-breakpoint-down(sm) {
+            grid-template-columns: repeat(100, 80%);
+            overflow-x: scroll;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            // just for hide scrollbar
+            padding-bottom: 20px;
+            margin-bottom: -20px;
+        }
+        @include media-breakpoint-up(md) {
+            grid-template-columns: 1fr 1fr;
+        }
+        grid-column-gap: 4px;
+        grid-row-gap: 4px;
+    }
+    &__item {
+        scroll-snap-align: center;
+        @include media-breakpoint-up(md) {
+            align-self: center;
+        }
+        &--isFullWidth {
+            @include media-breakpoint-up(md) {
+                grid-column-start: 1;
+                grid-column-end: 3;
+            }
+        }
+    }
+}

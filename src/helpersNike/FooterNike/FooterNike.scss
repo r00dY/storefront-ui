@@ -1,0 +1,49 @@
+@import "../../sass/style";
+
+.FooterNike {
+    //*{background: rgba(0,0,0,0.1)}
+    &__bottom {
+        background: lighten(black, 8%);
+        color: white;
+        @include vs(margin-top, $VS2m, $VS2d);
+        @include vs(padding-top, $VS2m, $VS2d);
+        @include vs(padding-bottom, $VS2m, $VS2d);
+    }
+    &__col {
+        @include make-col-ready;
+        @include make-col(1, 6);
+        &--last {
+            @include make-col(3, 6);
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+
+    &__scrollerWrapper {
+        display: flex;
+        justify-content: flex-end;
+    }
+    &__scroller {
+        @include font-nike-3-2;
+        display: flex;
+        align-items: center;
+        svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+            margin-top: -0.15em;
+            margin-left: 4px;
+        }
+        @include hover {
+            color: $color-grey-2;
+        }
+    }
+
+    &__link {
+        @include font-nike-1-2;
+        line-height: 2;
+        @include hover {
+            color: $color-grey-3;
+        }
+    }
+}

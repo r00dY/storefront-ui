@@ -1,0 +1,73 @@
+@import "../../sass/style";
+
+.MenuBarCOS {
+    //*{background: rgba(0,0,0,0.1)}
+    background: white;
+
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $MENUBAR_HEIGHT;
+        &Left,
+        &Right {
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    &__logo {
+        width: 64px;
+        height: auto;
+        svg {
+            max-width: 100%;
+        }
+    }
+
+    &__link {
+        @include font-text-1;
+        color: $color-grey-1;
+        @include hover {
+            color: $color-grey-2;
+        }
+        margin-left: 30px;
+    }
+    &__button {
+        margin-left: 30px;
+        @include font-label-1;
+        display: flex;
+        @include hover {
+            color: $color-grey-2;
+        }
+        svg {
+            fill: currentColor;
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms;
+
+    &--isScrolledDown {
+        border-color: $color-grey-3;
+    }
+
+    //position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: white;
+    z-index: 1000;
+
+    @media screen and (max-width: 1100px) {
+        &__link,
+        &__button {
+            display: none;
+        }
+
+        &__button--myBag {
+            display: block;
+        }
+    }
+}

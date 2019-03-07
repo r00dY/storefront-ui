@@ -1,0 +1,65 @@
+@import "../../sass/style";
+
+.MenuBarNike {
+    //*{background: rgba(0,0,0,0.1)}
+    background: white;
+
+    &__inner {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: $MENUBAR_HEIGHT;
+        &Left,
+        &Right,
+        &Center {
+            display: flex;
+            align-items: center;
+        }
+        margin-left: 30px;
+        margin-right: 30px;
+    }
+
+    &__logo {
+        width: 64px;
+        height: auto;
+        svg {
+            max-width: 100%;
+        }
+        @include hover {
+            svg {
+                fill: $color-grey-2;
+            }
+        }
+    }
+
+    &__link {
+        @include font-nike-1-2;
+        color: $color-grey-1;
+        @include hover {
+            color: $color-grey-2;
+        }
+        &:not(:first-of-type) {
+            margin-left: 30px;
+        }
+    }
+    &__button {
+        @include font-nike-1-2;
+        display: flex;
+        @include hover {
+            color: $color-grey-2;
+        }
+        svg {
+            margin-right: 10px;
+            fill: currentColor;
+            width: 18px;
+            height: 18px;
+        }
+    }
+
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms;
+
+    &--isScrolledDown {
+        border-color: $color-grey-3;
+    }
+}

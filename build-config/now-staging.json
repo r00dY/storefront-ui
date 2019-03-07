@@ -1,0 +1,12 @@
+{
+  "name": "ecommerce",
+  "env": {
+  },
+  "alias": "ecommerce.ratio.team",
+  "scale": {
+    "bru1": {
+      "min": 1,
+      "max": 1
+    }
+  }
+}

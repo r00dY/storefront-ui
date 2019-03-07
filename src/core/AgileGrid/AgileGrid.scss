@@ -1,0 +1,82 @@
+@import "../../sass/style.scss";
+
+.AgileGrid {
+    @include make-container(true);
+    position: relative;
+    display: grid;
+
+    @include set-gutter-value(grid-column-gap);
+    @include set-gutter-value(grid-row-gap, 2);
+
+    &__item {
+        position: relative;
+    }
+
+    &--isSlider {
+        grid-auto-flow: column;
+
+        overflow: hidden;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 20px;
+        margin-bottom: -20px;
+        &.AgileGrid--centerSnap {
+            .AgileGrid__item {
+                scroll-snap-align: center;
+            }
+        }
+        &.AgileGrid--startSnap {
+            .AgileGrid__item {
+                scroll-snap-align: start;
+            }
+        }
+        &.AgileGrid--endSnap {
+            .AgileGrid__item {
+                scroll-snap-align: end;
+            }
+        }
+        &:not(.AgileGrid--includeGridMargins) {
+            // snag to make space after last slide
+            &:after {
+                content: "";
+                height: 100%;
+                @each $breakpoint in map-keys($grid-gutter-widths) {
+                    @include media-breakpoint-up($breakpoint) {
+                        $gutter: map-get($grid-gutter-widths, $breakpoint);
+                        $margin: map-get($grid-margins, $breakpoint);
+                        width: calc(#{$margin} - #{$gutter});
+                    }
+                }
+            }
+        }
+        &.AgileGrid--includeGridMargins {
+            padding-left: 0 !important;
+            padding-right: 0 !important;
+            @include make-container();
+        }
+    }
+    @for $i from 1 through 20 {
+        &--visibleItems#{$i} {
+            .AgileGrid__item:nth-child(n + #{$i + 1}) {
+                display: none;
+            }
+        }
+    }
+
+    &__title {
+        @include font-heading-1;
+        text-align: center;
+        @include vs(margin-bottom, $VS3m, $VS3d);
+    }
+}
+
+.__debug {
+    position: absolute;
+    top: 0;
+    left: 0;
+    @include font-debug;
+    background: rgba(0, 0, 0, 0.5);
+    color: greenyellow;
+    z-index: 9999;
+}

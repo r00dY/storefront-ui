@@ -1,0 +1,62 @@
+html {
+    -webkit-font-smoothing: antialiased;
+}
+body {
+    overflow-y: scroll;
+    max-width: 100vw;
+}
+
+.lazy-asset.lazy-asset-image .lazy-asset-wrapper {
+    background-color: black;
+}
+
+#fixed-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    // will-change: transform;
+
+    pointer-events: none;
+    > * {
+        pointer-events: auto;
+    }
+}
+
+@mixin is-primary-pointer-hoverable {
+    @media (hover: hover), not all and (-moz-touch-enabled) {
+        @content;
+    }
+}
+
+@mixin is-primary-pointer-touch {
+    @media (hover: none) {
+        @content;
+    }
+}
+@mixin hover {
+    @include is-primary-pointer-hoverable {
+        &:hover {
+            @content;
+        }
+    }
+}
+
+@mixin global-space($prop) {
+    @include vs($prop, $VS5m, $VS6d);
+}
+
+@keyframes underline {
+    0% {
+        width: 0;
+    }
+    100% {
+        width: 100%;
+    }
+}
+
+@mixin underline-animation {
+    animation: underline;
+}

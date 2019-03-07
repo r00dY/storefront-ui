@@ -1,0 +1,53 @@
+@import "../../../sass/style.scss";
+
+.EditorialHalfImage {
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    @include media-breakpoint-up(lg) {
+        height: 100vh;
+    }
+    &__imageWrapper,
+    &__elementWrapper {
+        @include media-breakpoint-up(lg) {
+            @include make-col(1, 2);
+            height: 100%;
+        }
+    }
+    &__imageWrapper {
+        @include media-breakpoint-down(md) {
+            @include make-col(1, 1);
+        }
+    }
+    &__image {
+        width: 100%;
+        height: 100%;
+        @include media-breakpoint-up(lg) {
+            &--natural {
+                display: none;
+            }
+        }
+        @include media-breakpoint-down(md) {
+            &--cover {
+                display: none;
+            }
+        }
+    }
+
+    &__elementWrapper {
+        display: flex;
+        @include vs(padding-top, $VS3m, $VS3d);
+        @include media-breakpoint-down(md) {
+            @include make-container;
+        }
+        @include media-breakpoint-down(md) {
+            order: 2;
+        }
+        @include media-breakpoint-up(lg) {
+            @include vs(padding, $VS3m, $VS3d);
+        }
+    }
+
+    &__element {
+    }
+}

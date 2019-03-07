@@ -1,0 +1,69 @@
+@import "../../sass/style";
+
+.ProductMeta {
+    $_BUTTON_HEIGHT: 42px;
+
+    //*, & { background: rgba(0,0,0,0.01); }
+
+    &__row {
+        display: flex;
+        &:not(:first-child) {
+            @include vs(margin-top, $VS3m, $VS3d);
+        }
+    }
+
+    &__title {
+        &--paddingBottom {
+            @include vs(padding-bottom, 0, $VS3d);
+        }
+        flex-grow: 1;
+    }
+    &__price {
+        white-space: nowrap;
+        span {
+            text-decoration: line-through;
+            color: $color-grey-2;
+        }
+    }
+    &__buttonWrapper {
+        width: 100%;
+        display: flex;
+    }
+
+    &__button {
+        background-color: $color-black;
+        color: white;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: $_BUTTON_HEIGHT;
+        padding-left: 20px;
+        padding-right: 20px;
+        svg {
+            fill: white;
+        }
+        &:hover {
+            background-color: $color-grey-2;
+        }
+        flex-grow: 1;
+        &--addToWishlist {
+            margin-left: 2px;
+            flex-grow: 0;
+        }
+    }
+    &__description {
+        p {
+            &:not(:first-child) {
+                margin-top: 1em;
+            }
+        }
+    }
+
+    .SizePicker {
+        width: 100%;
+    }
+    .AccordionGroup {
+        width: 100%;
+    }
+}

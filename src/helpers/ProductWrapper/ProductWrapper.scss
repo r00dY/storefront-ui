@@ -1,0 +1,25 @@
+@import "../../sass/style";
+
+.ProductWrapper {
+    position: relative;
+    & > div {
+        &:not(:first-child) {
+            @include global-space(margin-top);
+        }
+    }
+
+    .MenuBarCOS + div,
+    .MenuBarNike + div {
+        @include vs(margin-top, $VS3m, $VS3d);
+    }
+
+    .NotificationBar {
+    }
+    .MenuBarCOS,
+    .MenuBarNike {
+        margin-top: 0 !important;
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+}

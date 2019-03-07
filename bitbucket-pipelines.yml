@@ -1,0 +1,22 @@
+image: samueldebruyn/debian-git
+
+pipelines:
+    branches:
+        staging:
+            - parallel:
+                - step:
+                    name: Deploy website
+                    image: node
+                    script:
+                        - npm install -g now
+                        - now --public -t uy6nZtFHEIEGztkk4z3N43uc -A build-config/now-staging.json
+                        - now alias -t uy6nZtFHEIEGztkk4z3N43uc -A build-config/now-staging.json --no-verify
+                        - now rm -t uy6nZtFHEIEGztkk4z3N43uc jit --safe --yes
+                - step:
+                    name: Deploy storybook
+                    image: node
+                    script:
+                        - npm install -g now
+                        - now --public -t uy6nZtFHEIEGztkk4z3N43uc -A build-config/now-storybook.json
+                        - now alias  -t uy6nZtFHEIEGztkk4z3N43uc -A build-config/now-storybook.json
+                        - now rm -t uy6nZtFHEIEGztkk4z3N43uc jit-storybook --safe --yes

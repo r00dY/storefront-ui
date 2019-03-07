@@ -1,0 +1,33 @@
+@import "../../../sass/style.scss";
+
+.ThumbnailsList {
+    @include media-breakpoint-down(sm) {
+        display: grid;
+        grid-template-columns: repeat(100, 70px);
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        grid-column-gap: 4px;
+    }
+    &__thumbnail {
+        position: relative;
+        @include media-breakpoint-up(md) {
+            max-width: 60px;
+            &:not(:first-child) {
+                margin-top: 4px;
+            }
+        }
+        @include hover {
+            &:after {
+                position: absolute;
+                content: "";
+                cursor: pointer;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: rgba(255, 255, 255, 0.35);
+            }
+        }
+    }
+}
