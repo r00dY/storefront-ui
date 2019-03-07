@@ -6,6 +6,10 @@ class Color {
     get css() {
         return this._color;
     }
+
+    toString() {
+        return this._color;
+    }
 }
 
 export default Color;

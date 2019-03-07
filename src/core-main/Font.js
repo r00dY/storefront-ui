@@ -6,6 +6,10 @@ class Font {
     get css() {
         return this._css;
     }
+
+    toString() {
+        return this._css;
+    }
 }
 
 export default Font;
