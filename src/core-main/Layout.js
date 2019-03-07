@@ -14,6 +14,8 @@ class Layout {
             .divide(config.colNumber);
     }
 
+
+
     cols(n) {
         return this.col.multiply(n).add(this.gutter.multiply(n - 1));
     }
