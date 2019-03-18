@@ -17,7 +17,7 @@
         "app-root-path": "^2.1.0",
         "fs": "0.0.1-security",
         "imgix-core-js": "^1.2.0",
-        "lazy-asset-react": "^0.2.6",
+        "lazy-asset-react": "^0.2.7",
         "next": "^8.0.3",
         "react": "^16.6.3",
         "react-collapsible": "^2.3.2",
