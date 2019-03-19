@@ -80,16 +80,20 @@ GridItem.defaultProps = {
 };
 
 const Grid = function(props) {
-    let gutter = rs(props.gutter);
+    let colNumber = props.colNumber || Layout.main.colNumber;
+    let gutter = rs(props.gutter || Layout.main.gutter);
 
-    // console.log('first child params', props.children[0].props.params);
+    // Validation
+    if (!colNumber || !gutter) {
+        throw new Error("Grid: colNumber or gutter not defined. When using Grid you must either provide colNumber and gutter properties or define Layout.main");
+    }
 
     return (
         <GridRow gutter={gutter}>
             <GridContext.Provider
                 value={{
                     gutter: gutter,
-                    colNumber: props.colNumber
+                    colNumber: colNumber
                 }}
             >
                 {props.children}
@@ -99,13 +103,8 @@ const Grid = function(props) {
 };
 
 Grid.propTypes = {
-    gutter: PropTypes.any.isRequired,
-    colNumber: PropTypes.number.isRequired
+    gutter: PropTypes.any,
+    colNumber: PropTypes.number
 };
-//
-// Grid.defaultProps = {
-//     gutter: Layout.main.gutter,
-//     colNumber: Layout.main.colNumber
-// };
 
 export { Grid, GridItem };

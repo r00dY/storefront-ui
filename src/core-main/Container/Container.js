@@ -7,10 +7,17 @@ import Layout from "../Layout";
 import { css, jsx } from "@emotion/core";
 
 const Container = props => {
+    let width = rs(props.width || Layout.main.container);
+
+    // Validation
+    if (!width) {
+        throw new Error("Container: width not defined. When using Container you must either provide width property or define Layout.main");
+    }
+
     return (
         <div
             css={css`
-                ${rs(props.width).css("width")}
+                ${width.css("width")}
                 margin: auto;
             `}
         >
@@ -19,15 +26,9 @@ const Container = props => {
     );
 };
 
-// Container.defaultProps = {
-//     width: Layout.main.container
-// };
-
 Container.propTypes = {
     width:
-        PropTypes.any
-            .isRequired /* TODO: ResponsiveSize parameter might be number (pixels), string ("CSS width"), object (RangeMap) or ResponsiveSize. We must think of some unified way to type check */
+        PropTypes.any /* TODO: ResponsiveSize parameter might be number (pixels), string ("CSS width"), object (RangeMap) or ResponsiveSize. We must think of some unified way to type check */
 };
 
 export default Container;
-

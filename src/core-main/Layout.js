@@ -2,19 +2,17 @@ import { rs } from "responsive-helpers";
 
 class Layout {
     constructor(config) {
-        this.container = config.container;
+        this.container = rs(config.container);
         this.colNumber = config.colNumber;
-        this.gutter = config.gutter;
+        this.gutter = rs(config.gutter);
         this.margin = rs("100vw")
-            .subtract(config.container)
+            .subtract(this.container)
             .divide(2);
 
         this.col = this.container
-            .subtract(this.gutter.multiply(config.colNumber - 1))
-            .divide(config.colNumber);
+            .subtract(this.gutter.multiply(this.colNumber - 1))
+            .divide(this.colNumber);
     }
-
-
 
     cols(n) {
         return this.col.multiply(n).add(this.gutter.multiply(n - 1));
