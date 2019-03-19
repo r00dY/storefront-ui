@@ -4,11 +4,8 @@ import Font from "./core-main/Font";
 import Layout from "./core-main/Layout";
 import { RangeSet } from "responsive-helpers";
 
-//
-// import Container from "./core-main/Container/Container";
-// import { Grid, GridItem } from "./core-main/Grid/Grid";
-
-// import config from "__storefront_config_js";
+import Container from "./core-main/Container/Container";
+import { Grid, GridItem } from "./core-main/Grid/Grid";
 
 const defaultSpacings = {
     s1: 10,
@@ -40,11 +37,13 @@ let R = Ranges;
 let Colors = defaultColors;
 let C = Colors;
 
-let L = new Layout({
+Layout.main = new Layout({
     colNumber: 24,
     container: "90vw",
     gutter: 10
 });
+
+let L = Layout.main;
 
 function applyConfig(config) {
     if (config.fonts) {
@@ -81,5 +80,7 @@ export {
 
     Fonts, F, Spacings, S, Ranges, R, Colors, C, L,
 
-    applyConfig
+    applyConfig,
+
+    Container, Grid, GridItem
 }

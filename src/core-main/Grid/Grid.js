@@ -10,10 +10,7 @@ import Layout from "../Layout";
  * I removed it because it made StickyWrapper not work. To remember.
  */
 
-const GridContext = React.createContext({
-    gutter: Layout.main.gutter,
-    colNumber: Layout.main.colNumber
-});
+const GridContext = React.createContext(null);
 
 const GridRow = styled.div`
     display: flex;
