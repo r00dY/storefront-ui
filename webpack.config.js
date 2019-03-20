@@ -44,6 +44,14 @@ module.exports = {
                 commonjs: "responsive-helpers",
                 amd: "responsive-helpers"
             }
+        },
+        {
+            "@emotion/core": {
+                root: "emotionCore",
+                commonjs2: "@emotion/core",
+                commonjs: "@emotion/core",
+                amd: "@emotion/core"
+            }
         }
     ],
 
