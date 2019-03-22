@@ -35,7 +35,7 @@ function Example(props) {
     let component = React.createElement(props.component);
 
     return <div style={{backgroundColor: "rgb(245, 245, 245)", padding: 0, margin: 0, paddingBottom: "20px"}}>
-        { props.fullWidth ? <div style={{padding: "20px 0"}}>{component}</div> : <Container><div style={{padding: "20px"}}>{component}</div></Container> }
+        { props.fullWidth ? <div style={{padding: "20px 0"}}>{component}</div> : <Container><div style={{padding: "20px 0"}}>{component}</div></Container> }
         { props.code && <CodeBlock code={props.code}/>}
     </div>
 }
