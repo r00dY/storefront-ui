@@ -29,7 +29,7 @@ ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/01-standa
 
 ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/02-custom-load-time.js")} component={require('../src/core-main/Image/examples/02-custom-load-time.js').default} />}
 
-### ZoomableImage
+### \`ImageZoomable\`
 
 ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/03-image-zoomable.js")} component={require('../src/core-main/Image/examples/03-image-zoomable.js').default} />}
 
