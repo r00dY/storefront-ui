@@ -74,5 +74,5 @@
             "pre-commit": "./node_modules/.bin/pretty-quick --staged"
         }
     },
-    "version": "0.1.2"
+    "version": "0.1.3"
 }
