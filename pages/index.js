@@ -2,11 +2,6 @@ import React from "react";
 import Page from "../docs-utils/Page";
 import { md } from "../docs-utils/docs";
 
-import Box from "./Box";
-
-/** @jsx jsx */
-import {css, jsx} from "@emotion/core";
-
 const content = md`
 # Introduction
 

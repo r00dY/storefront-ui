@@ -4,8 +4,9 @@
     "main": "dist/bundle.js",
     "scripts": {
         "dev": "next",
-        "build": "webpack --mode production",
-        "start": "bash build-config/_start.sh",
+        "build-lib": "webpack --mode production",
+        "start": "next start",
+        "build": "next build",
         "storybook": "start-storybook -s . -p 9011 -c .storybook",
         "build-storybook": "build-storybook -c .storybook",
         "test": "./node_modules/.bin/babel-node ./spec/run.js"

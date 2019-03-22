@@ -43,7 +43,7 @@ By default, \`Container\` margin is \`5vw\`. Later we'll show how to make it cus
 
 Grid has n fixed width columns separated with fixed width gutters. Every layout should snap its blocks to the grid.
 
-The \`Grid\` behaves exactly the same as Bootstrap grid. For now you can set widths, offsets and order.
+The \`Grid\` behaves exactly the same as Bootstrap grid. For now you can set widths, offsets and order for items.
 
 ${<Example fullWidth={true} code={require("!!raw-loader!../src/core-main/Grid/examples/01-standard-use.js")} component={require('../src/core-main/Grid/examples/01-standard-use.js').default} />}
 
