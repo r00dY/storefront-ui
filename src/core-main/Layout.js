@@ -41,4 +41,10 @@ Layout.normalizeGridItemParams = function(params) {
     return params;
 };
 
+Layout.main = {
+    container: "90vw",
+    gutter: "15px",
+    colNumber: 24
+};
+
 export default Layout;

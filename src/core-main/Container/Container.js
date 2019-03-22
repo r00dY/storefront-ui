@@ -7,21 +7,25 @@ import Layout from "../Layout";
 import { css, jsx } from "@emotion/core";
 
 const Container = props => {
-    let width = rs(props.width || Layout.main.container);
+    let width = rs(props.width || Layout.main.container || "90vw");
 
     // Validation
     if (!width) {
         throw new Error("Container: width not defined. When using Container you must either provide width property or define Layout.main");
     }
 
+    let margin = rs("100vw").subtract(width).divide(2);
+
     return (
-        <div
-            css={css`
-                ${width.css("width")}
-                margin: auto;
-            `}
-        >
-            {props.children}
+        <div style={props.style} className={props.className}>
+            <div
+                css={css`
+                    ${margin.css("margin-left")}
+                    ${margin.css("margin-right")}
+                `}
+            >
+                {props.children}
+            </div>
         </div>
     );
 };

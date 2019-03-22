@@ -1,9 +1,10 @@
-import styled from "styled-components";
 import React from "react";
 import PropTypes from "prop-types";
 
 import { RangeMap, rs } from "responsive-helpers";
 import Layout from "../Layout";
+
+import styled from "@emotion/styled";
 
 /**
  * For some time this GridRow had: `overflow: hidden`
@@ -18,6 +19,15 @@ const GridRow = styled.div`
     ${props => props.gutter.divide(-2).css("margin-left")}
     ${props => props.gutter.divide(-2).css("margin-right")}
 `;
+
+function normalizeParams(params) {
+    if (typeof params === 'number' || Array.isArray(params)) {
+        return {
+            0: params
+        };
+    }
+    return params;
+}
 
 const GridItemStyled = styled.div`
     position: relative;
@@ -52,7 +62,7 @@ const GridItem = function(props) {
         <GridContext.Consumer>
             {({ gutter, colNumber }) => (
                 <GridItemStyled
-                    params={new RangeMap(props.params)}
+                    params={new RangeMap(normalizeParams(props.params))}
                     gutter={gutter}
                     colNumber={colNumber}
                 >

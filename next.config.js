@@ -1,16 +1,17 @@
-// next.config.js
-const withSass = require("@zeit/next-sass");
-const webpack = require("webpack");
+const path = require('path');
 
-module.exports = withSass({
-    webpack(config, options) {
-        config.resolve.modules.push(__dirname);
+module.exports = {
+    webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
+        // Perform customizations to webpack config
+        // Important: return the modified config
 
-        config.module.rules.push({
-            test: /\.svg$/,
-            loader: "svg-inline-loader"
-        });
+        config.resolve.alias['storefront-ui$'] = path.resolve(__dirname, 'src/index.js');
 
-        return config;
+        return config
+    },
+    webpackDevMiddleware: config => {
+        // Perform customizations to webpack dev middleware config
+        // Important: return the modified config
+        return config
     }
-});
+}
