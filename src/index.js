@@ -1,4 +1,6 @@
 import Image from "./core-main/Image/Image";
+import ImageZoomable from "./core-main/Image/ImageZoomable";
+
 import Color from "./core-main/Color";
 import Font from "./core-main/Font";
 import Layout from "./core-main/Layout";
@@ -75,6 +77,8 @@ function applyConfig(config) {
 
 export {
     Image,
+    ImageZoomable,
+
     Color,
     Font,
 

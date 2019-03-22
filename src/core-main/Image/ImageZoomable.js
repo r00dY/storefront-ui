@@ -163,7 +163,7 @@ class ImageZoomable extends React.Component {
                         }}
                     >
                         <div style={{ opacity: 1, height: "100%" }}>
-                            <Image style={{ height: "100" }} {...this.props} />
+                            <Image style={{ height: "100%" }} {...this.props} />
                         </div>
                     </div>
 
@@ -186,6 +186,7 @@ class ImageZoomable extends React.Component {
                             <Image
                                 {...this.props}
                                 load={true}
+                                autoload={false}
                                 animationTime={0}
                             />
                         </div>
@@ -197,6 +198,7 @@ class ImageZoomable extends React.Component {
 }
 
 ImageZoomable.defaultProps = {
+    ...Image.defaultProps,
     zoom: 2
 };
 
