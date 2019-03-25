@@ -19,7 +19,7 @@ It does many tasks under the hood so that you don't have to worry about them:
 
 Examples import example images from a helper \`images.js\` file:
 
-${<CodeBlock code={require("!!raw-loader!../src/core-main/Image/examples/images.js")} />}
+${<CodeBlock code={require("!!raw-loader!../data/images.js")} />}
 
 ### Standard use
 

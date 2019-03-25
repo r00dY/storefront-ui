@@ -1,6 +1,6 @@
 import { Grid, GridItem, Container } from "storefront-ui";
 import React from "react";
-import Rectangle from "./Rectangle";
+import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => (
     <Container>

@@ -4,7 +4,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catPortrait} from "./images";
+import { catPortrait} from "../../../../data/images";
 
 export default () => (
     <div>

@@ -4,7 +4,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catLandscape } from "./images";
+import { catLandscape } from "../../../../data/images";
 
 export default () => (
     <div>

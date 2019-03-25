@@ -4,10 +4,15 @@ import ImageZoomable from "./core-main/Image/ImageZoomable";
 import Color from "./core-main/Color";
 import Font from "./core-main/Font";
 import Layout from "./core-main/Layout";
+import Ease from "./core-main/Ease";
 import { RangeSet } from "responsive-helpers";
 
 import Container from "./core-main/Container/Container";
 import { Grid, GridItem } from "./core-main/Grid/Grid";
+
+import ProductPhotos, { useProductPhotos } from "./core-main/ProductPhotos/ProductPhotos";
+
+import SwipeableItemsContainer from "./core-main/SwipeableItemsContainer/SwipeableItemsContainer";
 
 const defaultSpacings = {
     s1: 10,
@@ -81,10 +86,16 @@ export {
 
     Color,
     Font,
+    Ease,
 
     Fonts, F, Spacings, S, Ranges, R, Colors, C, L,
 
     applyConfig,
 
-    Container, Grid, GridItem
+    Container, Grid, GridItem,
+
+    ProductPhotos,
+    useProductPhotos,
+
+    SwipeableItemsContainer
 }

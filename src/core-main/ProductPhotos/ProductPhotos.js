@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { Grid, GridItem } from "../Grid/Grid";
 import { rs } from "responsive-helpers";
 import SwipeableItemsContainer from "../SwipeableItemsContainer/SwipeableItemsContainer";
+import ImageZoomable from "../Image/ImageZoomable";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -211,7 +212,8 @@ ProductPhotos.propTypes = {
 ProductPhotos.defaultProps = {
     mode: "grid",
     gridLayout: 1,
-    gutter: 0
+    gutter: 10,
+    imageComponent: (image) => <ImageZoomable image={image} />
 };
 
 export default ProductPhotos;

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "styled-components";
-import { rs } from "responsive-helpers";
+import styled from "@emotion/styled";
+import { rs, RangeMap } from "responsive-helpers";
 import { TouchSpace, AbstractSlider } from "simpleswiper";
 
 const CSS = {
@@ -25,7 +25,6 @@ const Root = styled.div`
     position: relative;
     overflow: hidden;
 
-    width: 100%;
     height: 100%;
 `;
 
@@ -48,6 +47,7 @@ const Wrapper = styled.div`
             ? "overflow: hidden"
             : CSS[props.config.mode].overflowStyles}
 `;
+
 
 const ItemsContainer = styled.div`
     position: relative;
@@ -89,7 +89,7 @@ class SwipeableItemsContainer extends React.Component {
         this.wrapperRef = React.createRef();
         this.containerRef = React.createRef();
         this.inputRefs = [];
-        for (let i = 0; i < props.items.length; i++) {
+        for (let i = 0; i < props.children.length; i++) {
             this.inputRefs.push(React.createRef());
         }
     }
@@ -101,7 +101,7 @@ class SwipeableItemsContainer extends React.Component {
 
         let config = {
             containerSize: this.wrapperRef.current.clientWidth,
-            count: this.props.items.length,
+            count: this.props.children.length,
             leftOffset: 0,
             rightOffset: 0,
             slideSize: null
@@ -203,8 +203,8 @@ class SwipeableItemsContainer extends React.Component {
             offsetBefore: rs(props.offsetBefore || 0),
             offsetAfter: rs(props.offsetAfter || 0),
             gutter: rs(props.gutter || 0),
-            amount: this.props.items.length,
-            items: this.props.items,
+            amount: this.props.children.length,
+            items: this.props.children,
             overflowAlwaysHidden: props.swiper === true
         };
 
@@ -217,27 +217,31 @@ class SwipeableItemsContainer extends React.Component {
         } else if (props.itemAspectRatio) {
             // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
             // photo widths, unless in vertical mode
-        } else if (props.itemsInRow) {
-            config.containerWidth = rs(
-                `${(config.amount / props.itemsInRow) * 100}%`
-            )
+        } else if (props.itemsVisible) {
+            let rangeMap = new RangeMap(props.itemsVisible);
+
+            let containerWidth = {};
+            rangeMap.forEach((value, range) => { containerWidth[range.from] = `${(config.amount / value) * 100}%`; });
+
+            config.containerWidth = rs(containerWidth)
                 .add(config.offsetBefore)
                 .add(config.offsetAfter);
+
         } else {
             throw new Error(
-                "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsInRow parameter"
+                "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
             );
         }
 
         return (
-            <Root className={this.props.className}>
+            <Root className={this.props.className} style={this.props.style}>
                 <Wrapper ref={this.wrapperRef} config={config}>
                     <ItemsContainer ref={this.containerRef} config={config}>
-                        {this.props.items.map((item, i) => {
+                        {this.props.children.map((item, i) => {
                             return (
                                 <Item
                                     isFirst={i === 0}
-                                    isLast={i === this.props.items.length - 1}
+                                    isLast={i === this.props.children.length - 1}
                                     key={i}
                                     config={config}
                                     ref={this.inputRefs[i]}
@@ -254,12 +258,18 @@ class SwipeableItemsContainer extends React.Component {
 }
 
 SwipeableItemsContainer.defaultProps = {
-    swiper: false
+    swiper: true,
+    itemsVisible: 1,
+    snap: "edge"
 };
 
 SwipeableItemsContainer.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.element).isRequired,
-    swiper: PropTypes.bool.isRequired,
+    children: PropTypes.any,
+    gutter: PropTypes.any,
+    itemSize: PropTypes.any,
+    snap: PropTypes.oneOf(["edge", "offset", "center"]),
+
+    // swiper: PropTypes.bool.isRequired,
     onActiveChange: PropTypes.func
 };
 
