@@ -99,8 +99,6 @@ class SwipeableItemsContainer extends React.Component {
             let offset = inputRef.current.offsetLeft;
             let size = inputRef.current.clientWidth;
 
-            // console.log(index, offset, size);
-
             sizes.push(size);
 
             if (index > 0) {
@@ -151,10 +149,7 @@ class SwipeableItemsContainer extends React.Component {
 
         this.slider.addEventListener("activeSlidesChange", () => {
             let active = this.slider.state.slides.findIndex(s => s.active);
-
             if (this.props.onActiveChange) { this.props.onActiveChange(active) }
-
-            console.log('on active change', active, this);
             if (this._onActiveChange) { this._onActiveChange(active) }
         });
 
