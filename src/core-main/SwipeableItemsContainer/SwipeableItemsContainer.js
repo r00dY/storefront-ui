@@ -295,7 +295,7 @@ SwipeableItemsContainer.propTypes = {
     itemSize: PropTypes.any,
     offsetBefore: PropTypes.any,
     offsetAfter: PropTypes.any,
-    snap: PropTypes.oneOf(["offset"]),
+    snap: PropTypes.oneOf(["offset", "center"]),
     itemsVisibleIncludeMargins: PropTypes.bool,
 
     // swiper: PropTypes.bool.isRequired,
