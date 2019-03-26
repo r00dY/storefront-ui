@@ -1,8 +1,11 @@
 import React from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
-import { rs, RangeMap } from "responsive-helpers";
+import { rs, rssv, RangeMap } from "responsive-helpers";
 import { TouchSpace, AbstractSlider } from "simpleswiper";
+
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
 const CSS = {
     horizontal: {
@@ -24,7 +27,6 @@ const CSS = {
 const Root = styled.div`
     position: relative;
     overflow: hidden;
-
     height: 100%;
 `;
 
@@ -34,10 +36,6 @@ const Wrapper = styled.div`
     width: 100%;
     height: 100%;
 
-    ${props =>
-        rs("100%")
-            .add(props.config.gutter)
-            .css(CSS[props.config.mode].size)}
     ::-webkit-scrollbar {
         display: none;
     }
@@ -50,36 +48,21 @@ const Wrapper = styled.div`
 
 
 const ItemsContainer = styled.div`
-    position: relative;
-
-    width: 100%;
     height: 100%;
 
-    display: inline-flex;
+    display: flex;
     padding: 0;
     margin: 0;
     vertical-align: bottom;
     ${props => `flex-direction: ${CSS[props.config.mode].flexDirection}`};
-    ${props => props.config.containerWidth.css(CSS[props.config.mode].size)}}
 `;
 
 const Item = styled.div`
-    position: relative;
-
-    width: 100%;
-    ${props => (props.config.mode === "horizontal" ? "height: 100%" : "")}
-
-    box-sizing: content-box;
-    flex-grow: 1;
-    ${props =>
-        (props.isFirst ? props.config.offsetBefore : rs(0)).css(
-            CSS[props.config.mode].paddingStart
-        )}
-    ${props =>
-        (props.isLast
-            ? props.config.gutter.add(props.config.offsetAfter)
-            : props.config.gutter
-        ).css(CSS[props.config.mode].paddingEnd)}
+    ${props => (props.config.mode === "horizontal" ? "height: 100%;" : "")}
+    box-sizing: border-box;
+    ${props => props.size.css('flex-basis')}
+    flex-grow: 0;
+    flex-shrink: 0;
 `;
 
 class SwipeableItemsContainer extends React.Component {
@@ -92,6 +75,9 @@ class SwipeableItemsContainer extends React.Component {
         for (let i = 0; i < props.children.length; i++) {
             this.inputRefs.push(React.createRef());
         }
+
+        this.leftOffsetRef = React.createRef();
+        this.rightOffsetRef = React.createRef();
     }
 
     sliderGetConfig() {
@@ -102,8 +88,8 @@ class SwipeableItemsContainer extends React.Component {
         let config = {
             containerSize: this.wrapperRef.current.clientWidth,
             count: this.props.children.length,
-            leftOffset: 0,
-            rightOffset: 0,
+            leftOffset: this.leftOffsetRef.current.clientWidth,
+            rightOffset: this.rightOffsetRef.current.clientWidth,
             slideSize: null
         };
 
@@ -113,11 +99,9 @@ class SwipeableItemsContainer extends React.Component {
             let offset = inputRef.current.offsetLeft;
             let size = inputRef.current.clientWidth;
 
-            sizes.push(size);
+            // console.log(index, offset, size);
 
-            if (index === 0) {
-                config.leftOffset = offset;
-            }
+            sizes.push(size);
 
             if (index > 0) {
                 margins.push(offset - previousRightEdge);
@@ -127,22 +111,30 @@ class SwipeableItemsContainer extends React.Component {
         });
 
         margins.push(0);
-        config.rightOffset =
-            this.containerRef.current.clientWidth - previousRightEdge;
+
         config.slideSize = n => sizes[n];
-        config.marginSize = n => margins[n];
+        config.slideMargin = n => margins[n];
+
+        if (this.props.snap === 'center') {
+            config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
+        }
+        else {
+            config.slideSnapOffset = () => config.leftOffset;
+        }
 
         return config;
     }
 
     sliderApplyState() {
         this.containerRef.current.style.transform = `translate3d(${
-            this.slider.state.slides[0].coord
+            this.slider.state.slides[0].coord - this.leftOffset
         }px, 0, 0)`;
     }
 
     sliderInit() {
         let config = this.sliderGetConfig();
+
+        this.leftOffset = config.leftOffset;
 
         this.slider = new AbstractSlider(config);
 
@@ -209,23 +201,31 @@ class SwipeableItemsContainer extends React.Component {
         };
 
         if (props.itemSize) {
-            config.containerWidth = config.gutter
-                .multiply(config.amount - 1)
-                .add(config.itemSize.multiply(config.amount))
-                .add(config.offsetBefore)
-                .add(config.offsetAfter);
+            // config.containerWidth = config.gutter
+            //     .multiply(config.amount - 1)
+            //     .add(config.itemSize.multiply(config.amount))
+            //     .add(config.offsetBefore)
+            //     .add(config.offsetAfter);
+
+            // config.itemSize = props.itemSize;
+
         } else if (props.itemAspectRatio) {
             // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
             // photo widths, unless in vertical mode
         } else if (props.itemsVisible) {
-            let rangeMap = new RangeMap(props.itemsVisible);
+            let itemsVisibleMap = new RangeMap(props.itemsVisible);
 
-            let containerWidth = {};
-            rangeMap.forEach((value, range) => { containerWidth[range.from] = `${(config.amount / value) * 100}%`; });
+            let multiplier = {};
+            itemsVisibleMap.forEach((itemsVisible, range) => {
+               multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
+            });
 
-            config.containerWidth = rs(containerWidth)
-                .add(config.offsetBefore)
-                .add(config.offsetAfter);
+            let base = rs('100%');
+            if (!this.props.itemsVisibleIncludeMargins) {
+                base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
+            }
+
+            config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
 
         } else {
             throw new Error(
@@ -233,23 +233,48 @@ class SwipeableItemsContainer extends React.Component {
             );
         }
 
+        let itemsInContainer = [];
+
+        // left offset
+        itemsInContainer.push(<div key='spacer-before' ref={this.leftOffsetRef} css={css`
+            ${config.offsetBefore.css('flex-basis')}
+            flex-grow: 0;
+            flex-shrink: 0;
+        `} />);
+
+
+        this.props.children.forEach((item, i) => {
+            itemsInContainer.push(<Item
+                key={i}
+                config={config}
+                ref={this.inputRefs[i]}
+                size={config.itemSize}
+            >
+                {item}
+            </Item>);
+
+            // gutter
+            if (i !== this.props.children.length - 1) {
+                itemsInContainer.push(<div key={`spacer-${i}`} css={css`
+                    ${config.gutter.css('flex-basis')}
+                    flex-grow: 0;
+                    flex-shrink: 0;
+                `} />);
+            }
+        });
+
+        // right offset
+        itemsInContainer.push(<div key='spacer-after' ref={this.rightOffsetRef} css={css`
+            ${config.offsetAfter.css('flex-basis')}
+            flex-grow: 0;
+            flex-shrink: 0;
+        `} />);
+
         return (
             <Root className={this.props.className} style={this.props.style}>
                 <Wrapper ref={this.wrapperRef} config={config}>
                     <ItemsContainer ref={this.containerRef} config={config}>
-                        {this.props.children.map((item, i) => {
-                            return (
-                                <Item
-                                    isFirst={i === 0}
-                                    isLast={i === this.props.children.length - 1}
-                                    key={i}
-                                    config={config}
-                                    ref={this.inputRefs[i]}
-                                >
-                                    {item}
-                                </Item>
-                            );
-                        })}
+                        {itemsInContainer}
                     </ItemsContainer>
                 </Wrapper>
             </Root>
@@ -260,14 +285,18 @@ class SwipeableItemsContainer extends React.Component {
 SwipeableItemsContainer.defaultProps = {
     swiper: true,
     itemsVisible: 1,
-    snap: "edge"
+    snap: "offset",
+    itemsVisibleIncludeMargins: false
 };
 
 SwipeableItemsContainer.propTypes = {
     children: PropTypes.any,
     gutter: PropTypes.any,
     itemSize: PropTypes.any,
-    snap: PropTypes.oneOf(["edge", "offset", "center"]),
+    offsetBefore: PropTypes.any,
+    offsetAfter: PropTypes.any,
+    snap: PropTypes.oneOf(["offset"]),
+    itemsVisibleIncludeMargins: PropTypes.bool,
 
     // swiper: PropTypes.bool.isRequired,
     onActiveChange: PropTypes.func
