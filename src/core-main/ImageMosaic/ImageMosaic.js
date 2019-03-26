@@ -52,6 +52,10 @@ class ImageMosaic extends React.Component {
         });
     }
 
+    componentWillUnmount() {
+        this.observer.disconnect();
+    }
+
     _visibilityChange(entries) {
         entries.forEach(entry => {
             this.intersectionEntries[entry.target.dataset.photoId] = entry;
