@@ -11,6 +11,10 @@ const content = md`
 
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js').default} />}
 
+## Hook and state
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/02-hook.js').default} />}
+
 `;
 
 export default () => <Page>{content}</Page>;

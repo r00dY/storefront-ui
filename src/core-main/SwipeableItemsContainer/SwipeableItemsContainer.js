@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 import { rs, rssv, RangeMap } from "responsive-helpers";
@@ -149,13 +149,14 @@ class SwipeableItemsContainer extends React.Component {
             });
         });
 
-        if (this.props.onActiveChange) {
-            this.slider.addEventListener("activeSlidesChange", () => {
-                this.props.onActiveChange(
-                    this.slider.state.slides.findIndex(s => s.active)
-                );
-            });
-        }
+        this.slider.addEventListener("activeSlidesChange", () => {
+            let active = this.slider.state.slides.findIndex(s => s.active);
+
+            if (this.props.onActiveChange) { this.props.onActiveChange(active) }
+
+            console.log('on active change', active, this);
+            if (this._onActiveChange) { this._onActiveChange(active) }
+        });
 
         this.sliderApplyState();
     }
@@ -282,6 +283,29 @@ class SwipeableItemsContainer extends React.Component {
     }
 }
 
+function useSwipeableItemsContainer() {
+    const [active, setActiveRaw] = useState(0);
+    const ref = useRef(null);
+
+    const setActive = (n, animated) => {
+        if (ref.current && ref.current.slider) {
+            ref.current.slider.moveToSlide(n, animated);
+        }
+    };
+
+    useEffect(() => {
+        if (ref.current) {
+            ref.current._onActiveChange = setActiveRaw;
+        }
+    });
+
+    return {
+        ref: ref,
+        active: active,
+        setActive: setActive
+    };
+}
+
 SwipeableItemsContainer.defaultProps = {
     swiper: true,
     itemsVisible: 1,
@@ -304,3 +328,6 @@ SwipeableItemsContainer.propTypes = {
 };
 
 export default SwipeableItemsContainer;
+export {
+    useSwipeableItemsContainer
+}

@@ -46,7 +46,6 @@ const Dots = props => {
                 key={i}
             >
                 <DotsItem
-                    {...props}
                     dotSize={props.dotSize}
                     color={props.color}
                     activeColor={props.activeColor}
@@ -60,6 +59,7 @@ const Dots = props => {
         <div style={props.style} className={props.className}>
             <div
                 css={css`
+                    position: relative;
                     display: flex;
                     flex-direction: ${props.vertical ? "column" : "row"};
                     justify-content: center;

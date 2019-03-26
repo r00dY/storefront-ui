@@ -12,7 +12,11 @@ import { Grid, GridItem } from "./core-main/Grid/Grid";
 
 import ProductPhotos, { useProductPhotos } from "./core-main/ProductPhotos/ProductPhotos";
 
-import SwipeableItemsContainer from "./core-main/SwipeableItemsContainer/SwipeableItemsContainer";
+import SwipeableItemsContainer, { useSwipeableItemsContainer } from "./core-main/SwipeableItemsContainer/SwipeableItemsContainer";
+
+import ImageMosaic, { useImageMosaic } from "./core-main/ImageMosaic/ImageMosaic";
+
+import Dots from "./core-main/Dots/Dots";
 
 const defaultSpacings = {
     s1: 10,
@@ -97,5 +101,10 @@ export {
     ProductPhotos,
     useProductPhotos,
 
-    SwipeableItemsContainer
+    ImageMosaic,
+    useImageMosaic,
+
+    SwipeableItemsContainer, useSwipeableItemsContainer,
+
+    Dots
 }
