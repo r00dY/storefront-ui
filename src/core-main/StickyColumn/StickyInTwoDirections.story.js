@@ -2,7 +2,7 @@ import React from "react";
 import { storiesOf } from "@storybook/react";
 import Container from "../Container/Container";
 import { Grid, GridItem } from "../Grid/Grid";
-import StickyInTwoDirections from "./StickyInTwoDirections";
+import StickyColumn from "./StickyInTwoDirections";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -111,14 +111,14 @@ storiesOf("StickyInTwoDirections", module).add("default", () => (
                         lg: 3
                     }}
                 >
-                    <StickyInTwoDirections
+                    <StickyColumn
                         css={css`
                             height: 100%;
                         `}
                         offset={[10, 10]}
                     >
                         <VariableHeightColumn color={"green"} height={2000} />
-                    </StickyInTwoDirections>
+                    </StickyColumn>
                 </GridItem>
                 <GridItem
                     params={{
@@ -144,13 +144,13 @@ storiesOf("StickyInTwoDirections", module).add("default", () => (
                         lg: 3
                     }}
                 >
-                    <StickyInTwoDirections
+                    <StickyColumn
                         css={css`
                             height: 100%;
                         `}
                     >
                         <VariableHeightColumn color={"black"} height={400} />
-                    </StickyInTwoDirections>
+                    </StickyColumn>
                 </GridItem>
             </Grid>
         </Container>

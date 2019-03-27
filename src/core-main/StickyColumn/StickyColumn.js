@@ -275,7 +275,7 @@ const Wrapper3 = styled.div`
     ${props => props.offset[0].css("top")};
 `;
 
-class StickyInTwoDirections extends React.Component {
+class StickyColumn extends React.Component {
     constructor(props) {
         super(props);
 
@@ -400,12 +400,12 @@ class StickyInTwoDirections extends React.Component {
     }
 }
 
-StickyInTwoDirections.propTypes = {
+StickyColumn.propTypes = {
     offset: PropTypes.any.isRequired
 };
 
-StickyInTwoDirections.defaultProps = {
+StickyColumn.defaultProps = {
     offset: 0
 };
 
-export default StickyInTwoDirections;
+export default StickyColumn;

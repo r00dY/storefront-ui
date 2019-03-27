@@ -11,7 +11,7 @@ import ProductPhotos, {
 } from "../ProductPhotos/ProductPhotos";
 import Image from "../Image/Image";
 import ImageZoomable from "../Image/ImageZoomable";
-import StickyInTwoDirections from "../StickyInTwoDirections/StickyInTwoDirections";
+import StickyColumn from "../StickyColumn/StickyInTwoDirections";
 
 import S from "./spacings";
 import photos from "./photos";
@@ -42,7 +42,7 @@ function Story() {
                 <Container>
                     <Grid>
                         <GridItem params={{ xs: 0, md: 1 }}>
-                            <StickyInTwoDirections
+                            <StickyColumn
                                 css={css`
                                     height: 100%;
                                 `}
@@ -73,7 +73,7 @@ function Story() {
                                     active={active}
                                     onClick={setActive}
                                 />
-                            </StickyInTwoDirections>
+                            </StickyColumn>
                         </GridItem>
                         <GridItem params={{ xs: 24, md: 12 }}>
                             <ProductPhotos
@@ -92,14 +92,14 @@ function Story() {
                             />
                         </GridItem>
                         <GridItem params={{ xs: 24, md: [10, 1] }}>
-                            <StickyInTwoDirections
+                            <StickyColumn
                                 css={css`
                                     height: 100%;
                                 `}
                                 offset={30}
                             >
                                 <ProductMeta1 />
-                            </StickyInTwoDirections>
+                            </StickyColumn>
                         </GridItem>
                     </Grid>
                 </Container>

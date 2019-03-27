@@ -18,6 +18,8 @@ import ImageMosaic, { useImageMosaic } from "./core-main/ImageMosaic/ImageMosaic
 
 import Dots from "./core-main/Dots/Dots";
 
+import StickyColumn from "./core-main/StickyColumn/StickyColumn";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -106,5 +108,7 @@ export {
 
     SwipeableItemsContainer, useSwipeableItemsContainer,
 
-    Dots
+    Dots,
+
+    StickyColumn
 }

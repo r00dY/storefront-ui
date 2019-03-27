@@ -30,6 +30,7 @@ export default (props) => {
                 <li><Link href="/layout"><a>Layout, Container and Grid</a></Link></li>
                 <li><Link href="/image-mosaic"><a>Image mosaic</a></Link></li>
                 <li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>
+                <li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>
             </ul>
 
         </div>
