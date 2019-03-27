@@ -27,33 +27,36 @@ class ImageMosaic extends React.Component {
     }
 
     componentDidMount() {
-        this.observer = new IntersectionObserver(
-            entries => {
-                this._visibilityChange(entries);
-            },
-            {
-                threshold: [
-                    0,
-                    0.1,
-                    0.2,
-                    0.3,
-                    0.4,
-                    0.5,
-                    0.6,
-                    0.7,
-                    0.8,
-                    0.9,
-                    1
-                ]
-            }
-        );
-        this.photoRefs.forEach(ref => {
-            this.observer.observe(ref.current);
-        });
+        if (IntersectionObserver) {
+            this.observer = new IntersectionObserver(
+                entries => {
+                    this._visibilityChange(entries);
+                },
+                {
+                    threshold: [
+                        0,
+                        0.1,
+                        0.2,
+                        0.3,
+                        0.4,
+                        0.5,
+                        0.6,
+                        0.7,
+                        0.8,
+                        0.9,
+                        1
+                    ]
+                }
+            );
+            this.photoRefs.forEach(ref => {
+                this.observer.observe(ref.current);
+            });
+        }
+
     }
 
     componentWillUnmount() {
-        this.observer.disconnect();
+        if (this.observer) { this.observer.disconnect(); }
     }
 
     _visibilityChange(entries) {

@@ -252,7 +252,6 @@ const Root = styled.div`
 const Wrapper1 = styled.div`
     width: 100%;
     position: sticky;
-    position: -webkit-sticky;
     min-height: 100vh;
     ${props => props.offset[0].css("top")};
     align-self: flex-start;
@@ -262,7 +261,6 @@ const Wrapper1 = styled.div`
 const Wrapper2 = styled.div`
     width: 100%;
     position: sticky;
-    position: -webkit-sticky;
     ${props => props.offset[1].css("bottom")};
     align-self: flex-end;
     min-height: 100vh;
@@ -271,7 +269,6 @@ const Wrapper2 = styled.div`
 const Wrapper3 = styled.div`
     width: 100%;
     position: sticky;
-    position: -webkit-sticky;
     ${props => props.offset[0].css("top")};
 `;
 

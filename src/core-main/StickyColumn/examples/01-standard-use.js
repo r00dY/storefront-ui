@@ -64,6 +64,19 @@ export default () => {
                 >
                     <VariableHeightColumn color={"black"} height={400}/>
                 </StickyColumn>
+
+                {/*<div css={css`*/}
+                    {/*height: 100%;*/}
+                {/*`}>*/}
+                    {/*<div css={css`*/}
+                        {/*height: 300px;*/}
+                        {/*background-color: red;*/}
+                        {/*position: sticky;*/}
+                        {/*top: 0;*/}
+                    {/*`}>*/}
+
+                    {/*</div>*/}
+                {/*</div>*/}
             </GridItem>
         </Grid>
 
