@@ -66,7 +66,9 @@ const GridItem = function(props) {
                     gutter={gutter}
                     colNumber={colNumber}
                 >
-                    {props.children}
+                    <div className={props.className} style={props.style}>
+                        {props.children}
+                    </div>
                 </GridItemStyled>
             )}
         </GridContext.Consumer>
@@ -96,16 +98,18 @@ const Grid = function(props) {
     }
 
     return (
-        <GridRow gutter={gutter}>
-            <GridContext.Provider
-                value={{
-                    gutter: gutter,
-                    colNumber: colNumber
-                }}
-            >
-                {props.children}
-            </GridContext.Provider>
-        </GridRow>
+        <div className={props.className} style={props.style}>
+            <GridRow gutter={gutter}>
+                <GridContext.Provider
+                    value={{
+                        gutter: gutter,
+                        colNumber: colNumber
+                    }}
+                >
+                    {props.children}
+                </GridContext.Provider>
+            </GridRow>
+        </div>
     );
 };
 

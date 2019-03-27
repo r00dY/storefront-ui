@@ -2,6 +2,9 @@ import { Grid, GridItem, Container } from "storefront-ui";
 import React from "react";
 import Rectangle from "../../../../docs-utils/Rectangle";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
 export default () => (
     <Container>
         <Grid>
@@ -103,6 +106,29 @@ export default () => (
             }}>
                 <Rectangle color={"cornflowerblue"}>D (order changed below lg)</Rectangle>
             </GridItem>
+
+        </Grid>
+
+
+        {/* Styling Grid and GridItem */}
+
+        <Grid css={css`padding: 100px 0`}>
+            <GridItem params={6} css={css`height: 500px;`}>
+                <Rectangle color={"red"} height={"100%"}>always 6 cols</Rectangle>
+            </GridItem>
+
+            <GridItem params={6}>
+                <Rectangle color={"red"}>always 6 cols</Rectangle>
+            </GridItem>
+
+            <GridItem params={6}>
+                <Rectangle color={"red"}>always 6 cols</Rectangle>
+            </GridItem>
+
+            <GridItem params={6}>
+                <Rectangle color={"red"}>always 6 cols</Rectangle>
+            </GridItem>
+
 
         </Grid>
     </Container>
