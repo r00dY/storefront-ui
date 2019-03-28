@@ -3,7 +3,7 @@
     "description": "React PWA (single page application) e-commerce UI framework",
     "main": "dist/bundle.js",
     "scripts": {
-        "dev": "next",
+        "dev": "next --port 3333",
         "build-lib": "webpack --mode production",
         "start": "next start",
         "build": "next build",

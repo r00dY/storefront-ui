@@ -66,7 +66,7 @@ const GridItem = function(props) {
                     gutter={gutter}
                     colNumber={colNumber}
                 >
-                    <div className={props.className} style={props.style}>
+                    <div className={props.className} style={{...props.style, height: "100%"}}>
                         {props.children}
                     </div>
                 </GridItemStyled>

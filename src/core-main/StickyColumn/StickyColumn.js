@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import styled from "@emotion/styled";
 
 import { rs } from "responsive-helpers";
 
-// import ResizeObserver from "resize-observer-polyfill";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
 /**
  * TODO: resizing
@@ -241,36 +241,36 @@ import { rs } from "responsive-helpers";
  *
  *
  */
-
-const Root = styled.div`
-    display: flex;
-    position: relative;
-    width: 100%;
-    height: 100%;
-`;
-
-const Wrapper1 = styled.div`
-    width: 100%;
-    position: sticky;
-    min-height: 100vh;
-    ${props => props.offset[0].css("top")};
-    align-self: flex-start;
-    display: flex;
-`;
-
-const Wrapper2 = styled.div`
-    width: 100%;
-    position: sticky;
-    ${props => props.offset[1].css("bottom")};
-    align-self: flex-end;
-    min-height: 100vh;
-`;
-
-const Wrapper3 = styled.div`
-    width: 100%;
-    position: sticky;
-    ${props => props.offset[0].css("top")};
-`;
+//
+// const Root = styled.div`
+//     display: flex;
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+// `;
+//
+// const Wrapper1 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     min-height: 100vh;
+//     ${props => props.offset[0].css("top")};
+//     align-self: flex-start;
+//     display: flex;
+// `;
+//
+// const Wrapper2 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     ${props => props.offset[1].css("bottom")};
+//     align-self: flex-end;
+//     min-height: 100vh;
+// `;
+//
+// const Wrapper3 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     ${props => props.offset[0].css("top")};
+// `;
 
 class StickyColumn extends React.Component {
     constructor(props) {
@@ -373,27 +373,98 @@ class StickyColumn extends React.Component {
     render() {
         let offset = this.props.offset;
 
+        console.log(offset);
+
         if (Array.isArray(offset)) {
             offset = [rs(offset[0]), rs(offset[1])];
         } else {
             offset = [rs(offset), rs(offset)];
         }
 
-        return (
-            <Root
-                style={this.props.style}
-                className={this.props.className}
-                ref={this.divs.container}
-            >
-                <Wrapper1 ref={this.divs.wrapper1} offset={offset}>
-                    <Wrapper2 ref={this.divs.wrapper2} offset={offset}>
-                        <Wrapper3 ref={this.divs.wrapper3} offset={offset}>
+        console.log(offset);
+
+//         const Root = styled.div`
+//     display: flex;
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+// `;
+//
+//         const Wrapper1 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     min-height: 100vh;
+//     ${props => props.offset[0].css("top")};
+//     align-self: flex-start;
+//     display: flex;
+// `;
+//
+//         const Wrapper2 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     ${props => props.offset[1].css("bottom")};
+//     align-self: flex-end;
+//     min-height: 100vh;
+// `;
+//
+//         const Wrapper3 = styled.div`
+//     width: 100%;
+//     position: sticky;
+//     ${props => props.offset[0].css("top")};
+// `;
+
+        return <div className={this.props.className} style={this.props.style}>
+            <div css={css`
+                display: flex;
+                position: relative;
+                width: 100%;
+                height: 100%;
+            `} ref={this.divs.container}>
+                <div css={css`
+                    width: 100%;
+                    position: sticky;
+                    min-height: 100vh;
+                    ${offset[0].css("top")}
+                    align-self: flex-start;
+                    display: flex;
+                `} ref={this.divs.wrapper1}>
+                    <div css={css`
+                        width: 100%;
+                        position: sticky;
+                        ${offset[1].css("bottom")}
+                        align-self: flex-end;
+                        min-height: 100vh;
+                    `} ref={this.divs.wrapper2}>
+                        <div css={css`
+                            width: 100%;
+                            position: sticky;
+                            ${offset[0].css("top")}
+                        `} ref={this.divs.wrapper3}>
                             {this.props.children}
-                        </Wrapper3>
-                    </Wrapper2>
-                </Wrapper1>
-            </Root>
-        );
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+        // return (
+        //     <Root
+        //         style={this.props.style}
+        //         className={this.props.className}
+        //         ref={this.divs.container}
+        //     >
+        //         <Wrapper1 ref={this.divs.wrapper1} offset={offset}>
+        //             <Wrapper2 ref={this.divs.wrapper2} offset={offset}>
+        //                 <Wrapper3 ref={this.divs.wrapper3} offset={offset}>
+        //                     {this.props.children}
+        //                 </Wrapper3>
+        //             </Wrapper2>
+        //         </Wrapper1>
+        //     </Root>
+        // );
     }
 }
 

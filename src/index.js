@@ -20,6 +20,8 @@ import Dots from "./core-main/Dots/Dots";
 
 import StickyColumn from "./core-main/StickyColumn/StickyColumn";
 
+import MediaQuery from "./core-main/MediaQuery/MediaQuery";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -110,5 +112,7 @@ export {
 
     Dots,
 
-    StickyColumn
+    StickyColumn,
+
+    MediaQuery
 }
