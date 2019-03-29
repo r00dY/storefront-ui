@@ -373,15 +373,11 @@ class StickyColumn extends React.Component {
     render() {
         let offset = this.props.offset;
 
-        console.log(offset);
-
         if (Array.isArray(offset)) {
             offset = [rs(offset[0]), rs(offset[1])];
         } else {
             offset = [rs(offset), rs(offset)];
         }
-
-        console.log(offset);
 
 //         const Root = styled.div`
 //     display: flex;
