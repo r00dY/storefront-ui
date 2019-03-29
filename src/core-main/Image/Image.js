@@ -1,4 +1,4 @@
-import LazyAsset from "lazy-asset-react";
+import LazyAsset from "./LazyAsset";
 import React, { useEffect, useState } from "react";
 import Color from "../Color";
 
