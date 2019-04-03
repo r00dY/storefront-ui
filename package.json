@@ -6,7 +6,7 @@
         "dev": "next --port 3333",
         "build-lib": "webpack --mode production",
         "start": "next start",
-        "build": "next build",
+        "build": "webpack",
         "storybook": "start-storybook -s . -p 9011 -c .storybook",
         "build-storybook": "build-storybook -c .storybook",
         "test": "./node_modules/.bin/babel-node ./spec/run.js"
