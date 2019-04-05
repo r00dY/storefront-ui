@@ -15,6 +15,17 @@ ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/
 
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/02-hook.js').default} />}
 
+
+## Arrows, dots and other controller components
+
+Sliders usually have side components like arrow buttons, dots or progress bars.
+
+### Arrows
+
+\`SwipeableItemsContainer\` allows for quick addition vertically centered arrows.
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/03-arrows.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/03-arrows.js').default} />}
+
 `;
 
 export default () => <Page>{content}</Page>;

@@ -3,7 +3,7 @@ import { RangeSet, rs, rssv } from "responsive-helpers";
 import Layout from "../src/core-main/Layout";
 import Container from "../src/core-main/Container/Container";
 
-const req = require.context("../src/core-main", true, /story\.js$/);
+const req = require.context("../src/core-main/Overlay", true, /story\.js$/);
 
 function loadStories() {
     RangeSet.main = new RangeSet({

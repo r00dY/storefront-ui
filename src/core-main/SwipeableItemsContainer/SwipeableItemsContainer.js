@@ -24,10 +24,35 @@ const CSS = {
     }
 };
 
+const DefaultArrow = ({ side, content, offset, onClick}) => (<div className="storefrontUI__slider__arrow" css={css`
+                position: absolute;
+                ${offset.css(side)}
+                top: 0;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                opacity: 1;
+                transition: opacity .15s;
+            `}>
+
+    <button onClick={onClick} css={css`
+                    border: none;
+                    padding: 0;
+                    pointer-events: auto;
+                    cursor: pointer;
+                `}>
+        {content}
+    </button>
+</div>);
+
 const Root = styled.div`
     position: relative;
-    overflow: hidden;
     height: 100%;
+    
+    &:not(:hover) .storefrontUI__slider__arrow {
+        ${props => props.showArrowsOnlyOnHover ? "visibility: hidden; opacity: 0;" : ""}
+    }
 `;
 
 const Wrapper = styled.div`
@@ -64,6 +89,7 @@ const Item = styled.div`
     flex-grow: 0;
     flex-shrink: 0;
 `;
+
 
 class SwipeableItemsContainer extends React.Component {
     constructor(props) {
@@ -266,13 +292,28 @@ class SwipeableItemsContainer extends React.Component {
             flex-shrink: 0;
         `} />);
 
+
+        // arrows offset
+        let arrowsOffset = [0, 0];
+        if (this.props.arrows && this.props.arrows.offset) {
+            if (Array.isArray(this.props.arrows.offset)) {
+                arrowsOffset = [rs(this.props.arrows.offset[0]), rs(this.props.arrows.offset[1])];
+            }
+            else {
+                arrowsOffset = [this.props.arrows.offset,this.props.arrows.offset];
+            }
+        }
+
         return (
-            <Root className={this.props.className} style={this.props.style}>
+            <Root className={this.props.className} style={this.props.style} showArrowsOnlyOnHover={this.props.arrows && this.props.arrows.showOnlyOnHover}>
                 <Wrapper ref={this.wrapperRef} config={config}>
                     <ItemsContainer ref={this.containerRef} config={config}>
                         {itemsInContainer}
                     </ItemsContainer>
                 </Wrapper>
+
+                {this.props.arrows && <DefaultArrow side={"left"} content={this.props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}
+                {this.props.arrows && <DefaultArrow side={"right"} content={this.props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}
             </Root>
         );
     }
@@ -288,6 +329,18 @@ function useSwipeableItemsContainer() {
         }
     };
 
+    const setActiveNext = (animated) => {
+        if (ref.current && ref.current.slider) {
+            ref.current.slider.moveLeft(animated);
+        }
+    };
+
+    const setActivePrevious = (animated) => {
+        if (ref.current && ref.current.slider) {
+            ref.current.slider.moveRight(animated);
+        }
+    };
+
     useEffect(() => {
         if (ref.current) {
             ref.current._onActiveChange = setActiveRaw;
@@ -297,7 +350,9 @@ function useSwipeableItemsContainer() {
     return {
         ref: ref,
         active: active,
-        setActive: setActive
+        setActive: setActive,
+        setActiveNext: setActiveNext,
+        setActivePrevious: setActivePrevious,
     };
 }
 
@@ -317,6 +372,7 @@ SwipeableItemsContainer.propTypes = {
     snap: PropTypes.oneOf(["offset", "center"]),
     itemsVisibleIncludeMargins: PropTypes.bool,
     itemsVisible: PropTypes.any,
+    arrows: PropTypes.object,
 
     // swiper: PropTypes.bool.isRequired,
     onActiveChange: PropTypes.func
