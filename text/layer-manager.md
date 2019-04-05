@@ -1,7 +1,7 @@
 # Dropdowns, modals, popups aka layer manager
 One thing we've noticed during development of design systems in front-end is how hard it is to create nice architecture for dropdowns, modals and all other forms of popups. In this guideline we'll try to solve the problems occuring in this particular area.
 
-##What can pop up?
+## What can pop up?
 
 There are two categories of things that can popup, the ones that are not bound with its trigger (modals) and the ones that are (popups).
 
