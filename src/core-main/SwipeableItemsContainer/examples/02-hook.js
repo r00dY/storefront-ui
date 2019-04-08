@@ -1,5 +1,5 @@
 import React from "react";
-import {SwipeableItemsContainer, useSwipeableItemsContainer } from "storefront-ui";
+import { useSwipeableItemsContainer } from "storefront-ui";
 
 import {rslin} from "responsive-helpers";
 
@@ -9,12 +9,11 @@ import {css, jsx} from "@emotion/core";
 import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => {
-    let swiper = useSwipeableItemsContainer();
-    let { moveToSlide, active } = swiper;
+    let { SwipeableItemsContainer, moveToSlide, active } = useSwipeableItemsContainer();
 
     return <div>
         <p>Simplest use case</p>
-        <SwipeableItemsContainer mode={"horizontal"} connect={swiper}>
+        <SwipeableItemsContainer mode={"horizontal"}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
             <Rectangle color={"maroon"}>3</Rectangle>
@@ -25,5 +24,6 @@ export default () => {
         <div>Active: { active }</div>
         <button onClick={() => moveToSlide(3, false)}>Set active 3</button><br/>
         <button onClick={() => moveToSlide(3, true)}>Set active 3 animated</button>
-    </div>
+    </div>;
+
 };
