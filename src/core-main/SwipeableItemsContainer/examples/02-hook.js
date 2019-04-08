@@ -9,11 +9,12 @@ import {css, jsx} from "@emotion/core";
 import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => {
-    let { handler, moveToSlide, active } = useSwipeableItemsContainer();
+    let swiper = useSwipeableItemsContainer();
+    let { moveToSlide, active } = swiper;
 
     return <div>
         <p>Simplest use case</p>
-        <SwipeableItemsContainer mode={"horizontal"} handler={handler}>
+        <SwipeableItemsContainer mode={"horizontal"} connect={swiper}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
             <Rectangle color={"maroon"}>3</Rectangle>

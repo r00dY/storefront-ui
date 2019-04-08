@@ -208,7 +208,7 @@ function useSwipeableItemsContainer() {
             throw new Error("useSwiper hook is not connected to any SwipeableItemsContainer");
         }
 
-        let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs, snap } = handler.current;
+        let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs, props } = handler.current;
 
         // Let's create
         let sizes = [];
@@ -242,7 +242,7 @@ function useSwipeableItemsContainer() {
         config.slideSize = n => sizes[n];
         config.slideMargin = n => margins[n];
 
-        if (snap === 'center') {
+        if (props.snap === 'center') {
             config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
         }
         else {
@@ -274,28 +274,25 @@ function useSwipeableItemsContainer() {
 
 const SwipeableItemsContainer = React.memo((props) => {
 
-    console.log('render');
-
     const refs = useRef({
         leftOffsetRef: React.createRef(),
         rightOffsetRef: React.createRef(),
         wrapperRef: React.createRef(),
         containerRef: React.createRef(),
         itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
-        snap: props.snap
     });
 
     let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
 
     // Handler for hook!
-    let handler = props.handler;
-    if (!handler) {
-        let hook = useSwipeableItemsContainer();
-        handler = hook.handler;
+    let hook = props.connect;
+    if (!hook) {
+        hook = useSwipeableItemsContainer();
     }
 
-    handler.current = {
+    hook.handler.current = {
         ...refs.current,
+        props: props,
         connected: true
     };
 
@@ -394,8 +391,8 @@ const SwipeableItemsContainer = React.memo((props) => {
                 </ItemsContainer>
             </Wrapper>
 
-            {props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}
-            {props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}
+            {props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { hook.moveToPrev() }} />}
+            {props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { hook.moveToNext() }}/>}
         </Root>
     );
 }, () => true);

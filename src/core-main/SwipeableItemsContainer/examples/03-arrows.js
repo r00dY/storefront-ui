@@ -25,5 +25,6 @@ export default () => {
             <Rectangle color={"firebrick"}>5</Rectangle>
             <Rectangle color={"forestgreen"}>6</Rectangle>
         </SwipeableItemsContainer>
+
     </div>
 };
