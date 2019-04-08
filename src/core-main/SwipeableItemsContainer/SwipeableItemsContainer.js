@@ -90,40 +90,154 @@ const Item = styled.div`
     flex-shrink: 0;
 `;
 
+function getActiveSlidesIds(slider, activeAsArray) {
+    let activeSlidesIds = [];
+    slider.state.slides.forEach((s, i) => { if (s.active) { activeSlidesIds.push(i)} });
 
-class SwipeableItemsContainer extends React.Component {
-    constructor(props) {
-        super(props);
-
-        this.wrapperRef = React.createRef();
-        this.containerRef = React.createRef();
-        this.inputRefs = [];
-        for (let i = 0; i < props.children.length; i++) {
-            this.inputRefs.push(React.createRef());
-        }
-
-        this.leftOffsetRef = React.createRef();
-        this.rightOffsetRef = React.createRef();
+    if (activeAsArray) {
+        return activeSlidesIds;
     }
 
-    sliderGetConfig() {
+    return activeSlidesIds[0];
+}
+
+const noop = () => {};
+
+/**
+ * Hook wrapping AbstractSlider
+ *
+ * @param config
+ * @param events
+ * @returns {*}
+ */
+function useAbstractSlider(config, events) {
+    const ref = useRef(null);
+    let [active, setActive] = useState();
+
+    events = events || {};
+
+    function setConfig(config) {
+        let slider = ref.current;
+
+        if (slider) {
+            slider.applyConfig(config);
+
+            slider.activeAsArray = config.activeAsArray ? true : false;
+        }
+        else {
+            ref.current = new AbstractSlider(config);
+            slider = ref.current;
+
+            slider.activeAsArray = config.activeAsArray ? true : false;
+
+            // activeSlides
+            active = getActiveSlidesIds(slider);
+            slider.addEventListener('activeSlidesChange', () => {
+                setActive(getActiveSlidesIds(slider));
+            });
+
+            slider.addEventListener('move', () => {
+                if (events.move) {
+                    events.move(slider.state);
+                }
+            });
+        }
+    }
+
+    function getSlider() {
+        return ref.current;
+    }
+
+    // init slider if config given and slider not initialised
+    if (!getSlider() && config) {
+        setConfig(config);
+    }
+
+    let slider = getSlider();
+
+    // If slider not yet initialized, return emtpy values
+    if (!slider) {
+        return {
+            active: undefined,
+            isFirstActive: undefined,
+            isLastActive: undefined,
+            _getSlider: getSlider,
+
+            moveTo: noop,
+            moveToNext: noop,
+            moveToPrev: noop,
+            moveToSlide: noop,
+            setConfig: setConfig
+        }
+    }
+
+    // Otherwise, return properly
+    return {
+        active: active,
+        isFirstActive: Array.isArray(active) ? active.includes(0) : active === 0,
+        isLastActive: Array.isArray(active) ? active.includes(slider._config.count - 1) : active === slider._config.count - 1,
+        _getSlider: getSlider,
+
+        moveTo: slider.moveTo,
+        moveToNext: (...args) => slider.moveRight(...args),
+        moveToPrev: (...args) => slider.moveLeft(...args),
+        moveToSlide: (...args) => slider.moveToSlide(...args),
+        setConfig: setConfig
+    }
+}
+
+
+// function useSwiper() {
+//
+//
+//
+// }
+
+function SwipeableItemsContainer(props) {
+
+    // All refs
+    const leftOffsetRef = useRef(null);
+    const rightOffsetRef = useRef(null);
+    const wrapperRef = useRef(null);
+    const containerRef = useRef(null);
+    const itemRefs = useRef([...Array(props.children.length)].map(() => React.createRef()));
+
+    const sliderApplyState = (state) => {
+        containerRef.current.style.transform = `translate3d(${
+        state.slides[0].coord - state.leftOffset
+            }px, 0, 0)`;
+    };
+
+    const abstractSlider = useAbstractSlider(undefined, {
+        'move': (state) => {
+            sliderApplyState(state);
+            // cancelAnimationFrame(raf);
+            // raf = requestAnimationFrame(() => {
+            //     this.sliderApplyState();
+            // });
+        }
+    });
+
+    useEffect(() => {
+
+        console.log('use effect!');
         // Let's create
         let sizes = [];
         let margins = [];
 
         let config = {
-            containerSize: this.wrapperRef.current.clientWidth,
-            count: this.props.children.length,
-            leftOffset: this.leftOffsetRef.current.clientWidth,
-            rightOffset: this.rightOffsetRef.current.clientWidth,
+            containerSize: wrapperRef.current.clientWidth,
+            count: props.children.length,
+            leftOffset: leftOffsetRef.current.clientWidth,
+            rightOffset: rightOffsetRef.current.clientWidth,
             slideSize: null
         };
 
         let previousRightEdge = 0;
 
-        this.inputRefs.forEach((inputRef, index) => {
-            let offset = inputRef.current.offsetLeft;
-            let size = inputRef.current.clientWidth;
+        itemRefs.current.forEach((itemRef, index) => {
+            let offset = itemRef.current.offsetLeft;
+            let size = itemRef.current.clientWidth;
 
             sizes.push(size);
 
@@ -139,185 +253,363 @@ class SwipeableItemsContainer extends React.Component {
         config.slideSize = n => sizes[n];
         config.slideMargin = n => margins[n];
 
-        if (this.props.snap === 'center') {
+        if (props.snap === 'center') {
             config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
         }
         else {
             config.slideSnapOffset = () => config.leftOffset;
         }
 
-        return config;
-    }
+        abstractSlider.setConfig(config);
 
-    sliderApplyState() {
-        this.containerRef.current.style.transform = `translate3d(${
-            this.slider.state.slides[0].coord - this.leftOffset
-        }px, 0, 0)`;
-    }
+        sliderApplyState(abstractSlider._getSlider().state);
 
-    sliderInit() {
-        let config = this.sliderGetConfig();
+        let touchSpace = new TouchSpace(abstractSlider._getSlider(), wrapperRef.current);
+        touchSpace.enable();
 
-        this.leftOffset = config.leftOffset;
+        return () => {
+            containerRef.current.style.transform = "none";
+            touchSpace.disable();
+            abstractSlider._getSlider().destroy();
+        }
 
-        this.slider = new AbstractSlider(config);
+    }, []);
 
-        this.touchSpace = new TouchSpace(this.slider, this.wrapperRef.current);
-        this.touchSpace.enable();
 
-        let raf;
-        this.slider.addEventListener("move", () => {
-            cancelAnimationFrame(raf);
-            raf = requestAnimationFrame(() => {
-                this.sliderApplyState();
-            });
+    let config = {
+        mode: props.mode || "horizontal",
+        itemSize: rs(props.itemSize || 0),
+        offsetBefore: rs(props.offsetBefore || 0),
+        offsetAfter: rs(props.offsetAfter || 0),
+        gutter: rs(props.gutter || 0),
+        amount: props.children.length,
+        items: props.children,
+        overflowAlwaysHidden: props.swiper === true
+    };
+
+    if (props.itemSize) {
+
+
+    } else if (props.itemAspectRatio) {
+        // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
+        // photo widths, unless in vertical mode
+    } else if (props.itemsVisible) {
+        let itemsVisibleMap = new RangeMap(props.itemsVisible);
+
+        let multiplier = {};
+        itemsVisibleMap.forEach((itemsVisible, range) => {
+           multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
         });
 
-        this.slider.addEventListener("activeSlidesChange", () => {
-            let active = this.slider.state.slides.findIndex(s => s.active);
-            if (this.props.onActiveChange) { this.props.onActiveChange(active) }
-            if (this._onActiveChange) { this._onActiveChange(active) }
-        });
-
-        this.sliderApplyState();
-    }
-
-    sliderUpdate() {
-        this.containerRef.current.style.transform = "none";
-        this.slider.applyConfig(this.sliderGetConfig());
-        this.sliderApplyState();
-    }
-
-    sliderDeinit() {
-        if (this.slider) {
-            this.containerRef.current.style.transform = "none";
-            this.touchSpace.disable();
-            this.slider.destroy();
-            this.slider = undefined;
-        }
-    }
-
-    componentDidMount() {
-        if (this.props.swiper === true) {
-            this.sliderInit();
-        }
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this.resizeListener);
-        this.sliderDeinit();
-    }
-
-    render() {
-        let props = this.props;
-
-        let config = {
-            mode: props.mode || "horizontal",
-            itemSize: rs(props.itemSize || 0),
-            offsetBefore: rs(props.offsetBefore || 0),
-            offsetAfter: rs(props.offsetAfter || 0),
-            gutter: rs(props.gutter || 0),
-            amount: this.props.children.length,
-            items: this.props.children,
-            overflowAlwaysHidden: props.swiper === true
-        };
-
-        if (props.itemSize) {
-            // config.containerWidth = config.gutter
-            //     .multiply(config.amount - 1)
-            //     .add(config.itemSize.multiply(config.amount))
-            //     .add(config.offsetBefore)
-            //     .add(config.offsetAfter);
-
-            // config.itemSize = props.itemSize;
-
-        } else if (props.itemAspectRatio) {
-            // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
-            // photo widths, unless in vertical mode
-        } else if (props.itemsVisible) {
-            let itemsVisibleMap = new RangeMap(props.itemsVisible);
-
-            let multiplier = {};
-            itemsVisibleMap.forEach((itemsVisible, range) => {
-               multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
-            });
-
-            let base = rs('100%');
-            if (!this.props.itemsVisibleIncludeMargins) {
-                base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
-            }
-
-            config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
-
-        } else {
-            throw new Error(
-                "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
-            );
+        let base = rs('100%');
+        if (!props.itemsVisibleIncludeMargins) {
+            base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
         }
 
-        let itemsInContainer = [];
+        config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
 
-        // left offset
-        itemsInContainer.push(<div key='spacer-before' ref={this.leftOffsetRef} css={css`
-            ${config.offsetBefore.css('flex-basis')}
-            flex-grow: 0;
-            flex-shrink: 0;
-        `} />);
-
-
-        this.props.children.forEach((item, i) => {
-            itemsInContainer.push(<Item
-                key={i}
-                config={config}
-                ref={this.inputRefs[i]}
-                size={config.itemSize}
-            >
-                {item}
-            </Item>);
-
-            // gutter
-            if (i !== this.props.children.length - 1) {
-                itemsInContainer.push(<div key={`spacer-${i}`} css={css`
-                    ${config.gutter.css('flex-basis')}
-                    flex-grow: 0;
-                    flex-shrink: 0;
-                `} />);
-            }
-        });
-
-        // right offset
-        itemsInContainer.push(<div key='spacer-after' ref={this.rightOffsetRef} css={css`
-            ${config.offsetAfter.css('flex-basis')}
-            flex-grow: 0;
-            flex-shrink: 0;
-        `} />);
-
-
-        // arrows offset
-        let arrowsOffset = [0, 0];
-        if (this.props.arrows && this.props.arrows.offset) {
-            if (Array.isArray(this.props.arrows.offset)) {
-                arrowsOffset = [rs(this.props.arrows.offset[0]), rs(this.props.arrows.offset[1])];
-            }
-            else {
-                arrowsOffset = [this.props.arrows.offset,this.props.arrows.offset];
-            }
-        }
-
-        return (
-            <Root className={this.props.className} style={this.props.style} showArrowsOnlyOnHover={this.props.arrows && this.props.arrows.showOnlyOnHover}>
-                <Wrapper ref={this.wrapperRef} config={config}>
-                    <ItemsContainer ref={this.containerRef} config={config}>
-                        {itemsInContainer}
-                    </ItemsContainer>
-                </Wrapper>
-
-                {this.props.arrows && <DefaultArrow side={"left"} content={this.props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}
-                {this.props.arrows && <DefaultArrow side={"right"} content={this.props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}
-            </Root>
+    } else {
+        throw new Error(
+            "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
         );
     }
+
+    let itemsInContainer = [];
+
+    // left offset
+    itemsInContainer.push(<div key='spacer-before' ref={leftOffsetRef} css={css`
+        ${config.offsetBefore.css('flex-basis')}
+        flex-grow: 0;
+        flex-shrink: 0;
+    `} />);
+
+
+    props.children.forEach((item, i) => {
+        itemsInContainer.push(<Item
+            key={i}
+            config={config}
+            ref={itemRefs.current[i]}
+            size={config.itemSize}
+        >
+            {item}
+        </Item>);
+
+        // gutter
+        if (i !== props.children.length - 1) {
+            itemsInContainer.push(<div key={`spacer-${i}`} css={css`
+                ${config.gutter.css('flex-basis')}
+                flex-grow: 0;
+                flex-shrink: 0;
+            `} />);
+        }
+    });
+
+    // right offset
+    itemsInContainer.push(<div key='spacer-after' ref={rightOffsetRef} css={css`
+        ${config.offsetAfter.css('flex-basis')}
+        flex-grow: 0;
+        flex-shrink: 0;
+    `} />);
+
+
+    // arrows offset
+    let arrowsOffset = [0, 0];
+    if (props.arrows && props.arrows.offset) {
+        if (Array.isArray(props.arrows.offset)) {
+            arrowsOffset = [rs(props.arrows.offset[0]), rs(props.arrows.offset[1])];
+        }
+        else {
+            arrowsOffset = [props.arrows.offset,props.arrows.offset];
+        }
+    }
+
+    return (
+        <Root className={props.className} style={props.style} showArrowsOnlyOnHover={props.arrows && props.arrows.showOnlyOnHover}>
+            <Wrapper ref={wrapperRef} config={config}>
+                <ItemsContainer ref={containerRef} config={config}>
+                    {itemsInContainer}
+                </ItemsContainer>
+            </Wrapper>
+
+            {/*{props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}*/}
+            {/*{props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}*/}
+        </Root>
+    );
 }
+
+
+
+// class SwipeableItemsContainer extends React.Component {
+//     constructor(props) {
+//         super(props);
+//
+//         this.wrapperRef = React.createRef();
+//         this.containerRef = React.createRef();
+//         this.inputRefs = [];
+//         for (let i = 0; i < props.children.length; i++) {
+//             this.inputRefs.push(React.createRef());
+//         }
+//
+//         this.leftOffsetRef = React.createRef();
+//         this.rightOffsetRef = React.createRef();
+//
+//         this.state = {
+//             active: 0
+//         }
+//     }
+//
+//     sliderGetConfig() {
+//         // Let's create
+//         let sizes = [];
+//         let margins = [];
+//
+//         let config = {
+//             containerSize: this.wrapperRef.current.clientWidth,
+//             count: this.props.children.length,
+//             leftOffset: this.leftOffsetRef.current.clientWidth,
+//             rightOffset: this.rightOffsetRef.current.clientWidth,
+//             slideSize: null
+//         };
+//
+//         let previousRightEdge = 0;
+//
+//         this.inputRefs.forEach((inputRef, index) => {
+//             let offset = inputRef.current.offsetLeft;
+//             let size = inputRef.current.clientWidth;
+//
+//             sizes.push(size);
+//
+//             if (index > 0) {
+//                 margins.push(offset - previousRightEdge);
+//             }
+//
+//             previousRightEdge = offset + size;
+//         });
+//
+//         margins.push(0);
+//
+//         config.slideSize = n => sizes[n];
+//         config.slideMargin = n => margins[n];
+//
+//         if (this.props.snap === 'center') {
+//             config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
+//         }
+//         else {
+//             config.slideSnapOffset = () => config.leftOffset;
+//         }
+//
+//         return config;
+//     }
+//
+//     sliderApplyState() {
+//         this.containerRef.current.style.transform = `translate3d(${
+//             this.slider.state.slides[0].coord - this.leftOffset
+//         }px, 0, 0)`;
+//     }
+//
+//     sliderInit() {
+//         let config = this.sliderGetConfig();
+//
+//         this.leftOffset = config.leftOffset;
+//
+//         this.slider = new AbstractSlider(config);
+//
+//         this.touchSpace = new TouchSpace(this.slider, this.wrapperRef.current);
+//         this.touchSpace.enable();
+//
+//         let raf;
+//         this.slider.addEventListener("move", () => {
+//             cancelAnimationFrame(raf);
+//             raf = requestAnimationFrame(() => {
+//                 this.sliderApplyState();
+//             });
+//         });
+//
+//         this.slider.addEventListener("activeSlidesChange", () => {
+//             let active = this.slider.state.slides.findIndex(s => s.active);
+//             if (this.props.onActiveChange) { this.props.onActiveChange(active) }
+//             if (this._onActiveChange) { this._onActiveChange(active) }
+//         });
+//
+//         this.sliderApplyState();
+//     }
+//
+//     sliderUpdate() {
+//         this.containerRef.current.style.transform = "none";
+//         this.slider.applyConfig(this.sliderGetConfig());
+//         this.sliderApplyState();
+//     }
+//
+//     sliderDeinit() {
+//         if (this.slider) {
+//             this.containerRef.current.style.transform = "none";
+//             this.touchSpace.disable();
+//             this.slider.destroy();
+//             this.slider = undefined;
+//         }
+//     }
+//
+//     componentDidMount() {
+//         if (this.props.swiper === true) {
+//             this.sliderInit();
+//         }
+//     }
+//
+//     componentWillUnmount() {
+//         window.removeEventListener("resize", this.resizeListener);
+//         this.sliderDeinit();
+//     }
+//
+//     render() {
+//         let props = this.props;
+//
+//         let config = {
+//             mode: props.mode || "horizontal",
+//             itemSize: rs(props.itemSize || 0),
+//             offsetBefore: rs(props.offsetBefore || 0),
+//             offsetAfter: rs(props.offsetAfter || 0),
+//             gutter: rs(props.gutter || 0),
+//             amount: this.props.children.length,
+//             items: this.props.children,
+//             overflowAlwaysHidden: props.swiper === true
+//         };
+//
+//         if (props.itemSize) {
+//             // config.containerWidth = config.gutter
+//             //     .multiply(config.amount - 1)
+//             //     .add(config.itemSize.multiply(config.amount))
+//             //     .add(config.offsetBefore)
+//             //     .add(config.offsetAfter);
+//
+//             // config.itemSize = props.itemSize;
+//
+//         } else if (props.itemAspectRatio) {
+//             // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
+//             // photo widths, unless in vertical mode
+//         } else if (props.itemsVisible) {
+//             let itemsVisibleMap = new RangeMap(props.itemsVisible);
+//
+//             let multiplier = {};
+//             itemsVisibleMap.forEach((itemsVisible, range) => {
+//                multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
+//             });
+//
+//             let base = rs('100%');
+//             if (!this.props.itemsVisibleIncludeMargins) {
+//                 base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
+//             }
+//
+//             config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
+//
+//         } else {
+//             throw new Error(
+//                 "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
+//             );
+//         }
+//
+//         let itemsInContainer = [];
+//
+//         // left offset
+//         itemsInContainer.push(<div key='spacer-before' ref={this.leftOffsetRef} css={css`
+//             ${config.offsetBefore.css('flex-basis')}
+//             flex-grow: 0;
+//             flex-shrink: 0;
+//         `} />);
+//
+//
+//         this.props.children.forEach((item, i) => {
+//             itemsInContainer.push(<Item
+//                 key={i}
+//                 config={config}
+//                 ref={this.inputRefs[i]}
+//                 size={config.itemSize}
+//             >
+//                 {item}
+//             </Item>);
+//
+//             // gutter
+//             if (i !== this.props.children.length - 1) {
+//                 itemsInContainer.push(<div key={`spacer-${i}`} css={css`
+//                     ${config.gutter.css('flex-basis')}
+//                     flex-grow: 0;
+//                     flex-shrink: 0;
+//                 `} />);
+//             }
+//         });
+//
+//         // right offset
+//         itemsInContainer.push(<div key='spacer-after' ref={this.rightOffsetRef} css={css`
+//             ${config.offsetAfter.css('flex-basis')}
+//             flex-grow: 0;
+//             flex-shrink: 0;
+//         `} />);
+//
+//
+//         // arrows offset
+//         let arrowsOffset = [0, 0];
+//         if (this.props.arrows && this.props.arrows.offset) {
+//             if (Array.isArray(this.props.arrows.offset)) {
+//                 arrowsOffset = [rs(this.props.arrows.offset[0]), rs(this.props.arrows.offset[1])];
+//             }
+//             else {
+//                 arrowsOffset = [this.props.arrows.offset,this.props.arrows.offset];
+//             }
+//         }
+//
+//         return (
+//             <Root className={this.props.className} style={this.props.style} showArrowsOnlyOnHover={this.props.arrows && this.props.arrows.showOnlyOnHover}>
+//                 <Wrapper ref={this.wrapperRef} config={config}>
+//                     <ItemsContainer ref={this.containerRef} config={config}>
+//                         {itemsInContainer}
+//                     </ItemsContainer>
+//                 </Wrapper>
+//
+//                 {this.props.arrows && <DefaultArrow side={"left"} content={this.props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}
+//                 {this.props.arrows && <DefaultArrow side={"right"} content={this.props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}
+//             </Root>
+//         );
+//     }
+// }
 
 function useSwipeableItemsContainer() {
     const [active, setActiveRaw] = useState(0);
@@ -380,5 +672,6 @@ SwipeableItemsContainer.propTypes = {
 
 export default SwipeableItemsContainer;
 export {
-    useSwipeableItemsContainer
+    useSwipeableItemsContainer,
+    useAbstractSlider
 }

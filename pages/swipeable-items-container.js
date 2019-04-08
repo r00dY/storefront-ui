@@ -26,6 +26,10 @@ Sliders usually have side components like arrow buttons, dots or progress bars.
 
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/03-arrows.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/03-arrows.js').default} />}
 
+### Tmp - test
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/04-tmp.js")}
+           component={require('../src/core-main/SwipeableItemsContainer/examples/04-tmp.js').default}/>}
 `;
 
 export default () => <Page>{content}</Page>;
