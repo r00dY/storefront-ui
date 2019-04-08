@@ -101,8 +101,6 @@ function getActiveSlidesIds(slider, activeAsArray) {
     return activeSlidesIds[0];
 }
 
-const noop = () => {};
-
 /**
  * Hook wrapping AbstractSlider
  *
@@ -131,7 +129,9 @@ function useAbstractSlider(config, events) {
             slider.activeAsArray = config.activeAsArray ? true : false;
 
             // activeSlides
+            setActive(getActiveSlidesIds(slider));
             active = getActiveSlidesIds(slider);
+
             slider.addEventListener('activeSlidesChange', () => {
                 setActive(getActiveSlidesIds(slider));
             });
@@ -156,54 +156,39 @@ function useAbstractSlider(config, events) {
     let slider = getSlider();
 
     // If slider not yet initialized, return emtpy values
-    if (!slider) {
-        return {
-            active: undefined,
-            isFirstActive: undefined,
-            isLastActive: undefined,
-            _getSlider: getSlider,
 
-            moveTo: noop,
-            moveToNext: noop,
-            moveToPrev: noop,
-            moveToSlide: noop,
-            setConfig: setConfig
-        }
-    }
-
-    // Otherwise, return properly
-    return {
-        active: active,
-        isFirstActive: Array.isArray(active) ? active.includes(0) : active === 0,
-        isLastActive: Array.isArray(active) ? active.includes(slider._config.count - 1) : active === slider._config.count - 1,
+    let ret = {
+        active: undefined,
+        isFirstActive: undefined,
+        isLastActive: undefined,
         _getSlider: getSlider,
 
-        moveTo: slider.moveTo,
+        moveTo: (...args) => slider.moveTo(...args),
         moveToNext: (...args) => slider.moveRight(...args),
         moveToPrev: (...args) => slider.moveLeft(...args),
         moveToSlide: (...args) => slider.moveToSlide(...args),
         setConfig: setConfig
+    };
+
+    if (!slider) {
+        return ret;
+    }
+
+    // Otherwise, return properly
+    return {
+        ...ret,
+        active: active,
+        isFirstActive: Array.isArray(active) ? active.includes(0) : active === 0,
+        isLastActive: Array.isArray(active) ? active.includes(slider._config.count - 1) : active === slider._config.count - 1,
     }
 }
 
 
-// function useSwiper() {
-//
-//
-//
-// }
-
-function SwipeableItemsContainer(props) {
-
-    // All refs
-    const leftOffsetRef = useRef(null);
-    const rightOffsetRef = useRef(null);
-    const wrapperRef = useRef(null);
-    const containerRef = useRef(null);
-    const itemRefs = useRef([...Array(props.children.length)].map(() => React.createRef()));
+function useSwipeableItemsContainer() {
+    const handler = useRef(null);
 
     const sliderApplyState = (state) => {
-        containerRef.current.style.transform = `translate3d(${
+        handler.current.containerRef.current.style.transform = `translate3d(${
         state.slides[0].coord - state.leftOffset
             }px, 0, 0)`;
     };
@@ -219,15 +204,19 @@ function SwipeableItemsContainer(props) {
     });
 
     useEffect(() => {
+        if (!handler.current.connected) {
+            throw new Error("useSwiper hook is not connected to any SwipeableItemsContainer");
+        }
 
-        console.log('use effect!');
+        let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs, snap } = handler.current;
+
         // Let's create
         let sizes = [];
         let margins = [];
 
         let config = {
             containerSize: wrapperRef.current.clientWidth,
-            count: props.children.length,
+            count: itemRefs.length,
             leftOffset: leftOffsetRef.current.clientWidth,
             rightOffset: rightOffsetRef.current.clientWidth,
             slideSize: null
@@ -235,7 +224,7 @@ function SwipeableItemsContainer(props) {
 
         let previousRightEdge = 0;
 
-        itemRefs.current.forEach((itemRef, index) => {
+        itemRefs.forEach((itemRef, index) => {
             let offset = itemRef.current.offsetLeft;
             let size = itemRef.current.clientWidth;
 
@@ -253,7 +242,7 @@ function SwipeableItemsContainer(props) {
         config.slideSize = n => sizes[n];
         config.slideMargin = n => margins[n];
 
-        if (props.snap === 'center') {
+        if (snap === 'center') {
             config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
         }
         else {
@@ -267,14 +256,48 @@ function SwipeableItemsContainer(props) {
         let touchSpace = new TouchSpace(abstractSlider._getSlider(), wrapperRef.current);
         touchSpace.enable();
 
+        console.log('useEffect');
         return () => {
             containerRef.current.style.transform = "none";
             touchSpace.disable();
             abstractSlider._getSlider().destroy();
+            console.log('useEffect destroy');
         }
 
     }, []);
 
+    return {
+        ...abstractSlider,
+        handler
+    };
+}
+
+const SwipeableItemsContainer = React.memo((props) => {
+
+    console.log('render');
+
+    const refs = useRef({
+        leftOffsetRef: React.createRef(),
+        rightOffsetRef: React.createRef(),
+        wrapperRef: React.createRef(),
+        containerRef: React.createRef(),
+        itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
+        snap: props.snap
+    });
+
+    let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
+
+    // Handler for hook!
+    let handler = props.handler;
+    if (!handler) {
+        let hook = useSwipeableItemsContainer();
+        handler = hook.handler;
+    }
+
+    handler.current = {
+        ...refs.current,
+        connected: true
+    };
 
     let config = {
         mode: props.mode || "horizontal",
@@ -328,7 +351,7 @@ function SwipeableItemsContainer(props) {
         itemsInContainer.push(<Item
             key={i}
             config={config}
-            ref={itemRefs.current[i]}
+            ref={itemRefs[i]}
             size={config.itemSize}
         >
             {item}
@@ -371,11 +394,11 @@ function SwipeableItemsContainer(props) {
                 </ItemsContainer>
             </Wrapper>
 
-            {/*{props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}*/}
-            {/*{props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}*/}
+            {props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { this.slider.moveLeft() }} />}
+            {props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { this.slider.moveRight() }}/>}
         </Root>
     );
-}
+}, () => true);
 
 
 
@@ -611,42 +634,42 @@ function SwipeableItemsContainer(props) {
 //     }
 // }
 
-function useSwipeableItemsContainer() {
-    const [active, setActiveRaw] = useState(0);
-    const ref = useRef(null);
-
-    const setActive = (n, animated) => {
-        if (ref.current && ref.current.slider) {
-            ref.current.slider.moveToSlide(n, animated);
-        }
-    };
-
-    const setActiveNext = (animated) => {
-        if (ref.current && ref.current.slider) {
-            ref.current.slider.moveLeft(animated);
-        }
-    };
-
-    const setActivePrevious = (animated) => {
-        if (ref.current && ref.current.slider) {
-            ref.current.slider.moveRight(animated);
-        }
-    };
-
-    useEffect(() => {
-        if (ref.current) {
-            ref.current._onActiveChange = setActiveRaw;
-        }
-    });
-
-    return {
-        ref: ref,
-        active: active,
-        setActive: setActive,
-        setActiveNext: setActiveNext,
-        setActivePrevious: setActivePrevious,
-    };
-}
+// function useSwipeableItemsContainer() {
+//     const [active, setActiveRaw] = useState(0);
+//     const ref = useRef(null);
+//
+//     const setActive = (n, animated) => {
+//         if (ref.current && ref.current.slider) {
+//             ref.current.slider.moveToSlide(n, animated);
+//         }
+//     };
+//
+//     const setActiveNext = (animated) => {
+//         if (ref.current && ref.current.slider) {
+//             ref.current.slider.moveLeft(animated);
+//         }
+//     };
+//
+//     const setActivePrevious = (animated) => {
+//         if (ref.current && ref.current.slider) {
+//             ref.current.slider.moveRight(animated);
+//         }
+//     };
+//
+//     useEffect(() => {
+//         if (ref.current) {
+//             ref.current._onActiveChange = setActiveRaw;
+//         }
+//     });
+//
+//     return {
+//         ref: ref,
+//         active: active,
+//         setActive: setActive,
+//         setActiveNext: setActiveNext,
+//         setActivePrevious: setActivePrevious,
+//     };
+// }
 
 SwipeableItemsContainer.defaultProps = {
     swiper: true,
