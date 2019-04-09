@@ -11,11 +11,6 @@ const content = md`
 
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js').default} />}
 
-## Hook and state
-
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/02-hook.js').default} />}
-
-
 ## Arrows, dots and other controller components
 
 Sliders usually have side components like arrow buttons, dots or progress bars.
@@ -27,6 +22,19 @@ Sliders usually have side components like arrow buttons, dots or progress bars.
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/03-arrows.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/03-arrows.js').default} />}
 
 Arrows are always wrapped with \`button\` component.
+
+### Controlling swiper by external components
+
+Very often we might need to add some component that will make changes to swiper state (move slides or show active state). We can "connect" to internal swiper state by using \`useSwipeableItemsContainer\` hook. In such case \`SwipeableItemsContainer\` JSX must be passed to the hook, and we can obtain ready-to-use element + state variables and methods as a hook output.
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/02-hook.js').default} />}
+
+### Dots
+
+\`storefront-ui\` ships with a simple but useful component named \`Dots\`. It's frequently used with sliders.
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/04-dots.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/04-dots.js').default} />}
+
 
 `;
 

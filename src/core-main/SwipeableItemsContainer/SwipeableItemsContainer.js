@@ -24,7 +24,7 @@ const CSS = {
     }
 };
 
-const DefaultArrow = ({ side, content, offset, onClick}) => (<div className="storefrontUI__slider__arrow" css={css`
+const DefaultArrow = ({ side, content, offset, onClick, hide}) => (<div className="storefrontUI__slider__arrow" css={css`
                 position: absolute;
                 ${offset.css(side)}
                 top: 0;
@@ -33,7 +33,8 @@ const DefaultArrow = ({ side, content, offset, onClick}) => (<div className="sto
                 justify-content: center;
                 align-items: center;
                 opacity: 1;
-                transition: opacity .15s;
+                transition: opacity .15s, visibility .15s;
+                ${hide ? 'visibility: hidden; opacity: 0;' : ''}
             `}>
 
     <button onClick={onClick} css={css`
@@ -184,11 +185,173 @@ function useAbstractSlider(config, events) {
 }
 
 
-function useSwipeableItemsContainer() {
-    const handler = useRef(null);
+let SwipeableItemsContainerPure = (props) => {
+    let refs = props.__refs;
+    let abstractSlider = props.__abstractSlider;
+
+    if (!refs) {
+        refs = useRef({
+            leftOffsetRef: React.createRef(),
+            rightOffsetRef: React.createRef(),
+            wrapperRef: React.createRef(),
+            containerRef: React.createRef(),
+            itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
+        });
+    };
+
+    let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
+
+    let config = {
+        mode: props.mode || "horizontal",
+        itemSize: rs(props.itemSize || 0),
+        offsetBefore: rs(props.offsetBefore || 0),
+        offsetAfter: rs(props.offsetAfter || 0),
+        gutter: rs(props.gutter || 0),
+        amount: props.children.length,
+        items: props.children,
+        overflowAlwaysHidden: props.swiper === true
+    };
+
+    // useEffect(() => {
+    //     console.log('effect in pure!');
+    //
+    //     return () => {
+    //         console.log('effect remove in pure!');
+    //     }
+    // }, []);
+    //
+    // console.log('pure render');
+
+    if (props.itemSize) {
+
+
+    } else if (props.itemAspectRatio) {
+        // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
+        // photo widths, unless in vertical mode
+    } else if (props.itemsVisible) {
+        let itemsVisibleMap = new RangeMap(props.itemsVisible);
+
+        let multiplier = {};
+        itemsVisibleMap.forEach((itemsVisible, range) => {
+            multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
+        });
+
+        let base = rs('100%');
+        if (!props.itemsVisibleIncludeMargins) {
+            base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
+        }
+
+        config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
+
+    } else {
+        throw new Error(
+            "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
+        );
+    }
+
+    let itemsInContainer = [];
+
+    // left offset
+    itemsInContainer.push(<div key='spacer-before' ref={leftOffsetRef} css={css`
+        ${config.offsetBefore.css('flex-basis')}
+        flex-grow: 0;
+        flex-shrink: 0;
+    `} />);
+
+
+    props.children.forEach((item, i) => {
+        itemsInContainer.push(<Item
+            key={i}
+            config={config}
+            ref={itemRefs[i]}
+            size={config.itemSize}
+        >
+            {item}
+        </Item>);
+
+        // gutter
+        if (i !== props.children.length - 1) {
+            itemsInContainer.push(<div key={`spacer-${i}`} css={css`
+                ${config.gutter.css('flex-basis')}
+                flex-grow: 0;
+                flex-shrink: 0;
+            `} />);
+        }
+    });
+
+    // right offset
+    itemsInContainer.push(<div key='spacer-after' ref={rightOffsetRef} css={css`
+        ${config.offsetAfter.css('flex-basis')}
+        flex-grow: 0;
+        flex-shrink: 0;
+    `} />);
+
+
+    // arrows offset
+    let arrowsOffset = [0, 0];
+    if (props.arrows && props.arrows.offset) {
+        if (Array.isArray(props.arrows.offset)) {
+            arrowsOffset = [rs(props.arrows.offset[0]), rs(props.arrows.offset[1])];
+        }
+        else {
+            arrowsOffset = [props.arrows.offset,props.arrows.offset];
+        }
+    }
+
+    // console.log('pure component', abstractSlider.isFirstActive);
+
+    return (
+        <Root className={props.className} style={props.style} showArrowsOnlyOnHover={props.arrows && props.arrows.showOnlyOnHover}>
+            <Wrapper ref={wrapperRef} config={config}>
+                <ItemsContainer ref={containerRef} config={config}>
+                    {itemsInContainer}
+                </ItemsContainer>
+            </Wrapper>
+
+            {props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} hide={abstractSlider.isFirstActive && props.arrows.hideWhenInactive} onClick={() => { abstractSlider.moveToPrev() }} />}
+            {props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} hide={abstractSlider.isLastActive && props.arrows.hideWhenInactive} onClick={() => { abstractSlider.moveToNext() }}/>}
+        </Root>
+    );
+};
+
+SwipeableItemsContainerPure.defaultProps = {
+    swiper: true,
+    itemsVisible: 1,
+    snap: "offset",
+    itemsVisibleIncludeMargins: false
+};
+
+SwipeableItemsContainerPure.propTypes = {
+    children: PropTypes.any,
+    gutter: PropTypes.any,
+    itemSize: PropTypes.any,
+    offsetBefore: PropTypes.any,
+    offsetAfter: PropTypes.any,
+    snap: PropTypes.oneOf(["offset", "center"]),
+    itemsVisibleIncludeMargins: PropTypes.bool,
+    itemsVisible: PropTypes.any,
+    arrows: PropTypes.object,
+
+    // swiper: PropTypes.bool.isRequired,
+    onActiveChange: PropTypes.func
+};
+
+
+function useSwipeableItemsContainer(inputElement) {
+    let props = inputElement.props;
+
+    const refs = useRef({
+        leftOffsetRef: React.createRef(),
+        rightOffsetRef: React.createRef(),
+        wrapperRef: React.createRef(),
+        containerRef: React.createRef(),
+        itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
+    });
+
+    let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
 
     const sliderApplyState = (state) => {
-        handler.current.containerRef.current.style.transform = `translate3d(${
+        containerRef.current.style.transform = `translate3d(${
         state.slides[0].coord - state.leftOffset
             }px, 0, 0)`;
     };
@@ -203,149 +366,9 @@ function useSwipeableItemsContainer() {
         }
     });
 
-    let SwipeableItemsContainer = (props) => {
-
-
-        const refs = useRef({
-            leftOffsetRef: React.createRef(),
-            rightOffsetRef: React.createRef(),
-            wrapperRef: React.createRef(),
-            containerRef: React.createRef(),
-            itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
-        });
-
-        let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
-
-        // Handler for hook!
-        // let hook = props.connect;
-        // if (!hook) {
-        //     hook = useSwipeableItemsContainer();
-        // }
-
-        handler.current = {
-            ...refs.current,
-            props: props,
-            connected: true
-        };
-
-        let config = {
-            mode: props.mode || "horizontal",
-            itemSize: rs(props.itemSize || 0),
-            offsetBefore: rs(props.offsetBefore || 0),
-            offsetAfter: rs(props.offsetAfter || 0),
-            gutter: rs(props.gutter || 0),
-            amount: props.children.length,
-            items: props.children,
-            overflowAlwaysHidden: props.swiper === true
-        };
-
-        if (props.itemSize) {
-
-
-        } else if (props.itemAspectRatio) {
-            // this can work only in Javascript. No way for height ot be set anyhow in CSS and for us to keep
-            // photo widths, unless in vertical mode
-        } else if (props.itemsVisible) {
-            let itemsVisibleMap = new RangeMap(props.itemsVisible);
-
-            let multiplier = {};
-            itemsVisibleMap.forEach((itemsVisible, range) => {
-                multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
-            });
-
-            let base = rs('100%');
-            if (!props.itemsVisibleIncludeMargins) {
-                base = base.subtract(config.offsetBefore).subtract(config.offsetAfter);
-            }
-
-            config.itemSize = base.divide(itemsVisibleMap).subtract(config.gutter.multiply(multiplier));
-
-        } else {
-            throw new Error(
-                "FixedWidthItemsContainer: slider and slider-vertical modes require itemSize or itemsVisible parameter"
-            );
-        }
-
-        let itemsInContainer = [];
-
-        // left offset
-        itemsInContainer.push(<div key='spacer-before' ref={leftOffsetRef} css={css`
-        ${config.offsetBefore.css('flex-basis')}
-        flex-grow: 0;
-        flex-shrink: 0;
-    `} />);
-
-
-        props.children.forEach((item, i) => {
-            itemsInContainer.push(<Item
-                key={i}
-                config={config}
-                ref={itemRefs[i]}
-                size={config.itemSize}
-            >
-                {item}
-            </Item>);
-
-            // gutter
-            if (i !== props.children.length - 1) {
-                itemsInContainer.push(<div key={`spacer-${i}`} css={css`
-                ${config.gutter.css('flex-basis')}
-                flex-grow: 0;
-                flex-shrink: 0;
-            `} />);
-            }
-        });
-
-        // right offset
-        itemsInContainer.push(<div key='spacer-after' ref={rightOffsetRef} css={css`
-        ${config.offsetAfter.css('flex-basis')}
-        flex-grow: 0;
-        flex-shrink: 0;
-    `} />);
-
-
-        // arrows offset
-        let arrowsOffset = [0, 0];
-        if (props.arrows && props.arrows.offset) {
-            if (Array.isArray(props.arrows.offset)) {
-                arrowsOffset = [rs(props.arrows.offset[0]), rs(props.arrows.offset[1])];
-            }
-            else {
-                arrowsOffset = [props.arrows.offset,props.arrows.offset];
-            }
-        }
-
-        return (
-            <Root className={props.className} style={props.style} showArrowsOnlyOnHover={props.arrows && props.arrows.showOnlyOnHover}>
-                <Wrapper ref={wrapperRef} config={config}>
-                    <ItemsContainer ref={containerRef} config={config}>
-                        {itemsInContainer}
-                    </ItemsContainer>
-                </Wrapper>
-
-                {props.arrows && <DefaultArrow side={"left"} content={props.arrows.left} offset={rs(arrowsOffset[0])} onClick={() => { abstractSlider.moveToPrev() }} />}
-                {props.arrows && <DefaultArrow side={"right"} content={props.arrows.right} offset={rs(arrowsOffset[1])} onClick={() => { abstractSlider.moveToNext() }}/>}
-            </Root>
-        );
-    }
-
-    SwipeableItemsContainer.defaultProps = {
-        swiper: true,
-        itemsVisible: 1,
-        snap: "offset",
-        itemsVisibleIncludeMargins: false
-    };
-
-    SwipeableItemsContainer = useMemo(() => SwipeableItemsContainer, []);
-
-
+    const element = useMemo(() => <SwipeableItemsContainerPure {...props } __refs={refs} __abstractSlider={abstractSlider} />, [abstractSlider.isFirstActive, abstractSlider.isLastActive]);
 
     useEffect(() => {
-        if (!handler.current.connected) {
-            throw new Error("useSwiper hook is not connected to any SwipeableItemsContainer");
-        }
-
-        let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs, props } = handler.current;
 
         // Let's create
         let sizes = [];
@@ -403,37 +426,17 @@ function useSwipeableItemsContainer() {
 
     return {
         ...abstractSlider,
-        SwipeableItemsContainer
+        Element: element
     };
 }
 
 const SwipeableItemsContainer = (props) => {
-    const { SwipeableItemsContainer } = useSwipeableItemsContainer();
-    return <SwipeableItemsContainer {...props} />
-}
-
-
-SwipeableItemsContainer.defaultProps = {
-    swiper: true,
-    itemsVisible: 1,
-    snap: "offset",
-    itemsVisibleIncludeMargins: false
+    const { Element } = useSwipeableItemsContainer(<SwipeableItemsContainerPure {...props} />);
+    return <>{ Element }</>;
 };
 
-SwipeableItemsContainer.propTypes = {
-    children: PropTypes.any,
-    gutter: PropTypes.any,
-    itemSize: PropTypes.any,
-    offsetBefore: PropTypes.any,
-    offsetAfter: PropTypes.any,
-    snap: PropTypes.oneOf(["offset", "center"]),
-    itemsVisibleIncludeMargins: PropTypes.bool,
-    itemsVisible: PropTypes.any,
-    arrows: PropTypes.object,
-
-    // swiper: PropTypes.bool.isRequired,
-    onActiveChange: PropTypes.func
-};
+SwipeableItemsContainer.defaultProps = SwipeableItemsContainerPure.defaultProps;
+SwipeableItemsContainer.propTypes = SwipeableItemsContainerPure.propTypes;
 
 export default SwipeableItemsContainer;
 export {

@@ -1,5 +1,5 @@
 import React from "react";
-import { useSwipeableItemsContainer, SwipeableItemsContainer } from "storefront-ui";
+import { useSwipeableItemsContainer, SwipeableItemsContainer, Dots, Color } from "storefront-ui";
 
 import {rslin} from "responsive-helpers";
 
@@ -21,11 +21,28 @@ export default () => {
     );
 
     return <div>
-        <p>Simplest use case</p>
         { Element }
-        <div>Active: { active }</div>
-        <button onClick={() => moveToSlide(3, false)}>Set active 3</button><br/>
-        <button onClick={() => moveToSlide(3, true)}>Set active 3 animated</button>
+        <Dots active={active} onClick={moveToSlide} amount={6} />
+        <p>Dots might have other variants and are pretty much customisable. Vertical:</p>
+        <Dots
+            active={active}
+            onClick={moveToSlide}
+            amount={6}
+            vertical={true}
+        />
+        <p>Very custom</p>
+        <Dots
+            active={active}
+            onClick={moveToSlide}
+            amount={6}
+            spaceWidth={30}
+            spaceHeight={30}
+            hoverColor={new Color("red")}
+            dotSize={10}
+            color={new Color("blue")}
+            activeColor={new Color("coral")}
+        />
+
     </div>;
 
 };

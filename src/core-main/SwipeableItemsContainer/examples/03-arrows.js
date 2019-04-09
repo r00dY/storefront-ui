@@ -25,13 +25,14 @@ export default () => {
             <Rectangle color={"forestgreen"}>6</Rectangle>
         </SwipeableItemsContainer>
 
-        <p>Arrows visible on hover (<code>showOnlyOnHover</code> option), also added <code>offset</code></p>
+        <p>Arrows visible on hover (<code>showOnlyOnHover</code> option), hidden when inactive (<code>hideWhenInactive</code>), also added <code>offset</code></p>
 
         <SwipeableItemsContainer mode={"horizontal"} arrows={{
             left: <Arrow color={"yellow"} />,
             right: <Arrow color={"green"} />,
             offset: -25,
-            showOnlyOnHover: true
+            showOnlyOnHover: true,
+            hideWhenInactive: true
         }}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
