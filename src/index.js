@@ -22,6 +22,8 @@ import StickyColumn from "./core-main/StickyColumn/StickyColumn";
 
 import MediaQuery from "./core-main/MediaQuery/MediaQuery";
 
+import Overlay from "./core-main/Overlay/Overlay";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -114,5 +116,7 @@ export {
 
     StickyColumn,
 
-    MediaQuery
+    MediaQuery,
+
+    Overlay
 }

@@ -32,6 +32,7 @@ export default (props) => {
                 <li><Link href="/image-mosaic"><a>Image mosaic</a></Link></li>
                 <li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>
                 <li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>
+                <li><Link href="/overlays"><a>Overlays</a></Link></li>
             </ul>
 
         </div>
@@ -44,6 +45,8 @@ export default (props) => {
         `}>
             {props.children}
         </div>
+
+        <div id={"overlaysContainer"} />
 
     </div>
 };
