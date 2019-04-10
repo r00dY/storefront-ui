@@ -426,13 +426,13 @@ function useSwipeableItemsContainer(inputElement) {
 
     return {
         ...abstractSlider,
-        Element: element
+        element: element
     };
 }
 
 const SwipeableItemsContainer = (props) => {
-    const { Element } = useSwipeableItemsContainer(<SwipeableItemsContainerPure {...props} />);
-    return <>{ Element }</>;
+    const { element } = useSwipeableItemsContainer(<SwipeableItemsContainerPure {...props} />);
+    return <>{ element }</>;
 };
 
 SwipeableItemsContainer.defaultProps = SwipeableItemsContainerPure.defaultProps;

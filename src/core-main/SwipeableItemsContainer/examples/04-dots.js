@@ -9,7 +9,7 @@ import {css, jsx} from "@emotion/core";
 import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => {
-    let { Element, moveToSlide, active } = useSwipeableItemsContainer(
+    let { element, moveToSlide, active } = useSwipeableItemsContainer(
         <SwipeableItemsContainer mode={"horizontal"}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
@@ -21,7 +21,7 @@ export default () => {
     );
 
     return <div>
-        { Element }
+        { element }
         <Dots active={active} onClick={moveToSlide} amount={6} />
         <p>Dots might have other variants and are pretty much customisable. Vertical:</p>
         <Dots
