@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import {Accordion} from "storefront-ui";
+import {AccordionRaw} from "storefront-ui";
 
 import { css } from "@emotion/core";
 
@@ -9,11 +9,11 @@ export default () => {
     const [open, setOpen] = useState(true);
 
     return <div>
-        <Accordion css={`
+        <AccordionRaw css={`
             width: 300px;
         `} open={open}>
             <LoremIpsum />
-        </Accordion>
+        </AccordionRaw>
         <button onClick={() => setOpen(!open)}>{ open ? 'Hide' : 'Show' }</button>
     </div>
 };

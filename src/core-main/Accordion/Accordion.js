@@ -1,20 +1,28 @@
 import PropTypes from "prop-types";
-import React from "react";
+import React, { useState } from "react";
+
+import AccordionRaw from "./AccordionRaw";
 
 const Accordion = props => {
+    const [open, setOpen] = useState(props.openAtInit);
+
     return <div className={props.className} style={props.style}>
-        <div style={{
-            visibility: props.open ? 'visible' : 'hidden',
-            height: props.open ? 'auto' : '0px',
-            position: 'relative'
-        }}>
+        { props.headerComponent(open, setOpen) }
+
+        <AccordionRaw open={open}>
             {props.children}
-        </div>
-    </div>
+        </AccordionRaw>
+
+    </div>;
+};
+
+Accordion.defaultProps = {
+    openAtInit: true
 };
 
 Accordion.propTypes = {
-    open: PropTypes.bool
+    openAtInit: PropTypes.bool,
+    headerComponent: PropTypes.func.isRequired
 };
 
 export default Accordion;

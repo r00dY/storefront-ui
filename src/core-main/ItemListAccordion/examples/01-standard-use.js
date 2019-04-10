@@ -1,9 +1,10 @@
 import React, { useState }from "react";
 import {ItemListAccordion} from "storefront-ui";
 
-import { css } from "@emotion/core";
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
-const Item = (props) => <div css={css`padding: 8px;`}>{props.children}</div>;
+const Item = (props) => <div css={css`padding-bottom: 4px;`}>{props.children}</div>;
 
 const trigger = (open, setOpen) => <button onClick={() => setOpen(!open)}>{ open ? 'hide' : 'show more' }</button>;
 

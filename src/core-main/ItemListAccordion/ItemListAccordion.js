@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
 
-import Accordion from "../Accordion/Accordion";
+import AccordionRaw from "../Accordion/AccordionRaw";
 
 const ItemListAccordion = props => {
     const [open, setOpen] = useState(props.openAtInit);
@@ -31,9 +31,9 @@ const ItemListAccordion = props => {
 
     return <div className={props.className} style={props.style}>
         {itemsVisible}
-        <Accordion open={open}>
+        <AccordionRaw open={open}>
             { itemsInAccordion }
-        </Accordion>
+        </AccordionRaw>
         { itemsInAccordion.length > 0 && props.triggerComponent(open, setOpen) }
     </div>
 };
