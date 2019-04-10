@@ -33,6 +33,7 @@ export default (props) => {
                 <li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>
                 <li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>
                 <li><Link href="/overlays"><a>Overlays</a></Link></li>
+                <li><Link href="/accordion"><a>Accordion</a></Link></li>
             </ul>
 
         </div>

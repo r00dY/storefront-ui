@@ -24,6 +24,9 @@ import MediaQuery from "./core-main/MediaQuery/MediaQuery";
 
 import Overlay from "./core-main/Overlay/Overlay";
 
+import Accordion from "./core-main/Accordion/Accordion";
+import ItemListAccordion from "./core-main/ItemListAccordion/ItemListAccordion";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -118,5 +121,9 @@ export {
 
     MediaQuery,
 
-    Overlay
+    Overlay,
+
+    Accordion,
+
+    ItemListAccordion
 }
