@@ -26,3 +26,29 @@ ${<Example code={require("!!raw-loader!../src/core-main/ItemListAccordion/exampl
 export default () => <Page>{content}</Page>;
 
 
+// /** First way -> imperative creation of template */
+//
+// const desktopFilters = <div>
+//
+//     {filters.map((filter) => <Accordion header={<div>{filter.name}</div>}>
+//
+//         { filter.type === 'item-list' && filter.label !== 'color' &&
+//             <ItemListAccordion>
+//                 {filter.items.map((item) => <ItemListItem onClick={() => onChange(item.id)}>{item.name}</ItemListItem>)}
+//             </ItemListAccordion>
+//         }
+//
+//         { filter.type === 'item-list' && filter.label === 'color' &&
+//             <ColorsGrid>
+//                 {filter.items.map((item) => <Color color={item.color} onClick={() => onChange(item.id)} />)}
+//             </ColorsGrid>
+//         }
+//
+//         { filter.type === 'range' &&
+//             <InputRange from={filter.from} to={filter.to} onChage={() => onChange(item.id)} error={filter.error} />
+//         }
+//     </Accordion>)}
+//
+// </div>;
+//
+// /** Second way - declarative **/

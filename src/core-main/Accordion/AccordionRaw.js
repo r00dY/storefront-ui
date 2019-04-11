@@ -1,14 +1,22 @@
 import PropTypes from "prop-types";
 import React from "react";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
 const AccordionRaw = props => {
     return <div className={props.className} style={props.style}>
-        <div style={{
-            visibility: props.open ? 'visible' : 'hidden',
-            height: props.open ? 'auto' : '0px',
-            position: 'relative'
-        }}>
-            {props.children}
+        <div css={css`
+            visibility: ${props.open ? 'visible' : 'hidden'};
+            height: ${props.open ? 'auto' : '0px'};
+            position: relative;
+            transition: height .3s;
+        `}>
+            <div css={css`
+                position: relative;
+            `}>
+                {props.children}
+            </div>
         </div>
     </div>
 };
