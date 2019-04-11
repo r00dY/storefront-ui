@@ -47,6 +47,8 @@ const FiltersColumn = props => {
                     </ItemListAccordion>
                 </Accordion>
             }
+
+
         </div>
         )}
 

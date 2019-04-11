@@ -6,18 +6,16 @@ import { css, jsx } from "@emotion/core";
 
 
 const FilterItem = props => {
+
     return <div className={props.className} style={props.style}>
-        <div css={css`
-            display: flex;
+        <label css={css`
+            display: block;
             width: 100%;
             padding: 4px 0;
-            flex-direction: row;
-            align-items: center;
+            cursor: pointer;
         `}>
-
-            <input type="checkbox" name={props.name} id={props.id}/>
-            <label id={props.id}  css={css`margin-left: 4px;`}>{props.label}</label>
-        </div>
+            <input type="checkbox" name={props.name}/> {props.label}
+        </label>
     </div>
 };
 

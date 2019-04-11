@@ -1,8 +1,8 @@
-import React, { useState }from "react";
+import React, {useState} from "react";
 import {FiltersColumn} from "storefront-ui";
 
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import {css, jsx} from "@emotion/core";
 
 import filterData from "../../../../docs-utils/filtersData";
 
@@ -12,7 +12,8 @@ export default () => {
             css={css`
                 width: 400px;
             `}
-           data={filterData}
+            data={filterData}
+            gutter={16}
         />
     </div>
 };
