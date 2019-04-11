@@ -7,10 +7,11 @@ import { css, jsx } from "@emotion/core";
 const AccordionRaw = props => {
     return <div className={props.className} style={props.style}>
         <div css={css`
-            visibility: ${props.open ? 'visible' : 'hidden'};
+            display: ${props.open ? 'initial' : 'none'};
             height: ${props.open ? 'auto' : '0px'};
             position: relative;
             transition: height .3s;
+            overflow: ${props.open ? 'visible' : 'hidden'};
         `}>
             <div css={css`
                 position: relative;

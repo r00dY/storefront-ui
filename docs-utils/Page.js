@@ -34,6 +34,7 @@ export default (props) => {
                 <li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>
                 <li><Link href="/overlays"><a>Overlays</a></Link></li>
                 <li><Link href="/accordion"><a>Accordion</a></Link></li>
+                <li><Link href="/filters"><a>Filters</a></Link></li>
             </ul>
 
         </div>

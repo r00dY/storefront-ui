@@ -28,6 +28,8 @@ import Accordion from "./core-main/Accordion/Accordion";
 import AccordionRaw from "./core-main/Accordion/AccordionRaw";
 import ItemListAccordion from "./core-main/ItemListAccordion/ItemListAccordion";
 
+import FiltersColumn from "./core-main/Filters/FiltersColumn/FiltersColumn";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -127,5 +129,7 @@ export {
     AccordionRaw,
     Accordion,
 
-    ItemListAccordion
+    ItemListAccordion,
+
+    FiltersColumn
 }

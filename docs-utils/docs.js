@@ -26,7 +26,9 @@ class CodeBlock extends React.Component {
 
     render() {
         return <Container>
-            <pre style={{margin: 0}}><code className="language-javascript">{this.props.code}</code></pre>
+            <div style={{maxHeight: "600px", overflow: "auto"}}>
+                <pre style={{margin: 0}}><code className="language-javascript">{this.props.code}</code></pre>
+            </div>
         </Container>
     }
 }
