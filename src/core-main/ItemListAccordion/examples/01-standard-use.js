@@ -12,7 +12,7 @@ export default () => {
     return <div>
         <p>Basic use case</p>
 
-        <ItemListAccordion triggerComponent={trigger}>
+        <ItemListAccordion trigger={trigger}>
             <Item>Item 1</Item>
             <Item>Item 2</Item>
             <Item>Item 3</Item>
@@ -28,7 +28,7 @@ export default () => {
         <p><code>amountOfAlwaysVisible={3}</code></p>
 
         <ItemListAccordion
-            triggerComponent={trigger}
+            trigger={trigger}
             amountOfAlwaysVisible={3}
         >
             <Item>Item 1</Item>
@@ -46,7 +46,7 @@ export default () => {
         <p><code>minAmountToShowAccordion={20}</code></p>
 
         <ItemListAccordion
-            triggerComponent={trigger}
+            trigger={trigger}
             minAmountToShowAccordion={20}
         >
             <Item>Item 1</Item>
@@ -64,14 +64,14 @@ export default () => {
         <p>Empty list</p>
 
         <ItemListAccordion
-            triggerComponent={trigger}
+            trigger={trigger}
         >
         </ItemListAccordion>
 
         <p>Single item list</p>
 
         <ItemListAccordion
-            triggerComponent={trigger}
+            trigger={trigger}
         >
             <Item>Item 1</Item>
         </ItemListAccordion>

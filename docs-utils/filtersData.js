@@ -20,13 +20,13 @@ const filtersData = [
                 id: "puma",
                 name: "Puma",
                 amount: 12,
-                selected: false
+                selected: true
             },
             {
                 id: "under-armour",
                 name: "Under Armour",
                 amount: 0,
-                selected: false
+                selected: true
             },
             {
                 id: "asics",

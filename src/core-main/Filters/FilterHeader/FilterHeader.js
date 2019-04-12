@@ -32,8 +32,8 @@ const FilterHeader = props => {
 
 FilterHeader.propTypes = {
     title: PropTypes.any.isRequired,
-    open: PropTypes.boolean,
-    onClick: PropTypes.function
+    open: PropTypes.bool,
+    onClick: PropTypes.func
 };
 
 export default FilterHeader;

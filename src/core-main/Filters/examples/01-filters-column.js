@@ -13,7 +13,6 @@ export default () => {
                 width: 400px;
             `}
             data={filterData}
-            gutter={16}
         />
     </div>
 };

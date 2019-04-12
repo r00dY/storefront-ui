@@ -14,7 +14,7 @@ const FilterItem = props => {
             padding: 4px 0;
             cursor: pointer;
         `}>
-            <input type="checkbox" name={props.name}/> {props.label}
+            <input type="checkbox" name={props.name} onClick={props.onClick}/> {props.label}
         </label>
     </div>
 };
@@ -24,7 +24,7 @@ FilterItem.propTypes = {
     name: PropTypes.string,
     id: PropTypes.string,
     selected: PropTypes.bool.isRequired,
-    onClick: PropTypes.function
+    onClick: PropTypes.func
 };
 
 export default FilterItem;

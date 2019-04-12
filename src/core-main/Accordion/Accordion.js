@@ -7,7 +7,7 @@ const Accordion = props => {
     const [open, setOpen] = useState(props.openAtInit);
 
     return <div className={props.className} style={props.style}>
-        { props.headerComponent(open, setOpen) }
+        { props.header(open, setOpen) }
 
         <AccordionRaw open={open}>
             {props.children}
@@ -22,7 +22,7 @@ Accordion.defaultProps = {
 
 Accordion.propTypes = {
     openAtInit: PropTypes.bool,
-    headerComponent: PropTypes.func.isRequired
+    header: PropTypes.func.isRequired
 };
 
 export default Accordion;

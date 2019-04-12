@@ -10,7 +10,7 @@ export default () => {
     return <div>
         <p>Basic use case</p>
 
-        <Accordion headerComponent={(open, setOpen) => <div css={css`
+        <Accordion header={(open, setOpen) => <div css={css`
             padding: 10px;
             display: flex;
             flex-direction: row;

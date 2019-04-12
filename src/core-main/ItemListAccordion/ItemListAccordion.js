@@ -34,7 +34,7 @@ const ItemListAccordion = props => {
         <AccordionRaw open={open}>
             { itemsInAccordion }
         </AccordionRaw>
-        { itemsInAccordion.length > 0 && props.triggerComponent(open, setOpen) }
+        { itemsInAccordion.length > 0 && props.trigger(open, setOpen) }
     </div>
 };
 
@@ -48,7 +48,7 @@ ItemListAccordion.propTypes = {
     amountOfAlwaysVisible: PropTypes.number.isRequired, // might be higher if `minAmountToShowAccordion` is higher
     minAmountToShowAccordion: PropTypes.number,
     children: PropTypes.any,
-    triggerComponent: PropTypes.func.isRequired
+    trigger: PropTypes.func.isRequired
 };
 
 export default ItemListAccordion;

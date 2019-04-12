@@ -23,6 +23,10 @@ Let's start with simple filter column, so common in all kinds of e-commerce site
 
 ${<Example code={require("!!raw-loader!../src/core-main/Filters/examples/01-filters-column.js")} component={require('../src/core-main/Filters/examples/01-filters-column.js').default} />}
 
+It's very raw, but the idea is to give you flexibility to style this as much as you can.
+
+${<Example code={require("!!raw-loader!../src/core-main/Filters/examples/02-filters-column-custom.js")} component={require('../src/core-main/Filters/examples/02-filters-column-custom.js').default} />}
+
 `;
 
 export default () => <Page>{content}</Page>;
