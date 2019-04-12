@@ -56,7 +56,22 @@ const FiltersColumn = props => {
 
         { props.data.map((filter, index) => {
 
-            let arg = props.components[filter.type]; // value for components.select or components.range, etc
+            let arg; // value for components.select or components.range, etc
+            let argCustom = false;
+
+            // Let's look for specials
+            if (props.components.__custom) {
+                props.components.__custom.forEach((custom) => {
+                    if (custom.match(filter)) {
+                        arg = custom.component;
+                        argCustom = true;
+                    }
+                })
+            }
+            if (!argCustom) {
+                arg = props.components[filter.type];
+            }
+
 
             let component;
             if (typeof arg === 'function') { // if function just call it
@@ -64,6 +79,7 @@ const FiltersColumn = props => {
             }
             else { // otherwise, arg is object of config
 
+                console.log('config', arg);
                 let options = Object.assign(components[filter.type].defaultOptions, arg);
 
                 component = components[filter.type].component({data: props.data, filter}, options);
