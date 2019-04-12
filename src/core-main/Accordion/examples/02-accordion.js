@@ -10,14 +10,14 @@ export default () => {
     return <div>
         <p>Basic use case</p>
 
-        <Accordion header={(open, setOpen) => <div css={css`
+        <Accordion header={(open, toggle) => <div css={css`
             padding: 10px;
             display: flex;
             flex-direction: row;
             justify-content: space-between;
             align-items: center;
             border: 1px solid black;
-        `}><div>HEADER</div> <button onClick={() => setOpen(!open)}>{ open ? 'collapse' : 'uncollapse' }</button></div>}>
+        `}><div>HEADER</div> <button onClick={toggle}>{ open ? 'collapse' : 'uncollapse' }</button></div>}>
             <LoremIpsum/>
         </Accordion>
 

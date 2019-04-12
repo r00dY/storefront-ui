@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/core";
 
 const Item = (props) => <div css={css`padding-bottom: 4px;`}>{props.children}</div>;
 
-const trigger = (open, setOpen) => <button onClick={() => setOpen(!open)}>{ open ? 'hide' : 'show more' }</button>;
+const trigger = (open, toggle) => <button onClick={toggle}>{ open ? 'hide' : 'show more' }</button>;
 
 export default () => {
     return <div>

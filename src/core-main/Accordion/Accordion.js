@@ -5,9 +5,10 @@ import AccordionRaw from "./AccordionRaw";
 
 const Accordion = props => {
     const [open, setOpen] = useState(props.openAtInit);
+    const toggle = () => { setOpen(!open); };
 
     return <div className={props.className} style={props.style}>
-        { props.header(open, setOpen) }
+        { props.header(open, toggle) }
 
         <AccordionRaw open={open}>
             {props.children}

@@ -5,6 +5,7 @@ import AccordionRaw from "../Accordion/AccordionRaw";
 
 const ItemListAccordion = props => {
     const [open, setOpen] = useState(props.openAtInit);
+    const toggle = () => { setOpen(!open) };
 
     let minAmountToShowAccordion = props.minAmountToShowAccordion || props.amountOfAlwaysVisible + 1;
 
@@ -34,7 +35,7 @@ const ItemListAccordion = props => {
         <AccordionRaw open={open}>
             { itemsInAccordion }
         </AccordionRaw>
-        { itemsInAccordion.length > 0 && props.trigger(open, setOpen) }
+        { itemsInAccordion.length > 0 && props.trigger(open, toggle) }
     </div>
 };
 
