@@ -79,7 +79,7 @@ const FiltersColumn = props => {
                 component = arg({data: props.data, filter, onChange});
             }
             else { // otherwise, arg is object of config
-                let options = Object.assign(components[filter.type].defaultOptions, arg);
+                let options = Object.assign({}, components[filter.type].defaultOptions, arg);
                 component = components[filter.type].component({data: props.data, filter, onChange}, options);
             }
 
