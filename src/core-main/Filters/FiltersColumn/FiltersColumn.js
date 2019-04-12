@@ -48,7 +48,7 @@ const components = {
 
 const FiltersColumn = props => {
 
-    const onChange = () => console.log('stch clicked!');
+    const onChange = () => console.log('sth clicked!');
 
     return <div className={props.className} style={props.style}>
         <div css={css`
