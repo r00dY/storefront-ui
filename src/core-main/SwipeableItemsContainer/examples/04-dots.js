@@ -1,5 +1,5 @@
 import React from "react";
-import { useSwipeableItemsContainer, SwipeableItemsContainer, Dots, Color } from "storefront-ui";
+import { useSwipeableItemsContainer, SwipeableItemsContainer, Dots, Color, MediaQuery, R } from "storefront-ui";
 
 import {rslin} from "responsive-helpers";
 
@@ -22,6 +22,7 @@ export default () => {
 
     return <div>
         { element }
+
         <Dots active={active} onClick={moveToSlide} amount={6} />
         <p>Dots might have other variants and are pretty much customisable. Vertical:</p>
         <Dots

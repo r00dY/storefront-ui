@@ -12,6 +12,7 @@
         "test": "./node_modules/.bin/babel-node ./spec/run.js"
     },
     "dependencies": {
+        "@emotion/babel-preset-css-prop": "^10.0.9",
         "@emotion/core": "^10.0.7",
         "@emotion/styled": "^10.0.7",
         "@svgr/webpack": "^4.1.0",

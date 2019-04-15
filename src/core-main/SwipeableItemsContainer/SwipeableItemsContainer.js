@@ -212,15 +212,61 @@ let SwipeableItemsContainerPure = (props) => {
         overflowAlwaysHidden: props.swiper === true
     };
 
-    // useEffect(() => {
-    //     console.log('effect in pure!');
-    //
-    //     return () => {
-    //         console.log('effect remove in pure!');
-    //     }
-    // }, []);
-    //
-    // console.log('pure render');
+    useEffect(() => {
+
+        // Let's create
+        let sizes = [];
+        let margins = [];
+
+        let config = {
+            containerSize: wrapperRef.current.clientWidth,
+            count: itemRefs.length,
+            leftOffset: leftOffsetRef.current.clientWidth,
+            rightOffset: rightOffsetRef.current.clientWidth,
+            slideSize: null
+        };
+
+        let previousRightEdge = 0;
+
+        itemRefs.forEach((itemRef, index) => {
+            let offset = itemRef.current.offsetLeft;
+            let size = itemRef.current.clientWidth;
+
+            sizes.push(size);
+
+            if (index > 0) {
+                margins.push(offset - previousRightEdge);
+            }
+
+            previousRightEdge = offset + size;
+        });
+
+        margins.push(0);
+
+        config.slideSize = n => sizes[n];
+        config.slideMargin = n => margins[n];
+
+        if (props.snap === 'center') {
+            config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
+        }
+        else {
+            config.slideSnapOffset = () => config.leftOffset;
+        }
+
+        abstractSlider.setConfig(config);
+
+        props.__applyState(abstractSlider._getSlider().state);
+
+        let touchSpace = new TouchSpace(abstractSlider._getSlider(), wrapperRef.current);
+        touchSpace.enable();
+
+        return () => {
+            containerRef.current.style.transform = "none";
+            touchSpace.disable();
+            abstractSlider._getSlider().destroy();
+        }
+
+    }, []);
 
     if (props.itemSize) {
 
@@ -348,6 +394,8 @@ function useSwipeableItemsContainer(inputElement) {
         itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
     });
 
+    // TODO: these refs ere, sliderApplyState here, passing props to SwipeableItemsContainerPure -> this structure sucks, need to clean this up. But works so far.
+    // TODO: Need to consider resize and fact what happens if element is killed and reinstantiated, and hook is still the same!!! RESIZE.
     let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
 
     const sliderApplyState = (state) => {
@@ -366,63 +414,7 @@ function useSwipeableItemsContainer(inputElement) {
         }
     });
 
-    const element = useMemo(() => <SwipeableItemsContainerPure {...props } __refs={refs} __abstractSlider={abstractSlider} />, [abstractSlider.isFirstActive, abstractSlider.isLastActive]);
-
-    useEffect(() => {
-
-        // Let's create
-        let sizes = [];
-        let margins = [];
-
-        let config = {
-            containerSize: wrapperRef.current.clientWidth,
-            count: itemRefs.length,
-            leftOffset: leftOffsetRef.current.clientWidth,
-            rightOffset: rightOffsetRef.current.clientWidth,
-            slideSize: null
-        };
-
-        let previousRightEdge = 0;
-
-        itemRefs.forEach((itemRef, index) => {
-            let offset = itemRef.current.offsetLeft;
-            let size = itemRef.current.clientWidth;
-
-            sizes.push(size);
-
-            if (index > 0) {
-                margins.push(offset - previousRightEdge);
-            }
-
-            previousRightEdge = offset + size;
-        });
-
-        margins.push(0);
-
-        config.slideSize = n => sizes[n];
-        config.slideMargin = n => margins[n];
-
-        if (props.snap === 'center') {
-            config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
-        }
-        else {
-            config.slideSnapOffset = () => config.leftOffset;
-        }
-
-        abstractSlider.setConfig(config);
-
-        sliderApplyState(abstractSlider._getSlider().state);
-
-        let touchSpace = new TouchSpace(abstractSlider._getSlider(), wrapperRef.current);
-        touchSpace.enable();
-
-        return () => {
-            containerRef.current.style.transform = "none";
-            touchSpace.disable();
-            abstractSlider._getSlider().destroy();
-        }
-
-    }, []);
+    const element = useMemo(() => <SwipeableItemsContainerPure {...props } __refs={refs} __abstractSlider={abstractSlider} __applyState={sliderApplyState}/>, [abstractSlider.isFirstActive, abstractSlider.isLastActive]);
 
     return {
         ...abstractSlider,
