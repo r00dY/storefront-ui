@@ -1,5 +1,5 @@
 import React from "react";
-import {ImageMosaic, useImageMosaic, GridItem, Grid, Dots} from "storefront-ui";
+import {ImageMosaic, useImageMosaic, GridItem, Grid, Dots, Image, Ease } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -47,7 +47,6 @@ export default () => {
             </GridItem>
         </Grid>
 
-
         <p>Responsive</p>
         <ImageMosaic
             css={css`
@@ -55,6 +54,27 @@ export default () => {
             `}
             images={productPhotos}
             layout={{ xs: 1, lg: 2}}
+            gutter={10}
+        />
+
+        <p>Custom image component (custom hover effect)</p>
+        <ImageMosaic
+            css={css`
+                max-width: 600px;
+            `}
+            images={productPhotos}
+            imageComponent={(image, active, index) => <div css={css`overflow: hidden;`}>
+                <div css={css`
+                    &:hover {
+                        transform: scale(1.1);
+                    }
+
+                    transition: transform .8s ${Ease.expoOut.css};
+                `}>
+                    <Image image={image} />
+                </div>
+            </div>}
+            layout={2}
             gutter={10}
         />
     </div>
