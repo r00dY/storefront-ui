@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import VisibilitySensor from 'react-visibility-sensor';
 
 /**
- * TODO: video support
- * TODO: contain mode should work well with placeholders, extraContent and background
- * TODO: IE / Edge fallbacks
+ * TODO: "mode" support for video in Edge/IE and for images for IE.
+ * TODO: "media" should support video. Right now video it's not supported for "media" prop.
  * TODO: onLoad callbacks
+ * TODO: contain mode should work well with placeholders, extraContent and background (lower priority)
  */
 const styles = {
     LazyAsset: {
