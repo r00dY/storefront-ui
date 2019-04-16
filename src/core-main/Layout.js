@@ -47,4 +47,5 @@ Layout.main = {
     colNumber: 24
 };
 
+
 export default Layout;

@@ -1,5 +1,5 @@
 import React from "react";
-import {ImageMosaic, useImageMosaic, GridItem, Grid, Dots, Image, Ease } from "storefront-ui";
+import {ImageMosaic, useImageMosaic, GridItem, Grid, Dots, Image, Ease, GridDebugger } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -9,6 +9,9 @@ export default () => {
     let { ref, active, setActive } = useImageMosaic();
 
     return <div>
+
+        <GridDebugger />
+
         <p>Simplest grid</p>
         <ImageMosaic
             css={css`

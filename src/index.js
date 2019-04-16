@@ -9,6 +9,7 @@ import { RangeSet } from "responsive-helpers";
 
 import Container from "./core-main/Container/Container";
 import { Grid, GridItem } from "./core-main/Grid/Grid";
+import GridDebugger from "./core-main/Grid/GridDebugger";
 
 import ProductPhotos, { useProductPhotos } from "./core-main/ProductPhotos/ProductPhotos";
 
@@ -65,7 +66,7 @@ let C = Colors;
 Layout.main = new Layout({
     colNumber: 24,
     container: "90vw",
-    gutter: 10
+    gutter: 25
 });
 
 let L = Layout.main;
@@ -110,7 +111,7 @@ export {
 
     applyConfig,
 
-    Container, Grid, GridItem,
+    Container, Grid, GridItem, GridDebugger,
 
     ProductPhotos,
     useProductPhotos,
