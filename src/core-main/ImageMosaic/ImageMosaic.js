@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Grid, GridItem } from "../Grid/Grid";
-import { rs } from "responsive-helpers";
+import { rs, RangeMap } from "responsive-helpers";
 import ImageZoomable from "../Image/ImageZoomable";
+
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -140,11 +141,18 @@ class ImageMosaic extends React.Component {
             </div>
         ));
 
+        let layoutRangeMap = new RangeMap(this.props.layout);
+        let params = {};
+
+        layoutRangeMap.forEach((val, range) => {
+             params[range.from] = 12 / val;
+        });
+
         let component = (
             <Grid colNumber={12} gutter={gutter[0]}>
                 {items.map((item, index) => (
                     <GridItem
-                        params={{ xs: 12 / this.props.layout }}
+                        params={params}
                         key={index}
                     >
                         {item}
@@ -187,7 +195,7 @@ function useImageMosaic() {
 ImageMosaic.propTypes = {
     images: PropTypes.arrayOf(PropTypes.any).isRequired,
     imageComponent: PropTypes.func.isRequired,
-    layout: PropTypes.oneOf([1, 2]),
+    layout: PropTypes.any,
     gutter: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.any),
         PropTypes.any

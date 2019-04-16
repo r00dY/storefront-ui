@@ -47,5 +47,15 @@ export default () => {
             </GridItem>
         </Grid>
 
+
+        <p>Responsive</p>
+        <ImageMosaic
+            css={css`
+                max-width: 600px;
+            `}
+            images={productPhotos}
+            layout={{ xs: 1, lg: 2}}
+            gutter={10}
+        />
     </div>
 };
