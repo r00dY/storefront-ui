@@ -12,6 +12,15 @@ import { css, jsx } from "@emotion/core";
  * TODO: ImageMosaic should be a simple component with forwardRef
  * TODO: useImageMosaic should simply connect above two AND work like useSwipeableItemsContainer works.
  *
+ * actually there's a lot of logic in doing just
+ *
+ * const ref = useRef(null);
+ * const [active, setActive] = useActiveElementInViewport(ref);
+ *
+ * and then assigning ref to <ImageMosaic ref={ref} ... />
+ *
+ * useActiveElementInViewport would work with ImageMosaic or any array of refs or any other component from our system. Maybe API is a bit complicated but more versatile. To decide this later.
+ *
  */
 
 class ImageMosaic extends React.Component {
