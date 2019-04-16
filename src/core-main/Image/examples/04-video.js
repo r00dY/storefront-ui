@@ -4,7 +4,7 @@ import React from "react";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import {catLandscape} from "../../../../data/images";
+import {hulaHop} from "../../../../data/videos";
 
 export default () => (
     <div>
@@ -14,7 +14,7 @@ export default () => (
             css={css`
                 max-width: 800px;
             `}
-            image={catLandscape}
+            video={hulaHop}
         />
 
         <p>cover mode</p>
@@ -23,7 +23,7 @@ export default () => (
                 max-width: 800px;
                 height: 800px; // remember to set height in CSS, will be 0 otherwise!
             `}
-            image={catLandscape}
+            video={hulaHop}
             mode={"cover"}
         />
 
@@ -34,7 +34,7 @@ export default () => (
                 height: 800px; // remember to set height in CSS, will be 0 otherwise!
                 border: 1px solid lightgrey; // added border to show contain mode
             `}
-            image={catLandscape}
+            video={hulaHop}
             mode={"contain"}
         />
 
@@ -45,7 +45,7 @@ export default () => (
                 height: 800px; // remember to set height in CSS, will be 0 otherwise!
                 border: 1px solid lightgrey; // added border to show contain mode
             `}
-            image={catLandscape}
+            video={hulaHop}
             mode={"contain"}
             backgroundPosition={"left top"}
         />

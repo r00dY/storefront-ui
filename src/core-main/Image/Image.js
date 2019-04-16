@@ -11,14 +11,29 @@ function Image(props) {
         });
     }
 
-    const newProps = {
-        ...props,
-        load: loaded,
-        backgroundColor: props.backgroundColor.css,
-        images: props.image.src,
-        alt: props.image.alt,
-        loadWhenInViewport: props.loadWhenInViewport
-    };
+    let newProps;
+
+    if (props.image) {
+        newProps = {
+            ...props,
+            load: loaded,
+            backgroundColor: props.backgroundColor.css,
+            images: props.image.src,
+            alt: props.image.alt,
+            loadWhenInViewport: props.loadWhenInViewport
+        };
+    }
+    else if (props.video) {
+
+        newProps = {
+            ...props,
+            load: loaded,
+            backgroundColor: props.backgroundColor.css,
+            videos: props.video.src,
+            alt: props.video.alt,
+            loadWhenInViewport: props.loadWhenInViewport
+        };
+    }
 
     if (!props.autoload) {
         newProps.load = props.load;

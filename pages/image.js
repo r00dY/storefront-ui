@@ -33,6 +33,13 @@ ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/02-custom
 
 ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/03-image-zoomable.js")} component={require('../src/core-main/Image/examples/03-image-zoomable.js').default} />}
 
+### Videos
+
+It's very easy to add videos instead of images. Actually you must use \`Image\` component too. It's not video player. It's just a "moving content", like in Harry Potter. API is exactly the same, just use \`video\` prop instead of image.
+
+${<Example code={require("!!raw-loader!../src/core-main/Image/examples/04-video.js")}
+           component={require('../src/core-main/Image/examples/04-video.js').default}/>}
+
 `;
 
 export default () => <Page>{content}</Page>;

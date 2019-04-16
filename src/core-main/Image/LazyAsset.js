@@ -190,9 +190,17 @@ class LazyAsset extends React.Component {
                 wrapperStyles.backgroundImage = `url(${this.props.placeholder})`;
             }
 
+            let aspectRatio;
+
+            if (this.props.images) {
+                aspectRatio = (this.props.images[0].h / this.props.images[0].w);
+            }
+            else if (this.props.videos) {
+                aspectRatio = (this.props.videos[0].h / this.props.videos[0].w);
+            }
 
             if (this.props.mode === "natural") {
-                wrapperStyles.paddingBottom = `${(this.props.images[0].h / this.props.images[0].w * 100)}%`;
+                wrapperStyles.paddingBottom = `${(aspectRatio * 100)}%`;
                 wrapperStyles.height = "auto";
                 imgStyles.objectFit = "cover";
             }
@@ -207,7 +215,7 @@ class LazyAsset extends React.Component {
 
             imgStyles.objectPosition = this.props.backgroundPosition;
 
-            if (this.props.images.length > 0) {
+            if (this.props.images) {
                 imgTag = <img
                     ref={this.image}
                     style={{...styles.img, ...imgStyles }}
@@ -218,6 +226,21 @@ class LazyAsset extends React.Component {
                     className={`i-${this.randomId}`}
                     draggable={this.props.draggable}
                 />
+            }
+            else if (this.props.videos) {
+                imgTag = <video
+                    ref={this.image}
+                    style={{...styles.img, ...imgStyles }}
+                    autoPlay
+                    muted
+                    loop
+                    onCanPlay={this.handleImageLoaded}
+                    className={`i-${this.randomId}`}
+                    draggable={this.props.draggable}
+                    title={this.props.alt}
+                >
+                    {this.state.status >= 2 && this.props.videos.map((video) => <source type={video.type} src={video.url} />) }
+                </video>
             }
         }
 
@@ -246,6 +269,7 @@ class LazyAsset extends React.Component {
 LazyAsset.propTypes = {
     mode: PropTypes.oneOf(["cover", "natural", "contain"]),
     images: PropTypes.arrayOf(PropTypes.object),
+    videos: PropTypes.arrayOf(PropTypes.object),
     media: PropTypes.arrayOf(PropTypes.object),
 
     fallbackSrc: PropTypes.string,
@@ -271,7 +295,8 @@ LazyAsset.defaultProps = {
     animationTime: 1,
     loadWhenInViewport: false,
     sizes: "100vw",
-    images: [],
+    images: null,
+    videos: null,
     load: false,
     backgroundColor: "lightgrey",
     backgroundPosition: "center",
