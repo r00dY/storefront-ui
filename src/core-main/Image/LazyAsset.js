@@ -4,6 +4,7 @@ import VisibilitySensor from 'react-visibility-sensor';
 
 /**
  * TODO: "mode" support for video in Edge/IE and for images for IE.
+ * TODO: "video" already loaded (if already loaded in browser)
  * TODO: "media" should support video. Right now video it's not supported for "media" prop.
  * TODO: onLoad callbacks
  * TODO: contain mode should work well with placeholders, extraContent and background (lower priority)
@@ -239,7 +240,7 @@ class LazyAsset extends React.Component {
                     draggable={this.props.draggable}
                     title={this.props.alt}
                 >
-                    {this.state.status >= 2 && this.props.videos.map((video) => <source type={video.type} src={video.url} />) }
+                    {this.state.status >= 2 && this.props.videos.map((video) => <source key={video.url} type={video.type} src={video.url} />) }
                 </video>
             }
         }
