@@ -7,6 +7,13 @@ import ImageZoomable from "../Image/ImageZoomable";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
+/**
+ * TODO: Hook should be separate and work with any refs, should be independent of ImageMosaic
+ * TODO: ImageMosaic should be a simple component with forwardRef
+ * TODO: useImageMosaic should simply connect above two AND work like useSwipeableItemsContainer works.
+ *
+ */
+
 class ImageMosaic extends React.Component {
     constructor(props) {
         super(props);
