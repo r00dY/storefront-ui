@@ -35,6 +35,12 @@ ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/
 
 ${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/04-dots.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/04-dots.js').default} />}
 
+### Scrollbar
+
+Some designs require adding scrollbar which works together with swiper.
+
+${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/05-scrollbar.js")}
+           component={require('../src/core-main/SwipeableItemsContainer/examples/05-scrollbar.js').default}/>}
 
 `;
 

@@ -197,7 +197,7 @@ let SwipeableItemsContainerPure = (props) => {
             containerRef: React.createRef(),
             itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
         });
-    };
+    }
 
     let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
 

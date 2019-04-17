@@ -18,6 +18,7 @@ import SwipeableItemsContainer, { useSwipeableItemsContainer } from "./core-main
 import ImageMosaic, { useImageMosaic } from "./core-main/ImageMosaic/ImageMosaic";
 
 import Dots from "./core-main/Dots/Dots";
+import ScrollBar from "./core-main/Scrollbar/Scrollbar";
 
 import StickyColumn from "./core-main/StickyColumn/StickyColumn";
 
@@ -66,7 +67,7 @@ let C = Colors;
 Layout.main = new Layout({
     colNumber: 24,
     container: "90vw",
-    gutter: 25
+    gutter: 15
 });
 
 let L = Layout.main;
@@ -122,6 +123,7 @@ export {
     SwipeableItemsContainer, useSwipeableItemsContainer,
 
     Dots,
+    ScrollBar,
 
     StickyColumn,
 
