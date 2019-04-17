@@ -93,9 +93,10 @@ const Dots = props => {
 };
 
 Dots.propTypes = {
-    active: PropTypes.number.isRequired,
-    amount: PropTypes.number.isRequired,
+    active: PropTypes.number,
+    amount: PropTypes.number,
     onClick: PropTypes.func,
+    swipeableItemsContainer: PropTypes.object,
     dotSize: PropTypes.any,
     spaceWidth: PropTypes.any,
     spaceHeight: PropTypes.any,

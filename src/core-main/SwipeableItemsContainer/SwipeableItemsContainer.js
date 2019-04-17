@@ -426,12 +426,10 @@ function useSwipeableItemsContainerEvent(hook, event, callback) {
 
         if (oldInstance !== newInstance) {
             if (oldInstance) {
-                console.log('remove event listener');
                 oldInstance.removeEventListener('move', callback);
             }
 
             if (newInstance) {
-                console.log('add event listener');
                 newInstance.addEventListener('move', callback);
             }
 
@@ -440,7 +438,6 @@ function useSwipeableItemsContainerEvent(hook, event, callback) {
 
         return () => {
             if (newInstance) {
-                console.log('remove event listener');
                 newInstance.removeEventListener('move', callback);
             }
         }
