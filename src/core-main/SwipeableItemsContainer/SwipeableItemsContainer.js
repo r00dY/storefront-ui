@@ -91,9 +91,9 @@ const Item = styled.div`
     flex-shrink: 0;
 `;
 
-function getActiveSlidesIds(slider, activeAsArray) {
+function getActiveSlidesIds(state, activeAsArray) {
     let activeSlidesIds = [];
-    slider.state.slides.forEach((s, i) => { if (s.active) { activeSlidesIds.push(i)} });
+    state.slides.forEach((s, i) => { if (s.active) { activeSlidesIds.push(i)} });
 
     if (activeAsArray) {
         return activeSlidesIds;
@@ -111,93 +111,89 @@ function getActiveSlidesIds(slider, activeAsArray) {
  */
 function useAbstractSlider(config, events) {
     const ref = useRef(null);
-    let [active, setActive] = useState();
+    let [, updateState] = React.useState(0);
 
-    events = events || {};
+    const eventsRef = useRef(null);
+    eventsRef.current = events || {};
 
-    function setConfig(config) {
-        let slider = ref.current;
+    function getSlider(config) {
+        if (!config) {
+            return;
+        }
 
-        if (slider) {
-            slider.applyConfig(config);
+        let abstractSlider = ref.current;
 
-            slider.activeAsArray = config.activeAsArray ? true : false;
+        if (abstractSlider !== null) {
+            if (config) {
+                abstractSlider.applyConfig(config);
+            }
+            else {
+                abstractSlider.destroy();
+                ref.current = undefined;
+            }
         }
         else {
-            ref.current = new AbstractSlider(config);
-            slider = ref.current;
+            abstractSlider = new AbstractSlider(config);
+            ref.current = abstractSlider;
 
-            slider.activeAsArray = config.activeAsArray ? true : false;
-
-            // activeSlides
-            setActive(getActiveSlidesIds(slider));
-            active = getActiveSlidesIds(slider);
-
-            slider.addEventListener('activeSlidesChange', () => {
-                setActive(getActiveSlidesIds(slider));
-            });
-
-            slider.addEventListener('move', () => {
-                if (events.move) {
-                    events.move(slider.state);
+            // Register event listeners (only once)
+            abstractSlider.addEventListener('move', () => {
+                if (eventsRef.current.move) {
+                    eventsRef.current.move(abstractSlider.state);
                 }
             });
+
+            abstractSlider.addEventListener('activeSlidesChange', () => {
+                updateState(Math.random());
+            });
         }
+
+        return abstractSlider;
     }
 
-    function getSlider() {
-        return ref.current;
-    }
-
-    // init slider if config given and slider not initialised
-    if (!getSlider() && config) {
-        setConfig(config);
-    }
-
-    let slider = getSlider();
-
-    // If slider not yet initialized, return emtpy values
+    const abstractSlider = useMemo(() => getSlider(config), [config]);
 
     let ret = {
         active: undefined,
         isFirstActive: undefined,
         isLastActive: undefined,
-        _getSlider: getSlider,
 
-        moveTo: (...args) => getSlider().moveTo(...args),
-        moveToNext: (...args) => getSlider().moveRight(...args),
-        moveToPrev: (...args) => getSlider().moveLeft(...args),
-        moveToSlide: (...args) => getSlider().moveToSlide(...args),
-        setConfig: setConfig
+        instance: abstractSlider,
+
+        moveTo: (...args) => abstractSlider.moveTo(...args),
+        moveToNext: (...args) => abstractSlider.moveRight(...args),
+        moveToPrev: (...args) => abstractSlider.moveLeft(...args),
+        moveToSlide: (...args) => abstractSlider.moveToSlide(...args),
     };
 
-    if (!slider) {
+    if (!abstractSlider) {
         return ret;
     }
 
     // Otherwise, return properly
+
+    let active = getActiveSlidesIds(abstractSlider.state);
+
     return {
         ...ret,
         active: active,
         isFirstActive: Array.isArray(active) ? active.includes(0) : active === 0,
-        isLastActive: Array.isArray(active) ? active.includes(slider._config.count - 1) : active === slider._config.count - 1,
+        isLastActive: Array.isArray(active) ? active.includes(abstractSlider._config.count - 1) : active === abstractSlider._config.count - 1,
     }
 }
 
 
 let SwipeableItemsContainerPure = (props) => {
-    let refs = props.__refs;
     let abstractSlider = props.__abstractSlider;
+    let instance = abstractSlider.instance;
 
-    if (!refs) {
-        refs = useRef({
-            leftOffsetRef: React.createRef(),
-            rightOffsetRef: React.createRef(),
-            wrapperRef: React.createRef(),
-            containerRef: React.createRef(),
-            itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
-        });
-    }
+    const refs = useRef({
+        leftOffsetRef: React.createRef(),
+        rightOffsetRef: React.createRef(),
+        wrapperRef: React.createRef(),
+        containerRef: React.createRef(),
+        itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
+    });
 
     let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
 
@@ -212,8 +208,7 @@ let SwipeableItemsContainerPure = (props) => {
         overflowAlwaysHidden: props.swiper === true
     };
 
-    useEffect(() => {
-
+    const udpateAbstractSliderConfig = () => {
         // Let's create
         let sizes = [];
         let margins = [];
@@ -248,25 +243,48 @@ let SwipeableItemsContainerPure = (props) => {
 
         if (props.snap === 'center') {
             config.slideSnapOffset = (n) => (config.containerSize - sizes[n]) / 2;
-        }
-        else {
+        } else {
             config.slideSnapOffset = () => config.leftOffset;
         }
 
-        abstractSlider.setConfig(config);
+        props.__onConfigChange(config);
+    };
 
-        props.__applyState(abstractSlider._getSlider().state);
+    const applyState = () => {
+        containerRef.current.style.transform = `translate3d(${
+        instance.state.slides[0].coord - instance.state.leftOffset
+            }px, 0, 0)`;
+    };
 
-        let touchSpace = new TouchSpace(abstractSlider._getSlider(), wrapperRef.current);
-        touchSpace.enable();
+    if (instance) {
+        applyState();
+    }
+
+    // Slider config udpates (based on layout changes of items in DOM!)
+    useEffect(() => {
+        udpateAbstractSliderConfig();
+
+        window.addEventListener('resize', udpateAbstractSliderConfig);
 
         return () => {
-            containerRef.current.style.transform = "none";
-            touchSpace.disable();
-            abstractSlider._getSlider().destroy();
+            window.removeEventListener('resize', udpateAbstractSliderConfig);
+        }
+    }, []); // TODO: For now prop changes don't update layout!
+
+    useEffect(() => {
+        if (instance) { // if abstractSlider available
+            abstractSlider.instance.addEventListener('move', applyState);
+
+            let touchSpace = new TouchSpace(instance, wrapperRef.current);
+            touchSpace.enable();
+
+            return () => {
+                touchSpace.disable();
+            }
         }
 
-    }, []);
+    }, [instance]);
+
 
     if (props.itemSize) {
 
@@ -384,37 +402,13 @@ SwipeableItemsContainerPure.propTypes = {
 
 
 function useSwipeableItemsContainer(inputElement) {
+    const [config, setConfig] = useState(undefined);
+
     let props = inputElement.props;
 
-    const refs = useRef({
-        leftOffsetRef: React.createRef(),
-        rightOffsetRef: React.createRef(),
-        wrapperRef: React.createRef(),
-        containerRef: React.createRef(),
-        itemRefs: [...Array(props.children.length)].map(() => React.createRef()),
-    });
+    const abstractSlider = useAbstractSlider(config);
 
-    // TODO: these refs ere, sliderApplyState here, passing props to SwipeableItemsContainerPure -> this structure sucks, need to clean this up. But works so far.
-    // TODO: Need to consider resize and fact what happens if element is killed and reinstantiated, and hook is still the same!!! RESIZE.
-    let { leftOffsetRef, rightOffsetRef, wrapperRef, containerRef, itemRefs } = refs.current;
-
-    const sliderApplyState = (state) => {
-        containerRef.current.style.transform = `translate3d(${
-        state.slides[0].coord - state.leftOffset
-            }px, 0, 0)`;
-    };
-
-    const abstractSlider = useAbstractSlider(undefined, {
-        'move': (state) => {
-            sliderApplyState(state);
-            // cancelAnimationFrame(raf);
-            // raf = requestAnimationFrame(() => {
-            //     this.sliderApplyState();
-            // });
-        }
-    });
-
-    const element = useMemo(() => <SwipeableItemsContainerPure {...props } __refs={refs} __abstractSlider={abstractSlider} __applyState={sliderApplyState}/>, [abstractSlider.isFirstActive, abstractSlider.isLastActive]);
+    const element = <SwipeableItemsContainerPure {...props } __abstractSlider={abstractSlider} __onConfigChange={(config) => setConfig(config)}/>;
 
     return {
         ...abstractSlider,

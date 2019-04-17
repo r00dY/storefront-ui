@@ -10,7 +10,7 @@ import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => {
     let { element, moveToSlide, active } = useSwipeableItemsContainer(
-        <SwipeableItemsContainer mode={"horizontal"}>
+        <SwipeableItemsContainer mode={"horizontal"} css={css`width: 30vw;`}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
             <Rectangle color={"maroon"}>3</Rectangle>
