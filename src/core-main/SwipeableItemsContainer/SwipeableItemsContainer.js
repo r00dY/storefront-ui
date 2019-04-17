@@ -412,8 +412,39 @@ function useSwipeableItemsContainer(inputElement) {
 
     return {
         ...abstractSlider,
+        count: props.children.length,
         element: element
     };
+}
+
+function useSwipeableItemsContainerEvent(hook, event, callback) {
+    const ref = useRef(null);
+
+    useEffect(() => {
+        let oldInstance = ref.current ? ref.current.instance : undefined;
+        let newInstance = hook.instance;
+
+        if (oldInstance !== newInstance) {
+            if (oldInstance) {
+                console.log('remove event listener');
+                oldInstance.removeEventListener('move', callback);
+            }
+
+            if (newInstance) {
+                console.log('add event listener');
+                newInstance.addEventListener('move', callback);
+            }
+
+            ref.current = newInstance;
+        }
+
+        return () => {
+            if (newInstance) {
+                console.log('remove event listener');
+                newInstance.removeEventListener('move', callback);
+            }
+        }
+    });
 }
 
 const SwipeableItemsContainer = (props) => {
@@ -427,5 +458,6 @@ SwipeableItemsContainer.propTypes = SwipeableItemsContainerPure.propTypes;
 export default SwipeableItemsContainer;
 export {
     useSwipeableItemsContainer,
+    useSwipeableItemsContainerEvent,
     useAbstractSlider
 }

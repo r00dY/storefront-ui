@@ -33,15 +33,35 @@ let DotsBox = styled.div`
 `;
 
 const Dots = props => {
+
+    let data;
+
+    if (props.swipeableItemsContainer) {
+        let hook = props.swipeableItemsContainer;
+
+        data = {
+            amount: hook.count,
+            onClick: (i) => { hook.moveToSlide(i) },
+            active: hook.active
+        }
+    }
+    else {
+        data = {
+            amount: props.amount,
+            onClick: props.onClick,
+            active: props.active
+        }
+    }
+
     let items = [];
-    for (let i = 0; i < props.amount; i++) {
+    for (let i = 0; i < data.amount; i++) {
         items.push(
             <DotsBox
                 spaceWidth={props.spaceWidth}
                 spaceHeight={props.spaceHeight}
                 hoverColor={props.hoverColor}
                 onClick={() => {
-                    props.onClick ? props.onClick(i) : undefined;
+                    data.onClick ? data.onClick(i) : undefined;
                 }}
                 key={i}
             >
@@ -49,7 +69,7 @@ const Dots = props => {
                     dotSize={props.dotSize}
                     color={props.color}
                     activeColor={props.activeColor}
-                    active={props.active === i}
+                    active={data.active === i}
                 />
             </DotsBox>
         );

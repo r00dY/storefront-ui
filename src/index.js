@@ -13,7 +13,7 @@ import GridDebugger from "./core-main/Grid/GridDebugger";
 
 import ProductPhotos, { useProductPhotos } from "./core-main/ProductPhotos/ProductPhotos";
 
-import SwipeableItemsContainer, { useSwipeableItemsContainer } from "./core-main/SwipeableItemsContainer/SwipeableItemsContainer";
+import SwipeableItemsContainer, { useSwipeableItemsContainer, useSwipeableItemsContainerEvent } from "./core-main/SwipeableItemsContainer/SwipeableItemsContainer";
 
 import ImageMosaic, { useImageMosaic } from "./core-main/ImageMosaic/ImageMosaic";
 
@@ -120,7 +120,7 @@ export {
     ImageMosaic,
     useImageMosaic,
 
-    SwipeableItemsContainer, useSwipeableItemsContainer,
+    SwipeableItemsContainer, useSwipeableItemsContainer, useSwipeableItemsContainerEvent,
 
     Dots,
     ScrollBar,

@@ -20,20 +20,9 @@ export default () => {
         </SwipeableItemsContainer>
     );
 
-    /**
-     * Scrollbar should pass handle and should listen to "onMove" and "onInit", "onDestroy"!
-     *
-     * It won't have any state at first (just width 0), and onMove won't be called after init. That's why it should get onInit event. or general "onStateChange"? Sth like this.
-     *
-     * <ScrollBar swipeableItemsContainer={handle} />
-     * <Dots swipeableItemsContainer={handle} />
-     *
-     */
-
     return <div>
         { swiper.element }
         <ScrollBar swipeableItemsContainer={swiper} />
-
     </div>;
 
 };

@@ -9,7 +9,7 @@ import {css, jsx} from "@emotion/core";
 import Rectangle from "../../../../docs-utils/Rectangle";
 
 export default () => {
-    let { element, moveToSlide, active } = useSwipeableItemsContainer(
+    let swiper = useSwipeableItemsContainer(
         <SwipeableItemsContainer mode={"horizontal"}>
             <Rectangle color={"coral"}>1</Rectangle>
             <Rectangle color={"darkgoldenrod"}>2</Rectangle>
@@ -21,27 +21,30 @@ export default () => {
     );
 
     return <div>
-        { element }
+        { swiper.element }
 
-        <Dots active={active} onClick={moveToSlide} amount={6} />
+        <Dots swipeableItemsContainer={swiper} />
+
         <p>Dots might have other variants and are pretty much customisable. Vertical:</p>
-        <Dots
-            active={active}
-            onClick={moveToSlide}
-            amount={6}
-            vertical={true}
-        />
+        <Dots swipeableItemsContainer={swiper} vertical={true} />
+
         <p>Very custom</p>
         <Dots
-            active={active}
-            onClick={moveToSlide}
-            amount={6}
+            swipeableItemsContainer={swiper}
             spaceWidth={30}
             spaceHeight={30}
             hoverColor={new Color("red")}
             dotSize={10}
             color={new Color("blue")}
             activeColor={new Color("coral")}
+        />
+
+
+        <p>Dots without <code>swipeableItemsContainer</code> prop, but using swiper state directly</p>
+        <Dots
+            amount={swiper.count}
+            onClick={(i) => swiper.moveToSlide(i)}
+            active={swiper.active}
         />
 
     </div>;
