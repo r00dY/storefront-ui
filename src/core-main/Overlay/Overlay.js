@@ -2,46 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
 
-import { stylesToCSS, RangeMap, rm, rs } from "responsive-helpers";
+import { rm, rs } from "responsive-helpers";
 import Ease from "../Ease";
 import Color from "../Color";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
-
-//
-//
-// let ModalContentWrapper = styled.div`
-//     ${props => props.styles}
-// `;
-//
-// let ModalContent = styled.div`
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-//
-//     transition: ${props => props.styles.transition};
-//     ${props => props.styles.before}
-//     .Modal--opened:not(.Modal--before-close) & {
-//         ${props => props.styles.after}
-//     }
-// `;
-//
-// const ModalBackground = styled.div`
-//     position: absolute;
-//     top: 0;
-//     left: 0;
-//     width: 100%;
-//     height: 100%;
-//     background-color: ${props => props.backgroundColor};
-//     cursor: pointer;
-//
-//     transition: ${props => props.styles.transition};
-//     ${props => props.styles.before}
-//     .Modal--opened:not(.Modal--before-close) & {
-//         ${props => props.styles.after}
-//     }
-// `;
 
 const globalDefaults = {
     animationTime: 0.3,
@@ -56,10 +22,7 @@ const defaults = {
             0: "90%",
             720: "50%"
         },
-        height: {
-            0: "90%",
-            720: "50%"
-        }
+        height: "auto"
     },
     left: {
         mode: "left",
@@ -99,7 +62,7 @@ const centered = (width, height, time, ease, backgroundColor) => ({
     backgroundColor: backgroundColor,
     position: `
         ${rs(width).css('width')}
-        ${rs(height).css('height')}
+        ${height === "auto" ? "height: auto;" : rs(height).css('height')}
     `,
     animation: {
         content: {
@@ -161,16 +124,16 @@ function Overlay(props) {
                 rawConfigs[range.from] = centered(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor);
                 break;
             case "left":
-                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "X", true);
+                rawConfigs[range.from] = slide(config.width, "100%", config.animationTime, config.animationEase, config.backgroundColor, "X", true);
                 break;
             case "right":
-                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "X", false);
+                rawConfigs[range.from] = slide(config.width, "100%", config.animationTime, config.animationEase, config.backgroundColor, "X", false);
                 break;
             case "top":
-                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", true);
+                rawConfigs[range.from] = slide("100%", config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", true);
                 break;
             case "bottom":
-                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", false);
+                rawConfigs[range.from] = slide("100%", config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", false);
                 break;
         }
     });

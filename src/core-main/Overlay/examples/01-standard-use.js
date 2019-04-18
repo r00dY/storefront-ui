@@ -5,6 +5,8 @@ import {css, jsx} from "@emotion/core";
 
 import { Overlay, Color, Ease } from "storefront-ui";
 
+import LoremIpsum from "../../../../docs-utils/LoremIpsum";
+
 export default () => {
     // This code doesn't have to be called every time. You just have to call it once in your app to tell Overlay where to place overlays.
     useEffect(() => {
@@ -35,7 +37,7 @@ export default () => {
         },
         // from left
         {
-            mode: "right",
+            mode: "left",
             width: "80%",
             animationTime: 0.8,
             animationEase: Ease.expoInOut
@@ -56,11 +58,20 @@ export default () => {
                 mode: "right",
                 width: "50%"
             }
+        },
+        // height auto
+        {
+            mode: "center",
+            height: "auto",
+            minHeight: "50%",
+            maxHeight: "90%"
         }
     ];
 
     const [opened, setOpened] = useState(false);
     const [config, setConfig] = useState(null);
+
+
 
     return <div>
         <p>Click to open overlay in different configurations</p>
@@ -70,6 +81,7 @@ export default () => {
         <button onClick={() => { setConfig(configs[2]); setOpened(true)}}>mode: left, custom animation</button><br/><br/>
         <button onClick={() => { setConfig(configs[3]); setOpened(true)}}>mode: bottom, red background</button><br/><br/>
         <button onClick={() => { setConfig(configs[4]); setOpened(true)}}>mode: top on mobile, mode: right on desktop</button><br/><br/>
+        <button onClick={() => { setConfig(configs[5]); setOpened(true)}}>mode: center, height: auto</button><br/><br/>
 
         <Overlay
             config={config}
@@ -81,12 +93,18 @@ export default () => {
                 background-color: lightgoldenrodyellow;
                 width: 100%;
                 height: 100%;
+            `} />
+
+            <div css={css`
+                position: relative;
                 padding: 20px;
-                box-sizing: border-box;
+                max-height: 90%;
+                z-index: 1;
             `}>
-                <p>Hello world</p>
+                <LoremIpsum/>
                 <button onClick={() => setOpened(false)}>Close overlay</button>
             </div>
+
         </Overlay>
 
     </div>
