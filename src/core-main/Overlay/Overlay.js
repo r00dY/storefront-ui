@@ -1,168 +1,181 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Modal from "react-modal";
-import styled from "styled-components";
 
-import { stylesToCSS, RangeMap } from "responsive-helpers";
+import { stylesToCSS, RangeMap, rm, rs } from "responsive-helpers";
 import Ease from "../Ease";
+import Color from "../Color";
 
-let ModalContentWrapper = styled.div`
-    ${props => props.styles}
-`;
+/** @jsx jsx */
+import {css, jsx} from "@emotion/core";
 
-let ModalContent = styled.div`
-    position: relative;
-    width: 100%;
-    height: 100%;
+//
+//
+// let ModalContentWrapper = styled.div`
+//     ${props => props.styles}
+// `;
+//
+// let ModalContent = styled.div`
+//     position: relative;
+//     width: 100%;
+//     height: 100%;
+//
+//     transition: ${props => props.styles.transition};
+//     ${props => props.styles.before}
+//     .Modal--opened:not(.Modal--before-close) & {
+//         ${props => props.styles.after}
+//     }
+// `;
+//
+// const ModalBackground = styled.div`
+//     position: absolute;
+//     top: 0;
+//     left: 0;
+//     width: 100%;
+//     height: 100%;
+//     background-color: ${props => props.backgroundColor};
+//     cursor: pointer;
+//
+//     transition: ${props => props.styles.transition};
+//     ${props => props.styles.before}
+//     .Modal--opened:not(.Modal--before-close) & {
+//         ${props => props.styles.after}
+//     }
+// `;
 
-    transition: ${props => props.styles.transition};
-    ${props => props.styles.before}
-    .Modal--opened:not(.Modal--before-close) & {
-        ${props => props.styles.after}
+const globalDefaults = {
+    animationTime: 0.3,
+    animationEase: Ease.expoOut,
+    backgroundColor: new Color("rgba(0, 0, 0, 0.5)")
+};
+
+const defaults = {
+    center: {
+        mode: "center",
+        width: {
+            0: "90%",
+            720: "50%"
+        },
+        height: {
+            0: "90%",
+            720: "50%"
+        }
+    },
+    left: {
+        mode: "left",
+        width: {
+            0: "90%",
+            720: "35%"
+        },
+        height: "100%"
+    },
+    right: {
+        mode: "right",
+        width: {
+            0: "90%",
+            720: "35%"
+        },
+        height: "100%"
+    },
+    top: {
+        mode: "top",
+        width: "100%",
+        height: {
+            0: "90%",
+            720: "35%"
+        }
+    },
+    bottom: {
+        mode: "bottom",
+        width: "100%",
+        height: {
+            0: "90%",
+            720: "35%"
+        }
     }
-`;
+};
 
-const ModalBackground = styled.div`
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: ${props => props.backgroundColor};
-    cursor: pointer;
-
-    transition: ${props => props.styles.transition};
-    ${props => props.styles.before}
-    .Modal--opened:not(.Modal--before-close) & {
-        ${props => props.styles.after}
+const centered = (width, height, time, ease, backgroundColor) => ({
+    backgroundColor: backgroundColor,
+    position: `
+        ${rs(width).css('width')}
+        ${rs(height).css('height')}
+    `,
+    animation: {
+        content: {
+            before: "opacity: 0;",
+            after: "opacity: 1;"
+        },
+        background: {
+            before: "opacity: 0;",
+            after: "opacity: 1;"
+        },
+        time: time,
+        ease: ease,
     }
-`;
+});
 
-// TODO: RangeMap as a config! Example: overlay from right on desktop and from bottom on mobile (like PresentationController)
+const slide = (width, height, time, ease, backgroundColor, axis, fromStart) => ({
+    backgroundColor: backgroundColor,
+    position: `
+        position: absolute;
+        top: ${(axis === "Y" && fromStart) || axis === "X" ? 0 : "auto"};
+        bottom: ${axis === "Y" && !fromStart ? 0 : "auto"};
+        left: ${(axis === "X" && fromStart) || axis === "Y" ? 0 : "auto"};
+        right: ${axis === "X" && !fromStart ? 0 : "auto"};
+
+        ${rs(width).css('width')}
+        ${rs(height).css('height')}
+    `,
+    animation: {
+        content: {
+            before: `transform: translate${axis}(${fromStart ? "-" : ""}100%);`,
+            after: "transform: none;"
+        },
+        background: {
+            before: "opacity: 0;",
+            after: "opacity: 1;"
+        },
+        time: time,
+        ease: ease,
+    }
+});
+
 function Overlay(props) {
-    // let rangeMap;
+    let configs = rm(props.config || defaults.center);
 
-    // if (props.config) {
-    //     if (props.config instanceof RangeMap) {
-    //         rangeMap = props.config;
-    //     }
-    //     else if (typeof props.config === 'object') {
-    //         rangeMap = new RangeMap({
-    //             0: props.config
-    //         })
-    //     }
-    //     else {
-    //         throw new Error('Overlay: wrong value for "config" property!');
-    //     }
-    // }
-    // else {
-    //     throw new Error('Overlay: "config" property not defined!');
-    // }
-    //
-
-    let config = props.config;
-    if (!config) {
-        throw new Error('Overlay: "config" property not defined!');
-    }
-
-    // backgroundColor
-
-    if (!config.backgroundColor) {
-        config.backgroundColor = "rgba(0,0,0,0.1)";
-    }
-
-    // position styles
-
-    let positionStyles;
-
-    if (config.positionStyle) {
-        positionStyles = { ...config.positionStyle, position: "absolute" };
-    } else {
-        throw new Error("Overlay: 'positionStyle' must be defined in config");
-    }
+    let rawConfigs = {};
 
     let closeTimeout = 0;
 
-    // Modal Content
-    let modalStyles = {
-        before: "",
-        after: "",
-        transition: "none"
-    };
+    configs.forEach((config, range) => {
+        config.mode = config.mode || "center";
+        config = Object.assign({}, defaults[config.mode], globalDefaults, config);
 
-    if (config.animation && config.animation.content) {
-        let anim = config.animation.content;
-
-        anim.time = anim.time || config.animation.time || 0;
-        anim.ease = anim.ease || config.animation.ease || "linear";
-
-        if (anim.time > closeTimeout) {
-            closeTimeout = anim.time;
+        if (config.animationTime > closeTimeout) {
+            closeTimeout = config.animationTime;
         }
 
-        if (anim.styleBefore) {
-            modalStyles.before = anim.styleBefore;
+        switch(config.mode) {
+            case "center":
+                rawConfigs[range.from] = centered(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor);
+                break;
+            case "left":
+                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "X", true);
+                break;
+            case "right":
+                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "X", false);
+                break;
+            case "top":
+                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", true);
+                break;
+            case "bottom":
+                rawConfigs[range.from] = slide(config.width, config.height, config.animationTime, config.animationEase, config.backgroundColor, "Y", false);
+                break;
         }
+    });
 
-        if (anim.styleAfter) {
-            modalStyles.after = anim.styleAfter;
-        }
-
-        modalStyles.transition = `all ${anim.time}ms ${anim.ease}`;
-    }
-
-    // Modal background
-    let backgroundStyles = {
-        before: "",
-        after: "",
-        transition: "none"
-    };
-
-    if (config.animation && config.animation.background) {
-        let anim = config.animation.background;
-
-        anim.time = anim.time || config.animation.time || 0;
-        anim.ease = anim.ease || config.animation.ease || "linear";
-
-        if (anim.time > closeTimeout) {
-            closeTimeout = anim.time;
-        }
-
-        if (anim.styleBefore) {
-            backgroundStyles.before = anim.styleBefore;
-        }
-
-        if (anim.styleAfter) {
-            backgroundStyles.after = anim.styleAfter;
-        }
-
-        backgroundStyles.transition = `all ${anim.time}ms ${anim.ease}`;
-    }
-
-    // overlay styles
-
-    let overlayCss = {
-        position: "fixed",
-        zIndex: 10,
-        width: "100%",
-        height: "100%",
-        top: 0,
-        left: 0,
-        backgroundColor: "transparent"
-    };
-
-    let modalCss = {};
-
-    if (config.center) {
-        modalCss = {
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-        };
-    }
+    let styles = rm(rawConfigs);
 
     return (
         <Modal
@@ -177,108 +190,82 @@ function Overlay(props) {
                 beforeClose: `Modal--before-close`
             }}
             style={{
-                overlay: overlayCss,
-                content: modalCss
+                overlay: {
+                    position: "fixed",
+                    zIndex: 10,
+                    width: "100%",
+                    height: "100%",
+                    top: 0,
+                    left: 0,
+                    backgroundColor: "transparent"
+                },
+                content: {
+                    position: "relative",
+                    width: "100%",
+                    height: "100%",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }
             }}
             isOpen={props.isOpen}
-            closeTimeoutMS={closeTimeout}
+            closeTimeoutMS={closeTimeout*1000}
             onRequestClose={props.onRequestClose}
             onAfterOpen={props.onAfterOpen}
         >
-            <ModalBackground
-                backgroundColor={config.backgroundColor}
+            <div
+                css={css`
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    width: 100%;
+                    height: 100%;
+                    cursor: pointer;
+
+                    ${styles.css((style) => `
+                        background-color: ${style.backgroundColor.css};
+                        transition: all ${style.animation.time}s ${style.animation.ease.css};
+
+                        ${style.animation.background.before}
+                        .Modal--opened:not(.Modal--before-close) & {
+                            ${style.animation.background.after}
+                        }
+                    `)}
+                `}
                 onClick={props.onRequestClose}
-                styles={backgroundStyles}
                 key={"background"}
             />
 
-            <ModalContentWrapper styles={positionStyles}>
-                <ModalContent styles={modalStyles}>
+            <div css={css`
+                ${styles.css((style) => style.position)}
+            `}>
+
+                <div css={css`
+                    ${styles.css((style) => `
+                        position: relative;
+                        width: 100%;
+                        height: 100%;
+
+                        transition: all ${style.animation.time}s ${style.animation.ease.css};
+                        ${style.animation.content.before}
+                        .Modal--opened:not(.Modal--before-close) & {
+                            ${style.animation.content.after}
+                        }
+                    `)}
+                `}>
                     {props.children}
-                </ModalContent>
-            </ModalContentWrapper>
+                </div>
+            </div>
         </Modal>
     );
 }
-
-const slide = ({ width, height, time, ease }, axis, fromStart) => ({
-    positionStyle: {
-        top: (axis === "Y" && fromStart) || axis === "X" ? 0 : "auto",
-        bottom: axis === "Y" && !fromStart ? 0 : "auto",
-        left: (axis === "X" && fromStart) || axis === "Y" ? 0 : "auto",
-        right: axis === "X" && !fromStart ? 0 : "auto",
-
-        width: width ? width : "100%",
-        height: height ? height : "100%"
-    },
-    animation: {
-        time: time ? time : 350,
-        ease: ease ? ease : Ease.expoOut,
-        content: {
-            styleBefore: {
-                transform: `translate${axis}(${fromStart ? "-" : ""}100%)`
-            },
-            styleAfter: {
-                transform: "none"
-            }
-        },
-        background: {
-            styleBefore: {
-                opacity: 0
-            },
-            styleAfter: {
-                opacity: 1
-            }
-        }
-    }
-});
-
-Overlay.slideFromLeft = ({ width, height, time, ease }) =>
-    slide({ width, height, time, ease }, "X", true);
-Overlay.slideFromRight = ({ width, height, time, ease }) =>
-    slide({ width, height, time, ease }, "X", false);
-Overlay.slideFromTop = ({ width, height, time, ease }) =>
-    slide({ width, height, time, ease }, "Y", true);
-Overlay.slideFromBottom = ({ width, height, time, ease }) =>
-    slide({ width, height, time, ease }, "Y", false);
-
-Overlay.fadeInCentered = ({ width, height, time, ease }) => ({
-    positionStyle: {
-        width: width ? width : "100%",
-        height: height ? height : "100%"
-    },
-    center: true,
-    animation: {
-        time: time ? time : 350,
-        ease: ease ? ease : Ease.expoOut,
-        content: {
-            styleBefore: {
-                opacity: 0
-            },
-            styleAfter: {
-                opacity: 1
-            }
-        },
-        background: {
-            styleBefore: {
-                opacity: 0
-            },
-            styleAfter: {
-                opacity: 1
-            }
-        }
-    }
-});
 
 Overlay.setAppElement = function(appElement) {
     Modal.setAppElement(appElement);
 };
 
 Overlay.propTypes = {
-    config: PropTypes.oneOfType([
-        PropTypes.object,
-        PropTypes.instanceOf(RangeMap)
-    ]).isRequired,
+    config: PropTypes.object,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.element),
         PropTypes.element
