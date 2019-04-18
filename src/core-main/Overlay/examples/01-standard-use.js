@@ -47,11 +47,9 @@ export default () => {
             backgroundColor: new Color("rgba(255, 0, 0, 0.2)")
         },
         // responsive
-
-        // from bottom, custom background color
         {
             xs: {
-                mode: "bottom",
+                mode: "top",
                 height: "90%"
             },
             md: {
@@ -71,7 +69,7 @@ export default () => {
         <button onClick={() => { setConfig(configs[1]); setOpened(true)}}>mode: right, responsive size</button><br/><br/>
         <button onClick={() => { setConfig(configs[2]); setOpened(true)}}>mode: left, custom animation</button><br/><br/>
         <button onClick={() => { setConfig(configs[3]); setOpened(true)}}>mode: bottom, red background</button><br/><br/>
-        <button onClick={() => { setConfig(configs[4]); setOpened(true)}}>mode: bottom on mobile, mode: right on desktop</button><br/><br/>
+        <button onClick={() => { setConfig(configs[4]); setOpened(true)}}>mode: top on mobile, mode: right on desktop</button><br/><br/>
 
         <Overlay
             config={config}
