@@ -91,6 +91,7 @@ export default () => {
         <button onClick={() => { setConfig(configs[3]); setOpened(true)}}>mode: bottom, red background</button><br/><br/>
         <button onClick={() => { setConfig(configs[4]); setOpened(true)}}>mode: top on mobile, mode: right on desktop</button><br/><br/>
         <button onClick={() => { setConfig(configs[5]); setOpened(true)}}>mode: center, height: auto</button><br/><br/>
+        <p>In <code>height: auto</code> mode it's good to remember to set <code>max-height</code> on modal content.</p>
 
         <Overlay
             config={config}
