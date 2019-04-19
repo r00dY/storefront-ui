@@ -71,7 +71,16 @@ export default () => {
     const [opened, setOpened] = useState(false);
     const [config, setConfig] = useState(null);
 
-
+    /**
+     *
+     * maxHeight, minHeight won't work in API. Why?
+     *
+     * Because it doesn't work when you set height: auto, min-height and max-height.
+     * OK, it works.
+     *
+     * But absolutely positioned children with "height: 100%" will have height of CONTENT, not height of CONTAINER. Sad.
+     *
+     */
 
     return <div>
         <p>Click to open overlay in different configurations</p>
@@ -98,7 +107,6 @@ export default () => {
             <div css={css`
                 position: relative;
                 padding: 20px;
-                max-height: 90%;
                 z-index: 1;
             `}>
                 <LoremIpsum/>
