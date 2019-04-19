@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import { Overlay, Color, Ease } from "storefront-ui";
+import { Modal, Color, Ease } from "storefront-ui";
 
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 
 export default () => {
     // This code doesn't have to be called every time. You just have to call it once in your app to tell Overlay where to place overlays.
     useEffect(() => {
-        Overlay.setAppElement("#overlaysContainer");
+        Modal.setAppElement("#overlaysContainer");
     }, []);
 
     const configs = [
@@ -71,17 +71,6 @@ export default () => {
     const [opened, setOpened] = useState(false);
     const [config, setConfig] = useState(null);
 
-    /**
-     *
-     * maxHeight, minHeight won't work in API. Why?
-     *
-     * Because it doesn't work when you set height: auto, min-height and max-height.
-     * OK, it works.
-     *
-     * But absolutely positioned children with "height: 100%" will have height of CONTENT, not height of CONTAINER. Sad.
-     *
-     */
-
     return <div>
         <p>Click to open overlay in different configurations</p>
 
@@ -93,7 +82,7 @@ export default () => {
         <button onClick={() => { setConfig(configs[5]); setOpened(true)}}>mode: center, height: auto</button><br/><br/>
         <p>In <code>height: auto</code> mode it's good to remember to set <code>max-height</code> on modal content.</p>
 
-        <Overlay
+        <Modal
             config={config}
             isOpen={opened}
             onRequestClose={() => setOpened(false)}
@@ -114,7 +103,7 @@ export default () => {
                 <button onClick={() => setOpened(false)}>Close overlay</button>
             </div>
 
-        </Overlay>
+        </Modal>
 
     </div>
 };

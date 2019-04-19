@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Modal from "react-modal";
+import ReactModal from "react-modal";
 
 import { rm, rs } from "responsive-helpers";
 import Ease from "../Ease";
@@ -104,7 +104,7 @@ const slide = (width, height, time, ease, backgroundColor, axis, fromStart) => (
     }
 });
 
-function Overlay(props) {
+function Modal(props) {
     let configs = rm(props.config || defaults.center);
 
     let rawConfigs = {};
@@ -141,7 +141,7 @@ function Overlay(props) {
     let styles = rm(rawConfigs);
 
     return (
-        <Modal
+        <ReactModal
             overlayClassName={{
                 base: "Overlay",
                 afterOpen: `Overlay--opened`,
@@ -219,15 +219,15 @@ function Overlay(props) {
                     {props.children}
                 </div>
             </div>
-        </Modal>
+        </ReactModal>
     );
 }
 
-Overlay.setAppElement = function(appElement) {
-    Modal.setAppElement(appElement);
+Modal.setAppElement = function(appElement) {
+    ReactModal.setAppElement(appElement);
 };
 
-Overlay.propTypes = {
+Modal.propTypes = {
     config: PropTypes.object,
     children: PropTypes.oneOfType([
         PropTypes.arrayOf(PropTypes.element),
@@ -238,4 +238,4 @@ Overlay.propTypes = {
     onAfterOpen: PropTypes.func
 };
 
-export default Overlay;
+export default Modal;

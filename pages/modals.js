@@ -3,13 +3,13 @@ import Page from "../docs-utils/Page";
 import { md, Example, CodeBlock } from "../docs-utils/docs";
 
 const content = md`
-# Overlays and Modals
+# Modals / Overlays
 
 They are the same thing.
 
 Below examples how to use them in \`storefront-ui\`.
 
-${<Example code={require("!!raw-loader!../src/core-main/Overlay/examples/01-standard-use.js")} component={require('../src/core-main/Overlay/examples/01-standard-use.js').default} />}
+${<Example code={require("!!raw-loader!../src/core-main/Modal/examples/01-standard-use.js")} component={require('../src/core-main/Modal/examples/01-standard-use.js').default} />}
 
 `;
 

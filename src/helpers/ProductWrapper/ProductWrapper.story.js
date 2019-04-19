@@ -53,7 +53,7 @@ import {
     ProductMeta2
 } from "../../helpers/ProductMeta/ProductMeta.story";
 
-import Overlay from "../../core-main/Overlay/Overlay";
+import Modal from "../../core-main/Modal/Overlay";
 
 import MediaQuery from "react-responsive";
 
@@ -1182,8 +1182,8 @@ storiesOf("ProductWrapper", module).add("new components", () => (
                                     {desktopMarkup}
                                 </MediaQuery>
 
-                                <Overlay
-                                    config={Overlay.slideFromBottom({
+                                <Modal
+                                    config={Modal.slideFromBottom({
                                         width: "100%",
                                         height: "100%"
                                     })}
@@ -1381,7 +1381,7 @@ storiesOf("ProductWrapper", module).add("new components", () => (
                                         {/*</Grid>*/}
                                         {/*</OverlayPhotosWrapper>*/}
                                     </div>
-                                </Overlay>
+                                </Modal>
                             </div>
                         );
                     }

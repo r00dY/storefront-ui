@@ -43,7 +43,7 @@ import styled from "styled-components";
 
 import SwipeableItemsContainer from "../../core-main/SwipeableItemsContainer/SwipeableItemsContainer";
 
-import Overlay from "../../core-main/Overlay/Overlay";
+import Modal from "../../core-main/Modal/Overlay";
 
 import { RangeSet } from "responsive-helpers";
 

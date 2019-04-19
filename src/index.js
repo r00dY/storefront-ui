@@ -24,7 +24,7 @@ import StickyColumn from "./core-main/StickyColumn/StickyColumn";
 
 import MediaQuery from "./core-main/MediaQuery/MediaQuery";
 
-import Overlay from "./core-main/Overlay/Overlay";
+import Modal from "./core-main/Modal/Modal";
 
 import Accordion from "./core-main/Accordion/Accordion";
 import AccordionRaw from "./core-main/Accordion/AccordionRaw";
@@ -129,7 +129,7 @@ export {
 
     MediaQuery,
 
-    Overlay,
+    Modal,
 
     AccordionRaw,
     Accordion,
