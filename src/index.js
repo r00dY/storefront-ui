@@ -35,6 +35,8 @@ import FiltersColumn from "./core-main/Filters/FiltersColumn/FiltersColumn";
 import ButtonNaked from "./core-main/ButtonNaked/ButtonNaked";
 import Button from "./core-main/Button/Button";
 
+import DropdownMenu from "./core-main/DropdownMenu/DropdownMenu";
+
 const defaultSpacings = {
     s1: 10,
     s2: 20,
@@ -140,5 +142,7 @@ export {
     FiltersColumn,
 
     ButtonNaked,
-    Button
+    Button,
+
+    DropdownMenu
 }

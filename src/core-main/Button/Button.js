@@ -43,7 +43,7 @@ const ButtonUnstyled = (props) => <button css={css`
     position: relative;
     height: 100%;
 
-`} className={props.className} style={props.style} disabled={props.disabled}>{props.children}</button>;
+`} {...props} />;
 
 const LinkRaw = styled.a`
     background-color: transparent;
@@ -118,7 +118,7 @@ function Button(props) {
 
     let ButtonInnerContent = map[mode];
 
-    return <ButtonUnstyled disabled={props.disabled} onClick={props.onClick} style={props.style} className={props.className}><ButtonInnerContent {...props} /></ButtonUnstyled>;
+    return <ButtonUnstyled {...props}><ButtonInnerContent {...props} /></ButtonUnstyled>;
 
 }
 
