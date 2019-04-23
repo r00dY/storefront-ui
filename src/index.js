@@ -33,6 +33,7 @@ import ItemListAccordion from "./core-main/ItemListAccordion/ItemListAccordion";
 import FiltersColumn from "./core-main/Filters/FiltersColumn/FiltersColumn";
 
 import ButtonNaked from "./core-main/ButtonNaked/ButtonNaked";
+import Button from "./core-main/Button/Button";
 
 const defaultSpacings = {
     s1: 10,
@@ -138,5 +139,6 @@ export {
 
     FiltersColumn,
 
-    ButtonNaked
+    ButtonNaked,
+    Button
 }

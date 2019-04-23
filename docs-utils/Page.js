@@ -35,6 +35,7 @@ export default (props) => {
                 <li><Link href="/modals"><a>Modals / Overlays</a></Link></li>
                 <li><Link href="/accordion"><a>Accordion</a></Link></li>
                 <li><Link href="/filters"><a>Filters</a></Link></li>
+                <li><Link href="/button"><a>Button</a></Link></li>
             </ul>
 
         </div>

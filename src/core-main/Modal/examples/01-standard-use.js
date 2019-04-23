@@ -62,9 +62,7 @@ export default () => {
         // height auto
         {
             mode: "center",
-            height: "auto",
-            minHeight: "50%",
-            maxHeight: "90%"
+            height: "auto"
         }
     ];
 
