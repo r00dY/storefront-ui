@@ -44,13 +44,6 @@ function DropdownMenu(props) {
                 props.trigger.props.onClick(e);
             }
         },
-        onBlur: (e) => {
-            // setOpen(false);
-            // if (props.trigger.props.onBlur) { props.trigger.props.onBlur(e); }
-        },
-        onFocus: (e) => {
-
-        },
         dropdownOpened: open
     });
 
@@ -60,24 +53,31 @@ function DropdownMenu(props) {
 
     props.children.forEach((child) => {
 
-        let element =
-            <div css={css`
+        let element;
+
+        if (child.type === DropdownMenuItem) {
+            element =
+                <div css={css`
                 cursor: pointer;
             `} onClick={() => {
 
-                setOpen(false);
-                if (child.props.onClick) {
-                    child.props.onClick()
-                }
+                    setOpen(false);
+                    if (child.props.onClick) {
+                        child.props.onClick()
+                    }
 
-            }}
-                 key={child.key}
-            >
-                {child}
-            </div>;
+                }}
+                     key={child.key}
+                >
+                    {child}
+                </div>;
 
-        if (child.props.href) {
-            element = <div key={child.key}>{linkTransform(element, child.props.href, child.props)}</div>;
+            if (child.props.href) {
+                element = <div key={child.key}>{linkTransform(element, child.props.href, child.props)}</div>;
+            }
+        }
+        else {
+            element = child;
         }
 
         children.push(element);
