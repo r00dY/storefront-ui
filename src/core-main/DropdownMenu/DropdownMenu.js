@@ -1,16 +1,37 @@
-import React, { useState } from "react";
+import React, {useState} from "react";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import { Button } from "../Button/Button";
+import {Button} from "../Button/Button";
 
-const defaultItem = (data, { index, selected, focused }) => <div css={css`
+// props.selected, props.focused
+const DefaultItem = (props) => <div css={css`
     padding: 12px;
     &:hover {
         background-color: lightgrey;
     }
-`}>{data.label}</div>;
+`}>{props.children} {props.selected ? "(checked)" : ""}</div>;
+
+const map = {
+    default: DefaultItem
+};
+
+function DropdownMenuItem(props) {
+    let appearance = props.appearance || "default";
+    let ItemInternals = map[appearance];
+
+    return <ItemInternals {...props} />
+}
+
+const defaultLinkTransform = (content, href, props) => <a css={css`
+        &:visited, &:hover, &:active, &:link {
+            color: inherit;
+        }
+
+        text-decoration: none;
+
+    `} href={href}>{content}</a>;
 
 function DropdownMenu(props) {
     const [open, setOpen] = useState(false);
@@ -19,7 +40,9 @@ function DropdownMenu(props) {
         onClick: (e) => {
             setOpen(!open);
 
-            if (props.trigger.props.onClick) { props.trigger.props.onClick(e); }
+            if (props.trigger.props.onClick) {
+                props.trigger.props.onClick(e);
+            }
         },
         onBlur: (e) => {
             // setOpen(false);
@@ -28,6 +51,35 @@ function DropdownMenu(props) {
         onFocus: (e) => {
 
         }
+    });
+
+    let linkTransform = props.linkTransform || defaultLinkTransform;
+
+    let children = [];
+
+    props.children.forEach((child) => {
+
+        let element =
+            <div css={css`
+                cursor: pointer;
+            `} onClick={() => {
+
+                setOpen(false);
+                if (child.props.onClick) {
+                    child.props.onClick()
+                }
+
+            }}
+                 key={child.key}
+            >
+                {child}
+            </div>;
+
+        if (child.props.href) {
+            element = <div key={child.key}>{linkTransform(element, child.props.href, child.props)}</div>;
+        }
+
+        children.push(element);
     });
 
     return <div className={props.className} style={props.style}>
@@ -42,7 +94,7 @@ function DropdownMenu(props) {
                 {trigger}
             </div>
 
-            { open && <div css={css`
+            <div css={css`
                 position: absolute;
                 background-color: white;
                 box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
@@ -51,25 +103,18 @@ function DropdownMenu(props) {
                 top: calc(100% + 10px);
                 left: 0;
                 z-index: 1000;
+                display: flex;
+                flex-direction: column;
+                display: ${open ? 'block' : 'none'};
             `}>
-                { props.data.map((data, index) =>
-                    <div
-                        key={data.id}
-                        css={css`
-                            cursor: pointer;
-                        `}
-                        onClick={() => {
-                            setOpen(false);
-                            if (props.onClick) { props.onClick(data) }
-                        }}
-                    >
-                        { defaultItem(data, { index, selected: false, focused: false }) }
-                    </div>
-                )}
-            </div> }
+                {children}
+            </div>
 
         </div>
     </div>;
 }
 
-export default DropdownMenu;
+export {
+    DropdownMenu,
+    DropdownMenuItem
+};

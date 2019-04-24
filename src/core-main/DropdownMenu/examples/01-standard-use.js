@@ -1,30 +1,19 @@
-import React from "react";
-import {DropdownMenu, Button} from "storefront-ui";
+import React, { useState } from "react";
+import {DropdownMenu,DropdownMenuItem, Button} from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-const fruits = [
-    {
-        id: "apple",
-        label: "Apple"
-    },
-    {
-        id: "orange",
-        label: "Orange",
-    },
-    {
-        id: "peach",
-        label: "Peach"
-    }
-];
-
-export default () => (
-    <div>
+export default () => {
+    return <div>
         <DropdownMenu
-            data={fruits}
             trigger={<Button>Open dropdown</Button>}
-            onClick={(item) => console.log('item clicked!', item)}
-        />
+        >
+            <DropdownMenuItem key={"apple"} onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>
+            <DropdownMenuItem key={"orange"}>Orange</DropdownMenuItem>
+            <DropdownMenuItem key={"peach"}>Peach</DropdownMenuItem>
+            <DropdownMenuItem key={"wiki"} href={"https://www.wikipedia.org/"}>Link to Wikipedia</DropdownMenuItem>
+        </DropdownMenu>
     </div>
-);
+};
+
