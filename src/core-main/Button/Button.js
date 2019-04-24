@@ -79,6 +79,18 @@ const ButtonDefault = (props) => {
 };
 
 const ButtonDefaultContent = (props) => {
+
+    // Button is in dropdown context
+    let extraString = "";
+    if (typeof props.dropdownOpened !== "undefined") {
+        if (props.dropdownOpened) {
+            extraString = " (opened)";
+        }
+        else {
+            extraString = " (closed)";
+        }
+    }
+
     return <div css={css`
         ${ props.disabled ? 'opacity: 0.66;' : ''}
         ${ props.selected ? 'background-color: grey;' : ''}
@@ -101,7 +113,7 @@ const ButtonDefaultContent = (props) => {
 
         position: relative;
         height: 100%;
-    `}>{props.children}</div>
+    `}>{props.children} {extraString}</div>
 };
 
 const ButtonRawContent = (props) => {

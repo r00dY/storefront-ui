@@ -50,7 +50,8 @@ function DropdownMenu(props) {
         },
         onFocus: (e) => {
 
-        }
+        },
+        dropdownOpened: open
     });
 
     let linkTransform = props.linkTransform || defaultLinkTransform;
