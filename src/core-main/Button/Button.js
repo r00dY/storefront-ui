@@ -4,6 +4,8 @@ import styled from '@emotion/styled'
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
+import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
+
 // naked button (with no styling!) to promote accessibility
 
 const ButtonUnstyled = (props) => <button css={css`
@@ -126,11 +128,38 @@ const map = {
 };
 
 function Button(props) {
-    let mode = props.mode || "default";
 
-    let ButtonInnerContent = map[mode];
+    return <StorefrontUIContext.Consumer>
+        {(context) => {
 
-    return <ButtonUnstyled {...props}><ButtonInnerContent {...props} /></ButtonUnstyled>;
+            let appearance = props.appearance || "default";
+
+            let ButtonInnerContent;
+
+            if (typeof appearance === 'function') {
+                ButtonInnerContent = appearance;
+            }
+            else if (context.button && context.button[appearance]) {
+                ButtonInnerContent = context.button[appearance];
+            }
+            else if (appearance === "default" || appearance === "raw") {
+                ButtonInnerContent = map[appearance];
+            }
+            else {
+                throw new Error("Unknown appearance for Button: ", appearance);
+            }
+
+            let domButtonProps = {
+                ...props
+            };
+
+            delete domButtonProps.dropdownOpened;
+            delete domButtonProps.appearance;
+
+            return <ButtonUnstyled {...domButtonProps}><ButtonInnerContent {...props} /></ButtonUnstyled>;
+
+        }}
+    </StorefrontUIContext.Consumer>;
 
 }
 

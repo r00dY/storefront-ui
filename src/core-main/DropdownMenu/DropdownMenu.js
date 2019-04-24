@@ -1,9 +1,8 @@
 import React, {useState} from "react";
+import { rs } from "responsive-helpers";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
-
-import {Button} from "../Button/Button";
 
 // props.selected, props.focused
 const DefaultItem = (props) => <div css={css`
@@ -15,6 +14,51 @@ const DefaultItem = (props) => <div css={css`
 
 const map = {
     default: DefaultItem
+};
+
+
+const appearancesPopup = {
+    default: (props, items) => { return {
+        styles: `
+            background-color: white;
+            box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        `,
+        content: <>{items}</>
+    }},
+    crazy: (props, items) => { return {
+        styles: `
+            background-color: red;
+            box-shadow: 0 0px 16px rgba(0, 255, 0, 0.4);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            
+            > * {
+                margin: 10px 0;
+            }
+        `,
+        content: <>{items}</>
+    }}
+};
+
+const sizesPopup = {
+    small: {
+        width: 200,
+        maxHeight: 350
+    },
+    medium: {
+        width: 250,
+        maxHeight: 400
+    },
+    large: {
+        width: 300,
+        maxHeight: 500
+    }
 };
 
 function DropdownMenuItem(props) {
@@ -33,6 +77,8 @@ const defaultLinkTransform = (content, href, props) => <a css={css`
 
     `} href={href}>{content}</a>;
 
+
+
 function DropdownMenu(props) {
     const [open, setOpen] = useState(false);
 
@@ -49,7 +95,7 @@ function DropdownMenu(props) {
 
     let linkTransform = props.linkTransform || defaultLinkTransform;
 
-    let children = [];
+    let items = [];
 
     props.children.forEach((child) => {
 
@@ -80,8 +126,15 @@ function DropdownMenu(props) {
             element = child;
         }
 
-        children.push(element);
+        items.push(element);
     });
+
+
+    let appearance = appearancesPopup[props.appearance || "default"](props, items);
+    let size = sizesPopup[props.size || "medium"];
+    let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
+
+    // console.log(spacing.map.css((val) => { console.log(val);  }));
 
     return <div className={props.className} style={props.style}>
 
@@ -96,19 +149,24 @@ function DropdownMenu(props) {
             </div>
 
             <div css={css`
+                ${appearance.styles}
+
                 position: absolute;
-                background-color: white;
-                box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
-                width: 250px;
-                max-height: 400px;
+
+                ${rs(size.width).css('width')}
+                ${rs(size.maxHeight).css('max-height')}
+                height: auto;
+
                 top: calc(100% + 10px);
                 left: 0;
+
                 z-index: 1000;
-                display: flex;
-                flex-direction: column;
-                display: ${open ? 'block' : 'none'};
+
+                transition: all 100ms;
+                opacity: ${open ? 1 : 0};
+                visibility: ${open ? 'visible' : 'hidden'};
             `}>
-                {children}
+                { appearance.content }
             </div>
 
         </div>

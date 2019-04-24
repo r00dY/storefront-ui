@@ -17,20 +17,45 @@ const Header = (props) => <div css={css`
 `}>{props.children}</div>;
 
 export default () => {
+
+    const items = [
+        <Header key={"fruits"}>Fruits</Header>,
+        <DropdownMenuItem key={"apple"} onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>,
+        <DropdownMenuItem key={"orange"}>Orange</DropdownMenuItem>,
+        <DropdownMenuItem key={"peach"}>Peach</DropdownMenuItem>,
+        <Header key={"veggies"}>Veggies</Header>,
+        <DropdownMenuItem key={"carrot"} onClick={() => console.log('carrot clicked')}>Apple</DropdownMenuItem>,
+        <DropdownMenuItem key={"tomato"}>Tomato</DropdownMenuItem>,
+        <DropdownMenuItem key={"cucumber"}>Cucumber</DropdownMenuItem>,
+        <DropdownMenuItem key={"potato"}>Potato</DropdownMenuItem>,
+        <DropdownMenuItem key={"salad"}>Salad</DropdownMenuItem>,
+        <Separator key={"sep1"}/>,
+        <DropdownMenuItem key={"wiki"} href={"https://www.wikipedia.org/"}>Link to Wikipedia</DropdownMenuItem>,
+    ];
+
+    const trigger = <Button>Open dropdown</Button>;
+
     return <div>
-        <DropdownMenu
-            trigger={<Button>Open dropdown</Button>}
-        >
-            <Header>Fruits</Header>
-            <DropdownMenuItem key={"apple"} onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>
-            <DropdownMenuItem key={"orange"}>Orange</DropdownMenuItem>
-            <DropdownMenuItem key={"peach"}>Peach</DropdownMenuItem>
-            <Header>Veggies</Header>
-            <DropdownMenuItem key={"carrot"} onClick={() => console.log('carrot clicked')}>Apple</DropdownMenuItem>
-            <DropdownMenuItem key={"tomato"}>Tomato</DropdownMenuItem>
-            <Separator />
-            <DropdownMenuItem key={"wiki"} href={"https://www.wikipedia.org/"}>Link to Wikipedia</DropdownMenuItem>
+        <p>Standard</p>
+        <DropdownMenu trigger={trigger}>
+            {items}
         </DropdownMenu>
+
+        <p><code>small</code> size</p>
+        <DropdownMenu trigger={trigger} size={"small"}>
+            {items}
+        </DropdownMenu>
+
+        <p><code>large</code> size</p>
+        <DropdownMenu trigger={trigger} size={"large"}>
+            {items}
+        </DropdownMenu>
+
+        <p><code>crazy</code> appearance</p>
+        <DropdownMenu trigger={trigger} size={"large"} appearance={"crazy"}>
+            {items}
+        </DropdownMenu>
+
     </div>
 };
 
