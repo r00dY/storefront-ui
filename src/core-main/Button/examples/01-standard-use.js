@@ -47,7 +47,7 @@ export default () => (
         <Button appearance={CustomButtonAppearance} onClick={() => alert('red button')}>Custom red button</Button>
         <p>Custom button appearance registered in context</p>
         <StorefrontUIContext.Provider value={{ /* should be in some global config in the project */
-            button: {
+            Button: {
                 error: CustomButtonAppearance
             }
         }}>

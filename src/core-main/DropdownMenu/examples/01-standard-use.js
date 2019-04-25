@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {DropdownMenu,DropdownMenuItem, Button} from "storefront-ui";
+import {DropdownMenu,DropdownMenuItem, Button, StorefrontUIContext } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -14,6 +14,17 @@ const Header = (props) => <div css={css`
     padding: 12px;
     text-transform: uppercase;
     color: lightgrey;
+`}>{props.children}</div>;
+
+const CustomListItemAppearance = (props) => <div css={css`
+    padding: 8px;
+    background-color: grey;
+    text-transform: uppercase;
+    color: white;
+
+    &:hover {
+        background-color: red;
+    }
 `}>{props.children}</div>;
 
 export default () => {
@@ -55,6 +66,26 @@ export default () => {
         <DropdownMenu trigger={trigger} size={"large"} appearance={"crazy"}>
             {items}
         </DropdownMenu>
+
+        <p>Custom <code>appearance</code></p>
+        <DropdownMenu trigger={trigger}>
+            <DropdownMenuItem key={"apple"} appearance={CustomListItemAppearance}>Apple</DropdownMenuItem>
+            <DropdownMenuItem key={"orange"} appearance={CustomListItemAppearance}>Orange</DropdownMenuItem>
+            <DropdownMenuItem key={"peach"} appearance={CustomListItemAppearance}>Peach</DropdownMenuItem>
+        </DropdownMenu>
+
+        <p>Custom <code>appearance</code> registered</p>
+        <StorefrontUIContext.Provider value={{ /* should be in some global config in the project */
+            ListItem: {
+                custom: CustomListItemAppearance
+            }
+        }}>
+            <DropdownMenu trigger={trigger}>
+                <DropdownMenuItem key={"apple"} appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem key={"orange"} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem key={"peach"} appearance={"custom"}>Peach</DropdownMenuItem>
+            </DropdownMenu>
+        </StorefrontUIContext.Provider>
 
     </div>
 };

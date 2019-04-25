@@ -4,6 +4,9 @@ import { rs } from "responsive-helpers";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
+import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
+
+
 // props.selected, props.focused
 const DefaultItem = (props) => <div css={css`
     padding: 12px;
@@ -11,10 +14,6 @@ const DefaultItem = (props) => <div css={css`
         background-color: lightgrey;
     }
 `}>{props.children} {props.selected ? "(checked)" : ""}</div>;
-
-const map = {
-    default: DefaultItem
-};
 
 
 const appearancesPopup = {
@@ -62,10 +61,28 @@ const sizesPopup = {
 };
 
 function DropdownMenuItem(props) {
-    let appearance = props.appearance || "default";
-    let ItemInternals = map[appearance];
+    return <StorefrontUIContext.Consumer>
+        {(context) => {
+            let appearance = props.appearance || "default";
 
-    return <ItemInternals {...props} />
+            let ListItem;
+
+            if (typeof appearance === 'function') {
+                ListItem = appearance;
+            }
+            else if (context.ListItem && context.ListItem[appearance]) {
+                ListItem = context.ListItem[appearance];
+            }
+            else if (appearance === "default") {
+                ListItem = DefaultItem;
+            }
+            else {
+                throw new Error("Unknown appearance for ListItem: ", appearance);
+            }
+
+            return <ListItem {...props} />
+        }}
+    </StorefrontUIContext.Consumer>
 }
 
 const defaultLinkTransform = (content, href, props) => <a css={css`
@@ -78,99 +95,103 @@ const defaultLinkTransform = (content, href, props) => <a css={css`
     `} href={href}>{content}</a>;
 
 
-
 function DropdownMenu(props) {
     const [open, setOpen] = useState(false);
 
-    let trigger = React.cloneElement(props.trigger, {
-        onClick: (e) => {
-            setOpen(!open);
+    return <StorefrontUIContext.Consumer>
+        {(context) => {
 
-            if (props.trigger.props.onClick) {
-                props.trigger.props.onClick(e);
-            }
-        },
-        dropdownOpened: open
-    });
+            let trigger = React.cloneElement(props.trigger, {
+                onClick: (e) => {
+                    setOpen(!open);
 
-    let linkTransform = props.linkTransform || defaultLinkTransform;
-
-    let items = [];
-
-    props.children.forEach((child) => {
-
-        let element;
-
-        if (child.type === DropdownMenuItem) {
-            element =
-                <div css={css`
-                cursor: pointer;
-            `} onClick={() => {
-
-                    setOpen(false);
-                    if (child.props.onClick) {
-                        child.props.onClick()
+                    if (props.trigger.props.onClick) {
+                        props.trigger.props.onClick(e);
                     }
+                },
+                dropdownOpened: open
+            });
 
-                }}
-                     key={child.key}
-                >
-                    {child}
-                </div>;
+            let linkTransform = props.linkTransform || defaultLinkTransform;
 
-            if (child.props.href) {
-                element = <div key={child.key}>{linkTransform(element, child.props.href, child.props)}</div>;
-            }
-        }
-        else {
-            element = child;
-        }
+            let items = [];
 
-        items.push(element);
-    });
+            props.children.forEach((child) => {
+
+                let element;
+
+                if (child.type === DropdownMenuItem) {
+                    element =
+                        <div css={css`
+                        cursor: pointer;
+                    `} onClick={() => {
+
+                            setOpen(false);
+                            if (child.props.onClick) {
+                                child.props.onClick()
+                            }
+
+                        }}
+                             key={child.key}
+                        >
+                            {child}
+                        </div>;
+
+                    if (child.props.href) {
+                        element = <div key={child.key}>{linkTransform(element, child.props.href, child.props)}</div>;
+                    }
+                } else {
+                    element = child;
+                }
+
+                items.push(element);
+            });
 
 
-    let appearance = appearancesPopup[props.appearance || "default"](props, items);
-    let size = sizesPopup[props.size || "medium"];
-    let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
+            let appearance = appearancesPopup[props.appearance || "default"](props, items);
 
-    // console.log(spacing.map.css((val) => { console.log(val);  }));
+            let size = sizesPopup[props.size || "medium"];
+            let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
 
-    return <div className={props.className} style={props.style}>
+            // console.log(spacing.map.css((val) => { console.log(val);  }));
 
-        <div css={css`
-            position: relative;
-        `}>
+            return <div className={props.className} style={props.style}>
 
-            <div css={css`
+                <div css={css`
+                    position: relative;
+                `}>
 
-            `}>
-                {trigger}
-            </div>
+                    <div css={css`
 
-            <div css={css`
-                ${appearance.styles}
+                    `}>
+                        {trigger}
+                    </div>
 
-                position: absolute;
+                    <div css={css`
+                        ${appearance.styles}
 
-                ${rs(size.width).css('width')}
-                ${rs(size.maxHeight).css('max-height')}
-                height: auto;
+                        position: absolute;
 
-                top: calc(100% + 10px);
-                left: 0;
+                        ${rs(size.width).css('width')}
+                        ${rs(size.maxHeight).css('max-height')}
+                        height: auto;
 
-                z-index: 1000;
+                        top: calc(100% + 10px);
+                        left: 0;
 
-                transition: all 100ms;
-                opacity: ${open ? 1 : 0};
-                visibility: ${open ? 'visible' : 'hidden'};
-            `}>
-                { appearance.content }
-            </div>
+                        z-index: 1000;
 
-        </div>
-    </div>;
+                        transition: all 100ms;
+                        opacity: ${open ? 1 : 0};
+                        visibility: ${open ? 'visible' : 'hidden'};
+                    `}>
+                        {appearance.content}
+                    </div>
+
+                </div>
+            </div>;
+        }}
+    </StorefrontUIContext.Consumer>
 }
 
 export {

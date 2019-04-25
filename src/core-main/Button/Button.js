@@ -139,8 +139,8 @@ function Button(props) {
             if (typeof appearance === 'function') {
                 ButtonInnerContent = appearance;
             }
-            else if (context.button && context.button[appearance]) {
-                ButtonInnerContent = context.button[appearance];
+            else if (context.Button && context.Button[appearance]) {
+                ButtonInnerContent = context.Button[appearance];
             }
             else if (appearance === "default" || appearance === "raw") {
                 ButtonInnerContent = map[appearance];
