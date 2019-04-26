@@ -187,8 +187,7 @@ const createButton = (appearance, customProps) => {
     });
 };
 
-const Button = createButton(ButtonDefault);
+const Button = createButton(ButtonDefaultContent);
 
 export default Button;
-
 export { ButtonRaw, createButton };

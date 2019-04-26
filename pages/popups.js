@@ -5,6 +5,14 @@ import { md, Example, CodeBlock } from "../docs-utils/docs";
 const content = md`
 # Popups
 
+## \`Popup\`
+
+\`Popup\` is a small window that pops up, grabs focus and is placed close to some trigger element.
+
+${<Example code={require("!!raw-loader!../src/core-main/Popup/examples/01-standard-use.js")}
+           component={require('../src/core-main/Popup/examples/01-standard-use.js').default}/>}
+
+
 ## \`DropdownMenu\`
 
 \`DropdownMenu\` is a special case of popup. All it's responsible for is showing a list of items one under another.
@@ -12,10 +20,6 @@ const content = md`
 ${<Example code={require("!!raw-loader!../src/core-main/DropdownMenu/examples/01-standard-use.js")}
            component={require('../src/core-main/DropdownMenu/examples/01-standard-use.js').default}/>}
            
-## \`Popup\`
-
-${<Example code={require("!!raw-loader!../src/core-main/Popup/examples/01-standard-use.js")} component={require('../src/core-main/Popup/examples/01-standard-use.js').default} />}
-
 
 `;
 export default () => <Page>{content}</Page>;

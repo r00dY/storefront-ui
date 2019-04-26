@@ -29,12 +29,13 @@ const popupSizes = {
 };
 
 function Popup(props) {
+
     let trigger = React.cloneElement(props.trigger, {
         popupOpened: props.open
     });
 
     let popupStyles = props.styles || defaultPopupStyles;
-    let size = popupSizes[props.size || "medium"];
+    let size = typeof props.size === "object" ? props.size : popupSizes[props.size || "medium"] ;
     let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
 
     return <div className={props.className} style={props.style}>
