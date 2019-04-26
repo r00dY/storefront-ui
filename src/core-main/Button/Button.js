@@ -58,8 +58,6 @@ const rawLinkStyles = (disabled) => css`
 const ButtonDefault = (props) => {
     return <div css={css`
         ${ props.disabled ? 'opacity: 0.66;' : ''}
-        ${ props.selected ? 'background-color: grey;' : ''}
-        ${ props.loading ? 'background-color: green;' : ''}
 
         padding: 12px 20px;
         background-color: black;
@@ -85,8 +83,8 @@ const ButtonDefaultContent = (props) => {
 
     // Button is in dropdown context
     let extraString = "";
-    if (typeof props.dropdownOpened !== "undefined") {
-        if (props.dropdownOpened) {
+    if (typeof props.popupOpened !== "undefined") {
+        if (props.popupOpened) {
             extraString = " (opened)";
         }
         else {
@@ -131,14 +129,14 @@ const map = {
 
 const ButtonRaw = React.forwardRef(
     (
-        { type, href, disabled, className, style, dropdownOpened, children, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
+        { type, href, disabled, className, style, popupOpened, children, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
         ref,
     ) => {
 
         // let inner;
         //
         // if (typeof children === 'function') {
-        //     inner = children({ disabled, dropdownOpened});
+        //     inner = children({ disabled, popupOpened});
         // }
         //
         // if (props.href) {
@@ -176,7 +174,7 @@ const createButton = (appearance, customProps) => {
         let rawButtonProps = Object.assign({}, props);
         let appearanceProps = {
             disabled: props.disabled,
-            dropdownOpened: props.dropdownOpened,
+            popupOpened: props.popupOpened,
             children: props.children
         };
 
@@ -189,48 +187,7 @@ const createButton = (appearance, customProps) => {
     });
 };
 
-
-
-function Button(props) {
-
-
-
-
-    let domButtonProps = {
-        ...props
-    };
-
-    delete domButtonProps.dropdownOpened;
-
-
-    return <div></div>;
-    //
-    // return <StorefrontUIContext.Consumer>
-    //     {(context) => {
-    //
-    //         let appearance = props.appearance || "default";
-    //
-    //         let ButtonInnerContent;
-    //
-    //         if (typeof appearance === 'function') {
-    //             ButtonInnerContent = appearance;
-    //         }
-    //         else if (context.Button && context.Button[appearance]) {
-    //             ButtonInnerContent = context.Button[appearance];
-    //         }
-    //         else if (appearance === "default" || appearance === "raw") {
-    //             ButtonInnerContent = map[appearance];
-    //         }
-    //         else {
-    //             throw new Error("Unknown appearance for Button: ", appearance);
-    //         }
-    //
-    //         return <ButtonUnstyled {...domButtonProps}><ButtonInnerContent {...props} /></ButtonUnstyled>;
-    //
-    //     }}
-    // </StorefrontUIContext.Consumer>;
-
-}
+const Button = createButton(ButtonDefault);
 
 export default Button;
 

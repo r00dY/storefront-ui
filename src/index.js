@@ -37,6 +37,8 @@ import Button, { ButtonRaw, createButton } from "./core-main/Button/Button";
 
 import { DropdownMenu, DropdownMenuItem } from "./core-main/DropdownMenu/DropdownMenu";
 
+import Popup from "./core-main/Popup/Popup";
+
 import StorefrontUIContext from "./core-main/StorefrontUIContext/StorefrontUIContext";
 
 const defaultSpacings = {
@@ -147,6 +149,8 @@ export {
     Button,
     ButtonRaw,
     createButton,
+
+    Popup,
 
     DropdownMenu,
     DropdownMenuItem,
