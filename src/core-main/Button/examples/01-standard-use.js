@@ -1,57 +1,60 @@
 import React from "react";
-import { Button, StorefrontUIContext } from "storefront-ui";
+import { Button, ButtonRaw, StorefrontUIContext, createButton } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-const CustomButtonAppearance = (props) => {
-    return <div css={css`
-        ${ props.disabled ? 'opacity: 0.66;' : ''}
-
-        padding: 12px 20px;
-        background-color: red;
-        color: white;
+const ButtonCustom = createButton(({ disabled, dropdownOpened, children, inverted}) =>
+    <div css={css`
+        padding: 12px;
+        border: 1px solid black;
         border-radius: 6px;
+        border-color: lightgrey;
+        background-color: ${inverted ? 'black' : 'lightgrey'};
+        color: ${inverted ? 'white' : 'black'};
+        ${disabled ? 'color: grey;' : ''}
 
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        ${!props.disabled && `
-            &:hover {
-                opacity: 0.8;
-            }
+        &:hover {
+            opacity: 0.8;
+        }
         `}
-
-        position: relative;
-        height: 100%;
-    `}>{props.children}</div>
-};
+    >
+        {children}
+    </div>,
+    ['inverted']
+);
 
 export default () => (
+
     <div>
-        <p>Natural size</p>
-        <Button onClick={() => { alert('button clicked!') }}>Cześć</Button>
-        <p>CSS size</p>
-        <Button css={css`
+        <p>Raw button (no styling, just focus and accessibility)</p>
+        <ButtonRaw onClick={() => alert('button clicked!')}><div css={css`border: 1px solid grey`}>Raw button</div></ButtonRaw>
+
+        <p>Raw button disabled</p>
+        <ButtonRaw onClick={() => alert('button clicked!')} disabled={true}><div css={css`border: 1px solid grey`}>Disabled raw button</div></ButtonRaw>
+
+        <p>Raw button sized</p>
+        <ButtonRaw onClick={() => alert('button clicked!')} css={css`
             width: 250px;
-            height: 100px;
-        `}>
-            Cześć
-        </Button>
-        <p>Disabled</p>
-        <Button disabled={true} onClick={() => alert('disabled button, this message will never show')}>I'm disabled</Button>
-        <p>Raw</p>
-        <Button appearance="raw" onClick={() => alert('disabled button, this message will never show')}>I'm a raw button, totally unstyled, but focusable and clickable.</Button>
-        <p>Custom button appearance (styling only internals of <code>button</code>)</p>
-        <Button appearance={CustomButtonAppearance} onClick={() => alert('red button')}>Custom red button</Button>
-        <p>Custom button appearance registered in context</p>
-        <StorefrontUIContext.Provider value={{ /* should be in some global config in the project */
-            Button: {
-                error: CustomButtonAppearance
-            }
-        }}>
-            <Button appearance={"error"} onClick={() => alert('red button')}>Registered appearance button</Button>
-        </StorefrontUIContext.Provider>
+        `}><div css={css`border: 1px solid grey;`}>Sized raw button</div></ButtonRaw>
+
+        <p>Raw button as link</p>
+        <ButtonRaw href={"https://wikipedia.org"}><div css={css`border: 1px solid grey`}>Raw link</div></ButtonRaw>
+
+        <p>Raw button as a link can be disabled too</p>
+        <ButtonRaw href={"https://wikipedia.org"} disabled={true}><div css={css`border: 1px solid grey`}>Raw link disabled</div></ButtonRaw>
+
+        <p>Custom Button</p>
+        <ButtonCustom onClick={() => alert('custom button clicked')}>Custom button</ButtonCustom>
+
+        <p>Custom Button inverted</p>
+        <ButtonCustom onClick={() => alert('custom button clicked')} inverted={true}>Custom button inverted</ButtonCustom>
+
+        <p>Custom Button disabled, inverted with type</p>
+        <ButtonCustom onClick={() => alert('custom button clicked')} inverted={true} disabled={true} type={"submit"}>Custom button inverted</ButtonCustom>
+
+        <p>Custom Button inverted as a link</p>
+        <ButtonCustom href={"https://wikipedia.org"} inverted={true} target={"_blank"}>Link button</ButtonCustom>
+
     </div>
 );

@@ -4,11 +4,7 @@ import styled from '@emotion/styled'
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
-
-// naked button (with no styling!) to promote accessibility
-
-const ButtonUnstyled = (props) => <button css={css`
+const rawButtonStyles = css`
   font-family: inherit; /* 1 */
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
@@ -39,18 +35,23 @@ const ButtonUnstyled = (props) => <button css={css`
 
   cursor: pointer;
   &:disabled {
-    cursor: not-allowed;
+    cursor: default;
   }
 
     position: relative;
     height: 100%;
+`;
 
-`} {...props} />;
-
-const LinkRaw = styled.a`
-    background-color: transparent;
+const rawLinkStyles = (disabled) => css`
     text-decoration: none;
-    &:hover, &:active, &:visited, &:
+    &:visited, &:active, &:hover, &:link {
+        color: black;
+    }
+    
+    ${disabled ? `
+        pointer-events: none;
+        cursor: default;
+    ` : ''}
 `;
 
 
@@ -127,41 +128,110 @@ const map = {
     default: ButtonDefaultContent
 };
 
+
+const ButtonRaw = React.forwardRef(
+    (
+        { type, href, disabled, className, style, dropdownOpened, children, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
+        ref,
+    ) => {
+
+        // let inner;
+        //
+        // if (typeof children === 'function') {
+        //     inner = children({ disabled, dropdownOpened});
+        // }
+        //
+        // if (props.href) {
+        //     return (
+        //         <SafeAnchor
+        //             {...props}
+        //             as={as}
+        //             innerRef={ref}
+        //             className={classNames(classes, props.disabled && 'disabled')}
+        //         />
+        //     );
+        // }
+
+        // const Component = as || 'button';
+        // if (ref) props.ref = ref;
+
+        if (href) {
+            return <a css={rawLinkStyles(disabled)} style={style} className={className} {...props} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ children }</a>;
+        }
+
+        return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...props} ref={ref}>{ children }</button>;
+
+        // return <Component {...props} type={type} className={classes} ref={ref}/>;
+    },
+);
+
+const createButton = (appearance, customProps) => {
+    customProps = customProps || [];
+
+    return React.forwardRef((
+        props,
+        ref
+    ) => {
+
+        let rawButtonProps = Object.assign({}, props);
+        let appearanceProps = {
+            disabled: props.disabled,
+            dropdownOpened: props.dropdownOpened,
+            children: props.children
+        };
+
+        customProps.forEach((customProp) => {
+            delete rawButtonProps[customProp];
+            appearanceProps[customProp] = props[customProp];
+        });
+
+        return <ButtonRaw {...rawButtonProps} ref={ref}>{ appearance(appearanceProps) }</ButtonRaw>
+    });
+};
+
+
+
 function Button(props) {
 
-    return <StorefrontUIContext.Consumer>
-        {(context) => {
 
-            let appearance = props.appearance || "default";
 
-            let ButtonInnerContent;
 
-            if (typeof appearance === 'function') {
-                ButtonInnerContent = appearance;
-            }
-            else if (context.Button && context.Button[appearance]) {
-                ButtonInnerContent = context.Button[appearance];
-            }
-            else if (appearance === "default" || appearance === "raw") {
-                ButtonInnerContent = map[appearance];
-            }
-            else {
-                throw new Error("Unknown appearance for Button: ", appearance);
-            }
+    let domButtonProps = {
+        ...props
+    };
 
-            let domButtonProps = {
-                ...props
-            };
+    delete domButtonProps.dropdownOpened;
 
-            delete domButtonProps.dropdownOpened;
-            delete domButtonProps.appearance;
 
-            return <ButtonUnstyled {...domButtonProps}><ButtonInnerContent {...props} /></ButtonUnstyled>;
-
-        }}
-    </StorefrontUIContext.Consumer>;
+    return <div></div>;
+    //
+    // return <StorefrontUIContext.Consumer>
+    //     {(context) => {
+    //
+    //         let appearance = props.appearance || "default";
+    //
+    //         let ButtonInnerContent;
+    //
+    //         if (typeof appearance === 'function') {
+    //             ButtonInnerContent = appearance;
+    //         }
+    //         else if (context.Button && context.Button[appearance]) {
+    //             ButtonInnerContent = context.Button[appearance];
+    //         }
+    //         else if (appearance === "default" || appearance === "raw") {
+    //             ButtonInnerContent = map[appearance];
+    //         }
+    //         else {
+    //             throw new Error("Unknown appearance for Button: ", appearance);
+    //         }
+    //
+    //         return <ButtonUnstyled {...domButtonProps}><ButtonInnerContent {...props} /></ButtonUnstyled>;
+    //
+    //     }}
+    // </StorefrontUIContext.Consumer>;
 
 }
 
 export default Button;
 
+export { ButtonRaw, createButton };

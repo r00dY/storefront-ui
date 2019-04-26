@@ -33,7 +33,7 @@ import ItemListAccordion from "./core-main/ItemListAccordion/ItemListAccordion";
 import FiltersColumn from "./core-main/Filters/FiltersColumn/FiltersColumn";
 
 import ButtonNaked from "./core-main/ButtonNaked/ButtonNaked";
-import Button from "./core-main/Button/Button";
+import Button, { ButtonRaw, createButton } from "./core-main/Button/Button";
 
 import { DropdownMenu, DropdownMenuItem } from "./core-main/DropdownMenu/DropdownMenu";
 
@@ -145,9 +145,13 @@ export {
 
     ButtonNaked,
     Button,
+    ButtonRaw,
+    createButton,
 
     DropdownMenu,
     DropdownMenuItem,
 
-    StorefrontUIContext
+    StorefrontUIContext,
+
+
 }
