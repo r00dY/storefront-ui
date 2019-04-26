@@ -67,14 +67,14 @@ export default () => {
             {items}
         </DropdownMenu>
 
-        <p>Custom <code>appearance</code></p>
+        <p>Custom item <code>appearance</code></p>
         <DropdownMenu trigger={trigger}>
             <DropdownMenuItem key={"apple"} appearance={CustomListItemAppearance}>Apple</DropdownMenuItem>
             <DropdownMenuItem key={"orange"} appearance={CustomListItemAppearance}>Orange</DropdownMenuItem>
             <DropdownMenuItem key={"peach"} appearance={CustomListItemAppearance}>Peach</DropdownMenuItem>
         </DropdownMenu>
 
-        <p>Custom <code>appearance</code> registered</p>
+        <p>Custom item <code>appearance</code> registered</p>
         <StorefrontUIContext.Provider value={{ /* should be in some global config in the project */
             ListItem: {
                 custom: CustomListItemAppearance
@@ -84,9 +84,35 @@ export default () => {
                 <DropdownMenuItem key={"apple"} appearance={"custom"}>Apple</DropdownMenuItem>
                 <DropdownMenuItem key={"orange"} appearance={"custom"}>Orange</DropdownMenuItem>
                 <DropdownMenuItem key={"peach"} appearance={"custom"}>Peach</DropdownMenuItem>
+                <DropdownMenuItem key={"wiki"} href={"https://wikipedia.org"} appearance={"custom"}>Wiki</DropdownMenuItem>
             </DropdownMenu>
         </StorefrontUIContext.Provider>
 
     </div>
 };
 
+// const test = <>
+//     <DropdownMenuItem href="http://wiki.org" appearance={"PrettyItem"} icon={"dupa"}>Opcja</DropdownMenuItem>
+//     <DropdownMenuItem href="http://wiki.org" appearance={(focused, selected) => <PrettyItem focused={focused} selected={selected} icon={"dupa"}>Opcja</PrettyItem>} />
+//     <DropdownMenuItem href="http://wiki.org"><PrettyItem icon={"dupa"}>Opcja</PrettyItem></DropdownMenuItem>
+//
+//     <DropdownMenuItem href="http://wiki.org">
+//         { (focused, selected) => <PrettyItem icon={"dupa"} focused={focused} selected={selected}>Opcja</PrettyItem> }
+//     </DropdownMenuItem>
+//
+//     <DropdownMenuItem href="http://wiki.org">
+//         <PrettyItem icon={"dupa"}>Opcja</PrettyItem> {/* focused and selected will be automatically passed to PrettyItem */}
+//     </DropdownMenuItem>
+//
+//     <Button appearance="hej" />
+//
+//
+//
+//     {
+//         //const ButtonError = createButton((props) => <div>...</div>);
+//
+//         // const ListItemFilters = createListItem((focused, selected) => <div>...</div >)
+//     }
+//
+//
+// </>;
