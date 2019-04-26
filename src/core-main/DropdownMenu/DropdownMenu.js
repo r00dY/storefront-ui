@@ -17,29 +17,8 @@ const DefaultItem = (props) => <div css={css`
 `}>{props.children} {props.selected ? "(checked)" : ""}</div>;
 
 
-function DropdownMenuItem(props) {
-    return <StorefrontUIContext.Consumer>
-        {(context) => {
-            let appearance = props.appearance || "default";
-
-            let ListItem;
-
-            if (typeof appearance === 'function') {
-                ListItem = appearance;
-            }
-            else if (context.ListItem && context.ListItem[appearance]) {
-                ListItem = context.ListItem[appearance];
-            }
-            else if (appearance === "default") {
-                ListItem = DefaultItem;
-            }
-            else {
-                throw new Error("Unknown appearance for ListItem: ", appearance);
-            }
-
-            return <ListItem {...props} />
-        }}
-    </StorefrontUIContext.Consumer>
+function DropdownMenuItem() {
+    return <></>;
 }
 
 const defaultPopup = <Popup size={"medium"} />;
@@ -63,10 +42,18 @@ function DropdownMenu(props) {
     let items = [];
 
     props.children.forEach((child) => {
-
         let element;
 
         if (child.type === DropdownMenuItem) {
+
+            let content;
+            if (typeof child.props.children === 'function') {
+                content = child.props.children(false) // focused should be passed here!
+            }
+            else {
+                content = child.props.children;
+            }
+
             element =
                 <div css={css`
                 cursor: pointer;
@@ -80,11 +67,11 @@ function DropdownMenu(props) {
                 }}
                      key={child.key}
                 >
-                    {child}
+                    {content}
                 </div>;
 
             if (child.props.href) {
-                element = <div key={child.key}><a href={child.props.href}>{child}</a></div>;
+                element = <div key={child.key}><a href={child.props.href}>content</a></div>;
             }
         } else {
             element = child;

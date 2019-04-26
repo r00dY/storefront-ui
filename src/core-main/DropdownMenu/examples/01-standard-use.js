@@ -16,7 +16,7 @@ const Header = (props) => <div css={css`
     color: lightgrey;
 `}>{props.children}</div>;
 
-const CustomListItemAppearance = (props) => <div css={css`
+const CustomListItem = (props) => <div css={css`
     padding: 8px;
     background-color: grey;
     text-transform: uppercase;
@@ -77,11 +77,11 @@ export default () => {
             {items}
         </DropdownMenu>
 
-        <p>Custom item <code>appearance</code></p>
+        <p>Custom item look</p>
         <DropdownMenu trigger={trigger}>
-            <DropdownMenuItem key={"apple"} appearance={CustomListItemAppearance}>Apple</DropdownMenuItem>
-            <DropdownMenuItem key={"orange"} appearance={CustomListItemAppearance}>Orange</DropdownMenuItem>
-            <DropdownMenuItem key={"peach"} appearance={CustomListItemAppearance}>Peach</DropdownMenuItem>
+            <DropdownMenuItem key={"apple"}>{ (focused) => <CustomListItem focused={focused}>Apple</CustomListItem> }</DropdownMenuItem>
+            <DropdownMenuItem key={"orange"}>{ (focused) => <CustomListItem focused={focused}>Orange</CustomListItem> }</DropdownMenuItem>
+            <DropdownMenuItem key={"peach"}>{ (focused) => <CustomListItem focused={focused}>Peach</CustomListItem> }</DropdownMenuItem>
         </DropdownMenu>
 
     </div>
