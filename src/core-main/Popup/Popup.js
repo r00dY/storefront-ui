@@ -63,6 +63,7 @@ function Popup(props) {
                 left: 0;
 
                 z-index: 1000;
+                overflow-y: auto;
 
                 transition: all 100ms;
                 opacity: ${props.open ? 1 : 0};

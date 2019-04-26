@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DropdownMenu,DropdownMenuItem, Button } from "storefront-ui";
+import { DropdownMenu,DropdownMenuItem, Button, Popup } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -68,12 +68,12 @@ export default () => {
         </DropdownMenu>
 
         <p>custom <code>Popup</code></p>
-        <DropdownMenu trigger={trigger} size={{width: 500, maxHeight: 500 }}>
+        <DropdownMenu trigger={trigger} popup={<Popup styles={`border: 1px solid black; background-color: white;`} />}>
             {items}
         </DropdownMenu>
 
-        <p><code>crazy</code> appearance</p>
-        <DropdownMenu trigger={trigger} size={"large"} appearance={"crazy"}>
+        <p>custom <code>body</code></p>
+        <DropdownMenu trigger={trigger} body={(items) => <div css={css`padding: 10px; background-color: red; > * { margin-bottom: 10px; }`}>{items}</div>}>
             {items}
         </DropdownMenu>
 

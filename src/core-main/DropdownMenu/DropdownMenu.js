@@ -75,6 +75,7 @@ function DropdownMenu(props) {
                     if (child.props.onClick) {
                         child.props.onClick()
                     }
+                    setOpen(false);
 
                 }}
                      key={child.key}
@@ -92,11 +93,13 @@ function DropdownMenu(props) {
         items.push(element);
     });
 
+    let body = props.body || ((x) => <>{x}</>);
+
     let Popup = React.cloneElement(popup, {
         size: size,
         trigger: trigger,
         open: open
-    }, <>{items}</>);
+    }, body(items));
 
     return <>{Popup}</>
 }
