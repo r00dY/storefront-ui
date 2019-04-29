@@ -137,30 +137,23 @@ const Button = React.forwardRef(
         return <StorefrontUIContext.Consumer>
             {({ Button }) => {
 
-                let content;
-
-                if (typeof children === 'function') { // child render prop
-                    content = children({ disabled, popupOpened, ...props});
-                }
-                else {
-                    if (!appearance) {
-                        if (Button && Button.default) {
-                            appearance = Button.default;
-                        }
-                        else {
-                            appearance = appearanceDefault;
-                        }
+                if (!appearance) {
+                    if (Button && Button.default) {
+                        appearance = Button.default;
                     }
-                    else if (typeof appearance === 'string') {
-                        if (Button && !Button[appearance]) {
-                            throw new Error ('Unknown Button appearance: ' + appearance);
-                        }
-
-                        appearance = Button[appearance];
+                    else {
+                        appearance = appearanceDefault;
+                    }
+                }
+                else if (typeof appearance === 'string') {
+                    if (Button && !Button[appearance]) {
+                        throw new Error ('Unknown Button appearance: ' + appearance);
                     }
 
-                    content = appearance({ disabled, popupOpened, children, ...props});
+                    appearance = Button[appearance];
                 }
+
+                let content = appearance({ disabled, popupOpened, children, ...props});
 
                 if (href) {
                     return <a css={rawLinkStyles(disabled)} style={style} className={className} {...props} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;
