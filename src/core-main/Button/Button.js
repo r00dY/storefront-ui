@@ -1,5 +1,5 @@
 import React from "react";
-import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
+import StorefrontUIContext, { getAppearance } from "../StorefrontUIContext/StorefrontUIContext";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -96,14 +96,8 @@ const ButtonRawContent = (props) => {
     return <>{props.children}</>;
 };
 
-const map = {
-    raw: ButtonRawContent,
-    default: ButtonDefaultContent
-};
-
 const appearanceDefault = ({disabled, popupOpened, children}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>;
 const appearanceRaw = ({ children }) => <ButtonRawContent>{children}</ButtonRawContent>;
-
 
 const Button = React.forwardRef(
     (
@@ -114,26 +108,7 @@ const Button = React.forwardRef(
         return <StorefrontUIContext.Consumer>
             {({ Button }) => {
 
-                if (!appearance) {
-                    if (Button && Button.default) {
-                        appearance = Button.default;
-                    }
-                    else {
-                        appearance = appearanceDefault;
-                    }
-                }
-                else if (typeof appearance === 'string') {
-                    if (Button && Button[appearance]) {
-                        appearance = Button[appearance];
-                    } else if (appearance === "default") {
-                        appearance = appearanceDefault;
-                    } else if (appearance === "raw") {
-                        appearance = appearanceRaw;
-                    }
-                    else {
-                        throw new Error ('Unknown Button appearance: ' + appearance);
-                    }
-                }
+                appearance = getAppearance(appearance, "Button", { raw: appearanceRaw, default: appearanceDefault }, Button);
 
                 let content = appearance({ disabled, popupOpened, children, ...props});
 
