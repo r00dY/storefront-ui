@@ -1,5 +1,5 @@
 import React from "react";
-import styled from '@emotion/styled'
+import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -55,29 +55,29 @@ const rawLinkStyles = (disabled) => css`
 `;
 
 
-const ButtonDefault = (props) => {
-    return <div css={css`
-        ${ props.disabled ? 'opacity: 0.66;' : ''}
-
-        padding: 12px 20px;
-        background-color: black;
-        color: white;
-        border-radius: 6px;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-
-        ${!props.disabled && `
-            &:hover {
-                opacity: 0.8;
-            }
-        `}
-
-        position: relative;
-        height: 100%;
-    `}>{props.children}</div>
-};
+// const ButtonDefault = (props) => {
+//     return <div css={css`
+//         ${ props.disabled ? 'opacity: 0.66;' : ''}
+//
+//         padding: 12px 20px;
+//         background-color: black;
+//         color: white;
+//         border-radius: 6px;
+//
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//
+//         ${!props.disabled && `
+//             &:hover {
+//                 opacity: 0.8;
+//             }
+//         `}
+//
+//         position: relative;
+//         height: 100%;
+//     `}>{props.children}</div>
+// };
 
 const ButtonDefaultContent = (props) => {
 
@@ -95,7 +95,6 @@ const ButtonDefaultContent = (props) => {
     return <div css={css`
         ${ props.disabled ? 'opacity: 0.66;' : ''}
         ${ props.selected ? 'background-color: grey;' : ''}
-        ${ props.loading ? 'background-color: green;' : ''}
 
         padding: 12px 20px;
         background-color: black;
@@ -126,68 +125,51 @@ const map = {
     default: ButtonDefaultContent
 };
 
+const appearanceDefault = ({disabled, popupOpened, children}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>;
 
-const ButtonRaw = React.forwardRef(
+
+const Button = React.forwardRef(
     (
-        { type, href, disabled, className, style, popupOpened, children, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
+        { type, href, disabled, className, style, popupOpened, children, appearance, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
         ref,
     ) => {
 
-        // let inner;
-        //
-        // if (typeof children === 'function') {
-        //     inner = children({ disabled, popupOpened});
-        // }
-        //
-        // if (props.href) {
-        //     return (
-        //         <SafeAnchor
-        //             {...props}
-        //             as={as}
-        //             innerRef={ref}
-        //             className={classNames(classes, props.disabled && 'disabled')}
-        //         />
-        //     );
-        // }
+        return <StorefrontUIContext.Consumer>
+            {({ Button }) => {
 
-        // const Component = as || 'button';
-        // if (ref) props.ref = ref;
+                let content;
 
-        if (href) {
-            return <a css={rawLinkStyles(disabled)} style={style} className={className} {...props} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ children }</a>;
-        }
+                if (typeof children === 'function') { // child render prop
+                    content = children({ disabled, popupOpened, ...props});
+                }
+                else {
+                    if (!appearance) {
+                        if (Button && Button.default) {
+                            appearance = Button.default;
+                        }
+                        else {
+                            appearance = appearanceDefault;
+                        }
+                    }
+                    else if (typeof appearance === 'string') {
+                        if (Button && !Button[appearance]) {
+                            throw new Error ('Unknown Button appearance: ' + appearance);
+                        }
 
-        return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...props} ref={ref}>{ children }</button>;
+                        appearance = Button[appearance];
+                    }
 
-        // return <Component {...props} type={type} className={classes} ref={ref}/>;
+                    content = appearance({ disabled, popupOpened, children, ...props});
+                }
+
+                if (href) {
+                    return <a css={rawLinkStyles(disabled)} style={style} className={className} {...props} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;
+                }
+
+                return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...props} ref={ref}>{ content }</button>;
+            }}
+        </StorefrontUIContext.Consumer>;
     },
 );
 
-const createButton = (appearance, customProps) => {
-    customProps = customProps || [];
-
-    return React.forwardRef((
-        props,
-        ref
-    ) => {
-
-        let rawButtonProps = Object.assign({}, props);
-        let appearanceProps = {
-            disabled: props.disabled,
-            popupOpened: props.popupOpened,
-            children: props.children
-        };
-
-        customProps.forEach((customProp) => {
-            delete rawButtonProps[customProp];
-            appearanceProps[customProp] = props[customProp];
-        });
-
-        return <ButtonRaw {...rawButtonProps} ref={ref}>{ appearance(appearanceProps) }</ButtonRaw>
-    });
-};
-
-const Button = createButton(ButtonDefaultContent);
-
 export default Button;
-export { ButtonRaw, createButton };
