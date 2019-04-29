@@ -40,37 +40,40 @@ const appearanceDefault = () => ({
     `
 });
 
-function Popup({ open, children, size, appearance, stateless, ...props }) {
+function Popup({ open, trigger, children, stateless, appearance, size, spacing, styles, ...props }) {
     const [open2, setOpen2] = useState(false);
 
     return <StorefrontUIContext.Consumer>
         {({ Popup, PopupSize }) => {
 
+            // Get visual traits
             appearance = getAppearance(appearance, "Popup", { default: appearanceDefault }, Popup)(props);
             size = getAppearance(size || appearance.size, "PopupSize", popupSizeDefault, PopupSize);
+            spacing = spacing || appearance.spacing || 0;
+            styles = styles || appearance.styles || "";
 
             let triggerProps;
             let isOpen;
 
             if (stateless) {
                 triggerProps = {
-                    popupOpened: props.open
+                    popupOpened: open
                 };
-                isOpen = props.open;
+                isOpen = open;
             } else {
                 triggerProps = {
-                    popupOpened: open,
+                    popupOpened: open2,
                     onClick: (e) => {
                         setOpen2(!open2);
 
-                        if (props.trigger.props.onClick) {
-                            props.trigger.props.onClick(e);
+                        if (trigger.props.onClick) {
+                            trigger.props.onClick(e);
                         }
                     }
                 };
                 isOpen = open2;
             }
-            let trigger = React.cloneElement(props.trigger, triggerProps);
+            let triggerCloned = React.cloneElement(trigger, triggerProps);
 
             let content = typeof children === 'function' ? children(() => setOpen2(false)) : children;
 
@@ -87,7 +90,7 @@ function Popup({ open, children, size, appearance, stateless, ...props }) {
                     <div css={css`
 
             `}>
-                        {trigger}
+                        {triggerCloned}
                     </div>
 
                     <div css={css`

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DropdownMenu,DropdownMenuItem, Button, Popup } from "storefront-ui";
+import { DropdownMenu,DropdownMenuItem, Button, Popup, StorefrontUIContext } from "storefront-ui";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -16,16 +16,15 @@ const Header = (props) => <div css={css`
     color: lightgrey;
 `}>{props.children}</div>;
 
-const CustomListItem = (props) => <div css={css`
+const ListItem = ({children}) => <div css={css`
     padding: 8px;
-    background-color: grey;
-    text-transform: uppercase;
-    color: white;
 
     &:hover {
-        background-color: red;
+        background-color: lightgrey;
     }
-`}>{props.children}</div>;
+`}>{children}</div>;
+
+
 
 export default () => {
 
@@ -47,42 +46,97 @@ export default () => {
     const trigger = <Button>Open dropdown</Button>;
 
     return <div>
-        <p>Standard</p>
-        <DropdownMenu trigger={trigger}>
-            {items}
-        </DropdownMenu>
+        <StorefrontUIContext.Provider value={{
+            ListItem: {
+                custom: ListItem
+            },
+            Popup: {
+                flat: () => ({
+                    styles: `
+                        border: 1px solid black;
+                    `,
+                })
+            },
+            DropdownMenuItem: {
+                popup: "flat",
 
-        <p><code>small</code> size</p>
-        <DropdownMenu trigger={trigger} size={"small"}>
-            {items}
-        </DropdownMenu>
+            }
+        }}>
 
-        <p><code>large</code> size</p>
-        <DropdownMenu trigger={trigger} size={"large"}>
-            {items}
-        </DropdownMenu>
+            <p>Standard (links and buttons)</p>
+            <DropdownMenu trigger={trigger}>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')}>Peach</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"}>Wikipedia</DropdownMenuItem>
+            </DropdownMenu>
 
-        <p>custom size</p>
-        <DropdownMenu trigger={trigger} size={{width: 500, maxHeight: 500 }}>
-            {items}
-        </DropdownMenu>
+            <p>Styling <code>DropdownMenuItem</code></p>
+            <DropdownMenu trigger={trigger}>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={ListItem}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={ListItem}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={ListItem}>Peach</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"} appearance={ListItem}>Wikipedia</DropdownMenuItem>
+            </DropdownMenu>
 
-        <p>custom <code>Popup</code></p>
-        <DropdownMenu trigger={trigger} popup={<Popup styles={`border: 1px solid black; background-color: white;`} />}>
-            {items}
-        </DropdownMenu>
+            <p>We can use registered ListItem elements</p>
+            <DropdownMenu trigger={trigger}>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"} appearance={"custom"}>Wikipedia</DropdownMenuItem>
+            </DropdownMenu>
 
-        <p>custom <code>body</code></p>
-        <DropdownMenu trigger={trigger} body={(items) => <div css={css`padding: 10px; background-color: red; > * { margin-bottom: 10px; }`}>{items}</div>}>
-            {items}
-        </DropdownMenu>
+            <p>We can add custom elements that are not items and are not clickable</p>
+            <DropdownMenu trigger={trigger}>
+                <Header key={"fruits"}>Fruits</Header>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
+                <Header key={"veggies"}>Veggies</Header>
+                <DropdownMenuItem appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem appearance={"custom"}>Tomato</DropdownMenuItem>
+                <DropdownMenuItem appearance={"custom"}>Cucumber</DropdownMenuItem>
+                <DropdownMenuItem appearance={"custom"}>Potato</DropdownMenuItem>
+                <Separator/>
+                <DropdownMenuItem href={"https://wikipedia.org"} appearance={"custom"}>Wikipedia</DropdownMenuItem>
+            </DropdownMenu>
 
-        <p>Custom item look</p>
-        <DropdownMenu trigger={trigger}>
-            <DropdownMenuItem key={"apple"}>{ (focused) => <CustomListItem focused={focused}>Apple</CustomListItem> }</DropdownMenuItem>
-            <DropdownMenuItem key={"orange"}>{ (focused) => <CustomListItem focused={focused}>Orange</CustomListItem> }</DropdownMenuItem>
-            <DropdownMenuItem key={"peach"}>{ (focused) => <CustomListItem focused={focused}>Peach</CustomListItem> }</DropdownMenuItem>
-        </DropdownMenu>
+            <p>Custom body for dropdown (padding + background)</p>
+            <DropdownMenu
+                trigger={trigger}
+                body={(content) => <div css={css`
+                    padding: 8px;
+                    background-color: red;
+                `}>
+                    {content}
+                </div>}
+            >
+                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
+            </DropdownMenu>
+
+
+            <p>Custom body for dropdown (padding + background) + custom popup (no shadow, border)</p>
+            <DropdownMenu
+                trigger={trigger}
+                body={(content) => <div css={css`
+                    padding: 8px;
+                    background-color: red;
+                `}
+                 >
+                    {content}
+                </div>}
+                popup={"flat"}
+            >
+                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
+            </DropdownMenu>
+
+        </StorefrontUIContext.Provider>
+
 
     </div>
 };

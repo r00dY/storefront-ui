@@ -4,92 +4,100 @@ import { rs } from "responsive-helpers";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
-import Popup from "../Popup/Popup";
+import StorefrontUIContext, {getAppearance} from "../StorefrontUIContext/StorefrontUIContext";
+import PopupComponent from "../Popup/Popup";
 
 
 // props.selected, props.focused
-const DefaultItem = (props) => <div css={css`
-    padding: 12px;
-    &:hover {
-        background-color: lightgrey;
-    }
-`}>{props.children} {props.selected ? "(checked)" : ""}</div>;
+const defaultItemListAppearance = ({ children, focused }) => <div css={css`
+        &:hover {
+            background-color: lightgrey;
+        }
+    `}>{children}</div>
 
 
 function DropdownMenuItem() {
     return <></>;
 }
 
-const defaultPopup = <Popup size={"medium"} />;
-
 function DropdownMenu(props) {
-    const [open, setOpen] = useState(false);
+    let { open, trigger, children, stateless, appearance, size, spacing, styles, popup, body, item, ...propsExtra} = props;
 
-    let trigger = React.cloneElement(props.trigger, {
-        onClick: (e) => {
-            setOpen(!open);
+    return <StorefrontUIContext.Consumer>
+        {({ DropdownMenu, ListItem, Popup }) => {
+            let appearance = getAppearance(appearance, "DropdownMenu", { default: () => ({}) }, DropdownMenu)(propsExtra);
 
-            if (props.trigger.props.onClick) {
-                props.trigger.props.onClick(e);
-            }
-        }
-    });
+            let content = (closePopup) => {
 
-    let popup = props.popup || defaultPopup;
-    let size = props.size || popup.props.size;
+                let items = [];
 
-    let items = [];
+                children.forEach((child, index) => {
+                    let element;
 
-    props.children.forEach((child) => {
-        let element;
+                    let key = child.key ? child.key : index;
 
-        if (child.type === DropdownMenuItem) {
+                    if (child.type === DropdownMenuItem) {
+                        let { onClick, href, appearance, ...props } = child.props;
 
-            let content;
-            if (typeof child.props.children === 'function') {
-                content = child.props.children(false) // focused should be passed here!
-            }
-            else {
-                content = child.props.children;
-            }
+                        appearance = getAppearance(appearance, "DropdownMenuItem", { default: appearance.item || defaultItemListAppearance }, ListItem);
 
-            element =
-                <div css={css`
-                cursor: pointer;
-            `} onClick={() => {
+                        let content = appearance({
+                            ...props,
+                            focused: false
+                        });
 
-                    if (child.props.onClick) {
-                        child.props.onClick()
+                        element =
+                            <div css={css`
+                        cursor: pointer;
+                    `} onClick={() => {
+                                if (onClick) { onClick() }
+                                closePopup();
+                            }}
+                                 key={key}
+                            >
+                                {content}
+                            </div>;
+
+                        if (href) {
+                            element = <div key={key}><a href={href}>{content}</a></div>;
+                        }
+                    } else {
+                        element = child;
                     }
-                    setOpen(false);
 
-                }}
-                     key={child.key}
-                >
-                    {content}
-                </div>;
+                    items.push(element);
+                });
 
-            if (child.props.href) {
-                element = <div key={child.key}><a href={child.props.href}>content</a></div>;
-            }
-        } else {
-            element = child;
-        }
+                body = body || ((x) => <>{x}</>);
 
-        items.push(element);
-    });
+                return body(items)
+            };
 
-    let body = props.body || ((x) => <>{x}</>);
 
-    let Popup = React.cloneElement(popup, {
-        size: size,
-        trigger: trigger,
-        open: open
-    }, body(items));
+            // open, trigger, children, stateless, appearance, size, spacing, styles
 
-    return <>{Popup}</>
+            let popupChildren = {
+                appearance: appearance.popup,
+                open,
+                trigger,
+                stateless,
+                size,
+                spacing,
+                styles,
+                ...propsExtra
+            };
+
+            return <PopupComponent {...popupChildren}>
+                {content}
+            </PopupComponent>
+        }}
+    </StorefrontUIContext.Consumer>;
+
 }
+
+DropdownMenu.defaultProps = {
+    stateless: false
+};
 
 export {
     DropdownMenu,
