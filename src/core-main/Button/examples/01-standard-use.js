@@ -42,10 +42,10 @@ export default () => (
             width: 250px;
         `}>Sized raw button</Button>
 
-        <p>Raw button as link</p>
+        <p>Default button as link</p>
         <Button href={"https://wikipedia.org"}>Raw link</Button>
 
-        <p>Raw button as a link can be disabled too</p>
+        <p>Default button as a link can be disabled too</p>
         <Button href={"https://wikipedia.org"} disabled={true}>Raw link disabled</Button>
 
         <p>Custom <code>appearance</code> for button</p>
@@ -68,6 +68,10 @@ export default () => (
             <Button appearance={"custom"} level={"default"} href={"https://wikipedia.org"}>Custom appearance with custom prop as link</Button>
         </StorefrontUIContext.Provider>
 
+        <p>Raw button</p>
+        <Button appearance="raw" onClick={() => alert('button clicked!')}>Raw button</Button>
 
+        <p>Raw button as link</p>
+        <Button appearance="raw" target={"_blank"} href={"https://wikipedia.org"}>Raw button</Button>
     </div>
 );

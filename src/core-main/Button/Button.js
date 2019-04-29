@@ -55,30 +55,6 @@ const rawLinkStyles = (disabled) => css`
 `;
 
 
-// const ButtonDefault = (props) => {
-//     return <div css={css`
-//         ${ props.disabled ? 'opacity: 0.66;' : ''}
-//
-//         padding: 12px 20px;
-//         background-color: black;
-//         color: white;
-//         border-radius: 6px;
-//
-//         display: flex;
-//         justify-content: center;
-//         align-items: center;
-//
-//         ${!props.disabled && `
-//             &:hover {
-//                 opacity: 0.8;
-//             }
-//         `}
-//
-//         position: relative;
-//         height: 100%;
-//     `}>{props.children}</div>
-// };
-
 const ButtonDefaultContent = (props) => {
 
     // Button is in dropdown context
@@ -126,6 +102,7 @@ const map = {
 };
 
 const appearanceDefault = ({disabled, popupOpened, children}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>;
+const appearanceRaw = ({ children }) => <ButtonRawContent>{children}</ButtonRawContent>;
 
 
 const Button = React.forwardRef(
@@ -146,11 +123,16 @@ const Button = React.forwardRef(
                     }
                 }
                 else if (typeof appearance === 'string') {
-                    if (Button && !Button[appearance]) {
+                    if (Button && Button[appearance]) {
+                        appearance = Button[appearance];
+                    } else if (appearance === "default") {
+                        appearance = appearanceDefault;
+                    } else if (appearance === "raw") {
+                        appearance = appearanceRaw;
+                    }
+                    else {
                         throw new Error ('Unknown Button appearance: ' + appearance);
                     }
-
-                    appearance = Button[appearance];
                 }
 
                 let content = appearance({ disabled, popupOpened, children, ...props});
