@@ -47,8 +47,7 @@ function Popup({ open, children, size, appearance, stateless, ...props }) {
         {({ Popup, PopupSize }) => {
 
             appearance = getAppearance(appearance, "Popup", { default: appearanceDefault }, Popup)(props);
-
-            let size = getAppearance(size || appearance.size, "PopupSize", popupSizeDefault, PopupSize);
+            size = getAppearance(size || appearance.size, "PopupSize", popupSizeDefault, PopupSize);
 
             let triggerProps;
             let isOpen;

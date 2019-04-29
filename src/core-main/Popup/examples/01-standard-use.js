@@ -57,5 +57,18 @@ export default () => {
             <Popup trigger={<Button>Open dropdown</Button>}>Hello world.</Popup>
         </StorefrontUIContext.Provider>
 
+        <p>It's possible to register custom sizes</p>
+
+        <StorefrontUIContext.Provider value={{
+            PopupSize: {
+                tiny: {
+                    width: 100,
+                    maxHeight: 300
+                }
+            }
+        }}>
+            <Popup size="tiny" trigger={<Button>Open dropdown</Button>}>Tiny.</Popup>
+        </StorefrontUIContext.Provider>
+
     </div>
 };
