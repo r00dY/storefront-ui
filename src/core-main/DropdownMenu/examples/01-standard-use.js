@@ -16,7 +16,7 @@ const Header = (props) => <div css={css`
     color: lightgrey;
 `}>{props.children}</div>;
 
-const ListItem = ({ children, inverted}) => <div css={css`
+const ListItem = ({ children, inverted, focused, selected}) => <div css={css`
     padding: 8px;
 
     &:hover {
@@ -25,16 +25,19 @@ const ListItem = ({ children, inverted}) => <div css={css`
 
     color: ${inverted ? 'white' : 'black'};
     background-color: ${inverted ? 'black' : 'transparent'};
+
+    font-weight: ${selected ? 600 : 400};
 `}>
     {children}
 </div>;
 
 const ListItemAppearance = (props) => ({
-    children: ({ focused }) => <ListItem {...props} />
+    children: ({ focused, selected }) => <ListItem {...props} focused={focused} selected={selected} />
 });
 
 
 export default () => {
+    const [fruit, setFruit] = useState(null);
 
     const items = [
         <Header key={"fruits"}>Fruits</Header>,
@@ -156,6 +159,15 @@ export default () => {
                 <DropdownMenuItem onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log('orange clicked')}>Orange</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log('peach clicked')}>Peach</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"}>Wikipedia</DropdownMenuItem>
+            </DropdownMenu>
+
+            <p>Selecting</p>
+
+            <DropdownMenu trigger={<Button appearance={"test"}>{fruit ? fruit : 'Pick fruit'}</Button>} appearance={"crazy"}>
+                <DropdownMenuItem onClick={() => setFruit('apple')} selected={fruit === 'apple'}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFruit('orange')} selected={fruit === 'orange'}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => setFruit('peach')} selected={fruit === 'peach'}>Peach</DropdownMenuItem>
                 <DropdownMenuItem href={"https://wikipedia.org"}>Wikipedia</DropdownMenuItem>
             </DropdownMenu>
 

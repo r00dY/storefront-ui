@@ -7,15 +7,6 @@ import {css, jsx} from "@emotion/core";
 import StorefrontUIContext, {getAppearance} from "../StorefrontUIContext/StorefrontUIContext";
 import PopupComponent from "../Popup/Popup";
 
-
-// props.selected, props.focused
-const defaultItemListAppearance = ({ children, focused }) => <div css={css`
-        &:hover {
-            background-color: lightgrey;
-        }
-    `}>{children}</div>;
-
-
 function DropdownMenuItem() {
     return <></>;
 }
@@ -42,7 +33,7 @@ function DropdownMenu({ className, style, open, stateless, appearance, children 
                      * DropdownMenuItem
                      */
                     if (child.type === DropdownMenuItem) {
-                        let { onClick, href, appearance, ...appearanceProps } = child.props;
+                        let { onClick, href, appearance, selected, ...appearanceProps } = child.props;
 
                         if (!appearance) {
                             appearance = item;
@@ -54,7 +45,7 @@ function DropdownMenu({ className, style, open, stateless, appearance, children 
                             ListItem,
                         );
 
-                        let content = typeof children === 'function' ? children({focused: false}) : children;
+                        let content = typeof children === 'function' ? children({focused: false, selected: selected ? true : false }) : children;
 
                         element =
                             <div css={css`
