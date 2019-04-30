@@ -28,7 +28,7 @@ const buttonAppearance = ({ disabled, children, level}) => {
             {children}
         </div>
     }
-}
+};
 
 export default () => (
 

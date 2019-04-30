@@ -41,22 +41,23 @@ function Popup(props) {
             // Get canonical traits
             let values = getAppearance(
                 appearance,
-                props,
-                extraProps,
-                {
-                    size: "medium",
-                    spacing: 10,
-                    styles: `
-                        background-color: white;
-                        box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
-                    `
-                },
+                { ...extraProps },
+                { trigger, size, spacing, styles, children },
                 Popup
             );
 
-            values.size = getAppearance(values.size, {}, {}, popupSizeDefault.medium, popupSizeDefault, PopupSize);
+            values.size = values.size || "medium";
+            values.styles = values.styles || `
+                background-color: white;
+                box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
+            `;
+            values.spacing = values.spacing || 10;
 
-            console.log(values);
+            // Let's apply size
+            if (typeof values.size === 'string') {
+                const popupSizes = Object.assign({}, popupSizeDefault, PopupSize);
+                values.size = popupSizes[values.size];
+            }
 
             let triggerProps;
             let isOpen;
@@ -82,10 +83,6 @@ function Popup(props) {
             let triggerCloned = React.cloneElement(trigger, triggerProps);
 
             let content = typeof children === 'function' ? children(() => setOpen2(false)) : children;
-
-            // let popupStyles = props.styles || defaultPopupStyles;
-            // let size = typeof props.size === "object" ? props.size : popupSizes[props.size || "medium"] ;
-            // let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
 
             return <div className={className} style={style}>
 

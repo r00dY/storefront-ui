@@ -10,30 +10,28 @@ export default () => {
 
     return <div>
         <p>Standard</p>
-        <Popup trigger={<Button>Open dropdown</Button>}>
+        <Popup trigger={<Button appearance={"test"}>Open dropdown</Button>}>
             <div css={css`padding: 10px`}>Hello world!</div>
         </Popup>
 
         <p><code>size=large</code></p>
-        <Popup trigger={<Button>Open dropdown</Button>} size={"large"}>
+        <Popup trigger={<Button appearance={"test"}>Open dropdown</Button>} size={"large"}>
             <div css={css`padding: 10px`}>Hello world!</div>
         </Popup>
 
         <p><code>size=small</code></p>
-        <Popup trigger={<Button>Open dropdown</Button>} size={"small"}>
+        <Popup trigger={<Button appearance={"test"}>Open dropdown</Button>} size={"small"}>
             <div css={css`padding: 10px`}>Hello world!</div>
         </Popup>
 
-        <p>Custom appearance (no shadow, border, background yellow), closing by button inside popup</p>
+        <p>Custom look (no shadow, border, background yellow), closing by button inside popup</p>
         <Popup
-            trigger={<Button>Open dropdown</Button>}
+            trigger={<Button appearance={"test"}>Open dropdown</Button>}
             size={"small"}
-            appearance={() => ({
-                styles: `
-                    border: 1px solid black;
-                    background-color: yellow;
-                `
-            })}
+            styles={`
+                border: 1px solid black;
+                background-color: yellow;
+            `}
         >
             {(closePopup) => <div css={css`padding: 10px`}><button onClick={closePopup}>Close me</button></div>}
         </Popup>
@@ -54,7 +52,7 @@ export default () => {
                 })
             }
         }}>
-            <Popup trigger={<Button>Open dropdown</Button>}>Hello world.</Popup>
+            <Popup trigger={<Button appearance={"test"}>Open dropdown</Button>}>Hello world.</Popup>
         </StorefrontUIContext.Provider>
 
         <p>It's possible to register custom sizes</p>
@@ -67,7 +65,7 @@ export default () => {
                 }
             }
         }}>
-            <Popup size="tiny" trigger={<Button>Open dropdown</Button>}>Tiny.</Popup>
+            <Popup size="tiny" trigger={<Button appearance={"test"}>Open dropdown</Button>}>Tiny.</Popup>
         </StorefrontUIContext.Provider>
 
     </div>

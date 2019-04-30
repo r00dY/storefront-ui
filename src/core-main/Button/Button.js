@@ -120,8 +120,6 @@ const Button = React.forwardRef(
                     Button
                 );
 
-                console.log(value);
-
                 let content = typeof value.children === 'function' ? value.children({ disabled, popupOpened }) : value.children;
 
                 // let content = children;
