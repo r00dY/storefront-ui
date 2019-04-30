@@ -20,23 +20,15 @@ function DropdownMenuItem() {
     return <></>;
 }
 
-function DropdownMenu(props) {
-    let { open, trigger, children, stateless, appearance, size, spacing, styles, popup, body, item, ...propsExtra} = props;
+function DropdownMenu({ className, style, open, stateless, appearance, children /* children can't be modified in DropdownMenu */, ...appearanceProps}) {
 
     return <StorefrontUIContext.Consumer>
         {({ DropdownMenu, ListItem, Popup }) => {
-            let values = getAppearance(
+            let { trigger, size, spacing, styles, popup, body, item } = getAppearance(
                 appearance,
-                {
-                    ...propsExtra
-                },
-                {
-                    trigger, size, spacing, styles, popup, body, item
-                },
+                appearanceProps,
                 DropdownMenu
             );
-
-            let dropdownMenuValues = values;
 
             let content = (closePopup) => {
                 let items = [];
@@ -46,18 +38,23 @@ function DropdownMenu(props) {
 
                     let key = child.key ? child.key : index;
 
+                    /**
+                     * DropdownMenuItem
+                     */
                     if (child.type === DropdownMenuItem) {
-                        let { onClick, href, appearance, children, ...extraProps } = child.props;
+                        let { onClick, href, appearance, ...appearanceProps } = child.props;
 
-                        let values = getAppearance(
+                        if (!appearance) {
+                            appearance = item;
+                        }
+
+                        let { children } = getAppearance(
                             appearance,
-                            { ...extraProps, children, focused: false },
-                            { children },
-                            { default: dropdownMenuValues.item || defaultItemListAppearance },
-                            ListItem
+                            appearanceProps,
+                            ListItem,
                         );
 
-                        let content = typeof values.children === 'function' ? values.children({focused: false}) : values.children;
+                        let content = typeof children === 'function' ? children({focused: false}) : children;
 
                         element =
                             <div css={css`
@@ -81,23 +78,21 @@ function DropdownMenu(props) {
                     items.push(element);
                 });
 
-                values.body = values.body || ((x) => <>{x}</>);
+                body = body || ((x) => <>{x}</>);
 
-                return values.body(items)
+                return body(items);
             };
 
-            // open, trigger, children, stateless, appearance, size, spacing, styles
-            let popupChildren = {
-                appearance: values.popup,
-                open,
-                stateless,
-                trigger: values.trigger,
-                size: values.size,
-                spacing: values.spacing,
-                styles: values.styles,
-            };
+            popup = popup || {};
+            if (typeof popup === 'string') {
+                popup = { appearance: popup }
+            }
 
-            return <PopupComponent {...popupChildren}>
+            popup = Object.assign({}, {
+                className, style, open, stateless, appearance, trigger, size, spacing, styles
+            }, popup);
+
+            return <PopupComponent {...popup}>
                 {content}
             </PopupComponent>
         }}

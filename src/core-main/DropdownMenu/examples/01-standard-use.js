@@ -16,18 +16,22 @@ const Header = (props) => <div css={css`
     color: lightgrey;
 `}>{props.children}</div>;
 
-const ListItem = (props) => ({
-    children: <div css={css`
-        padding: 8px;
+const ListItem = ({ children, inverted}) => <div css={css`
+    padding: 8px;
 
-        &:hover {
-            background-color: lightgrey;
-        }
-    `}>
-        {props.children}
-    </div>
+    &:hover {
+        background-color: lightgrey;
+    }
+
+    color: ${inverted ? 'white' : 'black'};
+    background-color: ${inverted ? 'black' : 'transparent'};
+`}>
+    {children}
+</div>;
+
+const ListItemAppearance = (props) => ({
+    children: ({ focused }) => <ListItem {...props} />
 });
-
 
 
 export default () => {
@@ -52,7 +56,7 @@ export default () => {
     return <div>
         <StorefrontUIContext.Provider value={{
             ListItem: {
-                custom: ListItem
+                custom: ListItemAppearance
             },
             Popup: {
                 flat: () => ({
@@ -61,9 +65,18 @@ export default () => {
                     `,
                 })
             },
-            DropdownMenuItem: {
-                popup: "flat",
+            DropdownMenu: {
+                crazy: () => ({
+                    size: "large",
+                    popup: "flat",
+                    body: (content) => <div css={css`
+                        padding: 8px;
+                        background-color: red;
+                    `}>{content}</div>,
+                    item: "custom"
+                })
             }
+
         }}>
 
             <p>Standard (links and buttons)</p>
@@ -85,7 +98,7 @@ export default () => {
             <p>We can use registered ListItem elements</p>
             <DropdownMenu trigger={trigger}>
                 <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"} inverted={true}>Orange</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
                 <DropdownMenuItem href={"https://wikipedia.org"} appearance={"custom"}>Wikipedia</DropdownMenuItem>
             </DropdownMenu>
@@ -120,7 +133,6 @@ export default () => {
                 <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
             </DropdownMenu>
 
-
             <p>Custom body for dropdown (padding + background) + custom popup (no shadow, border)</p>
             <DropdownMenu
                 trigger={trigger}
@@ -136,6 +148,15 @@ export default () => {
                 <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={"custom"}>Apple</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={"custom"}>Orange</DropdownMenuItem>
                 <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={"custom"}>Peach</DropdownMenuItem>
+            </DropdownMenu>
+
+            <p>You can register entire <code>DropdownMenu</code> appearance, its body, popup settings and default <code>DropdownMenuItem</code> appearance</p>
+
+            <DropdownMenu trigger={trigger} appearance={"crazy"}>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')}>Apple</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')}>Orange</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')}>Peach</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"}>Wikipedia</DropdownMenuItem>
             </DropdownMenu>
 
         </StorefrontUIContext.Provider>

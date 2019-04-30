@@ -44,20 +44,6 @@ const getAppearance = (appearance, appearanceProps, ...maps) => {
     }
 
     return Object.assign({}, appearanceProps, newProps);
-
-    //
-    // return appearance;
-    //
-    // let result = appearanceProps;
-    //
-    // // Let's iterate over default props (ALL canonical props) and see if there are some overwritten by props.
-    // Object.keys(appearanceProps).forEach((key) => {
-    //     if (typeof appearance[key] !== "undefined") {
-    //         result[key] = appearance[key];
-    //     }
-    // });
-    //
-    // return result;
 };
 
 export default StorefrontUIContext;
