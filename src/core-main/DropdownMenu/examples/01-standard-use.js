@@ -16,13 +16,17 @@ const Header = (props) => <div css={css`
     color: lightgrey;
 `}>{props.children}</div>;
 
-const ListItem = ({children}) => <div css={css`
-    padding: 8px;
+const ListItem = (props) => ({
+    children: <div css={css`
+        padding: 8px;
 
-    &:hover {
-        background-color: lightgrey;
-    }
-`}>{children}</div>;
+        &:hover {
+            background-color: lightgrey;
+        }
+    `}>
+        {props.children}
+    </div>
+});
 
 
 
@@ -43,7 +47,7 @@ export default () => {
         <DropdownMenuItem key={"wiki"} href={"https://www.wikipedia.org/"}>Link to Wikipedia</DropdownMenuItem>,
     ];
 
-    const trigger = <Button>Open dropdown</Button>;
+    const trigger = <Button appearance={"test"}>Open dropdown</Button>;
 
     return <div>
         <StorefrontUIContext.Provider value={{
@@ -59,7 +63,6 @@ export default () => {
             },
             DropdownMenuItem: {
                 popup: "flat",
-
             }
         }}>
 
@@ -71,12 +74,12 @@ export default () => {
                 <DropdownMenuItem href={"https://wikipedia.org"}>Wikipedia</DropdownMenuItem>
             </DropdownMenu>
 
-            <p>Styling <code>DropdownMenuItem</code></p>
+            <p>Styling <code>DropdownMenuItem</code> via render props</p>
             <DropdownMenu trigger={trigger}>
-                <DropdownMenuItem onClick={() => console.log('apple clicked')} appearance={ListItem}>Apple</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => console.log('orange clicked')} appearance={ListItem}>Orange</DropdownMenuItem>
-                <DropdownMenuItem onClick={() => console.log('peach clicked')} appearance={ListItem}>Peach</DropdownMenuItem>
-                <DropdownMenuItem href={"https://wikipedia.org"} appearance={ListItem}>Wikipedia</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('apple clicked')}>{({focused}) => <ListItem>Apple</ListItem>}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('orange clicked')}>{({focused}) => <ListItem>Orange</ListItem>}</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => console.log('peach clicked')}>{({focused}) => <ListItem>Peach</ListItem>}</DropdownMenuItem>
+                <DropdownMenuItem href={"https://wikipedia.org"}>{({focused}) => <ListItem>Wikipedia</ListItem>}</DropdownMenuItem>
             </DropdownMenu>
 
             <p>We can use registered ListItem elements</p>

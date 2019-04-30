@@ -93,36 +93,32 @@ const ButtonDefaultContent = (props) => {
     `}>{props.children} {extraString}</div>
 };
 
-const appearanceTest = ({children, disabled, popupOpened}) => ({
-    children: <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>
+const appearanceTest = ({children}) => ({
+    children: ({ disabled, popupOpened}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>
 });
 
-
-const appearanceRaw = {
-    // children: ({ children }) => <>{children}</>
-};
+const appearanceRaw = ({children}) => ({
+});
 
 const Button = React.forwardRef(
     (
         props, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
         ref,
     ) => {
-        const { type, href, disabled, className, style, popupOpened, children, appearance, ...extraProps } = props;
+        const { type, href, disabled, className, style, popupOpened, appearance, ...appearanceProps } = props;
+        const { children, ...extraProps } = appearanceProps;
 
         return <StorefrontUIContext.Consumer>
             {({ Button }) => {
 
-                let value = getAppearance(
+                let { children } = getAppearance(
                     appearance,
-                    { ...extraProps, children, disabled, popupOpened },
-                    { children },
-                    { raw: {}, test: appearanceTest },
+                    appearanceProps,
+                    { raw: appearanceRaw, default: appearanceRaw, test: appearanceTest },
                     Button
                 );
 
-                let content = typeof value.children === 'function' ? value.children({ disabled, popupOpened }) : value.children;
-
-                // let content = children;
+                let content = typeof children === 'function' ? children({ disabled, popupOpened }) : children;
 
                 if (href) {
                     return <a css={rawLinkStyles(disabled)} style={style} className={className} {...extraProps} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;

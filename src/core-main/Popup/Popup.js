@@ -31,32 +31,31 @@ const popupSizeDefault = {
 
 popupSizeDefault.default = popupSizeDefault.medium;
 
-function Popup(props) {
-    const { className, style, open, trigger, children, stateless, appearance, size, spacing, styles, ...extraProps } = props;
+function Popup({ className, style, open, stateless, appearance, ...appearanceProps }) {
+
     const [open2, setOpen2] = useState(false);
 
     return <StorefrontUIContext.Consumer>
         {({ Popup, PopupSize }) => {
 
             // Get canonical traits
-            let values = getAppearance(
+            let { trigger, children, size, spacing, styles } = getAppearance(
                 appearance,
-                { ...extraProps },
-                { trigger, size, spacing, styles, children },
+                appearanceProps,
                 Popup
             );
 
-            values.size = values.size || "medium";
-            values.styles = values.styles || `
+            size = size || "medium";
+            styles = styles || `
                 background-color: white;
                 box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
             `;
-            values.spacing = values.spacing || 10;
+            spacing = spacing || 10;
 
             // Let's apply size
-            if (typeof values.size === 'string') {
+            if (typeof size === 'string') {
                 const popupSizes = Object.assign({}, popupSizeDefault, PopupSize);
-                values.size = popupSizes[values.size];
+                size = popupSizes[size];
             }
 
             let triggerProps;
@@ -102,12 +101,12 @@ function Popup(props) {
                 padding: 0;
                 overflow-y: auto;
 
-                ${values.styles}
+                ${styles}
 
                 position: absolute;
 
-                ${rs(values.size.width).css('width')}
-                ${rs(values.size.maxHeight).css('max-height')}
+                ${rs(size.width).css('width')}
+                ${rs(size.maxHeight).css('max-height')}
                 height: auto;
 
                 top: calc(100% + 10px);

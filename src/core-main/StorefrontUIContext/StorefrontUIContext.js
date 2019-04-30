@@ -16,7 +16,7 @@ const StorefrontUIContext = React.createContext({
  *
  * 1. If appearance is empty, then let's just use defaultProps
  */
-const getAppearance = (appearance, appearanceProps, outputProps, ...maps) => {
+const getAppearance = (appearance, appearanceProps, ...maps) => {
 
     let map = Object.assign({}, ...maps);
 
@@ -32,28 +32,32 @@ const getAppearance = (appearance, appearanceProps, outputProps, ...maps) => {
 
     // At this point, appearance is either function or nothing.
     // If appearance is a function, then let's calculate object, if nothing, the object is empty
+    let newProps = {};
+
     if (typeof appearance === 'function') {
-        appearance = appearance(appearanceProps);
+        newProps = appearance(appearanceProps);
     }
     else {
         if (map.default) {
-            appearance = map.default(appearanceProps);
-        }
-        else {
-            appearance = {};
+            newProps = map.default(appearanceProps);
         }
     }
 
-    let result = outputProps;
+    return Object.assign({}, appearanceProps, newProps);
 
-    // Let's iterate over default props (ALL canonical props) and see if there are some overwritten by props.
-    Object.keys(outputProps).forEach((key) => {
-        if (typeof appearance[key] !== "undefined") {
-            result[key] = appearance[key];
-        }
-    });
-
-    return result;
+    //
+    // return appearance;
+    //
+    // let result = appearanceProps;
+    //
+    // // Let's iterate over default props (ALL canonical props) and see if there are some overwritten by props.
+    // Object.keys(appearanceProps).forEach((key) => {
+    //     if (typeof appearance[key] !== "undefined") {
+    //         result[key] = appearance[key];
+    //     }
+    // });
+    //
+    // return result;
 };
 
 export default StorefrontUIContext;

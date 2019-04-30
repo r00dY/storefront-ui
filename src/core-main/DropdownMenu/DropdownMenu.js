@@ -13,7 +13,7 @@ const defaultItemListAppearance = ({ children, focused }) => <div css={css`
         &:hover {
             background-color: lightgrey;
         }
-    `}>{children}</div>
+    `}>{children}</div>;
 
 
 function DropdownMenuItem() {
@@ -25,10 +25,20 @@ function DropdownMenu(props) {
 
     return <StorefrontUIContext.Consumer>
         {({ DropdownMenu, ListItem, Popup }) => {
-            let appearance = getAppearance(appearance, "DropdownMenu", { default: () => ({}) }, DropdownMenu)(propsExtra);
+            let values = getAppearance(
+                appearance,
+                {
+                    ...propsExtra
+                },
+                {
+                    trigger, size, spacing, styles, popup, body, item
+                },
+                DropdownMenu
+            );
+
+            let dropdownMenuValues = values;
 
             let content = (closePopup) => {
-
                 let items = [];
 
                 children.forEach((child, index) => {
@@ -37,19 +47,22 @@ function DropdownMenu(props) {
                     let key = child.key ? child.key : index;
 
                     if (child.type === DropdownMenuItem) {
-                        let { onClick, href, appearance, ...props } = child.props;
+                        let { onClick, href, appearance, children, ...extraProps } = child.props;
 
-                        appearance = getAppearance(appearance, "DropdownMenuItem", { default: appearance.item || defaultItemListAppearance }, ListItem);
+                        let values = getAppearance(
+                            appearance,
+                            { ...extraProps, children, focused: false },
+                            { children },
+                            { default: dropdownMenuValues.item || defaultItemListAppearance },
+                            ListItem
+                        );
 
-                        let content = appearance({
-                            ...props,
-                            focused: false
-                        });
+                        let content = typeof values.children === 'function' ? values.children({focused: false}) : values.children;
 
                         element =
                             <div css={css`
-                        cursor: pointer;
-                    `} onClick={() => {
+                                cursor: pointer;
+                            `} onClick={() => {
                                 if (onClick) { onClick() }
                                 closePopup();
                             }}
@@ -68,23 +81,20 @@ function DropdownMenu(props) {
                     items.push(element);
                 });
 
-                body = body || ((x) => <>{x}</>);
+                values.body = values.body || ((x) => <>{x}</>);
 
-                return body(items)
+                return values.body(items)
             };
 
-
             // open, trigger, children, stateless, appearance, size, spacing, styles
-
             let popupChildren = {
-                appearance: appearance.popup,
+                appearance: values.popup,
                 open,
-                trigger,
                 stateless,
-                size,
-                spacing,
-                styles,
-                ...propsExtra
+                trigger: values.trigger,
+                size: values.size,
+                spacing: values.spacing,
+                styles: values.styles,
             };
 
             return <PopupComponent {...popupChildren}>
