@@ -36,6 +36,7 @@ const rawButtonStyles = css`
   cursor: pointer;
   &:disabled {
     cursor: default;
+    color: black;
   }
 
     position: relative;
@@ -92,31 +93,44 @@ const ButtonDefaultContent = (props) => {
     `}>{props.children} {extraString}</div>
 };
 
-const ButtonRawContent = (props) => {
-    return <>{props.children}</>;
-};
+const appearanceTest = ({children, disabled, popupOpened}) => ({
+    children: <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>
+});
 
-const appearanceDefault = ({disabled, popupOpened, children}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>;
-const appearanceRaw = ({ children }) => <ButtonRawContent>{children}</ButtonRawContent>;
+
+const appearanceRaw = {
+    // children: ({ children }) => <>{children}</>
+};
 
 const Button = React.forwardRef(
     (
-        { type, href, disabled, className, style, popupOpened, children, appearance, ...props }, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
+        props, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
         ref,
     ) => {
+        const { type, href, disabled, className, style, popupOpened, children, appearance, ...extraProps } = props;
 
         return <StorefrontUIContext.Consumer>
             {({ Button }) => {
 
-                appearance = getAppearance(appearance, "Button", { raw: appearanceRaw, default: appearanceDefault }, Button);
+                let value = getAppearance(
+                    appearance,
+                    { ...extraProps, children, disabled, popupOpened },
+                    { children },
+                    { raw: {}, test: appearanceTest },
+                    Button
+                );
 
-                let content = appearance({ disabled, popupOpened, children, ...props});
+                console.log(value);
+
+                let content = typeof value.children === 'function' ? value.children({ disabled, popupOpened }) : value.children;
+
+                // let content = children;
 
                 if (href) {
-                    return <a css={rawLinkStyles(disabled)} style={style} className={className} {...props} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;
+                    return <a css={rawLinkStyles(disabled)} style={style} className={className} {...extraProps} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;
                 }
 
-                return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...props} ref={ref}>{ content }</button>;
+                return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...extraProps} ref={ref}>{ content }</button>;
             }}
         </StorefrontUIContext.Consumer>;
     },

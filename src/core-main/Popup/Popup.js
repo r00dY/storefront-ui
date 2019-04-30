@@ -31,26 +31,32 @@ const popupSizeDefault = {
 
 popupSizeDefault.default = popupSizeDefault.medium;
 
-const appearanceDefault = () => ({
-    size: "medium",
-    spacing: 10,
-    styles: `
-        background-color: white;
-        box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
-    `
-});
-
-function Popup({ open, trigger, children, stateless, appearance, size, spacing, styles, ...props }) {
+function Popup(props) {
+    const { className, style, open, trigger, children, stateless, appearance, size, spacing, styles, ...extraProps } = props;
     const [open2, setOpen2] = useState(false);
 
     return <StorefrontUIContext.Consumer>
         {({ Popup, PopupSize }) => {
 
-            // Get visual traits
-            appearance = getAppearance(appearance, "Popup", { default: appearanceDefault }, Popup)(props);
-            size = getAppearance(size || appearance.size, "PopupSize", popupSizeDefault, PopupSize);
-            spacing = spacing || appearance.spacing || 0;
-            styles = styles || appearance.styles || "";
+            // Get canonical traits
+            let values = getAppearance(
+                appearance,
+                props,
+                extraProps,
+                {
+                    size: "medium",
+                    spacing: 10,
+                    styles: `
+                        background-color: white;
+                        box-shadow: 0 0px 14px rgba(0, 0, 0, 0.15);
+                    `
+                },
+                Popup
+            );
+
+            values.size = getAppearance(values.size, {}, {}, popupSizeDefault.medium, popupSizeDefault, PopupSize);
+
+            console.log(values);
 
             let triggerProps;
             let isOpen;
@@ -81,7 +87,7 @@ function Popup({ open, trigger, children, stateless, appearance, size, spacing, 
             // let size = typeof props.size === "object" ? props.size : popupSizes[props.size || "medium"] ;
             // let spacing = rs(props.spacing || 10); // TODO: make ResponsiveMap.map function return responsivesizes, not segments, and make it easy to return value only (calc(...))
 
-            return <div className={props.className} style={props.style}>
+            return <div className={className} style={style}>
 
                 <div css={css`
                     position: relative;
@@ -89,7 +95,7 @@ function Popup({ open, trigger, children, stateless, appearance, size, spacing, 
 
                     <div css={css`
 
-            `}>
+                    `}>
                         {triggerCloned}
                     </div>
 
@@ -99,12 +105,12 @@ function Popup({ open, trigger, children, stateless, appearance, size, spacing, 
                 padding: 0;
                 overflow-y: auto;
 
-                ${appearance.styles}
+                ${values.styles}
 
                 position: absolute;
 
-                ${rs(size.width).css('width')}
-                ${rs(size.maxHeight).css('max-height')}
+                ${rs(values.size.width).css('width')}
+                ${rs(values.size.maxHeight).css('max-height')}
                 height: auto;
 
                 top: calc(100% + 10px);
