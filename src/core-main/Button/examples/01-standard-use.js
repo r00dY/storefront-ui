@@ -25,7 +25,7 @@ const buttonAppearance = ({ children, level}) => {
                 opacity: 0.8;
             }
             `}
-            
+
             `}
         >
             {children}

@@ -60,7 +60,12 @@ function DropdownMenu({ className, style, open, stateless, appearance, children 
                             </div>;
 
                         if (href) {
-                            element = <div key={key}><a href={href}>{content}</a></div>;
+                            element = <div key={key}><a href={href} css={css`
+                                text-decoration: none;
+                                &:visited, &:active, &:hover, &:link {
+                                    color: black;
+                                }
+                            `}>{content}</a></div>;
                         }
                     } else {
                         element = child;
