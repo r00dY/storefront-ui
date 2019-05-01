@@ -4,6 +4,8 @@ import Color from "../Color";
 import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
 
 function Image(props) {
+    // appearance: backgroundColor, animationTime, offset, draggable -> will do for now (Image.defaultProps)
+
     const [loaded, setLoaded] = useState(false);
 
     useEffect(() => {
@@ -60,23 +62,5 @@ Image.defaultProps = {
     autoload: true
 };
 
-// createImage((image, video, props) => { // same with Button, DropdownMenuItem, etc.
-//
-//     // props are only the ones that
-//     return {
-//         props: { // canonical props, the ones that original image understands and that must be set correctly
-//             image: {},
-//             video: {},
-//             mode: "natural",
-//             loadWhenInViewport: true
-//         },
-//         defaultProps: {
-//
-//         },
-//         propTypes: {
-//
-//         }
-//     }
-// });
 
 export default Image;
