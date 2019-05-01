@@ -4,7 +4,7 @@ import { Button, StorefrontUIContext } from "storefront-ui";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-const buttonAppearance = ({ disabled, children, level}) => {
+const buttonAppearance = ({ children, level}) => {
     const levels = {
         default: 'grey',
         success: 'green',
@@ -13,16 +13,19 @@ const buttonAppearance = ({ disabled, children, level}) => {
     };
 
     return {
-        children: <div css={css`
+        children: ({ disabled }) => <div css={css`
             padding: 12px;
             border-radius: 6px;
             background-color: ${ level ? levels[level] : levels.default };
             color: white;
-            ${disabled ? 'color: grey;' : ''}
+            ${disabled ? 'opacity: 0.5;' : ''}
 
+            ${ !disabled && `
             &:hover {
                 opacity: 0.8;
             }
+            `}
+            
             `}
         >
             {children}
@@ -68,8 +71,9 @@ export default () => (
                  custom: buttonAppearance
              }
         }}>
-            <Button appearance={"custom"} level={"error"}>Custom appearance registered</Button><br/>
-            <Button appearance={"custom"} level={"success"}>Custom appearance with custom prop</Button><br/>
+            <Button appearance={"custom"} level={"error"}>Custom appearance error</Button><br/>
+            <Button appearance={"custom"} level={"success"}>Custom appearance success</Button><br/>
+            <Button appearance={"custom"} level={"success"} disabled={true}>Custom appearance success disabled</Button><br/>
             <Button appearance={"custom"} level={"default"} href={"https://wikipedia.org"}>Custom appearance with custom prop as link</Button>
         </StorefrontUIContext.Provider>
 
