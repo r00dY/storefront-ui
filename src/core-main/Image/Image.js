@@ -4,7 +4,7 @@ import Color from "../Color";
 import StorefrontUIContext from "../StorefrontUIContext/StorefrontUIContext";
 
 function Image(props) {
-    // appearance: backgroundColor, animationTime, offset, draggable -> will do for now (Image.defaultProps)
+    // appearance: backgroundColor, animationTime, offset, draggable, placeholder -> will do for now (Image.defaultProps)
 
     const [loaded, setLoaded] = useState(false);
 
@@ -17,7 +17,8 @@ function Image(props) {
     return <StorefrontUIContext.Consumer>
         {({ Image }) => {
             if (Image && Image.defaultProps) {
-                props = Object.assign({}, props, Image.defaultProps);
+                let defaultProps = typeof Image.defaultProps === 'function' ? Image.defaultProps(props) : Image.defaultProps;
+                props = Object.assign({}, props, defaultProps);
             }
 
             let newProps;
@@ -59,7 +60,7 @@ Image.defaultProps = {
     loadWhenInViewport: true,
     load: false,
     backgroundColor: new Color("#f5f5f5"),
-    autoload: true
+    autoload: true,
 };
 
 
