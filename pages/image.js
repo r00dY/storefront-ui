@@ -40,6 +40,12 @@ It's very easy to add videos instead of images. Actually you must use \`Image\` 
 ${<Example code={require("!!raw-loader!../src/core-main/Image/examples/04-video.js")}
            component={require('../src/core-main/Image/examples/04-video.js').default}/>}
 
+### Context, global default props
+
+You can set default \`Image\` props in \`StorefrontUIContext\` globally.
+
+${<Example code={require("!!raw-loader!../src/core-main/Image/examples/05-context.js")}
+           component={require('../src/core-main/Image/examples/05-context.js').default}/>}
 `;
 
 export default () => <Page>{content}</Page>;
