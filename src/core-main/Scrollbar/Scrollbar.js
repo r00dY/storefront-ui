@@ -12,11 +12,11 @@ const getScrollbarParams = (instance) => {
 
     if (instance) {
         width = instance.state.containerSize / instance.state.slideableWidth;
-        start = -instance.state.slides[0].coord / instance.state.slideableWidth;
+        start = (-instance.state.slides[0].coord + instance.state.leftOffset) / instance.state.slideableWidth;
     }
 
     return { width, start };
-}
+};
 
 function ScrollBar(props) {
     const instance = props.swipeableItemsContainer.instance;
