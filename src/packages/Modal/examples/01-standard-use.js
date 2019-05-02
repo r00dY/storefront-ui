@@ -3,7 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import { Modal, Color, Ease } from "storefront-ui";
+import Modal from "storefront-ui/Modal";
+import Color from "storefront-ui/Color";
+import Ease from "storefront-ui/Ease";
+
 
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 

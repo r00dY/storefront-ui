@@ -1,5 +1,6 @@
 import React from "react";
-import {StickyColumn, Grid, GridItem} from "storefront-ui";
+import StickyColumn from "storefront-ui/StickyColumn";
+import { Grid, GridItem } from "storefront-ui/Grid";
 import { rslin } from "responsive-helpers"
 
 /** @jsx jsx */
