@@ -1,59 +1,59 @@
 {
-    "name": "storefront-ui",
-    "description": "React PWA (single page application) e-commerce UI framework",
-    "main": "dist/bundle.js",
-    "scripts": {
-        "dev": "next --port 3333",
-        "build-lib": "webpack --mode production",
-        "start": "next start",
-        "build": "next build",
-        "storybook": "start-storybook -s . -p 9011 -c .storybook",
-        "build-storybook": "build-storybook -c .storybook",
-        "test": "./node_modules/.bin/babel-node ./spec/run.js"
-    },
-    "dependencies": {
-        "@emotion/core": "^10.0.7",
-        "@emotion/styled": "^10.0.7",
-        "react-responsive": "^6.1.1",
-        "responsive-helpers": "^0.1.12",
-        "simpleswiper": "^0.10.5",
-        "imgix-core-js": "^1.2.1",
-        "react-modal": "^3.8.1",
-        "react-visibility-sensor": "^5.0.2"
-    },
-    "peerDependencies": {
-        "react": "^16.8.6",
-        "react-dom": "^16.8.6"
-    },
-    "devDependencies": {
-        "next": "^8.0.3",
-        "markdown-to-jsx": "^6.9.3",
-        "@emotion/babel-preset-css-prop": "^10.0.9",
-        "@babel/cli": "^7.2.0",
-        "@babel/core": "^7.1.6",
-        "@babel/node": "^7.2.2",
-        "@babel/preset-env": "^7.1.6",
-        "@babel/preset-react": "^7.0.0",
-        "babel-eslint": "^10.0.1",
-        "babel-loader": "^8.0.4",
-        "babel-plugin-emotion": "^10.0.7",
-        "eslint": "^5.9.0",
-        "eslint-loader": "^2.1.1",
-        "eslint-plugin-react": "^7.11.1",
-        "extract-react-types-loader": "^0.3.1",
-        "husky": "^1.2.0",
-        "prettier": "1.15.2",
-        "pretty-quick": "^1.8.0",
-        "prism": "^4.1.2",
-        "react-markdown": "^4.0.6",
-        "react-prism": "^4.3.2",
-        "webpack": "^4.26.1",
-        "webpack-cli": "^3.2.1"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "pretty-quick --staged"
-        }
-    },
-    "version": "0.2.15"
+  "name": "storefront-ui",
+  "description": "React PWA (single page application) e-commerce UI framework",
+  "main": "dist/bundle.js",
+  "scripts": {
+    "dev": "next --port 3333",
+    "build-lib": "webpack --mode production",
+    "start": "next start",
+    "build": "next build",
+    "storybook": "start-storybook -s . -p 9011 -c .storybook",
+    "build-storybook": "build-storybook -c .storybook",
+    "test": "./node_modules/.bin/babel-node ./spec/run.js"
+  },
+  "dependencies": {
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7",
+    "react-responsive": "^6.1.1",
+    "responsive-helpers": "^0.1.12",
+    "simpleswiper": "^0.10.5",
+    "imgix-core-js": "^1.2.1",
+    "react-modal": "^3.8.1",
+    "react-visibility-sensor": "^5.0.2"
+  },
+  "peerDependencies": {
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6"
+  },
+  "devDependencies": {
+    "next": "^8.0.3",
+    "markdown-to-jsx": "^6.9.3",
+    "@emotion/babel-preset-css-prop": "^10.0.9",
+    "@babel/cli": "^7.2.0",
+    "@babel/core": "^7.1.6",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.1.6",
+    "@babel/preset-react": "^7.0.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.4",
+    "babel-plugin-emotion": "^10.0.7",
+    "eslint": "^5.9.0",
+    "eslint-loader": "^2.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "extract-react-types-loader": "^0.3.1",
+    "husky": "^1.2.0",
+    "prettier": "1.15.2",
+    "pretty-quick": "^1.8.0",
+    "prism": "^4.1.2",
+    "react-markdown": "^4.0.6",
+    "react-prism": "^4.3.2",
+    "webpack": "^4.26.1",
+    "webpack-cli": "^3.2.1"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "version": "0.2.15"
 }
