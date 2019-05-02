@@ -41,7 +41,10 @@ ${(
 ${(
   <Example
     fullWidth={true}
-    code={require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/Container/examples/01-standard-use.js").default
     }
@@ -59,7 +62,10 @@ The \`Grid\` behaves exactly the same as Bootstrap grid. For now you can set wid
 ${(
   <Example
     fullWidth={true}
-    code={require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/Grid/examples/01-standard-use.js").default
     }

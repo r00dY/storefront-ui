@@ -11,7 +11,10 @@ const content = md`
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/SwipeableItemsContainer/examples/01-standard-use.js")
         .default
@@ -29,7 +32,10 @@ Sliders usually have side components like arrow buttons, dots or progress bars.
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/03-arrows.js")}
+    code={
+      require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/03-arrows.js")
+        .default
+    }
     component={
       require("../src/packages/SwipeableItemsContainer/examples/03-arrows.js")
         .default
@@ -45,7 +51,10 @@ Very often we might need to add some component that will make changes to swiper 
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/02-hook.js")}
+    code={
+      require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/02-hook.js")
+        .default
+    }
     component={
       require("../src/packages/SwipeableItemsContainer/examples/02-hook.js")
         .default
@@ -59,7 +68,10 @@ ${(
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/04-dots.js")}
+    code={
+      require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/04-dots.js")
+        .default
+    }
     component={
       require("../src/packages/SwipeableItemsContainer/examples/04-dots.js")
         .default
@@ -73,7 +85,10 @@ Some designs require adding scrollbar which works together with swiper.
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/05-scrollbar.js")}
+    code={
+      require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/05-scrollbar.js")
+        .default
+    }
     component={
       require("../src/packages/SwipeableItemsContainer/examples/05-scrollbar.js")
         .default

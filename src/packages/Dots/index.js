@@ -1,4 +1,3 @@
-import React from "react";
 import PropTypes from "prop-types";
 import Color from "../Color";
 
@@ -26,7 +25,7 @@ let DotsBox = styled.div`
     display: flex;
   justify-content: center;
   align-items: center;
-  &:hover ${DotsItem} {
+  &:hover > * {
     background-color: ${props => props.hoverColor.css};
   }
   cursor: pointer;

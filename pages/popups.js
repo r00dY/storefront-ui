@@ -11,7 +11,10 @@ const content = md`
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Popup/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/Popup/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/Popup/examples/01-standard-use.js").default
     }
@@ -24,7 +27,10 @@ ${(
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/DropdownMenu/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/DropdownMenu/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/DropdownMenu/examples/01-standard-use.js")
         .default

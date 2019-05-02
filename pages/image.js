@@ -19,13 +19,16 @@ It does many tasks under the hood so that you don't have to worry about them:
 
 Examples import example images from a helper \`images.js\` file:
 
-${<CodeBlock code={require("!!raw-loader!../data/images.js")} />}
+${<CodeBlock code={require("!!raw-loader!../data/images.js").default} />}
 
 ### Standard use
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Image/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/Image/examples/01-standard-use.js").default
     }
@@ -36,7 +39,10 @@ ${(
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")}
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")
+        .default
+    }
     component={
       require("../src/packages/Image/examples/02-custom-load-time.js").default
     }
@@ -47,7 +53,10 @@ ${(
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")}
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")
+        .default
+    }
     component={
       require("../src/packages/Image/examples/03-image-zoomable.js").default
     }
@@ -60,7 +69,9 @@ It's very easy to add videos instead of images. Actually you must use \`Image\` 
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Image/examples/04-video.js")}
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/04-video.js").default
+    }
     component={require("../src/packages/Image/examples/04-video.js").default}
   />
 )}
@@ -71,7 +82,10 @@ You can set default \`Image\` props in \`StorefrontUIContext\` globally.
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Image/examples/05-context.js")}
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/05-context.js")
+        .default
+    }
     component={require("../src/packages/Image/examples/05-context.js").default}
   />
 )}

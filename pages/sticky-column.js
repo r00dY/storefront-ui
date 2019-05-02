@@ -9,7 +9,10 @@ Commonly used component in e-commerce.
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/StickyColumn/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/StickyColumn/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/StickyColumn/examples/01-standard-use.js")
         .default

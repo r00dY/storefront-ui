@@ -11,7 +11,10 @@ Below examples how to use them in \`storefront-ui\`.
 
 ${(
   <Example
-    code={require("!!raw-loader!../src/packages/Modal/examples/01-standard-use.js")}
+    code={
+      require("!!raw-loader!../src/packages/Modal/examples/01-standard-use.js")
+        .default
+    }
     component={
       require("../src/packages/Modal/examples/01-standard-use.js").default
     }
