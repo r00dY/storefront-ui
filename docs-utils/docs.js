@@ -3,7 +3,7 @@ import { css, jsx } from "@emotion/core";
 
 import Markdown from "react-markdown";
 import React from "react";
-// import Prism from "prismjs";
+import Prism from "prismjs";
 
 function Container(props) {
   return (
@@ -25,7 +25,7 @@ class CodeBlock extends React.Component {
   }
 
   componentDidMount() {
-    // Prism.highlightAll();
+    Prism.highlightAll();
   }
 
   render() {
