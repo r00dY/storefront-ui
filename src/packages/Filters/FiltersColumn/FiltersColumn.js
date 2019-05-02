@@ -12,14 +12,14 @@ import ItemListAccordion from "../../ItemListAccordion/ItemListAccordion";
 import FilterHeader from "../FilterHeader/FilterHeader";
 import FilterItem from "../FilterItem/FilterItem";
 
-import ButtonNaked from "../../ButtonNaked/ButtonNaked";
+import Button from "../../Button";
 
 const ShowMoreButton = (props) => {
-    return <ButtonNaked css={css`
+    return <Button appearance={"raw"} css={css`
         padding: 4px 0;
     `} onClick={props.onClick}>
         {props.open ? 'show less' : 'show more'}
-    </ButtonNaked>;
+    </Button>;
 };
 
 // default components

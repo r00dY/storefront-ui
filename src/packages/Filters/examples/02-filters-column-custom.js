@@ -1,6 +1,6 @@
 import React, {useState} from "react";
 import {FiltersColumn} from "storefront-ui/Filters";
-import ButtonNaked from "storefront-ui/ButtonNaked";
+import Button from "storefront-ui/Button";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
@@ -9,7 +9,7 @@ import filterData from "../../../../docs-utils/filtersData";
 
 const separator = <div css={css`width: 100%; height: 1px; background-color: lightgrey; `} />;
 
-const header = ({filter, open, toggle}) => <ButtonNaked css={css`
+const header = ({filter, open, toggle}) => <Button appearance={"raw"} css={css`
         padding: 6px;
         width: 100%;
         font-size: 16px;
@@ -27,20 +27,20 @@ const header = ({filter, open, toggle}) => <ButtonNaked css={css`
 >
     <div>{filter.name}</div>
     <div>{open ? '-' : '+' }</div>
-</ButtonNaked>;
+</Button>;
 
 const body = ({ component }) => <div css={css`padding: 10px; background-color: aqua;`}>{ component }</div>;
 
 const moreOptionsButton = ({open, toggle}) =>
-    <ButtonNaked css={css`
+    <Button appearance={"raw"} css={css`
         padding: 5px 0;
         text-decoration: underline;
         font-weight: 800;
     `} onClick={toggle}>
         { open ? 'less' : 'more'}
-    </ButtonNaked>;
+    </Button>;
 
-const item = ({ option, onChange }) => <ButtonNaked key={option.id} css={css`
+const item = ({ option, onChange }) => <Button appearance={"raw"} key={option.id} css={css`
         padding: 5px 0;
         ${option.selected ? 'font-weight: 800; color: red;' : ''}
         &:hover {
@@ -48,7 +48,7 @@ const item = ({ option, onChange }) => <ButtonNaked key={option.id} css={css`
         }
     `} onClick={onChange}>
     {option.name}
-</ButtonNaked>;
+</Button>;
 
 const colorFilterComponent = ({ data, filter, onChange}) => <div css={css`
         display: flex;
@@ -57,7 +57,7 @@ const colorFilterComponent = ({ data, filter, onChange}) => <div css={css`
     `}>
     { filter.options.map((option) =>
         <div css={css`margin-right: 10px; margin-bottom: 10px;`} key={option.id}>
-            <ButtonNaked css={css`
+            <Button appearance={"raw"} css={css`
                 position: relative;
                 width: 50px;
                 height: 50px;
@@ -69,7 +69,7 @@ const colorFilterComponent = ({ data, filter, onChange}) => <div css={css`
                     transform: scale(0.8);
                 }
                 `} onClick={onChange}>
-            </ButtonNaked>
+            </Button>
         </div>
     )}
 </div>;
