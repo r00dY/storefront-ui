@@ -72,7 +72,7 @@
     },
     "husky": {
         "hooks": {
-            "pre-commit": "./node_modules/.bin/pretty-quick --staged"
+            "pre-commit": "pretty-quick --staged"
         }
     },
     "version": "0.2.15"
