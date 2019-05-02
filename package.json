@@ -1,7 +1,6 @@
 {
   "name": "storefront-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
-  "main": "dist/bundle.js",
   "scripts": {
     "dev": "next --port 3333"
   },
