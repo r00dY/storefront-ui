@@ -1,5 +1,7 @@
-import { Grid, GridItem, Container } from "storefront-ui";
 import React from "react";
+import { Grid, GridItem } from "storefront-ui/Grid";
+import Container from "storefront-ui/Container";
+
 import Rectangle from "../../../../docs-utils/Rectangle";
 
 /** @jsx jsx */
