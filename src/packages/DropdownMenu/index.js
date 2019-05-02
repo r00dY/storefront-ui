@@ -4,8 +4,8 @@ import { rs } from "responsive-helpers";
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
 
-import Index, {getAppearance} from "../StorefrontUIContext/StorefrontUIContext";
-import PopupComponent from "../Popup/Popup";
+import Index, {getAppearance} from "../StorefrontUIContext";
+import PopupComponent from "../Popup";
 
 function DropdownMenuItem() {
     return <></>;

@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { Popup, Button, StorefrontUIContext } from "storefront-ui";
+
+import Button from "storefront-ui/Button";
+import Popup from "storefront-ui/Popup";
+import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";

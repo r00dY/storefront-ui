@@ -36,7 +36,7 @@ export default (props) => {
                 <li><Link href="/accordion"><a>Accordion</a></Link></li>
                 <li><Link href="/filters"><a>Filters</a></Link></li>
                 <li><Link href="/button"><a>Button</a></Link></li>
-                {/*<li><Link href="/popups"><a>Popups / dropdowns</a></Link></li>*/}
+                <li><Link href="/popups"><a>Popups / dropdowns</a></Link></li>
             </ul>
 
         </div>
