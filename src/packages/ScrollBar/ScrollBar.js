@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
-import { useSwipeableItemsContainerEvent } from "../SwipeableItemsContainer/SwipeableItemsContainer";
+import { useSwipeableItemsContainerEvent } from "../SwipeableItemsContainer";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";

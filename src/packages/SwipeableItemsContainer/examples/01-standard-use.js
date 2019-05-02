@@ -1,5 +1,6 @@
 import React from "react";
-import {SwipeableItemsContainer, L} from "storefront-ui";
+import SwipeableItemsContainer from "storefront-ui/SwipeableItemsContainer";
+import { L } from "storefront-ui/config";
 
 import {rslin} from "responsive-helpers";
 

@@ -1,5 +1,6 @@
 import React from "react";
-import { useSwipeableItemsContainer, SwipeableItemsContainer, ScrollBar } from "storefront-ui";
+import SwipeableItemsContainer, { useSwipeableItemsContainer } from "storefront-ui/SwipeableItemsContainer";
+import ScrollBar from "storefront-ui/ScrollBar";
 
 import {rslin} from "responsive-helpers";
 
