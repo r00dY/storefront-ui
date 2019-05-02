@@ -3,13 +3,7 @@
   "description": "React PWA (single page application) e-commerce UI framework",
   "main": "dist/bundle.js",
   "scripts": {
-    "dev": "next --port 3333",
-    "build-lib": "webpack --mode production",
-    "start": "next start",
-    "build": "next build",
-    "storybook": "start-storybook -s . -p 9011 -c .storybook",
-    "build-storybook": "build-storybook -c .storybook",
-    "test": "./node_modules/.bin/babel-node ./spec/run.js"
+    "dev": "next --port 3333"
   },
   "dependencies": {
     "@emotion/core": "^10.0.7",
