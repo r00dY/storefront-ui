@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import {ItemListAccordion} from "storefront-ui";
+import ItemListAccordion from "storefront-ui/ItemListAccordion";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

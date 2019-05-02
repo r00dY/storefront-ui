@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import {AccordionRaw} from "storefront-ui";
+import { AccordionRaw } from "storefront-ui/Accordion";
 
 import { css } from "@emotion/core";
 

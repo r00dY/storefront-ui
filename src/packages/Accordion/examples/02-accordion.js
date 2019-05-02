@@ -1,5 +1,5 @@
 import React, { useState }from "react";
-import {Accordion} from "storefront-ui";
+import Accordion from "storefront-ui/Accordion";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
