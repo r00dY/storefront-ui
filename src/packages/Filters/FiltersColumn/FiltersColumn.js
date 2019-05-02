@@ -32,6 +32,7 @@ const components = {
             trigger={(open, toggle) => showMore({ data, filter, open, toggle})}
         >
             {filter.options.map((option) => item({data, filter, option, onChange }))}
+            
         </ItemListAccordion>,
 
         defaultOptions: {
