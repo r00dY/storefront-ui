@@ -6,7 +6,7 @@ import Image from "../Image/Image";
 import ImageZoomable from "../Image/ImageZoomable";
 import { rslin } from "responsive-helpers";
 import { Grid, GridItem } from "../Grid/Grid";
-import Dots from "../Dots/Dots";
+import Index from "../Dots/Dots";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -101,7 +101,7 @@ function StoryGrid() {
                             top: 10px;
                         `}
                     >
-                        <Dots
+                        <Index
                             active={active}
                             onClick={setActive}
                             amount={productPhotos.length}
@@ -161,7 +161,7 @@ function StorySlider() {
                         gutter={10}
                     />
 
-                    <Dots
+                    <Index
                         active={active}
                         onClick={n => {
                             setActive(n, false);

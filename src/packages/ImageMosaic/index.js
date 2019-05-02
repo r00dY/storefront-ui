@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
-import { Grid, GridItem } from "../Grid/Grid";
+import { Grid, GridItem } from "../Grid";
 import { rs, RangeMap } from "responsive-helpers";
-import ImageZoomable from "../Image/ImageZoomable";
-
+import { ImageZoomable } from "../Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
