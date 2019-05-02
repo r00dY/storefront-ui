@@ -27,7 +27,7 @@ export default (props) => {
             `}>
                 <li><Link href="/"><a>Introduction</a></Link></li>
                 <li><Link href="/image"><a>Image</a></Link></li>
-                {/*<li><Link href="/responsive"><a>Responsiveness</a></Link></li>*/}
+                <li><Link href="/responsive"><a>Responsiveness</a></Link></li>
                 {/*<li><Link href="/layout"><a>Layout, Container and Grid</a></Link></li>*/}
                 {/*<li><Link href="/image-mosaic"><a>Image mosaic</a></Link></li>*/}
                 {/*<li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>*/}

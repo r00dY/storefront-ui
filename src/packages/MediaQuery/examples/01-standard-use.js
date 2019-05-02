@@ -1,8 +1,7 @@
 import React from "react";
-import { Container, MediaQuery, R } from "storefront-ui";
 
-/** @jsx jsx */
-import {css, jsx} from "@emotion/core";
+import MediaQuery from "storefront-ui/MediaQuery";
+import { R } from "storefront-ui/config";
 
 export default () => {
     return (<div>

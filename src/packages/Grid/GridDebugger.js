@@ -1,4 +1,4 @@
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import {Grid, GridItem} from "./Grid";
 import Layout from "../Layout";
 import React, { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ const GridDebugger = () => {
         pointer-events: none;
         display: ${ open ? "block" : "none"};
     `}>
-        <Container>
+        <Index>
             <Grid>
                 {
                     [...Array(Layout.main.colNumber)].map((e, i) => <GridItem params={1} key={i}>
@@ -45,7 +45,7 @@ const GridDebugger = () => {
                     </GridItem>)
                 }
             </Grid>
-        </Container>
+        </Index>
     </div>
 };
 

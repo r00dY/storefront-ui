@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { storiesOf } from "@storybook/react";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import ProductPhotos, { useProductPhotos } from "./ProductPhotos";
 import Image from "../Image/Image";
 import ImageZoomable from "../Image/ImageZoomable";
@@ -60,7 +60,7 @@ function StoryGrid() {
     const { setActive, active } = useProductPhotos(productPhotosRef);
 
     return (
-        <Container>
+        <Index>
             <h1>
                 <code>ProductPhotos</code>
             </h1>
@@ -110,7 +110,7 @@ function StoryGrid() {
                     </div>
                 </GridItem>
             </Grid>
-        </Container>
+        </Index>
     );
 }
 
@@ -119,7 +119,7 @@ function StorySlider() {
     const { setActive, active } = useProductPhotos(productPhotosRef);
 
     return (
-        <Container>
+        <Index>
             <h1>
                 <code>ProductPhotos</code> in a slider mode
             </h1>
@@ -170,7 +170,7 @@ function StorySlider() {
                     />
                 </GridItem>
             </Grid>
-        </Container>
+        </Index>
     );
 }
 

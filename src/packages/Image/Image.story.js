@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { storiesOf } from "@storybook/react";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import Image from "./Image";
 import ImageZoomable from "./ImageZoomable";
 
@@ -79,7 +79,7 @@ function Story() {
     });
 
     return (
-        <Container>
+        <Index>
             <p>Natural image</p>
 
             <Image
@@ -137,7 +137,7 @@ function Story() {
                 alt={"Super kociak"}
                 zoom={2.5}
             />
-        </Container>
+        </Index>
     );
 }
 

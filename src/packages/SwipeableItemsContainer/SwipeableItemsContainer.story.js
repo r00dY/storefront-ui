@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import SwipeableItemsContainer from "./SwipeableItemsContainer";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import { rslin } from "responsive-helpers";
 import Layout from "../Layout";
 import styled from "@emotion/styled";
@@ -39,7 +39,7 @@ const VerticalContainer = styled.div`
 `;
 
 storiesOf("SwipeableItemsContainer", module).add("slider mode", () => (
-    <Container>
+    <Index>
         <br />
         <h2>Slider horizontal (itemSize)</h2>
         <br />
@@ -147,5 +147,5 @@ storiesOf("SwipeableItemsContainer", module).add("slider mode", () => (
         <br />
         <br />
         <br />
-    </Container>
+    </Index>
 ));

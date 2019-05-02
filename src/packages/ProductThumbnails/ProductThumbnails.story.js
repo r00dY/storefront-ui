@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { storiesOf } from "@storybook/react";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import Image from "../Image/Image";
 import { rslin } from "responsive-helpers";
 import { Grid, GridItem } from "../Grid/Grid";
@@ -59,7 +59,7 @@ function Story() {
     const [active, setActive] = useState(0);
 
     return (
-        <Container>
+        <Index>
             <h1>
                 <code>ProductThumbnails</code>
             </h1>
@@ -152,7 +152,7 @@ function Story() {
                     onClick={setActive}
                 />
             </div>
-        </Container>
+        </Index>
     );
 }
 

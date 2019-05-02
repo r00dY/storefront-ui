@@ -1,7 +1,7 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
 import { Grid, GridItem } from "./Grid";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import Layout from "../Layout";
 
 /** @jsx jsx */
@@ -51,7 +51,7 @@ storiesOf("Grid", module).add("default", () => (
             overflow-x: hidden;
         `}
     >
-        <Container>
+        <Index>
             <Grid>
                 <GridItem params={{ xs: 12, md: 12, lg: 12 }}>
                     <Rectangle color={"red"} />
@@ -84,7 +84,7 @@ storiesOf("Grid", module).add("default", () => (
                     <Rectangle color={"green"} />
                 </GridItem>
             </Grid>
-        </Container>
+        </Index>
     </div>
 ));
 

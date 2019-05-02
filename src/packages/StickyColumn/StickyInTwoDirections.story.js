@@ -1,6 +1,6 @@
 import React from "react";
 import { storiesOf } from "@storybook/react";
-import Container from "../Container/Container";
+import Index from "../Container/Container";
 import { Grid, GridItem } from "../Grid/Grid";
 import StickyColumn from "./StickyInTwoDirections";
 
@@ -78,7 +78,7 @@ class VariableHeightColumn extends React.Component {
 
 storiesOf("StickyInTwoDirections", module).add("default", () => (
     <div>
-        <Container>
+        <Index>
             <div
                 css={css`
                     margin: 24px 0;
@@ -93,9 +93,9 @@ storiesOf("StickyInTwoDirections", module).add("default", () => (
                     );
                 })}
             </div>
-        </Container>
+        </Index>
 
-        <Container>
+        <Index>
             <Grid>
                 <GridItem
                     params={{
@@ -153,9 +153,9 @@ storiesOf("StickyInTwoDirections", module).add("default", () => (
                     </StickyColumn>
                 </GridItem>
             </Grid>
-        </Container>
+        </Index>
 
-        <Container>
+        <Index>
             <div
                 css={css`
                     margin: 24px 0;
@@ -170,6 +170,6 @@ storiesOf("StickyInTwoDirections", module).add("default", () => (
                     );
                 })}
             </div>
-        </Container>
+        </Index>
     </div>
 ));
