@@ -117,6 +117,7 @@ class ImageMosaic extends React.Component {
 
     items = items.map((item, index) => (
       <div
+        key={index}
         ref={this.photoRefs[index]}
         data-photo-id={index}
         css={css`
