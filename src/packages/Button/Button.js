@@ -1,5 +1,5 @@
 import React from "react";
-import Index, { getAppearance } from "../StorefrontUIContext/StorefrontUIContext";
+import Index, { getAppearance } from "../StorefrontUIContext";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
