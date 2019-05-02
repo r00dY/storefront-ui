@@ -1,9 +1,9 @@
 import React from "react";
 import Page from "../docs-utils/Page";
-import {md, Container, Example} from "../docs-utils/docs";
+import { md, Container, Example } from "../docs-utils/docs";
 
 /** @jsx jsx */
-import {css, jsx} from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 
 /**
  * Co z długoscia kontenera jesli bedzie zmienna (menu sie chowa / pojawia?) Tylko procenty ;( ;( ;(
@@ -14,13 +14,16 @@ import {css, jsx} from "@emotion/core";
  * - skupmy sie na budowaniu komponentow e-commerce
  */
 
-
 const content = md`
 # Layout, Container and Grid
 
 Web design **must** use a grid. Like here:
 
-${<Container><img src={"/static/grid.png"} style={{width: "100%"}} /></Container>}
+${(
+  <Container>
+    <img src={"/static/grid.png"} style={{ width: "100%" }} />
+  </Container>
+)}
 
 ### But why?
 - everything will look better thanks to design consistency across pages / devices
@@ -35,7 +38,15 @@ ${<Container><img src={"/static/grid.png"} style={{width: "100%"}} /></Container
 
 ### Standard use
 
-${<Example fullWidth={true} code={require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")} component={require('../src/packages/Container/examples/01-standard-use.js').default} />}
+${(
+  <Example
+    fullWidth={true}
+    code={require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")}
+    component={
+      require("../src/packages/Container/examples/01-standard-use.js").default
+    }
+  />
+)}
 
 By default, \`Container\` margin is \`5vw\`. Later we'll show how to make it custom.
 
@@ -45,7 +56,15 @@ Grid has n fixed width columns separated with fixed width gutters. Every layout 
 
 The \`Grid\` behaves exactly the same as Bootstrap grid. For now you can set widths, offsets and order for items.
 
-${<Example fullWidth={true} code={require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")} component={require('../src/packages/Grid/examples/01-standard-use.js').default} />}
+${(
+  <Example
+    fullWidth={true}
+    code={require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")}
+    component={
+      require("../src/packages/Grid/examples/01-standard-use.js").default
+    }
+  />
+)}
 
 ## Configuration
 
@@ -93,6 +112,5 @@ Pls don't use % unit when setting width for \`container\` or \`gutter\`. Use \`v
 The reason is that sometimes we want to create some UI element that is snapped to the grid and its width is not calculated relative to the body width. If we used \`%\`, the calculated values would be wrong. They'll be calculated relative to closest positioned ancestor, not window width.
 
 `;
-
 
 export default () => <Page>{content}</Page>;

@@ -273,203 +273,210 @@ import { css, jsx } from "@emotion/core";
 // `;
 
 class StickyColumn extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
+    super(props);
 
-        this.isScrollingDown = false;
-        this.pageYOffset = undefined;
+    this.isScrollingDown = false;
+    this.pageYOffset = undefined;
 
-        this.divs = {
-            container: React.createRef(),
-            wrapper1: React.createRef(),
-            wrapper2: React.createRef(),
-            wrapper3: React.createRef()
-        };
+    this.divs = {
+      container: React.createRef(),
+      wrapper1: React.createRef(),
+      wrapper2: React.createRef(),
+      wrapper3: React.createRef()
+    };
 
-        this.rects = {};
+    this.rects = {};
 
-        this._onScroll = this._onScroll.bind(this);
-        this._onResize = this._onResize.bind(this);
-        this._onScrollTimeout = this._onScrollTimeout.bind(this);
+    this._onScroll = this._onScroll.bind(this);
+    this._onResize = this._onResize.bind(this);
+    this._onScrollTimeout = this._onScrollTimeout.bind(this);
+  }
+
+  _updateValues() {
+    this.pageYOffset = window.pageYOffset;
+
+    this.rects.container = this.divs.container.current.getBoundingClientRect();
+    this.rects.wrapper1 = this.divs.wrapper1.current.getBoundingClientRect();
+    this.rects.wrapper2 = this.divs.wrapper2.current.getBoundingClientRect();
+    this.rects.wrapper3 = this.divs.wrapper3.current.getBoundingClientRect();
+
+    this.topMarginSpace = this.rects.wrapper2.top - this.rects.container.top;
+  }
+
+  _updateMinHeight() {
+    this._updateValues();
+
+    this.divs.wrapper1.current.style.minHeight = `calc(100% - ${
+      this.topMarginSpace
+    }px)`;
+  }
+
+  _onResize() {
+    this._updateValues();
+  }
+
+  _onScrollTimeout() {
+    this._updateMinHeight();
+  }
+
+  _onScroll() {
+    // After 300ms of NOT SCROLLING, we must update min-height!
+    clearTimeout(this.scrollTimeout);
+    this.scrollTimeout = setTimeout(this._onScrollTimeout, 300);
+
+    let pageYOffsetPrevious = this.pageYOffset;
+    this._updateValues();
+
+    if (this.pageYOffset === pageYOffsetPrevious) {
+      return;
     }
 
-    _updateValues() {
-        this.pageYOffset = window.pageYOffset;
-
-        this.rects.container = this.divs.container.current.getBoundingClientRect();
-        this.rects.wrapper1 = this.divs.wrapper1.current.getBoundingClientRect();
-        this.rects.wrapper2 = this.divs.wrapper2.current.getBoundingClientRect();
-        this.rects.wrapper3 = this.divs.wrapper3.current.getBoundingClientRect();
-
-        this.topMarginSpace =
-            this.rects.wrapper2.top - this.rects.container.top;
+    let directionChanged = 0;
+    if (this.pageYOffset > pageYOffsetPrevious && !this.isScrollingDown) {
+      directionChanged = 1; // from up to down
+    } else if (this.pageYOffset < pageYOffsetPrevious && this.isScrollingDown) {
+      directionChanged = -1;
     }
 
-    _updateMinHeight() {
-        this._updateValues();
-
-        this.divs.wrapper1.current.style.minHeight = `calc(100% - ${
-            this.topMarginSpace
-        }px)`;
+    if (directionChanged === 1) {
+      this.isScrollingDown = true;
+    } else if (directionChanged === -1) {
+      this.isScrollingDown = false;
     }
 
-    _onResize() {
-        this._updateValues();
+    // Direction change -> version with (bottom: 0)
+    if (directionChanged !== 0) {
+      this._updateMinHeight();
+    }
+  }
+
+  componentDidMount() {
+    this._updateValues();
+
+    window.addEventListener("resize", this._onResize);
+    window.addEventListener("scroll", this._onScroll);
+
+    this.forceUpdate();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this._onResize);
+    window.removeEventListener("scroll", this._onScroll);
+    clearTimeout(this.scrollTimeout);
+  }
+
+  render() {
+    let offset = this.props.offset;
+
+    if (Array.isArray(offset)) {
+      offset = [rs(offset[0]), rs(offset[1])];
+    } else {
+      offset = [rs(offset), rs(offset)];
     }
 
-    _onScrollTimeout() {
-        this._updateMinHeight();
-    }
+    //         const Root = styled.div`
+    //     display: flex;
+    //     position: relative;
+    //     width: 100%;
+    //     height: 100%;
+    // `;
+    //
+    //         const Wrapper1 = styled.div`
+    //     width: 100%;
+    //     position: sticky;
+    //     min-height: 100vh;
+    //     ${props => props.offset[0].css("top")};
+    //     align-self: flex-start;
+    //     display: flex;
+    // `;
+    //
+    //         const Wrapper2 = styled.div`
+    //     width: 100%;
+    //     position: sticky;
+    //     ${props => props.offset[1].css("bottom")};
+    //     align-self: flex-end;
+    //     min-height: 100vh;
+    // `;
+    //
+    //         const Wrapper3 = styled.div`
+    //     width: 100%;
+    //     position: sticky;
+    //     ${props => props.offset[0].css("top")};
+    // `;
 
-    _onScroll() {
-        // After 300ms of NOT SCROLLING, we must update min-height!
-        clearTimeout(this.scrollTimeout);
-        this.scrollTimeout = setTimeout(this._onScrollTimeout, 300);
-
-        let pageYOffsetPrevious = this.pageYOffset;
-        this._updateValues();
-
-        if (this.pageYOffset === pageYOffsetPrevious) {
-            return;
-        }
-
-        let directionChanged = 0;
-        if (this.pageYOffset > pageYOffsetPrevious && !this.isScrollingDown) {
-            directionChanged = 1; // from up to down
-        } else if (
-            this.pageYOffset < pageYOffsetPrevious &&
-            this.isScrollingDown
-        ) {
-            directionChanged = -1;
-        }
-
-        if (directionChanged === 1) {
-            this.isScrollingDown = true;
-        } else if (directionChanged === -1) {
-            this.isScrollingDown = false;
-        }
-
-        // Direction change -> version with (bottom: 0)
-        if (directionChanged !== 0) {
-            this._updateMinHeight();
-        }
-    }
-
-    componentDidMount() {
-        this._updateValues();
-
-        window.addEventListener("resize", this._onResize);
-        window.addEventListener("scroll", this._onScroll);
-
-        this.forceUpdate();
-    }
-
-    componentWillUnmount() {
-        window.removeEventListener("resize", this._onResize);
-        window.removeEventListener("scroll", this._onScroll);
-        clearTimeout(this.scrollTimeout);
-    }
-
-    render() {
-        let offset = this.props.offset;
-
-        if (Array.isArray(offset)) {
-            offset = [rs(offset[0]), rs(offset[1])];
-        } else {
-            offset = [rs(offset), rs(offset)];
-        }
-
-//         const Root = styled.div`
-//     display: flex;
-//     position: relative;
-//     width: 100%;
-//     height: 100%;
-// `;
-//
-//         const Wrapper1 = styled.div`
-//     width: 100%;
-//     position: sticky;
-//     min-height: 100vh;
-//     ${props => props.offset[0].css("top")};
-//     align-self: flex-start;
-//     display: flex;
-// `;
-//
-//         const Wrapper2 = styled.div`
-//     width: 100%;
-//     position: sticky;
-//     ${props => props.offset[1].css("bottom")};
-//     align-self: flex-end;
-//     min-height: 100vh;
-// `;
-//
-//         const Wrapper3 = styled.div`
-//     width: 100%;
-//     position: sticky;
-//     ${props => props.offset[0].css("top")};
-// `;
-
-        return <div className={this.props.className} style={this.props.style}>
-            <div css={css`
-                display: flex;
-                position: relative;
+    return (
+      <div className={this.props.className} style={this.props.style}>
+        <div
+          css={css`
+            display: flex;
+            position: relative;
+            width: 100%;
+            height: 100%;
+          `}
+          ref={this.divs.container}
+        >
+          <div
+            css={css`
+              width: 100%;
+              position: sticky;
+              min-height: 100vh;
+              ${offset[0].css("top")}
+              align-self: flex-start;
+              display: flex;
+            `}
+            ref={this.divs.wrapper1}
+          >
+            <div
+              css={css`
                 width: 100%;
-                height: 100%;
-            `} ref={this.divs.container}>
-                <div css={css`
-                    width: 100%;
-                    position: sticky;
-                    min-height: 100vh;
-                    ${offset[0].css("top")}
-                    align-self: flex-start;
-                    display: flex;
-                `} ref={this.divs.wrapper1}>
-                    <div css={css`
-                        width: 100%;
-                        position: sticky;
-                        ${offset[1].css("bottom")}
-                        align-self: flex-end;
-                        min-height: 100vh;
-                    `} ref={this.divs.wrapper2}>
-                        <div css={css`
-                            width: 100%;
-                            position: sticky;
-                            ${offset[0].css("top")}
-                        `} ref={this.divs.wrapper3}>
-                            {this.props.children}
-                        </div>
-
-                    </div>
-                </div>
+                position: sticky;
+                ${offset[1].css("bottom")}
+                align-self: flex-end;
+                min-height: 100vh;
+              `}
+              ref={this.divs.wrapper2}
+            >
+              <div
+                css={css`
+                  width: 100%;
+                  position: sticky;
+                  ${offset[0].css("top")}
+                `}
+                ref={this.divs.wrapper3}
+              >
+                {this.props.children}
+              </div>
             </div>
-
+          </div>
         </div>
+      </div>
+    );
 
-
-        // return (
-        //     <Root
-        //         style={this.props.style}
-        //         className={this.props.className}
-        //         ref={this.divs.container}
-        //     >
-        //         <Wrapper1 ref={this.divs.wrapper1} offset={offset}>
-        //             <Wrapper2 ref={this.divs.wrapper2} offset={offset}>
-        //                 <Wrapper3 ref={this.divs.wrapper3} offset={offset}>
-        //                     {this.props.children}
-        //                 </Wrapper3>
-        //             </Wrapper2>
-        //         </Wrapper1>
-        //     </Root>
-        // );
-    }
+    // return (
+    //     <Root
+    //         style={this.props.style}
+    //         className={this.props.className}
+    //         ref={this.divs.container}
+    //     >
+    //         <Wrapper1 ref={this.divs.wrapper1} offset={offset}>
+    //             <Wrapper2 ref={this.divs.wrapper2} offset={offset}>
+    //                 <Wrapper3 ref={this.divs.wrapper3} offset={offset}>
+    //                     {this.props.children}
+    //                 </Wrapper3>
+    //             </Wrapper2>
+    //         </Wrapper1>
+    //     </Root>
+    // );
+  }
 }
 
 StickyColumn.propTypes = {
-    offset: PropTypes.any.isRequired
+  offset: PropTypes.any.isRequired
 };
 
 StickyColumn.defaultProps = {
-    offset: 0
+  offset: 0
 };
 
 export default StickyColumn;

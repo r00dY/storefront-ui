@@ -15,163 +15,157 @@ import FilterItem from "../FilterItem/FilterItem";
 import Button from "../../Button";
 
 const ShowMoreButton = props => {
-    return (
-        <Button
-            appearance={"raw"}
-            css={css`
-                padding: 4px 0;
-            `}
-            onClick={props.onClick}
-        >
-            {props.open ? "show less" : "show more"}
-        </Button>
-    );
+  return (
+    <Button
+      appearance={"raw"}
+      css={css`
+        padding: 4px 0;
+      `}
+      onClick={props.onClick}
+    >
+      {props.open ? "show less" : "show more"}
+    </Button>
+  );
 };
 
 // default components
 const header = ({ data, filter, open, toggle }) => (
-    <FilterHeader title={filter.name} onClick={toggle} open={open} />
+  <FilterHeader title={filter.name} onClick={toggle} open={open} />
 );
 const body = ({ data, filter, component }) => <>{component}</>;
 
 const components = {
-    select: {
-        component: ({ data, filter, onChange }, { item, showMore }) => (
-            <ItemListAccordion
-                trigger={(open, toggle) =>
-                    showMore({ data, filter, open, toggle })
-                }
-            >
-                {filter.options.map(option =>
-                    item({ data, filter, option, onChange })
-                )}
-            </ItemListAccordion>
-        ),
+  select: {
+    component: ({ data, filter, onChange }, { item, showMore }) => (
+      <ItemListAccordion
+        trigger={(open, toggle) => showMore({ data, filter, open, toggle })}
+      >
+        {filter.options.map(option => item({ data, filter, option, onChange }))}
+      </ItemListAccordion>
+    ),
 
-        defaultOptions: {
-            item: ({ data, filter, option, onChange }) => (
-                <FilterItem
-                    key={option.id}
-                    label={option.name}
-                    selected={option.selected}
-                    id={option.id}
-                    onClick={onChange}
-                />
-            ),
-            showMore: ({ data, filter, open, toggle }) => (
-                <ShowMoreButton open={open} onClick={toggle} />
-            )
-        }
-    },
-    range: {
-        component: ({ data, filter }) => <div>RANGE COMPONENT</div>,
-        defaultOptions: {}
+    defaultOptions: {
+      item: ({ data, filter, option, onChange }) => (
+        <FilterItem
+          key={option.id}
+          label={option.name}
+          selected={option.selected}
+          id={option.id}
+          onClick={onChange}
+        />
+      ),
+      showMore: ({ data, filter, open, toggle }) => (
+        <ShowMoreButton open={open} onClick={toggle} />
+      )
     }
+  },
+  range: {
+    component: ({ data, filter }) => <div>RANGE COMPONENT</div>,
+    defaultOptions: {}
+  }
 };
 
 const FiltersColumn = props => {
-    const onChange = () => console.log("sth clicked!");
+  const onChange = () => console.log("sth clicked!");
 
-    return (
-        <div className={props.className} style={props.style}>
-            <div
+  return (
+    <div className={props.className} style={props.style}>
+      <div
+        css={css`
+          position: relative;
+        `}
+      >
+        {props.data.map((filter, index) => {
+          let arg; // value for components.select or components.range, etc
+          let argCustom = false;
+
+          // Let's look for specials
+          if (props.components.__custom) {
+            props.components.__custom.forEach(custom => {
+              if (custom.match(filter)) {
+                arg = custom.component;
+                argCustom = true;
+              }
+            });
+          }
+          if (!argCustom) {
+            arg = props.components[filter.type];
+          }
+
+          let component;
+          if (typeof arg === "function") {
+            // if function just call it
+            component = arg({ data: props.data, filter, onChange });
+          } else {
+            // otherwise, arg is object of config
+            let options = Object.assign(
+              {},
+              components[filter.type].defaultOptions,
+              arg
+            );
+            component = components[filter.type].component(
+              { data: props.data, filter, onChange },
+              options
+            );
+          }
+
+          return (
+            <React.Fragment key={filter.id}>
+              <div
                 css={css`
-                    position: relative;
+                  ${index < props.data.length - 1
+                    ? rs(props.gutter).css("margin-bottom")
+                    : ""}
+                  ${index > 0 ? rs(props.gutter).css("margin-top") : ""}
                 `}
-            >
-                {props.data.map((filter, index) => {
-                    let arg; // value for components.select or components.range, etc
-                    let argCustom = false;
-
-                    // Let's look for specials
-                    if (props.components.__custom) {
-                        props.components.__custom.forEach(custom => {
-                            if (custom.match(filter)) {
-                                arg = custom.component;
-                                argCustom = true;
-                            }
-                        });
-                    }
-                    if (!argCustom) {
-                        arg = props.components[filter.type];
-                    }
-
-                    let component;
-                    if (typeof arg === "function") {
-                        // if function just call it
-                        component = arg({ data: props.data, filter, onChange });
-                    } else {
-                        // otherwise, arg is object of config
-                        let options = Object.assign(
-                            {},
-                            components[filter.type].defaultOptions,
-                            arg
-                        );
-                        component = components[filter.type].component(
-                            { data: props.data, filter, onChange },
-                            options
-                        );
-                    }
-
-                    return (
-                        <React.Fragment key={filter.id}>
-                            <div
-                                css={css`
-                                    ${index < props.data.length - 1
-                                        ? rs(props.gutter).css("margin-bottom")
-                                        : ""}
-                                    ${index > 0
-                                        ? rs(props.gutter).css("margin-top")
-                                        : ""}
-                                `}
-                            >
-                                <Accordion
-                                    header={(open, toggle) =>
-                                        props.header({
-                                            data: props.data,
-                                            filter,
-                                            open,
-                                            toggle
-                                        })
-                                    }
-                                >
-                                    {props.body({
-                                        data: props.data,
-                                        filter,
-                                        component
-                                    })}
-                                </Accordion>
-                            </div>
-                            {index < props.data.length - 1 && props.separator}
-                        </React.Fragment>
-                    );
-                })}
-            </div>
-        </div>
-    );
+              >
+                <Accordion
+                  header={(open, toggle) =>
+                    props.header({
+                      data: props.data,
+                      filter,
+                      open,
+                      toggle
+                    })
+                  }
+                >
+                  {props.body({
+                    data: props.data,
+                    filter,
+                    component
+                  })}
+                </Accordion>
+              </div>
+              {index < props.data.length - 1 && props.separator}
+            </React.Fragment>
+          );
+        })}
+      </div>
+    </div>
+  );
 };
 
 FiltersColumn.defaultProps = {
-    gutter: 16,
-    separator: null,
+  gutter: 16,
+  separator: null,
 
-    header: header,
-    body: body,
+  header: header,
+  body: body,
 
-    components: {
-        select: components.select.defaultOptions,
-        range: components.select.defaultOptions
-    }
+  components: {
+    select: components.select.defaultOptions,
+    range: components.select.defaultOptions
+  }
 };
 
 FiltersColumn.propTypes = {
-    data: PropTypes.any,
+  data: PropTypes.any,
 
-    gutter: PropTypes.any,
-    separator: PropTypes.element,
+  gutter: PropTypes.any,
+  separator: PropTypes.element,
 
-    header: PropTypes.func,
-    body: PropTypes.func
+  header: PropTypes.func,
+  body: PropTypes.func
 };
 
 export default FiltersColumn;

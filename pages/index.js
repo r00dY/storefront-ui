@@ -8,6 +8,7 @@ const content = md`
 \`ecommerce-ui\` is an React UI framework for building custom e-commerce storefronts in PWA (single page application) technology.
 
 Your developers can integrate it with almost any e-commerce tech:
+
 - Magento
 - Shopify
 - BigCommerce

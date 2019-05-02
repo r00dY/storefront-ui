@@ -1,5 +1,5 @@
-# 4 space indentation
+# 2 space indentation
 [*.{js,jsx,css,scss,sass,json}]
 indent_style = space
-indent_size = 4
+indent_size = 2
 end_of_line = lf

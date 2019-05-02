@@ -9,151 +9,139 @@ import { css, jsx } from "@emotion/core";
 import ProductThumbnails from "./ProductThumbnails";
 
 const productPhotos = [
-    [
-        {
-            url: "/static/COS/product/product_1.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ],
-    [
-        {
-            url: "/static/COS/product/product_2.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ],
-    [
-        {
-            url: "/static/COS/product/product_3.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ],
-    [
-        {
-            url: "/static/COS/product/product_4.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ],
-    [
-        {
-            url: "/static/COS/product/product_5.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ],
-    [
-        {
-            url: "/static/COS/product/product_6.jpg",
-            w: 1128,
-            h: 1692
-        }
-    ]
+  [
+    {
+      url: "/static/COS/product/product_1.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ],
+  [
+    {
+      url: "/static/COS/product/product_2.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ],
+  [
+    {
+      url: "/static/COS/product/product_3.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ],
+  [
+    {
+      url: "/static/COS/product/product_4.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ],
+  [
+    {
+      url: "/static/COS/product/product_5.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ],
+  [
+    {
+      url: "/static/COS/product/product_6.jpg",
+      w: 1128,
+      h: 1692
+    }
+  ]
 ];
 
 let manyProductPhotos = [...productPhotos, ...productPhotos, ...productPhotos];
 
 function Story() {
-    const [active, setActive] = useState(0);
+  const [active, setActive] = useState(0);
 
-    return (
-        <Index>
-            <h1>
-                <code>ProductThumbnails</code>
-            </h1>
-            <h2>Horizontal</h2>
+  return (
+    <Index>
+      <h1>
+        <code>ProductThumbnails</code>
+      </h1>
+      <h2>Horizontal</h2>
 
-            <Grid>
-                <GridItem params={{ xs: 12 }}>
-                    <p>Active: {active}</p>
-                    <ProductThumbnails
-                        images={manyProductPhotos}
-                        mode={"horizontal"}
-                        itemSize={100}
-                        gutter={10}
-                        thumbnailComponent={(image, isActive, index) => (
-                            <div
-                                css={css`
-                                    opacity: ${isActive ? 0.5 : 1};
-                                `}
-                            >
-                                <Image
-                                    images={image}
-                                    load={true}
-                                    mode={"natural"}
-                                />
-                            </div>
-                        )}
-                        active={active}
-                        onClick={setActive}
-                    />
-                </GridItem>
-            </Grid>
-            <h2>Vertical</h2>
-
-            <div
+      <Grid>
+        <GridItem params={{ xs: 12 }}>
+          <p>Active: {active}</p>
+          <ProductThumbnails
+            images={manyProductPhotos}
+            mode={"horizontal"}
+            itemSize={100}
+            gutter={10}
+            thumbnailComponent={(image, isActive, index) => (
+              <div
                 css={css`
-                    width: 100px;
+                  opacity: ${isActive ? 0.5 : 1};
                 `}
-            >
-                <p>Active: {active}</p>
-                <ProductThumbnails
-                    images={manyProductPhotos}
-                    mode={"vertical-autoheight"}
-                    itemSize={100}
-                    gutter={10}
-                    thumbnailComponent={(image, isActive, index) => (
-                        <div
-                            css={css`
-                                opacity: ${isActive ? 0.5 : 1};
-                            `}
-                        >
-                            <Image
-                                images={image}
-                                load={true}
-                                mode={"natural"}
-                            />
-                        </div>
-                    )}
-                    active={active}
-                    onClick={setActive}
-                />
-            </div>
-            <h2>Vertical (scrollable)</h2>
+              >
+                <Image images={image} load={true} mode={"natural"} />
+              </div>
+            )}
+            active={active}
+            onClick={setActive}
+          />
+        </GridItem>
+      </Grid>
+      <h2>Vertical</h2>
 
+      <div
+        css={css`
+          width: 100px;
+        `}
+      >
+        <p>Active: {active}</p>
+        <ProductThumbnails
+          images={manyProductPhotos}
+          mode={"vertical-autoheight"}
+          itemSize={100}
+          gutter={10}
+          thumbnailComponent={(image, isActive, index) => (
             <div
-                css={css`
-                    width: 100px;
-                    height: 800px;
-                `}
+              css={css`
+                opacity: ${isActive ? 0.5 : 1};
+              `}
             >
-                <p>Active: {active}</p>
-                <ProductThumbnails
-                    images={manyProductPhotos}
-                    mode={"vertical"}
-                    itemSize={100}
-                    gutter={10}
-                    thumbnailComponent={(image, isActive, index) => (
-                        <div
-                            css={css`
-                                opacity: ${isActive ? 0.5 : 1};
-                            `}
-                        >
-                            <Image
-                                images={image}
-                                load={true}
-                                mode={"natural"}
-                            />
-                        </div>
-                    )}
-                    active={active}
-                    onClick={setActive}
-                />
+              <Image images={image} load={true} mode={"natural"} />
             </div>
-        </Index>
-    );
+          )}
+          active={active}
+          onClick={setActive}
+        />
+      </div>
+      <h2>Vertical (scrollable)</h2>
+
+      <div
+        css={css`
+          width: 100px;
+          height: 800px;
+        `}
+      >
+        <p>Active: {active}</p>
+        <ProductThumbnails
+          images={manyProductPhotos}
+          mode={"vertical"}
+          itemSize={100}
+          gutter={10}
+          thumbnailComponent={(image, isActive, index) => (
+            <div
+              css={css`
+                opacity: ${isActive ? 0.5 : 1};
+              `}
+            >
+              <Image images={image} load={true} mode={"natural"} />
+            </div>
+          )}
+          active={active}
+          onClick={setActive}
+        />
+      </div>
+    </Index>
+  );
 }
 
 storiesOf("ProductThumbnails", module).add("default", () => <Story />);

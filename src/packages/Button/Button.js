@@ -2,7 +2,7 @@ import React from "react";
 import Index, { getAppearance } from "../StorefrontUIContext";
 
 /** @jsx jsx */
-import {css, jsx} from "@emotion/core";
+import { css, jsx } from "@emotion/core";
 
 const rawButtonStyles = css`
   font-family: inherit; /* 1 */
@@ -39,39 +39,45 @@ const rawButtonStyles = css`
     color: black;
   }
 
-    position: relative;
-    height: 100%;
+  position: relative;
+  height: 100%;
 `;
 
-const rawLinkStyles = (disabled) => css`
-    text-decoration: none;
-    &:visited, &:active, &:hover, &:link {
-        color: black;
-    }
-    
-    ${disabled ? `
+const rawLinkStyles = disabled => css`
+  text-decoration: none;
+  &:visited,
+  &:active,
+  &:hover,
+  &:link {
+    color: black;
+  }
+
+  ${disabled
+    ? `
         pointer-events: none;
         cursor: default;
-    ` : ''}
+    `
+    : ""}
 `;
 
-
-const ButtonDefaultContent = (props) => {
-
-    // Button is in dropdown context
-    let extraString = "";
-    if (typeof props.popupOpened !== "undefined") {
-        if (props.popupOpened) {
-            extraString = " (opened)";
-        }
-        else {
-            extraString = " (closed)";
-        }
+const ButtonDefaultContent = props => {
+  // Button is in dropdown context
+  let extraString = "";
+  if (typeof props.popupOpened !== "undefined") {
+    if (props.popupOpened) {
+      extraString = " (opened)";
+    } else {
+      extraString = " (closed)";
     }
+  }
 
-    return <div css={css`
-        ${ props.disabled ? 'opacity: 0.66;' : ''}
-        ${ props.selected ? 'background-color: grey;' : ''}
+  return (
+    <div
+      css={css`
+        ${props.disabled ? "opacity: 0.66;" : ""}
+        ${props.selected
+          ? "background-color: grey;"
+          : ""}
 
         padding: 12px 20px;
         background-color: black;
@@ -82,7 +88,8 @@ const ButtonDefaultContent = (props) => {
         justify-content: center;
         align-items: center;
 
-        ${!props.disabled && `
+        ${!props.disabled &&
+          `
             &:hover {
                 opacity: 0.8;
             }
@@ -90,44 +97,86 @@ const ButtonDefaultContent = (props) => {
 
         position: relative;
         height: 100%;
-    `}>{props.children} {extraString}</div>
+      `}
+    >
+      {props.children} {extraString}
+    </div>
+  );
 };
 
-const appearanceTest = ({children}) => ({
-    children: ({ disabled, popupOpened}) => <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>{children}</ButtonDefaultContent>
+const appearanceTest = ({ children }) => ({
+  children: ({ disabled, popupOpened }) => (
+    <ButtonDefaultContent disabled={disabled} popupOpened={popupOpened}>
+      {children}
+    </ButtonDefaultContent>
+  )
 });
 
-const appearanceRaw = ({children}) => ({
+const appearanceRaw = ({ children }) => ({});
+
+const Button = React.forwardRef((
+  props, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
+  ref
+) => {
+  const {
+    type,
+    href,
+    disabled,
+    className,
+    style,
+    popupOpened,
+    appearance,
+    ...appearanceProps
+  } = props;
+  const { children, ...extraProps } = appearanceProps;
+
+  return (
+    <Index.Consumer>
+      {({ Button }) => {
+        let { children } = getAppearance(
+          appearance,
+          appearanceProps,
+          { raw: appearanceRaw, default: appearanceRaw, test: appearanceTest },
+          Button
+        );
+
+        let content =
+          typeof children === "function"
+            ? children({ disabled, popupOpened })
+            : children;
+
+        if (href) {
+          return (
+            <a
+              css={rawLinkStyles(disabled)}
+              style={style}
+              className={className}
+              {...extraProps}
+              href={href}
+              ref={ref}
+              tabIndex={disabled ? "-1" : 0}
+            >
+              {content}
+            </a>
+          );
+        }
+
+        return (
+          <button
+            css={rawButtonStyles}
+            style={style}
+            className={className}
+            disabled={disabled}
+            type={type}
+            {...extraProps}
+            ref={ref}
+          >
+            {content}
+          </button>
+        );
+      }}
+    </Index.Consumer>
+  );
 });
-
-const Button = React.forwardRef(
-    (
-        props, // here we divide custom properties of properties that DOM <button> should have (the rest of them)
-        ref,
-    ) => {
-        const { type, href, disabled, className, style, popupOpened, appearance, ...appearanceProps } = props;
-        const { children, ...extraProps } = appearanceProps;
-
-        return <Index.Consumer>
-            {({ Button }) => {
-
-                let { children } = getAppearance(
-                    appearance,
-                    appearanceProps,
-                    { raw: appearanceRaw, default: appearanceRaw, test: appearanceTest },
-                    Button
-                );
-
-                let content = typeof children === 'function' ? children({ disabled, popupOpened }) : children;
-
-                if (href) {
-                    return <a css={rawLinkStyles(disabled)} style={style} className={className} {...extraProps} href={href} ref={ref} tabIndex={disabled ? '-1' : 0}>{ content }</a>;
-                }
-
-                return <button css={rawButtonStyles} style={style} className={className} disabled={disabled} type={type} {...extraProps} ref={ref}>{ content }</button>;
-            }}
-        </Index.Consumer>;
-    },
-);
 
 export default Button;

@@ -1,15 +1,15 @@
 class Ease {
-    constructor(css) {
-        this._css = css;
-    }
+  constructor(css) {
+    this._css = css;
+  }
 
-    get css() {
-        return this._css;
-    }
+  get css() {
+    return this._css;
+  }
 
-    toString() {
-        return this._css;
-    }
+  toString() {
+    return this._css;
+  }
 }
 
 Ease.quadIn = new Ease("cubic-bezier(0.55, 0.085, 0.68, 0.53)");

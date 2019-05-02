@@ -1,7 +1,6 @@
 import React from "react";
 
-const Index = React.createContext({
-});
+const Index = React.createContext({});
 
 /**
  * Result of getAppearance is an object of canonical traits of the component.
@@ -17,36 +16,31 @@ const Index = React.createContext({
  * 1. If appearance is empty, then let's just use defaultProps
  */
 const getAppearance = (appearance, appearanceProps, ...maps) => {
+  let map = Object.assign({}, ...maps);
 
-    let map = Object.assign({}, ...maps);
-
-    // If appearance is string, convert it to function
-    if (typeof appearance === 'string') {
-        if (map[appearance]) {
-            appearance = map[appearance];
-        }
-        else {
-            throw new Error (`Unknown component appearance: ${appearance}`);
-        }
+  // If appearance is string, convert it to function
+  if (typeof appearance === "string") {
+    if (map[appearance]) {
+      appearance = map[appearance];
+    } else {
+      throw new Error(`Unknown component appearance: ${appearance}`);
     }
+  }
 
-    // At this point, appearance is either function or nothing.
-    // If appearance is a function, then let's calculate object, if nothing, the object is empty
-    let newProps = {};
+  // At this point, appearance is either function or nothing.
+  // If appearance is a function, then let's calculate object, if nothing, the object is empty
+  let newProps = {};
 
-    if (typeof appearance === 'function') {
-        newProps = appearance(appearanceProps);
+  if (typeof appearance === "function") {
+    newProps = appearance(appearanceProps);
+  } else {
+    if (map.default) {
+      newProps = map.default(appearanceProps);
     }
-    else {
-        if (map.default) {
-            newProps = map.default(appearanceProps);
-        }
-    }
+  }
 
-    return Object.assign({}, appearanceProps, newProps);
+  return Object.assign({}, appearanceProps, newProps);
 };
 
 export default Index;
-export {
-    getAppearance
-}
+export { getAppearance };

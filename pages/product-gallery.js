@@ -41,9 +41,7 @@ import { md, Example, CodeBlock } from "../docs-utils/docs";
 // `;
 
 const content = md`
-    Cze
+Cze
 `;
 
 export default () => <Page>{content}</Page>;
-
-

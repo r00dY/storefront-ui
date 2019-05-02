@@ -1,1 +1,6 @@
-export { fonts, colors, spacings, layout } from "../../../storefront-ui.config.js";
+export {
+  fonts,
+  colors,
+  spacings,
+  layout
+} from "../../../storefront-ui.config.js";
