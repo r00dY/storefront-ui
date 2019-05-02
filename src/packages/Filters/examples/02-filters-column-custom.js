@@ -1,5 +1,6 @@
 import React, {useState} from "react";
-import {FiltersColumn, ButtonNaked, Grid, GridItem} from "storefront-ui";
+import {FiltersColumn} from "storefront-ui/Filters";
+import ButtonNaked from "storefront-ui/ButtonNaked";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";

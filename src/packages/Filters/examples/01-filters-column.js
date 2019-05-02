@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {FiltersColumn} from "storefront-ui";
+import {FiltersColumn} from "storefront-ui/Filters";
 
 /** @jsx jsx */
 import {css, jsx} from "@emotion/core";
