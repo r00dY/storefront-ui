@@ -1,7 +1,0 @@
-{
-  "name": "ecommerce-storybook",
-  "env": {
-    "BUILD_TYPE": "storybook"
-  },
-  "alias": "ecommerce-storybook.ratio.team"
-}

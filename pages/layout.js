@@ -35,7 +35,7 @@ ${<Container><img src={"/static/grid.png"} style={{width: "100%"}} /></Container
 
 ### Standard use
 
-${<Example fullWidth={true} code={require("!!raw-loader!../src/core-main/Container/examples/01-standard-use.js")} component={require('../src/core-main/Container/examples/01-standard-use.js').default} />}
+${<Example fullWidth={true} code={require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")} component={require('../src/packages/Container/examples/01-standard-use.js').default} />}
 
 By default, \`Container\` margin is \`5vw\`. Later we'll show how to make it custom.
 
@@ -45,7 +45,7 @@ Grid has n fixed width columns separated with fixed width gutters. Every layout 
 
 The \`Grid\` behaves exactly the same as Bootstrap grid. For now you can set widths, offsets and order for items.
 
-${<Example fullWidth={true} code={require("!!raw-loader!../src/core-main/Grid/examples/01-standard-use.js")} component={require('../src/core-main/Grid/examples/01-standard-use.js').default} />}
+${<Example fullWidth={true} code={require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")} component={require('../src/packages/Grid/examples/01-standard-use.js').default} />}
 
 ## Configuration
 

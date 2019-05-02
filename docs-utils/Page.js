@@ -26,17 +26,17 @@ export default (props) => {
                 line-height: 1.5;
             `}>
                 <li><Link href="/"><a>Introduction</a></Link></li>
-                <li><Link href="/responsive"><a>Responsiveness</a></Link></li>
                 <li><Link href="/image"><a>Image</a></Link></li>
-                <li><Link href="/layout"><a>Layout, Container and Grid</a></Link></li>
-                <li><Link href="/image-mosaic"><a>Image mosaic</a></Link></li>
-                <li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>
-                <li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>
-                <li><Link href="/modals"><a>Modals / Overlays</a></Link></li>
-                <li><Link href="/accordion"><a>Accordion</a></Link></li>
-                <li><Link href="/filters"><a>Filters</a></Link></li>
-                <li><Link href="/button"><a>Button</a></Link></li>
-                <li><Link href="/popups"><a>Popups / dropdowns</a></Link></li>
+                {/*<li><Link href="/responsive"><a>Responsiveness</a></Link></li>*/}
+                {/*<li><Link href="/layout"><a>Layout, Container and Grid</a></Link></li>*/}
+                {/*<li><Link href="/image-mosaic"><a>Image mosaic</a></Link></li>*/}
+                {/*<li><Link href="/swipeable-items-container"><a>Swipers / sliders</a></Link></li>*/}
+                {/*<li><Link href="/sticky-column"><a>StickyColumn</a></Link></li>*/}
+                {/*<li><Link href="/modals"><a>Modals / Overlays</a></Link></li>*/}
+                {/*<li><Link href="/accordion"><a>Accordion</a></Link></li>*/}
+                {/*<li><Link href="/filters"><a>Filters</a></Link></li>*/}
+                {/*<li><Link href="/button"><a>Button</a></Link></li>*/}
+                {/*<li><Link href="/popups"><a>Popups / dropdowns</a></Link></li>*/}
             </ul>
 
         </div>

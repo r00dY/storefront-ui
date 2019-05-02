@@ -9,7 +9,7 @@ const content = md`
 
 ## Examples of use
 
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/01-standard-use.js').default} />}
+${<Example code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/01-standard-use.js")} component={require('../src/packages/SwipeableItemsContainer/examples/01-standard-use.js').default} />}
 
 ## Arrows, dots and other controller components
 
@@ -19,7 +19,7 @@ Sliders usually have side components like arrow buttons, dots or progress bars.
 
 \`SwipeableItemsContainer\` allows for quick addition vertically centered arrows.
 
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/03-arrows.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/03-arrows.js').default} />}
+${<Example code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/03-arrows.js")} component={require('../src/packages/SwipeableItemsContainer/examples/03-arrows.js').default} />}
 
 Arrows are always wrapped with \`button\` component.
 
@@ -27,20 +27,20 @@ Arrows are always wrapped with \`button\` component.
 
 Very often we might need to add some component that will make changes to swiper state (move slides or show active state). We can "connect" to internal swiper state by using \`useSwipeableItemsContainer\` hook. In such case \`SwipeableItemsContainer\` JSX must be passed to the hook, and we can obtain ready-to-use element + state variables and methods as a hook output.
 
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/02-hook.js').default} />}
+${<Example code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/02-hook.js")} component={require('../src/packages/SwipeableItemsContainer/examples/02-hook.js').default} />}
 
 ### Dots
 
 \`storefront-ui\` ships with a simple but useful component named \`Dots\`. It's frequently used with sliders.
 
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/04-dots.js")} component={require('../src/core-main/SwipeableItemsContainer/examples/04-dots.js').default} />}
+${<Example code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/04-dots.js")} component={require('../src/packages/SwipeableItemsContainer/examples/04-dots.js').default} />}
 
 ### Scrollbar
 
 Some designs require adding scrollbar which works together with swiper.
 
-${<Example code={require("!!raw-loader!../src/core-main/SwipeableItemsContainer/examples/05-scrollbar.js")}
-           component={require('../src/core-main/SwipeableItemsContainer/examples/05-scrollbar.js').default}/>}
+${<Example code={require("!!raw-loader!../src/packages/SwipeableItemsContainer/examples/05-scrollbar.js")}
+           component={require('../src/packages/SwipeableItemsContainer/examples/05-scrollbar.js').default}/>}
 
 `;
 

@@ -5,7 +5,7 @@ module.exports = {
         // Perform customizations to webpack config
         // Important: return the modified config
 
-        config.resolve.alias['storefront-ui$'] = path.resolve(__dirname, 'src/index.js');
+        config.resolve.alias['storefront-ui'] = path.resolve(__dirname, 'src/packages/');
 
         return config
     },
