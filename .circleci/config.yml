@@ -40,7 +40,9 @@ jobs:
           name: Publish docs to Now
           command: npm run publish-docs
 
-      - run: echo $NPM_TOKEN
+      - run:
+          name: Authenticate npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/repo/.npmrc
 
       - run:
           name: Publish library to npm
