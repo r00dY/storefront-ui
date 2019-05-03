@@ -3,7 +3,8 @@
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN",
-    "build": "rm -Rf dist && npx babel ./src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist && mv dist/config/storefront-ui.config__build.js dist/config/storefront-ui.config.js",
+    "build": "rm -Rf dist && npx babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist && mv dist/config/storefront-ui.config__build.js dist/config/storefront-ui.config.js",
+    "build2": "babel src/packages --out-dir dist && list -la dist",
     "publish": "npm run build && npm publish dist/",
     "dev": "next --port 3333"
   },
