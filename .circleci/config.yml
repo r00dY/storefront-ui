@@ -55,8 +55,12 @@ jobs:
           command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
 
       - run:
-          name: Build and publish
-          command: npm run publish
+          name: Build
+          command: npm run build
+
+      - run:
+          name: Publish
+          command: npm publish dist/
 
 workflows:
   version: 2
