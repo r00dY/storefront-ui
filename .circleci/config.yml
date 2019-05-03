@@ -31,22 +31,22 @@ jobs:
       - run: ls -la
       - run: whoami
       - run: pwd
-#      - run: npm install
-#      - run: npm install now
-#
-#      - save_cache:
-#          paths:
-#            - node_modules
-#          key: v1-dependencies-{{ checksum "package.json" }}
-#
-#      - run:
-#          name: Publish docs to Now
-#          command: npm run publish-docs
-#
-#      - run:
-#          name: Authenticate npm
-#          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-#
-#      - run:
-#          name: Publish library to npm
-#          command: npm run publish
+      - run: npm install
+      #      - run: npm install now
+      #
+      #      - save_cache:
+      #          paths:
+      #            - node_modules
+      #          key: v1-dependencies-{{ checksum "package.json" }}
+      #
+      #      - run:
+      #          name: Publish docs to Now
+      #          command: npm run publish-docs
+      #
+      - run:
+          name: Authenticate npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+
+      - run:
+          name: Publish library to npm
+          command: npm run publish
