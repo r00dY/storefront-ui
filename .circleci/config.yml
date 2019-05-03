@@ -40,6 +40,8 @@ jobs:
           name: Publish docs to Now
           command: npm run publish-docs
 
+      - run: echo $NPM_TOKEN
+
       - run:
           name: Publish library to npm
           command: npm run publish
