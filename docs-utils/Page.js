@@ -1,6 +1,7 @@
 import React from "react";
 import Link from "next/link";
 
+import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
 /** @jsx jsx */
@@ -26,7 +27,7 @@ export default props => {
               margin-bottom: 2em;
             `}
           >
-            ecommerce-ui
+            storefront-ui <code>{packageJson.version}</code>
           </pre>
         </strong>
 
