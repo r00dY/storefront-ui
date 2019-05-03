@@ -49,4 +49,4 @@ jobs:
 
       - run:
           name: Publish library to npm
-          command: npm run build2
+          command: npm run build
