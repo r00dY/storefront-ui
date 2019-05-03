@@ -8,6 +8,8 @@ jobs:
     filters:
       tags:
         only: /^v.*/
+      branches:
+        ignore: /.*/
 
     docker:
       # specify the version you desire here
