@@ -16,7 +16,7 @@ jobs:
 
     steps:
       - checkout
-      - run: echo success
+      - run: echo test success
 
   deploy:
     docker:
@@ -32,40 +32,40 @@ jobs:
       - checkout
 
       # Download and cache dependencies
-      #      - restore_cache:
-      #          keys:
-      #            - v1-dependencies-{{ checksum "package.json" }}
-      #            # fallback to using the latest cache if no exact match is found
-      #            - v1-dependencies-
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package.json" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
 
-      - run: echo success deploy
-      #      - run: npm install
-      #      - run: npm install now
-      #
-      #      - save_cache:
-      #          paths:
-      #            - node_modules
-      #          key: v1-dependencies-{{ checksum "package.json" }}
-      #
-      #      - run:
-      #          name: Publish docs to Now
-      #          command: npm run publish-docs
-      #
-#      - run:
-#          name: Authenticate npm
-#          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
-#
-#      - run:
-#          name: Publish library to npm
-#          command: npm run build
+      - run: npm install
+      - run: npm install now
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: Publish docs to Now
+          command: npm run publish-docs
+
+      - run:
+          name: Authenticate npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+
+      - run:
+          name: Build and publish
+          command: npm run publish
+
 workflows:
   version: 2
   build-n-deploy:
     jobs:
-      - test:
-          filters: # required since `deploy` has tag filters AND requires `build`
-            branches:
-              only: master
+      #      - test:
+      #          filters: # required since `deploy` has tag filters AND requires `build`
+      #            branches:
+      #              only: master
 
       - deploy:
           filters: # required since `deploy` has tag filters AND requires `build`
