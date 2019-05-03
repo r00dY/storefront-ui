@@ -7,18 +7,17 @@
     "dev": "next --port 3333"
   },
   "dependencies": {
-    "@emotion/core": "^10.0.7",
-    "@emotion/styled": "^10.0.7",
-    "react-responsive": "^6.1.1",
-    "responsive-helpers": "^0.1.12",
-    "simpleswiper": "^0.10.5",
-    "imgix-core-js": "^1.2.1",
     "react-modal": "^3.8.1",
-    "react-visibility-sensor": "^5.0.2"
+    "react-responsive": "^6.1.1",
+    "react-visibility-sensor": "^5.0.2",
+    "responsive-helpers": "^0.1.12",
+    "simpleswiper": "^0.10.5"
   },
   "peerDependencies": {
     "react": "^16.8.6",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.8.6",
+    "@emotion/core": "^10.0.7",
+    "@emotion/styled": "^10.0.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
