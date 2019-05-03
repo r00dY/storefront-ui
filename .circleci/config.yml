@@ -39,16 +39,16 @@ jobs:
             - v1-dependencies-
 
       - run: npm install
-      - run: npm install now
+      #      - run: npm install now
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run:
-          name: Publish docs to Now
-          command: npm run publish-docs
+      #      - run:
+      #          name: Publish docs to Now
+      #          command: npm run publish-docs
 
       - run:
           name: Authenticate npm
