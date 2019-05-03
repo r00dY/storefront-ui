@@ -5,6 +5,13 @@
 version: 2
 jobs:
   build:
+    branches:
+      only:
+        - master
+    filters:
+      tags:
+        only: /^v.*/
+
     docker:
       # specify the version you desire here
       - image: circleci/node:10.15
@@ -14,7 +21,7 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/repo
+    working_directory: .
 
     steps:
       - checkout
@@ -26,12 +33,17 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: npm install
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn test
+      - run:
+          name: Publish docs to Now
+          command: npm run publish-docs
+
+      - run:
+          name: Publish library to npm
+          command: npm run publish

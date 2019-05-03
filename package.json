@@ -2,10 +2,9 @@
   "name": "storefront-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
-    "docs-publish": "now --target production",
+    "publish-docs": "now --target production",
     "build": "rm -Rf dist && npx babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist && mv dist/config/storefront-ui.config__build.js dist/config/storefront-ui.config.js",
     "publish": "npm run build && npm publish dist/",
-    "publish-all": "npm run docs-publish && npm run publish",
     "dev": "next --port 3333"
   },
   "dependencies": {
