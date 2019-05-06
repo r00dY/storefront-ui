@@ -1,10 +1,11 @@
 {
-  "name": "ecommerce-ui",
-  "alias": "ecommerce-ui.ratio.team",
-  "scale": {
-    "bru1": {
-      "min": 1,
-      "max": 1
+  "version": 2,
+  "name": "storefront-ui",
+  "alias": "storefront-ui.ratio.team",
+  "builds": [
+    {
+      "src": "next.config.js",
+      "use": "@now/next"
     }
-  }
+  ]
 }

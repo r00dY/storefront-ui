@@ -1,9 +1,0 @@
-@import "../../../sass/style";
-
-.EditorialIntro {
-    &__inner {
-        @include make-col-ready;
-        @include make-col(16);
-        @include make-col-offset(4);
-    }
-}

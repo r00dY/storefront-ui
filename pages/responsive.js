@@ -7,10 +7,18 @@ const content = md`
 
 ## \`MediaQuery\`
 
-${<Example code={require("!!raw-loader!../src/core-main/MediaQuery/examples/01-standard-use.js")} component={require('../src/core-main/MediaQuery/examples/01-standard-use.js').default} />}
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/MediaQuery/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/MediaQuery/examples/01-standard-use.js").default
+    }
+  />
+)}
 
 `;
 
 export default () => <Page>{content}</Page>;
-
-

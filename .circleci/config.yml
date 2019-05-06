@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  test:
     docker:
       # specify the version you desire here
       - image: circleci/node:10.15
@@ -14,7 +14,19 @@ jobs:
       # documented at https://circleci.com/docs/2.0/circleci-images/
       # - image: circleci/mongo:3.4.4
 
-    working_directory: ~/repo
+    steps:
+      - checkout
+      - run: echo test success
+
+  deploy:
+    docker:
+      # specify the version you desire here
+      - image: circleci/node:10.15
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/mongo:3.4.4
 
     steps:
       - checkout
@@ -26,12 +38,42 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: yarn install
+      - run: npm install
+      - run: npm install now
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      # run tests!
-      - run: yarn test
+      - run:
+          name: Publish docs to Now
+          command: npm run publish-docs
+
+      - run:
+          name: Authenticate npm
+          command: echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > .npmrc
+
+      - run:
+          name: Build
+          command: npm run build
+
+      - run:
+          name: Publish
+          command: npm publish dist/
+
+workflows:
+  version: 2
+  build-n-deploy:
+    jobs:
+      #      - test:
+      #          filters: # required since `deploy` has tag filters AND requires `build`
+      #            branches:
+      #              only: master
+
+      - deploy:
+          filters: # required since `deploy` has tag filters AND requires `build`
+            tags:
+              only: /v.*/
+            branches:
+              ignore: /.*/

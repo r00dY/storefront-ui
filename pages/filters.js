@@ -15,17 +15,42 @@ There are different ways of building filtering in \`storefront-ui\`. You could s
 
 All filter components in \`storefront-ui\` require unified filter format which is as follows:
 
-${<CodeBlock code={require("!!raw-loader!../docs-utils/filtersData.js")} />}
+${(
+  <CodeBlock
+    code={require("!!raw-loader!../docs-utils/filtersData.js").default}
+  />
+)}
 
 ## \`FilterColumn\`
 
 Let's start with simple filter column, so common in all kinds of e-commerce sites.
 
-${<Example code={require("!!raw-loader!../src/core-main/Filters/examples/01-filters-column.js")} component={require('../src/core-main/Filters/examples/01-filters-column.js').default} />}
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Filters/examples/01-filters-column.js")
+        .default
+    }
+    component={
+      require("../src/packages/Filters/examples/01-filters-column.js").default
+    }
+  />
+)}
 
 It's very raw, but the idea is to give you flexibility to style this as much as you can.
 
-${<Example code={require("!!raw-loader!../src/core-main/Filters/examples/02-filters-column-custom.js")} component={require('../src/core-main/Filters/examples/02-filters-column-custom.js').default} />}
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Filters/examples/02-filters-column-custom.js")
+        .default
+    }
+    component={
+      require("../src/packages/Filters/examples/02-filters-column-custom.js")
+        .default
+    }
+  />
+)}
 
 `;
 
