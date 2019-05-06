@@ -43,7 +43,7 @@ class ImageMosaic extends React.Component {
   }
 
   componentDidMount() {
-    if (IntersectionObserver) {
+    if (typeof IntersectionObserver !== "undefined") {
       this.observer = new IntersectionObserver(
         entries => {
           this._visibilityChange(entries);
