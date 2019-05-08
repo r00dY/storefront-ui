@@ -1,7 +1,7 @@
 import React from "react";
 
 import MediaQuery from "storefront-ui/MediaQuery";
-import { R } from "storefront-ui/config";
+import { R } from "storefront-ui/Config";
 
 export default () => {
   return (

@@ -5,7 +5,7 @@ import SwipeableItemsContainer, {
 import Dots from "storefront-ui/Dots";
 import MediaQuery from "storefront-ui/MediaQuery";
 import Color from "storefront-ui/Color";
-import { R } from "storefront-ui/config";
+import { R } from "storefront-ui/Config";
 
 import { rslin } from "responsive-helpers";
 
