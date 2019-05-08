@@ -76,10 +76,11 @@ ${(
 
 By default, width of container is \`90vw\`, grid gutter is \`10px\` and number of columns is 24. These parameters can be changed via  \`layout.container\` property in config.
 
-\`\`\`javascript
-import { applyConfig } from "storefront-ui";
+Configuration can be changed via \`storefront-ui.config.js\` file in a root directory of the project. Example file:
 
-applyConfig({
+\`\`\`javascript
+
+export default {
     layout: {
         container: rs({ // Here we set custom container width!
             xs: "90vw",
@@ -93,7 +94,7 @@ applyConfig({
         }),
         colNumber: 12
     }
-});
+};
 \`\`\`
 
 ### Layout values
@@ -101,7 +102,7 @@ applyConfig({
 You can always access layout variables from \`L\`:
 
 \`\`\`javascript
-import { L } from "storefront-ui";
+import { L } from "storefront-ui/config";
 
 L.container // container width
 L.gutter // gutter width
