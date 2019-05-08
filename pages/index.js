@@ -1,6 +1,12 @@
+import "../storefront-ui.config";
+
 import React from "react";
 import Page from "../docs-utils/Page";
 import { md } from "../docs-utils/docs";
+
+import { C } from "storefront-ui/Config";
+
+console.log(C);
 
 const content = md`
 # Introduction
