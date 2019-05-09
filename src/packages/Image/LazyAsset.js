@@ -289,7 +289,7 @@ class LazyAsset extends React.Component {
             autoPlay
             muted
             loop
-            playsinline
+            playsInline
             onCanPlay={this.handleImageLoaded}
             className={`i-${this.randomId}`}
             draggable={this.props.draggable}
