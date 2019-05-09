@@ -4,7 +4,7 @@ import Index, { getAppearance } from "../StorefrontUIContext";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const rawButtonStyles = css`
+const rawButtonStyles = fitContainer => css`
   font-family: inherit; /* 1 */
   font-size: 100%; /* 1 */
   line-height: 1.15; /* 1 */
@@ -40,10 +40,14 @@ const rawButtonStyles = css`
   }
 
   position: relative;
-  height: 100%;
+
+  width: ${fitContainer ? "100%" : "auto"};
 `;
 
-const rawLinkStyles = disabled => css`
+const rawLinkStyles = (disabled, fitContainer) => css`
+  position: relative;
+  display: block;
+
   text-decoration: none;
   &:visited,
   &:active,
@@ -51,6 +55,8 @@ const rawLinkStyles = disabled => css`
   &:link {
     color: black;
   }
+
+  width: ${fitContainer ? "100%" : "auto"};
 
   ${disabled
     ? `
@@ -121,9 +127,8 @@ const Button = React.forwardRef((
   const {
     type,
     href,
+    fitContainer,
     disabled,
-    className,
-    style,
     popupOpened,
     appearance,
     ...appearanceProps
@@ -148,9 +153,7 @@ const Button = React.forwardRef((
         if (href) {
           return (
             <a
-              css={rawLinkStyles(disabled)}
-              style={style}
-              className={className}
+              css={rawLinkStyles(disabled, fitContainer)}
               {...extraProps}
               href={href}
               ref={ref}
@@ -163,9 +166,7 @@ const Button = React.forwardRef((
 
         return (
           <button
-            css={rawButtonStyles}
-            style={style}
-            className={className}
+            css={rawButtonStyles(fitContainer)}
             disabled={disabled}
             type={type}
             {...extraProps}
@@ -178,5 +179,9 @@ const Button = React.forwardRef((
     </Index.Consumer>
   );
 });
+
+Button.defaultProps = {
+  fitContainer: false
+};
 
 export default Button;

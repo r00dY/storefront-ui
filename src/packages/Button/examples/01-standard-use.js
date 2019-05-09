@@ -47,16 +47,6 @@ export default () => (
       Default button disabled
     </Button>
 
-    <p>Raw button sized</p>
-    <Button
-      onClick={() => alert("button clicked!")}
-      css={css`
-        width: 250px;
-      `}
-    >
-      Sized raw button
-    </Button>
-
     <p>Raw button as link</p>
     <Button href={"https://wikipedia.org"}>Raw link</Button>
 
@@ -109,6 +99,11 @@ export default () => (
         href={"https://wikipedia.org"}
       >
         Custom appearance with custom prop as link
+      </Button>
+      <br />
+      <p>Making button full width (button width width: 100%)</p>
+      <Button appearance={"custom"} level={"warning"} fitContainer={true}>
+        Button - full width
       </Button>
     </StorefrontUIContext.Provider>
   </div>
