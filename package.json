@@ -2,7 +2,7 @@
   "name": "storefront-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
-    "publish-docs": "now --target production -t $NOW_TOKEN",
+    "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333"
   },
