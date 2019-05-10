@@ -4,11 +4,7 @@ import Link from "next/link";
 import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
-// import { ModalContainer } from "storefront-ui/Modal";
-
-import Modal, { ModalContainer, dupa } from "storefront-ui/Modal";
-
-console.log(ModalContainer, dupa, Modal);
+import { ModalContainer } from "storefront-ui/Modal";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

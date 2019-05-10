@@ -1,5 +1,5 @@
 import React from "react";
-import Index, { getAppearance } from "../StorefrontUIContext";
+import StorefrontUIContext, { getAppearance } from "../StorefrontUIContext";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -136,7 +136,7 @@ const Button = React.forwardRef((
   const { children, ...extraProps } = appearanceProps;
 
   return (
-    <Index.Consumer>
+    <StorefrontUIContext.Consumer>
       {({ Button }) => {
         let { children } = getAppearance(
           appearance,
@@ -176,7 +176,7 @@ const Button = React.forwardRef((
           </button>
         );
       }}
-    </Index.Consumer>
+    </StorefrontUIContext.Consumer>
   );
 });
 

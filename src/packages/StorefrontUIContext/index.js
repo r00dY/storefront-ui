@@ -1,6 +1,6 @@
 import React from "react";
 
-const Index = React.createContext({});
+const StorefrontUIContext = React.createContext({});
 
 /**
  * Result of getAppearance is an object of canonical traits of the component.
@@ -42,5 +42,5 @@ const getAppearance = (appearance, appearanceProps, ...maps) => {
   return Object.assign({}, appearanceProps, newProps);
 };
 
-export default Index;
+export default StorefrontUIContext;
 export { getAppearance };

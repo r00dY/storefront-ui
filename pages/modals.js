@@ -21,6 +21,18 @@ ${(
   />
 )}
 
+## We can register custom modal looks
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Modal/examples/02-register.js")
+        .default
+    }
+    component={require("../src/packages/Modal/examples/02-register.js").default}
+  />
+)}
+
 `;
 
 export default () => <Page>{content}</Page>;
