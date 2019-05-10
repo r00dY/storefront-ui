@@ -33,6 +33,20 @@ ${(
   />
 )}
 
+## header and footer
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Modal/examples/03-header-and-footer.js")
+        .default
+    }
+    component={
+      require("../src/packages/Modal/examples/03-header-and-footer.js").default
+    }
+  />
+)}
+
 `;
 
 export default () => <Page>{content}</Page>;

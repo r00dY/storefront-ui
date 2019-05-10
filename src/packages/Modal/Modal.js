@@ -125,7 +125,7 @@ function Modal(props) {
   return (
     <StorefrontUIContext.Consumer>
       {({ Modal }) => {
-        let { children, config } = getAppearance(
+        let { children, config, header, footer } = getAppearance(
           appearance,
           appearanceProps,
           Modal
@@ -208,6 +208,51 @@ function Modal(props) {
         });
 
         let styles = rm(rawConfigs);
+
+        let content;
+        if (!header && !footer) {
+          content = children;
+        } else {
+          content = (
+            <div
+              css={css`
+                position: relative;
+                display: flex;
+                flex-direction: column;
+                height: 100%;
+                background-color: white;
+              `}
+            >
+              <div
+                css={css`
+                  flex-shrink: 0;
+                  flex-grow: 0;
+                `}
+              >
+                {header}
+              </div>
+
+              <div
+                css={css`
+                  position: relative;
+                  flex-grow: 1;
+                  overflow-y: auto;
+                `}
+              >
+                {children}
+              </div>
+
+              <div
+                css={css`
+                  flex-shrink: 0;
+                  flex-grow: 0;
+                `}
+              >
+                {footer}
+              </div>
+            </div>
+          );
+        }
 
         return (
           <ReactModal
@@ -296,7 +341,7 @@ function Modal(props) {
                   )}
                 `}
               >
-                {children}
+                {content}
               </div>
             </div>
           </ReactModal>
