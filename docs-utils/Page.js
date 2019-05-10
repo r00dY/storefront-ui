@@ -4,6 +4,12 @@ import Link from "next/link";
 import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
+// import { ModalContainer } from "storefront-ui/Modal";
+
+import Modal, { ModalContainer, dupa } from "storefront-ui/Modal";
+
+console.log(ModalContainer, dupa, Modal);
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -112,7 +118,7 @@ export default props => {
         {props.children}
       </div>
 
-      <div id={"overlaysContainer"} />
+      <ModalContainer />
     </div>
   );
 };

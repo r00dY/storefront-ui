@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import ReactModal from "react-modal";
 
@@ -187,106 +187,96 @@ function Modal(props) {
   let styles = rm(rawConfigs);
 
   return (
-    <>
-      <Global
-        styles={css`
-          body.ReactModal__Body--open {
-            ${props.isOpen ? "overflow-y: hidden;" : ""}
-          }
-        `}
-      />
+    <ReactModal
+      overlayClassName={{
+        base: "Overlay",
+        afterOpen: `Overlay--opened`,
+        beforeClose: `Overlay--before-close`
+      }}
+      className={{
+        base: "Modal",
+        afterOpen: `Modal--opened`,
+        beforeClose: `Modal--before-close`
+      }}
+      style={{
+        overlay: {
+          position: "fixed",
+          zIndex: 10,
+          width: "100%",
+          height: "100%",
+          top: 0,
+          left: 0,
+          backgroundColor: "transparent"
+        },
+        content: {
+          position: "relative",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }
+      }}
+      isOpen={props.isOpen}
+      closeTimeoutMS={closeTimeout * 1000}
+      onRequestClose={props.onRequestClose}
+      onAfterOpen={props.onAfterOpen}
+    >
+      <div
+        css={css`
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
 
-      <ReactModal
-        overlayClassName={{
-          base: "Overlay",
-          afterOpen: `Overlay--opened`,
-          beforeClose: `Overlay--before-close`
-        }}
-        className={{
-          base: "Modal",
-          afterOpen: `Modal--opened`,
-          beforeClose: `Modal--before-close`
-        }}
-        style={{
-          overlay: {
-            position: "fixed",
-            zIndex: 10,
-            width: "100%",
-            height: "100%",
-            top: 0,
-            left: 0,
-            backgroundColor: "transparent"
-          },
-          content: {
-            position: "relative",
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
-          }
-        }}
-        isOpen={props.isOpen}
-        closeTimeoutMS={closeTimeout * 1000}
-        onRequestClose={props.onRequestClose}
-        onAfterOpen={props.onAfterOpen}
-      >
-        <div
-          css={css`
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-
-            ${styles.css(
-              style => `
+          ${styles.css(
+            style => `
                         background-color: ${style.backgroundColor.css};
                         transition: all ${style.animation.time}s ${
-                style.animation.ease.css
-              };
+              style.animation.ease.css
+            };
 
                         ${style.animation.background.before}
                         .Modal--opened:not(.Modal--before-close) & {
                             ${style.animation.background.after}
                         }
                     `
-            )}
-          `}
-          onClick={props.onRequestClose}
-          key={"background"}
-        />
+          )}
+        `}
+        onClick={props.onRequestClose}
+        key={"background"}
+      />
 
+      <div
+        css={css`
+          ${styles.css(style => style.position)}
+        `}
+      >
         <div
           css={css`
-            ${styles.css(style => style.position)}
-          `}
-        >
-          <div
-            css={css`
-              ${styles.css(
-                style => `
+            ${styles.css(
+              style => `
                         position: relative;
                         width: 100%;
                         height: 100%;
 
                         transition: all ${style.animation.time}s ${
-                  style.animation.ease.css
-                };
+                style.animation.ease.css
+              };
                         ${style.animation.content.before}
                         .Modal--opened:not(.Modal--before-close) & {
                             ${style.animation.content.after}
                         }
                     `
-              )}
-            `}
-          >
-            {props.children}
-          </div>
+            )}
+          `}
+        >
+          {props.children}
         </div>
-      </ReactModal>
-    </>
+      </div>
+    </ReactModal>
   );
 }
 
@@ -305,4 +295,28 @@ Modal.propTypes = {
   onAfterOpen: PropTypes.func
 };
 
+function ModalContainer({ className, style }) {
+  useEffect(() => {
+    Modal.setAppElement("#__storefrontUI__modalContainer");
+  });
+
+  return (
+    <>
+      <Global
+        styles={css`
+          body.ReactModal__Body--open {
+            overflow-y: hidden;
+          }
+        `}
+      />
+      <div
+        style={style}
+        className={className}
+        id={"__storefrontUI__modalContainer"}
+      />
+    </>
+  );
+}
+
 export default Modal;
+export { ModalContainer };

@@ -10,11 +10,6 @@ import Ease from "storefront-ui/Ease";
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 
 export default () => {
-  // This code doesn't have to be called every time. You just have to call it once in your app to tell Overlay where to place overlays.
-  useEffect(() => {
-    Modal.setAppElement("#overlaysContainer");
-  }, []);
-
   const configs = [
     // center
     {

@@ -7,7 +7,7 @@ import { css, jsx } from "@emotion/core";
 const rawButtonStyles = fitContainer => css`
   font-family: inherit; /* 1 */
   font-size: 100%; /* 1 */
-  line-height: 1.15; /* 1 */
+  line-height: 1; /* 1 */
   margin: 0; /* 2 */
 
   overflow: visible;
