@@ -4,7 +4,8 @@
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
-    "dev": "next --port 3333"
+    "dev": "next --port 3333",
+    "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"
   },
   "dependencies": {
     "react-modal": "^3.8.1",
