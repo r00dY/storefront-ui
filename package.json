@@ -8,6 +8,7 @@
     "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"
   },
   "dependencies": {
+    "formik": "^1.5.4",
     "react-modal": "^3.8.1",
     "react-responsive": "^6.1.1",
     "react-visibility-sensor": "^5.0.2",
