@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-import { RangeMap, rs } from "responsive-helpers";
+import { RangeMap, rs, rm } from "responsive-helpers";
 import Layout from "../Layout";
 
 import styled from "@emotion/styled";
@@ -39,15 +39,16 @@ const GridItemStyled = styled.div`
     box-sizing: border-box;
 
   ${props =>
-    props.params.css(params => {
-      params = Layout.normalizeGridItemParams(params);
+    props.params.crosssect(props.colNumber).css(entry => {
+      let params = Layout.normalizeGridItemParams(entry.val1);
+      let colNumber = entry.val2;
 
       return `
-            flex: 0 0 ${(params.cols / props.colNumber) * 100}%;
-            max-width: ${(params.cols / props.colNumber) * 100}%;
+            flex: 0 0 ${(params.cols / colNumber) * 100}%;
+            max-width: ${(params.cols / colNumber) * 100}%;
             ${
               params.offset > 0
-                ? `margin-left: ${(params.offset / props.colNumber) * 100}%;`
+                ? `margin-left: ${(params.offset / colNumber) * 100}%;`
                 : ""
             }
             ${params.order !== 0 ? `order: ${params.order};` : ""}
@@ -91,7 +92,7 @@ GridItem.defaultProps = {
 };
 
 const Grid = function(props) {
-  let colNumber = props.colNumber || Layout.main.colNumber;
+  let colNumber = rm(props.colNumber || Layout.main.colNumber);
   let gutter = rs(props.gutter || Layout.main.gutter);
 
   // Validation

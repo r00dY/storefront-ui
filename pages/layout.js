@@ -72,6 +72,63 @@ ${(
   />
 )}
 
+## Custom column numbers
+
+Sometimes it is necessary to have column number different from global settings. In such case \`colNumber\` attribute is your friend.
+
+Below we show example when grid has 5 columns.
+
+${(
+  <Example
+    fullWidth={true}
+    code={
+      require("!!raw-loader!../src/packages/Grid/examples/02-custom-col-number.js")
+        .default
+    }
+    component={
+      require("../src/packages/Grid/examples/02-custom-col-number.js").default
+    }
+  />
+)}
+
+## Responsive column number
+
+Sometimes (rarely) you'll need to have responsive column number. It's possible too.
+
+Below we show example when grid has 4 columns from xs to lg, and from lg up, it has 5 cols.
+
+${(
+  <Example
+    fullWidth={true}
+    code={
+      require("!!raw-loader!../src/packages/Grid/examples/03-responsive-col-number.js")
+        .default
+    }
+    component={
+      require("../src/packages/Grid/examples/03-responsive-col-number.js")
+        .default
+    }
+  />
+)}
+
+## Grid nesting
+
+Sometimes, nested grids are important. Let's look at layout below.
+
+${(
+  <Example
+    fullWidth={true}
+    code={
+      require("!!raw-loader!../src/packages/Grid/examples/04-nested-grid.js")
+        .default
+    }
+    component={
+      require("../src/packages/Grid/examples/04-nested-grid.js").default
+    }
+  />
+)}
+
+
 ## Configuration
 
 By default, width of container is \`90vw\`, grid gutter is \`10px\` and number of columns is 24. These parameters can be changed via  \`layout.container\` property in config.
