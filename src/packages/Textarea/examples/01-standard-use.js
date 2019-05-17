@@ -14,22 +14,20 @@ export default () => {
   return (
     <div>
       <p>Standard</p>
-      <Textarea
-        onChange={e => setValue(e.target.value)}
-        placeholder={"Notes"}
-        value={value}
-      />{" "}
+      <Textarea onChange={e => setValue(e.target.value)} placeholder={"Notes"}>
+        {value}
+      </Textarea>
       <br />
       <Textarea
+        initialState={{ value: value2 }}
         onChange={e => setValue2(e.target.value)}
         placeholder={"Notes"}
-        value={value2}
       />
       <p>Error</p>
       <Textarea
         onChange={e => setValue(e.target.value)}
         placeholder={"Notes"}
-        value={value}
+        initialState={{ value: value2 }}
         error={true}
       />{" "}
       <br />
@@ -43,7 +41,7 @@ export default () => {
       <Textarea
         onChange={e => setValue(e.target.value)}
         placeholder={"Notes"}
-        value={value}
+        initialState={{ value: value2 }}
         disabled={true}
       />{" "}
       <br />
