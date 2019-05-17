@@ -42,20 +42,22 @@ function getDecoratorBorderRadius(position, radius) {
   }[position];
 }
 
-function getFont(size, typography) {
+function getFont(size, fonts) {
   return {
-    [SIZE.default]: typography.font300,
-    [SIZE.compact]: typography.font200
-  }[size];
+    font: {
+      [SIZE.default]: fonts.body1,
+      [SIZE.compact]: fonts.body2
+    }[size]
+  };
 }
 
 export const Root = styled("div", props => {
   const {
     $size,
-    $theme: { colors, typography }
+    $theme: { colors, fonts }
   } = props;
   return {
-    ...getFont($size, typography),
+    ...getFont($size, fonts),
     color: colors.foreground,
     display: "flex",
     width: "100%"
@@ -66,10 +68,10 @@ export const InputEnhancer = styled("div", props => {
   const {
     $position,
     $size,
-    $theme: { colors, sizing, typography }
+    $theme: { colors, sizing, fonts }
   } = props;
   return {
-    ...getFont($size, typography),
+    ...getFont($size, fonts),
     color: colors.foreground,
     display: "flex",
     ...getInputPadding($size, sizing),
@@ -85,10 +87,10 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
     $error,
     $disabled,
     $size,
-    $theme: { colors, sizing, typography, animation, borders }
+    $theme: { colors, sizing, fonts, animation, borders }
   } = props;
   return {
-    ...getFont($size, typography),
+    ...getFont($size, fonts),
     color: $disabled ? colors.inputTextDisabled : colors.foreground,
     boxSizing: "border-box",
     display: "flex",
@@ -134,10 +136,10 @@ export const getInputStyles = (props: SharedPropsT) => {
     $disabled,
     $error,
     $size,
-    $theme: { colors, sizing, typography }
+    $theme: { colors, sizing, fonts }
   } = props;
   return {
-    ...getFont($size, typography),
+    ...getFont($size, fonts),
     color: $disabled ? colors.foregroundAlt : colors.foreground,
     caretColor: $error ? colors.negative400 : colors.primary,
     boxSizing: "border-box",
