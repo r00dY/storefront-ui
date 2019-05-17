@@ -116,7 +116,7 @@ function Popup({
                   ${rs(size.maxHeight).css(
                     "max-height"
                   )}
-                height: auto;
+                  height: auto;
 
                   top: calc(100% + 10px);
                   left: 0;

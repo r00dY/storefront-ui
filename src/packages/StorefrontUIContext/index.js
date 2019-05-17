@@ -1,6 +1,8 @@
 import React from "react";
 
-const StorefrontUIContext = React.createContext({});
+import DefaultConfig from "./defaults";
+
+const StorefrontUIContext = React.createContext(DefaultConfig);
 
 /**
  * Result of getAppearance is an object of canonical traits of the component.

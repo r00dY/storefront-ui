@@ -6,6 +6,8 @@ import { menuWidth } from "./layoutVars";
 
 import { ModalContainer } from "storefront-ui/Modal";
 
+import { ThemeProvider } from "storefront-ui/Theme";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -100,6 +102,11 @@ export default props => {
               <a>Popups / dropdowns</a>
             </Link>
           </li>
+          <li>
+            <Link href="/forms">
+              <a>Forms / Inputs / Controls</a>
+            </Link>
+          </li>
         </ul>
       </div>
 
@@ -111,7 +118,7 @@ export default props => {
           padding: 20px 0 100px 0;
         `}
       >
-        {props.children}
+        <ThemeProvider>{props.children}</ThemeProvider>
       </div>
 
       <ModalContainer />

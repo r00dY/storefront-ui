@@ -4,9 +4,10 @@ import React from "react";
 import Page from "../docs-utils/Page";
 import { md } from "../docs-utils/docs";
 
-import { C } from "storefront-ui/Config";
+import { C, F } from "storefront-ui/Config";
 
-console.log(C);
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
 const content = md`
 # Introduction

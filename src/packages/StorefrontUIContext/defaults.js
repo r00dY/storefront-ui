@@ -1,5 +1,3 @@
-import { RangeSet } from "responsive-helpers";
-import Layout from "../Layout";
 import Color from "../Color";
 import Font from "../Font";
 
@@ -120,50 +118,8 @@ const defaultFonts = {
   `)
 };
 
-let Fonts = defaultFonts;
-let F = Fonts;
-
-let Spacings = defaultSpacings;
-let S = Spacings;
-
-let Ranges = RangeSet.main;
-let R = Ranges;
-
-let Colors = defaultColors;
-let C = Colors;
-
-let L = new Layout({
-  colNumber: 24,
-  container: "90vw",
-  gutter: 15
-});
-
-function applyConfig(config) {
-  if (config.fonts) {
-    Fonts = Object.assign({}, defaultFonts, config.fonts);
-    F = Fonts;
-  }
-
-  if (config.colors) {
-    Colors = Object.assign({}, defaultColors, config.colors);
-    C = Colors;
-  }
-
-  if (config.spacings) {
-    Spacings = config.spacings;
-    S = Spacings;
-  }
-
-  if (config.ranges) {
-    RangeSet.main = new RangeSet(config.ranges);
-    Ranges = RangeSet.main;
-    R = Ranges;
-  }
-
-  if (config.layout) {
-    Layout.main = new Layout(config.layout);
-    L = Layout.main;
-  }
-}
-
-export { applyConfig, Fonts, F, Spacings, S, Ranges, R, Colors, C, L };
+export default {
+  fonts: defaultFonts,
+  colors: defaultColors,
+  spacings: defaultSpacings
+};

@@ -47,7 +47,7 @@ function Example(props) {
   return (
     <div
       style={{
-        backgroundColor: "rgb(245, 245, 245)",
+        backgroundColor: props.background || "rgb(245, 245, 245)",
         padding: 0,
         margin: 0,
         paddingBottom: "20px"
