@@ -22,3 +22,4 @@
 // export * from "./types.js";
 
 export { default as Input } from "./input";
+export { StatefulInput } from "../base/input";

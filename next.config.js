@@ -10,6 +10,23 @@ module.exports = {
       "src/packages/"
     );
 
+    config.module.rules.push({
+      test: /\.svg$/,
+      use: [
+        {
+          loader: "@svgr/webpack",
+          options: {
+            svgoConfig: {
+              plugins: {
+                removeViewBox: false
+              }
+            },
+            titleProp: true
+          }
+        }
+      ]
+    });
+
     return config;
   },
   webpackDevMiddleware: config => {

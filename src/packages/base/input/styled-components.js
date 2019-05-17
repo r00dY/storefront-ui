@@ -47,7 +47,7 @@ export const Root = styled("div", props => {
 
   return `
     ${getFont($size, fonts).css}
-    color: ${colors.text};
+    color: ${colors.foreground};
     display: flex;
     width: 100%;
   `;
@@ -62,7 +62,7 @@ export const InputEnhancer = styled("div", props => {
 
   return `
     ${getFont($size, fonts).css}
-    color: ${colors.text};
+    color: ${colors.foreground};
     display: flex;
     padding: ${getInputPadding($size, sizing)};
     backgroundColor: ${colors.inputFillEnhancer};
@@ -82,7 +82,7 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
 
   return `
     ${getFont($size, fonts).css}
-    color: ${$disabled ? colors.inputTextDisabled : colors.text};
+    color: ${$disabled ? colors.inputTextDisabled : colors.foreground};
     box-sizing: border-box;
     display: flex;
     width: 100%;

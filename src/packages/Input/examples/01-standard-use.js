@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { Input } from "storefront-ui/Input";
+import { StatefulInput } from "storefront-ui/Input";
 import { useTheme } from "storefront-ui/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+
+import IconSearch from "../../../../data/svg/search.svg";
 
 export default () => {
   let [value, setValue] = useState("");
@@ -50,6 +53,28 @@ export default () => {
         placeholder={"First name"}
         value={value2}
         disabled={true}
+      />
+      <p>Before / After + stateful</p>
+      <StatefulInput
+        placeholder={"Search"}
+        overrides={{
+          After: () => (
+            <div
+              css={css`
+                display: flex;
+                justify-content: flex;
+                align-items: center;
+                margin-right: 8px;
+              `}
+            >
+              <IconSearch
+                css={css`
+                  fill: currentColor;
+                `}
+              />
+            </div>
+          )
+        }}
       />
     </div>
   );
