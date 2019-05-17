@@ -23,6 +23,20 @@ ${(
   />
 )}
 
+## Textarea
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Textarea/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/Textarea/examples/01-standard-use.js").default
+    }
+  />
+)}
+
 ## Checkbox
 
 ${(

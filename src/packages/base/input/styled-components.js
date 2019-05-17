@@ -11,8 +11,18 @@ import type { SharedPropsT } from "./types.js";
 
 function getInputPadding(size, sizing) {
   return {
-    [SIZE.default]: `${sizing.scale400} ${sizing.scale500}`,
-    [SIZE.compact]: `${sizing.scale200} ${sizing.scale500}`
+    [SIZE.default]: {
+      paddingTop: sizing.scale400,
+      paddingRight: sizing.scale500,
+      paddingBottom: sizing.scale400,
+      paddingLeft: sizing.scale500
+    },
+    [SIZE.compact]: {
+      paddingTop: sizing.scale200,
+      paddingRight: sizing.scale500,
+      paddingBottom: sizing.scale200,
+      paddingLeft: sizing.scale500
+    }
   }[size];
 }
 
@@ -32,42 +42,40 @@ function getDecoratorBorderRadius(position, radius) {
   }[position];
 }
 
-function getFont(size, fonts) {
+function getFont(size, typography) {
   return {
-    [SIZE.default]: fonts.body1,
-    [SIZE.compact]: fonts.body2
+    [SIZE.default]: typography.font300,
+    [SIZE.compact]: typography.font200
   }[size];
 }
 
 export const Root = styled("div", props => {
   const {
     $size,
-    $theme: { colors, fonts }
+    $theme: { colors, typography }
   } = props;
-
-  return `
-    ${getFont($size, fonts).css}
-    color: ${colors.foreground};
-    display: flex;
-    width: 100%;
-  `;
+  return {
+    ...getFont($size, typography),
+    color: colors.foreground,
+    display: "flex",
+    width: "100%"
+  };
 });
 
 export const InputEnhancer = styled("div", props => {
   const {
     $position,
     $size,
-    $theme: { colors, sizing, fonts }
+    $theme: { colors, sizing, typography }
   } = props;
-
-  return `
-    ${getFont($size, fonts).css}
-    color: ${colors.foreground};
-    display: flex;
-    padding: ${getInputPadding($size, sizing)};
-    backgroundColor: ${colors.inputFillEnhancer};
-    borderRadius: ${getDecoratorBorderRadius($position, sizing.scale100)};
-  `;
+  return {
+    ...getFont($size, typography),
+    color: colors.foreground,
+    display: "flex",
+    ...getInputPadding($size, sizing),
+    backgroundColor: colors.inputFillEnhancer,
+    borderRadius: getDecoratorBorderRadius($position, sizing.scale100)
+  };
 });
 
 export const getInputContainerStyles = (props: SharedPropsT) => {
@@ -77,34 +85,46 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
     $error,
     $disabled,
     $size,
-    $theme: { colors, sizing, fonts, animation, borders }
+    $theme: { colors, sizing, typography, animation, borders }
   } = props;
-
-  return `
-    ${getFont($size, fonts).css}
-    color: ${$disabled ? colors.inputTextDisabled : colors.foreground};
-    box-sizing: border-box;
-    display: flex;
-    width: 100%;
-    background-color: ${$disabled ? colors.inputFillDisabled : "transparent"};
-    
-    border: 1px solid ${
-      $error
-        ? colors.negative400
+  return {
+    ...getFont($size, typography),
+    color: $disabled ? colors.inputTextDisabled : colors.foreground,
+    boxSizing: "border-box",
+    display: "flex",
+    width: "100%",
+    backgroundColor: $disabled
+      ? colors.inputFillDisabled
+      : $isFocused
+      ? colors.background
+      : $error
+      ? colors.inputFillError
+      : colors.inputFill,
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: $disabled
+      ? colors.inputFillDisabled
+      : $error
+      ? colors.negative400
+      : $isFocused
+      ? colors.primary400
+      : colors.inputFill,
+    borderRadius: borders.useRoundedCorners
+      ? getBorderRadius($adjoined, sizing.scale100)
+      : "0px",
+    boxShadow: `0 2px 6px ${
+      $disabled
+        ? "transparent"
         : $isFocused
-        ? colors.primary400
-        : colors.mono500
-    };
-    
-    border-radius: ${
-      borders.useRoundedCorners
-        ? getBorderRadius($adjoined, sizing.scale100)
-        : "0px"
-    };
-      
-      transition-property: border, boxShadow, backgroundColor;
-      transition-duration: ${animation.timing100};
-  `;
+        ? $error
+          ? colors.shadowError
+          : colors.shadowFocus
+        : "transparent"
+    }`,
+    transitionProperty: "border, boxShadow, backgroundColor",
+    transitionDuration: animation.timing100,
+    transitionTimingFunction: animation.easeOutCurve
+  };
 };
 
 export const InputContainer = styled("div", getInputContainerStyles);
@@ -114,43 +134,25 @@ export const getInputStyles = (props: SharedPropsT) => {
     $disabled,
     $error,
     $size,
-    $theme: { colors, sizing, fonts }
+    $theme: { colors, sizing, typography }
   } = props;
-
-  return `
-    ${getFont($size, fonts).css}
-    color: ${$disabled ? colors.foregroundAlt : colors.foreground};
-    box-sizing: border-box;
-    background-color: transparent;
-    border-width: 0;
-    border-style: none;
-    outline: none;
-    padding: ${getInputPadding($size, sizing)};
-    width: 100%;
-    height: 100%;
-    max-width: 100%;
-    cursor: ${$disabled ? "not-allowed" : "text"};
-    ::placeholder {
-      color: ${$disabled ? colors.inputTextDisabled : colors.foregroundAlt}
+  return {
+    ...getFont($size, typography),
+    color: $disabled ? colors.foregroundAlt : colors.foreground,
+    caretColor: $error ? colors.negative400 : colors.primary,
+    boxSizing: "border-box",
+    backgroundColor: "transparent",
+    borderWidth: "0",
+    borderStyle: "none",
+    outline: "none",
+    ...getInputPadding($size, sizing),
+    width: "100%",
+    maxWidth: "100%",
+    cursor: $disabled ? "not-allowed" : "text",
+    "::placeholder": {
+      color: $disabled ? colors.inputTextDisabled : colors.foregroundAlt
     }
-  `;
-  // return {
-  //   ...getFont($size, fonts),
-  //   color: $disabled ? colors.foregroundAlt : colors.foreground,
-  //   // caretColor: $error ? colors.negative400 : colors.primary,
-  //   boxSizing: "border-box",
-  //   backgroundColor: "transparent",
-  //   borderWidth: "0",
-  //   borderStyle: "none",
-  //   outline: "none",
-  //   ...getInputPadding($size, sizing),
-  //   width: "100%",
-  //   maxWidth: "100%",
-  //   cursor: $disabled ? "not-allowed" : "text",
-  //   "::placeholder": {
-  //     color: $disabled ? colors.inputTextDisabled : colors.foregroundAlt
-  //   }
-  // };
+  };
 };
 
 export const Input = styled("input", getInputStyles);
