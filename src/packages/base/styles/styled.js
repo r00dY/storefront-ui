@@ -55,8 +55,39 @@ import React, { useContext } from "react";
 
 import { ThemeContext } from "../../Theme";
 
+import Color from "../../Color";
+
+/**
+ * TODO: temporarily transoforms legacy styled-components.js format styles to our format by proper use of Font and Color classes.
+ */
+function stylesToString(styles) {
+  if (!styles) {
+    return "";
+  }
+  if (typeof styles === "string") {
+    return styles;
+  }
+
+  let font;
+
+  Object.keys(styles).forEach(key => {
+    if (key === "font") {
+      font = styles[key];
+      delete styles[key];
+    }
+    if (styles[key] instanceof Color) {
+      styles[key] = styles[key].css;
+    }
+  });
+
+  return css`
+    ${font ? font.css : ""}
+    ${styles}
+  `;
+}
+
 function styled(component, arg) {
-  arg = arg || (() => ({}));
+  arg = arg || {};
 
   const Component = styledEmotion[component]``;
 
@@ -64,7 +95,7 @@ function styled(component, arg) {
     <ThemeContext.Consumer>
       {theme => {
         const styleProps = { ...props, $theme: theme, $config: theme };
-        const styles = arg(styleProps);
+        const styles = typeof arg === "function" ? arg(styleProps) : arg;
 
         let overrideStyles;
         if (typeof props.$style === "function") {
@@ -78,8 +109,8 @@ function styled(component, arg) {
             {...props}
             $theme={theme}
             css={css`
-              ${styles}
-              ${overrideStyles}
+              ${stylesToString(styles)}
+              ${stylesToString(overrideStyles)}
             `}
           />
         );

@@ -23,10 +23,22 @@ ${(
   />
 )}
 
-## Tests
+## Checkbox
 
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Checkbox/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/Checkbox/examples/01-standard-use.js").default
+    }
+  />
+)}
 
 `;
+
 //
 // ${(
 //     <Example
