@@ -51,6 +51,20 @@ ${(
   />
 )}
 
+## Radio
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Radio/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/Radio/examples/01-standard-use.js").default
+    }
+  />
+)}
+
 `;
 
 //

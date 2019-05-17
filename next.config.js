@@ -1,4 +1,5 @@
 const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
@@ -26,6 +27,12 @@ module.exports = {
         }
       ]
     });
+
+    config.plugins.push(
+      new webpack.DefinePlugin({
+        __DEV__: true
+      })
+    );
 
     return config;
   },
