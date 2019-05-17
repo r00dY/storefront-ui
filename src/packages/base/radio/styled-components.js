@@ -180,13 +180,13 @@ export const RadioMarkOuter = styled("div", props => {
 
 export const Label = styled("div", props => {
   const {
-    $theme: { typography }
+    $theme: { fonts }
   } = props;
   return {
     verticalAlign: "middle",
     ...getLabelPadding(props),
     color: getLabelColor(props),
-    ...typography.font450
+    font: fonts.body1
   };
 });
 
@@ -202,7 +202,7 @@ export const Input = styled("input", {
 
 export const Description = styled("div", props => {
   return {
-    ...props.$theme.typography.font300,
+    font: props.$theme.fonts.body1,
     color: props.$theme.colors.colorSecondary,
     cursor: "auto",
     marginLeft: props.$theme.sizing.scale900,

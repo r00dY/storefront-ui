@@ -65,6 +65,20 @@ ${(
   />
 )}
 
+## FormControl
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/FormControl/examples/01-standard-use.js").default
+    }
+  />
+)}
+
 `;
 
 //
