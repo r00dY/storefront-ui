@@ -20,6 +20,16 @@
 //     CUSTOM_INPUT_TYPE
 // } from "./constants.js";
 // export * from "./types.js";
+//
+// export { Textarea } from "../base/textarea";
+// export { StatefulTextarea } from "../base/textarea";
 
-export { Textarea } from "../base/textarea";
-export { StatefulTextarea } from "../base/textarea";
+import { withTheme } from "../Theme";
+
+import { Textarea as Textarea_orig } from "../base/textarea";
+import { StatefulTextarea as StatefulTextarea_orig } from "../base/textarea";
+
+const Textarea = withTheme(Textarea_orig, "Textarea");
+const StatefulTextarea = withTheme(StatefulTextarea_orig, "Textarea");
+
+export { StatefulTextarea, Textarea };
