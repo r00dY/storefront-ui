@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Input } from "storefront-ui/Input";
 import { StatefulInput } from "storefront-ui/Input";
-import { useTheme } from "storefront-ui/Theme";
+import { ThemeProvider } from "storefront-ui/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -76,6 +76,39 @@ export default () => {
           )
         }}
       />
+      <ThemeProvider
+        theme={{
+          Input: {
+            default: {
+              overrides: {
+                InputContainer: {
+                  style: `
+                                border-color: green;
+                                border-width: 2px;
+                            `
+                }
+              }
+            },
+
+            thick: props => ({
+              overrides: {
+                InputContainer: {
+                  style: `
+                                border-color: black;
+                                border-width: 5px;
+                            `
+                }
+              }
+            })
+          }
+        }}
+      >
+        <p>Themed default</p>
+        <StatefulInput placeholder={"Search"} />
+
+        <p>Themed custom</p>
+        <StatefulInput appearance={"thick"} placeholder={"Search"} />
+      </ThemeProvider>
     </div>
   );
 };

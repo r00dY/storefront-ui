@@ -7,6 +7,7 @@ import { menuWidth } from "./layoutVars";
 import { ModalContainer } from "storefront-ui/Modal";
 
 import { ThemeProvider } from "storefront-ui/Theme";
+import defaultTheme from "storefront-ui/Theme/defaultTheme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -118,7 +119,7 @@ export default props => {
           padding: 20px 0 100px 0;
         `}
       >
-        <ThemeProvider>{props.children}</ThemeProvider>
+        <ThemeProvider theme={defaultTheme}>{props.children}</ThemeProvider>
       </div>
 
       <ModalContainer />

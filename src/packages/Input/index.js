@@ -1,25 +1,9 @@
-// export { default as StatefulInput } from "../base/input";
-// export { default as StatefulContainer } from "./stateful-container.js";
-// export { default as Input } from "./input.js";
-// export { default as BaseInput } from "./base-input.js";
-// export { default as MaskedInput } from "./masked-input.js";
-// // Styled elements
-// export {
-//     Root as StyledRoot,
-//     InputEnhancer as StyledInputEnhancer,
-//     InputEnhancer as StyledStartEnhancer,
-//     InputEnhancer as StyledEndEnhancer,
-//     InputContainer as StyledInputContainer,
-//     Input as StyledInput
-// } from "./styled-components.js";
-//
-// export {
-//     STATE_CHANGE_TYPE,
-//     ADJOINED,
-//     SIZE,
-//     CUSTOM_INPUT_TYPE
-// } from "./constants.js";
-// export * from "./types.js";
+import { withTheme } from "../Theme";
 
-export { default as Input } from "./input";
-export { StatefulInput } from "../base/input";
+import Input_orig from "./input";
+import { StatefulInput as StatefulInput_orig } from "../base/input";
+
+const Input = withTheme(Input_orig, "Input");
+const StatefulInput = withTheme(StatefulInput_orig, "Input");
+
+export { StatefulInput, Input };
