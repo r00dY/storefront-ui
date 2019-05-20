@@ -90,7 +90,7 @@ export default () => {
               }
             },
 
-            thick: props => ({
+            thick: ({ disabled = true }) => ({
               overrides: {
                 InputContainer: {
                   style: `
@@ -98,16 +98,21 @@ export default () => {
                                 border-width: 5px;
                             `
                 }
-              }
+              },
+              disabled: disabled
             })
           }
         }}
       >
         <p>Themed default</p>
         <StatefulInput placeholder={"Search"} />
-
-        <p>Themed custom</p>
-        <StatefulInput appearance={"thick"} placeholder={"Search"} />
+        <p>Themed custom (disabled by default)</p>
+        <StatefulInput appearance={"thick"} placeholder={"Search"} /> <br />
+        <StatefulInput
+          appearance={"thick"}
+          placeholder={"Search"}
+          disabled={false}
+        />
       </ThemeProvider>
     </div>
   );
