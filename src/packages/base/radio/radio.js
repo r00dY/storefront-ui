@@ -133,6 +133,50 @@ class Radio extends React.Component<RadioPropsT, RadioStateT> {
       </Label>
     );
 
+    const radioMarker = (
+      <RadioMarkOuter {...sharedProps} {...radioMarkOuterProps}>
+        <RadioMarkInner {...sharedProps} {...radioMarkInnerProps} />
+      </RadioMarkOuter>
+    );
+
+    const input = (
+      <Input
+        aria-invalid={this.props.isError || null}
+        aria-required={this.props.required || null}
+        checked={this.props.checked}
+        disabled={this.props.disabled}
+        name={this.props.name}
+        onBlur={this.onBlur}
+        onFocus={this.onFocus}
+        onChange={this.props.onChange}
+        $ref={this.props.inputRef}
+        required={this.props.required}
+        type="radio"
+        value={this.props.value}
+        {...sharedProps}
+        {...inputProps}
+      />
+    );
+
+    let content;
+    if (overrides.Root && overrides.Root.content) {
+      content = overrides.Root.content({
+        ...sharedProps,
+        input,
+        radioMarker,
+        label
+      });
+    } else {
+      content = (
+        <>
+          {isLabelTopLeft(this.props.labelPlacement) && label}
+          {radioMarker}
+          {input}
+          {isLabelBottomRight(this.props.labelPlacement) && label}
+        </>
+      );
+    }
+
     return (
       <React.Fragment>
         <Root
@@ -144,27 +188,7 @@ class Radio extends React.Component<RadioPropsT, RadioStateT> {
           {...sharedProps}
           {...rootProps}
         >
-          {isLabelTopLeft(this.props.labelPlacement) && label}
-          <RadioMarkOuter {...sharedProps} {...radioMarkOuterProps}>
-            <RadioMarkInner {...sharedProps} {...radioMarkInnerProps} />
-          </RadioMarkOuter>
-          <Input
-            aria-invalid={this.props.isError || null}
-            aria-required={this.props.required || null}
-            checked={this.props.checked}
-            disabled={this.props.disabled}
-            name={this.props.name}
-            onBlur={this.onBlur}
-            onFocus={this.onFocus}
-            onChange={this.props.onChange}
-            $ref={this.props.inputRef}
-            required={this.props.required}
-            type="radio"
-            value={this.props.value}
-            {...sharedProps}
-            {...inputProps}
-          />
-          {isLabelBottomRight(this.props.labelPlacement) && label}
+          {content}
         </Root>
 
         {!!this.props.description && (
