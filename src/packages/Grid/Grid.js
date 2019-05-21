@@ -40,8 +40,8 @@ const GridItemStyled = styled.div`
 
   ${props =>
     props.params.crosssect(props.colNumber).css(entry => {
-      let params = Layout.normalizeGridItemParams(entry.val1);
       let colNumber = entry.val2;
+      let params = Layout.normalizeGridItemParams(entry.val1, colNumber);
 
       return `
             flex: 0 0 ${(params.cols / colNumber) * 100}%;

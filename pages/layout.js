@@ -72,6 +72,24 @@ ${(
   />
 )}
 
+## Fractional widths
+
+Instead of absolute values, we can use fractions for item widths. Denominator must always be dividable by column number of grid.
+
+${(
+  <Example
+    fullWidth={true}
+    code={
+      require("!!raw-loader!../src/packages/Grid/examples/05-fractional-widths.js")
+        .default
+    }
+    component={
+      require("../src/packages/Grid/examples/05-fractional-widths.js").default
+    }
+  />
+)}
+
+
 ## Custom column numbers
 
 Sometimes it is necessary to have column number different from global settings. In such case \`colNumber\` attribute is your friend.

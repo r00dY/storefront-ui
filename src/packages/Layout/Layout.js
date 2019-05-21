@@ -19,7 +19,29 @@ class Layout {
   }
 }
 
-Layout.normalizeGridItemParams = function(params) {
+Layout.normalizeGridItemParams = function(params, colNumber) {
+  if (typeof params === "string") {
+    const parts = params.trim().match(/^([0-9]+)[ \t]*\/[ \t]*([0-9]+)$/);
+
+    if (parts === null) {
+      throw new Error(
+        "[GridItem params] wrong input format (should be x/y, where x and y are positive integer numbers): " +
+          params
+      );
+    }
+
+    let n = parseInt(parts[1]);
+    let d = parseInt(parts[2]);
+
+    if (colNumber % d !== 0) {
+      throw new Error(
+        `[GridItem params] denominator must be dividable by column number of Grid. Denominator given: ${d}, col number: ${colNumber}`
+      );
+    }
+
+    params = n * (colNumber / d);
+  }
+
   if (typeof params === "number") {
     return {
       cols: params,
