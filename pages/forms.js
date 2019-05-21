@@ -79,6 +79,19 @@ ${(
   />
 )}
 
+## FormHeader
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/FormHeader/examples/01-standard-use.js").default
+    }
+  />
+)}
 `;
 
 //

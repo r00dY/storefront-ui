@@ -14,7 +14,7 @@ export const Label = styled("label", props => {
     $theme: { colors, sizing, fonts }
   } = props;
   return {
-    font: fonts.body1,
+    font: fonts.body2,
     fontWeight: 500,
     color: $disabled ? colors.foregroundAlt : colors.foreground,
     cursor: $disabled ? "not-allowed" : "auto",
@@ -47,7 +47,7 @@ export const Caption = styled("div", props => {
     paddingLeft: "0",
     marginTop: sizing.scale300,
     marginRight: "0",
-    marginBottom: sizing.scale300,
+    // marginBottom: sizing.scale300,
     marginLeft: "0"
   };
 });
@@ -57,6 +57,6 @@ export const ControlContainer = styled("div", props => {
     $theme: { sizing }
   } = props;
   return {
-    marginBottom: sizing.scale600
+    // marginBottom: sizing.scale600
   };
 });

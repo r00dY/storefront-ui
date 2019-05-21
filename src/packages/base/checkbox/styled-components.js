@@ -200,7 +200,7 @@ export const Label = styled("div", props => {
     verticalAlign: "middle",
     ...getLabelPadding(props),
     color: getLabelColor(props),
-    font: fonts.body1,
+    font: fonts.body2,
     lineHeight: "24px"
   };
 });
