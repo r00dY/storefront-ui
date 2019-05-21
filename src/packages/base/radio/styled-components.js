@@ -119,7 +119,10 @@ export const RadioGroupRoot = styled("div", props => {
     flexDirection: $align === "horizontal" ? "row" : "column",
     display: "flex",
     alignItems: $align === "horizontal" ? "center" : "flex-start",
-    cursor: $disabled ? "not-allowed" : "pointer"
+    cursor: $disabled ? "not-allowed" : "pointer",
+    "> *": {
+      marginRight: $align === "horizontal" ? "16px" : 0
+    }
   };
 });
 
@@ -134,6 +137,7 @@ export const Root = styled("label", props => {
     display: "flex",
     alignItems: "center",
     cursor: $disabled ? "not-allowed" : "pointer",
+
     marginTop: sizing.scale200,
     marginBottom: $hasDescription ? null : sizing.scale200
   };

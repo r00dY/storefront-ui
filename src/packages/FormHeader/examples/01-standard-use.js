@@ -106,6 +106,7 @@ export default () => {
             <StatefulRadioGroup
               initialState={{ value: "company" }}
               name={"test"}
+              align={"horizontal"}
             >
               <Radio value="individual">Individual client</Radio>
               <Radio value="company">Company</Radio>
