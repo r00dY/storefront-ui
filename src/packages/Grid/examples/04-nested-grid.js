@@ -9,9 +9,9 @@ import { css, jsx } from "@emotion/core";
 
 export default () => (
   <Container>
-    <Grid>
+    <Grid gutterVertical={20}>
       <GridItem params={{ xs: 24, lg: 16 }}>
-        <Grid colNumber={16}>
+        <Grid colNumber={16} gutterVertical={20}>
           <GridItem params={{ xs: 8, md: 4 }}>
             <Rectangle color={"red"}>always 6 cols</Rectangle>
           </GridItem>

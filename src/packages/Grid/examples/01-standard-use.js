@@ -9,7 +9,7 @@ import { css, jsx } from "@emotion/core";
 
 export default () => (
   <Container>
-    <Grid>
+    <Grid gutterVertical={10}>
       {/* Fixed width items */}
 
       <GridItem params={6}>

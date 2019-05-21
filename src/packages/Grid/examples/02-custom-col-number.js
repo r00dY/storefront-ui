@@ -4,6 +4,8 @@ import Container from "storefront-ui/Container";
 
 import Rectangle from "../../../../docs-utils/Rectangle";
 
+import { rs } from "responsive-helpers";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 

@@ -53,6 +53,8 @@ const GridItemStyled = styled.div`
             }
             ${params.order !== 0 ? `order: ${params.order};` : ""}
             ${params.cols === 0 ? "display: none;" : ""}
+            
+            ${props.gutterVertical.css("margin-bottom")}
         `;
     })}
 `;
@@ -60,10 +62,11 @@ const GridItemStyled = styled.div`
 const GridItem = function(props) {
   return (
     <GridContext.Consumer>
-      {({ gutter, colNumber }) => (
+      {({ gutter, gutterVertical, colNumber }) => (
         <GridItemStyled
           params={new RangeMap(normalizeParams(props.params))}
           gutter={gutter}
+          gutterVertical={gutterVertical}
           colNumber={colNumber}
         >
           <div
@@ -94,6 +97,7 @@ GridItem.defaultProps = {
 const Grid = function(props) {
   let colNumber = rm(props.colNumber || Layout.main.colNumber);
   let gutter = rs(props.gutter || Layout.main.gutter);
+  let gutterVertical = rs(props.gutterVertical || 0);
 
   // Validation
   if (!colNumber || !gutter) {
@@ -108,7 +112,8 @@ const Grid = function(props) {
         <GridContext.Provider
           value={{
             gutter: gutter,
-            colNumber: colNumber
+            colNumber: colNumber,
+            gutterVertical: gutterVertical
           }}
         >
           {props.children}

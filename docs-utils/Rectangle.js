@@ -10,7 +10,6 @@ export default props => (
       background-color: ${props.color};
       width: 100%;
       height: ${props.height || "320px"};
-      margin-bottom: 10px;
       display: flex;
       justify-content: center;
       align-items: center;
