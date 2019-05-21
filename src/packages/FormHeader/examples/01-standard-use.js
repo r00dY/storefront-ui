@@ -96,13 +96,12 @@ export default () => {
 
         <Grid
           gutter={8}
-          colNumber={12}
           gutterVertical={8}
           css={css`
             margin-bottom: 48px;
           `}
         >
-          <GridItem params={12}>
+          <GridItem>
             <StatefulRadioGroup
               initialState={{ value: "company" }}
               name={"test"}
@@ -113,61 +112,61 @@ export default () => {
             </StatefulRadioGroup>
           </GridItem>
 
-          <GridItem params={6}>
+          <GridItem params={"1/2"}>
             <FormControl label="Company name">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={6}>
+          <GridItem params={"1/2"}>
             <FormControl label="NIP">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={6}>
+          <GridItem params={"1/2"}>
             <FormControl label="First name">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={6}>
+          <GridItem params={"1/2"}>
             <FormControl label="Last name">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={12}>
+          <GridItem>
             <FormControl label="Address">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={12}>
+          <GridItem>
             <FormControl label="Apartment, suite, etc. (optional)">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={12}>
+          <GridItem>
             <FormControl label="City">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={4}>
+          <GridItem params={"1/3"}>
             <FormControl label="Country">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={4}>
+          <GridItem params={"1/3"}>
             <FormControl label="State">
               <StatefulInput />
             </FormControl>
           </GridItem>
 
-          <GridItem params={4}>
+          <GridItem params={"1/3"}>
             <FormControl label="Zip code">
               <StatefulInput placeholder={"10-900"} />
             </FormControl>

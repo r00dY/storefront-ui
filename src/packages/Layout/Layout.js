@@ -20,7 +20,9 @@ class Layout {
 }
 
 Layout.normalizeGridItemParams = function(params, colNumber) {
-  if (typeof params === "string") {
+  if (typeof params === "undefined") {
+    params = colNumber;
+  } else if (typeof params === "string") {
     const parts = params.trim().match(/^([0-9]+)[ \t]*\/[ \t]*([0-9]+)$/);
 
     if (parts === null) {
