@@ -1,110 +1,49 @@
 import React from "react";
-import Button from "storefront-ui/Button";
-import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
+import { Button, KIND } from "storefront-ui/Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const buttonAppearance = ({ children, level }) => {
-  const levels = {
-    default: "grey",
-    success: "green",
-    warning: "orange",
-    error: "red"
-  };
-
-  return {
-    children: ({ disabled }) => (
-      <div
-        css={css`
-          padding: 12px;
-          border-radius: 6px;
-          background-color: ${level ? levels[level] : levels.default};
-          color: white;
-          ${disabled ? "opacity: 0.5;" : ""}
-
-          ${!disabled &&
-            `
-            &:hover {
-                opacity: 0.8;
-            }
-            `}
-        `}
-      >
-        {children}
-      </div>
-    )
-  };
-};
+import IconWrench from "../../../../data/svg/wrench.svg";
+import IconAccount from "../../../../data/svg/account.svg";
 
 export default () => (
   <div>
-    <p>Raw button (no styling, just focus and accessibility)</p>
-    <Button onClick={() => alert("button clicked!")}>Default button</Button>
+    <p>Standard button</p>
 
-    <p>Raw button disabled</p>
-    <Button onClick={() => alert("button clicked!")} disabled={true}>
-      Default button disabled
-    </Button>
+    <Button>Primary button</Button>
+    <br />
+    <br />
+    <Button kind={KIND.secondary}>Secondary button</Button>
+    <br />
+    <br />
+    <Button kind={KIND.tertiary}>Tertiary button</Button>
+    <br />
+    <br />
+    <Button kind={KIND.minimal}>Minimal button</Button>
+    <br />
+    <br />
 
-    <p>Raw button as link</p>
-    <Button href={"https://wikipedia.org"}>Raw link</Button>
+    <p>States</p>
+    <Button>No state</Button>
+    <br />
+    <br />
+    <Button isLoading>Loading</Button>
+    <br />
+    <br />
+    <Button isSelected>Selected</Button>
+    <br />
+    <br />
+    <Button disabled>Disabled</Button>
+    <br />
+    <br />
 
-    <p>Raw button as a link can be disabled too</p>
-    <Button href={"https://wikipedia.org"} disabled={true}>
-      Default link disabled
-    </Button>
-
-    <p>Custom look for button</p>
-    <Button onClick={() => alert("custom button clicked")}>
-      {({ disabled, popupOpened }) => (
-        <div
-          css={css`
-            padding: 12px;
-            border-radius: 6px;
-            background-color: red;
-            color: white;
-          `}
-        >
-          Custom appearance
-        </div>
-      )}
-    </Button>
-
+    <p>Enhancers</p>
     <p>
-      Custom <code>appearance</code> for button, registered (recommended way)
+      <Button startEnhancer={() => <IconAccount />}>Account</Button>
     </p>
-    <StorefrontUIContext.Provider
-      value={{
-        Button: {
-          custom: buttonAppearance
-        }
-      }}
-    >
-      <Button appearance={"custom"} level={"error"}>
-        Custom appearance error
-      </Button>
-      <br />
-      <Button appearance={"custom"} level={"success"}>
-        Custom appearance success
-      </Button>
-      <br />
-      <Button appearance={"custom"} level={"success"} disabled={true}>
-        Custom appearance success disabled
-      </Button>
-      <br />
-      <Button
-        appearance={"custom"}
-        level={"default"}
-        href={"https://wikipedia.org"}
-      >
-        Custom appearance with custom prop as link
-      </Button>
-      <br />
-      <p>Making button full width (button width width: 100%)</p>
-      <Button appearance={"custom"} level={"warning"} fitContainer={true}>
-        Button - full width
-      </Button>
-    </StorefrontUIContext.Provider>
+    <p>
+      <Button endEnhancer={() => <IconWrench />}>Settings</Button>
+    </p>
   </div>
 );

@@ -195,6 +195,7 @@ export function getStyleForKind({
   if ($disabled) {
     return {};
   }
+
   switch ($kind) {
     case KIND.primary:
       return {

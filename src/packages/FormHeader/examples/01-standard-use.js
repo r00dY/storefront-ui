@@ -84,7 +84,7 @@ export default () => {
         >
           <GridItem params={12}>
             <FormControl label="E-mail">
-              <StatefulInput placeholder={"joe@gmail.com"} />
+              <StatefulInput placeholder={"joe@gmail.com"} type={"email"} />
             </FormControl>
           </GridItem>
           <GridItem params={12}>

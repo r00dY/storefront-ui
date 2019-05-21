@@ -58,7 +58,7 @@ import { ThemeContext } from "../../Theme";
 import Color from "../../Color";
 
 /**
- * TODO: temporarily transoforms legacy styled-components.js format styles to our format by proper use of Font and Color classes.
+ * TODO: temporarily transforms legacy styled-components.js format styles to our format by proper use of Font and Color classes.
  */
 function stylesToString(styles) {
   if (!styles) {
@@ -74,9 +74,11 @@ function stylesToString(styles) {
     if (key === "font") {
       font = styles[key];
       delete styles[key];
-    }
-    if (styles[key] instanceof Color) {
+    } else if (styles[key] instanceof Color) {
       styles[key] = styles[key].css;
+    } else if (typeof styles[key] === "object") {
+      // if object, it means it's ":hover" or sth, and we need recursively solve it.
+      styles[key] = stylesToString(styles[key]);
     }
   });
 
