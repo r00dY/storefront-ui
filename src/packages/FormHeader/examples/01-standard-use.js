@@ -40,7 +40,7 @@ export default () => {
                                     : "transparent"
                                 };
                             `,
-                  content: ({ input, radioMarker, label }) => (
+                  children: ({ input, radioMarker, label }) => (
                     <>
                       {input}
                       {radioMarker}
