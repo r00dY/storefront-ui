@@ -137,8 +137,11 @@ export default () => {
           </GridItem>
 
           <GridItem>
-            <FormControl label="Address">
-              <StatefulInput />
+            <FormControl
+              label="Address"
+              caption={"I'm sorry but this is invalid"}
+            >
+              <StatefulInput error={"Dupa"} />
             </FormControl>
           </GridItem>
 
