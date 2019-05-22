@@ -8,6 +8,9 @@ import { StatefulRadioGroup, Radio } from "storefront-ui/Radio";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 
+import { Button } from "storefront-ui/Button";
+import { ButtonGroup } from "storefront-ui/ButtonGroup";
+
 import { ThemeProvider } from "storefront-ui/Theme";
 
 /** @jsx jsx */
@@ -192,6 +195,17 @@ export default () => {
             <strong>Shipment 3</strong>
           </Radio>
         </StatefulRadioGroup>
+
+        <div
+          css={css`
+            margin-top: 48px;
+            display: flex;
+            justify-content: space-between;
+          `}
+        >
+          <Button appearance={"minimal"}>Go back</Button>
+          <Button>Submit</Button>
+        </div>
       </ThemeProvider>
     </div>
   );
