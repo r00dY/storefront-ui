@@ -46,8 +46,8 @@ export default () => (
             overrides: {
               BaseButton: {
                 style: `
-                            padding: 30px;
-                          `
+                    background-color: black;
+                  `
               }
             }
           },
@@ -55,7 +55,8 @@ export default () => (
             overrides: {
               BaseButton: {
                 style: `
-                            padding: 40px;
+                            background-color: grey;
+                            color: white;
                           `
               }
             }
