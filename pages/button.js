@@ -21,6 +21,20 @@ ${(
 
 Important thing is to know how \`Button\` is sized. If it's a standard button (no href) it will be standard button. If you want to make it 100% width, just apply \`fitContainer={true}\`. In case of \`href\`, the button will be \`a\` tag with \`display: block\` applied. 
 
+## ButtonGroup
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/ButtonGroup/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/ButtonGroup/examples/01-standard-use.js").default
+    }
+  />
+)}
+
 # \`ButtonRaw\`
 
 ${(

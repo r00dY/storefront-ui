@@ -21,11 +21,22 @@ const Button_base_secondary = ({
   return <Button_base {...restProps} kind={"secondary"} />;
 };
 
+const Button_base_minimal = ({
+  size,
+  shape,
+  kind,
+  isSelected,
+  ...restProps
+}) => {
+  return <Button_base {...restProps} kind={"minimal"} />;
+};
+
 const Button = withTheme(
   {
     default: "primary",
     primary: Button_base_primary,
-    secondary: Button_base_secondary
+    secondary: Button_base_secondary,
+    minimal: Button_base_minimal
   },
   "Button"
 );
