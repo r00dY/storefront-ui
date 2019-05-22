@@ -85,7 +85,8 @@ GridItem.propTypes = {
   params: PropTypes.oneOfType([
     PropTypes.array,
     PropTypes.number,
-    PropTypes.object
+    PropTypes.object,
+    PropTypes.string
   ]),
   __extraStyles: PropTypes.string
 };

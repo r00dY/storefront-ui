@@ -9,8 +9,6 @@ function ButtonRaw(props) {
     ...restProps
   } = props;
 
-  console.log(props.overrides);
-
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
 
   return <Root {...restProps} {...rootProps} />;

@@ -1,5 +1,6 @@
 import React from "react";
-import { Button, KIND } from "storefront-ui/Button";
+import { Button } from "storefront-ui/Button";
+import { ThemeProvider } from "../../Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -12,26 +13,16 @@ export default () => (
     <p>Standard button</p>
 
     <Button>Primary button</Button>
+
     <br />
     <br />
-    <Button kind={KIND.secondary}>Secondary button</Button>
-    <br />
-    <br />
-    <Button kind={KIND.tertiary}>Tertiary button</Button>
-    <br />
-    <br />
-    <Button kind={KIND.minimal}>Minimal button</Button>
-    <br />
-    <br />
+    <Button appearance={"secondary"}>Secondary button</Button>
 
     <p>States</p>
     <Button>No state</Button>
     <br />
     <br />
     <Button isLoading>Loading</Button>
-    <br />
-    <br />
-    <Button isSelected>Selected</Button>
     <br />
     <br />
     <Button disabled>Disabled</Button>
@@ -45,5 +36,40 @@ export default () => (
     <p>
       <Button endEnhancer={() => <IconWrench />}>Settings</Button>
     </p>
+
+    <p>Overrides</p>
+
+    <ThemeProvider
+      theme={{
+        Button: {
+          primary: {
+            overrides: {
+              BaseButton: {
+                style: `
+                            padding: 30px;
+                          `
+              }
+            }
+          },
+          secondary: {
+            overrides: {
+              BaseButton: {
+                style: `
+                            padding: 40px;
+                          `
+              }
+            }
+          }
+        }
+      }}
+    >
+      <Button>Primary button</Button>
+      <br />
+      <br />
+      <Button appearance={"primary"}>Primary button</Button>
+      <br />
+      <br />
+      <Button appearance={"secondary"}>Primary button</Button>
+    </ThemeProvider>
   </div>
 );

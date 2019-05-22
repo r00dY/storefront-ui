@@ -19,20 +19,44 @@ const useTheme = function() {
   return theme;
 };
 
-const withTheme = (OriginalComponent, componentName) => {
+const withTheme = (arg, componentName) => {
+  let originals = Object.assign({}, arg);
+
+  if (typeof arg === "function" || arg instanceof React.Component) {
+    originals = {
+      default: arg
+    };
+  }
+
   return props => {
     const theme = useTheme();
 
     let appearance = props.appearance || "default";
 
-    if (theme[componentName] && theme[componentName][appearance]) {
+    let DefaultComponent = originals.default;
+
+    if (typeof originals.default === "string") {
+      // If default is ALIAS (like button default = button primary)
+      if (appearance === "default") {
+        appearance = originals.default;
+      }
+      DefaultComponent = originals[originals.default];
+    }
+
+    const OriginalComponent = originals[appearance]
+      ? originals[appearance]
+      : DefaultComponent;
+
+    if (theme[componentName]) {
       let overrides = theme[componentName][appearance];
 
-      if (typeof overrides === "function") {
-        overrides = overrides(props);
-      }
+      if (overrides) {
+        if (typeof overrides === "function") {
+          overrides = overrides(props);
+        }
 
-      return <OriginalComponent {...props} {...overrides} />;
+        return <OriginalComponent {...props} {...overrides} />;
+      }
     }
 
     return <OriginalComponent {...props} />;
