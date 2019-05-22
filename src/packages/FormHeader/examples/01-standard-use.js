@@ -204,7 +204,10 @@ export default () => {
           `}
         >
           <Button appearance={"minimal"}>Go back</Button>
-          <Button>Submit</Button>
+          <ButtonGroup>
+            <Button appearance={"secondary"}>Reset</Button>
+            <Button>Submit</Button>
+          </ButtonGroup>
         </div>
       </ThemeProvider>
     </div>
