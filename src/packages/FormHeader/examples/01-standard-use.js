@@ -13,6 +13,8 @@ import { ButtonGroup } from "storefront-ui/ButtonGroup";
 
 import { ThemeProvider } from "storefront-ui/Theme";
 
+import IconArrowBack from "../../../../data/svg/arrow_back.svg";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -203,10 +205,12 @@ export default () => {
             justify-content: space-between;
           `}
         >
-          <Button appearance={"minimal"}>Go back</Button>
+          <Button appearance={"minimal"} startEnhancer={<IconArrowBack />}>
+            Return to Address
+          </Button>
           <ButtonGroup>
             <Button appearance={"secondary"}>Reset</Button>
-            <Button>Submit</Button>
+            <Button>Continue to payment method</Button>
           </ButtonGroup>
         </div>
       </ThemeProvider>
