@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Button from "storefront-ui/Button";
+import { Button } from "storefront-ui/Button";
 import Popup from "storefront-ui/Popup";
 import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
 import { DropdownMenu, DropdownMenuItem } from "storefront-ui/DropdownMenu";
