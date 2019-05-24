@@ -5,26 +5,42 @@ import AccordionRaw from "./AccordionRaw";
 
 const Accordion = props => {
   const [open, setOpen] = useState(props.openAtInit);
-  const toggle = () => {
-    setOpen(!open);
+
+  const {
+    overrides: { Header: Header },
+    title,
+    ...restProps
+  } = props;
+
+  /**
+   * code
+   */
+
+  const headerProps = {
+    open: open,
+    onClick: () => {
+      setOpen(!open);
+    },
+    children: title
   };
 
   return (
     <div className={props.className} style={props.style}>
-      {props.header(open, toggle)}
-
+      <Header {...headerProps} />
       <AccordionRaw open={open}>{props.children}</AccordionRaw>
     </div>
   );
 };
 
 Accordion.defaultProps = {
-  openAtInit: true
+  openAtInit: true,
+  overrides: {}
 };
 
 Accordion.propTypes = {
+  title: PropTypes.string,
   openAtInit: PropTypes.bool,
-  header: PropTypes.func.isRequired
+  overrides: PropTypes.object
 };
 
 export default Accordion;

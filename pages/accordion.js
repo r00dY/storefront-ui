@@ -26,16 +26,15 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/AccordionHeader/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
     component={
-      require("../src/packages/AccordionHeader/examples/01-standard-use.js")
+      require("../src/packages/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
   />
 )}
-
 
 ### \`Accordion\`
 
@@ -53,49 +52,23 @@ ${(
   />
 )}
 
-### \`ItemListAccordion\`
-
-Frequently we need to show item list with couple of items hidden and possible to uncollapse.
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/ItemListAccordion/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/ItemListAccordion/examples/01-standard-use.js")
-        .default
-    }
-  />
-)}
 `;
 
+//
+// ### \`ItemListAccordion\`
+//
+// Frequently we need to show item list with couple of items hidden and possible to uncollapse.
+//
+// ${(
+//     <Example
+//         code={
+//             require("!!raw-loader!../src/packages/ItemListAccordion/examples/01-standard-use.js")
+//                 .default
+//         }
+//         component={
+//             require("../src/packages/ItemListAccordion/examples/01-standard-use.js")
+//                 .default
+//         }
+//     />
+// )}
 export default () => <Page>{content}</Page>;
-
-// /** First way -> imperative creation of template */
-//
-// const desktopFilters = <div>
-//
-//     {filters.map((filter) => <Accordion header={<div>{filter.name}</div>}>
-//
-//         { filter.type === 'item-list' && filter.label !== 'color' &&
-//             <ItemListAccordion>
-//                 {filter.items.map((item) => <ItemListItem onClick={() => onChange(item.id)}>{item.name}</ItemListItem>)}
-//             </ItemListAccordion>
-//         }
-//
-//         { filter.type === 'item-list' && filter.label === 'color' &&
-//             <ColorsGrid>
-//                 {filter.items.map((item) => <Color color={item.color} onClick={() => onChange(item.id)} />)}
-//             </ColorsGrid>
-//         }
-//
-//         { filter.type === 'range' &&
-//             <InputRange from={filter.from} to={filter.to} onChage={() => onChange(item.id)} error={filter.error} />
-//         }
-//     </Accordion>)}
-//
-// </div>;
-//
-// /** Second way - declarative **/
