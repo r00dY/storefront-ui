@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AccordionHeader } from "storefront-ui/AccordionHeader";
+import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -14,14 +14,14 @@ export default () => {
           border: 1px solid black;
         `}
       >
-        <AccordionHeader open={open} onClick={() => setOpen(!open)}>
+        <AccordionHeader$ open={open} onClick={() => setOpen(!open)}>
           Cześć
-        </AccordionHeader>
+        </AccordionHeader$>
       </div>
       <p>{open ? "opened" : "closed"}</p>
 
       <p>Overrides</p>
-      <AccordionHeader
+      <AccordionHeader$
         open={open}
         onClick={() => setOpen(!open)}
         overrides={{
@@ -43,11 +43,11 @@ export default () => {
         }}
       >
         Cześć
-      </AccordionHeader>
+      </AccordionHeader$>
       <p>{open ? "opened" : "closed"}</p>
 
       <p>Overrides - root children change order</p>
-      <AccordionHeader
+      <AccordionHeader$
         open={open}
         onClick={() => setOpen(!open)}
         overrides={{
@@ -62,7 +62,7 @@ export default () => {
         }}
       >
         Cześć
-      </AccordionHeader>
+      </AccordionHeader$>
       <p>{open ? "opened" : "closed"}</p>
     </div>
   );

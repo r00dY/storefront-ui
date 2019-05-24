@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { AccordionHeader } from "../../../../components/AccordionHeader";
+import { Accordion$ } from "storefront-ui/Accordion";
 import { Accordion } from "../../../../components/Accordion";
 
 /** @jsx jsx */
@@ -11,29 +13,42 @@ export default () => {
     <div>
       <p>Basic use case</p>
 
-      <Accordion title={"Test"}>
+      <Accordion title={"Header"}>
         <LoremIpsum />
       </Accordion>
 
-      {/*<Accordion*/}
-      {/*header={(open, toggle) => (*/}
-      {/*<div*/}
-      {/*css={css`*/}
-      {/*padding: 10px;*/}
-      {/*display: flex;*/}
-      {/*flex-direction: row;*/}
-      {/*justify-content: space-between;*/}
-      {/*align-items: center;*/}
-      {/*border: 1px solid black;*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*<div>HEADER</div>{" "}*/}
-      {/*<button onClick={toggle}>{open ? "collapse" : "uncollapse"}</button>*/}
-      {/*</div>*/}
-      {/*)}*/}
-      {/*>*/}
-      {/*<LoremIpsum />*/}
-      {/*</Accordion>*/}
+      <p>
+        Overrides (reusing standard <code>AccordionHeader</code>)
+      </p>
+      <Accordion$
+        title={"Header"}
+        overrides={{
+          Header: props => (
+            <AccordionHeader
+              {...props}
+              overrides={{
+                Title: {
+                  style: ({ $theme }) => `
+                        ${$theme.fonts.body1.css}
+                      `
+                },
+                Toggle: {
+                  style: ({ $theme }) => `
+                        ${$theme.fonts.body1.css}
+                      `
+                },
+                Root: {
+                  style: `
+                          background-color: yellow;
+                      `
+                }
+              }}
+            />
+          )
+        }}
+      >
+        <LoremIpsum />
+      </Accordion$>
     </div>
   );
 };

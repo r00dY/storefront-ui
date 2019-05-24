@@ -6,7 +6,7 @@ import { ButtonRaw } from "../ButtonRaw";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-function AccordionHeader(props) {
+function AccordionHeader$(props) {
   const {
     children,
     open,
@@ -53,9 +53,9 @@ function AccordionHeader(props) {
   );
 }
 
-AccordionHeader.defaultProps = {
+AccordionHeader$.defaultProps = {
   open: true,
   overrides: {}
 };
 
-export { AccordionHeader };
+export { AccordionHeader$ };

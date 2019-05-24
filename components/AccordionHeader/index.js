@@ -1,1 +1,3 @@
-export { AccordionHeader } from "storefront-ui/AccordionHeader";
+export {
+  AccordionHeader$ as AccordionHeader
+} from "storefront-ui/AccordionHeader";
