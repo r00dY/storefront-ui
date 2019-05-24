@@ -19,6 +19,24 @@ ${(
   />
 )}
 
+### \`AccordionHeader\`
+
+\`AccordionHeader\` is a special kind of button used in accordions.
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/AccordionHeader/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/AccordionHeader/examples/01-standard-use.js")
+        .default
+    }
+  />
+)}
+
+
 ### \`Accordion\`
 
 \`Accordion\` makes it quicker to add internal state + header.

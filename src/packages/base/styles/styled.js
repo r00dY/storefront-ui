@@ -88,7 +88,7 @@ function stylesToString(styles) {
   `;
 }
 
-function styled(component, arg) {
+function styled(component, arg, childrenFunc) {
   arg = arg || {};
 
   const Component = styledEmotion[component]``;
@@ -106,14 +106,22 @@ function styled(component, arg) {
           overrideStyles = props.$style;
         }
 
+        let { children, ...restProps } = props;
+
+        childrenFunc = props.$children || childrenFunc;
+        if (childrenFunc) {
+          children = childrenFunc(styleProps);
+        }
+
         return (
           <Component
-            {...props}
+            {...restProps}
             $theme={theme}
             css={css`
               ${stylesToString(styles)}
               ${stylesToString(overrideStyles)}
             `}
+            children={children}
           />
         );
       }}

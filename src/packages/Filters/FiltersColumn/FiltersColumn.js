@@ -12,7 +12,7 @@ import ItemListAccordion from "../../ItemListAccordion/ItemListAccordion";
 import FilterHeader from "../FilterHeader/FilterHeader";
 import FilterItem from "../FilterItem/FilterItem";
 
-import Button from "../../Button";
+import { Button } from "../../Button";
 
 const ShowMoreButton = props => {
   return (

@@ -48,7 +48,8 @@ export function getOverrideProps<T>(override: ?OverrideT<T>) {
       // $FlowFixMe
       ...override.props,
       // $FlowFixMe
-      $style: override.style
+      $style: override.style,
+      $children: override.children
     };
   }
   return {};
