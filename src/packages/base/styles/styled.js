@@ -108,9 +108,9 @@ function styled(component, arg, childrenFunc) {
 
         let { children, ...restProps } = props;
 
-        childrenFunc = props.$children || childrenFunc;
-        if (childrenFunc) {
-          children = childrenFunc(styleProps);
+        let func = props.$children || childrenFunc;
+        if (func) {
+          children = func(styleProps);
         }
 
         return (
