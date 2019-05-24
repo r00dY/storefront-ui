@@ -19,6 +19,23 @@ ${(
   />
 )}
 
+### \`Accordion\`
+
+\`Accordion\` makes it quicker to add internal state + header.
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Accordion/examples/02-accordion.js")
+        .default
+    }
+    component={
+      require("../src/packages/Accordion/examples/02-accordion.js").default
+    }
+  />
+)}
+
+
 ### \`AccordionHeader\`
 
 \`AccordionHeader\` is a special kind of button used in accordions.
@@ -36,21 +53,6 @@ ${(
   />
 )}
 
-### \`Accordion\`
-
-\`Accordion\` makes it quicker to add internal state + header.
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/Accordion/examples/02-accordion.js")
-        .default
-    }
-    component={
-      require("../src/packages/Accordion/examples/02-accordion.js").default
-    }
-  />
-)}
 
 `;
 

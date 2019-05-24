@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { AccordionHeader } from "../../../../components/AccordionHeader";
 import { Accordion$ } from "storefront-ui/Accordion";
 import { Accordion } from "../../../../components/Accordion";
+import { ButtonRaw } from "storefront-ui/ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -44,6 +45,30 @@ export default () => {
                 }
               }}
             />
+          )
+        }}
+      >
+        <LoremIpsum />
+      </Accordion$>
+
+      <p>Overrides (total custom)</p>
+      <Accordion$
+        title={"Header"}
+        overrides={{
+          Header: ({ children, open, onClick }) => (
+            <ButtonRaw
+              onClick={onClick}
+              css={css`
+                border: 3px solid black;
+                padding: 10px;
+                width: 100%;
+                background-color: ${open ? "red" : "yellow"};
+                display: flex;
+                justify-content: center;
+              `}
+            >
+              {children}
+            </ButtonRaw>
           )
         }}
       >
