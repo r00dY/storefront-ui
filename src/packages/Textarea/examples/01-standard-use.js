@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { StatefulTextarea as Textarea } from "storefront-ui/Textarea";
-import { useTheme, ThemeProvider } from "storefront-ui/Theme";
+import { StatefulTextarea as Textarea } from "../../../../components/Textarea";
+import { StatefulTextarea$ } from "storefront-ui/Textarea";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -51,40 +51,18 @@ export default () => {
         value={value2}
         disabled={true}
       />
-      <ThemeProvider
-        theme={{
-          Textarea: {
-            default: {
-              overrides: {
-                Input: {
-                  style: `
+      <p>Overrides</p>
+      <StatefulTextarea$
+        placeholder={"Search"}
+        overrides={{
+          Input: {
+            style: `
                                 border-color: green;
                                 border-width: 2px;
                             `
-                }
-              }
-            },
-
-            thick: ({ disabled = true }) => ({
-              overrides: {
-                Input: {
-                  style: `
-                                border-color: black;
-                                border-width: 5px;
-                            `
-                }
-              },
-              disabled: disabled
-            })
           }
         }}
-      >
-        <p>Themed default</p>
-        <Textarea placeholder={"Search"} />
-
-        <p>Themed custom (disabled by default)</p>
-        <Textarea placeholder={"Search"} appearance={"thick"} />
-      </ThemeProvider>
+      />
     </div>
   );
 };
