@@ -1,1 +1,1 @@
-export { FormHeader } from "./FormHeader";
+export { FormHeader as FormHeader$ } from "./FormHeader";

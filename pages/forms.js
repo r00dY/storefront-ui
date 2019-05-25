@@ -65,46 +65,34 @@ ${(
   />
 )}
 
-`;
+## FormControl
 
-// ## FormControl
-//
-// ${(
-//   <Example
-//     code={
-//       require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
-//         .default
-//     }
-// component={
-//     require("../src/packages/FormControl/examples/01-standard-use.js").default
-// }
-// />
-// )}
-//
-// ## FormHeader
-//
-// ${(
-//   <Example
-//     code={
-//       require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
-//         .default
-//     }
-// component={
-//     require("../src/packages/FormHeader/examples/01-standard-use.js").default
-// }
-// />
-// )}
-//
-// ${(
-//     <Example
-//         code={
-//             require("!!raw-loader!../src/packages/Form/examples/01-standard-use.js")
-//                 .default
-//         }
-// component={
-//     require("../src/packages/Form/examples/01-standard-use.js").default
-// }
-// />
-// )}
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/FormControl/examples/01-standard-use.js").default
+    }
+  />
+)}
+
+## Form
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/FormHeader/examples/01-standard-use.js").default
+    }
+  />
+)}
+
+`;
 
 export default () => <Page>{content}</Page>;
