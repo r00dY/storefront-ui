@@ -47,7 +47,7 @@ const ItemListAccordion$ = props => {
 
   return (
     <div className={props.className} style={props.style}>
-      <ItemListContainer {...itemListContainerProps}>
+      <ItemListContainer {...itemListContainerProps} tabIndex={0}>
         {itemsVisible.map(item => {
           return (
             <ListItem
