@@ -1,7 +1,8 @@
 import React, { useState } from "react";
-import { Input } from "storefront-ui/Input";
-import { StatefulInput } from "storefront-ui/Input";
-import { ThemeProvider } from "storefront-ui/Theme";
+import { Input } from "../../../../components/Input";
+import { StatefulInput } from "../../../../components/Input";
+import { Input$ } from "storefront-ui/Input";
+import { StatefulInput$ } from "storefront-ui/Input";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -19,7 +20,7 @@ export default () => {
         onChange={e => setValue(e.target.value)}
         placeholder={"First name"}
         value={value}
-      />{" "}
+      />
       <br />
       <Input
         onChange={e => setValue2(e.target.value)}
@@ -76,44 +77,30 @@ export default () => {
           )
         }}
       />
-      <ThemeProvider
-        theme={{
-          Input: {
-            default: {
-              overrides: {
-                InputContainer: {
-                  style: `
-                                border-color: green;
-                                border-width: 2px;
-                            `
-                }
-              }
-            },
-
-            thick: ({ disabled = true }) => ({
-              overrides: {
-                InputContainer: {
-                  style: `
+      <p>Themed</p>
+      <StatefulInput$
+        placeholder={"Search"}
+        overrides={{
+          InputContainer: {
+            style: `
+                    border-color: green;
+                    border-width: 2px;
+                `
+          }
+        }}
+      />
+      <p>Themed as thick</p>
+      <StatefulInput
+        placeholder={"Search"}
+        overrides={{
+          InputContainer: {
+            style: `
                                 border-color: black;
                                 border-width: 5px;
                             `
-                }
-              },
-              disabled: disabled
-            })
           }
         }}
-      >
-        <p>Themed default</p>
-        <StatefulInput placeholder={"Search"} />
-        <p>Themed custom (disabled by default)</p>
-        <StatefulInput appearance={"thick"} placeholder={"Search"} /> <br />
-        <StatefulInput
-          appearance={"thick"}
-          placeholder={"Search"}
-          disabled={false}
-        />
-      </ThemeProvider>
+      />
     </div>
   );
 };

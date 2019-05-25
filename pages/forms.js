@@ -23,77 +23,77 @@ ${(
   />
 )}
 
-## Textarea
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/Textarea/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/Textarea/examples/01-standard-use.js").default
-    }
-  />
-)}
-
-## Checkbox
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/Checkbox/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/Checkbox/examples/01-standard-use.js").default
-    }
-  />
-)}
-
-## Radio
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/Radio/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/Radio/examples/01-standard-use.js").default
-    }
-  />
-)}
-
-## FormControl
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/FormControl/examples/01-standard-use.js").default
-    }
-  />
-)}
-
-## FormHeader
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
-        .default
-    }
-    component={
-      require("../src/packages/FormHeader/examples/01-standard-use.js").default
-    }
-  />
-)}
 `;
-
+//
+// ## Textarea
+//
+// ${(
+//   <Example
+//     code={
+//       require("!!raw-loader!../src/packages/Textarea/examples/01-standard-use.js")
+//         .default
+//     }
+// component={
+//     require("../src/packages/Textarea/examples/01-standard-use.js").default
+// }
+// />
+// )}
+//
+// ## Checkbox
+//
+// ${(
+//   <Example
+//     code={
+//       require("!!raw-loader!../src/packages/Checkbox/examples/01-standard-use.js")
+//         .default
+//     }
+// component={
+//     require("../src/packages/Checkbox/examples/01-standard-use.js").default
+// }
+// />
+// )}
+//
+// ## Radio
+//
+// ${(
+//   <Example
+//     code={
+//       require("!!raw-loader!../src/packages/Radio/examples/01-standard-use.js")
+//         .default
+//     }
+// component={
+//     require("../src/packages/Radio/examples/01-standard-use.js").default
+// }
+// />
+// )}
+//
+// ## FormControl
+//
+// ${(
+//   <Example
+//     code={
+//       require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
+//         .default
+//     }
+// component={
+//     require("../src/packages/FormControl/examples/01-standard-use.js").default
+// }
+// />
+// )}
+//
+// ## FormHeader
+//
+// ${(
+//   <Example
+//     code={
+//       require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
+//         .default
+//     }
+// component={
+//     require("../src/packages/FormHeader/examples/01-standard-use.js").default
+// }
+// />
+// )}
 //
 // ${(
 //     <Example
