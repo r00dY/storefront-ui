@@ -6,6 +6,7 @@ LICENSE file in the root directory of this source tree.
 */
 // @flow
 import { styled } from "../styles/index.js";
+import React from "react";
 
 const DEFAULT = 0;
 const HOVERED = 1;
@@ -126,22 +127,32 @@ export const RadioGroupRoot = styled("div", props => {
   };
 });
 
-export const Root = styled("label", props => {
-  const { $disabled, $hasDescription, $labelPlacement, $theme } = props;
-  const { sizing } = $theme;
-  return {
-    flexDirection:
-      $labelPlacement === "top" || $labelPlacement === "bottom"
-        ? "column"
-        : "row",
-    display: "flex",
-    alignItems: "center",
-    cursor: $disabled ? "not-allowed" : "pointer",
+export const Root = styled(
+  "label",
+  props => {
+    const { $disabled, $hasDescription, $labelPlacement, $theme } = props;
+    const { sizing } = $theme;
+    return {
+      flexDirection:
+        $labelPlacement === "top" || $labelPlacement === "bottom"
+          ? "column"
+          : "row",
+      display: "flex",
+      alignItems: "center",
+      cursor: $disabled ? "not-allowed" : "pointer",
 
-    marginTop: sizing.scale200,
-    marginBottom: $hasDescription ? null : sizing.scale200
-  };
-});
+      marginTop: sizing.scale200,
+      marginBottom: $hasDescription ? null : sizing.scale200
+    };
+  },
+  ({ labelPlacement, label, radioMarker, input }) => (
+    <>
+      {radioMarker}
+      {input}
+      {label}
+    </>
+  )
+);
 
 export const RadioMarkInner = styled("div", props => {
   const { animation, sizing } = props.$theme;

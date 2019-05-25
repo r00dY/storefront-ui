@@ -158,25 +158,6 @@ class Radio extends React.Component<RadioPropsT, RadioStateT> {
       />
     );
 
-    let children;
-    if (overrides.Root && overrides.Root.children) {
-      children = overrides.Root.children({
-        ...sharedProps,
-        input,
-        radioMarker,
-        label
-      });
-    } else {
-      children = (
-        <>
-          {isLabelTopLeft(this.props.labelPlacement) && label}
-          {radioMarker}
-          {input}
-          {isLabelBottomRight(this.props.labelPlacement) && label}
-        </>
-      );
-    }
-
     return (
       <React.Fragment>
         <Root
@@ -187,9 +168,10 @@ class Radio extends React.Component<RadioPropsT, RadioStateT> {
           onMouseUp={this.onMouseUp}
           {...sharedProps}
           {...rootProps}
-        >
-          {children}
-        </Root>
+          input={input}
+          radioMarker={radioMarker}
+          label={label}
+        />
 
         {!!this.props.description && (
           <Description {...descriptionProps}>

@@ -43,26 +43,26 @@ export default () => {
                                     ? $theme.colors.mono200
                                     : "transparent"
                                 };
-      `
-          // children: ({ input, radioMarker, label }) => (
-          //     <>
-          //       {input}
-          //       {radioMarker}
-          //       <div
-          //           css={css`
-          //                     display: flex;
-          //                     flex-direciton: row;
-          //                     justify-content: space-between;
-          //                     flex-grow: 1;
-          //                   `}
-          //       >
-          //         {label}
-          //         <div>
-          //           <strong>{props.rightLabel}</strong>
-          //         </div>
-          //       </div>
-          //     </>
-          // )
+      `,
+          children: ({ input, radioMarker, label }) => (
+            <>
+              {input}
+              {radioMarker}
+              <div
+                css={css`
+                  display: flex;
+                  flex-direciton: row;
+                  justify-content: space-between;
+                  flex-grow: 1;
+                `}
+              >
+                {label}
+                <div>
+                  <strong>{props.rightLabel}</strong>
+                </div>
+              </div>
+            </>
+          )
         },
         Label: {}
       }}
