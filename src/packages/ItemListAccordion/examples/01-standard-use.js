@@ -1,84 +1,52 @@
 import React, { useState } from "react";
-import ItemListAccordion from "storefront-ui/ItemListAccordion";
+import { ItemListAccordion } from "../../../../components/ItemListAccordion";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const Item = props => (
-  <div
-    css={css`
-      padding-bottom: 4px;
-    `}
-  >
-    {props.children}
-  </div>
-);
+function generateItems(n) {
+  let items = [];
 
-const trigger = (open, toggle) => (
-  <button onClick={toggle}>{open ? "hide" : "show more"}</button>
-);
+  for (let i = 0; i < n; i++) {
+    items.push({
+      id: `id${i}`,
+      value: `Item ${i}`,
+      selected: i % 5 === 4
+    });
+  }
+
+  return items;
+}
 
 export default () => {
   return (
     <div>
       <p>Basic use case</p>
 
-      <ItemListAccordion trigger={trigger}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
-        <Item>Item 4</Item>
-        <Item>Item 5</Item>
-        <Item>Item 6</Item>
-        <Item>Item 7</Item>
-        <Item>Item 8</Item>
-        <Item>Item 9</Item>
-        <Item>Item 10</Item>
-      </ItemListAccordion>
+      <ItemListAccordion items={generateItems(10)} />
 
       <p>
         <code>amountOfAlwaysVisible={3}</code>
       </p>
 
-      <ItemListAccordion trigger={trigger} amountOfAlwaysVisible={3}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
-        <Item>Item 4</Item>
-        <Item>Item 5</Item>
-        <Item>Item 6</Item>
-        <Item>Item 7</Item>
-        <Item>Item 8</Item>
-        <Item>Item 9</Item>
-        <Item>Item 10</Item>
-      </ItemListAccordion>
+      <ItemListAccordion items={generateItems(10)} amountOfAlwaysVisible={3} />
 
       <p>
         <code>minAmountToShowAccordion={20}</code>
       </p>
 
-      <ItemListAccordion trigger={trigger} minAmountToShowAccordion={20}>
-        <Item>Item 1</Item>
-        <Item>Item 2</Item>
-        <Item>Item 3</Item>
-        <Item>Item 4</Item>
-        <Item>Item 5</Item>
-        <Item>Item 6</Item>
-        <Item>Item 7</Item>
-        <Item>Item 8</Item>
-        <Item>Item 9</Item>
-        <Item>Item 10</Item>
-      </ItemListAccordion>
+      <ItemListAccordion
+        items={generateItems(10)}
+        minAmountToShowAccordion={20}
+      />
 
       <p>Empty list</p>
 
-      <ItemListAccordion trigger={trigger} />
+      <ItemListAccordion items={[]} />
 
       <p>Single item list</p>
 
-      <ItemListAccordion trigger={trigger}>
-        <Item>Item 1</Item>
-      </ItemListAccordion>
+      <ItemListAccordion items={generateItems(1)} />
     </div>
   );
 };

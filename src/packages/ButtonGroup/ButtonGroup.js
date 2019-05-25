@@ -7,7 +7,7 @@ import { rs } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-function ButtonGroup(props) {
+function ButtonGroup$(props) {
   const {
     overrides: { Root: RootOverride },
     gutter
@@ -30,9 +30,9 @@ function ButtonGroup(props) {
   );
 }
 
-ButtonGroup.defaultProps = {
+ButtonGroup$.defaultProps = {
   overrides: {},
   gutter: 12
 };
 
-export { ButtonGroup };
+export { ButtonGroup$ };

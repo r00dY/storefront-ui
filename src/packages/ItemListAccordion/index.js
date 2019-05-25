@@ -1,1 +1,2 @@
-export { default } from "./ItemListAccordion";
+import ItemListAccordion$ from "./ItemListAccordion";
+export { ItemListAccordion$ };

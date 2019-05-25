@@ -1,7 +1,7 @@
 import React from "react";
 import { getOverrides } from "../base/helpers/overrides";
 import { TitleStyled, ToggleStyled, RootStyled } from "./styled-components";
-import { ButtonRaw } from "../ButtonRaw";
+import { ButtonRaw$ } from "../ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -41,7 +41,7 @@ function AccordionHeader$(props) {
   );
 
   return (
-    <ButtonRaw
+    <ButtonRaw$
       {...restProps}
       css={css`
         display: block;
@@ -49,7 +49,7 @@ function AccordionHeader$(props) {
       `}
     >
       <Root {...sharedProps} {...rootProps} toggle={toggle} title={title} />
-    </ButtonRaw>
+    </ButtonRaw$>
   );
 }
 

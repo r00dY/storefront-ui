@@ -2,7 +2,7 @@ import React from "react";
 import { getOverrides } from "../base/helpers/overrides";
 import { RootStyled } from "./styled-components";
 
-function ButtonRaw(props) {
+function ButtonRaw$(props) {
   const {
     overrides: { Root: RootOverride },
     appearance,
@@ -14,8 +14,8 @@ function ButtonRaw(props) {
   return <Root {...restProps} {...rootProps} />;
 }
 
-ButtonRaw.defaultProps = {
+ButtonRaw$.defaultProps = {
   overrides: {}
 };
 
-export default ButtonRaw;
+export { ButtonRaw$ };

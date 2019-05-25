@@ -1,11 +1,25 @@
 import PropTypes from "prop-types";
 import React, { useState } from "react";
+import { ItemListContainerStyled } from "./styled-components";
+import { ToggleContainerStyled } from "./styled-components";
 
-import AccordionRaw from "../Accordion/AccordionRaw";
+import { getOverrides } from "../base/helpers/overrides";
 
-const ItemListAccordion = props => {
+const ItemListAccordion$ = props => {
   const [open, setOpen] = useState(props.openAtInit);
-  const toggle = () => {
+
+  const {
+    items,
+    overrides: {
+      ToggleButton: ToggleButton,
+      ListItem: ListItem,
+      ItemListContainer: ItemListContainerOverride,
+      ToggleContainer: ToggleContainerOverride
+    },
+    ...restProps
+  } = props;
+
+  const onClick = () => {
     setOpen(!open);
   };
 
@@ -15,15 +29,6 @@ const ItemListAccordion = props => {
   let itemsVisible = [];
   let itemsInAccordion = [];
 
-  let items = [];
-  if (Array.isArray(props.children)) {
-    items = props.children;
-  } else if (props.children) {
-    items = [props.children];
-  } else {
-    items = [];
-  }
-
   if (items.length < minAmountToShowAccordion) {
     itemsVisible = items;
   } else {
@@ -31,26 +36,62 @@ const ItemListAccordion = props => {
     itemsInAccordion = items.slice(props.amountOfAlwaysVisible);
   }
 
+  const [ItemListContainer, itemListContainerProps] = getOverrides(
+    ItemListContainerOverride,
+    ItemListContainerStyled
+  );
+  const [ToggleContainer, toggleContainerProps] = getOverrides(
+    ToggleContainerOverride,
+    ToggleContainerStyled
+  );
+
   return (
     <div className={props.className} style={props.style}>
-      {itemsVisible}
-      <AccordionRaw open={open}>{itemsInAccordion}</AccordionRaw>
-      {itemsInAccordion.length > 0 && props.trigger(open, toggle)}
+      <ItemListContainer {...itemListContainerProps}>
+        {itemsVisible.map(item => {
+          return (
+            <ListItem
+              key={item.id}
+              focused={false}
+              selected={item.selected}
+              item={item}
+            />
+          );
+        })}
+
+        {open &&
+          itemsInAccordion.map(item => {
+            return (
+              <ListItem
+                key={item.id}
+                focused={false}
+                selected={item.selected}
+                item={item}
+              />
+            );
+          })}
+      </ItemListContainer>
+
+      <ToggleContainer {...toggleContainerProps}>
+        {itemsInAccordion.length > 0 && (
+          <ToggleButton open={open} onClick={onClick} />
+        )}
+      </ToggleContainer>
     </div>
   );
 };
 
-ItemListAccordion.defaultProps = {
+ItemListAccordion$.defaultProps = {
   openAtInit: false,
-  amountOfAlwaysVisible: 5
+  amountOfAlwaysVisible: 5,
+  overrides: {}
 };
 
-ItemListAccordion.propTypes = {
+ItemListAccordion$.propTypes = {
   openAtInit: PropTypes.bool,
   amountOfAlwaysVisible: PropTypes.number.isRequired, // might be higher if `minAmountToShowAccordion` is higher
   minAmountToShowAccordion: PropTypes.number,
-  children: PropTypes.any,
-  trigger: PropTypes.func.isRequired
+  children: PropTypes.any
 };
 
-export default ItemListAccordion;
+export default ItemListAccordion$;
