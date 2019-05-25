@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { Checkbox } from "storefront-ui/Checkbox";
+import { Checkbox$ } from "storefront-ui/Checkbox";
+import { Checkbox } from "../../../../components/Checkbox";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { ThemeProvider } from "storefront-ui/Theme";
 
 export default () => {
   const [checked, setChecked] = useState(true);
@@ -15,29 +15,23 @@ export default () => {
         click me
       </Checkbox>
 
-      <ThemeProvider
-        theme={{
-          Checkbox: {
-            default: {
-              overrides: {
-                Checkmark: {
-                  style: ({ $theme }) => `
+      <p>Themed</p>
+
+      <Checkbox
+        checked={checked}
+        onChange={() => setChecked(!checked)}
+        overrides={{
+          Checkmark: {
+            style: ({ $theme }) => `
                                    background-color: ${
                                      $theme.colors.mono800.css
                                    };
                                 `
-                }
-              }
-            }
           }
         }}
       >
-        <p>Themed default</p>
-
-        <Checkbox checked={checked} onChange={() => setChecked(!checked)}>
-          themed default (background)
-        </Checkbox>
-      </ThemeProvider>
+        themed default (background)
+      </Checkbox>
     </div>
   );
 };
