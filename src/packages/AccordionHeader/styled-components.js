@@ -2,13 +2,11 @@ import { styled } from "../base/styles";
 import React from "react";
 
 export const titleStyles = ({ $theme }) => `
-    ${$theme.fonts.h6.css}
 `;
 
 export const TitleStyled = styled("div", titleStyles);
 
 export const toggleStyles = ({ $theme }) => `
-    ${$theme.fonts.h6.css}
 `;
 
 export const ToggleStyled = styled("div", toggleStyles);
@@ -18,7 +16,7 @@ export const rootStyles = ({ $theme }) => `
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    padding: ${$theme.sizing.scale600};
+    padding: ${$theme.sizing.scale400};
     border-bottom: 1px solid ${$theme.colors.mono400.css};
 `;
 

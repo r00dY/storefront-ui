@@ -1,4 +1,4 @@
-// TODO: here should be used a preset with easily styleable checkmark!
+// TODO: here should be used a neat tiny preset with easily styleable checkmark!
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -14,7 +14,7 @@ const ListItem = ({ selected, focused, item }) => (
       cursor: pointer;
     `}
   >
-    {selected ? "[X]" : "[ ]"} {item.value}
+    {selected ? "[X]" : "[ ]"} {item.name}
   </div>
 );
 

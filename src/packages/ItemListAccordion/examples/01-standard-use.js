@@ -10,7 +10,7 @@ function generateItems(n) {
   for (let i = 0; i < n; i++) {
     items.push({
       id: `id${i}`,
-      value: `Item ${i}`,
+      name: `Item ${i}`,
       selected: i % 5 === 4
     });
   }
