@@ -31,7 +31,7 @@ const popupSizeDefault = {
 
 popupSizeDefault.default = popupSizeDefault.medium;
 
-function Popup({
+function Popover({
   className,
   style,
   open,
@@ -138,8 +138,8 @@ function Popup({
   );
 }
 
-Popup.defaultProps = {
+Popover.defaultProps = {
   stateless: false
 };
 
-export default Popup;
+export default Popover;
