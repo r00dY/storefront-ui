@@ -62,33 +62,6 @@ export default () => {
           <Radio value="blue">Blue</Radio>
         </StatefulRadioGroup>
       </FormControlStyled>
-
-      {/*<br/>*/}
-      {/*<br/>*/}
-
-      {/*<div css={css`*/}
-      {/*position: relative;*/}
-      {/*width: 200px;*/}
-      {/*height: 50px;*/}
-      {/*background-color: red;*/}
-      {/*`}>*/}
-      {/*<select id={"dupa"} css={css`*/}
-      {/*appearance: none;*/}
-      {/*border: none;*/}
-      {/*outline: none;*/}
-      {/*background-color: transparent;*/}
-      {/*width: 100%;*/}
-      {/*height: 100%;*/}
-      {/*padding-left: 12px;*/}
-      {/*`} required={false}>*/}
-      {/*<option disabled>Zwierzątko</option>*/}
-      {/*<option>Pies</option>*/}
-      {/*<option>Kot</option>*/}
-      {/*<option>Ryba</option>*/}
-      {/*<option>Świnia</option>*/}
-      {/*<option>Świnka morska</option>*/}
-      {/*</select>*/}
-      {/*</div>*/}
     </div>
   );
 };
