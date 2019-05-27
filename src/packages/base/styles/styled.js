@@ -5,7 +5,7 @@ This source code is licensed under the MIT license found in the
 LICENSE file in the root directory of this source tree.
 */
 
-// @flow
+// // @flow
 // import * as React from 'react';
 // import {createStyled, withStyleDeep} from 'styletron-react';
 // import {driver, getInitialStyle} from 'styletron-standard';
@@ -115,6 +115,7 @@ function styled(component, arg, childrenFunc) {
 
         return (
           <Component
+            ref={props.$ref}
             {...restProps}
             $theme={theme}
             css={css`

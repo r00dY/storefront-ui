@@ -30,7 +30,8 @@ module.exports = {
 
     config.plugins.push(
       new webpack.DefinePlugin({
-        __DEV__: true
+        __DEV__: true,
+        __BROWSER__: !isServer
       })
     );
 
