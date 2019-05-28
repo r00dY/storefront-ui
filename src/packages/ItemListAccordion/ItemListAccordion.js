@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { ItemListContainerStyled } from "./styled-components";
 import { ToggleContainerStyled } from "./styled-components";
 
@@ -61,9 +61,8 @@ const ItemListAccordion$ = props => {
     <>
       {items.map(item => {
         return (
-          <div onClick={() => onItemClick(item)}>
+          <div onClick={() => onItemClick(item)} key={item.id}>
             <ListItem
-              key={item.id}
               focused={false}
               selected={value.includes(item)}
               item={item}
@@ -75,7 +74,7 @@ const ItemListAccordion$ = props => {
   );
 
   return (
-    <div className={props.className} style={props.style}>
+    <div>
       <ItemListContainer {...itemListContainerProps} tabIndex={0}>
         {renderItems(itemsVisible)}
         {open && renderItems(itemsInAccordion)}

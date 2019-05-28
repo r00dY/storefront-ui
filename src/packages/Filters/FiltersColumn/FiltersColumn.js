@@ -11,7 +11,11 @@ import { rs } from "responsive-helpers";
 import { getOverrides } from "../../base/helpers/overrides";
 
 const FiltersColumn$ = props => {
-  const onChange = () => console.log("sth changed!");
+  const onChange = (id, value) => {
+    if (props.onChange) {
+      props.onChange(id, value);
+    }
+  };
 
   const {
     data,
@@ -28,39 +32,6 @@ const FiltersColumn$ = props => {
   return (
     <div>
       {data.map((filter, index) => {
-        // let arg; // value for components.select or components.range, etc
-        // let argCustom = false;
-        //
-        // // Let's look for specials
-        // if (props.components.__custom) {
-        //     props.components.__custom.forEach(custom => {
-        //         if (custom.match(filter)) {
-        //             arg = custom.component;
-        //             argCustom = true;
-        //         }
-        //     });
-        // }
-        // if (!argCustom) {
-        //     arg = props.components[filter.type];
-        // }
-        //
-        // let component;
-        // if (typeof arg === "function") {
-        //     // if function just call it
-        //     component = arg({ data: data, filter, onChange });
-        // } else {
-        //     // otherwise, arg is object of config
-        //     let options = Object.assign(
-        //         {},
-        //         components[filter.type].defaultOptions,
-        //         arg
-        //     );
-        //     component = components[filter.type].component(
-        //         { data: data, filter, onChange },
-        //         options
-        //     );
-        // }
-
         const Component = filterComponents[filter.type];
 
         const [Body, bodyProps] = getOverrides(BodyOverride, BodyStyled);
@@ -86,7 +57,10 @@ const FiltersColumn$ = props => {
                 title={filter.name}
               >
                 <Body {...bodyProps}>
-                  <Component filter={filter} onChange={onChange} />
+                  <Component
+                    filter={filter}
+                    onChange={value => onChange(filter.id, value)}
+                  />
                 </Body>
               </Accordion$>
             </div>

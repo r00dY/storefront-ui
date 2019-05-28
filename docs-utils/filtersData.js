@@ -3,60 +3,51 @@ const filtersData = [
     id: "brand",
     name: "Brand",
     type: "select",
-    options: [
+    items: [
       {
         id: "nike",
         name: "Nike",
-        amount: 46,
-        selected: false
+        amount: 46
       },
       {
         id: "adidas",
         name: "Adidas",
-        amount: 21,
-        selected: false
+        amount: 21
       },
       {
         id: "puma",
         name: "Puma",
-        amount: 12,
-        selected: true
+        amount: 12
       },
       {
         id: "under-armour",
         name: "Under Armour",
-        amount: 0,
-        selected: true
+        amount: 0
       },
       {
         id: "asics",
         name: "ASICS",
-        amount: 12,
-        selected: false
+        amount: 12
       },
       {
         id: "new-balance",
         name: "New Balance",
-        amount: 54,
-        selected: false
+        amount: 54
       },
       {
         id: "sketchers",
         name: "Sketchers",
-        amount: 32,
-        selected: false
+        amount: 32
       },
       {
         id: "fila",
         name: "Fila",
-        amount: 75,
-        selected: false
+        amount: 75
       },
       {
         id: "bata",
         name: "Bata",
-        amount: 2,
-        selected: false
+        amount: 2
       }
     ]
   },
@@ -64,12 +55,11 @@ const filtersData = [
     id: "color",
     name: "Color",
     type: "select",
-    options: [
+    items: [
       {
         id: "white",
         name: "white",
         amount: 46,
-        selected: false,
         data: {
           hex: "#ffffff"
         }
@@ -78,7 +68,6 @@ const filtersData = [
         id: "grey",
         name: "grey",
         amount: 21,
-        selected: false,
         data: {
           hex: "#E5E5E7"
         }
@@ -87,7 +76,6 @@ const filtersData = [
         id: "black",
         name: "black",
         amount: 12,
-        selected: false,
         data: {
           hex: "#000000"
         }
@@ -96,7 +84,6 @@ const filtersData = [
         id: "blue",
         name: "blue",
         amount: 0,
-        selected: false,
         data: {
           hex: "#295F9A"
         }
@@ -105,7 +92,6 @@ const filtersData = [
         id: "olive",
         name: "olive",
         amount: 12,
-        selected: false,
         data: {
           hex: "#62664D"
         }
@@ -114,7 +100,6 @@ const filtersData = [
         id: "beige",
         name: "beige",
         amount: 54,
-        selected: false,
         data: {
           hex: "#BBB09E"
         }
@@ -123,7 +108,6 @@ const filtersData = [
         id: "orange",
         name: "orange",
         amount: 32,
-        selected: false,
         data: {
           hex: "#D8922C"
         }
@@ -132,7 +116,6 @@ const filtersData = [
         id: "red",
         name: "red",
         amount: 75,
-        selected: true,
         data: {
           hex: "#C52E35"
         }
@@ -141,7 +124,6 @@ const filtersData = [
         id: "pink",
         name: "pink",
         amount: 2,
-        selected: false,
         data: {
           hex: "#F1D4CF"
         }
@@ -150,7 +132,6 @@ const filtersData = [
         id: "purple",
         name: "purple",
         amount: 2,
-        selected: false,
         data: {
           hex: "#4F3B75"
         }
@@ -159,7 +140,6 @@ const filtersData = [
         id: "brown",
         name: "brown",
         amount: 2,
-        selected: false,
         data: {
           hex: "#9C673B"
         }
@@ -168,7 +148,6 @@ const filtersData = [
         id: "honey",
         name: "honey",
         amount: 2,
-        selected: false,
         data: {
           hex: "#ECB91E"
         }
@@ -193,24 +172,21 @@ const filtersData = [
     id: "width",
     name: "Width",
     type: "select",
-    options: [
+    items: [
       {
         id: "wide",
         name: "Wide",
-        amount: 46,
-        selected: false
+        amount: 46
       },
       {
         id: "standard",
         name: "Standard",
-        amount: 21,
-        selected: false
+        amount: 21
       },
       {
         id: "narrow",
         name: "Narrow",
-        amount: 12,
-        selected: false
+        amount: 12
       }
     ]
   }
