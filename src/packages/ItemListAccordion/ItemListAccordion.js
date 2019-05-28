@@ -16,6 +16,8 @@ const ItemListAccordion$ = props => {
       ItemListContainer: ItemListContainerOverride,
       ToggleContainer: ToggleContainerOverride
     },
+    onChange,
+    value,
     ...restProps
   } = props;
 
@@ -45,31 +47,38 @@ const ItemListAccordion$ = props => {
     ToggleContainerStyled
   );
 
-  return (
-    <div className={props.className} style={props.style}>
-      <ItemListContainer {...itemListContainerProps} tabIndex={0}>
-        {itemsVisible.map(item => {
-          return (
+  const onItemClick = item => {
+    if (onChange) {
+      if (value.includes(item)) {
+        onChange(value.filter(x => x !== item));
+      } else {
+        onChange([...value, item]);
+      }
+    }
+  };
+
+  const renderItems = items => (
+    <>
+      {items.map(item => {
+        return (
+          <div onClick={() => onItemClick(item)}>
             <ListItem
               key={item.id}
               focused={false}
-              selected={item.selected}
+              selected={value.includes(item)}
               item={item}
             />
-          );
-        })}
+          </div>
+        );
+      })}
+    </>
+  );
 
-        {open &&
-          itemsInAccordion.map(item => {
-            return (
-              <ListItem
-                key={item.id}
-                focused={false}
-                selected={item.selected}
-                item={item}
-              />
-            );
-          })}
+  return (
+    <div className={props.className} style={props.style}>
+      <ItemListContainer {...itemListContainerProps} tabIndex={0}>
+        {renderItems(itemsVisible)}
+        {open && renderItems(itemsInAccordion)}
       </ItemListContainer>
 
       <ToggleContainer {...toggleContainerProps}>
@@ -84,14 +93,16 @@ const ItemListAccordion$ = props => {
 ItemListAccordion$.defaultProps = {
   openAtInit: false,
   amountOfAlwaysVisible: 5,
-  overrides: {}
+  overrides: {},
+  value: []
 };
 
 ItemListAccordion$.propTypes = {
   openAtInit: PropTypes.bool,
   amountOfAlwaysVisible: PropTypes.number.isRequired, // might be higher if `minAmountToShowAccordion` is higher
   minAmountToShowAccordion: PropTypes.number,
-  children: PropTypes.any
+  children: PropTypes.any,
+  value: PropTypes.array
 };
 
 export default ItemListAccordion$;

@@ -18,12 +18,16 @@ function generateItems(n) {
   return items;
 }
 
+const items = generateItems(10);
+
 export default () => {
+  const [value, setValue] = useState([items[0], items[1]]);
+
   return (
     <div>
-      <p>Basic use case</p>
+      <p>Basic use case (+ connected to state)</p>
 
-      <ItemListAccordion items={generateItems(10)} />
+      <ItemListAccordion items={items} value={value} onChange={setValue} />
 
       <p>
         <code>amountOfAlwaysVisible={3}</code>
