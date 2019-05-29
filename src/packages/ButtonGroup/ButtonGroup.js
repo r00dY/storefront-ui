@@ -19,6 +19,7 @@ function ButtonGroup$(props) {
     <Root {...rootProps}>
       {props.children.map((child, i) => (
         <div
+          key={child.key || i}
           css={css`
             ${i > 0 && rs(gutter).css("margin-left")}
           `}

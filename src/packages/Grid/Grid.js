@@ -126,7 +126,7 @@ const Grid = function(props) {
 
 Grid.propTypes = {
   gutter: PropTypes.any,
-  colNumber: PropTypes.number
+  colNumber: PropTypes.any
 };
 
 export { Grid, GridItem };
