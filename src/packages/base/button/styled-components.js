@@ -43,9 +43,7 @@ export const BaseButton = styled(
     $disabled
   }: StylePropsT) => ({
     position: "relative",
-    ...($size === SIZE.compact
-      ? $theme.fonts.body1.css
-      : $theme.fonts.body2.css),
+    font: $size === SIZE.compact ? $theme.fonts.body1 : $theme.fonts.body2,
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",

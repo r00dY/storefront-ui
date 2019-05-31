@@ -9,6 +9,8 @@ LICENSE file in the root directory of this source tree.
 import type { ThemeT } from "../styles/types.js";
 import type { PrimitivesT } from "./types.js";
 import deepMerge from "../utils/deep-merge.js";
+import Font from "../../Font";
+import Color from "../../Color";
 
 const WHITE = "#FFFFFF";
 
@@ -16,6 +18,51 @@ export default function createTheme(
   primitives: PrimitivesT,
   overrides?: {}
 ): ThemeT {
+  const colorSets = ["primary", "negative", "positive"];
+  const levels = [50, 100, 200, 300, 400, 500, 600, 700];
+
+  primitives.primary = primitives.primary || new Color("#2196F3");
+  primitives.negative = primitives.negative || new Color("#F44336");
+  primitives.positive = primitives.positive || new Color("#4CAF50");
+
+  colorSets.forEach(colorSet => {
+    levels.forEach(level => {
+      const key = `${colorSet}${level}`;
+      if (!primitives[key]) {
+        primitives[key] = primitives[colorSet].changeBrightness(
+          (400 - level) / 500
+        );
+      }
+    });
+  });
+
+  const monoColors = {
+    mono: new Color("#9e9e9e"),
+    mono50: new Color("#fafafa"),
+    mono100: new Color("#f5f5f5"),
+    mono200: new Color("#eeeeee"),
+    mono300: new Color("#e0e0e0"),
+    mono400: new Color("#bdbdbd"),
+    mono500: new Color("#9e9e9e"),
+    mono600: new Color("#757575"),
+    mono700: new Color("#616161"),
+    mono800: new Color("#424242"),
+    mono900: new Color("#212121"),
+    mono1000: new Color("000000")
+  };
+
+  Object.keys(monoColors).forEach(key => {
+    if (!primitives[key]) {
+      primitives[key] = monoColors[key];
+    }
+  });
+
+  primitives = {
+    ...primitives,
+    rating200: new Color("#FFE1A5"),
+    rating400: new Color("#FFC043")
+  };
+
   const theme = {
     breakpoints: {
       small: 320,
@@ -25,62 +72,65 @@ export default function createTheme(
 
     colors: {
       // Primary Palette
+      primary: primitives.primary400,
       primary50: primitives.primary50,
       primary100: primitives.primary100,
       primary200: primitives.primary200,
       primary300: primitives.primary300,
       primary400: primitives.primary400,
-      primary: primitives.primary400,
       primary500: primitives.primary500,
       primary600: primitives.primary600,
       primary700: primitives.primary700,
 
       // Negative Palette
+      negative: primitives.negative400,
       negative50: primitives.negative50,
       negative100: primitives.negative100,
       negative200: primitives.negative200,
       negative300: primitives.negative300,
       negative400: primitives.negative400,
-      negative: primitives.negative400,
       negative500: primitives.negative500,
       negative600: primitives.negative600,
       negative700: primitives.negative700,
 
       // Warning Palette
+      warning: primitives.warning400,
       warning50: primitives.warning50,
       warning100: primitives.warning100,
       warning200: primitives.warning200,
       warning300: primitives.warning300,
       warning400: primitives.warning400,
-      warning: primitives.warning400,
       warning500: primitives.warning500,
       warning600: primitives.warning600,
       warning700: primitives.warning700,
 
       // Positive Palette
+      positive: primitives.positive400,
       positive50: primitives.positive50,
       positive100: primitives.positive100,
       positive200: primitives.positive200,
       positive300: primitives.positive300,
       positive400: primitives.positive400,
-      positive: primitives.positive400,
       positive500: primitives.positive500,
       positive600: primitives.positive600,
       positive700: primitives.positive700,
 
-      // Monochrome Palette
-      white: primitives.mono100,
-      mono100: primitives.mono100,
-      mono200: primitives.mono200,
-      mono300: primitives.mono300,
-      mono400: primitives.mono400,
-      mono500: primitives.mono500,
-      mono600: primitives.mono600,
-      mono700: primitives.mono700,
-      mono800: primitives.mono800,
-      mono900: primitives.mono900,
-      mono1000: primitives.mono1000,
-      black: primitives.mono1000,
+      // material grey
+      mono50: new Color("#fafafa"),
+      mono100: new Color("#f5f5f5"),
+      mono200: new Color("#eeeeee"),
+      mono300: new Color("#e0e0e0"),
+      mono400: new Color("#bdbdbd"),
+      mono500: new Color("#9e9e9e"),
+      mono600: new Color("#757575"),
+      mono700: new Color("#616161"),
+      mono800: new Color("#424242"),
+      mono900: new Color("#212121"),
+      mono1000: new Color("000000"),
+      mono: new Color("#9e9e9e"),
+
+      white: new Color("#ffffff"),
+      black: new Color("#000000"),
 
       // Rating Palette,
       rating200: primitives.rating200,
@@ -410,92 +460,55 @@ export default function createTheme(
       tooltipBackground: primitives.mono900,
       tooltipText: primitives.mono100
     },
-    typography: {
-      font100: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "11px",
-        fontWeight: "normal",
-        lineHeight: "16px"
-      },
-      font200: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "12px",
-        fontWeight: "normal",
-        lineHeight: "20px"
-      },
-      font250: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "12px",
-        fontWeight: "bold",
-        lineHeight: "20px"
-      },
-      font300: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "14px",
-        fontWeight: "normal",
-        lineHeight: "20px"
-      },
-      font350: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "14px",
-        fontWeight: "bold",
-        lineHeight: "20px"
-      },
-      font400: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "16px",
-        fontWeight: "normal",
-        lineHeight: "24px"
-      },
-      font450: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "16px",
-        fontWeight: "bold",
-        lineHeight: "24px"
-      },
-      font500: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "20px",
-        fontWeight: "bold",
-        lineHeight: "28px"
-      },
-      font600: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "24px",
-        fontWeight: "bold",
-        lineHeight: "36px"
-      },
-      font700: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "32px",
-        fontWeight: "bold",
-        lineHeight: "48px"
-      },
-      font800: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "40px",
-        fontWeight: "bold",
-        lineHeight: "56px"
-      },
-      font900: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "52px",
-        fontWeight: "bold",
-        lineHeight: "68px"
-      },
-      font1000: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "72px",
-        fontWeight: "normal",
-        lineHeight: "96px"
-      },
-      font1100: {
-        fontFamily: primitives.primaryFontFamily,
-        fontSize: "96px",
-        fontWeight: "normal",
-        lineHeight: "116px"
-      }
+
+    fonts: {
+      body1: new Font(`
+        font-family: sans-serif;
+        font-size: 16px;
+        font-weight: 400;
+      `),
+      body2: new Font(`
+        font-family: sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+      `),
+      h6: new Font(`
+        font-family: sans-serif;
+        font-size: 20px;
+        font-weight: 600;
+      `),
+      h5: new Font(`
+        font-family: sans-serif;
+        font-size: 24px;
+        font-weight: 600;
+      `),
+      h4: new Font(`
+        font-family: sans-serif;
+        font-size: 34px;
+        font-weight: 600;
+      `),
+      h3: new Font(`
+        font-family: sans-serif;
+        font-size: 48px;
+        font-weight: 600;
+      `),
+      h2: new Font(`
+        font-family: sans-serif;
+        font-size: 60px;
+        font-weight: 600;
+      `),
+      h1: new Font(`
+        font-family: sans-serif;
+        font-size: 96px;
+        font-weight: 600;
+      `),
+      caption: new Font(`
+        font-family: sans-serif;
+        font-size: 12px;
+        font-weight: 400;
+      `)
     },
+
     sizing: {
       scale0: "2px",
       scale100: "4px",
@@ -581,6 +594,28 @@ export default function createTheme(
     // https://github.com/uber-web/baseui/pull/1184
     tooltip: {
       backgroundColor: primitives.mono900
+    },
+    spacings: {
+      s0: 2,
+      s10: 4,
+      s20: 6,
+      s30: 8,
+      s40: 10,
+      s50: 12,
+      s55: 14,
+      s60: 16,
+      s70: 20,
+      s80: 24,
+      s90: 28,
+      s100: 32,
+      s110: 40,
+      s120: 48,
+      s130: 56,
+      s140: 64,
+      s150: 80,
+      s160: 96,
+      s170: 112,
+      s180: 128
     }
     // ^^^^^^^
   };

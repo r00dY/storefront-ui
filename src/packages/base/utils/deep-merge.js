@@ -7,6 +7,9 @@ LICENSE file in the root directory of this source tree.
 
 // @flow
 
+import Color from "../../Color";
+import Font from "../../Color";
+
 export default function deepMerge(
   target?: ?{},
   ...sources: Array<null | ?{}>
@@ -33,5 +36,8 @@ export default function deepMerge(
 
 /* eslint-disable-next-line flowtype/no-weak-types */
 function isCloneable(obj: mixed) {
+  if (obj instanceof Color || obj instanceof Font) {
+    return false;
+  }
   return Array.isArray(obj) || {}.toString.call(obj) == "[object Object]";
 }

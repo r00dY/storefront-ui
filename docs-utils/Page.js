@@ -6,8 +6,11 @@ import { menuWidth } from "./layoutVars";
 
 import { ModalContainer } from "storefront-ui/Modal";
 
-import { ThemeProvider } from "storefront-ui/Theme";
-import defaultTheme from "storefront-ui/Theme/defaultTheme";
+import { ThemeProvider, createTheme } from "storefront-ui/Theme";
+
+import Color from "../src/packages/Color";
+
+const defaultTheme = createTheme();
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

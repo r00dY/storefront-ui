@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 
+import createThemeBase from "../base/themes/creator";
+
 const ThemeContext = React.createContext(null);
 
 const ThemeProvider = props => {
@@ -63,4 +65,10 @@ const withTheme = (arg, componentName) => {
   };
 };
 
-export { ThemeContext, ThemeProvider, useTheme, withTheme };
+const createTheme = config => {
+  config = config || {};
+  const primitives = config.colors || {};
+  return createThemeBase(primitives, config);
+};
+
+export { ThemeContext, ThemeProvider, useTheme, withTheme, createTheme };
