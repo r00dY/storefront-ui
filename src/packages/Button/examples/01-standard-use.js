@@ -22,7 +22,7 @@ export default () => (
     <Button$>No state</Button$>
     <br />
     <br />
-    <Button$ isLoading>Loading</Button$>
+    <Button$ isLoading>Primary button</Button$>
     <br />
     <br />
     <Button$ disabled>Disabled</Button$>
@@ -72,5 +72,10 @@ export default () => (
     >
       Primary button
     </Button$>
+    <br />
+    <br />
+
+    <p>fit container</p>
+    <Button$ fitContainer={true}>Full width button</Button$>
   </div>
 );

@@ -6,11 +6,11 @@ class Ease {
   get css() {
     return this._css;
   }
-
-  toString() {
-    return this._css;
-  }
 }
+
+Ease.prototype.toString = function() {
+  return this._css;
+};
 
 Ease.quadIn = new Ease("cubic-bezier(0.55, 0.085, 0.68, 0.53)");
 Ease.quadOut = new Ease("cubic-bezier(0.25, 0.46, 0.45, 0.94)");

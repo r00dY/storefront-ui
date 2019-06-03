@@ -1,7 +1,8 @@
 import { Button } from "../base/button";
 import { withTheme } from "../Theme";
 
-const Button$ = Button;
+const Button$ = props => <Button {...props} />;
+
 // const Button_base_primary = ({
 //   size,
 //   shape,

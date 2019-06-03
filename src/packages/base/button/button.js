@@ -26,7 +26,8 @@ export default class Button extends React.Component<ButtonPropsT> {
     kind: KIND.primary,
     overrides: {},
     shape: SHAPE.default,
-    size: SIZE.default
+    size: SIZE.default,
+    fitContainer: false
   };
 
   internalOnClick = (...args: *) => {
@@ -56,6 +57,7 @@ export default class Button extends React.Component<ButtonPropsT> {
       overrides.BaseButton,
       StyledBaseButton
     );
+
     const [LoadingSpinner, loadingSpinnerProps] = getOverrides(
       overrides.LoadingSpinner,
       StyledLoadingSpinner

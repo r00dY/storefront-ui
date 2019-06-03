@@ -40,7 +40,8 @@ export const BaseButton = styled(
     $shape,
     $isLoading,
     $isSelected,
-    $disabled
+    $disabled,
+    $fitContainer
   }: StylePropsT) => ({
     position: "relative",
     font: $size === SIZE.compact ? $theme.fonts.body1 : $theme.fonts.body2,
@@ -55,12 +56,11 @@ export const BaseButton = styled(
     transitionProperty: "background",
     transitionDuration: $theme.animation.timing100,
     transitionTimingFunction: $theme.animation.easeOutCurve,
-    cursor: "pointer",
     ":disabled": {
-      cursor: "not-allowed",
       backgroundColor: $theme.colors.buttonDisabledFill,
       color: $theme.colors.buttonDisabledText
     },
+    cursor: $disabled || $isLoading ? "auto" : "pointer",
     // Padding For Shape and Size
     ...getStyleForShape({ $theme, $shape, $size }),
     // Kind style override
@@ -68,7 +68,8 @@ export const BaseButton = styled(
     marginLeft: 0,
     marginTop: 0,
     marginRight: 0,
-    marginBottom: 0
+    marginBottom: 0,
+    width: $fitContainer ? "100%" : "auto"
   })
 );
 
@@ -203,7 +204,7 @@ export function getStyleForKind({
           : $theme.colors.buttonPrimaryFill,
         ":hover": {
           backgroundColor: $isLoading
-            ? $theme.colors.buttonPrimaryActive
+            ? $theme.colors.buttonPrimaryFill
             : $theme.colors.buttonPrimaryHover
         },
         ":focus": {

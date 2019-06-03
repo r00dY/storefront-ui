@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 
 import createThemeBase from "../base/themes/creator";
+import Color from "../Color";
 
 const ThemeContext = React.createContext(null);
 
@@ -65,10 +66,68 @@ const withTheme = (arg, componentName) => {
   };
 };
 
+const generateThemeColors = primitives => {
+  primitives = { ...primitives };
+
+  primitives.primary = primitives.primary || new Color("#2196F3");
+  primitives.negative = primitives.negative || new Color("#F44336");
+  primitives.positive = primitives.positive || new Color("#4CAF50");
+
+  const colorSets = ["primary", "negative", "positive"];
+  const levels = [50, 100, 200, 300, 400, 500, 600, 700];
+
+  colorSets.forEach(colorSet => {
+    levels.forEach(level => {
+      const key = `${colorSet}${level}`;
+      if (!primitives[key]) {
+        primitives[key] = primitives[colorSet].changeBrightness(
+          (400 - level) / 500
+        );
+      }
+    });
+  });
+
+  const monoColors = {
+    mono: new Color("#9e9e9e"),
+    mono50: new Color("#fafafa"),
+    mono100: new Color("#f5f5f5"),
+    mono200: new Color("#eeeeee"),
+    mono300: new Color("#e0e0e0"),
+    mono400: new Color("#bdbdbd"),
+    mono500: new Color("#9e9e9e"),
+    mono600: new Color("#757575"),
+    mono700: new Color("#616161"),
+    mono800: new Color("#424242"),
+    mono900: new Color("#212121"),
+    mono1000: new Color("000000")
+  };
+
+  Object.keys(monoColors).forEach(key => {
+    if (!primitives[key]) {
+      primitives[key] = monoColors[key];
+    }
+  });
+
+  return {
+    ...primitives,
+    rating200: new Color("#FFE1A5"),
+    rating400: new Color("#FFC043"),
+    black: new Color("#000000"),
+    white: new Color("#ffffff")
+  };
+};
+
 const createTheme = config => {
   config = config || {};
-  const primitives = config.colors || {};
+  const primitives = generateThemeColors(config.colors || {});
   return createThemeBase(primitives, config);
 };
 
-export { ThemeContext, ThemeProvider, useTheme, withTheme, createTheme };
+export {
+  ThemeContext,
+  ThemeProvider,
+  useTheme,
+  withTheme,
+  createTheme,
+  generateThemeColors
+};

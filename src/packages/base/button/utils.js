@@ -13,7 +13,8 @@ export function getSharedProps({
   isSelected,
   kind,
   shape,
-  size
+  size,
+  fitContainer
 }: ButtonPropsT) {
   return {
     $disabled: disabled,
@@ -21,6 +22,7 @@ export function getSharedProps({
     $isSelected: isSelected,
     $kind: kind,
     $shape: shape,
-    $size: size
+    $size: size,
+    $fitContainer: fitContainer
   };
 }

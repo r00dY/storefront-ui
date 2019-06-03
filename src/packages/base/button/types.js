@@ -19,6 +19,7 @@ export type OverridesT = {
 export type ButtonPropsT = {
   children?: React$Node,
   disabled: boolean,
+  fitContainer: boolean,
   /** A helper rendered at the end of the button. */
   endEnhancer?: (*) => React$Node | React$Node,
   /** Show loading button style and spinner. */

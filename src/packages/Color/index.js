@@ -125,4 +125,8 @@ class Color {
   }
 }
 
+Color.prototype.toString = function() {
+  return this._color;
+};
+
 export default Color;
