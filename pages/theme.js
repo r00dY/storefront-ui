@@ -29,6 +29,17 @@ ${(
   />
 )}
 
+## Fonts
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Theme/examples/03-fonts.js").default
+    }
+    component={require("../src/packages/Theme/examples/03-fonts.js").default}
+  />
+)}
+
 `;
 
 export default () => <Page>{content}</Page>;
