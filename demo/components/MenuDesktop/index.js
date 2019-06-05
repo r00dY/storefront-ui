@@ -22,7 +22,7 @@ const MenuDesktopRaw = props => {
     const buttonSharedProps = {
       menuItem,
       isActive: menuActive === menuItem,
-      onMouseEnter: () => setMenuActive(menuItem)
+      setActive: () => setMenuActive(menuItem)
     };
 
     if (typeof MenuButton === "function") {
@@ -34,7 +34,7 @@ const MenuDesktopRaw = props => {
         React.cloneElement(
           MenuButton,
           {
-            onMouseEnter: buttonSharedProps.onMouseEnter,
+            onMouseEnter: buttonSharedProps.setActive,
             isSelected: buttonSharedProps.isActive
           },
           menuItem.label
