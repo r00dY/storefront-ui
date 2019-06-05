@@ -10,7 +10,7 @@ const MenuContent = props => (
   <div
     css={css`
       width: 100%;
-      height: 400px;
+      height: 200px;
       padding: 40px 0;
       background-color: lightgrey;
     `}
@@ -36,6 +36,7 @@ const Page = props => (
           content: <MenuContent>Nara</MenuContent>
         }
       ]}
+      renderMenuContent={true}
     />
     <div
       css={css`

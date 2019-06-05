@@ -13,7 +13,8 @@ const MenuDesktopRaw = props => {
 
   const {
     overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
-    data
+    data,
+    renderMenuContent
   } = props;
 
   let buttons = [];
@@ -72,32 +73,55 @@ const MenuDesktopRaw = props => {
         <MenuBar {...sharedProps} />
       </div>
 
-      <div
-        css={css`
-          position: absolute;
-          width: 100%;
-          // transition: opacity .1s;
-          visibility: ${menuActive ? "visible" : "hidden"};
-          opacity: ${menuActive ? "1" : "0"};
-        `}
-      >
-        {menuActive &&
-          (typeof menuActive.content === "function"
-            ? menuActive.content(sharedProps)
-            : menuActive.content)}
-      </div>
+      {renderMenuContent && (
+        <>
+          {data.map(menuItem => (
+            <div
+              css={css`
+                position: absolute;
+                width: 100%;
+                display: ${menuItem === menuActive ? "block" : "none"};
+              `}
+            >
+              {typeof menuItem.content === "function"
+                ? menuItem.content(sharedProps)
+                : menuItem.content}
+            </div>
+          ))}
+        </>
+      )}
+
+      {!renderMenuContent && (
+        <div
+          css={css`
+            position: absolute;
+            width: 100%;
+            display: ${menuActive ? "block" : "none"};
+          `}
+        >
+          {menuActive &&
+            (typeof menuActive.content === "function"
+              ? menuActive.content(sharedProps)
+              : menuActive.content)}
+        </div>
+      )}
     </div>
   );
 };
 
 MenuDesktopRaw.defaultProps = {
-  overrides: {}
+  overrides: {},
+  renderMenuContent: false
 };
 
 const MenuDesktop = props => (
   <MenuDesktopRaw
     overrides={{
-      MenuButton: <Button kind={"minimal"} />,
+      MenuButton: ({ menuItem, isActive, setActive }) => (
+        <Button kind={"minimal"} isSelected={isActive} onMouseEnter={setActive}>
+          {menuItem.label}
+        </Button>
+      ),
       MenuBar: ({ buttons }) => (
         <div
           css={css`
