@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { AccordionHeader } from "../../../../components/AccordionHeader";
+import { AccordionHeader } from "../../../../demo/theme/AccordionHeader";
 import { Accordion$ } from "storefront-ui/Accordion";
-import { Accordion } from "../../../../components/Accordion";
+import { Accordion } from "../../../../demo/theme/Accordion";
 // import { ButtonRaw } from "../../../../components/ButtonRaw";
 
 /** @jsx jsx */

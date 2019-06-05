@@ -1,7 +1,7 @@
+import React, { useEffect, useState } from "react";
 import Index from "../Container/Container";
 import { Grid, GridItem } from "./Grid";
 import Layout from "../Layout";
-import React, { useEffect, useState } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

@@ -1,17 +1,17 @@
 import React, { useState } from "react";
-import { FormControl } from "../../../../components/FormControl";
-import { FormHeader } from "../../../../components/FormHeader";
-import { StatefulCheckbox } from "../../../../components/Checkbox";
-import { StatefulInput } from "../../../../components/Input";
-import { StatefulTextarea } from "../../../../components/Textarea";
-import { StatefulRadioGroup, Radio } from "../../../../components/Radio";
+import { FormControl } from "../../../../demo/theme/FormControl";
+import { FormHeader } from "../../../../demo/theme/FormHeader";
+import { StatefulCheckbox } from "../../../../demo/theme/Checkbox";
+import { StatefulInput } from "../../../../demo/theme/Input";
+import { StatefulTextarea } from "../../../../demo/theme/Textarea";
+import { StatefulRadioGroup, Radio } from "../../../../demo/theme/Radio";
 
 import { Radio$ } from "storefront-ui/Radio";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 
-import { Button } from "../../../../components/Button";
-import { ButtonGroup } from "../../../../components/ButtonGroup";
+import { Button } from "../../../../demo/theme/Button";
+import { ButtonGroup } from "../../../../demo/theme/ButtonGroup";
 
 import { ThemeProvider } from "storefront-ui/Theme";
 

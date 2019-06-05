@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Radio, RadioGroup } from "../../../../components/Radio";
+import { Radio, RadioGroup } from "../../../../demo/theme/Radio";
 
 import { Radio$, RadioGroup$ } from "storefront-ui/Radio";
 

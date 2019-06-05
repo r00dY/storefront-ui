@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ItemListAccordion } from "../../../../components/ItemListAccordion";
+import { ItemListAccordion } from "../../../../demo/theme/ItemListAccordion";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

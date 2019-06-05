@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import { Button } from "../../../../components/Button";
+import { Button } from "../../../../demo/theme/Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { StatefulPopover } from "../../../../components/Popover";
+import { StatefulPopover } from "../../../../demo/theme/Popover";
 import { StatefulPopover$ } from "storefront-ui/Popover";
 
 export default () => {

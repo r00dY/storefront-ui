@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { FormControl } from "../../../../components/FormControl";
-import { StatefulCheckbox } from "../../../../components/Checkbox";
-import { StatefulInput } from "../../../../components/Input";
-import { StatefulTextarea } from "../../../../components/Textarea";
-import { StatefulRadioGroup, Radio } from "../../../../components/Radio";
+import { FormControl } from "../../../../demo/theme/FormControl";
+import { StatefulCheckbox } from "../../../../demo/theme/Checkbox";
+import { StatefulInput } from "../../../../demo/theme/Input";
+import { StatefulTextarea } from "../../../../demo/theme/Textarea";
+import { StatefulRadioGroup, Radio } from "../../../../demo/theme/Radio";
 
 import { FormControl$ } from "storefront-ui/FormControl";
 

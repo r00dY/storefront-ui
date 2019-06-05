@@ -1,5 +1,3 @@
-import "../storefront-ui.config";
-
 import React from "react";
 import Page from "../docs-utils/Page";
 import { md } from "../docs-utils/docs";

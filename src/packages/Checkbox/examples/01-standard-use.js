@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Checkbox$ } from "storefront-ui/Checkbox";
-import { Checkbox } from "../../../../components/Checkbox";
+import { Checkbox } from "../../../../demo/theme/Checkbox";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

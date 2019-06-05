@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiltersColumn } from "../../../../components/Filters";
+import { FiltersColumn } from "../../../../demo/theme/Filters";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
