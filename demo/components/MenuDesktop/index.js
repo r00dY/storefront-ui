@@ -12,17 +12,44 @@ const MenuDesktopRaw = props => {
   const [menuActive, setMenuActive] = useState(null);
 
   const {
-    overrides: { MenuBar: MenuBar },
+    overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
     data
   } = props;
+
+  let buttons = [];
+
+  data.forEach(menuItem => {
+    const buttonSharedProps = {
+      menuItem,
+      isActive: menuActive === menuItem,
+      onMouseEnter: () => setMenuActive(menuItem)
+    };
+
+    if (typeof MenuButton === "function") {
+      buttons.push(
+        <MenuButton {...buttonSharedProps}>{menuItem.label}</MenuButton>
+      );
+    } else {
+      buttons.push(
+        React.cloneElement(
+          MenuButton,
+          {
+            onMouseEnter: buttonSharedProps.onMouseEnter,
+            isSelected: buttonSharedProps.isActive
+          },
+          menuItem.label
+        )
+      );
+    }
+  });
 
   const sharedProps = {
     onMouseEnter: menuItem => {
       setMenuActive(menuItem);
     },
-    onMouseLeave: menuItem => {},
     menuActive,
-    data
+    data,
+    buttons
   };
 
   return (
@@ -70,7 +97,8 @@ MenuDesktopRaw.defaultProps = {
 const MenuDesktop = props => (
   <MenuDesktopRaw
     overrides={{
-      MenuBar: ({ onMouseEnter, onMouseLeave, menuActive, data }) => (
+      MenuButton: <Button kind={"minimal"} />,
+      MenuBar: ({ buttons }) => (
         <div
           css={css`
             background-color: lightgrey;
@@ -80,25 +108,7 @@ const MenuDesktop = props => (
             <LayoutLeftRightCenter
               left={"LOGO"}
               right={"buttons"}
-              center={
-                <div
-                  css={css`
-                    position: relative;
-                    height: 50px;
-                    display: flex;
-                    align-items: center;
-                  `}
-                >
-                  {data.map(menuItem => (
-                    <Button
-                      kind={"minimal"}
-                      onMouseEnter={() => onMouseEnter(menuItem)}
-                    >
-                      {menuItem.label}
-                    </Button>
-                  ))}
-                </div>
-              }
+              center={buttons}
             />
           </Container>
         </div>
