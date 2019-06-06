@@ -8,13 +8,14 @@
     "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"
   },
   "dependencies": {
+    "headroom.js": "^0.9.4",
+    "popper.js": "^1.14.3",
+    "react-input-mask": "^2.0.4",
     "react-modal": "^3.8.1",
     "react-responsive": "^6.1.1",
     "react-visibility-sensor": "^5.0.2",
     "responsive-helpers": "^0.1.12",
-    "simpleswiper": "^0.10.5",
-    "popper.js": "^1.14.3",
-    "react-input-mask": "^2.0.4"
+    "simpleswiper": "^0.10.5"
   },
   "peerDependencies": {
     "react": "^16.8.6",

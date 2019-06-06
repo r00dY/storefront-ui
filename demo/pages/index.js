@@ -13,7 +13,11 @@ export default () => (
       <Grid>
         <GridItem params={3}>Cześć</GridItem>
 
-        <GridItem params={[19, 1]}>Cześć</GridItem>
+        <GridItem params={[19, 1]}>
+          {Array(1000).map(() => (
+            <div>Cześć</div>
+          ))}
+        </GridItem>
       </Grid>
     </Container>
   </Page>

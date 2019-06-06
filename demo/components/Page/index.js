@@ -36,8 +36,8 @@ const Page = props => (
           content: <MenuContent>Nara</MenuContent>
         }
       ]}
-      renderMenuContent={true}
     />
+
     <div
       css={css`
         margin-top: 100px;

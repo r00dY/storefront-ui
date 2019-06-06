@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 
 import Container from "storefront-ui/Container";
 import LayoutLeftRightCenter from "../LayoutLeftRightCenter";
@@ -7,85 +7,173 @@ import { Button } from "../../theme/Button";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const MenuDesktopRaw = props => {
-  const [menuHover, setMenuHover] = useState(false);
-  const [menuActive, setMenuActive] = useState(null);
+import Headroom from "../../../../headroom.js";
 
+/**
+ * There are couple of common use cases to consider here:
+ * 1. (single menu) Menu static and no stickyness -> simplest option
+ * 2. (single menu) Menu fixed always. It might/might not hide/show after some treshold (headroom)
+ * 3. TODO: (single menu) Menu scrollable to some point and then getting fixed. It should have extra prop "scrollableContent". Menu has position: absolute when scrolling and position: fixed when not (for the sake of not taking up space in the page).
+ * 4. (double menu) System with 2 menus. One is static and second one is showing after some treshold. Only one should have renderMenuContent=true for SEO reasons. Actually it's mix of 1. and 2. (with 2. showing only when onTop=false).
+ */
+
+const MenuDesktopRaw = props => {
   const {
     overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
     data,
-    renderMenuContent
+    renderMenuContent,
+    mode,
+    offset
   } = props;
+
+  const [menuHover, setMenuHover] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
+
+  const [isPinned, setPinned] = useState(true);
+  const [isOnTop, setOnTop] = useState(true);
+  const [isOnBottom, setOnBottom] = useState(false);
+
+  const ref = useRef(null);
+  const headroom = useRef(null);
+
+  useEffect(
+    () => {
+      if (headroom.current) {
+        headroom.current.destroy();
+      }
+
+      if (mode !== "static") {
+        headroom.current = new Headroom(ref.current, {
+          offset: offset,
+          onPin: () => {
+            setPinned(true);
+          },
+          onUnpin: () => {
+            setPinned(false);
+          },
+          onTop: () => {
+            setOnTop(true);
+          },
+          onNotTop: () => {
+            setOnTop(false);
+          },
+          onBottom: () => {
+            setOnBottom(true);
+          },
+          onNotBottom: () => {
+            setOnBottom(false);
+          }
+        });
+        headroom.current.init();
+      }
+    },
+    [offset, mode]
+  );
 
   let buttons = [];
 
-  data.forEach(menuItem => {
+  data.forEach((menu, i) => {
     const buttonSharedProps = {
-      menuItem,
-      isActive: menuActive === menuItem,
-      setActive: () => setMenuActive(menuItem)
+      menu,
+      isActive: activeMenu === menu,
+      setActive: () => setActiveMenu(menu),
+      menuHover,
+      isPinned,
+      isOnTop,
+      isOnBottom
     };
 
     if (typeof MenuButton === "function") {
       buttons.push(
-        <MenuButton {...buttonSharedProps}>{menuItem.label}</MenuButton>
+        <MenuButton key={i} {...buttonSharedProps}>
+          {menu.label}
+        </MenuButton>
       );
     } else {
       buttons.push(
         React.cloneElement(
           MenuButton,
           {
+            key: i,
             onMouseEnter: buttonSharedProps.setActive,
             isSelected: buttonSharedProps.isActive
           },
-          menuItem.label
+          menu.label
         )
       );
     }
   });
 
   const sharedProps = {
-    onMouseEnter: menuItem => {
-      setMenuActive(menuItem);
-    },
-    menuActive,
+    setActiveMenu,
+    activeMenu,
     data,
-    buttons
+    buttons,
+    menuHover,
+    isPinned,
+    isOnTop,
+    isOnBottom
   };
+
+  let containerStyles;
+  if (mode === "static") {
+    containerStyles = "";
+  } else if (mode === "fixed") {
+    containerStyles = `
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+    `;
+  }
+
+  console.log("state", isPinned, isOnTop, isOnBottom);
 
   return (
     <div
       css={css`
-        position: relative;
-        z-index: 1000;
+        ${containerStyles}
       `}
       onMouseEnter={() => setMenuHover(true)}
       onMouseLeave={() => {
         setMenuHover(false);
-        setMenuActive(false);
+        setActiveMenu(false);
       }}
+      ref={ref}
     >
       <div
         css={css`
           position: relative;
+          overflow: hidden;
         `}
       >
-        <MenuBar {...sharedProps} />
+        <div
+          css={css`
+          transition: transform .15s ease-out;
+          // transform: ${
+            isOnTop && !activeMenu ? "translateY(-100%)" : "none"
+          };
+        `}
+        >
+          <MenuBar {...sharedProps} />
+        </div>
       </div>
 
       {renderMenuContent && (
         <>
-          {data.map(menuItem => (
+          {data.map((menu, i) => (
             <div
               css={css`
                 position: absolute;
                 width: 100%;
-                display: ${menuItem === menuActive ? "block" : "none"};
+                display: ${menu === activeMenu ? "block" : "none"};
               `}
+              key={i}
             >
-              {typeof menuItem.content === "function"
-                ? menuItem.content(sharedProps)
-                : menuItem.content}
+              {typeof menu.content === "function"
+                ? menu.content(sharedProps)
+                : menu.content}
             </div>
           ))}
         </>
@@ -96,13 +184,13 @@ const MenuDesktopRaw = props => {
           css={css`
             position: absolute;
             width: 100%;
-            display: ${menuActive ? "block" : "none"};
+            display: ${activeMenu ? "block" : "none"};
           `}
         >
-          {menuActive &&
-            (typeof menuActive.content === "function"
-              ? menuActive.content(sharedProps)
-              : menuActive.content)}
+          {activeMenu &&
+            (typeof activeMenu.content === "function"
+              ? activeMenu.content(sharedProps)
+              : activeMenu.content)}
         </div>
       )}
     </div>
@@ -111,33 +199,46 @@ const MenuDesktopRaw = props => {
 
 MenuDesktopRaw.defaultProps = {
   overrides: {},
-  renderMenuContent: false
+  renderMenuContent: false,
+  mode: "static"
 };
 
 const MenuDesktop = props => (
   <MenuDesktopRaw
     overrides={{
-      MenuButton: ({ menuItem, isActive, setActive }) => (
+      MenuButton: ({ menu, isActive, setActive }) => (
         <Button kind={"minimal"} isSelected={isActive} onMouseEnter={setActive}>
-          {menuItem.label}
+          {menu.label}
         </Button>
       ),
-      MenuBar: ({ buttons }) => (
+      MenuBar: ({ buttons, isOnTop, isPinned }) => (
         <div
           css={css`
-            background-color: lightgrey;
+            position: relative;
+            overflow: hidden;
           `}
         >
-          <Container>
-            <LayoutLeftRightCenter
-              left={"LOGO"}
-              right={"buttons"}
-              center={buttons}
-            />
-          </Container>
+          <div
+            css={css`
+              ${isPinned ? "" : "transform: translateY(-100%);"}
+              background-color: lightgrey;
+              ${isOnTop ? "" : "border-bottom: 1px solid black;"}
+            `}
+          >
+            <Container>
+              <LayoutLeftRightCenter
+                left={"LOGO"}
+                right={"buttons"}
+                center={buttons}
+              />
+            </Container>
+          </div>
         </div>
       )
     }}
+    renderMenuContent={true}
+    mode={"fixed"}
+    offset={100}
     {...props}
   />
 );
