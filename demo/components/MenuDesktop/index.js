@@ -7,15 +7,35 @@ import { Button } from "../../theme/Button";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import Headroom from "../../../../headroom.js";
-
 /**
  * There are couple of common use cases to consider here:
  * 1. (single menu) Menu static and no stickyness -> simplest option
  * 2. (single menu) Menu fixed always. It might/might not hide/show after some treshold (headroom)
  * 3. TODO: (single menu) Menu scrollable to some point and then getting fixed. It should have extra prop "scrollableContent". Menu has position: absolute when scrolling and position: fixed when not (for the sake of not taking up space in the page).
  * 4. (double menu) System with 2 menus. One is static and second one is showing after some treshold. Only one should have renderMenuContent=true for SEO reasons. Actually it's mix of 1. and 2. (with 2. showing only when onTop=false).
+ *
+ * TODO: hide / show sharedProps (scrollingUp / scrollingDown). Remember about: overflow effect, resize + bars on mobile.
  */
+
+function getActiveOffset(offsets, scrollY) {
+  let offsetsCopy = { ...offsets };
+
+  if (!offsetsCopy[0]) {
+    offsetsCopy[0] = "top";
+  }
+
+  let keys = Object.keys(offsetsCopy);
+  keys.sort();
+
+  let result;
+  for (let i = 0; i < keys.length; i++) {
+    if (keys[i] <= scrollY) {
+      result = offsetsCopy[keys[i]];
+    }
+  }
+
+  return result;
+}
 
 const MenuDesktopRaw = props => {
   const {
@@ -23,51 +43,37 @@ const MenuDesktopRaw = props => {
     data,
     renderMenuContent,
     mode,
-    offset
+    offsets
   } = props;
 
   const [menuHover, setMenuHover] = useState(false);
   const [activeMenu, setActiveMenu] = useState(null);
 
-  const [isPinned, setPinned] = useState(true);
-  const [isOnTop, setOnTop] = useState(true);
-  const [isOnBottom, setOnBottom] = useState(false);
+  const [offset, setOffset] = useState(undefined);
 
-  const ref = useRef(null);
-  const headroom = useRef(null);
+  const updateOffset = () => {
+    setOffset(getActiveOffset(offsets, window.scrollY));
+  };
+
+  const scrollListenerRef = useRef(null);
 
   useEffect(
     () => {
-      if (headroom.current) {
-        headroom.current.destroy();
+      if (mode === "static") {
+        return;
       }
 
-      if (mode !== "static") {
-        headroom.current = new Headroom(ref.current, {
-          offset: offset,
-          onPin: () => {
-            setPinned(true);
-          },
-          onUnpin: () => {
-            setPinned(false);
-          },
-          onTop: () => {
-            setOnTop(true);
-          },
-          onNotTop: () => {
-            setOnTop(false);
-          },
-          onBottom: () => {
-            setOnBottom(true);
-          },
-          onNotBottom: () => {
-            setOnBottom(false);
-          }
-        });
-        headroom.current.init();
-      }
+      scrollListenerRef.current = window.addEventListener(
+        "scroll",
+        updateOffset
+      );
+      updateOffset();
+
+      return function cleanup() {
+        window.removeEventListener("scroll", updateOffset);
+      };
     },
-    [offset, mode]
+    [offsets, mode]
   );
 
   let buttons = [];
@@ -78,9 +84,7 @@ const MenuDesktopRaw = props => {
       isActive: activeMenu === menu,
       setActive: () => setActiveMenu(menu),
       menuHover,
-      isPinned,
-      isOnTop,
-      isOnBottom
+      offset
     };
 
     if (typeof MenuButton === "function") {
@@ -110,9 +114,7 @@ const MenuDesktopRaw = props => {
     data,
     buttons,
     menuHover,
-    isPinned,
-    isOnTop,
-    isOnBottom
+    offset
   };
 
   let containerStyles;
@@ -128,8 +130,6 @@ const MenuDesktopRaw = props => {
     `;
   }
 
-  console.log("state", isPinned, isOnTop, isOnBottom);
-
   return (
     <div
       css={css`
@@ -140,7 +140,6 @@ const MenuDesktopRaw = props => {
         setMenuHover(false);
         setActiveMenu(false);
       }}
-      ref={ref}
     >
       <div
         css={css`
@@ -200,7 +199,8 @@ const MenuDesktopRaw = props => {
 MenuDesktopRaw.defaultProps = {
   overrides: {},
   renderMenuContent: false,
-  mode: "static"
+  mode: "static",
+  offsets: {}
 };
 
 const MenuDesktop = props => (
@@ -211,7 +211,7 @@ const MenuDesktop = props => (
           {menu.label}
         </Button>
       ),
-      MenuBar: ({ buttons, isOnTop, isPinned }) => (
+      MenuBar: ({ buttons, offset }) => (
         <div
           css={css`
             position: relative;
@@ -220,9 +220,11 @@ const MenuDesktop = props => (
         >
           <div
             css={css`
-              ${isPinned ? "" : "transform: translateY(-100%);"}
               background-color: lightgrey;
-              ${isOnTop ? "" : "border-bottom: 1px solid black;"}
+              transition: transform 0.15s ease-out;
+              transform: ${offset === "treshold"
+                ? "none"
+                : "translateY(-100%)"};
             `}
           >
             <Container>
@@ -238,7 +240,9 @@ const MenuDesktop = props => (
     }}
     renderMenuContent={true}
     mode={"fixed"}
-    offset={100}
+    offsets={{
+      800: "treshold"
+    }}
     {...props}
   />
 );
