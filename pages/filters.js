@@ -21,7 +21,7 @@ ${(
   />
 )}
 
-## \`FilterColumn\`
+## \`FiltersColumn\`
 
 Let's start with simple filter column, so common in all kinds of e-commerce sites.
 
@@ -37,6 +37,21 @@ ${(
   />
 )}
 
+## \`FiltersRow\`
+
+These filters are organised in a horizontal row of triggers that show popups. Primarily this solution is made to be used mostly as a single-row bar(when triggers stack vertically they are almost inaccessible).
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Filters/examples/03-filters-row.js")
+        .default
+    }
+    component={
+      require("../src/packages/Filters/examples/03-filters-row.js").default
+    }
+  />
+)}
 
 `;
 
