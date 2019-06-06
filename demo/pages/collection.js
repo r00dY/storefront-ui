@@ -24,8 +24,8 @@ export default () => {
           </GridItem>
 
           <GridItem params={[19, 1]}>
-            {[...Array(1000)].map(() => (
-              <div>Cześć</div>
+            {[...Array(1000)].map((e, i) => (
+              <div key={i}>Cześć</div>
             ))}
           </GridItem>
         </Grid>

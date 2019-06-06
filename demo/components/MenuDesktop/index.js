@@ -37,6 +37,20 @@ function getActiveOffset(offsets, scrollY) {
   return result;
 }
 
+// takes overflow of Safari iOS into account
+const getNormalizedScrollY = () => {
+  const scrollY = window.scrollY;
+
+  if (
+    scrollY >= document.documentElement.scrollHeight - window.innerHeight ||
+    scrollY < 0
+  ) {
+    return null;
+  }
+
+  return scrollY;
+};
+
 const MenuDesktopRaw = props => {
   const {
     overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
@@ -51,11 +65,51 @@ const MenuDesktopRaw = props => {
 
   const [offset, setOffset] = useState(undefined);
 
-  const updateOffset = () => {
-    setOffset(getActiveOffset(offsets, window.scrollY));
-  };
+  const [hideable, setHideable] = useState(false);
+  const [blocked, setBlocked] = useState(false);
 
-  const scrollListenerRef = useRef(null);
+  const previousScrollY = useRef(null);
+  const timeout = useRef(null);
+
+  // wrapper to have access to up-to-date values in updateScroll closure
+  const wrapper = useRef({});
+  wrapper.current.blocked = blocked;
+  wrapper.current.hideable = hideable;
+
+  const updateScroll = () => {
+    const scrollY = getNormalizedScrollY();
+    if (scrollY === null) {
+      return;
+    }
+
+    setOffset(getActiveOffset(offsets, scrollY));
+
+    if (previousScrollY.current !== null) {
+      let newHideable;
+
+      if (scrollY > previousScrollY.current) {
+        newHideable = true;
+      } else {
+        newHideable = false;
+      }
+
+      if (
+        newHideable !== wrapper.current.hideable &&
+        !wrapper.current.blocked
+      ) {
+        setHideable(newHideable);
+
+        clearTimeout(timeout.current);
+        timeout.current = setTimeout(() => {
+          setBlocked(false);
+        }, 300);
+
+        setBlocked(true);
+      }
+    }
+
+    previousScrollY.current = scrollY;
+  };
 
   useEffect(
     () => {
@@ -63,14 +117,12 @@ const MenuDesktopRaw = props => {
         return;
       }
 
-      scrollListenerRef.current = window.addEventListener(
-        "scroll",
-        updateOffset
-      );
-      updateOffset();
+      window.addEventListener("scroll", updateScroll);
+      updateScroll();
 
       return function cleanup() {
-        window.removeEventListener("scroll", updateOffset);
+        window.removeEventListener("scroll", updateScroll);
+        clearTimeout(timeout.current);
       };
     },
     [offsets, mode]
@@ -84,7 +136,8 @@ const MenuDesktopRaw = props => {
       isActive: activeMenu === menu,
       setActive: () => setActiveMenu(menu),
       menuHover,
-      offset
+      offset,
+      hideable
     };
 
     if (typeof MenuButton === "function") {
@@ -114,7 +167,8 @@ const MenuDesktopRaw = props => {
     data,
     buttons,
     menuHover,
-    offset
+    offset,
+    hideable
   };
 
   let containerStyles;
@@ -200,7 +254,8 @@ MenuDesktopRaw.defaultProps = {
   overrides: {},
   renderMenuContent: false,
   mode: "static",
-  offsets: {}
+  offsets: {},
+  tolerance: 0
 };
 
 const MenuDesktop = props => (
@@ -211,7 +266,7 @@ const MenuDesktop = props => (
           {menu.label}
         </Button>
       ),
-      MenuBar: ({ buttons, offset }) => (
+      MenuBar: ({ buttons, offset, hideable }) => (
         <div
           css={css`
             position: relative;
@@ -222,9 +277,14 @@ const MenuDesktop = props => (
             css={css`
               background-color: lightgrey;
               transition: transform 0.15s ease-out;
-              transform: ${offset === "treshold"
-                ? "none"
-                : "translateY(-100%)"};
+
+              transform: ${offset === "treshold" && hideable
+                ? "translateY(-100%)"
+                : "none"};
+
+              border-bottom: ${offset === "treshold" || offset === "not-top"
+                ? "1px solid black;"
+                : "none"};
             `}
           >
             <Container>
@@ -241,6 +301,7 @@ const MenuDesktop = props => (
     renderMenuContent={true}
     mode={"fixed"}
     offsets={{
+      1: "not-top",
       800: "treshold"
     }}
     {...props}
