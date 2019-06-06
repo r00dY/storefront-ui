@@ -1,1 +1,4 @@
-export { default as FiltersColumn$ } from "./FiltersColumn/FiltersColumn";
+import FiltersColumn$ from "./FiltersColumn/FiltersColumn";
+import FiltersRow$ from "./FiltersRow/FiltersRow";
+
+export { FiltersColumn$, FiltersRow$ };
