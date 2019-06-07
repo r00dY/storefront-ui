@@ -1,26 +1,26 @@
 import PropTypes from "prop-types";
 import React, { useState, useEffect } from "react";
-import { ItemsListContainerStyled } from "./styled-components";
+import { ItemListContainerStyled } from "./styled-components";
 
 import { getOverrides } from "../base/helpers/overrides";
 
-const ItemsList$ = props => {
+const ItemList$ = props => {
   const [open, setOpen] = useState(props.openAtInit);
 
   const {
     items,
     overrides: {
       ListItem: ListItem,
-      ItemsListContainer: ItemsListContainerOverride
+      ItemListContainer: ItemListContainerOverride
     },
     onChange,
     value,
     ...restProps
   } = props;
 
-  const [ItemsListContainer, itemListContainerProps] = getOverrides(
-    ItemsListContainerOverride,
-    ItemsListContainerStyled
+  const [ItemListContainer, itemListContainerProps] = getOverrides(
+    ItemListContainerOverride,
+    ItemListContainerStyled
   );
 
   const onItemClick = item => {
@@ -35,7 +35,7 @@ const ItemsList$ = props => {
 
   return (
     <div>
-      <ItemsListContainer {...itemListContainerProps} tabIndex={0}>
+      <ItemListContainer {...itemListContainerProps} tabIndex={0}>
         {items.map(item => {
           return (
             <div onClick={() => onItemClick(item)} key={item.id}>
@@ -47,19 +47,19 @@ const ItemsList$ = props => {
             </div>
           );
         })}
-      </ItemsListContainer>
+      </ItemListContainer>
     </div>
   );
 };
 
-ItemsList$.defaultProps = {
+ItemList$.defaultProps = {
   overrides: {},
   value: []
 };
 
-ItemsList$.propTypes = {
+ItemList$.propTypes = {
   children: PropTypes.any,
   value: PropTypes.array
 };
 
-export default ItemsList$;
+export default ItemList$;

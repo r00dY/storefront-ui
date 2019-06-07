@@ -17,7 +17,7 @@ import { css, jsx } from "@emotion/core";
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../../base/helpers/overrides";
 
-const FiltersRow$ = props => {
+const FilterRow$ = props => {
   const onChange = (id, value) => {
     if (props.onChange) {
       props.onChange(id, value);
@@ -81,31 +81,16 @@ const FiltersRow$ = props => {
                     <PopoverHead
                       onChange={value => onChange(filter.id, value)}
                       filter={filter}
+                      close={close}
                       {...popoverHeadProps}
-                    >
-                      <Button$
-                        fitContainer
-                        kind={"secondary"}
-                        disabled={
-                          !filter.value ||
-                          (filter.value && filter.value.length === 0)
-                        }
-                        onClick={() => onChange(filter.id, [])}
-                      >
-                        Clear all
-                      </Button$>
-                    </PopoverHead>
+                    />
                     <PopoverBody {...popoverBodyProps}>
                       <Component
                         filter={filter}
                         onChange={value => onChange(filter.id, value)}
                       />
                     </PopoverBody>
-                    <PopoverFooter {...popoverFooterProps}>
-                      <Button$ fitContainer onClick={close}>
-                        Apply
-                      </Button$>
-                    </PopoverFooter>
+                    <PopoverFooter close={close} {...popoverFooterProps} />
                   </PopoverRoot>
                 )}
                 {...popoverProps}
@@ -131,14 +116,14 @@ const FiltersRow$ = props => {
   );
 };
 
-FiltersRow$.defaultProps = {
+FilterRow$.defaultProps = {
   gutter: 16,
   overrides: {}
 };
 
-FiltersRow$.propTypes = {
+FilterRow$.propTypes = {
   gutter: PropTypes.any.isRequired,
   overrides: PropTypes.object
 };
 
-export default FiltersRow$;
+export default FilterRow$;

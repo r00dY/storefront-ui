@@ -1,4 +1,4 @@
 import FiltersColumn$ from "./FiltersColumn/FiltersColumn";
-import FiltersRow$ from "./FiltersRow/FiltersRow";
+import FilterRow$ from "./FilterRow/FilterRow";
 
-export { FiltersColumn$, FiltersRow$ };
+export { FiltersColumn$, FilterRow$ };

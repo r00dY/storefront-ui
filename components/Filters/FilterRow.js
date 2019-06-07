@@ -1,8 +1,7 @@
 import React from "react";
-import { FiltersRow$ } from "storefront-ui/Filters";
-import { ItemsList } from "../ItemsList";
+import { FilterRow$ } from "storefront-ui/Filters";
+import { ItemList } from "../ItemList";
 import { Button } from "../Button";
-import { Button$ } from "../../src/packages/Button";
 
 const overrides = {
   Trigger: ({ filter }) => (
@@ -16,28 +15,26 @@ const overrides = {
     </Button>
   ),
   PopoverHead: ({ filter, onChange }) => (
-    <Button$
+    <Button
       fitContainer
       disabled={!filter.value || (filter.value && filter.value.length === 0)}
       kind={"secondary"}
       onClick={() => onChange([])}
-      overrides={{
-        Root: {}
-      }}
     >
       Clear All
-    </Button$>
+    </Button>
+  ),
+  PopoverFooter: ({ close }) => (
+    <Button fitContainer onClick={close}>
+      Apply
+    </Button>
   ),
   filterComponents: {
     select: ({ filter, onChange }) => (
-      <ItemsList
-        items={filter.items}
-        value={filter.value}
-        onChange={onChange}
-      />
+      <ItemList items={filter.items} value={filter.value} onChange={onChange} />
     ),
     range: ({ filter, onChange }) => <div>range</div>
   }
 };
-const FiltersRow = props => <FiltersRow$ overrides={overrides} {...props} />;
-export default FiltersRow;
+const FilterRow = props => <FilterRow$ overrides={overrides} {...props} />;
+export default FilterRow;

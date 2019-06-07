@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FiltersRow } from "../../../../components/Filters";
+import { FilterRow } from "../../../../components/Filters";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -10,5 +10,5 @@ import useFiltersData from "storefront-ui/Filters/useFiltersData";
 export default () => {
   const [data, onChange] = useFiltersData(filterData);
 
-  return <FiltersRow data={data} onChange={onChange} />;
+  return <FilterRow data={data} onChange={onChange} />;
 };

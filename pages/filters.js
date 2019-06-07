@@ -44,11 +44,11 @@ These filters are organised in a horizontal row of triggers that show popups. Pr
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Filters/examples/03-filters-row.js")
+      require("!!raw-loader!../src/packages/Filters/examples/03-filter-row.js")
         .default
     }
     component={
-      require("../src/packages/Filters/examples/03-filters-row.js").default
+      require("../src/packages/Filters/examples/03-filter-row.js").default
     }
   />
 )}
