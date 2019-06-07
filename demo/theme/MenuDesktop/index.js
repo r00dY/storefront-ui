@@ -1,6 +1,6 @@
 import React from "react";
 
-import { MenuDesktopRaw } from "storefront-ui/MenuDesktop";
+import { MenuDesktop$ } from "storefront-ui/MenuDesktop";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import LayoutRow from "storefront-ui/LayoutRow";
 import useScrollDirection from "storefront-ui/useScrollDirection";
@@ -17,7 +17,7 @@ const MenuDesktop = props => {
   const segment = useScrollSegment({ 1: "not-top", 1000: "hideable" });
 
   return (
-    <MenuDesktopRaw
+    <MenuDesktop$
       overrides={{
         MenuButton: ({ index, menu, isActive, setActive }) => (
           <Button

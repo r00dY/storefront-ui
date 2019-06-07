@@ -12,7 +12,7 @@ import { css, jsx } from "@emotion/core";
  *
  */
 
-const MenuDesktopRaw = props => {
+const MenuDesktop$ = props => {
   const {
     overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
     data,
@@ -107,11 +107,11 @@ const MenuDesktopRaw = props => {
   );
 };
 
-MenuDesktopRaw.defaultProps = {
+MenuDesktop$.defaultProps = {
   overrides: {},
   renderMenuContent: false,
   mode: "static",
   offsets: {}
 };
 
-export { MenuDesktopRaw };
+export { MenuDesktop$ };
