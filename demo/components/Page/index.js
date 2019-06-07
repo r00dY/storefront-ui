@@ -1,6 +1,6 @@
 import React from "react";
 import { GridDebugger } from "storefront-ui/Grid";
-import MenuDesktop from "../MenuDesktop";
+import MenuDesktop from "../../theme/MenuDesktop";
 import Container from "storefront-ui/Container";
 
 /** @jsx jsx */
