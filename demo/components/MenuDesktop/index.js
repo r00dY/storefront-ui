@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from "react";
 
 import Container from "storefront-ui/Container";
 import LayoutLeftRightCenter from "../LayoutLeftRightCenter";
+import LayoutRow from "../LayoutRow";
 import { Button } from "../../theme/Button";
 
 /** @jsx jsx */
@@ -278,14 +279,13 @@ const MenuDesktop = props => {
             >
               <Container>
                 <LayoutLeftRightCenter
+                  height={50}
                   left={
-                    <div
-                      css={css`
-                        height: 50px;
-                      `}
-                    >
-                      Logo
-                    </div>
+                    <LayoutRow>
+                      <div>A</div>
+                      <div>B</div>
+                      <div>C</div>
+                    </LayoutRow>
                   }
                   right={"buttons"}
                   center={buttons}
