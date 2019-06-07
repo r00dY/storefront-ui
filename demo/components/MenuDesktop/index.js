@@ -10,12 +10,89 @@ import { css, jsx } from "@emotion/core";
 /**
  * There are couple of common use cases to consider here:
  * 1. (single menu) Menu static and no stickyness -> simplest option
- * 2. (single menu) Menu fixed always. It might/might not hide/show after some treshold (headroom)
- * 3. TODO: (single menu) Menu scrollable to some point and then getting fixed. It should have extra prop "scrollableContent". Menu has position: absolute when scrolling and position: fixed when not (for the sake of not taking up space in the page).
+ * 2. (single menu) Menu fixed always. It might optionally hide/show on scroll down/up.
+ * 3. TODO: (single menu) Menu scrollable to some point and then getting fixed. It should have extra prop "scrollableContent". Menu has position: absolute when scrolling and position: fixed when sticky (for the sake of not taking up space in the page).
  * 4. (double menu) System with 2 menus. One is static and second one is showing after some treshold. Only one should have renderMenuContent=true for SEO reasons. Actually it's mix of 1. and 2. (with 2. showing only when onTop=false).
  *
- * TODO: hide / show sharedProps (scrollingUp / scrollingDown). Remember about: overflow effect, resize + bars on mobile.
  */
+
+// takes overflow of Safari iOS into account
+const getNormalizedScrollY = () => {
+  const scrollY = window.scrollY;
+
+  if (
+    scrollY >= document.documentElement.scrollHeight - window.innerHeight ||
+    scrollY < 0
+  ) {
+    return null;
+  }
+
+  return scrollY;
+};
+
+function useScrollDirection(options) {
+  options = options || {};
+  const { timeDebounce } = options;
+
+  const [direction, setDirection] = useState(undefined);
+  const [blocked, setBlocked] = useState(false);
+
+  // wrapper to have access to up-to-date values in updateScroll closure
+  const wrapper = useRef({});
+  wrapper.current.blocked = blocked;
+  wrapper.current.direction = direction;
+
+  const previousScrollY = useRef(null);
+  const timeout = useRef(null);
+
+  useEffect(
+    () => {
+      const updateScroll = () => {
+        const scrollY = getNormalizedScrollY();
+        if (scrollY === null) {
+          return;
+        }
+
+        if (previousScrollY.current !== null) {
+          let newDirection;
+
+          if (scrollY > previousScrollY.current) {
+            newDirection = true;
+          } else {
+            newDirection = false;
+          }
+
+          if (
+            newDirection !== wrapper.current.direction &&
+            !wrapper.current.blocked
+          ) {
+            setDirection(newDirection);
+
+            clearTimeout(timeout.current);
+            timeout.current = setTimeout(() => {
+              setBlocked(false);
+            }, timeDebounce);
+
+            setBlocked(true);
+          }
+        }
+
+        previousScrollY.current = scrollY;
+      };
+
+      window.addEventListener("scroll", updateScroll);
+      updateScroll();
+
+      return function cleanup() {
+        window.removeEventListener("scroll", updateScroll);
+        clearTimeout(timeout.current);
+      };
+    },
+    [timeDebounce]
+  );
+
+  return direction;
+}
 
 function getActiveOffset(offsets, scrollY) {
   let offsetsCopy = { ...offsets };
@@ -37,96 +114,38 @@ function getActiveOffset(offsets, scrollY) {
   return result;
 }
 
-// takes overflow of Safari iOS into account
-const getNormalizedScrollY = () => {
-  const scrollY = window.scrollY;
-
-  if (
-    scrollY >= document.documentElement.scrollHeight - window.innerHeight ||
-    scrollY < 0
-  ) {
-    return null;
-  }
-
-  return scrollY;
-};
-
-const MenuDesktopRaw = props => {
-  const {
-    overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
-    data,
-    renderMenuContent,
-    mode,
-    offsets
-  } = props;
-
-  const [menuHover, setMenuHover] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
-
-  const [offset, setOffset] = useState(undefined);
-
-  const [hideable, setHideable] = useState(false);
-  const [blocked, setBlocked] = useState(false);
-
-  const previousScrollY = useRef(null);
-  const timeout = useRef(null);
-
-  // wrapper to have access to up-to-date values in updateScroll closure
-  const wrapper = useRef({});
-  wrapper.current.blocked = blocked;
-  wrapper.current.hideable = hideable;
-
-  const updateScroll = () => {
-    const scrollY = getNormalizedScrollY();
-    if (scrollY === null) {
-      return;
-    }
-
-    setOffset(getActiveOffset(offsets, scrollY));
-
-    if (previousScrollY.current !== null) {
-      let newHideable;
-
-      if (scrollY > previousScrollY.current) {
-        newHideable = true;
-      } else {
-        newHideable = false;
-      }
-
-      if (
-        newHideable !== wrapper.current.hideable &&
-        !wrapper.current.blocked
-      ) {
-        setHideable(newHideable);
-
-        clearTimeout(timeout.current);
-        timeout.current = setTimeout(() => {
-          setBlocked(false);
-        }, 300);
-
-        setBlocked(true);
-      }
-    }
-
-    previousScrollY.current = scrollY;
-  };
+function useScrollSegmentDetector(segments) {
+  const [segment, setSegment] = useState(undefined);
 
   useEffect(
     () => {
-      if (mode === "static") {
-        return;
-      }
+      const updateScroll = () => {
+        setSegment(getActiveOffset(segments, window.scrollY));
+      };
 
       window.addEventListener("scroll", updateScroll);
       updateScroll();
 
       return function cleanup() {
         window.removeEventListener("scroll", updateScroll);
-        clearTimeout(timeout.current);
       };
     },
-    [offsets, mode]
+    [segments]
   );
+
+  return segment;
+}
+
+const MenuDesktopRaw = props => {
+  const {
+    overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
+    data,
+    renderMenuContent,
+    mode
+  } = props;
+
+  const [menuHover, setMenuHover] = useState(false);
+  const [activeMenu, setActiveMenu] = useState(null);
 
   let buttons = [];
 
@@ -135,30 +154,10 @@ const MenuDesktopRaw = props => {
       menu,
       isActive: activeMenu === menu,
       setActive: () => setActiveMenu(menu),
-      menuHover,
-      offset,
-      hideable
+      menuHover
     };
 
-    if (typeof MenuButton === "function") {
-      buttons.push(
-        <MenuButton key={i} {...buttonSharedProps}>
-          {menu.label}
-        </MenuButton>
-      );
-    } else {
-      buttons.push(
-        React.cloneElement(
-          MenuButton,
-          {
-            key: i,
-            onMouseEnter: buttonSharedProps.setActive,
-            isSelected: buttonSharedProps.isActive
-          },
-          menu.label
-        )
-      );
-    }
+    buttons.push(MenuButton({ index: i, ...buttonSharedProps }));
   });
 
   const sharedProps = {
@@ -166,9 +165,7 @@ const MenuDesktopRaw = props => {
     activeMenu,
     data,
     buttons,
-    menuHover,
-    offset,
-    hideable
+    menuHover
   };
 
   let containerStyles;
@@ -195,23 +192,7 @@ const MenuDesktopRaw = props => {
         setActiveMenu(false);
       }}
     >
-      <div
-        css={css`
-          position: relative;
-          overflow: hidden;
-        `}
-      >
-        <div
-          css={css`
-          transition: transform .15s ease-out;
-          // transform: ${
-            isOnTop && !activeMenu ? "translateY(-100%)" : "none"
-          };
-        `}
-        >
-          <MenuBar {...sharedProps} />
-        </div>
-      </div>
+      {MenuBar(sharedProps)}
 
       {renderMenuContent && (
         <>
@@ -254,67 +235,63 @@ MenuDesktopRaw.defaultProps = {
   overrides: {},
   renderMenuContent: false,
   mode: "static",
-  offsets: {},
-  tolerance: 0
+  offsets: {}
 };
 
-const MenuDesktop = props => (
-  <MenuDesktopRaw
-    overrides={{
-      MenuButton: ({ menu, isActive, setActive }) => (
-        <Button kind={"minimal"} isSelected={isActive} onMouseEnter={setActive}>
-          {menu.label}
-        </Button>
-      ),
-      MenuBar: ({ buttons, offset, hideable }) => (
-        <div
-          css={css`
-            position: relative;
-            overflow: hidden;
-          `}
-        >
+const MenuDesktop = props => {
+  const direction = useScrollDirection();
+  const segment = useScrollSegmentDetector({ 1: "not-top", 1000: "treshold" });
+
+  return (
+    <MenuDesktopRaw
+      overrides={{
+        MenuButton: ({ index, menu, isActive, setActive }) => (
+          <Button
+            key={index}
+            kind={"minimal"}
+            isSelected={isActive}
+            onMouseEnter={setActive}
+          >
+            {menu.label}
+          </Button>
+        ),
+        MenuBar: ({ buttons, offset, hideable }) => (
           <div
             css={css`
-              background-color: lightgrey;
-              transition: transform 0.15s ease-out;
-
-              transform: ${offset === "treshold" && hideable
-                ? "translateY(-100%)"
-                : "none"};
-
-              border-bottom: ${offset === "treshold" || offset === "not-top"
-                ? "1px solid black;"
-                : "none"};
+              position: relative;
+              overflow: hidden;
             `}
           >
-            <Container>
-              <LayoutLeftRightCenter
-                left={"LOGO"}
-                right={"buttons"}
-                center={buttons}
-              />
-            </Container>
-          </div>
-        </div>
-      )
-    }}
-    renderMenuContent={true}
-    mode={"fixed"}
-    offsets={{
-      1: "not-top",
-      800: "treshold"
-    }}
-    {...props}
-  />
-);
+            <div
+              css={css`
+                background-color: lightgrey;
+                transition: transform 0.15s ease-out;
 
-/**
- Shared props:
- - menu opened / closed
- - scrolling down
- - scrolling up
- - on top (above trigger point)
- - below top (below trigger point)
- */
+                transform: ${segment === "treshold" && direction === true
+                  ? "translateY(-100%)"
+                  : "none"};
+
+                border-bottom: ${segment === "treshold" || segment === "not-top"
+                  ? "1px solid black"
+                  : "none"};
+              `}
+            >
+              <Container>
+                <LayoutLeftRightCenter
+                  left={"Logo"}
+                  right={"buttons"}
+                  center={buttons}
+                />
+              </Container>
+            </div>
+          </div>
+        )
+      }}
+      renderMenuContent={true}
+      mode={"fixed"}
+      {...props}
+    />
+  );
+};
 
 export default MenuDesktop;
