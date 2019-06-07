@@ -46,7 +46,10 @@ const MenuDesktop$ = props => {
 
   let containerStyles;
   if (mode === "static") {
-    containerStyles = "";
+    containerStyles = `
+      position: relative;
+      z-index: 1000;
+    `;
   } else if (mode === "fixed") {
     containerStyles = `
       position: fixed;
