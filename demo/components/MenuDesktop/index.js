@@ -240,7 +240,7 @@ MenuDesktopRaw.defaultProps = {
 
 const MenuDesktop = props => {
   const direction = useScrollDirection();
-  const segment = useScrollSegmentDetector({ 1: "not-top", 1000: "treshold" });
+  const segment = useScrollSegmentDetector({ 1: "not-top", 1000: "hideable" });
 
   return (
     <MenuDesktopRaw
@@ -255,7 +255,7 @@ const MenuDesktop = props => {
             {menu.label}
           </Button>
         ),
-        MenuBar: ({ buttons, offset, hideable }) => (
+        MenuBar: ({ buttons }) => (
           <div
             css={css`
               position: relative;
@@ -267,18 +267,26 @@ const MenuDesktop = props => {
                 background-color: lightgrey;
                 transition: transform 0.15s ease-out;
 
-                transform: ${segment === "treshold" && direction === true
+                transform: ${segment === "hideable" && direction === true
                   ? "translateY(-100%)"
                   : "none"};
 
-                border-bottom: ${segment === "treshold" || segment === "not-top"
+                border-bottom: ${segment === "hideable" || segment === "not-top"
                   ? "1px solid black"
                   : "none"};
               `}
             >
               <Container>
                 <LayoutLeftRightCenter
-                  left={"Logo"}
+                  left={
+                    <div
+                      css={css`
+                        height: 50px;
+                      `}
+                    >
+                      Logo
+                    </div>
+                  }
                   right={"buttons"}
                   center={buttons}
                 />

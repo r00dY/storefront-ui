@@ -3,13 +3,13 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-export default ({ left, right, center }) => {
+export default ({ left, right, center, alignItems = "center" }) => {
   return (
     <div
       css={css`
         display: flex;
         flex-direction: row;
-        align-items: center;
+        align-items: ${alignItems};
       `}
     >
       <div
@@ -32,7 +32,7 @@ export default ({ left, right, center }) => {
             position: relative;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: ${alignItems};
           `}
         >
           {center}
@@ -50,7 +50,7 @@ export default ({ left, right, center }) => {
             position: relative;
             display: flex;
             justify-content: flex-end;
-            align-items: center;
+            align-items: ${alignItems};
           `}
         >
           {right}
