@@ -3,6 +3,7 @@ const filters = [
     id: "sort",
     name: "Sort",
     type: "select",
+    multiple: false,
     items: [
       {
         id: "price-asc",

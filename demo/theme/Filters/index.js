@@ -10,6 +10,7 @@ const overrides = {
         items={filter.items}
         value={filter.value}
         onChange={onChange}
+        multiple={filter.multiple}
       />
     ),
     range: ({ filter, onChange }) => <div>range</div>

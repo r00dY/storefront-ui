@@ -18,6 +18,7 @@ const ItemListAccordion$ = props => {
     },
     onChange,
     value,
+    multiple,
     ...restProps
   } = props;
 
@@ -52,7 +53,11 @@ const ItemListAccordion$ = props => {
       if (value.includes(item)) {
         onChange(value.filter(x => x !== item));
       } else {
-        onChange([...value, item]);
+        if (multiple) {
+          onChange([...value, item]);
+        } else {
+          onChange([item]);
+        }
       }
     }
   };
@@ -93,7 +98,8 @@ ItemListAccordion$.defaultProps = {
   openAtInit: false,
   amountOfAlwaysVisible: 5,
   overrides: {},
-  value: []
+  value: [],
+  multiple: true
 };
 
 ItemListAccordion$.propTypes = {
@@ -101,7 +107,8 @@ ItemListAccordion$.propTypes = {
   amountOfAlwaysVisible: PropTypes.number.isRequired, // might be higher if `minAmountToShowAccordion` is higher
   minAmountToShowAccordion: PropTypes.number,
   children: PropTypes.any,
-  value: PropTypes.array
+  value: PropTypes.array,
+  multiple: PropTypes.bool
 };
 
 export default ItemListAccordion$;
