@@ -144,6 +144,7 @@ export default () => {
         config={config}
         isOpen={opened}
         onRequestClose={() => setOpened(false)}
+        header={"Modal example"}
       >
         <LoremIpsum />
         <br />
@@ -167,8 +168,6 @@ export default () => {
           }
         >
           <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
-          <br />
-          <br />
         </StatefulPopover>
       </Modal>
 
@@ -178,6 +177,7 @@ export default () => {
           width: "50%",
           height: "50%"
         }}
+        header={null}
         isOpen={inlineOpened}
         onRequestClose={() => setInlineOpened(false)}
       >
@@ -200,8 +200,6 @@ export default () => {
           }
         >
           <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
-          <br />
-          <br />
         </StatefulPopover>
         <LoremIpsum />
         <br />
