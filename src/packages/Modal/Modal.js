@@ -270,7 +270,6 @@ function Modal(props) {
             style={{
               overlay: {
                 position: "fixed",
-                zIndex: 10,
                 width: "100%",
                 height: "100%",
                 top: 0,

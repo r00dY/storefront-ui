@@ -1,1 +1,1 @@
-export { default, ModalContainer } from "./Modal";
+export { default as Modal$, ModalContainer } from "./Modal";

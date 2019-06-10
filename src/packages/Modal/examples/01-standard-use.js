@@ -3,11 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import Modal from "storefront-ui/Modal";
+import { Modal } from "../../../../demo/theme/Modal";
 import Color from "storefront-ui/Color";
 import Ease from "storefront-ui/Ease";
 
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";
+
+import { Button } from "../../../../demo/theme/Button";
+import { StatefulPopover } from "../../../../demo/theme/Popover";
 
 export default () => {
   const configs = [
@@ -65,6 +68,8 @@ export default () => {
 
   const [opened, setOpened] = useState(false);
   const [config, setConfig] = useState(null);
+
+  const [inlineOpened, setInlineOpened] = useState(false);
 
   return (
     <div>
@@ -157,7 +162,72 @@ export default () => {
           `}
         >
           <LoremIpsum />
-          <button onClick={() => setOpened(false)}>Close overlay</button>
+          <Button onClick={() => setOpened(false)}>Close overlay</Button>
+          <br />
+          <br />
+          <Button onClick={() => setInlineOpened(true)}>
+            Open inline modal
+          </Button>
+
+          <StatefulPopover
+            content={
+              <div
+                css={css`
+                  width: 200px;
+                  height: 300px;
+                  background-color: red;
+                `}
+              />
+            }
+          >
+            <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
+          </StatefulPopover>
+        </div>
+      </Modal>
+
+      <Modal
+        config={{
+          mode: "center",
+          width: "50%",
+          height: "50%"
+        }}
+        isOpen={inlineOpened}
+        onRequestClose={() => setInlineOpened(false)}
+      >
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            overflow-y: auto;
+          `}
+        >
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <StatefulPopover
+            content={
+              <div
+                css={css`
+                  width: 200px;
+                  height: 300px;
+                  background-color: red;
+                `}
+              />
+            }
+          >
+            <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
+          </StatefulPopover>
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
+          <LoremIpsum />
         </div>
       </Modal>
     </div>
