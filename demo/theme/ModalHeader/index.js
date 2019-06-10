@@ -11,6 +11,8 @@ import IconClose from "../../../data/svg/close.svg";
 export const ModalHeader = ({ onRequestClose, title }) => (
   <div
     css={css`
+      box-sizing: border-box;
+
       height: 50px;
       background-color: lightgrey;
       padding: 16px;
@@ -18,7 +20,7 @@ export const ModalHeader = ({ onRequestClose, title }) => (
   >
     <LayoutLeftCenterRight
       height={"100%"}
-      left={
+      right={
         <ButtonRaw
           css={css`
             display: flex;
@@ -32,7 +34,7 @@ export const ModalHeader = ({ onRequestClose, title }) => (
         </ButtonRaw>
       }
       center={title}
-      right={<div />}
+      left={<div />}
     />
   </div>
 );
