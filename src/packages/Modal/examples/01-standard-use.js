@@ -145,44 +145,31 @@ export default () => {
         isOpen={opened}
         onRequestClose={() => setOpened(false)}
       >
-        <div
-          css={css`
-            position: absolute;
-            background-color: lightgoldenrodyellow;
-            width: 100%;
-            height: 100%;
-          `}
-        />
+        <LoremIpsum />
+        <br />
 
-        <div
-          css={css`
-            position: relative;
-            padding: 20px;
-            z-index: 1;
-          `}
+        <Button onClick={() => setOpened(false)}>Close overlay</Button>
+        <br />
+        <br />
+        <Button onClick={() => setInlineOpened(true)}>Open inline modal</Button>
+        <br />
+        <br />
+
+        <StatefulPopover
+          content={
+            <div
+              css={css`
+                width: 200px;
+                height: 300px;
+                background-color: red;
+              `}
+            />
+          }
         >
-          <LoremIpsum />
-          <Button onClick={() => setOpened(false)}>Close overlay</Button>
+          <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
           <br />
           <br />
-          <Button onClick={() => setInlineOpened(true)}>
-            Open inline modal
-          </Button>
-
-          <StatefulPopover
-            content={
-              <div
-                css={css`
-                  width: 200px;
-                  height: 300px;
-                  background-color: red;
-                `}
-              />
-            }
-          >
-            <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
-          </StatefulPopover>
-        </div>
+        </StatefulPopover>
       </Modal>
 
       <Modal
@@ -194,41 +181,33 @@ export default () => {
         isOpen={inlineOpened}
         onRequestClose={() => setInlineOpened(false)}
       >
-        <div
-          css={css`
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: white;
-            overflow-y: auto;
-          `}
+        <LoremIpsum />
+        <br />
+        <LoremIpsum />
+        <br />
+        <LoremIpsum />
+        <br />
+
+        <StatefulPopover
+          content={
+            <div
+              css={css`
+                width: 200px;
+                height: 300px;
+                background-color: red;
+              `}
+            />
+          }
         >
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-          <StatefulPopover
-            content={
-              <div
-                css={css`
-                  width: 200px;
-                  height: 300px;
-                  background-color: red;
-                `}
-              />
-            }
-          >
-            <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
-          </StatefulPopover>
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-          <LoremIpsum />
-        </div>
+          <Button onClick={() => setInlineOpened(true)}>Open popover</Button>
+          <br />
+          <br />
+        </StatefulPopover>
+        <LoremIpsum />
+        <br />
+        <LoremIpsum />
+        <br />
+        <LoremIpsum />
       </Modal>
     </div>
   );
