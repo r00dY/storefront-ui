@@ -62,8 +62,8 @@ export default () => {
         </Modal>
 
         <Grid>
-          <GridItem params={3}>
-            <FiltersColumn data={filters} onChange={onChange} />
+          <GridItem params={4}>
+            <FiltersColumn data={filters.slice(1)} onChange={onChange} />
           </GridItem>
 
           <GridItem params={[19, 1]}>

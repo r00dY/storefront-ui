@@ -1,5 +1,29 @@
 const filtersData = [
   {
+    id: "sort",
+    name: "Sort",
+    type: "select",
+    items: [
+      {
+        id: "price-asc",
+        name: "Price (high to low)"
+      },
+      {
+        id: "price-desc",
+        name: "Price (low to high)"
+      },
+      {
+        id: "newest",
+        name: "Newest"
+      },
+      {
+        id: "most-popular",
+        name: "Most popular"
+      }
+    ],
+    expandOnMobile: true
+  },
+  {
     id: "brand",
     name: "Brand",
     type: "select",

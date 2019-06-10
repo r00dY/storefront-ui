@@ -26,7 +26,8 @@ const FiltersColumn$ = props => {
       Body: BodyOverride,
 
       filterComponents: filterComponents
-    }
+    },
+    expand
   } = props;
 
   return (
@@ -55,6 +56,7 @@ const FiltersColumn$ = props => {
                   Header: Header
                 }}
                 title={filter.name}
+                openAtInit={expand || filter.forceExpand === true}
               >
                 <Body {...bodyProps}>
                   <Component
@@ -74,12 +76,14 @@ const FiltersColumn$ = props => {
 
 FiltersColumn$.defaultProps = {
   gutter: 16,
-  overrides: {}
+  overrides: {},
+  expand: true
 };
 
 FiltersColumn$.propTypes = {
   gutter: PropTypes.any.isRequired,
-  overrides: PropTypes.object
+  overrides: PropTypes.object,
+  expand: PropTypes.bool
 };
 
 export default FiltersColumn$;
