@@ -35,8 +35,8 @@ export default () => {
             lg: "50%"
           }
         }}
-        header={<div>Cześć</div>}
-        footer={<div>Nara</div>}
+        header={() => <div>Cześć</div>}
+        footer={() => <div>Nara</div>}
       >
         <LoremIpsum />
         <LoremIpsum />

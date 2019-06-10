@@ -2,7 +2,7 @@ import { Modal$ } from "storefront-ui/Modal";
 import { ModalHeader } from "../ModalHeader";
 
 export const Modal = props => {
-  const { header } = props;
+  const { header, footer } = props;
 
   let headerOverride;
 
@@ -17,7 +17,8 @@ export const Modal = props => {
   return (
     <Modal$
       overrides={{
-        Header: headerOverride
+        Header: headerOverride,
+        Footer: footer
       }}
       {...props}
     />
