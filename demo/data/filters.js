@@ -183,15 +183,17 @@ const filters = [
     id: "price",
     name: "Price",
     type: "range",
-    from: null,
-    to: 500
+    min: 0,
+    max: 1999,
+    unit: "zł"
   },
   {
     id: "radius",
     name: "Radius (cm)",
     type: "range",
-    from: 12,
-    to: null
+    min: 15,
+    max: 49,
+    unit: "cm"
   },
   {
     id: "width",

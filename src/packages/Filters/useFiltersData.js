@@ -7,6 +7,8 @@ const useFiltersData = initData => {
     if (!entry.value) {
       if (entry.type === "select") {
         entry.value = [];
+      } else if (entry.type === "range") {
+        entry.value = {};
       }
     }
   });
