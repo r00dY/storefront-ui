@@ -138,9 +138,9 @@ const getHideSpinButtonProps = (shouldHide, isNumber) => {
 
   return {
     "::-webkit-outer-spin-button, ::-webkit-inner-spin-button": {
-      "-webkit-appearance": "none"
+      WebkitAppearance: "none"
     },
-    "-moz-appearance": "textfield"
+    MozAppearance: "textfield"
   };
 };
 
