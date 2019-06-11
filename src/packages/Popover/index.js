@@ -11,7 +11,6 @@ import {
 
 const mountNode = () => {
   if (typeof document !== "undefined") {
-    console.log("mount node!", document.getElementById("__layers__"));
     return document.getElementById("__layers__");
   }
 };

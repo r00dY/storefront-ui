@@ -8,7 +8,6 @@ import { css, jsx } from "@emotion/core";
 ReactModal.setAppElement("#__app__");
 
 export default ({ theme, children }) => {
-  console.log("######## ROOOOOT!");
   return (
     <ThemeProvider theme={theme}>
       <div
