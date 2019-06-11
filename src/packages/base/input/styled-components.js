@@ -131,11 +131,26 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
 
 export const InputContainer = styled("div", getInputContainerStyles);
 
+const getHideSpinButtonProps = (shouldHide, isNumber) => {
+  if (!shouldHide || !isNumber) {
+    return {};
+  }
+
+  return {
+    "::-webkit-outer-spin-button, ::-webkit-inner-spin-button": {
+      "-webkit-appearance": "none"
+    },
+    "-moz-appearance": "textfield"
+  };
+};
+
 export const getInputStyles = (props: SharedPropsT) => {
   const {
     $disabled,
     $error,
     $size,
+    $hideSpinButtons,
+    $type,
     $theme: { colors, sizing, fonts }
   } = props;
   return {
@@ -153,7 +168,8 @@ export const getInputStyles = (props: SharedPropsT) => {
     cursor: $disabled ? "not-allowed" : "text",
     "::placeholder": {
       color: $disabled ? colors.inputTextDisabled : colors.foregroundAlt
-    }
+    },
+    ...getHideSpinButtonProps($hideSpinButtons, $type === "number")
   };
 };
 

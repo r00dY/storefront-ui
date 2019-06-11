@@ -11,7 +11,15 @@ export function getSharedProps<T>(
   props: BaseInputPropsT<T> | InputPropsT,
   state: InternalStateT
 ) {
-  const { disabled, error, adjoined, size, required } = props;
+  const {
+    disabled,
+    error,
+    adjoined,
+    size,
+    required,
+    hideSpinButtons,
+    type
+  } = props;
   const { isFocused } = state;
   return {
     $isFocused: isFocused,
@@ -19,6 +27,8 @@ export function getSharedProps<T>(
     $error: error,
     $adjoined: adjoined,
     $size: size,
-    $required: required
+    $required: required,
+    $hideSpinButtons: hideSpinButtons,
+    $type: type
   };
 }

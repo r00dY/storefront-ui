@@ -55,6 +55,14 @@ export default () => {
         value={value2}
         disabled={true}
       />
+      <p>type=number and hiding browser controls</p>
+      <StatefulInput placeholder={"Number without controls"} type={"number"} />
+      <br />
+      <StatefulInput
+        placeholder={"Number with controls"}
+        type={"number"}
+        hideSpinButtons={false}
+      />
       <p>Before / After + stateful</p>
       <StatefulInput
         placeholder={"Search"}

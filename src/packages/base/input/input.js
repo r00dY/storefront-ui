@@ -30,7 +30,8 @@ class Input extends React.Component<InputPropsT, InternalStateT> {
     required: false,
     size: "default",
     startEnhancer: null,
-    endEnhancer: null
+    endEnhancer: null,
+    hideSpinButtons: true
   };
 
   /**

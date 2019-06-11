@@ -103,7 +103,8 @@ export type BaseInputPropsT<T> = {
   type: string,
   /** Input value attribute. */
   value?: string,
-  rows?: number
+  rows?: number,
+  hideSpinButtons?: boolean
 };
 
 export type InputPropsT = {

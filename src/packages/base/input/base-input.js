@@ -45,7 +45,8 @@ class BaseInput<T: EventTarget> extends React.Component<
     placeholder: "",
     required: false,
     size: SIZE.default,
-    type: "text"
+    type: "text",
+    hideSpinButtons: true
   };
 
   state = {
