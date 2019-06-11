@@ -298,6 +298,7 @@ function Modal(props) {
       closeTimeoutMS={closeTimeout * 1000}
       onRequestClose={onRequestClose}
       onAfterOpen={onAfterOpen}
+      parentSelector={() => document.getElementById("__layers__")}
     >
       <div
         css={css`

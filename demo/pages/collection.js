@@ -7,6 +7,8 @@ import { FiltersColumn } from "../theme/Filters";
 import { Button } from "../theme/Button";
 import LayoutRow from "storefront-ui/LayoutRow";
 
+import { StatefulPopover } from "../theme/Popover";
+
 import { Modal } from "../theme/Modal";
 
 import useFiltersData from "storefront-ui/Filters/useFiltersData";
@@ -27,6 +29,23 @@ export default () => {
         <Button onClick={() => setFiltersModalOpened(true)}>
           Filters modal
         </Button>
+
+        <StatefulPopover
+          content={
+            <div
+              css={css`
+                width: 200px;
+                height: 300px;
+                background: red;
+              `}
+            >
+              Hej
+            </div>
+          }
+        >
+          <Button>Open popover</Button>
+        </StatefulPopover>
+
         <br />
         <br />
 

@@ -9,8 +9,15 @@ import {
   ANIMATE_OUT_TIME
 } from "../base/popover";
 
-const Popover$ = Popover;
-const StatefulPopover$ = StatefulPopover;
+const mountNode =
+  typeof document !== "undefined"
+    ? document.getElementById("__layers__")
+    : undefined;
+
+const Popover$ = props => <Popover {...props} mountNode={mountNode} />;
+const StatefulPopover$ = props => (
+  <StatefulPopover {...props} mountNode={mountNode} />
+);
 
 Object.assign(Popover$, {
   ACCESSIBILITY_TYPE,

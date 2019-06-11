@@ -8,6 +8,8 @@ import { ModalContainer } from "storefront-ui/Modal";
 
 import { ThemeProvider, createTheme } from "storefront-ui/Theme";
 
+import Root from "storefront-ui/Root";
+
 import Color from "../src/packages/Color";
 
 const defaultTheme = createTheme();
@@ -17,7 +19,7 @@ import { css, jsx } from "@emotion/core";
 
 export default props => {
   return (
-    <div>
+    <Root theme={defaultTheme}>
       <div
         css={css`
           position: fixed;
@@ -122,10 +124,8 @@ export default props => {
           padding: 20px 0 100px 0;
         `}
       >
-        <ThemeProvider theme={defaultTheme}>{props.children}</ThemeProvider>
+        {props.children}
       </div>
-
-      <ModalContainer />
-    </div>
+    </Root>
   );
 };
