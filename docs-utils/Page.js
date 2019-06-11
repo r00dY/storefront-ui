@@ -4,22 +4,14 @@ import Link from "next/link";
 import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
-import { ModalContainer } from "storefront-ui/Modal";
-
-import { ThemeProvider, createTheme } from "storefront-ui/Theme";
-
-import Root from "storefront-ui/Root";
-
 import Color from "../src/packages/Color";
-
-const defaultTheme = createTheme();
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 export default props => {
   return (
-    <Root theme={defaultTheme}>
+    <div>
       <div
         css={css`
           position: fixed;
@@ -126,6 +118,6 @@ export default props => {
       >
         {props.children}
       </div>
-    </Root>
+    </div>
   );
 };

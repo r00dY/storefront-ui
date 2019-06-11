@@ -9,14 +9,16 @@ import {
   ANIMATE_OUT_TIME
 } from "../base/popover";
 
-const mountNode =
-  typeof document !== "undefined"
-    ? document.getElementById("__layers__")
-    : undefined;
+const mountNode = () => {
+  if (typeof document !== "undefined") {
+    console.log("mount node!", document.getElementById("__layers__"));
+    return document.getElementById("__layers__");
+  }
+};
 
-const Popover$ = props => <Popover {...props} mountNode={mountNode} />;
+const Popover$ = props => <Popover {...props} mountNode={mountNode()} />;
 const StatefulPopover$ = props => (
-  <StatefulPopover {...props} mountNode={mountNode} />
+  <StatefulPopover {...props} mountNode={mountNode()} />
 );
 
 Object.assign(Popover$, {

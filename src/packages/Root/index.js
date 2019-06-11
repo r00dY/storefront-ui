@@ -4,11 +4,11 @@ import ReactModal from "react-modal";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import Modal from "../Modal/Modal";
 
 ReactModal.setAppElement("#__app__");
 
 export default ({ theme, children }) => {
+  console.log("######## ROOOOOT!");
   return (
     <ThemeProvider theme={theme}>
       <div
