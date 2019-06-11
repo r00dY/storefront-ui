@@ -4,6 +4,8 @@ import { ItemListAccordion } from "../ItemListAccordion";
 
 import { Input } from "../Input";
 
+import { Button } from "../Button";
+
 import { useState, useRef } from "react";
 
 /** @jsx jsx */
@@ -27,6 +29,9 @@ const RangePicker = props => {
   };
 
   value = value || {};
+
+  const isClearable =
+    typeof value.from !== "undefined" || typeof value.to !== "undefined";
 
   value = {
     from: typeof value.from === "undefined" ? defaultValue.from : value.from,
@@ -194,6 +199,21 @@ const RangePicker = props => {
           />
         </div>
       </div>
+      {isClearable && (
+        <div>
+          <Button
+            kind={"minimal"}
+            size={"compact"}
+            onClick={() => {
+              if (onChange) {
+                onChange({});
+              }
+            }}
+          >
+            clear
+          </Button>
+        </div>
+      )}
     </div>
   );
 };
@@ -231,8 +251,8 @@ const overrides = {
         unit={filter.unit}
         min={filter.min}
         max={filter.max}
-        neverEmpty={false}
-        snapToMinMax={false}
+        neverEmpty={true}
+        snapToMinMax={true}
       />
     )
   }

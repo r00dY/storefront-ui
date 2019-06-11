@@ -44,7 +44,7 @@ export const BaseButton = styled(
     $fitContainer
   }: StylePropsT) => ({
     position: "relative",
-    font: $size === SIZE.compact ? $theme.fonts.body1 : $theme.fonts.body2,
+    font: $size === SIZE.compact ? $theme.fonts.body2 : $theme.fonts.body1,
     display: "inline-flex",
     alignItems: "center",
     justifyContent: "center",
