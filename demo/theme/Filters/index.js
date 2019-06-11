@@ -119,7 +119,6 @@ const RangePicker = props => {
           delete newValue.to;
         }
 
-        console.log("on change", newValue);
         onChange(newValue);
       }
     }, 0);
