@@ -1,4 +1,4 @@
-const filtersData = [
+const filters = [
   {
     id: "sort",
     name: "Sort",
@@ -22,7 +22,7 @@ const filtersData = [
         name: "Most popular"
       }
     ],
-    expandOnMobile: true
+    forceExpand: true
   },
   {
     id: "brand",
@@ -183,15 +183,17 @@ const filtersData = [
     id: "price",
     name: "Price",
     type: "range",
-    from: null,
-    to: 500
+    min: 0,
+    max: 1999,
+    unit: "zł"
   },
   {
     id: "radius",
     name: "Radius (cm)",
     type: "range",
-    from: 12,
-    to: null
+    min: 15,
+    max: 49,
+    unit: "cm"
   },
   {
     id: "width",
@@ -217,4 +219,4 @@ const filtersData = [
   }
 ];
 
-export default filtersData;
+export default filters;

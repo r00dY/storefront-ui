@@ -5,9 +5,11 @@ import ReactModal from "react-modal";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-ReactModal.setAppElement("#__app__");
-
 export default ({ theme, children }) => {
+  useEffect(() => {
+    ReactModal.setAppElement("#__app__");
+  }, []);
+
   return (
     <ThemeProvider theme={theme}>
       <div

@@ -37,22 +37,20 @@ ${(
   />
 )}
 
+## \`RangePicker\`
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/RangePicker/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/RangePicker/examples/01-standard-use.js").default
+    }
+  />
+)}
 
 `;
-
-// It's very raw, but the idea is to give you flexibility to style this as much as you can.
-//
-// ${(
-//   <Example
-//     code={
-//       require("!!raw-loader!../src/packages/Filters/examples/02-filters-column-custom.js")
-//         .default
-//     }
-// component={
-//     require("../src/packages/Filters/examples/02-filters-column-custom.js")
-// .default
-// }
-// />
-// )}
 
 export default () => <Page>{content}</Page>;

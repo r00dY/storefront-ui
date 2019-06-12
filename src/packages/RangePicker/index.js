@@ -1,50 +1,129 @@
 import React, { useState, useRef } from "react";
-
-import { css } from "@emotion/core";
-import { Input } from "../../../demo/theme/Input";
 import PropTypes from "prop-types";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
+import { SeparatorStyled, RootStyled } from "./styled-components";
+import { getOverrides } from "../base/helpers/overrides";
+
 const RangePicker$ = props => {
-  const { initialState, onChange, min, max, defaultToMinMax } = props;
+  let { onChange, value, min, max, neverEmpty, snapToMinMax } = props;
 
-  const defaultFrom = defaultToMinMax ? min : "";
-  const defaultTo = defaultToMinMax ? max : "";
+  const {
+    Root: RootOverride,
+    InputFrom: InputFrom,
+    InputTo: InputTo,
+    Separator: SeparatorOverride,
+    ClearButton: ClearButton
+  } = props.overrides;
 
-  const [state, setState] = useState({
-    from: initialState.from || defaultFrom,
-    to: initialState.to || defaultTo
-  });
-
-  const isStateValid = () => {
-    return !(
-      typeof state.from === "number" &&
-      typeof state.to === "number" &&
-      state.from > state.to
+  if (neverEmpty && (typeof min !== "number" || typeof max !== "number")) {
+    throw new Error(
+      "[RangePicker$] If neverEmpty=true, you must set min and max props"
     );
+  }
+
+  const defaultValue = {
+    from: neverEmpty ? min : "",
+    to: neverEmpty ? max : ""
   };
 
-  // Timeout prevents from calling onChange too early (when we blurred and focused second field of range picker)
-  const onBlur = input => {
-    clearTimeout(timeout.current);
+  value = value || {};
 
-    timeout.current = setTimeout(() => {
-      if (isStateValid()) {
-        return;
+  const isClearable =
+    typeof value.from !== "undefined" || typeof value.to !== "undefined";
+
+  value = {
+    from: typeof value.from === "undefined" ? defaultValue.from : value.from,
+    to: typeof value.to === "undefined" ? defaultValue.to : value.to
+  };
+
+  const [state, setState] = useState({
+    from: undefined,
+    to: undefined,
+    isEditing: false
+  });
+
+  const timeout = useRef(null);
+
+  // Function taking new state (after blur) and correcting it if invalid
+  const stateReducer = (newState, input, nothingFocused) => {
+    // set value to default if input was cleared, if neverEmpty, it will be minimum value.
+    if (newState[input] === "") {
+      newState = {
+        ...state,
+        [input]: defaultValue[input]
+      };
+    }
+
+    // snap to min / max
+    if (newState[input] !== "") {
+      // always snap negative values to 0
+      if (newState[input] < 0) {
+        newState = {
+          ...state,
+          [input]: 0
+        };
       }
 
-      if (input === "from") {
-        setState({
-          from: defaultFrom
-        });
-      } else {
-        setState({
-          to: defaultTo
-        });
+      if (snapToMinMax) {
+        if (typeof min === "number" && newState[input] < min) {
+          newState = {
+            ...state,
+            [input]: min || 0
+          };
+        } else if (typeof max === "number" && newState[input] > max) {
+          newState = {
+            ...state,
+            [input]: max
+          };
+        }
+      }
+    }
+
+    // correct if from > to
+    if (nothingFocused) {
+      if (
+        typeof newState.from === "number" &&
+        typeof newState.to === "number" &&
+        newState.from > newState.to
+      ) {
+        newState = {
+          ...newState,
+          [input]: input === "from" ? newState.to : newState.from
+        };
+      }
+    }
+
+    return newState;
+  };
+
+  const onBlur = input => {
+    setState(stateReducer(state, input, false));
+
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      const newState = stateReducer(state, input, true);
+      setState({ ...newState, isEditing: false });
+
+      if (onChange) {
+        let newValue = {
+          ...newState
+        };
+
+        delete newValue.isEditing;
+        if (newValue.from === "" || newValue.from === min) {
+          delete newValue.from;
+        }
+        if (newValue.to === "" || newValue.to === max) {
+          delete newValue.to;
+        }
+
+        onChange(newValue);
       }
     }, 0);
   };
-
-  const timeout = useRef(null);
 
   const setValue = (val, input) => {
     val = parseFloat(val);
@@ -53,15 +132,63 @@ const RangePicker$ = props => {
     }
 
     setState({
+      ...state,
       [input]: val
     });
   };
 
   const onFocus = () => {
     clearTimeout(timeout.current);
+
+    if (!state.isEditing) {
+      setState({
+        from: value.from,
+        to: value.to,
+        isEditing: true
+      });
+    }
   };
 
-  return (
+  const inputValue = {
+    from: state.isEditing ? state.from : value.from,
+    to: state.isEditing ? state.to : value.to
+  };
+
+  const clear = () => {
+    if (onChange) {
+      onChange({});
+    }
+  };
+
+  const sharedProps = {
+    clear: clear
+  };
+
+  const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [Separator, separatorProps] = getOverrides(
+    SeparatorOverride,
+    SeparatorStyled
+  );
+
+  const inputProps = input => ({
+    type: "number",
+    onChange: event => {
+      setValue(event.target.value, input);
+    },
+    value: inputValue[input],
+    onBlur: () => onBlur(input),
+    onFocus: onFocus
+  });
+
+  const inputFrom = InputFrom({
+    inputProps: inputProps("from"),
+    ...sharedProps
+  });
+  const inputTo = InputTo({ inputProps: inputProps("to"), ...sharedProps });
+
+  const clearButton = ClearButton(sharedProps);
+
+  const rangePicker = (
     <div
       css={css`
         position: relative;
@@ -71,54 +198,36 @@ const RangePicker$ = props => {
         align-items: center;
       `}
     >
-      <div>
-        <Input
-          type={"number"}
-          placeholder={"from"}
-          unit={"zł"}
-          onChange={event => setValue(event.target.value, "from")}
-          value={from}
-          onBlur={() => onBlur("from")}
-          onFocus={onFocus}
-        />
-      </div>
-
-      <div
-        css={css`
-          width: 32px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        `}
-      >
-        -
-      </div>
-      <div>
-        <Input
-          type={"number"}
-          placeholder={"to"}
-          unit={"zł"}
-          value={to}
-          onChange={event => setValue(event.target.value, "to")}
-          onBlur={() => onBlur("to")}
-          onFocus={onFocus}
-        />
-      </div>
+      {inputFrom}
+      <Separator {...separatorProps} {...sharedProps} />
+      {inputTo}
     </div>
+  );
+
+  return (
+    <Root
+      {...rootProps}
+      {...sharedProps}
+      rangePicker={rangePicker}
+      clearButton={isClearable && clearButton}
+    />
   );
 };
 
 RangePicker$.defaultProps = {
-  defaultToMinMax: true,
-  initialState: {}
+  neverEmpty: false,
+  snapToMinMax: true,
+  overrides: {}
 };
 
 RangePicker$.propTypes = {
-  initialState: PropTypes.object,
-  onChange: PropTypes.function,
+  value: PropTypes.object,
+  onChange: PropTypes.func,
   min: PropTypes.number,
   max: PropTypes.number,
-  defaultToMinMax: PropTypes.bool
+  neverEmpty: PropTypes.bool,
+  snapToMinMax: PropTypes.bool,
+  overrides: PropTypes.object
 };
 
 export { RangePicker$ };
