@@ -3,7 +3,7 @@ import { ThemeProvider } from "../Theme";
 import ReactModal from "react-modal";
 
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { css, Global, jsx } from "@emotion/core";
 
 export default ({ theme, children }) => {
   useEffect(() => {
@@ -12,6 +12,14 @@ export default ({ theme, children }) => {
 
   return (
     <ThemeProvider theme={theme}>
+      <Global
+        styles={css`
+          body.ReactModal__Body--open {
+            overflow-y: hidden;
+          }
+        `}
+      />
+
       <div
         css={css`
           position: relative;
