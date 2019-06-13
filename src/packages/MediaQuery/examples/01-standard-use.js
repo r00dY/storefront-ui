@@ -14,11 +14,11 @@ export default () => {
         <p>&lt;1000px paragraph</p>
       </MediaQuery>
 
-      <MediaQuery range={R.from("md")}>
+      <MediaQuery range={R.from("md")} prerender={true}>
         <p>from MD up</p>
       </MediaQuery>
 
-      <MediaQuery range={R.to("sm")}>
+      <MediaQuery range={R.to("sm")} prerender={false}>
         <p>from SM down</p>
       </MediaQuery>
     </div>
