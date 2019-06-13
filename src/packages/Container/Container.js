@@ -2,12 +2,15 @@ import { rs } from "responsive-helpers";
 import PropTypes from "prop-types";
 import React from "react";
 import Layout from "../Layout";
+import { useTheme } from "../Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 const Container = props => {
-  let width = rs(props.width || Layout.main.container || "90vw");
+  const { layout } = useTheme();
+
+  let width = rs(props.width || layout.container || "90vw");
 
   // Validation
   if (!width) {

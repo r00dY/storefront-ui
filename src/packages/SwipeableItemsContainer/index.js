@@ -67,8 +67,11 @@ const Root = styled.div`
 const Wrapper = styled.div`
   position: relative;
 
-  width: 100%;
   height: 100%;
+
+  ${props => props.config.externalOffsetBefore.css("margin-left")}
+  ${props =>
+    props.config.externalOffsetAfter.css("margin-right")}
 
   ::-webkit-scrollbar {
     display: none;
@@ -218,6 +221,8 @@ let SwipeableItemsContainerPure = props => {
     itemSize: rs(props.itemSize || 0),
     offsetBefore: rs(props.offsetBefore || 0),
     offsetAfter: rs(props.offsetAfter || 0),
+    externalOffsetBefore: rs(props.externalOffsetBefore || 0),
+    externalOffsetAfter: rs(props.externalOffsetAfter || 0),
     gutter: rs(props.gutter || 0),
     amount: props.children.length,
     items: props.children,
@@ -442,6 +447,8 @@ SwipeableItemsContainerPure.propTypes = {
   itemSize: PropTypes.any,
   offsetBefore: PropTypes.any,
   offsetAfter: PropTypes.any,
+  externalOffsetBefore: PropTypes.any,
+  externalOffsetAfter: PropTypes.any,
   snap: PropTypes.oneOf(["offset", "center"]),
   itemsVisibleIncludeMargins: PropTypes.bool,
   itemsVisible: PropTypes.any,

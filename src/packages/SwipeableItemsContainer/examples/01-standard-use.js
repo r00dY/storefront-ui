@@ -129,5 +129,49 @@ export default () => (
       <Rectangle color={"firebrick"}>5</Rectangle>
       <Rectangle color={"forestgreen"}>6</Rectangle>
     </SwipeableItemsContainer>
+
+    <p>External offset</p>
+
+    <div
+      css={css`
+        border: 1px solid black;
+      `}
+    >
+      <SwipeableItemsContainer
+        mode={"horizontal"}
+        externalOffsetBefore={100}
+        externalOffsetAfter={100}
+      >
+        <Rectangle color={"coral"}>1</Rectangle>
+        <Rectangle color={"darkgoldenrod"}>2</Rectangle>
+        <Rectangle color={"maroon"}>3</Rectangle>
+        <Rectangle color={"navy"}>4</Rectangle>
+        <Rectangle color={"firebrick"}>5</Rectangle>
+        <Rectangle color={"forestgreen"}>6</Rectangle>
+      </SwipeableItemsContainer>
+    </div>
+
+    <p>External offset changing into internal on mobile</p>
+
+    <div
+      css={css`
+        border: 1px solid black;
+      `}
+    >
+      <SwipeableItemsContainer
+        mode={"horizontal"}
+        externalOffsetBefore={{ xs: 0, md: 100 }}
+        externalOffsetAfter={{ xs: 0, md: 100 }}
+        offsetBefore={{ xs: 100, md: 0 }}
+        offsetAfter={{ xs: 100, md: 0 }}
+      >
+        <Rectangle color={"coral"}>1</Rectangle>
+        <Rectangle color={"darkgoldenrod"}>2</Rectangle>
+        <Rectangle color={"maroon"}>3</Rectangle>
+        <Rectangle color={"navy"}>4</Rectangle>
+        <Rectangle color={"firebrick"}>5</Rectangle>
+        <Rectangle color={"forestgreen"}>6</Rectangle>
+      </SwipeableItemsContainer>
+    </div>
   </div>
 );

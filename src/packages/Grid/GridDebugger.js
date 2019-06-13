@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import Index from "../Container/Container";
 import { Grid, GridItem } from "./Grid";
 import Layout from "../Layout";
+import { useTheme } from "../Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 const GridDebugger = () => {
   const [open, setOpen] = useState(false);
+  const { layout } = useTheme();
 
   const onKeyPress = event => {
     if (event.keyCode === 76 && event.ctrlKey) {
@@ -37,7 +39,7 @@ const GridDebugger = () => {
     >
       <Index>
         <Grid>
-          {[...Array(Layout.main.colNumber)].map((e, i) => (
+          {[...Array(layout.colNumber)].map((e, i) => (
             <GridItem params={1} key={i}>
               <div
                 css={css`

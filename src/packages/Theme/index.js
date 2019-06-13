@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 
 import createThemeBase from "../base/themes/creator";
 import Color from "../Color";
+import Layout from "../Layout";
 
 const ThemeContext = React.createContext(null);
 
@@ -120,7 +121,19 @@ const generateThemeColors = primitives => {
 const createTheme = config => {
   config = config || {};
   const primitives = generateThemeColors(config.colors || {});
-  return createThemeBase(primitives, config);
+  let theme = createThemeBase(primitives, config);
+
+  theme.layout =
+    config.layout ||
+    new Layout({
+      container: "90vw",
+      colNumber: 24,
+      gutter: 20
+    });
+
+  console.log(theme.layout);
+
+  return theme;
 };
 
 export {

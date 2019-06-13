@@ -6,6 +6,8 @@ import Layout from "../Layout";
 
 import styled from "@emotion/styled";
 
+import { useTheme } from "../Theme";
+
 /**
  * For some time this GridRow had: `overflow: hidden`
  * I removed it because it made StickyWrapper not work. To remember.
@@ -96,8 +98,9 @@ GridItem.defaultProps = {
 };
 
 const Grid = function(props) {
-  let colNumber = rm(props.colNumber || Layout.main.colNumber);
-  let gutter = rs(props.gutter || Layout.main.gutter);
+  const { layout } = useTheme();
+  let colNumber = rm(props.colNumber || layout.colNumber);
+  let gutter = rs(props.gutter || layout.gutter);
   let gutterVertical = rs(props.gutterVertical || 0);
 
   // Validation
