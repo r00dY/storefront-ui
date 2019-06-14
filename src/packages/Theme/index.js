@@ -131,8 +131,6 @@ const createTheme = config => {
       gutter: 20
     });
 
-  console.log(theme.layout);
-
   return theme;
 };
 

@@ -9,7 +9,7 @@ import { styled } from "../styles/index.js";
 import { ADJOINED, SIZE, ENHANCER_POSITION } from "./constants.js";
 import type { SharedPropsT } from "./types.js";
 
-function getInputPadding(size, sizing) {
+export function getInputPadding(size, sizing) {
   return {
     [SIZE.default]: {
       paddingTop: sizing.scale400,
