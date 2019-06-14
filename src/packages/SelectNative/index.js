@@ -4,18 +4,17 @@ import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { SelectStyled } from "./styled-components";
+import { SelectStyled, RootStyled, IconStyled } from "./styled-components";
+import { getOverrides } from "../base/helpers/overrides";
 
-import {
-  getInputPadding,
-  getInputContainerStyles
-} from "../base/input/styled-components";
-
-import { styled } from "../base/styles";
-
-const Container = styled("div", props => ({
-  ...getInputContainerStyles(props)
-}));
+/**
+ * Problem with native select
+ *
+ * There's one layout problem with native select. It's automatic width always equals longest option. Only setting width explicitly solves this -> and it sucks.
+ *
+ * Let's think of using custom select which is MOBILE FIRST.
+ *
+ */
 
 const getOptionFields = (option, props) => {
   if (typeof option === "undefined" || option === null) {
@@ -45,7 +44,11 @@ const SelectNative$ = props => {
     required,
     labelKey,
     valueKey,
-    overrides,
+    overrides: {
+      Root: RootOverride,
+      Select: SelectOverride,
+      Icon: IconOverride
+    },
     autoFocus,
     onFocus,
     onBlur,
@@ -81,9 +84,14 @@ const SelectNative$ = props => {
 
   const selectedValue = getOptionFields(value, props)[0];
 
+  const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [Select, selectProps] = getOverrides(SelectOverride, SelectStyled);
+  const [Icon, iconProps] = getOverrides(IconOverride, IconStyled);
+
   return (
-    <Container {...$sharedProps}>
-      <SelectStyled
+    <Root {...rootProps} {...$sharedProps}>
+      <Select
+        {...selectProps}
         {...$sharedProps}
         {...restProps}
         value={selectedValue}
@@ -122,8 +130,20 @@ const SelectNative$ = props => {
             </option>
           );
         })}
-      </SelectStyled>
-    </Container>
+      </Select>
+
+      <Icon {...iconProps} {...$sharedProps}>
+        <svg
+          data-baseweb="icon"
+          viewBox="0 0 24 24"
+          width="16"
+          fill="currentColor"
+        >
+          <title>open</title>
+          <path d="M12.7071 15.2929L17.1464 10.8536C17.4614 10.5386 17.2383 10 16.7929 10L7.20711 10C6.76165 10 6.53857 10.5386 6.85355 10.8536L11.2929 15.2929C11.6834 15.6834 12.3166 15.6834 12.7071 15.2929Z" />
+        </svg>
+      </Icon>
+    </Root>
   );
 };
 
@@ -134,7 +154,8 @@ SelectNative$.defaultProps = {
   error: false,
   disabled: false,
   required: false,
-  size: "default"
+  size: "default",
+  overrides: {}
 };
 
 SelectNative$.propTypes = {};

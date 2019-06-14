@@ -1,9 +1,12 @@
 import { styled } from "../base/styles";
 
-import { getInputPadding } from "../base/input/styled-components";
+import {
+  getInputContainerStyles,
+  getInputPadding
+} from "../base/input/styled-components";
 
 export const selectStyles = ({ $disabled, $size, $theme }) => {
-  const { sizing, colors } = $theme;
+  const { colors, sizing } = $theme;
 
   return {
     appearance: "none",
@@ -12,10 +15,36 @@ export const selectStyles = ({ $disabled, $size, $theme }) => {
     backgroundColor: "transparent",
     display: "block",
     width: "100%",
-    cursor: $disabled ? "not-allowed" : "pointer",
     color: $disabled ? colors.inputTextDisabled : colors.foreground,
-    ...getInputPadding($size, sizing)
+    cursor: $disabled ? "not-allowed" : "pointer",
+    ...getInputPadding($size, sizing),
+    paddingRight: "28px"
   };
 };
 
 export const SelectStyled = styled("select", selectStyles);
+
+export const rootStyles = props => {
+  return {
+    ...getInputContainerStyles(props),
+    overflow: "hidden",
+    position: "relative"
+  };
+};
+
+export const RootStyled = styled("div", rootStyles);
+
+export const iconStyles = props => {
+  return `
+        position: absolute;
+        right: 0;
+        top: 0;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        margin-right: 6px;
+        pointer-events: none;
+    `;
+};
+
+export const IconStyled = styled("div", iconStyles);

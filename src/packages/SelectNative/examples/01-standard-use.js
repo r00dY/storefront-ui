@@ -35,6 +35,7 @@ export default () => {
   return (
     <div>
       <p>String options</p>
+
       <SelectNative$
         options={stringOptions}
         onChange={setSelect1}
@@ -68,6 +69,24 @@ export default () => {
         onChange={setSelect4}
         error
       />
+
+      <p>
+        By default length of select is length of longest option. We don't fight
+        with the platform and here it is shown (display: inline-block parent to
+        show natural width)
+      </p>
+
+      <div
+        css={css`
+          display: inline-block;
+        `}
+      >
+        <SelectNative$
+          options={stringOptions}
+          onChange={setSelect1}
+          value={select1}
+        />
+      </div>
     </div>
   );
 };
