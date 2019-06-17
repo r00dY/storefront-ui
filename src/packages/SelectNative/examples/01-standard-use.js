@@ -4,7 +4,13 @@ import { SelectNative$ } from "storefront-ui/SelectNative";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const stringOptions = ["New York", "Washington", "London", "Warsaw"];
+const stringOptions = [
+  "New York",
+  "Washington",
+  "London",
+  "Warsaw",
+  "City with a very long name"
+];
 
 const options = [
   {

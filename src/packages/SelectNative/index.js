@@ -8,12 +8,12 @@ import { SelectStyled, RootStyled, IconStyled } from "./styled-components";
 import { getOverrides } from "../base/helpers/overrides";
 
 /**
- * Problem with native select
+ * Problems with native select
  *
- * There's one layout problem with native select. It's automatic width always equals longest option. Only setting width explicitly solves this -> and it sucks.
+ * - There's one layout problem with native select. It's automatic width always equals longest option. Only setting width explicitly solves this -> and it sucks.
+ * - select renders option label. Rest of stuff (like down arrow etc) must be positioned absolute and this should be taken into account in select padding. Unfortunately you can't open native select with JS, so having arrow not "inside select rectangle" will make cliking on arrow NOT open select, which definitely sucks.
  *
- * Let's think of using custom select which is MOBILE FIRST.
- *
+ * TODO: correct so that icon is not absolute and clicking on it will focus the input!!!
  */
 
 const getOptionFields = (option, props) => {
