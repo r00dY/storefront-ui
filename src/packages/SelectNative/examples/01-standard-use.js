@@ -1,5 +1,8 @@
 import React, { useState } from "react";
-import { SelectNative$ } from "storefront-ui/SelectNative";
+import {
+  SelectNative$,
+  StatefulSelectNative$
+} from "storefront-ui/SelectNative";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -93,6 +96,14 @@ export default () => {
           value={select1}
         />
       </div>
+
+      <p>Stateful</p>
+
+      <StatefulSelectNative$
+        options={stringOptions}
+        onChange={val => console.log(val)}
+        initValue={stringOptions[3]}
+      />
     </div>
   );
 };

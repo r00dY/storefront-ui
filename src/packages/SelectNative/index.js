@@ -160,4 +160,22 @@ SelectNative$.defaultProps = {
 
 SelectNative$.propTypes = {};
 
-export { SelectNative$ };
+const StatefulSelectNative$ = props => {
+  const [value, setValue] = useState(props.initValue);
+
+  return (
+    <SelectNative$
+      {...props}
+      value={value}
+      onChange={newValue => {
+        setValue(newValue);
+
+        if (props.onChange) {
+          props.onChange(newValue);
+        }
+      }}
+    />
+  );
+};
+
+export { SelectNative$, StatefulSelectNative$ };

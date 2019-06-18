@@ -1,1 +1,4 @@
-export { SelectNative$ as SelectNative } from "storefront-ui/SelectNative";
+export {
+  SelectNative$ as SelectNative,
+  StatefulSelectNative$ as StatefulSelectNative
+} from "storefront-ui/SelectNative";
