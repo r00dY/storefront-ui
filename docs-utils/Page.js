@@ -105,6 +105,11 @@ export default props => {
               <a>Forms / Inputs / Controls</a>
             </Link>
           </li>
+          <li>
+            <Link href="/pagination">
+              <a>Pagination</a>
+            </Link>
+          </li>
         </ul>
       </div>
 

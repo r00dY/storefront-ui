@@ -17,16 +17,18 @@ export default ({
         flex-direction: row;
         align-items: ${alignItems};
         ${height === null ? "" : rs(height).css("height")}
-
-        > * {
-          ${rs(gutter).css("margin-right")};
-          &:last-child {
-            margin-right: 0;
-          }
-        }
       `}
     >
-      {children}
+      {React.Children.map(children, (elem, index) => (
+        <div
+          key={elem.key || index}
+          css={css`
+            ${index > 0 ? rs(gutter).css("margin-left") : ""};
+          `}
+        >
+          {elem}
+        </div>
+      ))}
     </div>
   );
 };
