@@ -20,6 +20,19 @@ ${(
   />
 )}
 
+## \`Pagination\`
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Pagination/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/Pagination/examples/01-standard-use.js").default
+    }
+  />
+)}
 `;
 
 export default () => <Page>{content}</Page>;

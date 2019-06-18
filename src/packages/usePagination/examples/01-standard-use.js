@@ -3,7 +3,7 @@ import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { usePagination } from "../index";
+import usePagination from "storefront-ui/usePagination";
 
 import { Button } from "../../../../demo/theme/Button";
 import { SelectNative } from "../../../../demo/theme/SelectNative";
@@ -55,12 +55,14 @@ export default () => {
           Previous
         </Button>
 
-        {pagination.parts.map(part => {
-          if (part.type === "separator") return <div>...</div>;
+        {pagination.parts.map((part, index) => {
+          if (part.type === "separator")
+            return <div key={"separator" + index}>...</div>;
           return part.buttons.map(({ props, page }) => (
             <Button
               kind={page === pagination.current ? "primary" : "minimal"}
               {...props}
+              key={"button" + page}
             >
               {page}
             </Button>

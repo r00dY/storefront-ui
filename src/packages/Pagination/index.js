@@ -1,20 +1,31 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
+import usePagination from "../usePagination";
 
 const Pagination$ = function(props) {
-  // const {
-  //     overrides: {
-  //         ButtonPrev: buttonPrev,
-  //         ButtonNext: buttonNext,
-  //         Select: select,
-  //
-  //     }
-  // }
+  const {
+    overrides: { Root: root },
+    split,
+    current,
+    count,
+    href,
+    onChange
+  } = props;
+
+  const pagination = usePagination({
+    split,
+    current,
+    count,
+    href,
+    onChange
+  });
+
+  return root(pagination);
 };
 
 Pagination$.defaultProps = {
   current: 1,
-  split: [2, 5, 2],
+  split: [1, 1, 1],
   overrides: {}
 };
 
@@ -27,4 +38,21 @@ Pagination$.propTypes = {
   overrides: PropTypes.object
 };
 
-export { Pagination$ };
+const StatefulPagination$ = props => {
+  const [page, setPage] = useState(props.initPage || 1);
+
+  return (
+    <Pagination$
+      {...props}
+      current={page}
+      onChange={page => {
+        setPage(page);
+        if (props.onChange) {
+          props.onChange(page);
+        }
+      }}
+    />
+  );
+};
+
+export { Pagination$, StatefulPagination$ };

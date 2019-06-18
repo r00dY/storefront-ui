@@ -6,7 +6,7 @@ const defaultOptions = {
   onChange: () => {}
 };
 
-export function usePagination(options) {
+function usePagination(options) {
   const { current, splitter, onChange, count, href } = Object.assign(
     {},
     defaultOptions,
@@ -107,3 +107,5 @@ export function usePagination(options) {
 
   return vals;
 }
+
+export default usePagination;
