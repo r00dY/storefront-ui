@@ -16,7 +16,8 @@ export default () => {
   const pagination = usePagination({
     count: 10,
     current: page,
-    onChange: setPage
+    onChange: setPage,
+    href: page => "#" + page
   });
 
   return (

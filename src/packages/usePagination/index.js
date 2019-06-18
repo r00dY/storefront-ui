@@ -7,17 +7,20 @@ const defaultOptions = {
 };
 
 export function usePagination(options) {
-  const { current, splitter, onChange, count } = Object.assign(
+  const { current, splitter, onChange, count, href } = Object.assign(
     {},
     defaultOptions,
     options
   );
 
+  const nextPage = Math.min(current + 1, count);
+  const prevPage = Math.max(current - 1, 1);
+
   const goToNext = () => {
-    onChange(Math.min(current + 1, count));
+    onChange(nextPage);
   };
   const goToPrev = () => {
-    onChange(Math.max(current - 1, 1));
+    onChange(prevPage);
   };
 
   const goTo = index => {
@@ -69,7 +72,8 @@ export function usePagination(options) {
       buttons: group.map(page => ({
         page: page,
         props: {
-          onClick: () => goTo(page)
+          onClick: () => goTo(page),
+          href: href ? href(page) : undefined
         }
       }))
     });
@@ -81,10 +85,12 @@ export function usePagination(options) {
     prevButtonActive: current > 1,
     nextButtonActive: current < count,
     nextButtonProps: {
-      onClick: goToNext
+      onClick: goToNext,
+      href: href ? href(nextPage) : undefined
     },
     prevButtonProps: {
-      onClick: goToPrev
+      onClick: goToPrev,
+      href: href ? href(prevPage) : undefined
     },
     goToNext: goToNext,
     goToPrevious: goToPrev,
