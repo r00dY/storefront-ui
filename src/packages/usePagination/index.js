@@ -3,11 +3,12 @@ import { useState } from "react";
 const defaultOptions = {
   current: 1,
   splitter: [1, 1, 1],
-  onChange: () => {}
+  onChange: () => {},
+  label: page => page
 };
 
 function usePagination(options) {
-  const { current, splitter, onChange, count, href } = Object.assign(
+  const { current, splitter, onChange, count, href, label } = Object.assign(
     {},
     defaultOptions,
     options
@@ -79,6 +80,12 @@ function usePagination(options) {
     });
   });
 
+  const selectOptions = pageArray.map(page => ({
+    value: page.toString(),
+    label: label(page),
+    page
+  }));
+
   const vals = {
     current: current,
     count: count,
@@ -96,10 +103,10 @@ function usePagination(options) {
     goToPrevious: goToPrev,
     goTo: goTo,
     selectProps: {
-      options: pageArray.map(x => x.toString()),
-      value: current.toString(),
+      options: selectOptions,
+      value: selectOptions[current - 1],
       onChange: val => {
-        goTo(parseInt(val));
+        goTo(val.page);
       }
     },
     parts
