@@ -79,7 +79,6 @@ export default class Button extends React.Component<ButtonPropsT> {
         {...baseButtonProps}
         // Applies last to override passed in onClick
         onClick={this.internalOnClick}
-        ref={forwardedRef}
       >
         {isLoading ? (
           <React.Fragment>

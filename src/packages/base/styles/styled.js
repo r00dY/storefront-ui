@@ -93,7 +93,7 @@ function styled(component, arg, childrenFunc) {
 
   const Component = styledEmotion[component]``;
 
-  return React.forwardRef((props, ref) => (
+  return props => (
     <ThemeContext.Consumer>
       {theme => {
         const styleProps = { ...props, $theme: theme, $config: theme };
@@ -115,7 +115,7 @@ function styled(component, arg, childrenFunc) {
 
         return (
           <Component
-            ref={ref}
+            ref={props.$ref}
             {...restProps}
             $theme={theme}
             css={css`
@@ -127,7 +127,7 @@ function styled(component, arg, childrenFunc) {
         );
       }}
     </ThemeContext.Consumer>
-  ));
+  );
 }
 
 export default styled;

@@ -34,7 +34,7 @@ export default () => {
           data={options}
           overrides={{
             Tab: ({ tabData, active, activate, ref }) => (
-              <Button forwardedRef={ref} kind={"minimal"} onClick={activate}>
+              <Button kind={"minimal"} onClick={activate} $ref={ref}>
                 {tabData}
               </Button>
             ),

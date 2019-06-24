@@ -135,11 +135,11 @@ function Tabs$(props) {
   });
 
   return (
-    <Root {...sharedProps} {...rootProps} ref={rootRef}>
+    <Root {...sharedProps} {...rootProps} $ref={rootRef}>
       <TabsContainer {...sharedProps} {...tabsContainerProps}>
         {items}
 
-        <Line ref={lineRef} {...lineProps} />
+        <Line $ref={lineRef} {...lineProps} />
       </TabsContainer>
     </Root>
   );
