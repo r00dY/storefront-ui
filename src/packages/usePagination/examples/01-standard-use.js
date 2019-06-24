@@ -56,8 +56,9 @@ export default () => {
         </Button>
 
         {pagination.parts.map((part, index) => {
-          if (part.type === "separator")
+          if (part.type === "separator") {
             return <div key={"separator" + index}>...</div>;
+          }
           return part.buttons.map(({ props, page }) => (
             <Button
               kind={page === pagination.current ? "primary" : "minimal"}

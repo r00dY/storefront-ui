@@ -77,8 +77,9 @@ function Tabs$(props) {
     lineRef.current.style.width = `${activeTabWidth}px`;
 
     if (firstMount.current) {
+      // This is set here to prevent animating at mount
       setTimeout(() => {
-        lineRef.current.style.transition = "all 0.15s ease-out"; // This is set here to prevent animating at mount
+        lineRef.current.style.transition = "all 0.15s ease-out";
       }, 500);
     } else {
       lineRef.current.style.transition = "all 0.15s ease-out";
