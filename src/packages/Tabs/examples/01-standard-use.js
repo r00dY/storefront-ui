@@ -21,7 +21,7 @@ const options = [
 ];
 
 export default () => {
-  const [tab, setTab] = useState(options[0]);
+  const [tab, setTab] = useState(options[11]);
 
   return (
     <div>
@@ -37,10 +37,26 @@ export default () => {
               <Button forwardedRef={ref} kind={"minimal"} onClick={activate}>
                 {tabData}
               </Button>
-            )
+            ),
+            Separator: () => (
+              <div
+                css={css`
+                  height: 100%;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                `}
+              >
+                -
+              </div>
+            ),
+            Line: {
+              style: `height: 1px;`
+            }
           }}
           active={tab}
           onChange={setTab}
+          gutter={10}
         />
       </div>
     </div>

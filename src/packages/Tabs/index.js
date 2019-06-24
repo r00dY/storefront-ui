@@ -1,21 +1,36 @@
 import React, { useRef, useEffect } from "react";
 import PropTypes from "prop-types";
 import { getOverrides } from "../base/helpers/overrides";
-import { TabStyled, RootStyled } from "./styled-components";
+import {
+  TabStyled,
+  RootStyled,
+  TabsContainerStyled,
+  LineStyled
+} from "./styled-components";
+
+import { rs } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 function Tabs$(props) {
-  const {
-    overrides: { Root: RootOverride, Tab: tab },
+  let {
+    overrides: {
+      Root: RootOverride,
+      Tab: tab,
+      TabsContainer: TabsContainerOverride,
+      Separator: separator,
+      Line: LineOverride
+    },
     data,
     active,
-    onChange
+    onChange,
+    gutter
   } = props;
 
   const rootRef = useRef(null);
   const lineRef = useRef(null);
+  const firstMount = useRef(true);
 
   const itemRefs = [];
   for (let i = 0; i < data.length; i++) {
@@ -23,6 +38,8 @@ function Tabs$(props) {
   }
 
   const activeIndex = data.indexOf(active);
+
+  gutter = rs(gutter);
 
   useEffect(() => {
     /**
@@ -38,15 +55,15 @@ function Tabs$(props) {
     if (leftDiff < 0 && rightDiff < 0) {
       // do nothing, item is wider than container
     } else if (leftDiff < 0) {
-      scrollBy = -(-leftDiff + 50);
+      scrollBy = -(-leftDiff + 100);
     } else if (rightDiff < 0) {
-      scrollBy = -rightDiff + 50;
+      scrollBy = -rightDiff + 100;
     }
 
     if (scrollBy) {
       rootRef.current.scrollBy({
         left: scrollBy,
-        behavior: "smooth"
+        behavior: firstMount.current ? "auto" : "smooth"
       });
     }
 
@@ -58,11 +75,24 @@ function Tabs$(props) {
      */
     lineRef.current.style.transform = `translateX(${activeTabLeft}px)`;
     lineRef.current.style.width = `${activeTabWidth}px`;
+
+    if (firstMount.current) {
+      setTimeout(() => {
+        lineRef.current.style.transition = "all 0.15s ease-out"; // This is set here to prevent animating at mount
+      }, 0);
+    }
+
+    firstMount.current = false;
   });
 
   const sharedProps = {};
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [TabsContainer, tabsContainerProps] = getOverrides(
+    TabsContainerOverride,
+    TabsContainerStyled
+  );
+  const [Line, lineProps] = getOverrides(LineOverride, LineStyled);
 
   const activate = (tabData, index) => {
     if (onChange) {
@@ -70,41 +100,58 @@ function Tabs$(props) {
     }
   };
 
-  return (
-    <Root {...sharedProps} {...rootProps} ref={rootRef}>
-      {data.map((tabData, index) =>
-        tab({
+  let items = [];
+  data.forEach((tabData, index) => {
+    if (separator && index > 0) {
+      items.push(
+        <div
+          css={css`
+            ${gutter.css("margin-right")}
+          `}
+        >
+          {separator({ ...sharedProps, tabData, index })}
+        </div>
+      );
+    }
+
+    items.push(
+      <div
+        css={css`
+          ${gutter.css("margin-right")}
+        `}
+      >
+        {tab({
           tabData,
           active: tabData === active,
           activate: () => activate(tabData, index),
-          ref: itemRefs[index]
-        })
-      )}
+          ref: itemRefs[index],
+          index
+        })}
+      </div>
+    );
+  });
 
-      <div
-        css={css`
-          position: absolute;
-          left: 0;
-          bottom: 0;
-          height: 2px;
-          background-color: aqua;
-          transition: all 0.15s ease-out;
-          width: 0px;
-        `}
-        ref={lineRef}
-      />
+  return (
+    <Root {...sharedProps} {...rootProps} ref={rootRef}>
+      <TabsContainer {...sharedProps} {...tabsContainerProps}>
+        {items}
+
+        <Line ref={lineRef} {...lineProps} />
+      </TabsContainer>
     </Root>
   );
 }
 
 Tabs$.defaultProps = {
-  overrides: {}
+  overrides: {},
+  gutter: 0
 };
 
 Tabs$.propTypes = {
   overrides: PropTypes.object,
   active: PropTypes.any,
-  onChange: PropTypes.func
+  onChange: PropTypes.func,
+  gutter: PropTypes.any
 };
 
 export { Tabs$ };
