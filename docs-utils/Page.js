@@ -110,6 +110,11 @@ export default props => {
               <a>Pagination</a>
             </Link>
           </li>
+          <li>
+            <Link href="/tabs">
+              <a>Tabs</a>
+            </Link>
+          </li>
         </ul>
       </div>
 
