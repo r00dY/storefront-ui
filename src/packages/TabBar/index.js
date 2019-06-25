@@ -13,7 +13,7 @@ import { rs } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-function Tabs$(props) {
+function TabBar$(props) {
   let {
     overrides: {
       Root: RootOverride,
@@ -145,16 +145,16 @@ function Tabs$(props) {
   );
 }
 
-Tabs$.defaultProps = {
+TabBar$.defaultProps = {
   overrides: {},
   gutter: 0
 };
 
-Tabs$.propTypes = {
+TabBar$.propTypes = {
   overrides: PropTypes.object,
   active: PropTypes.any,
   onChange: PropTypes.func,
   gutter: PropTypes.any
 };
 
-export { Tabs$ };
+export { TabBar$ };
