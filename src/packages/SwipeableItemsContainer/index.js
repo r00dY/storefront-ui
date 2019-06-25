@@ -175,8 +175,6 @@ function useAbstractSlider(config, events) {
   // Otherwise, return properly
   let active = getActiveSlidesIds(abstractSlider.state, true);
 
-  console.log(active);
-
   return {
     ...ret,
     active: active,

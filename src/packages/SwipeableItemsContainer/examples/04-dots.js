@@ -56,7 +56,9 @@ export default () => {
       <Dots
         amount={swiper.count}
         onClick={i => swiper.moveToSlide(i)}
-        active={swiper.active}
+        active={
+          typeof swiper.active === "undefined" ? undefined : swiper.active[0]
+        }
       />
     </div>
   );

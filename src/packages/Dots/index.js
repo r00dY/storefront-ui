@@ -37,8 +37,6 @@ const Dots = props => {
   if (props.swipeableItemsContainer) {
     let hook = props.swipeableItemsContainer;
 
-    console.log(hook);
-
     data = {
       amount: hook.count,
       onClick: i => {
