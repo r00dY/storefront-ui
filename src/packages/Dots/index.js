@@ -37,12 +37,14 @@ const Dots = props => {
   if (props.swipeableItemsContainer) {
     let hook = props.swipeableItemsContainer;
 
+    console.log(hook);
+
     data = {
       amount: hook.count,
       onClick: i => {
         hook.moveToSlide(i);
       },
-      active: hook.active
+      active: typeof hook.active === "undefined" ? undefined : hook.active[0]
     };
   } else {
     data = {

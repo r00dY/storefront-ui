@@ -4,6 +4,7 @@ import SwipeableItemsContainer, {
 } from "storefront-ui/SwipeableItemsContainer";
 
 import { rslin } from "responsive-helpers";
+import { ButtonRaw } from "../../../../demo/theme/ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -30,8 +31,16 @@ export default () => {
       <SwipeableItemsContainer
         mode={"horizontal"}
         arrows={{
-          left: <Arrow color={"red"} />,
-          right: <Arrow color={"blue"} />
+          left: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"red"} />
+            </ButtonRaw>
+          ),
+          right: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"blue"} />
+            </ButtonRaw>
+          )
         }}
       >
         <Rectangle color={"coral"}>1</Rectangle>
@@ -51,8 +60,16 @@ export default () => {
       <SwipeableItemsContainer
         mode={"horizontal"}
         arrows={{
-          left: <Arrow color={"yellow"} />,
-          right: <Arrow color={"green"} />,
+          left: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"red"} />
+            </ButtonRaw>
+          ),
+          right: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"blue"} />
+            </ButtonRaw>
+          ),
           offset: -25,
           showOnlyOnHover: true,
           hideWhenInactive: true

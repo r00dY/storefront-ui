@@ -24,7 +24,7 @@ const CSS = {
   }
 };
 
-const DefaultArrow = ({ side, content, offset, onClick, hide }) => (
+const DefaultArrowContainer = ({ side, content, offset, hide }) => (
   <div
     className="storefrontUI__slider__arrow"
     css={css`
@@ -40,17 +40,7 @@ const DefaultArrow = ({ side, content, offset, onClick, hide }) => (
       ${hide ? "visibility: hidden; opacity: 0;" : ""}
     `}
   >
-    <button
-      onClick={onClick}
-      css={css`
-        border: none;
-        padding: 0;
-        pointer-events: auto;
-        cursor: pointer;
-      `}
-    >
-      {content}
-    </button>
+    {content}
   </div>
 );
 
@@ -183,16 +173,15 @@ function useAbstractSlider(config, events) {
   }
 
   // Otherwise, return properly
+  let active = getActiveSlidesIds(abstractSlider.state, true);
 
-  let active = getActiveSlidesIds(abstractSlider.state);
+  console.log(active);
 
   return {
     ...ret,
     active: active,
-    isFirstActive: Array.isArray(active) ? active.includes(0) : active === 0,
-    isLastActive: Array.isArray(active)
-      ? active.includes(abstractSlider._config.count - 1)
-      : active === abstractSlider._config.count - 1
+    isFirstActive: active.includes(0),
+    isLastActive: active.includes(abstractSlider._config.count - 1)
   };
 }
 
@@ -409,25 +398,27 @@ let SwipeableItemsContainerPure = props => {
       </Wrapper>
 
       {props.arrows && (
-        <DefaultArrow
+        <DefaultArrowContainer
           side={"left"}
-          content={props.arrows.left}
+          content={props.arrows.left({
+            onClick: () => {
+              abstractSlider.moveToPrev();
+            }
+          })}
           offset={rs(arrowsOffset[0])}
           hide={abstractSlider.isFirstActive && props.arrows.hideWhenInactive}
-          onClick={() => {
-            abstractSlider.moveToPrev();
-          }}
         />
       )}
       {props.arrows && (
-        <DefaultArrow
+        <DefaultArrowContainer
           side={"right"}
-          content={props.arrows.right}
+          content={props.arrows.right({
+            onClick: () => {
+              abstractSlider.moveToNext();
+            }
+          })}
           offset={rs(arrowsOffset[1])}
           hide={abstractSlider.isLastActive && props.arrows.hideWhenInactive}
-          onClick={() => {
-            abstractSlider.moveToNext();
-          }}
         />
       )}
     </Root>
