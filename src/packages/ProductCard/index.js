@@ -61,9 +61,11 @@ const ProductCard$ = props => {
   ));
 
   const nameElem = (
-    <ButtonRaw$ href={href}>
-      <Name {...nameProps}>{name}</Name>
-    </ButtonRaw$>
+    <>
+      <ButtonRaw$ href={href}>
+        <Name {...nameProps}>{name}</Name>
+      </ButtonRaw$>
+    </>
   );
   const descriptionElem = (
     <Description {...descriptionProps}>{description}</Description>

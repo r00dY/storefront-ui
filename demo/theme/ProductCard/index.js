@@ -88,7 +88,7 @@ const overridesTheme1 = {
         <ButtonRaw$>
           <div
             css={css`
-              background: rgba(255, 255, 255, 0.4);
+              background: rgba(255, 255, 255, 0.8);
               width: 44px;
               height: 44px;
               border-radius: 50%;
