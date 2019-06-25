@@ -106,6 +106,11 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/product-card">
+              <a>ProductRow</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/forms">
               <a>Forms / Inputs / Controls</a>
             </Link>
