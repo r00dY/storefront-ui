@@ -72,7 +72,7 @@ const ProductCard$ = props => {
   );
   const priceElem = (
     <Price {...priceProps} price={price} discountPrice={discountPrice}>
-      {price} {discountPrice}
+      {price} <span>{discountPrice}</span>
     </Price>
   );
   const badgesElem = (

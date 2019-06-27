@@ -31,11 +31,9 @@ export const NameStyled = styled("div", nameStyles);
 export const descriptionStyles = ({ $theme }) => ``;
 export const DescriptionStyled = styled("div", descriptionStyles);
 
-export const priceStyles = ({ $theme }) => `margin-top: 10px;`;
+export const priceStyles = ({ $theme }) =>
+  `span {text-decoration: line-through;}`;
 export const PriceStyled = styled("div", priceStyles);
-
-export const discountPriceStyles = ({ $theme }) => ``;
-export const DiscountPriceStyled = styled("div", discountPriceStyles);
 
 export const imageOverlayStyles = ({ $theme }) =>
   `position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; align-items: flex-end; justify-content: flex-end;`;

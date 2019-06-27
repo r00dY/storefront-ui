@@ -33,7 +33,7 @@ const products = [
     href: "long-a-line-jersey-dress"
   },
   {
-    name: "Bubble-shaped Jersey Dress",
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: " \u20ac129",
     description: "Jersey Dresses",
     badges: [
@@ -49,7 +49,7 @@ const products = [
     name: "Shaped A-line Cotton Dress",
     price: " \u20ac99",
     discountPrice: " \u20ac79",
-    description: "Evening & Occasion Dresses",
+    description: "Evening & Occasion Dresses Very Long Description",
     badges: [
       {
         label: "-20%",
