@@ -48,7 +48,7 @@ LICENSE file in the root directory of this source tree.
 // }
 
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { css, jsx, keyframes } from "@emotion/core";
 import styledEmotion from "@emotion/styled";
 
 import React, { useContext } from "react";
@@ -71,7 +71,9 @@ function stylesToString(styles) {
   let font;
 
   Object.keys(styles).forEach(key => {
-    if (key === "font") {
+    if (key === "animationName") {
+      styles["animationName"] = `${keyframes(styles[key])}`;
+    } else if (key === "font") {
       font = styles[key];
       delete styles[key];
     } else if (styles[key] instanceof Color) {

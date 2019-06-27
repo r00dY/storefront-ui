@@ -60,7 +60,7 @@ export const BaseButton = styled(
       backgroundColor: $theme.colors.buttonDisabledFill,
       color: $theme.colors.buttonDisabledText
     },
-    cursor: $disabled || $isLoading ? "auto" : "pointer",
+    cursor: $disabled ? "auto" : "pointer",
     // Padding For Shape and Size
     ...getStyleForShape({ $theme, $shape, $size }),
     // Kind style override
