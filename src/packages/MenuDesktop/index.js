@@ -34,7 +34,6 @@ const MenuDesktop$ = props => {
       menu,
       isActive: activeMenu === menu,
       buttonProps: {
-        onClick: () => setActiveMenu(menu),
         onMouseEnter: () => setActiveMenu(menu),
         onMouseLeave: () => setActiveMenu(null)
       }
@@ -83,20 +82,23 @@ const MenuDesktop$ = props => {
             setActiveMenu(false);
           }}
         >
-          {data.map((menu, i) => (
-            <div
-              css={css`
-                position: absolute;
-                width: 100%;
-                display: ${menu === activeMenu ? "block" : "none"};
-              `}
-              key={i}
-            >
-              {typeof menu.content === "function"
-                ? menu.content(sharedProps)
-                : menu.content}
-            </div>
-          ))}
+          {data.map(
+            (menu, i) =>
+              menu.content && (
+                <div
+                  css={css`
+                    position: absolute;
+                    width: 100%;
+                    display: ${menu === activeMenu ? "block" : "none"};
+                  `}
+                  key={i}
+                >
+                  {typeof menu.content === "function"
+                    ? menu.content(sharedProps)
+                    : menu.content}
+                </div>
+              )
+          )}
         </div>
       )}
 

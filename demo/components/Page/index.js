@@ -32,6 +32,9 @@ const Page = props => (
           content: <MenuContent>Cześć albo nara</MenuContent>
         },
         {
+          label: "Empty"
+        },
+        {
           label: "Third",
           content: <MenuContent>Nara</MenuContent>
         }
