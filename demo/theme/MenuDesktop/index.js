@@ -19,12 +19,12 @@ const MenuDesktop = props => {
   return (
     <MenuDesktop$
       overrides={{
-        MenuButton: ({ index, menu, isActive, setActive }) => (
+        MenuButton: ({ index, menu, isActive, setActive, buttonProps }) => (
           <Button
             key={index}
             kind={"minimal"}
             isSelected={isActive}
-            onMouseEnter={setActive}
+            {...buttonProps}
           >
             {menu.label}
           </Button>
@@ -70,6 +70,7 @@ const MenuDesktop = props => {
       }}
       renderMenuContent={true}
       mode={"fixed"}
+      debounce={200}
       {...props}
     />
   );

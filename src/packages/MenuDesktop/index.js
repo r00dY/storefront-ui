@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useDebounce } from "use-debounce";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -17,11 +18,14 @@ const MenuDesktop$ = props => {
     overrides: { MenuBar: MenuBar, MenuButton: MenuButton },
     data,
     renderMenuContent,
-    mode
+    mode,
+    debounce
   } = props;
 
-  const [menuHover, setMenuHover] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null);
+  // const [menuHover, setMenuHover] = useState(false);
+  const [activeMenu_, setActiveMenu] = useState(null);
+
+  const [activeMenu] = useDebounce(activeMenu_, debounce);
 
   let buttons = [];
 
@@ -29,8 +33,11 @@ const MenuDesktop$ = props => {
     const buttonSharedProps = {
       menu,
       isActive: activeMenu === menu,
-      setActive: () => setActiveMenu(menu),
-      menuHover
+      buttonProps: {
+        onClick: () => setActiveMenu(menu),
+        onMouseEnter: () => setActiveMenu(menu),
+        onMouseLeave: () => setActiveMenu(null)
+      }
     };
 
     buttons.push(MenuButton({ index: i, ...buttonSharedProps }));
@@ -40,8 +47,8 @@ const MenuDesktop$ = props => {
     setActiveMenu,
     activeMenu,
     data,
-    buttons,
-    menuHover
+    buttons
+    // menuHover
   };
 
   let containerStyles;
@@ -65,16 +72,17 @@ const MenuDesktop$ = props => {
       css={css`
         ${containerStyles}
       `}
-      onMouseEnter={() => setMenuHover(true)}
-      onMouseLeave={() => {
-        setMenuHover(false);
-        setActiveMenu(false);
-      }}
     >
       {MenuBar(sharedProps)}
 
       {renderMenuContent && (
-        <>
+        <div
+          onMouseEnter={() => setActiveMenu(activeMenu)}
+          onMouseLeave={() => {
+            // setMenuHover(false);
+            setActiveMenu(false);
+          }}
+        >
           {data.map((menu, i) => (
             <div
               css={css`
@@ -89,7 +97,7 @@ const MenuDesktop$ = props => {
                 : menu.content}
             </div>
           ))}
-        </>
+        </div>
       )}
 
       {!renderMenuContent && (
@@ -114,7 +122,8 @@ MenuDesktop$.defaultProps = {
   overrides: {},
   renderMenuContent: false,
   mode: "static",
-  offsets: {}
+  offsets: {},
+  debounce: 50
 };
 
 export { MenuDesktop$ };
