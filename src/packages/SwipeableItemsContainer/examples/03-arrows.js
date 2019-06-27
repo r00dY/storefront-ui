@@ -54,7 +54,9 @@ export default () => {
       <p>
         Arrows visible on hover (<code>showOnlyOnHover</code> option), hidden
         when inactive (<code>hideWhenInactive</code>), also added{" "}
-        <code>offset</code>
+        <code>offset</code>. <strong>Imporant -> </strong>on touch devices
+        arrows will be visible anyway (can be disabled with{" "}
+        <code>hideOnTouchDevices</code>)
       </p>
 
       <SwipeableItemsContainer
@@ -74,6 +76,36 @@ export default () => {
           showOnlyOnHover: true,
           hideWhenInactive: true
         }}
+      >
+        <Rectangle color={"coral"}>1</Rectangle>
+        <Rectangle color={"darkgoldenrod"}>2</Rectangle>
+        <Rectangle color={"maroon"}>3</Rectangle>
+        <Rectangle color={"navy"}>4</Rectangle>
+        <Rectangle color={"firebrick"}>5</Rectangle>
+        <Rectangle color={"forestgreen"}>6</Rectangle>
+      </SwipeableItemsContainer>
+
+      <p>
+        <code>hideOnTouchDevices=true</code> + <code>externalOffset</code>
+      </p>
+
+      <SwipeableItemsContainer
+        mode={"horizontal"}
+        arrows={{
+          left: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"red"} />
+            </ButtonRaw>
+          ),
+          right: ({ onClick }) => (
+            <ButtonRaw onClick={onClick}>
+              <Arrow color={"blue"} />
+            </ButtonRaw>
+          ),
+          hideOnTouchDevices: true
+        }}
+        externalOffsetBefore={{ xs: 50, md: 100 }}
+        externalOffsetAfter={{ xs: 50, md: 100 }}
       >
         <Rectangle color={"coral"}>1</Rectangle>
         <Rectangle color={"darkgoldenrod"}>2</Rectangle>

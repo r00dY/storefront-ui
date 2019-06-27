@@ -24,7 +24,13 @@ const CSS = {
   }
 };
 
-const DefaultArrowContainer = ({ side, content, offset, hide }) => (
+const DefaultArrowContainer = ({
+  side,
+  content,
+  offset,
+  hide,
+  hideOnTouchDevices
+}) => (
   <div
     className="storefrontUI__slider__arrow"
     css={css`
@@ -37,7 +43,12 @@ const DefaultArrowContainer = ({ side, content, offset, hide }) => (
       align-items: center;
       opacity: 1;
       transition: opacity 0.15s, visibility 0.15s;
+
       ${hide ? "visibility: hidden; opacity: 0;" : ""}
+
+      ${hideOnTouchDevices
+        ? "@media (hover: none) { visibility: hidden; }"
+        : ""}
     `}
   >
     {content}
@@ -48,9 +59,11 @@ const Root = styled.div`
   position: relative;
   height: 100%;
 
-  &:not(:hover) .storefrontUI__slider__arrow {
-    ${props =>
-      props.showArrowsOnlyOnHover ? "visibility: hidden; opacity: 0;" : ""}
+  @media (hover: hover) {
+    &:not(:hover) .storefrontUI__slider__arrow {
+      ${props =>
+        props.showArrowsOnlyOnHover ? "visibility: hidden; opacity: 0;" : ""}
+    }
   }
 `;
 
@@ -403,8 +416,9 @@ let SwipeableItemsContainerPure = props => {
               abstractSlider.moveToPrev();
             }
           })}
-          offset={rs(arrowsOffset[0])}
+          offset={rs(arrowsOffset[0]).add(config.externalOffsetBefore)}
           hide={abstractSlider.isFirstActive && props.arrows.hideWhenInactive}
+          hideOnTouchDevices={props.arrows.hideOnTouchDevices || false}
         />
       )}
       {props.arrows && (
@@ -415,8 +429,9 @@ let SwipeableItemsContainerPure = props => {
               abstractSlider.moveToNext();
             }
           })}
-          offset={rs(arrowsOffset[1])}
+          offset={rs(arrowsOffset[1]).add(config.externalOffsetAfter)}
           hide={abstractSlider.isLastActive && props.arrows.hideWhenInactive}
+          hideOnTouchDevices={props.arrows.hideOnTouchDevices || false}
         />
       )}
     </Root>
