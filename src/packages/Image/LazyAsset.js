@@ -3,6 +3,17 @@ import PropTypes from "prop-types";
 import VisibilitySensor from "react-visibility-sensor";
 
 /**
+ * What does Image do?
+ * 1. Supports lazy loading out of the box (not crucial in ecommerce in a lot of cases)
+ * 2. Seamless video integration (with lazyloading built-in too) -> with taking into account image fallback (play button, low battery, etc.)
+ * 3. Images take up all the space they need with modes into account (cover / contain / aspect-ratio).
+ * 4. IE fallbacks
+ * 5. Easy changing of modes in responsiveness (full CSS, like <picture tag />).
+ * 6. Background color / background image placeholder -> easy.
+ *
+ *
+ *
+ *
  * TODO: "mode" support for video in Edge/IE and for images for IE.
  * TODO: "video" already loaded (if already loaded in browser)
  * TODO: "media" should support video. Right now video it's not supported for "media" prop.
@@ -50,9 +61,10 @@ class LazyAsset extends React.Component {
     // 2 - props.load = true. Image is being downloaded (srcset for <img> is set).
     // 3 - props.load = true. Image is downloaded.
     this.state = {
-      status: props.load === true ? 2 : 0,
+      status: props.load === true ? 3 : 0,
       visible: false
     };
+
     this.image = React.createRef();
     this.wrapper = React.createRef();
     this.handleImageLoaded = this.handleImageLoaded.bind(this);
@@ -304,37 +316,43 @@ class LazyAsset extends React.Component {
       }
     }
 
-    // Tag picking. Picture (for responsive image sets) or img
+    const content = (
+      <div
+        ref={this.wrapper}
+        className={`LazyAsset__Wrapper w-${this.randomId}`}
+        style={{ ...styles.LazyAsset__Wrapper, ...wrapperStyles }}
+      >
+        <div
+          className={"LazyAsset__WrapperOverflow"}
+          style={{
+            ...styles.LazyAsset__WrapperOverflow,
+            transition: `opacity ${this.props.animationTime}s`,
+            opacity: this.state.status === 3 ? 1 : 0
+          }}
+        >
+          {imgTag}
+        </div>
+        {styleTag}
+        {this.props.children}
+      </div>
+    );
 
     return (
       <div
         className={`LazyAsset ${this.props.className}`}
         style={{ ...styles.LazyAsset, ...this.props.style }}
       >
-        <VisibilitySensor
-          onChange={this.handleVisibilityChange}
-          partialVisibility={true}
-          offset={this.props.offset}
-        >
-          <div
-            ref={this.wrapper}
-            className={`LazyAsset__Wrapper w-${this.randomId}`}
-            style={{ ...styles.LazyAsset__Wrapper, ...wrapperStyles }}
+        {this.props.loadWhenInViewport && (
+          <VisibilitySensor
+            onChange={this.handleVisibilityChange}
+            partialVisibility={true}
+            offset={this.props.offset}
           >
-            <div
-              className={"LazyAsset__WrapperOverflow"}
-              style={{
-                ...styles.LazyAsset__WrapperOverflow,
-                transition: `opacity ${this.props.animationTime}s`,
-                opacity: this.state.status === 3 ? 1 : 0
-              }}
-            >
-              {imgTag}
-            </div>
-            {styleTag}
-            {this.props.children}
-          </div>
-        </VisibilitySensor>
+            {content}
+          </VisibilitySensor>
+        )}
+
+        {!this.props.loadWhenInViewport && content}
       </div>
     );
   }
@@ -356,7 +374,7 @@ LazyAsset.propTypes = {
   loadWhenInViewport: PropTypes.bool,
   sizes: PropTypes.string,
   alt: PropTypes.string,
-  loaded: PropTypes.bool,
+  load: PropTypes.bool,
   backgroundColor: PropTypes.string,
   offset: PropTypes.object,
   draggable: PropTypes.bool,

@@ -11,6 +11,17 @@ import { catLandscape } from "../../../../data/images";
 
 export default () => (
   <div>
+    <p>
+      <code>loadWhenInViewport=false</code>
+    </p>
+
+    <Image
+      css={css`
+        max-width: 800px;
+      `}
+      image={catLandscape}
+    />
+
     <p>natural mode (default)</p>
 
     <Image
@@ -18,6 +29,8 @@ export default () => (
         max-width: 800px;
       `}
       image={catLandscape}
+      load={false}
+      loadWhenInViewport={true}
     />
 
     <p>cover mode</p>
@@ -28,6 +41,8 @@ export default () => (
       `}
       image={catLandscape}
       mode={"cover"}
+      load={false}
+      loadWhenInViewport={true}
     />
 
     <p>contain mode</p>
@@ -39,6 +54,8 @@ export default () => (
       `}
       image={catLandscape}
       mode={"contain"}
+      load={false}
+      loadWhenInViewport={true}
     />
 
     <p>contain mode with backgroundPosition (same as in CSS)</p>
@@ -51,6 +68,8 @@ export default () => (
       image={catLandscape}
       mode={"contain"}
       backgroundPosition={"left top"}
+      load={false}
+      loadWhenInViewport={true}
     />
   </div>
 );

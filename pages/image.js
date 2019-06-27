@@ -76,19 +76,6 @@ ${(
   />
 )}
 
-### Context, global default props
-
-You can set default \`Image\` props in \`StorefrontUIContext\` globally.
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/Image/examples/05-context.js")
-        .default
-    }
-    component={require("../src/packages/Image/examples/05-context.js").default}
-  />
-)}
 `;
 
 export default () => <Page>{content}</Page>;
