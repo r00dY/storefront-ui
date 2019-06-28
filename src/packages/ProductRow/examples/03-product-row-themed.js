@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductCardTheme1 } from "../../../../demo/theme/ProductCard";
+import { ProductRowTheme1 } from "../../../../demo/theme/ProductRow";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */
@@ -11,14 +11,16 @@ export default () => {
     <div>
       <Grid gutter={20} gutterVertical={20}>
         {products.map((product, index) => (
-          <GridItem params={{ xs: 24, md: 12, lg: 12 }} key={index}>
-            <ProductCardTheme1
+          <GridItem params={{ xs: 24, md: [24], lg: [24] }} key={index}>
+            <ProductRowTheme1
               name={product.name}
               description={product.description}
               price={product.price}
               discountPrice={product.discountPrice}
               images={product.images}
-              badges={product.badges}
+              quantity={product.quantity}
+              variant={product.variant}
+              mode={"compact"}
             />
           </GridItem>
         ))}

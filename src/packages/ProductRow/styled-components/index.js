@@ -1,8 +1,10 @@
 import { styled } from "../../base/styles";
 import React from "react";
-import { ButtonRaw$ } from "../../ButtonRaw";
+import { rslin } from "responsive-helpers";
+import { R } from "storefront-ui/Config";
 
-export const rootStyles = ({ $theme }) => ``;
+export const rootStyles = ({ $theme }) =>
+  `display: flex; flex-wrap: nowrap; background: white;`;
 export const rootChildren = ({ content, image }) => (
   <>
     {image}
@@ -12,36 +14,51 @@ export const rootChildren = ({ content, image }) => (
 export const RootStyled = styled("div", rootStyles, rootChildren);
 
 export const imageContainerStyles = ({ $theme }) =>
-  `position: relative; margin-bottom: 10px;`;
+  `position: relative; flex-shrink: 0; ${rslin(100, 140).css("width")} `;
 export const ImageContainerStyled = styled("div", imageContainerStyles);
 
-export const contentStyles = ({ $theme }) => ``;
-export const contentChildren = ({ name, description, price }) => (
+export const quantityStyles = ({ $theme }) =>
+  `display: flex; align-items: center; `;
+export const QuantityStyled = styled("div", quantityStyles);
+
+export const nameStyles = ({ $theme }) => `${$theme.fonts.h6.css} 
+   overflow: hidden;
+  max-height: calc(2 * 1.01em);`;
+export const NameStyled = styled("div", nameStyles);
+
+export const descriptionStyles = ({ $theme }) => `color: ${
+  $theme.colors.mono500.css
+}; ${$theme.fonts.body2.css}     white-space: nowrap; 
+    overflow: hidden;
+    text-overflow: ellipsis;`;
+export const DescriptionStyled = styled("div", descriptionStyles);
+
+export const variantStyles = ({ $theme }) =>
+  `color: ${$theme.colors.mono500.css}; ${$theme.fonts.body2.css}`;
+export const VariantStyled = styled("div", variantStyles);
+
+export const priceStyles = ({ $theme }) =>
+  `span {text-decoration: line-through;}`;
+export const priceChildren = ({ price, discountPrice, quantity }) => (
+  <>
+    {discountPrice && (
+      <>
+        <span>{quantity * price}</span>
+        {quantity * discountPrice}
+      </>
+    )}
+    {!discountPrice && quantity * price}
+  </>
+);
+export const PriceStyled = styled("div", priceStyles, priceChildren);
+
+export const dataStyles = ({ $theme, gutter }) => `
+`;
+export const dataChildren = ({ name, description, variant }) => (
   <>
     {name}
     {description}
-    {price}
+    {variant}
   </>
 );
-export const ContentStyled = styled("div", contentStyles, contentChildren);
-
-export const nameStyles = ({ $theme }) => ``;
-export const NameStyled = styled("div", nameStyles);
-
-export const descriptionStyles = ({ $theme }) => ``;
-export const DescriptionStyled = styled("div", descriptionStyles);
-
-export const priceStyles = ({ $theme }) => `margin-top: 10px;`;
-export const PriceStyled = styled("div", priceStyles);
-
-export const discountPriceStyles = ({ $theme }) => ``;
-export const DiscountPriceStyled = styled("div", discountPriceStyles);
-
-export const imageOverlayStyles = ({ $theme }) =>
-  `position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; display: flex; align-items: flex-end; justify-content: flex-end;`;
-export const imageOverlayChildren = ({ badges }) => <>{badges}</>;
-export const ImageOverlayStyled = styled(
-  "div",
-  imageOverlayStyles,
-  imageOverlayChildren
-);
+export const DataStyled = styled("div", dataStyles, dataChildren);

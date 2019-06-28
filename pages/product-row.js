@@ -8,31 +8,48 @@ const content = md`
 
 ## \`ProductRow\`
 
-Let's start with raw example
+ProductRow is made to display lists of products in such contexts like basket page, mini-basket, order summary page, wishlist.
 
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ProductCard/examples/01-product-card.js")
+      require("!!raw-loader!../src/packages/ProductRow/examples/01-product-row.js")
         .default
     }
     component={
-      require("../src/packages/ProductCard/examples/01-product-card.js").default
+      require("../src/packages/ProductRow/examples/01-product-row.js").default
     }
   />
 )}
 
 
-Now we go with some overrides:
+\`ProductRow\` comes in two modes: \`"full"\` and \`"compact"\`.
+
+In \`"full"\` mode it unwraps on given \`breakpoint\`. This mode suits to basket page, and product summary, where products are displayed widely.
+
+Below we have example with theme overrides, \`"full"\` mode which breaks above \`"lg"\` breakpoint:
 
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ProductCard/examples/02-product-card-themed.js")
+      require("!!raw-loader!../src/packages/ProductRow/examples/02-product-row-themed.js")
         .default
     }
     component={
-      require("../src/packages/ProductCard/examples/02-product-card-themed.js")
+      require("../src/packages/ProductRow/examples/02-product-row-themed.js")
+        .default
+    }
+  />
+)}
+\`"compact"\` mode suits best as responsive basket page or mini-basket on desktop:
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/ProductRow/examples/03-product-row-themed.js")
+        .default
+    }
+    component={
+      require("../src/packages/ProductRow/examples/03-product-row-themed.js")
         .default
     }
   />

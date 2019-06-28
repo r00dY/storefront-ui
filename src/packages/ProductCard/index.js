@@ -9,7 +9,8 @@ import {
   DescriptionStyled,
   PriceStyled,
   ContentStyled,
-  ImageOverlayStyled
+  ImageOverlayStyled,
+  BadgeStyled
 } from "./styled-components";
 
 /** @jsx jsx */
@@ -56,9 +57,7 @@ const ProductCard$ = props => {
     ImageOverlayOverride,
     ImageOverlayStyled
   );
-  const [Badge, badgeProps] = getOverrides(BadgeOverride, props => (
-    <div>{props.children}</div>
-  ));
+  const [Badge, badgeProps] = getOverrides(BadgeOverride, BadgeStyled);
 
   const nameElem = (
     <>
@@ -72,7 +71,9 @@ const ProductCard$ = props => {
   );
   const priceElem = (
     <Price {...priceProps} price={price} discountPrice={discountPrice}>
-      {price} <span>{discountPrice}</span>
+      {discountPrice && <span>{price}</span>}
+      {!discountPrice && price}
+      {discountPrice}
     </Price>
   );
   const badgesElem = (

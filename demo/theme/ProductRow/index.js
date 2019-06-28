@@ -1,129 +1,83 @@
 import React from "react";
 import ProductRow$ from "../../../src/packages/ProductRow";
-
+import Price from "../../../src/packages/Price";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 import { ButtonRaw$ } from "../../../src/packages/ButtonRaw";
 
-const overrides = {};
-const Price = ({ price, discountPrice, discountFirst }) => (
-  <div
-    css={css`
-      display: flex;
-      line-height: 1.5;
-      font-weight: 300;
-    `}
-  >
-    <div
-      css={css`
-        ${!(discountPrice === null || discountPrice === undefined)
-          ? `text-decoration: line-through; opacity: 0.3;`
-          : ``}
-      `}
-    >
-      {price}
-    </div>
-    {discountPrice && (
-      <div
-        css={css`
-          ${discountFirst
-            ? "order: -1; margin-right: 5px;"
-            : "margin-left: 5px;"}
-        `}
-      >
-        {discountPrice}
-      </div>
-    )}
-  </div>
-);
+import IconClear from "./outline-clear-24px.svg";
+import IconAdd from "./outline-add-24px.svg";
+import IconRemove from "./outline-remove-24px.svg";
+
+const overrides = {
+  Price: ({ price, discountPrice, quantity }) => (
+    <Price
+      price={price}
+      discountPrice={discountPrice}
+      quantity={quantity}
+      alignRight
+      prefix={"€"}
+    />
+  )
+};
 const overridesTheme1 = {
-  Price: ({ price, discountPrice }) => (
-    <Price price={price} discountPrice={discountPrice} />
+  Price: ({ price, discountPrice, quantity }) => (
+    <Price
+      price={price}
+      discountPrice={discountPrice}
+      quantity={quantity}
+      alignRight
+      prefix={"€"}
+    />
   ),
-  Badge: ({ label, type }) => (
-    <div
-      css={css`
-        background: rgba(255, 255, 255, 0.8);
-        padding: 3px 5px;
-        font-size: 0.75em;
-        border-radius: 2px;
-        text-transform: uppercase;
-        ${type === "feature"
-          ? `background-color: DarkSeaGreen; color: white; `
-          : ""}
-      `}
-    >
-      {label}
-    </div>
-  ),
-  Description: {
-    style: ({ $theme }) => `font-size: 0.75em; opacity: 0.5;`
-  },
-  Name: {
-    style: ({ $theme }) => `font-weight: 300;`
-  },
-  ImageOverlay: ({ badges }) => (
-    <div
-      css={css`
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
-      `}
-    >
-      <div
-        css={css`
-          display: flex;
-          justify-content: flex-end;
-        `}
-      >
-        <ButtonRaw$>
-          <div
-            css={css`
-              background: rgba(255, 255, 255, 0.8);
-              width: 44px;
-              height: 44px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-            `}
-          >
-            <IconFav />
-          </div>
-        </ButtonRaw$>
-      </div>
-      <div
-        css={css`
-          display: flex;
-          div + div {
-            margin-left: 4px;
-          }
-        `}
-      >
-        {badges}
-      </div>
-    </div>
-  ),
-  Content: ({ name, description, price }) => (
-    <>
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-between;
-        `}
-      >
-        {name} {price}
-      </div>
+  Data: ({ name, description, variant }) => (
+    <div>
       {description}
-    </>
+      {name}
+      {variant}
+    </div>
+  ),
+  Name: {
+    style: ({ $theme }) => `margin-bottom: 0.5em;`
+  },
+  Remove: () => (
+    <ButtonRaw$>
+      <IconClear
+        css={css`
+          width: 18px;
+          height: 18px;
+        `}
+      />
+    </ButtonRaw$>
+  ),
+  Quantity: ({ quantity }) => (
+    <div
+      css={css`
+        display: flex;
+        width: 100%;
+        align-items: center;
+        svg {
+          width: 18px;
+          height: 18px;
+        }
+      `}
+    >
+      <ButtonRaw$>
+        <IconRemove />
+      </ButtonRaw$>
+      <div
+        css={css`
+          width: 36px;
+          text-align: center;
+        `}
+      >
+        {quantity}
+      </div>
+      <ButtonRaw$>
+        <IconAdd />
+      </ButtonRaw$>
+    </div>
   )
 };
 const ProductRow = props => <ProductRow$ {...props} overrides={overrides} />;

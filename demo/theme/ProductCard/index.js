@@ -5,71 +5,16 @@ import { css, jsx } from "@emotion/core";
 
 import IconFav from "./outline-favorite_border-24px.svg";
 import { ButtonRaw$ } from "../../../src/packages/ButtonRaw";
-
+import Price from "../../../src/packages/Price";
 import { rslin } from "responsive-helpers";
 
 const overrides = {};
-const Price = ({ price, discountPrice, discountFirst }) => (
-  <div
-    css={css`
-      display: flex;
-      line-height: 1.5;
-      font-weight: 300;
-    `}
-  >
-    <div
-      css={css`
-        ${!(discountPrice === null || discountPrice === undefined)
-          ? `text-decoration: line-through; opacity: 0.3;`
-          : ``}
-      `}
-    >
-      {price}
-    </div>
-    {discountPrice && (
-      <div
-        css={css`
-          ${discountFirst
-            ? "order: -1; margin-right: 5px;"
-            : "margin-left: 5px;"}
-        `}
-      >
-        {discountPrice}
-      </div>
-    )}
-  </div>
-);
 const overridesTheme1 = {
   Price: ({ price, discountPrice }) => (
-    <Price price={price} discountPrice={discountPrice} discountFirst />
+    <Price price={price} discountPrice={discountPrice} prefix={"€"} />
   ),
-  Badge: ({ label, type }) => (
-    <div
-      css={css`
-        background: rgba(255, 255, 255, 0.8);
-        padding: 3px 5px;
-        font-size: 0.75em;
-        border-radius: 2px;
-        text-transform: uppercase;
-        ${type === "feature"
-          ? `background-color: DarkSeaGreen; color: white; `
-          : ""}
-      `}
-    >
-      {label}
-    </div>
-  ),
-  Description: {
-    style: ({ $theme }) => `
-    font-size: 0.75em; 
-    opacity: 0.5;
-    white-space: nowrap; 
-    overflow: hidden;
-    text-overflow: ellipsis;`
-  },
   Name: {
-    style: ({ $theme }) =>
-      `font-weight: 300; font-height: 16px; line-height: 1.2em; max-height: calc(2 * 1.2em); overflow: hidden;`
+    style: ({ $theme }) => `margin-bottom: ${$theme.spacings.s30}px;`
   },
   ImageOverlay: ({ badges }) => (
     <div
