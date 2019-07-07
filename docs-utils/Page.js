@@ -86,6 +86,11 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/divider">
+              <a>Divider </a>
+            </Link>
+          </li>
+          <li>
             <Link href="/filters">
               <a>Filters</a>
             </Link>
