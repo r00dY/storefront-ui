@@ -16,6 +16,7 @@ export const labelStyles = ({ $theme }) => `
     white-space: nowrap; 
     overflow: hidden;
     text-overflow: ellipsis;
+    color: ${$theme.colors.mono700.css};
     ${$theme.fonts.body2.css}
 `;
 export const LabelStyled = styled("div", labelStyles);

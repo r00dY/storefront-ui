@@ -5,11 +5,11 @@ import { md, Example, CodeBlock } from "../docs-utils/docs";
 const content = md`
 # Divider
 
-Bla bla
+Most of it's usage is horizontal visual separator of forms blocks or groups of inputs.
 
 ## \`Divider\`
 
-Bla bla
+Simple usage
 
 ${(
   <Example
