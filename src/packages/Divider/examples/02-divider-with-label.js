@@ -8,10 +8,10 @@ export default () => {
   return (
     <div
       css={css`
-        width: 400px;
+        width: 600px;
       `}
     >
-      <Divider label={"or"} />
+      <Divider label={"divider label"} />
     </div>
   );
 };
