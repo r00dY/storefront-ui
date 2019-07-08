@@ -12,6 +12,7 @@ import { useTheme } from "storefront-ui/Theme";
 export default () => {
   const theme = useTheme();
 
+  const initialState = { currentStep: 1 };
   return (
     <div
       css={css`
@@ -22,6 +23,7 @@ export default () => {
         <ProgressStepsItem
           label={"Consumer information"}
           href={"#"}
+          x
           completed
           theme={theme}
         />

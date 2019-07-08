@@ -5,11 +5,11 @@ import { md, Example, CodeBlock } from "../docs-utils/docs";
 const content = md`
 # ProgressSteps
 
-Description
+Progress Steps are made to be checkout pages breadcrumbs.
 
 ## \`ProgressSteps\`, \`ProgressStepsItem\`
 
-Let's start with simple filter column, so common in all kinds of e-commerce sites.
+\`ProgressSteps\` wraps items and manages their state. \`ProgressStepsItem\` can have one of three states: default, completed and current.
 
 ${(
   <Example

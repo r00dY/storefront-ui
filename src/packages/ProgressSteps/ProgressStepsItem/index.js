@@ -19,7 +19,7 @@ const ProgressStepsItem$ = ({ theme, label, href, current, completed }) => (
         margin-right: ${theme.spacings.s40}px;
         &:after {
           margin-left: ${theme.spacings.s40}px;
-          content: ">";
+          content: "→";
           color: ${theme.colors.mono400.css};
           ${completed && `color: ${theme.colors.mono900.css};`}
         }
