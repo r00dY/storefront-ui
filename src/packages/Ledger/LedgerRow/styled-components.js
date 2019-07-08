@@ -4,7 +4,6 @@ import React from "react";
 export const rootStyles = ({ $theme, isTotal }) =>
   `position: relative; display: flex; flex-wrap: nowrap;
     padding: ${$theme.spacings.s10}px 0;
-    ${isTotal && `border-top: 1px solid ${$theme.colors.mono300.css}`}
     `;
 export const rootChildren = ({ label, value }) => (
   <>
