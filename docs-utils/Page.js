@@ -101,6 +101,11 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/progress-steps">
+              <a>Progress Steps</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/forms">
               <a>Forms / Inputs / Controls</a>
             </Link>
