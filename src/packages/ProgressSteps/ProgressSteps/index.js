@@ -1,38 +1,41 @@
 import PropTypes from "prop-types";
 import React from "react";
 
-// import { ItemStyled } from "./styled-components";
-
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../../base/helpers/overrides";
-import { BodyStyled } from "../FiltersColumn/styled-components";
+
+import { RootStyled, SeparatorStyled } from "./styled-components";
+
 const ProgressSteps$ = props => {
   const {
-    data,
     children,
-    overrides: {
-      Header: Header,
-
-      Separator: SeparatorOverride,
-      Item: ItemOverride,
-
-      filterComponents: filterComponents
-    },
-    expand
+    overrides: { Root: RootOverride, Separator: SeparatorOverride }
   } = props;
+  const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [Separator, separatorProps] = getOverrides(
+    SeparatorOverride,
+    SeparatorStyled
+  );
 
   return (
-    <div
-      css={css`
-        display: flex;
-        flex-wrap: wrap;
-      `}
-    >
-      {children}
-    </div>
+    <Root {...rootProps}>
+      {children.map((child, index) => (
+        <>
+          {child}
+          {index < children.length - 1 && (
+            <div>
+              <Separator
+                {...separatorProps}
+                highlighted={child.props.completed}
+              />
+            </div>
+          )}
+        </>
+      ))}
+    </Root>
   );
 };
 

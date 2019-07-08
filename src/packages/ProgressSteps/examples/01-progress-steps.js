@@ -7,12 +7,9 @@ import {
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { useTheme } from "storefront-ui/Theme";
-
 export default () => {
-  const theme = useTheme();
+  const currentStep = 1;
 
-  const initialState = { currentStep: 1 };
   return (
     <div
       css={css`
@@ -23,17 +20,21 @@ export default () => {
         <ProgressStepsItem
           label={"Consumer information"}
           href={"#"}
-          x
-          completed
-          theme={theme}
+          current={currentStep === 0}
+          completed={currentStep > 0}
         />
         <ProgressStepsItem
           label={"Shipping method"}
           href={"#"}
-          current
-          theme={theme}
+          current={currentStep === 1}
+          completed={currentStep > 1}
         />
-        <ProgressStepsItem label={"Payment method"} theme={theme} />
+        <ProgressStepsItem
+          label={"Payment method"}
+          current={currentStep === 2}
+          completed={currentStep > 2}
+          href={"#"}
+        />
       </ProgressSteps>
     </div>
   );

@@ -5,11 +5,11 @@ import { md, Example, CodeBlock } from "../docs-utils/docs";
 const content = md`
 # ProgressSteps
 
-Progress Steps are made to be checkout pages breadcrumbs.
+Most commonly used within the checkout flow at the top of page, and other flows that have number of a few steps. It provides a visual indicator of where user currently is in flow and displays how many steps user has to pass.
 
 ## \`ProgressSteps\`, \`ProgressStepsItem\`
 
-\`ProgressSteps\` wraps items and manages their state. \`ProgressStepsItem\` can have one of three states: default, completed and current.
+\`ProgressSteps\` component wraps items and adds separators. \`ProgressStepsItem\` can have \`completed\` state and one of them should be marked as \`current\`.
 
 ${(
   <Example
