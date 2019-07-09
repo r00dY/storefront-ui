@@ -16,26 +16,24 @@ export default () => {
         width: 600px;
       `}
     >
-      <ProgressSteps>
-        <ProgressStepsItem
-          label={"Consumer information"}
-          href={"#"}
-          current={currentStep === 0}
-          completed={currentStep > 0}
-        />
-        <ProgressStepsItem
-          label={"Shipping method"}
-          href={"#"}
-          current={currentStep === 1}
-          completed={currentStep > 1}
-        />
-        <ProgressStepsItem
-          label={"Payment method"}
-          current={currentStep === 2}
-          completed={currentStep > 2}
-          href={"#"}
-        />
-      </ProgressSteps>
+      <ProgressSteps
+        data={[
+          {
+            label: "Consumer information",
+            href: "#"
+          },
+          {
+            label: "Shipping method",
+            href: "#"
+          },
+          {
+            label: "Payment method",
+            href: "#"
+          }
+        ]}
+        active={0}
+        lastCompleted={1}
+      />
     </div>
   );
 };

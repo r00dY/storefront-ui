@@ -7,14 +7,22 @@ import { css, jsx } from "@emotion/core";
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../../base/helpers/overrides";
 
-import { RootStyled, SeparatorStyled } from "./styled-components";
+import { RootStyled, StepStyled, SeparatorStyled } from "./styled-components";
 
 const ProgressSteps$ = props => {
   const {
-    children,
-    overrides: { Root: RootOverride, Separator: SeparatorOverride }
+    data,
+    onClick,
+    active,
+    lastCompleted,
+    overrides: {
+      Root: RootOverride,
+      Step: StepOverride,
+      Separator: SeparatorOverride
+    }
   } = props;
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [Step, stepProps] = getOverrides(StepOverride, StepStyled);
   const [Separator, separatorProps] = getOverrides(
     SeparatorOverride,
     SeparatorStyled
@@ -22,16 +30,19 @@ const ProgressSteps$ = props => {
 
   return (
     <Root {...rootProps}>
-      {children.map((child, index) => (
+      {data.map((step, index) => (
         <>
-          {child}
-          {index < children.length - 1 && (
-            <div>
-              <Separator
-                {...separatorProps}
-                highlighted={child.props.completed}
-              />
-            </div>
+          <Step
+            {...stepProps}
+            href={step.href}
+            completed={index <= lastCompleted}
+            active={active}
+          />
+          {index < data.length - 1 && (
+            <Separator
+              {...separatorProps}
+              nextStepIsCompleted={index < lastCompleted}
+            />
           )}
         </>
       ))}
@@ -44,7 +55,6 @@ ProgressSteps$.defaultProps = {
 };
 
 ProgressSteps$.propTypes = {
-  children: PropTypes.any.isRequired,
   overrides: PropTypes.object
 };
 

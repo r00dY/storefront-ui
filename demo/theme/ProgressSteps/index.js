@@ -11,12 +11,12 @@ import {
 import IconArrow from "./outline-arrow_forward_ios-24px.svg";
 
 const overrides = {
-  Separator: ({ $theme, highlighted }) => (
+  Separator: ({ $theme, nextStepIsCompleted }) => (
     <IconArrow
       css={css`
         width: 16px;
         height: 16px;
-        ${!highlighted ? "opacity: 0.4;" : ""}
+        ${!nextStepIsCompleted ? "opacity: 0.4;" : ""}
       `}
     />
   )
