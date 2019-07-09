@@ -7,9 +7,9 @@ const content = md`
 
 Most commonly used within the checkout flow at the top of page, and other flows that have number of a few steps. It provides a visual indicator of where user currently is in flow and displays how many steps user has to pass.
 
-## \`ProgressSteps\`, \`ProgressStepsItem\`
+## \`ProgressSteps\`
 
-\`ProgressSteps\` component wraps items and adds separators. \`ProgressStepsItem\` can have \`completed\` state and one of them should be marked as \`current\`.
+\`ProgressSteps\` component wraps items and adds separators.
 
 ${(
   <Example

@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import {
-  ProgressSteps,
-  ProgressStepsItem
-} from "../../../../demo/theme/ProgressSteps";
+import { ProgressSteps } from "../../../../demo/theme/ProgressSteps";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 export default () => {
-  const currentStep = 1;
-
   return (
     <div
       css={css`
@@ -31,8 +26,11 @@ export default () => {
             href: "#"
           }
         ]}
-        active={0}
+        active={1}
         lastCompleted={1}
+        onClick={stepIndex => {
+          console.log("clicked step " + stepIndex);
+        }}
       />
     </div>
   );

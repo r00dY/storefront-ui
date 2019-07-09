@@ -9,6 +9,8 @@ import { getOverrides } from "../../base/helpers/overrides";
 
 import { RootStyled, StepStyled, SeparatorStyled } from "./styled-components";
 
+import { Button$ } from "storefront-ui/Button";
+
 const ProgressSteps$ = props => {
   const {
     data,
@@ -31,20 +33,26 @@ const ProgressSteps$ = props => {
   return (
     <Root {...rootProps}>
       {data.map((step, index) => (
-        <>
-          <Step
-            {...stepProps}
-            href={step.href}
-            completed={index <= lastCompleted}
-            active={active}
-          />
-          {index < data.length - 1 && (
-            <Separator
-              {...separatorProps}
-              nextStepIsCompleted={index < lastCompleted}
+        <React.Fragment key={index}>
+          <div>
+            <Step
+              {...stepProps}
+              label={step.label}
+              href={step.href}
+              completed={index <= lastCompleted}
+              active={index === active}
+              activate={() => onClick(index)}
             />
+          </div>
+          {index < data.length - 1 && (
+            <div>
+              <Separator
+                {...separatorProps}
+                nextStepIsCompleted={index < lastCompleted}
+              />
+            </div>
           )}
-        </>
+        </React.Fragment>
       ))}
     </Root>
   );
