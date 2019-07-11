@@ -50,6 +50,7 @@ export default class Button extends React.Component<ButtonPropsT> {
       startEnhancer,
       endEnhancer,
       children,
+      forwardedRef,
       ...restProps
     } = this.props;
     // Get overrides
