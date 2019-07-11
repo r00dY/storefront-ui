@@ -7,7 +7,6 @@ import {
   ImageContainerStyled,
   NameStyled,
   DescriptionStyled,
-  PriceStyled,
   ContentStyled,
   ImageOverlayStyled,
   BadgeStyled
@@ -22,24 +21,21 @@ import { ButtonRaw$ } from "../ButtonRaw";
 
 const ProductCard$ = props => {
   const {
-    name,
-    href,
-    description,
-    price,
-    discountPrice,
-    images,
-    badges,
+    product,
+    onSaveToFavourites,
     overrides: {
       Root: RootOverride,
       ImageContainer: ImageContainerOverride,
       Name: NameOverride,
       Description: DescriptionOverride,
-      Price: PriceOverride,
       Content: ContentOverride,
       ImageOverlay: ImageOverlayOverride,
-      Badge: BadgeOverride
+      Badge: BadgeOverride,
+      Price: Price
     }
   } = props;
+
+  const { name, href, description, price, images, badges } = product;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -52,7 +48,6 @@ const ProductCard$ = props => {
     DescriptionOverride,
     DescriptionStyled
   );
-  const [Price, priceProps] = getOverrides(PriceOverride, PriceStyled);
   const [ImageOverlay, imageOverlayProps] = getOverrides(
     ImageOverlayOverride,
     ImageOverlayStyled
@@ -61,21 +56,15 @@ const ProductCard$ = props => {
 
   const nameElem = (
     <>
-      <ButtonRaw$ href={href}>
-        <Name {...nameProps}>{name}</Name>
-      </ButtonRaw$>
+      <Name {...nameProps}>
+        <a href={href}>{name} </a>
+      </Name>
     </>
   );
   const descriptionElem = (
     <Description {...descriptionProps}>{description}</Description>
   );
-  const priceElem = (
-    <Price {...priceProps} price={price} discountPrice={discountPrice}>
-      {discountPrice && <span>{price}</span>}
-      {!discountPrice && price}
-      {discountPrice}
-    </Price>
-  );
+  const priceElem = <Price price={price} />;
   const badgesElem = (
     <>
       {badges &&
@@ -104,10 +93,16 @@ const ProductCard$ = props => {
       name={name}
       description={description}
       price={price}
-      discountPrice={discountPrice}
+      onSaveToFavourites={onSaveToFavourites}
     >
-      <Image image={images[0]} />
-      <ImageOverlay {...imageOverlayProps} badges={badgesElem} />
+      <a href={product.href} tabIndex={"-1"}>
+        <Image image={images[0]} />
+      </a>
+      <ImageOverlay
+        {...imageOverlayProps}
+        badges={badgesElem}
+        onSaveToFavourites={onSaveToFavourites}
+      />
     </ImageContainer>
   );
 
@@ -118,25 +113,20 @@ const ProductCard$ = props => {
       name={name}
       description={description}
       price={price}
-      discountPrice={discountPrice}
       images={images}
       badges={badges}
+      onSaveToFavourites={onSaveToFavourites}
       {...rootProps}
     />
   );
 };
-//
-// ProductCard$.defaultProps = {
-//     overrides: {}
-// };
+
+ProductCard$.defaultProps = {
+  overrides: {}
+};
 
 ProductCard$.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  price: PropTypes.string.isRequired,
-  discountPrice: PropTypes.string,
-  images: PropTypes.array.isRequired,
-  badges: PropTypes.array,
+  product: PropTypes.object.isRequired,
   overrides: PropTypes.object
 };
 

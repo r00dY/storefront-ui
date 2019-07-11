@@ -7,7 +7,6 @@ import {
   ImageContainerStyled,
   NameStyled,
   DescriptionStyled,
-  PriceStyled,
   DataStyled,
   VariantStyled,
   QuantityStyled
@@ -25,14 +24,9 @@ import { ButtonRaw$ } from "../ButtonRaw";
 
 const ProductRow$ = props => {
   const {
-    name,
-    images,
-    href,
-    description,
+    product,
     price,
-    discountPrice,
     quantity,
-    variant,
     gutter,
     mode,
     breakpoint,
@@ -42,13 +36,15 @@ const ProductRow$ = props => {
       Name: NameOverride,
       Description: DescriptionOverride,
       Variant: VariantOverride,
-      Price: PriceOverride,
+      Price: Price,
       Content: ContentOverride,
       Data: DataOverride,
       Quantity: QuantityOverride,
       Remove: RemoveOverride
     }
   } = props;
+
+  const { name, description, variant, href, images } = product;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -57,19 +53,7 @@ const ProductRow$ = props => {
   );
   const [Content, contentProps] = getOverrides(
     ContentOverride,
-    ({
-      dataElem,
-      removeElem,
-      quantityElem,
-      priceElem,
-      mode,
-      name,
-      description,
-      variant,
-      quantity,
-      price,
-      discountPrice
-    }) => {
+    ({ dataElem, removeElem, quantityElem, priceElem, mode }) => {
       let _breakpoint = breakpoint;
       if (mode === "compact") {
         _breakpoint = undefined;
@@ -154,7 +138,6 @@ const ProductRow$ = props => {
     DescriptionOverride,
     DescriptionStyled
   );
-  const [Price, priceProps] = getOverrides(PriceOverride, PriceStyled);
   const [Remove, removeProps] = getOverrides(RemoveOverride, () => (
     <ButtonRaw$>Remove</ButtonRaw$>
   ));
@@ -164,11 +147,9 @@ const ProductRow$ = props => {
   );
 
   const nameElem = (
-    <>
-      <ButtonRaw$ href={href}>
-        <Name {...nameProps}>{name}</Name>
-      </ButtonRaw$>
-    </>
+    <Name {...nameProps}>
+      <a href={href}>{name}</a>
+    </Name>
   );
   const descriptionElem = (
     <Description {...descriptionProps}>{description}</Description>
@@ -178,14 +159,7 @@ const ProductRow$ = props => {
       Size: {variant}
     </Variant>
   );
-  const priceElem = (
-    <Price
-      {...priceProps}
-      price={price}
-      discountPrice={discountPrice}
-      quantity={quantity}
-    />
-  );
+  const priceElem = <Price price={price} />;
   const removeElem = <Remove {...removeProps} />;
 
   const dataElem = (
@@ -203,7 +177,6 @@ const ProductRow$ = props => {
       <ButtonRaw$>[+]</ButtonRaw$>
     </Quantity>
   );
-
   const contentElem = (
     <Content
       {...contentProps}
@@ -217,16 +190,16 @@ const ProductRow$ = props => {
       variant={variant}
       quantity={quantity}
       price={price}
-      discountPrice={discountPrice}
     />
   );
 
   const imageElem = (
-    <ImageContainer {...imageContainerProps}>
-      <Image image={images[0]} />
-    </ImageContainer>
+    <a href={href} tabIndex={"-1"}>
+      <ImageContainer {...imageContainerProps}>
+        <Image image={images[0]} />
+      </ImageContainer>
+    </a>
   );
-
   return <Root image={imageElem} content={contentElem} {...rootProps} />;
 };
 ProductRow$.defaultProps = {
@@ -236,12 +209,10 @@ ProductRow$.defaultProps = {
 };
 
 ProductRow$.propTypes = {
-  name: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  price: PropTypes.string.isRequired,
-  discountPrice: PropTypes.string,
-  images: PropTypes.array.isRequired,
-  badges: PropTypes.array,
+  product: PropTypes.object.isRequired,
+  price: PropTypes.object.isRequired,
+  quantity: PropTypes.string.isRequired,
+  mode: PropTypes.string,
   gutter: PropTypes.number,
   overrides: PropTypes.object
 };

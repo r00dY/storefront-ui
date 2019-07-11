@@ -1,6 +1,6 @@
 import React from "react";
 import ProductRow$ from "../../../src/packages/ProductRow";
-import Price from "../../../src/packages/Price";
+import Price from "../Price";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -12,24 +12,12 @@ import IconRemove from "./outline-remove-24px.svg";
 
 const overrides = {
   Price: ({ price, discountPrice, quantity }) => (
-    <Price
-      price={price}
-      discountPrice={discountPrice}
-      quantity={quantity}
-      alignRight
-      prefix={"€"}
-    />
+    <Price price={price} alignRight />
   )
 };
 const overridesTheme1 = {
   Price: ({ price, discountPrice, quantity }) => (
-    <Price
-      price={price}
-      discountPrice={discountPrice}
-      quantity={quantity}
-      alignRight
-      prefix={"€"}
-    />
+    <Price price={price} alignRight />
   ),
   Data: ({ name, description, variant }) => (
     <div>

@@ -1,4 +1,4 @@
-import { styled } from "../base/styles";
+import { styled } from "../../../src/packages/base/styles";
 
 export const rootStyles = ({ $theme, alignRight }) => `
     display: flex; flex-wrap: wrap; white-space: nowrap; justify-content: flex-start;
@@ -6,4 +6,4 @@ export const rootStyles = ({ $theme, alignRight }) => `
     ${$theme.fonts.body1.css}
 `;
 
-export const RootStyled = styled("div", rootStyles);
+export const Root = styled("div", rootStyles);

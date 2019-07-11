@@ -16,8 +16,14 @@ const sizes = ["XS", "S", "M", "L"];
 const products = [
   {
     name: "Assymetric Tie Dress",
-    price: "99",
-    discountPrice: "69",
+    price: {
+      regular: "99",
+      discount: "69",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
     description: "A-line Dresses",
     badges: [
       {
@@ -31,22 +37,34 @@ const products = [
     ],
     images: productPhotos2,
     href: "assymetric-tie-dress",
-    variant: sizes[getRandomInt(0, 3)],
-    quantity: getRandomInt(1, 9)
+    variant: sizes[getRandomInt(0, 3)]
   },
 
   {
     name: "Long A-line Jersey Dress",
-    price: "69",
+    price: {
+      regular: "99",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
     description: "Jersey Dresses",
     images: productPhotos3,
     href: "long-a-line-jersey-dress",
-    variant: sizes[getRandomInt(0, 3)],
-    quantity: getRandomInt(1, 9)
+    variant: sizes[getRandomInt(0, 3)]
   },
   {
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
-    price: "129",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
     description: "Jersey Dresses",
     badges: [
       {
@@ -56,13 +74,18 @@ const products = [
     ],
     images: productPhotos4,
     href: "bubble-shaped-jersey-dress",
-    variant: sizes[getRandomInt(0, 3)],
-    quantity: getRandomInt(1, 9)
+    variant: sizes[getRandomInt(0, 3)]
   },
   {
     name: "Shaped A-line Cotton Dress",
-    price: "99",
-    discountPrice: "79",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
     description: "Evening & Occasion Dresses Very Long Description",
     badges: [
       {
@@ -72,8 +95,7 @@ const products = [
     ],
     images: productPhotos5,
     href: "shaped-a-line-cotton-dress",
-    variant: sizes[getRandomInt(0, 3)],
-    quantity: getRandomInt(1, 9)
+    variant: sizes[getRandomInt(0, 3)]
   }
 ];
 

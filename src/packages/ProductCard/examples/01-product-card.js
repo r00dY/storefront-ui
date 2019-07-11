@@ -17,12 +17,9 @@ export default () => {
         {products.map((product, index) => (
           <GridItem params={{ xs: 12, md: 12, lg: 12 }} key={index}>
             <ProductCard
-              name={product.name}
-              description={product.description}
-              price={product.price}
-              discountPrice={product.discountPrice}
-              images={product.images}
-              badges={product.badges}
+              product={product}
+              onClick={() => console.log("click")}
+              onSaveToFavourites={() => console.log("fav click")}
             />
           </GridItem>
         ))}

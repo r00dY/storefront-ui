@@ -13,14 +13,11 @@ export default () => {
         {products.map((product, index) => (
           <GridItem params={{ xs: 24, md: [24], lg: [24] }} key={index}>
             <ProductRowTheme1
-              name={product.name}
-              description={product.description}
+              product={product}
               price={product.price}
-              discountPrice={product.discountPrice}
-              images={product.images}
-              quantity={product.quantity}
-              variant={product.variant}
+              quantity={"1"}
               mode={"compact"}
+              onClick={() => console.log("click")}
             />
           </GridItem>
         ))}

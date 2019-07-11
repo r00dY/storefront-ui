@@ -23,7 +23,8 @@ export const QuantityStyled = styled("div", quantityStyles);
 
 export const nameStyles = ({ $theme }) => `${$theme.fonts.h6.css} 
    overflow: hidden;
-  max-height: calc(2 * 1.01em);`;
+  max-height: calc(2 * 1.01em);
+  a {text-decoration: none; color: ${$theme.colors.mono900.css};}`;
 export const NameStyled = styled("div", nameStyles);
 
 export const descriptionStyles = ({ $theme }) => `color: ${
@@ -36,21 +37,6 @@ export const DescriptionStyled = styled("div", descriptionStyles);
 export const variantStyles = ({ $theme }) =>
   `color: ${$theme.colors.mono500.css}; ${$theme.fonts.body2.css}`;
 export const VariantStyled = styled("div", variantStyles);
-
-export const priceStyles = ({ $theme }) =>
-  `span {text-decoration: line-through;}`;
-export const priceChildren = ({ price, discountPrice, quantity }) => (
-  <>
-    {discountPrice && (
-      <>
-        <span>{quantity * price}</span>
-        {quantity * discountPrice}
-      </>
-    )}
-    {!discountPrice && quantity * price}
-  </>
-);
-export const PriceStyled = styled("div", priceStyles, priceChildren);
 
 export const dataStyles = ({ $theme, gutter }) => `
 `;

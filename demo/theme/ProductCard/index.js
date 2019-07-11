@@ -5,18 +5,24 @@ import { css, jsx } from "@emotion/core";
 
 import IconFav from "./outline-favorite_border-24px.svg";
 import { ButtonRaw$ } from "../../../src/packages/ButtonRaw";
-import Price from "../../../src/packages/Price";
+import Price from "../Price";
 import { rslin } from "responsive-helpers";
 
-const overrides = {};
-const overridesTheme1 = {
-  Price: ({ price, discountPrice }) => (
-    <Price price={price} discountPrice={discountPrice} prefix={"€"} />
-  ),
+const overrides = {
+  Price: ({ price }) => <Price price={price} />
+};
+const overrides2 = {
+  Price: ({ price }) => <Price price={price} />,
   Name: {
     style: ({ $theme }) => `margin-bottom: ${$theme.spacings.s30}px;`
   },
-  ImageOverlay: ({ badges }) => (
+  Badge: {
+    style: ({ $theme, type }) =>
+      `padding: ${$theme.spacings.s10}px; border-radius: ${
+        $theme.borders.radius200
+      }; `
+  },
+  ImageOverlay: ({ badges, onSaveToFavourites }) => (
     <div
       css={css`
         position: absolute;
@@ -37,7 +43,12 @@ const overridesTheme1 = {
           justify-content: flex-end;
         `}
       >
-        <ButtonRaw$>
+        <ButtonRaw$
+          onClick={onSaveToFavourites}
+          css={css`
+            pointer-events: all;
+          `}
+        >
           <div
             css={css`
               background: rgba(255, 255, 255, 0.8);
@@ -82,7 +93,7 @@ const overridesTheme1 = {
 };
 const ProductCard = props => <ProductCard$ {...props} overrides={overrides} />;
 const ProductCardTheme1 = props => (
-  <ProductCard$ {...props} overrides={overridesTheme1} />
+  <ProductCard$ {...props} overrides={overrides2} />
 );
 
 export { ProductCard, ProductCardTheme1 };
