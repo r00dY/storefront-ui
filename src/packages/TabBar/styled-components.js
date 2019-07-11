@@ -1,10 +1,10 @@
 import { styled } from "../base/styles";
 
-export const tabStyles = ({ $theme }) => `
-    background-color: yellow;
+export const tabContentStyles = ({ $theme, active }) => `
+    ${active ? "" : "display: none;"}
 `;
 
-export const TabStyled = styled("div", tabStyles);
+export const TabContentStyled = styled("div", tabContentStyles);
 
 export const tabsContainerStyles = ({ $theme, align }) => {
   let marginLeft = 0;
@@ -33,23 +33,7 @@ export const tabsContainerStyles = ({ $theme, align }) => {
 export const TabsContainerStyled = styled("div", tabsContainerStyles);
 
 export const rootStyles = ({ $theme, scrollable, align }) => {
-  return `
-    position: relative;
-
-    ${
-      scrollable
-        ? `
-        overflow-x: auto;
-        ::-webkit-scrollbar {display:none;}
-    `
-        : `
-        overflow: hidden;
-    `
-    }
-    
-    ${align !== "fit" ? "display: flex" : ""};
-        
-`;
+  return ``;
 };
 
 export const RootStyled = styled("div", rootStyles);

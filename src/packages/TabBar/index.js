@@ -5,6 +5,7 @@ import {
   TabStyled,
   RootStyled,
   TabsContainerStyled,
+  TabContentStyled,
   LineStyled
 } from "./styled-components";
 
@@ -21,6 +22,7 @@ function TabBar$(props) {
       Root: RootOverride,
       Tab: tab,
       TabsContainer: TabsContainerOverride,
+      TabContent: TabContentOverride,
       Separator: separator,
       Line: LineOverride
     },
@@ -29,7 +31,8 @@ function TabBar$(props) {
     onChange,
     gutter,
     scrollable,
-    align
+    align,
+    showPanels
   } = props;
 
   const [focus, setFocus] = useState(false);
@@ -109,6 +112,10 @@ function TabBar$(props) {
     TabsContainerStyled
   );
   const [Line, lineProps] = getOverrides(LineOverride, LineStyled);
+  const [TabContent, tabContentProps] = getOverrides(
+    TabContentOverride,
+    TabContentStyled
+  );
 
   const activate = index => {
     if (onChange) {
@@ -167,18 +174,35 @@ function TabBar$(props) {
   });
 
   return (
-    <Root
-      {...sharedProps}
-      {...rootProps}
-      $ref={rootRef}
-      scrollable={scrollable}
-      align={align}
-    >
-      <TabsContainer {...sharedProps} {...tabsContainerProps} align={align}>
-        {items}
+    <Root {...sharedProps} {...rootProps}>
+      <div
+        css={css`
+          position: relative;
 
-        <Line $ref={lineRef} {...lineProps} />
-      </TabsContainer>
+          ${scrollable
+            ? `
+                overflow-x: auto;
+                ::-webkit-scrollbar {display:none;}
+                `
+            : `overflow: hidden;`}
+
+          ${align !== "fit" ? "display: flex" : ""};
+        `}
+        ref={rootRef}
+      >
+        <TabsContainer {...sharedProps} {...tabsContainerProps} align={align}>
+          {items}
+
+          <Line $ref={lineRef} {...lineProps} />
+        </TabsContainer>
+      </div>
+
+      {showPanels &&
+        data.map((tabData, index) => (
+          <TabContent {...tabContentProps} active={index === active}>
+            {tabData.panel}
+          </TabContent>
+        ))}
     </Root>
   );
 }
@@ -187,7 +211,8 @@ TabBar$.defaultProps = {
   overrides: {},
   gutter: 0,
   scrollable: true,
-  align: "left"
+  align: "left",
+  showPanels: false
 };
 
 TabBar$.propTypes = {
@@ -196,7 +221,8 @@ TabBar$.propTypes = {
   onChange: PropTypes.func,
   gutter: PropTypes.any,
   scrollable: PropTypes.bool,
-  align: PropTypes.oneOf(["left", "center", "right", "fit"])
+  align: PropTypes.oneOf(["left", "center", "right", "fit"]),
+  showPanels: PropTypes.bool
 };
 
 export { TabBar$ };

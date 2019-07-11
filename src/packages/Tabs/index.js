@@ -15,33 +15,38 @@ import { css, jsx } from "@emotion/core";
 
 function Tabs$(props) {
   let {
-    overrides: {
-      Root: RootOverride,
-      Tab: tab,
-      TabsContainer: TabsContainerOverride,
-      TabContent: TabContentOverride,
-      Separator: separator,
-      Line: LineOverride
-    },
+    overrides: { TabBar: tabbar, TabContent: TabContentOverride },
     data,
     active,
-    onChange,
-    gutter
+    onChange
   } = props;
 
-  return <div />;
+  return (
+    <div>
+      {tabbar}
+      <div>
+        {data.map((tab, index) => (
+          <div
+            css={css`
+              ${active === index ? "" : "display: none;"}
+            `}
+          >
+            {tab.content}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
 }
 
 Tabs$.defaultProps = {
-  overrides: {},
-  gutter: 0
+  overrides: {}
 };
 
 Tabs$.propTypes = {
   overrides: PropTypes.object,
   active: PropTypes.any,
-  onChange: PropTypes.func,
-  gutter: PropTypes.any
+  onChange: PropTypes.func
 };
 
 export { Tabs$ };

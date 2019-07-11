@@ -1,5 +1,5 @@
 import { Button } from "../Button";
-import { TabBar$ } from "storefront-ui/TabBar";
+import { TabBar } from "../TabBar";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -21,7 +21,7 @@ export const TabBar = props => (
             ${focus ? "background: lightgrey;" : ""}
           `}
         >
-          {tabData.label}
+          {tabData}
         </div>
       ),
       Separator: () => (

@@ -8,21 +8,57 @@ import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
 const options = [
-  "One",
-  "Two",
-  "Three",
-  "Four",
-  "Five",
-  "Six",
-  "Seven",
-  "Eight",
-  "Nine",
-  "Ten",
-  "Eleven",
-  "Twelve"
+  {
+    label: "One",
+    panel: <div>Panel one</div>
+  },
+  {
+    label: "Two",
+    panel: <div>Panel two</div>
+  },
+  {
+    label: "Three",
+    panel: <div>Panel three</div>
+  },
+  {
+    label: "Four",
+    panel: <div>Panel four</div>
+  },
+  {
+    label: "Five",
+    panel: <div>Panel five</div>
+  },
+  {
+    label: "Six",
+    panel: <div>Panel six</div>
+  },
+  {
+    label: "Seven",
+    panel: <div>Panel seven</div>
+  },
+  {
+    label: "Eight",
+    panel: <div>Panel eight</div>
+  },
+  {
+    label: "Nine",
+    panel: <div>Panel nine</div>
+  },
+  {
+    label: "Ten",
+    panel: <div>Panel ten</div>
+  },
+  {
+    label: "Eleven",
+    panel: <div>Panel eleven</div>
+  },
+  {
+    label: "Twelve",
+    panel: <div>Panel twelve</div>
+  }
 ];
 
-const options2 = ["One", "Two", "Three", "Four", "Five"];
+const options2 = options.slice(0, 5);
 
 const Wrapper = styled.div`
   border: 1px solid lightgrey;
@@ -128,6 +164,16 @@ export default () => {
 
       <br />
       <br />
+
+      <p>With panels</p>
+      <Wrapper>
+        <TabBar
+          scrollable={false}
+          {...props2}
+          align={"fit"}
+          showPanels={true}
+        />
+      </Wrapper>
 
       {/*<div css={css`*/}
       {/*display: flex;*/}
