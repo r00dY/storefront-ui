@@ -6,19 +6,51 @@ export const tabStyles = ({ $theme }) => `
 
 export const TabStyled = styled("div", tabStyles);
 
-export const tabsContainerStyles = ({ $theme }) => `
-    position: relative;
-    display: flex;
-    flex-direction: row;
-`;
+export const tabsContainerStyles = ({ $theme, align }) => {
+  let marginLeft = 0;
+  let marginRight = 0;
+  switch (align) {
+    case "right":
+      marginLeft = "auto";
+      break;
+    case "center":
+      marginLeft = "auto";
+      marginRight = "auto";
+      break;
+    default:
+      marginRight = "auto";
+  }
+
+  return `
+        position: relative;
+        display: flex;
+        flex-direction: row;
+        margin-left: ${marginLeft};
+        margin-right: ${marginRight};
+    `;
+};
 
 export const TabsContainerStyled = styled("div", tabsContainerStyles);
 
-export const rootStyles = ({ $theme }) => `
+export const rootStyles = ({ $theme, scrollable, align }) => {
+  return `
     position: relative;
-    overflow-x: auto;
-    ::-webkit-scrollbar {display:none;}
+
+    ${
+      scrollable
+        ? `
+        overflow-x: auto;
+        ::-webkit-scrollbar {display:none;}
+    `
+        : `
+        overflow: hidden;
+    `
+    }
+    
+    ${align !== "fit" ? "display: flex" : ""};
+        
 `;
+};
 
 export const RootStyled = styled("div", rootStyles);
 

@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import { getOverrides } from "../base/helpers/overrides";
 import {
@@ -7,6 +7,8 @@ import {
   TabsContainerStyled,
   LineStyled
 } from "./styled-components";
+
+import { ButtonRaw$ } from "../ButtonRaw";
 
 import { rs } from "responsive-helpers";
 
@@ -25,8 +27,12 @@ function TabBar$(props) {
     data,
     active,
     onChange,
-    gutter
+    gutter,
+    scrollable,
+    align
   } = props;
+
+  const [focus, setFocus] = useState(false);
 
   const rootRef = useRef(null);
   const lineRef = useRef(null);
@@ -37,42 +43,49 @@ function TabBar$(props) {
     itemRefs.push(React.createRef());
   }
 
-  const activeIndex = data.indexOf(active);
-
   gutter = rs(gutter);
 
+  // If scrollable, fit doesn't work (if items take less space than container)  TODO: To think about later
+  if (scrollable && align === "fit") {
+    align = "left";
+  }
+
   useEffect(() => {
-    /**
-     * trivial scrollBy behaviour
-     */
-    const itemRect = itemRefs[activeIndex].current.getBoundingClientRect();
-    const containerRect = rootRef.current.getBoundingClientRect();
+    const itemRect = itemRefs[active].current.getBoundingClientRect();
 
-    const leftDiff = itemRect.left - containerRect.left;
-    const rightDiff = -(itemRect.right - containerRect.right);
-    let scrollBy;
+    if (scrollable) {
+      /**
+       * trivial scrollBy behaviour
+       */
+      const containerRect = rootRef.current.getBoundingClientRect();
 
-    if (leftDiff < 0 && rightDiff < 0) {
-      // do nothing, item is wider than container
-    } else if (leftDiff < 0) {
-      scrollBy = -(-leftDiff + 100);
-    } else if (rightDiff < 0) {
-      scrollBy = -rightDiff + 100;
+      const leftDiff = itemRect.left - containerRect.left;
+      const rightDiff = -(itemRect.right - containerRect.right);
+      let scrollBy;
+
+      if (leftDiff < 0 && rightDiff < 0) {
+        // do nothing, item is wider than container
+      } else if (leftDiff < 0) {
+        scrollBy = -(-leftDiff + 100);
+      } else if (rightDiff < 0) {
+        scrollBy = -rightDiff + 100;
+      }
+
+      if (scrollBy) {
+        rootRef.current.scrollBy({
+          left: scrollBy,
+          behavior: firstMount.current ? "auto" : "smooth"
+        });
+      }
     }
-
-    if (scrollBy) {
-      rootRef.current.scrollBy({
-        left: scrollBy,
-        behavior: firstMount.current ? "auto" : "smooth"
-      });
-    }
-
-    const activeTabLeft = itemRefs[activeIndex].current.offsetLeft;
-    const activeTabWidth = itemRect.width;
 
     /**
      * Line scrolling
      */
+
+    const activeTabLeft = itemRefs[active].current.offsetLeft;
+    const activeTabWidth = itemRect.width;
+
     lineRef.current.style.transform = `translateX(${activeTabLeft}px)`;
     lineRef.current.style.width = `${activeTabWidth}px`;
 
@@ -97,9 +110,9 @@ function TabBar$(props) {
   );
   const [Line, lineProps] = getOverrides(LineOverride, LineStyled);
 
-  const activate = (tabData, index) => {
+  const activate = index => {
     if (onChange) {
-      onChange(tabData);
+      onChange(index);
     }
   };
 
@@ -110,6 +123,8 @@ function TabBar$(props) {
         <div
           css={css`
             ${gutter.css("margin-right")}
+            flex-grow: 0;
+            flex-shrink: 0;
           `}
         >
           {separator({ ...sharedProps, tabData, index })}
@@ -118,25 +133,48 @@ function TabBar$(props) {
     }
 
     items.push(
-      <div
+      <ButtonRaw$
         css={css`
-          ${gutter.css("margin-right")}
+          ${index === data.length - 1 ? "" : gutter.css("margin-right")}
+
+          ${align === "fit"
+            ? `
+                    flex-grow: 1;
+                    flex-shrink: 1;
+                `
+            : ""}
         `}
+        onClick={() => activate(index)}
+        $ref={itemRefs[index]}
+        href={tabData.href}
+        tabIndex={index === active ? 0 : -1}
+        onFocus={() => setFocus(true)}
+        onBlur={() => setFocus(false)}
+        overrides={{
+          Root: {
+            style: `outline: none;`
+          }
+        }}
       >
         {tab({
           tabData,
-          active: tabData === active,
-          activate: () => activate(tabData, index),
-          ref: itemRefs[index],
+          active: index === active,
+          focus: index === active && focus,
           index
         })}
-      </div>
+      </ButtonRaw$>
     );
   });
 
   return (
-    <Root {...sharedProps} {...rootProps} $ref={rootRef}>
-      <TabsContainer {...sharedProps} {...tabsContainerProps}>
+    <Root
+      {...sharedProps}
+      {...rootProps}
+      $ref={rootRef}
+      scrollable={scrollable}
+      align={align}
+    >
+      <TabsContainer {...sharedProps} {...tabsContainerProps} align={align}>
         {items}
 
         <Line $ref={lineRef} {...lineProps} />
@@ -147,14 +185,18 @@ function TabBar$(props) {
 
 TabBar$.defaultProps = {
   overrides: {},
-  gutter: 0
+  gutter: 0,
+  scrollable: true,
+  align: "left"
 };
 
 TabBar$.propTypes = {
   overrides: PropTypes.object,
   active: PropTypes.any,
   onChange: PropTypes.func,
-  gutter: PropTypes.any
+  gutter: PropTypes.any,
+  scrollable: PropTypes.bool,
+  align: PropTypes.oneOf(["left", "center", "right", "fit"])
 };
 
 export { TabBar$ };

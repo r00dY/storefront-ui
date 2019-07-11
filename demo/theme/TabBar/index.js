@@ -7,16 +7,31 @@ import { css, jsx } from "@emotion/core";
 export const TabBar = props => (
   <TabBar$
     overrides={{
-      Tab: ({ tabData, active, activate, ref }) => (
-        <Button kind={"minimal"} onClick={activate} $ref={ref}>
+      Tab: ({ tabData, focus }) => (
+        <div
+          css={css`
+            padding: 8px 12px;
+            &:hover {
+              background: lightgrey;
+            }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            ${focus ? "background: lightgrey;" : ""}
+          `}
+        >
           {tabData}
-        </Button>
+        </div>
       ),
       Separator: () => (
         <div
           css={css`
+            position: relative;
             height: 100%;
+            width: 10px;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
           `}
@@ -28,7 +43,7 @@ export const TabBar = props => (
         style: `height: 1px;`
       }
     }}
-    gutter={10}
+    gutter={5}
     {...props}
   />
 );
