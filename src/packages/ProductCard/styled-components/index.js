@@ -1,7 +1,7 @@
 import { styled } from "../../base/styles";
 import React from "react";
 
-export const rootStyles = ({ $theme }) => ``;
+export const rootStyles = ({ $theme }) => `position: relative;`;
 export const rootChildren = ({ content, image }) => (
   <>
     {image}

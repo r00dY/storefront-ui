@@ -1,10 +1,11 @@
 import React from "react";
-import ProductCard$ from "../../../src/packages/ProductCard";
+import ProductCard$ from "storefront-ui/ProductCard";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 import IconFav from "./outline-favorite_border-24px.svg";
-import { ButtonRaw$ } from "../../../src/packages/ButtonRaw";
+import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 import Price from "../Price";
 import { rslin } from "responsive-helpers";
 
@@ -35,6 +36,7 @@ const overrides2 = {
         flex-direction: column;
         justify-content: space-between;
         padding: 10px;
+        box-sizing: border-box;
       `}
     >
       <div

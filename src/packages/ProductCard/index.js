@@ -17,7 +17,6 @@ import { css, jsx } from "@emotion/core";
 
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
-import { ButtonRaw$ } from "../ButtonRaw";
 
 const ProductCard$ = props => {
   const {

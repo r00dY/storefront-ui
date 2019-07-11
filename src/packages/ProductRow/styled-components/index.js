@@ -4,7 +4,7 @@ import { rslin } from "responsive-helpers";
 import { R } from "storefront-ui/Config";
 
 export const rootStyles = ({ $theme }) =>
-  `display: flex; flex-wrap: nowrap; background: white;`;
+  `position: relative; display: flex; flex-wrap: nowrap; background: white;`;
 export const rootChildren = ({ content, image }) => (
   <>
     {image}

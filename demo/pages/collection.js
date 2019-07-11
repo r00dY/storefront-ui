@@ -17,6 +17,7 @@ import useFiltersData from "storefront-ui/Filters/useFiltersData";
 import { css, jsx } from "@emotion/core";
 
 import data from "../data";
+import { ProductCardTheme1 } from "../theme/ProductCard";
 
 export default () => {
   const [filters, onChange] = useFiltersData(data.filters);
@@ -86,9 +87,13 @@ export default () => {
           </GridItem>
 
           <GridItem params={[19, 1]}>
-            {[...Array(1000)].map((e, i) => (
-              <div key={i}>Cześć</div>
-            ))}
+            <Grid colNumber={19} gutter={20} gutterVertical={20}>
+              {data.products.map((product, index) => (
+                <GridItem params={{ xs: 12, md: 6 }} key={index}>
+                  <ProductCardTheme1 product={product} />
+                </GridItem>
+              ))}
+            </Grid>
           </GridItem>
         </Grid>
       </Container>
