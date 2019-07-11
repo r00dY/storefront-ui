@@ -101,6 +101,11 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/ledger">
+              <a>Ledger</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/button">
               <a>Button</a>
             </Link>
