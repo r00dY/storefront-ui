@@ -28,9 +28,13 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 import React, { useState } from "react";
 import OrderDetails from "../theme/OrderDetails";
+import { ProgressSteps } from "../theme/ProgressSteps";
 
 export default () => {
   const theme = useTheme();
+  const spacer = rslin(theme.spacings.s100, theme.spacings.s140).css(
+    "margin-top"
+  );
   return (
     <Page>
       <Container>
@@ -53,8 +57,34 @@ export default () => {
         <Grid>
           <GridItem params={{ xs: 24, md: [16] }}>
             <Grid gutterVertical={20}>
-              <GridItem>ProgressSteps</GridItem>
               <GridItem>
+                <ProgressSteps
+                  data={[
+                    {
+                      label: "Consumer information",
+                      href: "#"
+                    },
+                    {
+                      label: "Shipping method",
+                      href: "#"
+                    },
+                    {
+                      label: "Payment method",
+                      href: "#"
+                    }
+                  ]}
+                  active={1}
+                  lastCompleted={1}
+                  onClick={stepIndex => {
+                    console.log("clicked step " + stepIndex);
+                  }}
+                />
+              </GridItem>
+              <GridItem
+                css={css`
+                  ${spacer}
+                `}
+              >
                 <OrderDetails
                   rows={[
                     {
@@ -68,7 +98,11 @@ export default () => {
                   ]}
                 />
               </GridItem>
-              <GridItem>
+              <GridItem
+                css={css`
+                  ${spacer}
+                `}
+              >
                 <FormHeader title={"Shipping method"} />
               </GridItem>
               <GridItem>
