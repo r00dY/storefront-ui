@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "headroom.js": "^0.9.4",
+    "mobile-detect": "^1.4.3",
     "popper.js": "^1.14.3",
     "react-input-mask": "^2.0.4",
     "react-modal": "^3.8.1",

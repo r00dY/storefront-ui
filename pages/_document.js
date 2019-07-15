@@ -2,8 +2,12 @@ import Document, { Html, Head, Main, NextScript } from "next/document";
 import { Provider as StyletronProvider } from "styletron-react";
 import { styletron } from "../styletron";
 
+import Device from "storefront-ui/Device";
+
 class MyDocument extends Document {
   static async getInitialProps(props) {
+    Device.setUserAgent(props.req.headers["user-agent"]);
+
     const page = props.renderPage(App => props => (
       <StyletronProvider value={styletron}>
         <App {...props} />

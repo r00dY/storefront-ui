@@ -19,6 +19,19 @@ ${(
   />
 )}
 
+## \`Device\`
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Device/examples/01-standard-use.js")
+        .default
+    }
+    component={
+      require("../src/packages/Device/examples/01-standard-use.js").default
+    }
+  />
+)}
 `;
 
 export default () => <Page>{content}</Page>;

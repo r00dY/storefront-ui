@@ -27,7 +27,7 @@ const MediaQuery = props => {
 
 MediaQuery.propTypes = {
   range: PropTypes.instanceOf(Range),
-  prerender: PropTypes.bool // 'lazy' means that children will be rendered on componentDidMount -> this is quick fix to prevent this from being rendered in SSR environment
+  prerender: PropTypes.bool
 };
 
 MediaQuery.defaultProps = {
