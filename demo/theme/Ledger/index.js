@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Ledger$ } from "storefront-ui/Ledger";
+import Ledger$ from "storefront-ui/Ledger";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
