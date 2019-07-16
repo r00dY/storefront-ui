@@ -22,6 +22,7 @@ import { AccordionRaw } from "storefront-ui/Accordion";
 
 import IconMore from "./outline-expand_more-24px.svg";
 import IconLess from "./outline-expand_less-24px.svg";
+import PageTitle from "../../theme/PageTitle";
 
 const CheckoutPage = props => {
   const theme = useTheme();
@@ -94,22 +95,8 @@ const CheckoutPage = props => {
   );
   return (
     <Page>
+      <PageTitle title={"Outdoor Voices"} />
       <Container>
-        <Grid>
-          <GridItem
-            css={css`
-                      text-align: center; ${theme.fonts.h2.css}
-                      ${rslin(theme.spacings.s120, theme.spacings.s140).css(
-                        "padding-top"
-                      )}
-                      ${rslin(theme.spacings.s140, theme.spacings.s180).css(
-                        "padding-bottom"
-                      )}
-                      `}
-          >
-            Outdoor Voices
-          </GridItem>
-        </Grid>
         <Grid>
           <GridItem
             params={{ xs: [24, 0, 1], md: [16], lg: [12, 2], xl: [10, 4] }}
