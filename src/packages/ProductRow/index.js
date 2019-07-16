@@ -30,6 +30,7 @@ const ProductRow$ = props => {
     gutter,
     mode,
     breakpoint,
+    editable,
     overrides: {
       Root: RootOverride,
       ImageContainer: ImageContainerOverride,
@@ -38,7 +39,6 @@ const ProductRow$ = props => {
       Variant: VariantOverride,
       Price: Price,
       Content: ContentOverride,
-      Data: DataOverride,
       Quantity: QuantityOverride,
       Remove: RemoveOverride
     }
@@ -53,93 +53,106 @@ const ProductRow$ = props => {
   );
   const [Content, contentProps] = getOverrides(
     ContentOverride,
-    ({ dataElem, removeElem, quantityElem, priceElem, mode }) => {
+    ({
+      nameElem,
+      descriptionElem,
+      variantElem,
+      removeElem,
+      quantityElem,
+      priceElem,
+      mode,
+      editable
+    }) => {
       let _breakpoint = breakpoint;
       if (mode === "compact") {
         _breakpoint = undefined;
       }
 
-      let paramsData = { xs: [20] };
-      let paramsRemove = { xs: [4] };
-      let paramsQuantity = { xs: [12] };
-      let paramsPrice = { xs: [12] };
-
-      if (_breakpoint) {
-        paramsData[_breakpoint] = [12, 0, 0];
-        paramsQuantity[_breakpoint] = [3, 0, 1];
-        paramsPrice[_breakpoint] = [5, 0, 2];
-        paramsRemove[_breakpoint] = [4, 0, 3];
-      }
-
       return (
         <div
           css={css`
+            width: 100%;
+            padding: ${gutter}px;
             display: flex;
-            flex-grow: 1;
+            flex-wrap: wrap;
+            align-content: space-between;
+            justify-content: space-between;
+            min-width: 0;
+            ${_breakpoint
+              ? R.from(_breakpoint).css(
+                  "align-items: center; flex-wrap: nowrap;"
+                )
+              : ""}
           `}
         >
-          <Grid
+          <div
             css={css`
-              flex-grow: 1;
-              height: 100%;
-              padding: ${gutter}px;
-              & > div {
-                height: 100%;
-                align-content: stretch;
-                ${_breakpoint &&
-                  R.from(_breakpoint).css("align-items: center;")}
-              }
+              width: 100%;
+              padding-bottom: ${gutter}px;
+              ${editable ? "padding-right: 30px;" : ""}
+              ${_breakpoint
+                ? R.from(_breakpoint).css(
+                    `padding-right: ${gutter}px; padding-bottom: 0; width: 50%;`
+                  )
+                : ""}
             `}
-            gutter={gutter}
           >
-            <GridItem params={paramsData}>{dataElem}</GridItem>
-            <GridItem
-              params={paramsRemove}
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                align-items: flex-start;
-              `}
-            >
-              {removeElem}
-            </GridItem>
-            <GridItem
-              params={paramsQuantity}
-              css={css`
-                display: flex;
-                align-items: flex-end;
-                ${_breakpoint &&
-                  R.from(_breakpoint).css("justify-content: center;")}
-              `}
-            >
-              {quantityElem}
-            </GridItem>
-            <GridItem
-              params={paramsPrice}
-              css={css`
-                display: flex;
-                justify-content: flex-end;
-                align-items: flex-end;
-                ${_breakpoint &&
-                  R.from(_breakpoint).css("align-items: center;")}
-              `}
-            >
-              {priceElem}
-            </GridItem>
-          </Grid>
+            {nameElem}
+            {descriptionElem}
+            {variantElem}
+          </div>
+          <div
+            css={css`
+              position: absolute;
+              top: ${gutter}px;
+              right: ${gutter}px;
+              ${_breakpoint
+                ? R.from(_breakpoint).css(
+                    `position: relative; top: auto; right: auto; order: 3; padding-left: ${gutter}px;`
+                  )
+                : ""}
+            `}
+          >
+            {removeElem}
+          </div>
+          <div
+            css={css`
+              display: flex;
+              align-items: flex-end;
+              ${_breakpoint
+                ? R.from(_breakpoint).css(
+                    "width: auto; justify-content: center;"
+                  )
+                : ""}
+            `}
+          >
+            {quantityElem}
+          </div>
+          <div
+            css={css`
+              display: flex;
+              justify-content: flex-end;
+              ${_breakpoint
+                ? R.from(_breakpoint).css(
+                    `width: auto; padding-left: ${gutter}px; flex-grow: 1;`
+                  )
+                : ""}
+            `}
+          >
+            {priceElem}
+          </div>
         </div>
       );
     }
   );
-  const [Data, dataProps] = getOverrides(DataOverride, DataStyled);
   const [Variant, variantProps] = getOverrides(VariantOverride, VariantStyled);
   const [Name, nameProps] = getOverrides(NameOverride, NameStyled);
   const [Description, descriptionProps] = getOverrides(
     DescriptionOverride,
     DescriptionStyled
   );
-  const [Remove, removeProps] = getOverrides(RemoveOverride, () => (
-    <ButtonRaw$>Remove</ButtonRaw$>
+  const [Remove, removeProps] = getOverrides(RemoveOverride, ({ editable }) => (
+    <>{editable && <ButtonRaw$>Remove</ButtonRaw$>}</>
   ));
   const [Quantity, quantityProps] = getOverrides(
     QuantityOverride,
@@ -147,7 +160,7 @@ const ProductRow$ = props => {
   );
 
   const nameElem = (
-    <Name {...nameProps}>
+    <Name {...nameProps} mode={mode}>
       <a href={href}>{name}</a>
     </Name>
   );
@@ -160,27 +173,21 @@ const ProductRow$ = props => {
     </Variant>
   );
   const priceElem = <Price price={price} />;
-  const removeElem = <Remove {...removeProps} />;
+  const removeElem = <Remove {...removeProps} editable={editable} />;
 
-  const dataElem = (
-    <Data
-      {...dataProps}
-      name={nameElem}
-      description={descriptionElem}
-      variant={variantElem}
-    />
-  );
   const quantityElem = (
-    <Quantity {...quantityProps} quantity={quantity}>
-      <ButtonRaw$>[-]</ButtonRaw$>
+    <Quantity {...quantityProps} quantity={quantity} editable={editable}>
+      {editable && <ButtonRaw$>[-]</ButtonRaw$>}
       {quantity}
-      <ButtonRaw$>[+]</ButtonRaw$>
+      {editable && <ButtonRaw$>[+]</ButtonRaw$>}
     </Quantity>
   );
   const contentElem = (
     <Content
       {...contentProps}
-      dataElem={dataElem}
+      nameElem={nameElem}
+      descriptionElem={descriptionElem}
+      variantElem={variantElem}
       removeElem={removeElem}
       quantityElem={quantityElem}
       priceElem={priceElem}
@@ -190,13 +197,19 @@ const ProductRow$ = props => {
       variant={variant}
       quantity={quantity}
       price={price}
+      editable={editable}
     />
   );
 
   const imageElem = (
     <a href={href} tabIndex={"-1"}>
-      <ImageContainer {...imageContainerProps}>
-        <Image image={images[0]} />
+      <ImageContainer {...imageContainerProps} mode={mode}>
+        <Image
+          image={images[0]}
+          css={css`
+            width: 100%;
+          `}
+        />
       </ImageContainer>
     </a>
   );
@@ -205,7 +218,8 @@ const ProductRow$ = props => {
 ProductRow$.defaultProps = {
   gutter: 16,
   mode: "full",
-  breakpoint: "md"
+  breakpoint: "md",
+  editable: false
 };
 
 ProductRow$.propTypes = {

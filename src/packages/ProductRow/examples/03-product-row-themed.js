@@ -11,7 +11,7 @@ export default () => {
     <div>
       <Grid gutter={20} gutterVertical={20}>
         {products.map((product, index) => (
-          <GridItem params={{ xs: 24, md: [24], lg: [24] }} key={index}>
+          <GridItem params={{ xs: 24, md: [24], lg: [12] }} key={index}>
             <ProductRowTheme1
               product={product}
               price={product.price}

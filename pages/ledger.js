@@ -7,11 +7,6 @@ const content = md`
 
 Ledger is part of storefront checkout
 
-
-## \`LedgerRow\`
-
-LedgerRow contains label and value.
-
 ${(
   <Example
     code={

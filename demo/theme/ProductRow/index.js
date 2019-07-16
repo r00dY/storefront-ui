@@ -1,72 +1,80 @@
 import React from "react";
-import ProductRow$ from "../../../src/packages/ProductRow";
+import ProductRow$ from "storefront-ui/ProductRow";
 import Price from "../Price";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { ButtonRaw$ } from "../../../src/packages/ButtonRaw";
+import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 
 import IconClear from "./outline-clear-24px.svg";
 import IconAdd from "./outline-add-24px.svg";
 import IconRemove from "./outline-remove-24px.svg";
+import { useTheme } from "storefront-ui/Theme";
 
 const overrides = {
-  Price: ({ price, discountPrice, quantity }) => (
-    <Price price={price} alignRight />
-  )
+  Price: ({ price }) => <Price price={price} alignRight />
 };
-const overridesTheme1 = {
-  Price: ({ price, discountPrice, quantity }) => (
-    <Price price={price} alignRight />
-  ),
-  Data: ({ name, description, variant }) => (
-    <div>
-      {description}
-      {name}
-      {variant}
-    </div>
-  ),
-  Name: {
-    style: ({ $theme }) => `margin-bottom: 0.5em;`
-  },
-  Remove: () => (
-    <ButtonRaw$>
-      <IconClear
-        css={css`
-          width: 18px;
-          height: 18px;
-        `}
-      />
-    </ButtonRaw$>
-  ),
-  Quantity: ({ quantity }) => (
+
+const Quantity = ({ quantity, editable }) => {
+  const theme = useTheme();
+  return (
     <div
       css={css`
         display: flex;
         width: 100%;
         align-items: center;
+        ${theme.fonts.body1.css}
         svg {
           width: 18px;
           height: 18px;
         }
       `}
     >
-      <ButtonRaw$>
-        <IconRemove />
-      </ButtonRaw$>
+      {editable && (
+        <ButtonRaw$>
+          <IconRemove />
+        </ButtonRaw$>
+      )}
       <div
         css={css`
           width: 36px;
-          text-align: center;
+          ${editable ? "text-align: center;" : ""}
         `}
       >
         {quantity}
       </div>
-      <ButtonRaw$>
-        <IconAdd />
-      </ButtonRaw$>
+      {editable && (
+        <ButtonRaw$>
+          <IconAdd />
+        </ButtonRaw$>
+      )}
     </div>
-  )
+  );
+};
+
+const overridesTheme1 = {
+  Price: ({ price }) => <Price price={price} alignRight />,
+  Name: {
+    style: ({ $theme, mode }) =>
+      `margin-bottom: 0.5em; ${
+        mode === "compact" ? $theme.fonts.body1.css : ""
+      }`
+  },
+  Remove: ({ editable }) => (
+    <>
+      {editable && (
+        <ButtonRaw$>
+          <IconClear
+            css={css`
+              width: 18px;
+              height: 18px;
+            `}
+          />
+        </ButtonRaw$>
+      )}
+    </>
+  ),
+  Quantity: Quantity
 };
 const ProductRow = props => <ProductRow$ {...props} overrides={overrides} />;
 const ProductRowTheme1 = props => (

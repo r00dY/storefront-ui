@@ -1,7 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { rslin } from "responsive-helpers";
-import { RootStyled } from "./styled-components";
+import {
+  RootStyled,
+  RowStyled,
+  LabelStyled,
+  ValueStyled
+} from "./styled-components";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -10,15 +15,38 @@ import { getOverrides } from "../../base/helpers/overrides";
 
 const Ledger$ = props => {
   const {
-    children,
-    overrides: { Root: RootOverride }
+    rows,
+    overrides: {
+      Root: RootOverride,
+      Row: RowOverride,
+      Label: LabelOverride,
+      Value: ValueOverride
+    }
   } = props;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
+  const [Row, rowProps] = getOverrides(RowOverride, RowStyled);
+  const [Label, labelProps] = getOverrides(LabelOverride, LabelStyled);
+  const [Value, valueProps] = getOverrides(ValueOverride, ValueStyled);
 
   return (
-    <Root children={children} {...rootProps}>
-      {children}
+    <Root {...rootProps}>
+      {rows.map((row, index) => (
+        <Row
+          {...rowProps}
+          key={index}
+          value={row.value}
+          label={row.label}
+          isTotal={row.isTotal}
+        >
+          <Label {...labelProps} isTotal={row.isTotal}>
+            {row.label}
+          </Label>
+          <Value {...valueProps} isTotal={row.isTotal}>
+            {row.value}
+          </Value>
+        </Row>
+      ))}
     </Root>
   );
 };
@@ -27,7 +55,7 @@ Ledger$.defaultProps = {
 };
 
 Ledger$.propTypes = {
-  children: PropTypes.array,
+  rows: PropTypes.array,
   overrides: PropTypes.object
 };
 
