@@ -4,6 +4,8 @@ import Link from "next/link";
 import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
+import { R } from "storefront-ui/Config";
+
 import Color from "../src/packages/Color";
 
 /** @jsx jsx */
@@ -14,13 +16,16 @@ export default props => {
     <div>
       <div
         css={css`
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: ${menuWidth};
-          height: 100vh;
           background-color: #eaeaea;
           padding: 20px;
+          width: ${menuWidth};
+          ${R.from("sm").css`
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+          `}
+          ${R.to("xs_plus").css("width: 100%")}
         `}
       >
         <strong>
@@ -86,8 +91,18 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/divider">
+              <a>Divider </a>
+            </Link>
+          </li>
+          <li>
             <Link href="/filters">
               <a>Filters</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/ledger">
+              <a>Ledger</a>
             </Link>
           </li>
           <li>
@@ -98,6 +113,21 @@ export default props => {
           <li>
             <Link href="/popups">
               <a>Popups / dropdowns</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/product-card">
+              <a>ProductCard</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/product-row">
+              <a>ProductRow</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/progress-steps">
+              <a>Progress Steps</a>
             </Link>
           </li>
           <li>
@@ -120,10 +150,12 @@ export default props => {
 
       <div
         css={css`
-          position: absolute;
-          left: ${menuWidth};
-          width: calc(100% - ${menuWidth});
           padding: 20px 0 100px 0;
+          width: 100%;
+          ${R.from("sm").css(`
+               width: calc(100% - ${menuWidth});
+               margin-left: ${menuWidth};
+          `)}
         `}
       >
         {props.children}

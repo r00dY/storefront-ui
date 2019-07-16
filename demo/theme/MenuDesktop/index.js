@@ -11,6 +11,8 @@ import { Button } from "../Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { StatefulPopover } from "../Popover";
+import MiniBasketContent from "../MiniBasketContent";
 
 const MenuDesktop = props => {
   const direction = useScrollDirection();
@@ -60,7 +62,15 @@ const MenuDesktop = props => {
                       <div>C</div>
                     </LayoutRow>
                   }
-                  right={"buttons"}
+                  right={
+                    <StatefulPopover
+                      content={<MiniBasketContent />}
+                      accessibilityType={"tooltip"}
+                      placement={StatefulPopover.PLACEMENT.bottomRight}
+                    >
+                      <Button kind={"minimal"}>Bag (1)</Button>
+                    </StatefulPopover>
+                  }
                   center={buttons}
                 />
               </Container>

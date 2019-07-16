@@ -129,5 +129,61 @@ const productPhotos = [
   productPhoto5,
   productPhoto6
 ];
+const productPhotos2 = [
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_7.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
+  }
+];
+const productPhotos3 = [
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_8.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
+  }
+];
+const productPhotos4 = [
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_9.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
+  }
+];
+const productPhotos5 = [
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_10.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
+  }
+];
 
-export { catLandscape, catPortrait, productPhotos };
+export {
+  catLandscape,
+  catPortrait,
+  productPhotos,
+  productPhotos2,
+  productPhotos3,
+  productPhotos4,
+  productPhotos5
+};

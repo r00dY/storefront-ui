@@ -1,5 +1,7 @@
 import filters from "./filters";
+import products from "./products";
 
 export default {
-  filters: filters
+  filters: filters,
+  products: products
 };
