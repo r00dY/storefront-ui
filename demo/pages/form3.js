@@ -1,5 +1,6 @@
 import { Grid, GridItem } from "storefront-ui/Grid";
 
+import { R } from "storefront-ui/Config";
 import { FormHeader } from "../theme/FormHeader";
 import { StatefulRadioGroup, Radio } from "../theme/Radio";
 import { Button } from "../theme/Button";
@@ -21,7 +22,6 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 import React, { useState } from "react";
 import { ProgressSteps } from "../theme/ProgressSteps";
-import CheckoutSidebar from "../components/CheckoutSidebar";
 import { Checkbox } from "../theme/Checkbox";
 import CheckoutPage from "../components/CheckoutPage";
 
@@ -34,7 +34,11 @@ export default () => {
   return (
     <CheckoutPage>
       <Grid gutterVertical={20}>
-        <GridItem>
+        <GridItem
+          css={css`
+            ${R.to("sm").css("display: none;")}
+          `}
+        >
           <ProgressSteps
             data={[
               {

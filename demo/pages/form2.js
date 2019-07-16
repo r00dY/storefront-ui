@@ -1,5 +1,6 @@
 import { Grid, GridItem } from "storefront-ui/Grid";
 
+import { R } from "storefront-ui/Config";
 import { FormHeader } from "../theme/FormHeader";
 import { StatefulRadioGroup, Radio } from "../theme/Radio";
 import { Button } from "../theme/Button";
@@ -32,7 +33,11 @@ export default () => {
   return (
     <CheckoutPage>
       <Grid gutterVertical={20}>
-        <GridItem>
+        <GridItem
+          css={css`
+            ${R.to("sm").css("display: none;")}
+          `}
+        >
           <ProgressSteps
             data={[
               {

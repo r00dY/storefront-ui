@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 
+import { R } from "storefront-ui/Config";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import { Radio$ } from "storefront-ui/Radio";
@@ -40,7 +41,11 @@ export default () => {
   return (
     <CheckoutPage>
       <Grid gutterVertical={20}>
-        <GridItem>
+        <GridItem
+          css={css`
+            ${R.to("sm").css("display: none;")}
+          `}
+        >
           <ProgressSteps
             data={[
               {
