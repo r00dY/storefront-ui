@@ -14,13 +14,17 @@ import { useTheme } from "storefront-ui/Theme";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import LayoutRow from "storefront-ui/LayoutRow";
 
+import { useDebouncedCallback } from "use-debounce";
+
 import Router from "next/router";
 
 import { StatefulInput } from "../../theme/Input";
 import { StatefulInput$ } from "storefront-ui/Input";
 
-const NavBarMobileSearch = () => {
+const NavBarMobileSearch = ({ onChange, placeholder }) => {
   const theme = useTheme();
+
+  const [debouncedOnChange] = useDebouncedCallback(onChange, 300);
 
   return (
     <div
@@ -57,8 +61,15 @@ const NavBarMobileSearch = () => {
 
           <StatefulInput$
             clearable
-            placeholder={"What you're looking for?"}
+            placeholder={placeholder}
             autoFocus
+            onChange={e => {
+              if (e.target.value.trim() === "") {
+                debouncedOnChange(null);
+                return;
+              }
+              debouncedOnChange(e.target.value.trim());
+            }}
           />
         </div>
       </Container>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 
@@ -8,9 +8,14 @@ import { css, jsx } from "@emotion/core";
 import { Input, StatefulInput } from "../theme/Input";
 import Container from "storefront-ui/Container";
 
+// import data from "../data";
+// import { ProductRow } from "../theme/ProductRow";
+
 import NavBarMobileSearch from "../theme/NavBarMobileSearch";
 
 const Search = () => {
+  const [phrase, setPhrase] = useState(null);
+
   return (
     <div>
       <div
@@ -19,9 +24,10 @@ const Search = () => {
           top: 0;
           left: 0;
           width: 100%;
+          z-index: 1;
         `}
       >
-        <NavBarMobileSearch />
+        <NavBarMobileSearch placeholder={"Search"} onChange={setPhrase} />
       </div>
 
       <div
@@ -29,7 +35,15 @@ const Search = () => {
           margin-top: 50px;
         `}
       >
-        <Container>content</Container>
+        <Container
+          css={css`
+            padding-top: 16px;
+          `}
+        >
+          {phrase === null
+            ? "No previous searches"
+            : `Current phrase: ${phrase}`}
+        </Container>
       </div>
     </div>
   );
