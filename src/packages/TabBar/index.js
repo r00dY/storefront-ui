@@ -92,9 +92,11 @@ function TabBar$(props) {
     lineRef.current.style.transform = `translateX(${activeTabLeft}px)`;
     lineRef.current.style.width = `${activeTabWidth}px`;
 
+    let timeout;
+
     if (firstMount.current) {
       // This is set here to prevent animating at mount
-      setTimeout(() => {
+      timeout = setTimeout(() => {
         lineRef.current.style.transition = "all 0.15s ease-out";
       }, 500);
     } else {
@@ -102,6 +104,10 @@ function TabBar$(props) {
     }
 
     firstMount.current = false;
+
+    return () => {
+      clearTimeout(timeout);
+    };
   });
 
   const sharedProps = {};

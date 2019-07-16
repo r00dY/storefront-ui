@@ -3,6 +3,7 @@
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
+    "watch": "babel src/packages --out-dir dist --watch",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
     "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"

@@ -6,7 +6,10 @@ const theme = createTheme({
     container: "90vw",
     gutter: 20,
     colNumber: 24
-  })
+  }),
+  borders: {
+    useRoundedCorners: false
+  }
 });
 
 export default theme;
