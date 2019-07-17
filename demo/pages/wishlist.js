@@ -22,17 +22,19 @@ const Wishlist = () => {
     <div>
       {noRoot && <NavBarMobile title={"Wishlist"} />}
       <Container>
+        {!noRoot && (
+          <div
+            css={css`
+              ${theme.fonts.h4.css}
+              margin-top: 20px;
+            `}
+          >
+            Your Wishlist
+          </div>
+        )}
         <div
           css={css`
-            ${theme.fonts.h4.css}
             margin-top: 20px;
-            margin-bottom: 20px;
-          `}
-        >
-          Your Wishlist
-        </div>
-        <div
-          css={css`
             padding-bottom: 40px;
             & > div:not(:first-of-type) {
               margin-top: 10px;
