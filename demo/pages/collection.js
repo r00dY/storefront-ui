@@ -43,7 +43,7 @@ const NavBarCollection = props => {
           : "none"};
       `}
     >
-      <NavBarMobile />
+      <NavBarMobile title={"Spring dresses"} />
 
       <div
         css={css`

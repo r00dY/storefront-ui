@@ -7,14 +7,18 @@ import { css, jsx } from "@emotion/core";
 
 import { Input, StatefulInput } from "../theme/Input";
 import Container from "storefront-ui/Container";
+import { useRouter } from "next/router";
 
 // import data from "../data";
 // import { ProductRow } from "../theme/ProductRow";
 
 import NavBarMobileSearch from "../theme/NavBarMobileSearch";
 
-const Search = () => {
+const Search = props => {
   const [phrase, setPhrase] = useState(null);
+  const router = useRouter();
+
+  console.log("search query", router.query);
 
   return (
     <div>
