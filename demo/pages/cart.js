@@ -25,17 +25,19 @@ const Cart = () => {
     <div>
       {noRoot && <NavBarMobile title={"Cart"} />}
       <Container>
+        {!noRoot && (
+          <div
+            css={css`
+              ${theme.fonts.h4.css}
+              margin-top: 20px;
+            `}
+          >
+            Your Bag
+          </div>
+        )}
         <div
           css={css`
-            ${theme.fonts.h4.css}
             margin-top: 20px;
-            margin-bottom: 20px;
-          `}
-        >
-          Your Bag
-        </div>
-        <div
-          css={css`
             padding-bottom: 100px;
             & > div:not(:first-of-type) {
               margin-top: 10px;
@@ -57,7 +59,7 @@ const Cart = () => {
       <div
         css={css`
           position: fixed;
-          bottom: 50px;
+          ${noRoot ? "bottom: 0px;" : " bottom: 50px;"}
           left: 0;
           width: 100%;
           z-index: 1;
