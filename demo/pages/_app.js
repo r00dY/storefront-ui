@@ -23,9 +23,6 @@ const tabs = [
   },
   {
     label: "basket"
-  },
-  {
-    label: "user"
   }
 ];
 
@@ -83,8 +80,6 @@ export default class MyApp extends App {
                     Router.push("/wishlist");
                   } else if (index === 3) {
                     Router.push("/cart");
-                  } else if (index === 4) {
-                    Router.push("/account");
                   }
                 }}
                 scrollable={false}
