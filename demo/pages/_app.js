@@ -30,6 +30,16 @@ const tabs = [
 ];
 
 export default class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps, noRoot: ctx.query.noRoot !== undefined };
+  }
+
   render() {
     const { Component, pageProps } = this.props;
 
@@ -39,8 +49,7 @@ export default class MyApp extends App {
       </Container>
     );
 
-    const showTabbar =
-      Component.tabbar !== undefined && Router.query.noRoot === undefined;
+    const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
 
     return (
       <Root theme={theme}>
