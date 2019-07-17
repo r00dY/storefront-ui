@@ -22,6 +22,9 @@ const tabs = [
     label: "favs"
   },
   {
+    label: "basket"
+  },
+  {
     label: "user"
   }
 ];
@@ -66,6 +69,10 @@ export default class MyApp extends App {
                     Router.push("/menu");
                   } else if (index === 2) {
                     Router.push("/wishlist");
+                  } else if (index === 3) {
+                    Router.push("/basket");
+                  } else if (index === 4) {
+                    Router.push("/account");
                   }
                 }}
                 scrollable={false}
@@ -75,32 +82,7 @@ export default class MyApp extends App {
           </div>
         )}
 
-        {Component.navbar !== undefined && (
-          <div>
-            <div
-              css={css`
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-              `}
-            >
-              <NavBarMobile />
-            </div>
-
-            <div
-              css={css`
-                margin-top: 50px;
-              `}
-            >
-              {content}
-            </div>
-          </div>
-        )}
-
-        {Component.navbar === undefined &&
-          Component.tabbar === undefined &&
-          content}
+        {Component.tabbar === undefined && content}
       </Root>
     );
   }

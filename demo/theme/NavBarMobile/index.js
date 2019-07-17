@@ -72,6 +72,9 @@ const NavBarMobile = () => {
                     line-height: 1;
                   }
                 `}
+                onClick={() => {
+                  Router.push("/search");
+                }}
               >
                 <IconSearch />
               </ButtonRaw>
