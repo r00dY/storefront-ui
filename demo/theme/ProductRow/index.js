@@ -17,6 +17,9 @@ const overrides = {
 
 const Quantity = ({ quantity, editable }) => {
   const theme = useTheme();
+  if (!quantity) {
+    return false;
+  }
   return (
     <div
       css={css`
