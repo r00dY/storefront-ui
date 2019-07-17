@@ -88,6 +88,7 @@ const ProductRow$ = props => {
           <div
             css={css`
               width: 100%;
+              min-width: 0;
               padding-bottom: ${gutter}px;
               ${editable ? "padding-right: 30px;" : ""}
               ${_breakpoint
