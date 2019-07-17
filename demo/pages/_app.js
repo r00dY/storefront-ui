@@ -30,6 +30,16 @@ const tabs = [
 ];
 
 export default class MyApp extends App {
+  static async getInitialProps({ Component, ctx }) {
+    let pageProps = {};
+
+    if (Component.getInitialProps) {
+      pageProps = await Component.getInitialProps(ctx);
+    }
+
+    return { pageProps, noRoot: ctx.query.noRoot !== undefined };
+  }
+
   render() {
     const { Component, pageProps } = this.props;
 
@@ -39,9 +49,11 @@ export default class MyApp extends App {
       </Container>
     );
 
+    const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
+
     return (
       <Root theme={theme}>
-        {Component.tabbar !== undefined && (
+        {showTabbar && (
           <div>
             <div
               css={css`
@@ -70,7 +82,7 @@ export default class MyApp extends App {
                   } else if (index === 2) {
                     Router.push("/wishlist");
                   } else if (index === 3) {
-                    Router.push("/basket");
+                    Router.push("/cart");
                   } else if (index === 4) {
                     Router.push("/account");
                   }
@@ -82,7 +94,7 @@ export default class MyApp extends App {
           </div>
         )}
 
-        {Component.tabbar === undefined && content}
+        {!showTabbar && content}
       </Root>
     );
   }

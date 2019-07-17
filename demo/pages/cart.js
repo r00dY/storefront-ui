@@ -10,18 +10,18 @@ import { css, jsx } from "@emotion/core";
 import { useRouter } from "next/router";
 import NavBarMobile from "../theme/NavBarMobile";
 
-const Wishlist = () => {
+const Cart = () => {
   const router = useRouter();
   const noRoot = router.query.noRoot !== undefined;
 
   return (
     <div>
-      {noRoot && <NavBarMobile title={"Wishlist"} />}
-      Wishlist.
+      {noRoot && <NavBarMobile title={"Cart"} />}
+      Cart.
     </div>
   );
 };
 
-Wishlist.tabbar = 2;
+Cart.tabbar = 3;
 
-export default Wishlist;
+export default Cart;

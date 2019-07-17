@@ -9,6 +9,7 @@ import { ButtonRaw } from "../ButtonRaw";
 import IconArrowBack from "../../svg/arrow_back.svg";
 import IconHeart from "../../svg/heart.svg";
 import IconSearch from "../../svg/search.svg";
+import IconCart from "../../svg/cart.svg";
 import { useTheme } from "storefront-ui/Theme";
 
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
@@ -16,7 +17,7 @@ import LayoutRow from "storefront-ui/LayoutRow";
 
 import Router from "next/router";
 
-const NavBarMobile = () => {
+const NavBarMobile = props => {
   const theme = useTheme();
 
   return (
@@ -50,7 +51,7 @@ const NavBarMobile = () => {
                   line-height: 1;
                 `}
               >
-                Spring dresses
+                {props.title}
               </div>
             </LayoutRow>
           }
@@ -62,6 +63,22 @@ const NavBarMobile = () => {
                     line-height: 1;
                   }
                 `}
+                onClick={() => {
+                  Router.push("/cart?noRoot", "/cart");
+                }}
+              >
+                <IconCart />
+              </ButtonRaw>
+
+              <ButtonRaw
+                css={css`
+                  svg {
+                    line-height: 1;
+                  }
+                `}
+                onClick={() => {
+                  Router.push("/wishlist?noRoot", "/wishlist");
+                }}
               >
                 <IconHeart />
               </ButtonRaw>
