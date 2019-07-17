@@ -23,8 +23,12 @@ const NavBarMobile = props => {
   return (
     <div
       css={css`
+        ${props.transparent
+          ? ""
+          : `
         background: #fafafa;
         border-bottom: 1px solid lightgrey;
+        `}
       `}
     >
       <Container>

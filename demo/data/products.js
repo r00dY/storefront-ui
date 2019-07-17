@@ -82,6 +82,28 @@ const productPhotos2 = [
       }
     ],
     alt: ""
+  },
+
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_8.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
+  },
+
+  {
+    src: [
+      {
+        url: "/static/COS/product/product_9.jpeg",
+        w: 1000,
+        h: 1500
+      }
+    ],
+    alt: ""
   }
 ];
 const productPhotos3 = [
@@ -152,7 +174,7 @@ const products = [
       }
     ],
     images: productPhotos2,
-    href: "assymetric-tie-dress",
+    href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
 
@@ -168,7 +190,7 @@ const products = [
     },
     description: "Jersey Dresses",
     images: productPhotos3,
-    href: "long-a-line-jersey-dress",
+    href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
   {
@@ -189,7 +211,7 @@ const products = [
       }
     ],
     images: productPhotos4,
-    href: "bubble-shaped-jersey-dress",
+    href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
   {
@@ -210,7 +232,7 @@ const products = [
       }
     ],
     images: productPhotos5,
-    href: "shaped-a-line-cotton-dress",
+    href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   }
 ];
