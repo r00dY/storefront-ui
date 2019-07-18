@@ -13,19 +13,24 @@ import { css, jsx } from "@emotion/core";
 
 const tabs = [
   {
-    label: "home"
+    label: "Home",
+    icon: "home"
   },
   {
-    label: "menu"
+    label: "Menu",
+    icon: "menu"
   },
   {
-    label: "favs"
+    label: "Favs",
+    icon: "favs"
   },
   {
-    label: "basket"
+    label: "Basket",
+    icon: "basket"
   },
   {
-    label: "profile"
+    label: "Profile",
+    icon: "profile"
   }
 ];
 

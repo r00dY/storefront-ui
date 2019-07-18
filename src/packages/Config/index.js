@@ -113,9 +113,14 @@ const defaultFonts = {
     font-size: 96px;
     font-weight: 600;
   `),
-  caption: new Font(`
+  caption1: new Font(`
     font-family: sans-serif;
     font-size: 12px;
+    font-weight: 400;
+  `),
+  caption2: new Font(`
+    font-family: sans-serif;
+    font-size: 10px;
     font-weight: 400;
   `)
 };
