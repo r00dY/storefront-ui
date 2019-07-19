@@ -174,3 +174,20 @@ export const getInputStyles = (props: SharedPropsT) => {
 };
 
 export const Input = styled("input", getInputStyles);
+
+export const clearButtonContainerStyles = ({ $theme }) => `
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    svg {
+      display: block;
+    }
+    margin-right: 6px;
+`;
+
+export const ClearButtonContainerStyled = styled(
+  "div",
+  clearButtonContainerStyles
+);

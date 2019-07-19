@@ -13,10 +13,13 @@ import { getOverrides } from "../helpers/overrides.js";
 import { ADJOINED, SIZE, CUSTOM_INPUT_TYPE } from "./constants.js";
 import {
   InputContainer as StyledInputContainer,
-  Input as StyledInput
+  Input as StyledInput,
+  ClearButtonContainerStyled
 } from "./styled-components.js";
 import type { BaseInputPropsT, InternalStateT } from "./types.js";
 import { getSharedProps } from "./utils.js";
+
+import createEvent from "../utils/create-event.js";
 
 const NullComponent = () => null;
 
@@ -34,7 +37,7 @@ class BaseInput<T: EventTarget> extends React.Component<
     disabled: false,
     error: false,
     name: "",
-    inputRef: (React.createRef(): { current: HTMLInputElement | null }),
+    inputRef: null, //(React.createRef(): { current: HTMLInputElement | null }),
     onBlur: () => {},
     onChange: () => {},
     onKeyDown: () => {},
@@ -53,10 +56,55 @@ class BaseInput<T: EventTarget> extends React.Component<
     isFocused: this.props.autoFocus || false
   };
 
+  inputRef = this.props.inputRef || React.createRef();
+
   componentDidMount() {
-    const { autoFocus, inputRef } = this.props;
-    if (autoFocus && inputRef.current) {
-      inputRef.current.focus();
+    const { autoFocus, clearable } = this.props;
+
+    if (this.inputRef.current) {
+      if (autoFocus) {
+        this.inputRef.current.focus();
+      }
+
+      if (this.inputRef.current && clearable) {
+        this.inputRef.current.addEventListener("keydown", this.onInputKeyDown);
+      }
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearable } = this.props;
+
+    if (clearable && this.inputRef.current) {
+      this.inputRef.current.removeEventListener("keydown", this.onInputKeyDown);
+    }
+  }
+
+  onInputKeyDown = (e: SyntheticKeyboardEvent<T>) => {
+    if (this.props.clearable && e.key === "Escape" && this.inputRef.current) {
+      this.clearValue();
+      // prevent event from closing modal or doing something unexpected
+      e.stopPropagation();
+    }
+  };
+
+  clearValue() {
+    // trigger a fake input change event (as if all text was deleted)
+
+    const input = this.inputRef.current;
+    if (input) {
+      const nativeInputValue = Object.getOwnPropertyDescriptor(
+        window.HTMLInputElement.prototype,
+        "value"
+      );
+      if (nativeInputValue) {
+        const nativeInputValueSetter = nativeInputValue.set;
+        if (nativeInputValueSetter) {
+          nativeInputValueSetter.call(input, "");
+          const event = createEvent("input");
+          input.dispatchEvent(event);
+        }
+      }
     }
   }
 
@@ -91,7 +139,7 @@ class BaseInput<T: EventTarget> extends React.Component<
     } = this.props;
 
     return {
-      $ref: $ref || inputRef,
+      $ref: this.inputRef,
       "aria-label": this.props["aria-label"],
       "aria-labelledby": this.props["aria-labelledby"],
       "aria-describedby": this.props["aria-describedby"],
@@ -114,6 +162,48 @@ class BaseInput<T: EventTarget> extends React.Component<
     };
   };
 
+  onClearButtonClick = () => {
+    // console.log(this.props.inputRef.current);
+
+    if (this.inputRef.current) {
+      this.clearValue();
+      // return focus to the input after click
+      this.inputRef.current.focus();
+    }
+  };
+
+  renderClear() {
+    const { clearable, value, disabled, overrides = {}, size } = this.props;
+    if (!clearable || !value || !value.length || disabled) {
+      return null;
+    }
+
+    const [ClearButtonContainer, clearButtonContainerProps] = getOverrides(
+      overrides.ClearButtonContainerOverride,
+      ClearButtonContainerStyled
+    );
+
+    return (
+      <ClearButtonContainer {...clearButtonContainerProps}>
+        <div
+          role={"button"}
+          onClick={this.onClearButtonClick}
+          style={{ opacity: 0.5, cursor: "pointer" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+          >
+            <path d="M12 2C6.47 2 2 6.47 2 12s4.47 10 10 10 10-4.47 10-10S17.53 2 12 2zm5 13.59L15.59 17 12 13.41 8.41 17 7 15.59 10.59 12 7 8.41 8.41 7 12 10.59 15.59 7 17 8.41 13.41 12 17 15.59z" />
+            <path d="M0 0h24v24H0z" fill="none" />
+          </svg>
+        </div>
+      </ClearButtonContainer>
+    );
+  }
+
   render() {
     const {
       value,
@@ -122,7 +212,8 @@ class BaseInput<T: EventTarget> extends React.Component<
         InputContainer: InputContainerOverride,
         Input: InputOverride,
         Before: BeforeOverride,
-        After: AfterOverride
+        After: AfterOverride,
+        ClearButtonContainer: ClearButtonContainerOverride
       }
     } = this.props;
 
@@ -135,6 +226,8 @@ class BaseInput<T: EventTarget> extends React.Component<
     const [Input, inputProps] = getOverrides(InputOverride, StyledInput);
     const [Before, beforeProps] = getOverrides(BeforeOverride, NullComponent);
     const [After, afterProps] = getOverrides(AfterOverride, NullComponent);
+    // const [ClearButtonContainer, clearButtonContainerProps] = getOverrides(ClearButtonContainerOverride, ClearButtonContainerStyled);
+
     return (
       <InputContainer
         data-baseweb={this.props["data-baseweb"] || "base-input"}
@@ -145,6 +238,8 @@ class BaseInput<T: EventTarget> extends React.Component<
         <Input {...sharedProps} {...this.getInputProps()} {...inputProps}>
           {type === CUSTOM_INPUT_TYPE.textarea ? value : null}
         </Input>
+
+        {this.renderClear()}
         <After {...sharedProps} {...afterProps} />
       </InputContainer>
     );
