@@ -109,7 +109,7 @@ export default () => {
                 ...data.products,
                 ...data.products
               ].map((product, index) => (
-                <GridItem params={{ xs: 12, md: 6 }} key={index}>
+                <GridItem params={{ xs: 12, md: 8, lg: 6, xl: 4 }} key={index}>
                   <ProductCardTheme1 product={product} />
                 </GridItem>
               ))}
