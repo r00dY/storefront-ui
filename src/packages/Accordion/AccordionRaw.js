@@ -12,7 +12,9 @@ const AccordionRaw = props => {
 
   useEffect(
     () => {
-      // if (!props.animated) { return; }
+      if (!props.animated) {
+        return;
+      }
 
       if (props.open) {
         setHeight(containerRef.current.clientHeight);

@@ -7,6 +7,7 @@ import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 
 export default () => {
   const [open, setOpen] = useState(true);
+  const [open2, setOpen2] = useState(true);
 
   return (
     <div>
@@ -19,6 +20,21 @@ export default () => {
         <LoremIpsum />
       </AccordionRaw>
       <button onClick={() => setOpen(!open)}>{open ? "Hide" : "Show"}</button>
+
+      <p>Not animated </p>
+
+      <AccordionRaw
+        css={`
+          width: 300px;
+        `}
+        animated={false}
+        open={open2}
+      >
+        <LoremIpsum />
+      </AccordionRaw>
+      <button onClick={() => setOpen2(!open2)}>
+        {open2 ? "Hide" : "Show"}
+      </button>
     </div>
   );
 };
