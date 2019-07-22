@@ -12,7 +12,9 @@ import deepMerge from "../utils/deep-merge.js";
 import Font from "../../Font";
 import Color from "../../Color";
 
-const WHITE = "#FFFFFF";
+const BLACK = new Color("#000000");
+const WHITE = new Color("#ffffff");
+const TRANSPARENT = new Color("transparent");
 
 export default function createTheme(
   primitives: PrimitivesT,
@@ -84,8 +86,8 @@ export default function createTheme(
       mono1000: new Color("000000"),
       mono: new Color("#9e9e9e"),
 
-      white: new Color("#ffffff"),
-      black: new Color("#000000"),
+      white: WHITE,
+      black: BLACK,
 
       // Rating Palette,
       rating200: primitives.rating200,
@@ -414,6 +416,26 @@ export default function createTheme(
       // Tooltip
       tooltipBackground: primitives.mono900,
       tooltipText: primitives.mono100
+    },
+
+    forms: {
+      inputTextColor: BLACK,
+      inputCaretColor: BLACK,
+      inputFillColor: WHITE,
+      inputBorderColor: primitives.mono300,
+      inputBorderWidth: "1px",
+      inputBorderRadius: "0px",
+      inputPlaceholderColor: primitives.mono500,
+      inputBoxShadow: "none",
+
+      inputBorderColorFocused: primitives.mono500,
+      inputBoxShadowFocused: `0 2px 6px ${primitives.mono400.css}`,
+
+      inputBorderColorError: primitives.negative,
+      inputBoxShadowErrorFocused: `0 2px 6px ${primitives.negative100.css}`,
+
+      inputBorderColorDisabled: primitives.mono400,
+      inputFillColorDisabled: primitives.mono300
     },
 
     fonts: {
