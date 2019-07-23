@@ -8,7 +8,7 @@ import { css, jsx } from "@emotion/core";
 
 const AccordionRaw = props => {
   const containerRef = useRef(null);
-  let [height, setHeight] = useState(props.open ? null : 0);
+  let [height, setHeight] = useState(props.open === true ? null : 0);
 
   useEffect(
     () => {
@@ -16,13 +16,13 @@ const AccordionRaw = props => {
         return;
       }
 
-      if (props.open) {
+      if (props.open && height === 0) {
         setHeight(containerRef.current.clientHeight);
 
         setTimeout(() => {
           setHeight(null);
         }, 300);
-      } else {
+      } else if (!props.open && (height === null || height > 0)) {
         setHeight(containerRef.current.clientHeight);
 
         setTimeout(() => {

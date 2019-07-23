@@ -54,7 +54,6 @@ const Menu = () => {
           />
         </div>
       </Container>
-
       {/*<Modal*/}
       {/*config={{*/}
       {/*mode: "right",*/}
@@ -70,11 +69,7 @@ const Menu = () => {
       {/*{[...Array(20)].map((e, i) => <ItemTmp onClick={() => { setOpen(true) }}>Category {i}</ItemTmp>)}*/}
 
       {[...Array(20)].map((e, i) => (
-        <Accordion
-          title={`Category ${i}`}
-          openAtInit={false}
-          scrollTopAtOpen={false}
-        >
+        <Accordion title={`Category ${i}`} openAtInit={false}>
           {[...Array(10)].map((e, j) => (
             <ItemTmp>Subcategory {i}</ItemTmp>
           ))}

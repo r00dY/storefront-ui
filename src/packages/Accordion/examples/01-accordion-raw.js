@@ -8,6 +8,7 @@ import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 export default () => {
   const [open, setOpen] = useState(true);
   const [open2, setOpen2] = useState(true);
+  const [open3, setOpen3] = useState(false);
 
   return (
     <div>
@@ -34,6 +35,22 @@ export default () => {
       </AccordionRaw>
       <button onClick={() => setOpen2(!open2)}>
         {open2 ? "Hide" : "Show"}
+      </button>
+
+      <p>
+        <code>openAtInit=true</code>{" "}
+      </p>
+
+      <AccordionRaw
+        css={`
+          width: 300px;
+        `}
+        open={open3}
+      >
+        <LoremIpsum />
+      </AccordionRaw>
+      <button onClick={() => setOpen3(!open3)}>
+        {open3 ? "Hide" : "Show"}
       </button>
     </div>
   );
