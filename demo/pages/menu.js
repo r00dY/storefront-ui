@@ -69,18 +69,17 @@ const Menu = () => {
       {/*{[...Array(20)].map((e, i) => <ItemTmp onClick={() => { setOpen(true) }}>Category {i}</ItemTmp>)}*/}
 
       {[...Array(20)].map((e, i) => (
-        <Accordion title={`Category ${i}`} openAtInit={false}>
+        <Accordion
+          title={`Category ${i}`}
+          openAtInit={false}
+          animated={false}
+          scrollTopAtOpen={true}
+        >
           {[...Array(10)].map((e, j) => (
             <ItemTmp>Subcategory {i}</ItemTmp>
           ))}
         </Accordion>
       ))}
-
-      <div
-        css={css`
-          height: 200px;
-        `}
-      />
     </div>
   );
 };
