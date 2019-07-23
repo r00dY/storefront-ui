@@ -14,7 +14,7 @@ export const rootChildren = ({ content, image }) => (
 export const RootStyled = styled("div", rootStyles, rootChildren);
 
 export const imageContainerStyles = ({ $theme, mode }) =>
-  `position: relative; height: 100%; display: flex; align-items: center; ${
+  `position: relative; height: 100%; display: flex;  ${
     mode === "compact"
       ? rslin(100, 100).css("width")
       : rslin(80, 140).css("width")
@@ -26,8 +26,6 @@ export const quantityStyles = ({ $theme }) =>
 export const QuantityStyled = styled("div", quantityStyles);
 
 export const nameStyles = ({ $theme, mode }) => `${$theme.fonts.h6.css} 
-   overflow: hidden;
-  max-height: calc(2 * 1.2em);
   a {text-decoration: none; color: ${$theme.colors.mono900.css};}`;
 export const NameStyled = styled("div", nameStyles);
 

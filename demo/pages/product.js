@@ -26,6 +26,7 @@ import SizePicker from "../theme/SizePicker/SizePicker";
 import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import Price from "../theme/Price";
+import { Spacer } from "../theme/Spacer";
 import Device from "storefront-ui/Device";
 
 import data from "../data";
@@ -36,6 +37,8 @@ const Product = () => {
   const segment = useScrollSegment({ 400: "not-top" });
 
   let boxes = [];
+
+  let product = data.products[0];
 
   let products = [
     data.products[1],
@@ -107,16 +110,6 @@ const Product = () => {
       </Accordion>
     </>
   );
-
-  const Spacer = () => (
-    <div
-      css={css`
-        height: ${theme.spacings.s170}px;
-      `}
-    />
-  );
-
-  let product = data.products[0];
 
   return (
     <div>

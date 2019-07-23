@@ -23,33 +23,44 @@ const Wishlist = () => {
       {noRoot && <NavBarMobile title={"Wishlist"} />}
       <Container>
         {!noRoot && (
-          <div
-            css={css`
-              ${theme.fonts.h4.css}
-              margin-top: 20px;
+          <>
+            <div
+              css={css`
+                ${theme.fonts.h4.css}
+                margin-top: 20px;
+              `}
+            >
+              Your Wishlist
+            </div>
+            <div
+              css={css`
+              ${theme.fonts.body2.css}
+              color: ${theme.colors.mono600.css};
             `}
-          >
-            Your Wishlist
-          </div>
+            >
+              {data.products.length} items
+            </div>
+          </>
         )}
-        <div
+        <Grid
+          gutterVertical={40}
+          gutter={40}
           css={css`
             margin-top: 20px;
             padding-bottom: 40px;
-            & > div:not(:first-of-type) {
-              margin-top: 10px;
-            }
           `}
         >
           {data.products.map((product, index) => (
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              mode={"compact"}
-              editable
-            />
+            <GridItem key={index} params={{ xs: 24, sm: 12, lg: 8 }}>
+              <ProductRowTheme1
+                product={product}
+                price={product.price}
+                layout={"compact"}
+                mode={"wishlist"}
+              />
+            </GridItem>
           ))}
-        </div>
+        </Grid>
       </Container>
     </div>
   );

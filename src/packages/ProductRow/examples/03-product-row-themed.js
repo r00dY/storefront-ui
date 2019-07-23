@@ -16,7 +16,8 @@ export default () => {
               product={product}
               price={product.price}
               quantity={"1"}
-              mode={"compact"}
+              layout={"compact"}
+              mode={"basket"}
               onClick={() => console.log("click")}
             />
           </GridItem>
