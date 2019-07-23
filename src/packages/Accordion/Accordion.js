@@ -34,11 +34,14 @@ const Accordion = props => {
     onClick: () => {
       setOpen(!open);
 
-      if (containerRef.current && !open && props.scrollTopAtOpen) {
-        window.scrollBy({
-          top: containerRef.current.getBoundingClientRect().top,
-          behavior: "smooth"
-        });
+      if (!open && props.scrollTopAtOpen) {
+        setTimeout(() => {
+          window.scrollTo({
+            top:
+              containerRef.current.getBoundingClientRect().top + window.scrollY,
+            behavior: "smooth"
+          });
+        }, 50);
       }
     },
     children: title
@@ -47,7 +50,9 @@ const Accordion = props => {
   return (
     <div className={props.className} style={props.style} ref={containerRef}>
       <Header {...headerProps} />
-      <AccordionRaw open={open}>{props.children}</AccordionRaw>
+      <AccordionRaw open={open} animated={props.animated}>
+        {props.children}
+      </AccordionRaw>
     </div>
   );
 };
@@ -55,14 +60,16 @@ const Accordion = props => {
 Accordion.defaultProps = {
   openAtInit: true,
   overrides: {},
-  scrollTopAtOpen: false
+  scrollTopAtOpen: false,
+  animated: true
 };
 
 Accordion.propTypes = {
   title: PropTypes.string,
   openAtInit: PropTypes.bool,
   overrides: PropTypes.object,
-  scrollTopAtOpen: PropTypes.bool
+  scrollTopAtOpen: PropTypes.bool,
+  animated: PropTypes.bool
 };
 
 export default Accordion;
