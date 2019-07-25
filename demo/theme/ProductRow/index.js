@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/core";
 
 import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 
-import IconClear from "./outline-clear-24px.svg";
+import IconClear from "./outline-delete-24px.svg";
 import IconAdd from "./outline-add-24px.svg";
 import IconRemove from "./outline-remove-24px.svg";
 import { useTheme } from "storefront-ui/Theme";

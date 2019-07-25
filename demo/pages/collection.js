@@ -102,13 +102,7 @@ export default () => {
               Found 35 items
             </div>
             <Grid gutterVertical={16}>
-              {[
-                ...data.products,
-                ...data.products,
-                ...data.products,
-                ...data.products,
-                ...data.products
-              ].map((product, index) => (
+              {[...data.products].map((product, index) => (
                 <GridItem params={{ xs: 12, md: 8, lg: 6, xl: 4 }} key={index}>
                   <ProductCardTheme1 product={product} />
                 </GridItem>

@@ -1,9 +1,9 @@
 import React from "react";
 
-import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 import { useTheme } from "storefront-ui/Theme";
+import Device from "storefront-ui/Device";
 
 import { Input, StatefulInput } from "../theme/Input";
 
@@ -13,44 +13,84 @@ import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import MenuDesktop from "../theme/MenuDesktop";
+import Footer from "../theme/Footer";
 
 const Home = () => {
   const theme = useTheme();
 
   return (
     <div>
-      <Container>
+      <Device desktop>
+        <MenuDesktop
+          data={[
+            {
+              label: "Men",
+              href: "/category"
+            },
+            {
+              label: "Women",
+              href: "/category"
+            },
+            {
+              label: "Kids",
+              href: "/category"
+            },
+            {
+              label: "Customize",
+              href: "/category"
+            },
+            {
+              label: "Gifts",
+              href: "/category"
+            }
+          ]}
+        />
+      </Device>
+      <Container
+        css={css`
+          min-height: 100vh;
+        `}
+      >
         <div
           css={css`
             text-align: center;
-            margin-top: 28px;
-            margin-bottom: 28px;
-            ${theme.fonts.h4}
+            padding: 140px 0 80px;
+            ${theme.fonts.h2.css}
           `}
         >
-          SUPER STORE
+          SuperStore
         </div>
+        <Grid>
+          <GridItem params={{ xs: 24, md: [6, 9] }}>
+            <StatefulInput
+              placeholder={"What you're looking for?"}
+              onFocus={() => {
+                Router.push("/search");
+              }}
+            />
 
-        <StatefulInput
-          placeholder={"What you're looking for?"}
-          onFocus={() => {
-            Router.push("/search");
-          }}
-        />
-
-        <ul>
-          <li>
-            <Link href={"/product"}>
-              <a>Go to product</a>
-            </Link>
-          </li>
-          <li>
-            <Link href={"/collection"}>
-              <a>Go to collection</a>
-            </Link>
-          </li>
-        </ul>
+            <div
+              css={css`a {${theme.fonts.h6.css} color: ${
+                theme.colors.primary
+              };} div {margin-top: 20px;} text-align: center;`}
+            >
+              <div>
+                <Link href={"/product"}>
+                  <a>Go to product</a>
+                </Link>
+              </div>
+              <div>
+                <Link href={"/collection"}>
+                  <a>Go to collection</a>
+                </Link>
+              </div>
+            </div>
+          </GridItem>
+        </Grid>
       </Container>
+
+      <Footer />
     </div>
   );
 };

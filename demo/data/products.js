@@ -67,7 +67,70 @@ const products = [
         type: "feature"
       }
     ],
+    images: [images[2], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
+    images: [images[3], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
     images: [images[4], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
+    images: [images[5], images[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -89,6 +152,27 @@ const products = [
       }
     ],
     images: [images[6], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
+    images: [images[7], images[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -260,6 +344,27 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
+    images: [images[16], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -281,6 +386,27 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    price: {
+      regular: "129",
+      discount: null,
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Jersey Dresses",
+    badges: [
+      {
+        label: "Sustainability",
+        type: "feature"
+      }
+    ],
+    images: [images[18], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -298,6 +424,216 @@ const products = [
       }
     ],
     images: [images[19], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[20], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[21], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[22], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[23], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[24], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[25], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[26], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[27], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[28], images[2]],
+    href: "/product",
+    variant: sizes[getRandomInt(0, 3)]
+  },
+  {
+    name: "Shaped A-line Cotton Dress",
+    price: {
+      regular: "99",
+      discount: "79",
+      currency: {
+        code: "EUR",
+        symbol: "€"
+      }
+    },
+    description: "Evening & Occasion Dresses Very Long Description",
+    badges: [
+      {
+        label: "-20%",
+        type: "discount"
+      }
+    ],
+    images: [images[29], images[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   }
