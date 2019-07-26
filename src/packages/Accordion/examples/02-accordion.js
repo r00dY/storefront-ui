@@ -18,64 +18,13 @@ export default () => {
         <LoremIpsum />
       </Accordion>
 
-      {/*<p>*/}
-      {/*Overrides (reusing standard <code>AccordionHeader</code>)*/}
-      {/*</p>*/}
-      {/*<Accordion$*/}
-      {/*title={"Header"}*/}
-      {/*overrides={{*/}
-      {/*Header: props => (*/}
-      {/*<AccordionHeader*/}
-      {/*{...props}*/}
-      {/*overrides={{*/}
-      {/*Title: {*/}
-      {/*style: ({ $theme }) => `*/}
-      {/*${$theme.fonts.body1.css}*/}
-      {/*`*/}
-      {/*},*/}
-      {/*Toggle: {*/}
-      {/*style: ({ $theme }) => `*/}
-      {/*${$theme.fonts.body1.css}*/}
-      {/*`*/}
-      {/*},*/}
-      {/*Root: {*/}
-      {/*style: `*/}
-      {/*background-color: yellow;*/}
-      {/*`*/}
-      {/*}*/}
-      {/*}}*/}
-      {/*/>*/}
-      {/*)*/}
-      {/*}}*/}
-      {/*>*/}
-      {/*<LoremIpsum />*/}
-      {/*</Accordion$>*/}
+      <p>
+        Basic use case, <code>scrollTopAtOpen=true</code>
+      </p>
 
-      {/*<p>Overrides (total custom)</p>*/}
-      {/*<Accordion$*/}
-      {/*title={"Header"}*/}
-      {/*overrides={{*/}
-      {/*Header: ({ children, open, onClick }) => (*/}
-      {/*<ButtonRaw*/}
-      {/*onClick={onClick}*/}
-      {/*css={css`*/}
-      {/*border: 3px solid black;*/}
-      {/*padding: 10px;*/}
-      {/*width: 100%;*/}
-      {/*background-color: ${open ? "red" : "yellow"};*/}
-      {/*display: flex;*/}
-      {/*justify-content: center;*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*{children}*/}
-      {/*</ButtonRaw*/}
-      {/**/}
-      {/*>*/}
-      {/*)*/}
-      {/*}}*/}
-      {/*>*/}
-      {/*<LoremIpsum />*/}
-      {/*</Accordion$>*/}
+      <Accordion title={"Header"} scrollTopAtOpen={true}>
+        <LoremIpsum />
+      </Accordion>
     </div>
   );
 };
