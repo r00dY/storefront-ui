@@ -30,8 +30,8 @@ const CheckoutSidebar = props => {
               product={product}
               price={product.price}
               quantity={"1"}
-              mode={"compact"}
-              editable={false}
+              layout={"compact"}
+              mode={"default"}
             />
           </div>
         ))}

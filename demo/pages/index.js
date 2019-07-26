@@ -4,6 +4,9 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
+import { L } from "storefront-ui/Config";
+
+import { rslin } from "responsive-helpers";
 
 import { Input, StatefulInput } from "../theme/Input";
 
@@ -15,9 +18,52 @@ import Link from "next/link";
 import { css, jsx } from "@emotion/core";
 import MenuDesktop from "../theme/MenuDesktop";
 import Footer from "../theme/Footer";
+import { Banner, BannerInner } from "../theme/Banner";
+import TwoBanners from "../theme/TwoBanners";
+
+import data from "../data";
+import ProductSlider from "../theme/ProductSlider/ProductSlider";
+import { ProductCardTheme1 } from "../theme/ProductCard";
+import SectionTitle from "../theme/SectionTitle";
+import CategoryCard from "../theme/CategoryCard";
 
 const Home = () => {
   const theme = useTheme();
+
+  let sliderItems = [];
+
+  data.products.map((product, index) => {
+    sliderItems.push(<ProductCardTheme1 product={product} key={index} />);
+  });
+
+  const categories = [
+    { name: "Home", image: data.images.products[4] },
+    { name: "Beauty", image: data.images.products[8] },
+    { name: "Food", image: data.images.products[10] },
+    { name: "Health", image: data.images.products[11] }
+  ];
+
+  const banner1 = (
+    <Banner
+      image={data.products[1].images[0]}
+      // imageMobile={new ImgixImage(DATA.home.image3_mobile)}
+      element={<BannerInner text={"The Tonal Trend"} />}
+      elementFlexAlign={"flex-end"}
+      elementFullWidth
+    />
+  );
+  const banner2 = (
+    <Banner
+      image={data.products[2].images[0]}
+      // imageMobile={new ImgixImage(DATA.home.image4_mobile)}
+      // video={DATA.home.video1}
+      // videoMobile={DATA.home.video1}
+      modeCover
+      element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
+      elementFlexAlign={"flex-end"}
+      elementFullWidth
+    />
+  );
 
   return (
     <div>
@@ -47,11 +93,8 @@ const Home = () => {
           ]}
         />
       </Device>
-      <Container
-        css={css`
-          min-height: 100vh;
-        `}
-      >
+
+      <Container>
         <div
           css={css`
             text-align: center;
@@ -69,28 +112,50 @@ const Home = () => {
                 Router.push("/search");
               }}
             />
-
-            <div
-              css={css`a {${theme.fonts.h6.css} color: ${
-                theme.colors.primary
-              };} div {margin-top: 20px;} text-align: center;`}
-            >
-              <div>
-                <Link href={"/product"}>
-                  <a>Go to product</a>
-                </Link>
-              </div>
-              <div>
-                <Link href={"/collection"}>
-                  <a>Go to collection</a>
-                </Link>
-              </div>
-            </div>
           </GridItem>
         </Grid>
       </Container>
 
-      <Footer />
+      <div
+        css={css`&>div:not(:first-of-type) {margin-top: ${
+          theme.spacings.s180
+        }px;`}
+      >
+        <Container>
+          <SectionTitle>Big Thing</SectionTitle>
+          <Banner
+            image={data.images.landscape1}
+            element={
+              <BannerInner
+                label={"Truly Transparent"}
+                title={"Transparent Bottle"}
+                text={"No more bother about color again"}
+                hideTextOnMobile
+              />
+            }
+            elementFlexAlign={{ xs: "flex-end", md: "flex-end" }}
+          />
+        </Container>
+
+        <ProductSlider boxes={sliderItems} title={"Top Picks"} />
+
+        <TwoBanners title={"Trending Now"} banners={[banner1, banner2]} />
+
+        <div>
+          <Container>
+            <SectionTitle>Top Categories</SectionTitle>
+            <Grid gutterVertical={L.gutter}>
+              {categories.map((category, index) => (
+                <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
+                  <CategoryCard image={category.image} text={category.name} />
+                </GridItem>
+              ))}
+            </Grid>
+          </Container>
+        </div>
+
+        <Footer />
+      </div>
     </div>
   );
 };

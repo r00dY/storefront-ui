@@ -14,8 +14,8 @@ import Container from "storefront-ui/Container";
 
 import IconArrowLeft from "./baseline-keyboard_arrow_left-24px.svg";
 import IconArrowRight from "./baseline-keyboard_arrow_right-24px.svg";
-import { Button } from "../Button";
 import { ButtonRaw } from "../ButtonRaw";
+import SectionTitle from "../SectionTitle";
 
 function ProductSlider(props) {
   const theme = useTheme();
@@ -112,7 +112,7 @@ function ProductSlider(props) {
             ).css("margin-bottom")}
           `}
         >
-          {props.title}
+          <SectionTitle>{props.title}</SectionTitle>
         </div>
       </Container>
       {swiper.element}

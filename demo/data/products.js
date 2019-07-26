@@ -8,6 +8,8 @@ function getRandomInt(min, max) {
 
 const sizes = ["XS", "S", "M", "L"];
 
+let productImages = images.products;
+
 const products = [
   {
     name: "Transparent Bottle",
@@ -30,7 +32,12 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[0], images[1], images[5], images[7]],
+    images: [
+      productImages[0],
+      productImages[1],
+      productImages[5],
+      productImages[7]
+    ],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -46,7 +53,7 @@ const products = [
       }
     },
     description: "Jersey Dresses",
-    images: [images[1], images[2]],
+    images: [productImages[1], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -67,7 +74,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[2], images[2]],
+    images: [productImages[2], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -88,7 +95,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[3], images[2]],
+    images: [productImages[3], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -109,7 +116,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[4], images[2]],
+    images: [productImages[4], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -130,7 +137,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[5], images[2]],
+    images: [productImages[5], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -151,7 +158,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[6], images[2]],
+    images: [productImages[6], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -172,7 +179,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[7], images[2]],
+    images: [productImages[7], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -197,7 +204,12 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[8], images[1], images[5], images[7]],
+    images: [
+      productImages[8],
+      productImages[1],
+      productImages[5],
+      productImages[7]
+    ],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -213,7 +225,7 @@ const products = [
       }
     },
     description: "Jersey Dresses",
-    images: [images[9], images[2]],
+    images: [productImages[9], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -234,7 +246,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[10], images[2]],
+    images: [productImages[10], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -255,7 +267,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[11], images[2]],
+    images: [productImages[11], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -276,7 +288,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[12], images[2]],
+    images: [productImages[12], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -297,7 +309,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[13], images[2]],
+    images: [productImages[13], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -318,7 +330,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[14], images[2]],
+    images: [productImages[14], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -339,7 +351,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[15], images[2]],
+    images: [productImages[15], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -360,7 +372,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[16], images[2]],
+    images: [productImages[16], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -381,7 +393,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[17], images[2]],
+    images: [productImages[17], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -402,7 +414,7 @@ const products = [
         type: "feature"
       }
     ],
-    images: [images[18], images[2]],
+    images: [productImages[18], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -423,7 +435,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[19], images[2]],
+    images: [productImages[19], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -444,7 +456,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[20], images[2]],
+    images: [productImages[20], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -465,7 +477,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[21], images[2]],
+    images: [productImages[21], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -486,7 +498,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[22], images[2]],
+    images: [productImages[22], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -507,7 +519,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[23], images[2]],
+    images: [productImages[23], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -528,7 +540,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[24], images[2]],
+    images: [productImages[24], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -549,7 +561,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[25], images[2]],
+    images: [productImages[25], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -570,7 +582,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[26], images[2]],
+    images: [productImages[26], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -591,7 +603,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[27], images[2]],
+    images: [productImages[27], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -612,7 +624,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[28], images[2]],
+    images: [productImages[28], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   },
@@ -633,7 +645,7 @@ const products = [
         type: "discount"
       }
     ],
-    images: [images[29], images[2]],
+    images: [productImages[29], productImages[2]],
     href: "/product",
     variant: sizes[getRandomInt(0, 3)]
   }

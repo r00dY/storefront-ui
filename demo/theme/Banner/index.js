@@ -7,8 +7,73 @@ import { rslin, rs, rm } from "responsive-helpers";
 import { F, L, Color, S, R } from "storefront-ui/Config";
 import Image from "storefront-ui/Image";
 import Link from "next/link";
+import { useTheme } from "storefront-ui/Theme";
+import { Button } from "../Button";
 
-function BannerBox(props) {
+const BannerButton = props => {
+  const theme = useTheme();
+  return (
+    <div>
+      <Button href={props.href}>{props.label}</Button>
+    </div>
+  );
+};
+
+const BannerInner = props => {
+  const theme = useTheme();
+  return (
+    <div>
+      <div
+        css={css`
+          margin-bottom: ${theme.spacings.s80}px;
+        `}
+      >
+        {props.label && (
+          <div
+            css={css`
+              ${theme.fonts.caption.css}
+            `}
+          >
+            {props.label}
+          </div>
+        )}
+        {props.title && (
+          <div
+            css={css`
+              ${theme.fonts.h2.css}
+            `}
+          >
+            {props.title}
+          </div>
+        )}
+        {props.text && (
+          <div
+            css={css`
+              ${theme.fonts.body1.css}
+              ${props.hideTextOnMobile ? R.to("sm").css("display: none;") : ""}
+            `}
+          >
+            {props.text}
+          </div>
+        )}
+      </div>
+      <BannerButton label={"Shop"} />
+    </div>
+  );
+};
+BannerInner.defaultProps = {
+  hideTextOnMobile: false
+};
+BannerInner.propTypes = {
+  title: PropTypes.string,
+  text: PropTypes.string,
+  hideTextOnMobile: PropTypes.bool,
+  buttons: PropTypes.array
+};
+
+const Banner = props => {
+  const theme = useTheme();
+
   function setParams(param) {
     if (typeof param === "string") {
       return { xs: param };
@@ -16,14 +81,15 @@ function BannerBox(props) {
       return param;
     }
   }
-  const image = (
+
+  const imageElem = (
     <Image
       image={props.image}
       backgroundColor={props.imageBackground}
       video={props.video}
     />
   );
-  const imageWithMobile = (
+  const imageWithMobileElem = (
     <div>
       <Image
         css={css`
@@ -44,14 +110,16 @@ function BannerBox(props) {
     </div>
   );
 
-  const section = (
+  const sectionElem = (
     <div
       css={css`
         position: relative;
       `}
     >
       <div>
-        {props.imageMobile || props.videoMobile ? imageWithMobile : image}
+        {props.imageMobile || props.videoMobile
+          ? imageWithMobileElem
+          : imageElem}
 
         <div
           className={"ImageOverlay"}
@@ -83,7 +151,9 @@ function BannerBox(props) {
                     ${rm(setParams(props.elementFlexJustify)).css(
                       val => `justify-content: ${val};`
                     )}
-                    ${rslin(S.s3, S.s4).css("padding")}
+                    ${rslin(theme.spacings.s80, theme.spacings.s80).css(
+                      "padding"
+                    )}
                 `}
         >
           <div
@@ -109,21 +179,21 @@ function BannerBox(props) {
     <>
       {props.href ? (
         <Link href={"/category"}>
-          <a>{section}</a>
+          <a>{sectionElem}</a>
         </Link>
       ) : (
-        section
+        sectionElem
       )}
     </>
   );
-}
-BannerBox.defaultProps = {
+};
+Banner.defaultProps = {
   imageBackground: "transparent",
   elementFlexAlign: "flex-start",
   elementFlexJustify: "flex-start",
   elementFullWidth: false
 };
-BannerBox.propTypes = {
+Banner.propTypes = {
   image: PropTypes.object,
   imageMobile: PropTypes.object,
   video: PropTypes.object,
@@ -135,4 +205,4 @@ BannerBox.propTypes = {
   imageBackground: PropTypes.string,
   href: PropTypes.string
 };
-export default BannerBox;
+export { Banner, BannerInner, BannerButton };

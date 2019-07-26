@@ -18,7 +18,7 @@ const CheckoutPage = props => {
         <Grid>
           <GridItem
             css={css`
-                      text-align: center; ${theme.fonts.h2.css}
+                      text-align: center; ${theme.fonts.h3.css}
                       ${rslin(theme.spacings.s120, theme.spacings.s140).css(
                         "padding-top"
                       )}
@@ -27,7 +27,7 @@ const CheckoutPage = props => {
                       )}
                       `}
           >
-            Outdoor Voices
+            SuperStore Checkout
           </GridItem>
         </Grid>
         <Grid>
