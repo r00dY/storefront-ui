@@ -129,11 +129,11 @@ const Home = () => {
               <BannerInner
                 label={"Truly Transparent"}
                 title={"Transparent Bottle"}
-                text={"No more bother about color again"}
+                text={"Don't bother about color anymore"}
                 hideTextOnMobile
               />
             }
-            elementFlexAlign={{ xs: "flex-end", md: "flex-end" }}
+            elementFlexAlign={{ xs: "flex-end", md: "center" }}
           />
         </Container>
 

@@ -151,7 +151,7 @@ const Banner = props => {
                     ${rm(setParams(props.elementFlexJustify)).css(
                       val => `justify-content: ${val};`
                     )}
-                    ${rslin(theme.spacings.s80, theme.spacings.s80).css(
+                    ${rslin(theme.spacings.s80, theme.spacings.s120).css(
                       "padding"
                     )}
                 `}
