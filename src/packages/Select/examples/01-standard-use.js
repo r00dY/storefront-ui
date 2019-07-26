@@ -139,11 +139,12 @@ export default () => {
                 {...popoverProps}
                 overrides={{
                   Body: {
-                    style: `
-                                                                box-shadow: none;
-                                                                    border-radius: 10px;
-                                                                    overflow: hidden;
-                                                                `
+                    style: ({ $anchorWidth }) => `
+                            min-width: ${$anchorWidth}px;
+                            box-shadow: none;
+                                border-radius: 10px;
+                                overflow: hidden;
+                            `
                   }
                 }}
               />
