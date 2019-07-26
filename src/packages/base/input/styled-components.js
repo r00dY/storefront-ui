@@ -80,7 +80,7 @@ export const InputEnhancer = styled("div", props => {
   };
 });
 
-const getInputStyle = (style, props) => {
+export const getInputStyle = (style, props) => {
   const {
     $isFocused,
     $error,
@@ -159,7 +159,7 @@ export const getInputStyles = (props: SharedPropsT) => {
     $size,
     $hideSpinButtons,
     $type,
-    $theme: { colors, sizing, fonts }
+    $theme: { sizing, fonts }
   } = props;
   return {
     ...getFont($size, fonts),

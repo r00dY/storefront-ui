@@ -54,6 +54,7 @@ const Menu = () => {
           />
         </div>
       </Container>
+
       {/*<Modal*/}
       {/*config={{*/}
       {/*mode: "right",*/}

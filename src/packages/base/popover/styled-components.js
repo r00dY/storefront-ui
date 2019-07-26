@@ -25,7 +25,8 @@ export function getBodyStyles(props: SharedStylePropsT) {
     $placement,
     $popoverOffset,
     $showArrow,
-    $theme
+    $theme,
+    $anchorWidth
   } = props;
 
   const borderRadius = $theme.borders.useRoundedCorners
@@ -52,7 +53,8 @@ export function getBodyStyles(props: SharedStylePropsT) {
       $isAnimating && $isOpen
         ? getEndPosition($popoverOffset)
         : getStartPosition($popoverOffset, $placement, $showArrow),
-    ...getPopoverMarginStyles($showArrow, $placement)
+    ...getPopoverMarginStyles($showArrow, $placement),
+    minWidth: `${$anchorWidth}px`
   };
 }
 
