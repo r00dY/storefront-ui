@@ -93,12 +93,15 @@ const Home = () => {
           ]}
         />
       </Device>
-
-      <Container>
+      <Container
+        css={css`
+          ${rslin(theme.spacings.s80, theme.spacings.s100).css("margin-bottom")}
+        `}
+      >
         <div
           css={css`
             text-align: center;
-            padding: 140px 0 80px;
+            padding: 100px 0 60px;
             ${theme.fonts.h2.css}
           `}
         >

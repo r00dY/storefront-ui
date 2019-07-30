@@ -9,6 +9,46 @@ const images = {
     ],
     alt: "landscape1.jpg"
   },
+  landscape2: {
+    src: [
+      {
+        url: "/static/images/landscape2.jpg",
+        w: 2667,
+        h: 1000
+      }
+    ],
+    alt: "landscape1.jpg"
+  },
+  landscape3: {
+    src: [
+      {
+        url: "/static/images/landscape3.jpg",
+        w: 2667,
+        h: 1000
+      }
+    ],
+    alt: "landscape1.jpg"
+  },
+  landscape4: {
+    src: [
+      {
+        url: "/static/images/landscape4.jpg",
+        w: 2667,
+        h: 1000
+      }
+    ],
+    alt: "landscape1.jpg"
+  },
+  landscape5: {
+    src: [
+      {
+        url: "/static/images/landscape5.jpg",
+        w: 2667,
+        h: 1000
+      }
+    ],
+    alt: "landscape1.jpg"
+  },
   products: [
     {
       src: [
