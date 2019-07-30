@@ -7,7 +7,7 @@ const ItemListAccordion = props => (
     {...props}
     overrides={{
       ToggleButton: ({ open, onClick }) => (
-        <Button kind={"minimal"} size="compact" onClick={onClick}>
+        <Button kind={"minimal"} size="compact" fitContainer onClick={onClick}>
           {open ? "- show less" : "+ show more"}
         </Button>
       ),

@@ -51,7 +51,7 @@ const NavBarMobile = props => {
 
               <div
                 css={css`
-                  ${theme.fonts.h6}
+                  ${theme.fonts.h6.css}
                   line-height: 1;
                 `}
               >

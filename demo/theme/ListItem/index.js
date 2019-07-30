@@ -1,21 +1,32 @@
-// TODO: here should be used a neat tiny preset with easily styleable checkmark!
-
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import { useTheme } from "storefront-ui/Theme";
 
-const ListItem = ({ selected, focused, item }) => (
-  <div
-    css={css`
-      padding: 8px;
-      background-color: ${focused ? "lightgrey" : "transparent"};
-      &:hover {
-        background-color: lightgrey;
-      }
-      cursor: pointer;
-    `}
-  >
-    {selected ? "[X]" : "[ ]"} {item.name}
-  </div>
-);
+import IconCheckBlank from "../../svg/checkbox_blank.svg";
+import IconCheckChecked from "../../svg/checkbox.svg";
+
+const ListItem = ({ selected, focused, item }) => {
+  const theme = useTheme();
+  return (
+    <div
+      css={css`
+        padding: ${theme.spacings.s40}px;
+        display: flex;
+        align-items: center;
+        background-color: ${focused ? theme.colors.mono100.css : "transparent"};
+        ${theme.fonts.body2.css}
+        &:hover {
+          background-color: ${theme.colors.mono100.css};
+        }
+        svg {
+          margin-right: ${theme.spacings.s40}px;
+        }
+        cursor: pointer;
+      `}
+    >
+      {selected ? <IconCheckChecked /> : <IconCheckBlank />} {item.name}
+    </div>
+  );
+};
 
 export { ListItem };

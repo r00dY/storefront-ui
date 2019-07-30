@@ -29,6 +29,8 @@ const NavBarCollection = props => {
   const direction = useScrollDirection();
   const segment = useScrollSegment({ 50: "not-top" });
 
+  const theme = useTheme();
+
   return (
     <div
       css={css`
@@ -43,7 +45,7 @@ const NavBarCollection = props => {
           : "none"};
       `}
     >
-      <NavBarMobile title={"Spring dresses"} />
+      <NavBarMobile title={"All Bottles"} />
 
       <div
         css={css`
@@ -56,7 +58,15 @@ const NavBarCollection = props => {
       >
         <Container>
           <LayoutLeftCenterRight
-            left={<div>coś tam po lewej</div>}
+            left={
+              <div
+                css={css`
+                  ${theme.fonts.body2.css}
+                `}
+              >
+                something
+              </div>
+            }
             right={<Button onClick={props.onFilterOpen}>Filter</Button>}
             height={50}
           />
@@ -94,19 +104,29 @@ export default () => {
             <div
               css={css`
                 padding-bottom: 24px;
-                ${theme.fonts.body2}
+                ${theme.fonts.body2.css}
                 text-align: center;
                 color: ${theme.colors.mono500.css};
               `}
             >
               Found 35 items
             </div>
-            <Grid gutterVertical={16}>
-              {[...data.products].map((product, index) => (
-                <GridItem params={{ xs: 12, md: 8, lg: 6, xl: 4 }} key={index}>
-                  <ProductCardTheme1 product={product} />
-                </GridItem>
-              ))}
+            <Grid>
+              <GridItem params={{ xs: 0, md: 6, xl: 5 }}>
+                <FiltersColumn data={filters} onChange={onChange} />
+              </GridItem>
+              <GridItem params={{ xs: 24, md: 18 }}>
+                <Grid gutterVertical={16}>
+                  {[...data.products].map((product, index) => (
+                    <GridItem
+                      params={{ xs: 12, md: 8, lg: 8, xl: 6 }}
+                      key={index}
+                    >
+                      <ProductCardTheme1 product={product} />
+                    </GridItem>
+                  ))}
+                </Grid>
+              </GridItem>
             </Grid>
           </Container>
         </div>
@@ -123,8 +143,8 @@ export default () => {
         footer={() => (
           <div
             css={css`
-              padding: 10px;
-              background-color: lightgrey;
+              padding: ${theme.spacings.s40}px;
+              border-top: 1px solid ${theme.colors.mono300.css};
             `}
           >
             <Grid gutter={10}>

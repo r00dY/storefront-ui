@@ -1,5 +1,7 @@
 import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
 
+import IconExpandMore from "./baseline-expand_more-24px.svg";
+import IconExpandLess from "./baseline-expand_less-24px.svg";
 const AccordionHeader = props => (
   <AccordionHeader$
     {...props}
@@ -9,10 +11,11 @@ const AccordionHeader = props => (
       },
       Root: {
         style: ({ $theme }) =>
-          ` border-top: 1px solid ${
-            $theme.colors.mono300.css
-          }; border-bottom: none; height: 30px;`
-      }
+          `border-bottom: none; height: 50px; background: ${
+            $theme.colors.mono100.css
+          };`
+      },
+      Toggle: ({ $open }) => ($open ? <IconExpandLess /> : <IconExpandMore />)
     }}
   />
 );

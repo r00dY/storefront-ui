@@ -120,9 +120,11 @@ const Home = () => {
       </Container>
 
       <div
-        css={css`&>div:not(:first-of-type) {margin-top: ${
-          theme.spacings.s180
-        }px;`}
+        css={css`
+          & > div:not(:first-of-type) {
+            ${rslin(theme.spacings.s120, theme.spacings.s180).css("margin-top")}
+          }
+        `}
       >
         <Container>
           <SectionTitle>Big Thing</SectionTitle>
