@@ -19,6 +19,9 @@ import IconSearch from "./outline-search-24px.svg";
 import IconCart from "./outline-shopping_cart-24px.svg";
 import IconMenu from "./baseline-menu-24px.svg";
 import IconAccount from "./baseline-account_circle-24px.svg";
+import SectionTitle from "../../pages";
+import { Banner, BannerInner } from "../Banner";
+import { ProductCardTheme1 } from "../ProductCard";
 
 const MenuDesktop = props => {
   const basketProducts = data.products;
@@ -126,6 +129,114 @@ const MenuDesktop = props => {
                   center={buttons}
                 />
               </Container>
+            </div>
+            <div>
+              {data.categories.map((category, i) => {
+                if (i > 0) {
+                  return;
+                }
+                return (
+                  <div
+                    css={css`
+                      background: white;
+                      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.15);
+                    `}
+                  >
+                    <Container>
+                      <div
+                        css={css`
+                          padding: ${theme.spacings.s100}px 0;
+                        `}
+                      >
+                        {/*<div css={css`${theme.fonts.h5.css}`}>*/}
+                        {/*{category.name}*/}
+                        {/*</div>*/}
+                        <div
+                          css={css`
+                            display: flex;
+                          `}
+                        >
+                          <div
+                            css={css`
+                              display: flex;
+                              flex-direction: column;
+                              max-height: 500px;
+                              flex-wrap: wrap;
+                              align-content: flex-start;
+                              justify-content: flex-start;
+                              width: 75%;
+                            `}
+                          >
+                            {category.subcats.map((subcat, j) => (
+                              <div
+                                css={css`
+                                  width: 33.33%;
+                                  a {
+                                    color: inherit;
+                                    text-decoration: none;
+                                  }
+                                `}
+                              >
+                                <div
+                                  css={css`${
+                                    theme.fonts.h6.css
+                                  } margin-bottom: ${
+                                    theme.spacings.s40
+                                  }px; color: ${
+                                    theme.colors.primary.css
+                                  }; a:hover {color:${
+                                    theme.colors.primary600.css
+                                  }; }`}
+                                >
+                                  <a href="#">{subcat.name}</a>
+                                </div>
+                                <div
+                                  css={css`
+                                    padding-bottom: ${theme.spacings.s80}px;
+                                  `}
+                                >
+                                  {subcat.links &&
+                                    subcat.links.map((link, k) => (
+                                      <div
+                                        css={css`${
+                                          theme.fonts.body2.css
+                                        } line-height: 2; a:hover {color: ${
+                                          theme.colors.mono500.css
+                                        };`}
+                                      >
+                                        <a href="">{link}</a>
+                                      </div>
+                                    ))}
+                                </div>
+                              </div>
+                            ))}
+                          </div>
+                          <div
+                            css={css`
+                              width: 25%;
+                              padding-left: ${theme.spacings.s40}px;
+                            `}
+                          >
+                            {i === 0 && (
+                              <ProductCardTheme1 product={data.products[0]} />
+                            )}
+                            {i === 1 && (
+                              <Banner
+                                image={data.products[1].images[0]}
+                                element={
+                                  <BannerInner text={"The Tonal Trend"} />
+                                }
+                                elementFlexAlign={"flex-end"}
+                                elementFullWidth
+                              />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    </Container>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )
