@@ -28,7 +28,6 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import CategoryCard from "../theme/CategoryCard";
 import Image from "storefront-ui/Image";
-import { StatefulSelect } from "../theme/Select";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
