@@ -438,6 +438,43 @@ export default function createTheme(
       inputFillColorDisabled: primitives.mono300
     },
 
+    notifications: {
+      topLeft: {
+        x: 16,
+        y: 16,
+        spacer: 8,
+        width: 300
+      },
+      topRight: {
+        x: 16,
+        y: 16,
+        spacer: 8,
+        width: 300
+      },
+      bottomLeft: {
+        x: 16,
+        y: 16,
+        spacer: 8,
+        width: 300
+      },
+      bottomRight: {
+        x: 16,
+        y: 16,
+        spacer: 8,
+        width: 300
+      },
+      mobileTop: {
+        x: 0,
+        y: 0,
+        spacer: 0
+      },
+      mobileBottom: {
+        x: 0,
+        y: 0,
+        spacer: 8
+      }
+    },
+
     fonts: {
       body1: new Font(`
         font-family: sans-serif;

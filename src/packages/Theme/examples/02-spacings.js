@@ -7,8 +7,6 @@ import { useTheme } from "storefront-ui/Theme";
 const SpacingBox = ({ spacing }) => {
   const theme = useTheme();
 
-  console.log(theme.spacings);
-
   return (
     <div
       css={css`

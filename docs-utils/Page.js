@@ -150,6 +150,11 @@ export default props => {
               <a>Select</a>
             </Link>
           </li>
+          <li>
+            <Link href="/notifications">
+              <a>Notifications</a>
+            </Link>
+          </li>
         </ul>
       </div>
 

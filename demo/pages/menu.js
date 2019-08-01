@@ -22,6 +22,8 @@ const ItemTmp = styled.div`
 
 const Menu = () => {
   const theme = useTheme();
+
+  console.log(theme);
   // const [open, setOpen] = useState(false);
 
   return (
