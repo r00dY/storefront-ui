@@ -15,6 +15,7 @@ import { ProductRowTheme1 } from "../theme/ProductRow";
 import NavBarMobileSearch from "./search";
 import { Button } from "../theme/Button";
 import { Ledger } from "../theme/Ledger";
+import { Spacer } from "../theme/Spacer";
 
 const Cart = () => {
   const router = useRouter();
@@ -26,36 +27,66 @@ const Cart = () => {
       {noRoot && <NavBarMobile title={"Cart"} />}
       <Container>
         {!noRoot && (
-          <div
-            css={css`
-              ${theme.fonts.h4.css}
-              margin-top: 20px;
+          <>
+            <div
+              css={css`
+                ${theme.fonts.h4.css}
+                margin-top: 20px;
+              `}
+            >
+              Your Bag
+            </div>
+            <div
+              css={css`
+              ${theme.fonts.body2.css}
+              color: ${theme.colors.mono600.css};
+              margin-bottom: 20px;
             `}
-          >
-            Your Bag
-          </div>
+            >
+              {data.products.length} items
+            </div>
+          </>
         )}
-        <div
-          css={css`
-            margin-top: 20px;
-            padding-bottom: 100px;
-            & > div:not(:first-of-type) {
-              margin-top: 10px;
-            }
-          `}
-        >
-          {data.products.map((product, index) => (
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              quantity={1}
-              mode={"compact"}
-              editable
+        <Grid>
+          <GridItem params={{ xs: 24, sm: 12 }}>
+            <div
+              css={css`
+                & > div:not(:first-of-type) {
+                  margin-top: 40px;
+                }
+              `}
+            >
+              {data.products.map((product, index) => (
+                <ProductRowTheme1
+                  key={index}
+                  product={product}
+                  price={product.price}
+                  quantity={"1"}
+                  mode={"basket"}
+                  layout={"full"}
+                />
+              ))}
+            </div>
+            <Spacer />
+          </GridItem>
+          <GridItem params={{ xs: 24, sm: 12, md: [10, 2] }}>
+            <div
+              css={css`${theme.fonts.h6.css} border-bottom: 1px solid ${
+                theme.colors.mono400.css
+              }; margin-bottom: 0.5em;`}
+            >
+              Summary
+            </div>
+            <Ledger
+              rows={[
+                { label: "Shipping", value: "free" },
+                { label: "Total", value: "$399.00", isTotal: true }
+              ]}
             />
-          ))}
-        </div>
+          </GridItem>
+        </Grid>
       </Container>
-
+      <Spacer />
       <div
         css={css`
           position: fixed;

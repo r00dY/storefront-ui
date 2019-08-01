@@ -6,11 +6,11 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 
 import { Button } from "../Button";
-import { ButtonGroup } from "../ButtonGroup";
-import data from "../../data";
 import { ProductRowTheme1 } from "../ProductRow";
 import { Ledger } from "../Ledger";
-import { Divider } from "../Divider";
+
+import IconClose from "./outline-clear-24px.svg";
+import { ButtonRaw } from "../ButtonRaw";
 
 const MiniBasketContent = props => {
   const {} = props;
@@ -18,20 +18,37 @@ const MiniBasketContent = props => {
 
   return (
     <div
-      css={css`width: 400px; padding: ${
-        theme.spacings.s40
-      }px; * {box-sizing: border-box;} & > { &:not(:first-of-type) {margin-top: ${
-        theme.spacings.s40
-      }px; }`}
+      css={css`
+        width: 400px;
+        padding: ${theme.spacings.s50}px;
+        * {
+          box-sizing: border-box;
+        }
+        & > div:not(:first-of-type) {
+          margin-top: ${theme.spacings.s80}px;
+        }
+      `}
     >
-      {data.products.map((product, index) => (
+      <div
+        css={css`
+          margin-top: 10px;
+          ${theme.fonts.h5.css} display: flex;
+          justify-content: space-between;
+        `}
+      >
+        Your Bag
+        <ButtonRaw>
+          <IconClose />
+        </ButtonRaw>
+      </div>
+      {props.products.map((product, index) => (
         <div>
           <ProductRowTheme1
             product={product}
             price={product.price}
             quantity={"1"}
-            mode={"compact"}
-            editable
+            layout={"compact"}
+            mode={"basket"}
           />
         </div>
       ))}

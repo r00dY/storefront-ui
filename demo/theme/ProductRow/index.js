@@ -6,20 +6,18 @@ import { css, jsx } from "@emotion/core";
 
 import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 
-import IconClear from "./outline-clear-24px.svg";
+import IconClear from "./outline-delete-24px.svg";
 import IconAdd from "./outline-add-24px.svg";
 import IconRemove from "./outline-remove-24px.svg";
 import { useTheme } from "storefront-ui/Theme";
+import { Button } from "../Button";
 
 const overrides = {
   Price: ({ price }) => <Price price={price} alignRight />
 };
 
-const Quantity = ({ quantity, editable }) => {
+const Quantity = ({ quantity, mode, isWishlistItem }) => {
   const theme = useTheme();
-  if (!quantity) {
-    return false;
-  }
   return (
     <div
       css={css`
@@ -33,24 +31,27 @@ const Quantity = ({ quantity, editable }) => {
         }
       `}
     >
-      {editable && (
+      {mode === "basket" && (
         <ButtonRaw$>
           <IconRemove />
         </ButtonRaw$>
       )}
-      <div
-        css={css`
-          width: 36px;
-          ${editable ? "text-align: center;" : ""}
-        `}
-      >
-        {quantity}
-      </div>
-      {editable && (
+      {(mode === "basket" || mode === "default") && (
+        <div
+          css={css`
+            width: 36px;
+            ${mode === "basket" ? "text-align: center;" : ""}
+          `}
+        >
+          {quantity}
+        </div>
+      )}
+      {mode === "basket" && (
         <ButtonRaw$>
           <IconAdd />
         </ButtonRaw$>
       )}
+      {mode === "wishlist" && <Button>Add to basket</Button>}
     </div>
   );
 };
@@ -63,9 +64,9 @@ const overridesTheme1 = {
         mode === "compact" ? $theme.fonts.body1.css : ""
       }`
   },
-  Remove: ({ editable }) => (
+  Remove: ({ mode }) => (
     <>
-      {editable && (
+      {(mode === "basket" || mode === "wishlist") && (
         <ButtonRaw$>
           <IconClear
             css={css`
@@ -77,6 +78,9 @@ const overridesTheme1 = {
       )}
     </>
   ),
+  Content: {
+    style: ({ $theme, gutter }) => `padding: 0 ${gutter}px; background: red;`
+  },
   Quantity: Quantity
 };
 const ProductRow = props => <ProductRow$ {...props} overrides={overrides} />;
