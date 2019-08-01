@@ -5,6 +5,7 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 import { FiltersColumn } from "../theme/Filters";
 import { Button } from "../theme/Button";
+import { L, R } from "storefront-ui/Config";
 import LayoutRow from "storefront-ui/LayoutRow";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 
@@ -24,6 +25,9 @@ import data from "../data";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import NavBarMobile from "../theme/NavBarMobile";
 import { useTheme } from "storefront-ui/Theme";
+import { StatefulPagination } from "../theme/Pagination";
+import CategoryCard from "../theme/CategoryCard";
+import Image from "storefront-ui/Image";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
@@ -45,7 +49,7 @@ const NavBarCollection = props => {
           : "none"};
       `}
     >
-      <NavBarMobile title={"All Bottles"} />
+      <NavBarMobile title={"All Food"} />
 
       <div
         css={css`
@@ -95,15 +99,63 @@ export default () => {
             margin-top: 100px;
           `}
         >
-          <Container
-            css={css`
-              padding-top: 24px;
-              padding-bottom: 24px;
-            `}
-          >
+          <Container>
+            <Grid
+              gutterVertical={L.gutter}
+              css={css`
+                padding-top: ${theme.spacings.s140}px;
+              `}
+            >
+              <GridItem params={{ xs: 24, md: 12 }}>
+                <div
+                  css={css`
+                    ${theme.fonts.h2.css} margin-bottom: 0.5em;
+                  `}
+                >
+                  Snacks
+                </div>
+                <div
+                  css={css`
+                    ${theme.fonts.body1.css}
+                  `}
+                >
+                  Our snacks are all non GMO with lots of gluten free, vegan,
+                  and organic options. Our jerky comes in savory flavors and may
+                  be your new protein treat. Prefer sweet? How about Chocolate
+                  Quinoa Bites? Find your faves here.
+                </div>
+              </GridItem>
+              <GridItem
+                params={{ xs: 24, md: [8, 4] }}
+                css={css`
+                  ${R.to("sm").css("display: none;")}
+                `}
+              >
+                <Image image={data.images.landscape1} />
+              </GridItem>
+              {data.categories[0].subcats.map((category, index) => {
+                if (index === 0) {
+                  return;
+                }
+                return (
+                  <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+                    <CategoryCard
+                      image={
+                        data.images[
+                          "landscape" + (index > 3 ? index - 2 : index + 1)
+                        ]
+                      }
+                      text={category.name}
+                    />
+                  </GridItem>
+                );
+              })}
+            </Grid>
+
             <div
               css={css`
-                padding-bottom: 24px;
+                padding-bottom: ${theme.spacings.s120}px;
+                padding-top: ${theme.spacings.s140}px;
                 ${theme.fonts.body2.css}
                 text-align: center;
                 color: ${theme.colors.mono500.css};
@@ -112,7 +164,7 @@ export default () => {
               Found 35 items
             </div>
             <Grid>
-              <GridItem params={{ xs: 0, md: 6, xl: 5 }}>
+              <GridItem params={{ xs: 0, md: 6 }}>
                 <FiltersColumn data={filters} onChange={onChange} />
               </GridItem>
               <GridItem params={{ xs: 24, md: 18 }}>
@@ -125,6 +177,20 @@ export default () => {
                       <ProductCardTheme1 product={product} />
                     </GridItem>
                   ))}
+                  <div
+                    css={css`
+                      display: flex;
+                      justify-content: center;
+                      width: 100%;
+                      margin-top: ${theme.spacings.s80}px;
+                    `}
+                  >
+                    <StatefulPagination
+                      count={20}
+                      initPage={5}
+                      onChange={page => console.log(page)}
+                    />
+                  </div>
                 </Grid>
               </GridItem>
             </Grid>

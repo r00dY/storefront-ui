@@ -143,10 +143,8 @@ const Menu = () => {
             >
               <Image
                 image={image}
-                mode={"cover"}
-                css={css`
-                  height: ${theme.spacings.s180}px;
-                `}
+                // mode={"cover"}
+                css={css``}
               />
               <div
                 css={css`

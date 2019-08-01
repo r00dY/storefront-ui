@@ -40,6 +40,7 @@ function ProductSlider(props) {
     <div
       css={css`
         ${_arrowCss}
+        margin-left: -25px;
       `}
     >
       <IconArrowLeft />
@@ -49,6 +50,7 @@ function ProductSlider(props) {
     <div
       css={css`
         ${_arrowCss}
+        margin-right: -25px;
       `}
     >
       <IconArrowRight />

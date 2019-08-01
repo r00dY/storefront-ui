@@ -132,7 +132,7 @@ const MenuDesktop = props => {
             </div>
             <div>
               {data.categories.map((category, i) => {
-                if (i > 0) {
+                if (i > -1) {
                   return;
                 }
                 return (

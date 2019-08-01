@@ -93,34 +93,35 @@ const Home = () => {
           ]}
         />
       </Device>
-      <Container
-        css={css`
-          ${rslin(theme.spacings.s80, theme.spacings.s100).css("margin-bottom")}
-        `}
-      >
-        <div
-          css={css`
-            text-align: center;
-            padding: 100px 0 60px;
-            ${theme.fonts.h2.css}
-          `}
-        >
-          SuperStore
-        </div>
-        <Grid>
-          <GridItem params={{ xs: 24, md: [6, 9] }}>
-            <StatefulInput
-              placeholder={"What you're looking for?"}
-              onFocus={() => {
-                Router.push("/search");
-              }}
-            />
-          </GridItem>
-        </Grid>
-      </Container>
+      {/*<Container*/}
+      {/*css={css`*/}
+      {/*${rslin(theme.spacings.s80, theme.spacings.s100).css("margin-bottom")}*/}
+      {/*`}*/}
+      {/*>*/}
+      {/*<div*/}
+      {/*css={css`*/}
+      {/*text-align: center;*/}
+      {/*padding: 100px 0 60px;*/}
+      {/*${theme.fonts.h2.css}*/}
+      {/*`}*/}
+      {/*>*/}
+      {/*SuperStore*/}
+      {/*</div>*/}
+      {/*<Grid>*/}
+      {/*<GridItem params={{ xs: 24, md: [6, 9] }}>*/}
+      {/*<StatefulInput*/}
+      {/*placeholder={"What you're looking for?"}*/}
+      {/*onFocus={() => {*/}
+      {/*Router.push("/search");*/}
+      {/*}}*/}
+      {/*/>*/}
+      {/*</GridItem>*/}
+      {/*</Grid>*/}
+      {/*</Container>*/}
 
       <div
         css={css`
+          padding-top: 100px;
           & > div:not(:first-of-type) {
             ${rslin(theme.spacings.s120, theme.spacings.s180).css("margin-top")}
           }
@@ -138,7 +139,7 @@ const Home = () => {
                 hideTextOnMobile
               />
             }
-            elementFlexAlign={{ xs: "flex-end", md: "center" }}
+            elementFlexAlign={{ xs: "flex-end", md: "flex-end" }}
           />
         </Container>
 
@@ -151,7 +152,7 @@ const Home = () => {
             <SectionTitle>Top Categories</SectionTitle>
             <Grid gutterVertical={L.gutter}>
               {categories.map((category, index) => (
-                <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
+                <GridItem key={index} params={{ xs: 12, sm: 12, lg: 6 }}>
                   <CategoryCard image={category.image} text={category.name} />
                 </GridItem>
               ))}
