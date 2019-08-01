@@ -10,10 +10,7 @@ const AccordionHeader = props => (
         style: ({ $theme }) => `${$theme.fonts.body1.css}`
       },
       Root: {
-        style: ({ $theme }) =>
-          `border-bottom: none; height: 50px; background: ${
-            $theme.colors.mono100.css
-          };`
+        style: ({ $theme }) => `border-bottom: none; height: 50px; `
       },
       Toggle: ({ $open }) => ($open ? <IconExpandLess /> : <IconExpandMore />)
     }}

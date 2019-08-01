@@ -28,6 +28,7 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import CategoryCard from "../theme/CategoryCard";
 import Image from "storefront-ui/Image";
+import { StatefulSelect } from "../theme/Select";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
@@ -80,6 +81,25 @@ const NavBarCollection = props => {
   );
 };
 
+const options = [
+  {
+    value: "new-york",
+    label: "New York"
+  },
+  {
+    value: "washington",
+    label: "Washington"
+  },
+  {
+    value: "london",
+    label: "London"
+  },
+  {
+    value: "warsaw",
+    label: "Warsaw"
+  }
+];
+
 export default () => {
   const [filters, onChange] = useFiltersData(data.filters);
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
@@ -106,7 +126,7 @@ export default () => {
                 padding-top: ${theme.spacings.s140}px;
               `}
             >
-              <GridItem params={{ xs: 24, md: 12 }}>
+              <GridItem params={{ xs: 24 }}>
                 <div
                   css={css`
                     ${theme.fonts.h2.css} margin-bottom: 0.5em;
@@ -114,24 +134,6 @@ export default () => {
                 >
                   Snacks
                 </div>
-                <div
-                  css={css`
-                    ${theme.fonts.body1.css}
-                  `}
-                >
-                  Our snacks are all non GMO with lots of gluten free, vegan,
-                  and organic options. Our jerky comes in savory flavors and may
-                  be your new protein treat. Prefer sweet? How about Chocolate
-                  Quinoa Bites? Find your faves here.
-                </div>
-              </GridItem>
-              <GridItem
-                params={{ xs: 24, md: [8, 4] }}
-                css={css`
-                  ${R.to("sm").css("display: none;")}
-                `}
-              >
-                <Image image={data.images.landscape1} />
               </GridItem>
               {data.categories[0].subcats.map((category, index) => {
                 if (index === 0) {
@@ -164,10 +166,10 @@ export default () => {
               Found 35 items
             </div>
             <Grid>
-              <GridItem params={{ xs: 0, md: 6 }}>
+              <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
                 <FiltersColumn data={filters} onChange={onChange} />
               </GridItem>
-              <GridItem params={{ xs: 24, md: 18 }}>
+              <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [19, 1] }}>
                 <Grid gutterVertical={16}>
                   {[...data.products].map((product, index) => (
                     <GridItem
