@@ -137,8 +137,6 @@ const Home = () => {
             </Grid>
           </Container>
         </div>
-
-        <Footer />
       </div>
     </div>
   );

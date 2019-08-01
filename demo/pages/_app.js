@@ -13,6 +13,7 @@ import Device from "storefront-ui/Device";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import MenuDesktop from "../theme/MenuDesktop";
+import Footer from "../theme/Footer";
 
 const tabs = [
   {
@@ -73,6 +74,7 @@ export default class MyApp extends App {
                 `}
               >
                 {content}
+                <Footer />
               </div>
 
               <div
@@ -106,7 +108,12 @@ export default class MyApp extends App {
             </div>
           )}
 
-          {!showTabbar && content}
+          {!showTabbar && (
+            <>
+              {content}
+              <Footer />
+            </>
+          )}
         </Device>
 
         <Device desktop>
@@ -141,6 +148,8 @@ export default class MyApp extends App {
                 `}
               >
                 {content}
+
+                <Footer />
               </div>
             </>
           )}
