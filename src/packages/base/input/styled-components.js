@@ -80,6 +80,35 @@ export const InputEnhancer = styled("div", props => {
   };
 });
 
+const getInputStyle = (style, props) => {
+  const {
+    $isFocused,
+    $error,
+    $disabled,
+    $theme: { forms }
+  } = props;
+
+  let value = forms["input" + style];
+
+  if ($isFocused) {
+    value = forms["input" + style + "Focused"] || value;
+  }
+
+  if ($error) {
+    value = forms["input" + style + "Error"] || value;
+  }
+
+  if ($error && $isFocused) {
+    value = forms["input" + style + "ErrorFocused"] || value;
+  }
+
+  if ($disabled) {
+    value = forms["input" + style + "Disabled"] || value;
+  }
+
+  return value;
+};
+
 export const getInputContainerStyles = (props: SharedPropsT) => {
   const {
     $isFocused,
@@ -89,40 +118,19 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
     $size,
     $theme: { colors, sizing, fonts, animation, borders }
   } = props;
+
   return {
     ...getFont($size, fonts),
-    color: $disabled ? colors.inputTextDisabled : colors.foreground,
+    color: getInputStyle("TextColor", props),
     boxSizing: "border-box",
     display: "flex",
     width: "100%",
-    backgroundColor: $disabled
-      ? colors.inputFillDisabled
-      : $isFocused
-      ? colors.background
-      : $error
-      ? colors.inputFillError
-      : colors.inputFill,
-    borderWidth: "1px",
+    backgroundColor: getInputStyle("FillColor", props),
+    borderWidth: getInputStyle("BorderWidth", props),
     borderStyle: "solid",
-    borderColor: $disabled
-      ? colors.inputFillDisabled
-      : $error
-      ? colors.negative400
-      : $isFocused
-      ? colors.primary400
-      : colors.inputFill,
-    borderRadius: borders.useRoundedCorners
-      ? getBorderRadius($adjoined, sizing.scale100)
-      : "0px",
-    boxShadow: `0 2px 6px ${
-      $disabled
-        ? "transparent"
-        : $isFocused
-        ? $error
-          ? colors.shadowError
-          : colors.shadowFocus
-        : "transparent"
-    }`,
+    borderColor: getInputStyle("BorderColor", props),
+    borderRadius: getInputStyle("BorderRadius", props),
+    boxShadow: getInputStyle("BoxShadow", props),
     transitionProperty: "border, boxShadow, backgroundColor",
     transitionDuration: animation.timing100,
     transitionTimingFunction: animation.easeOutCurve
@@ -155,11 +163,11 @@ export const getInputStyles = (props: SharedPropsT) => {
   } = props;
   return {
     ...getFont($size, fonts),
-    color: $disabled ? colors.foregroundAlt : colors.foreground,
-    caretColor: $error ? colors.negative400 : colors.primary,
+    color: getInputStyle("TextColor", props),
+    caretColor: getInputStyle("CaretColor", props),
     boxSizing: "border-box",
-    backgroundColor: "transparent",
-    borderWidth: "0",
+    backgroundColor: getInputStyle("FillColor", props),
+    borderWidth: 0,
     borderStyle: "none",
     outline: "none",
     ...getInputPadding($size, sizing),
@@ -167,10 +175,27 @@ export const getInputStyles = (props: SharedPropsT) => {
     maxWidth: "100%",
     cursor: $disabled ? "not-allowed" : "text",
     "::placeholder": {
-      color: $disabled ? colors.inputTextDisabled : colors.foregroundAlt
+      color: getInputStyle("PlaceholderColor", props)
     },
     ...getHideSpinButtonProps($hideSpinButtons, $type === "number")
   };
 };
 
 export const Input = styled("input", getInputStyles);
+
+export const clearButtonContainerStyles = ({ $theme }) => `
+    position: relative;
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    svg {
+      display: block;
+    }
+    margin-right: 6px;
+`;
+
+export const ClearButtonContainerStyled = styled(
+  "div",
+  clearButtonContainerStyles
+);

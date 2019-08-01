@@ -27,6 +27,14 @@ export default () => {
         placeholder={"First name"}
         value={value2}
       />
+      <br />
+      <p>Clearable</p>
+      <Input
+        onChange={e => setValue(e.target.value)}
+        placeholder={"First name"}
+        value={value}
+        clearable={true}
+      />
       <p>Error</p>
       <Input
         onChange={e => setValue(e.target.value)}
