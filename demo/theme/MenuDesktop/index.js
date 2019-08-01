@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
+
+import { Modal } from "../Modal";
+import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
 
 import { MenuDesktop$ } from "storefront-ui/MenuDesktop";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
@@ -17,13 +20,20 @@ import MiniBasketContent from "../MiniBasketContent";
 
 import IconSearch from "./outline-search-24px.svg";
 import IconCart from "./outline-shopping_cart-24px.svg";
+import IconClose from "./outline-clear-24px.svg";
 import IconMenu from "./baseline-menu-24px.svg";
 import IconAccount from "./baseline-account_circle-24px.svg";
 import SectionTitle from "../../pages";
 import { Banner, BannerInner } from "../Banner";
 import { ProductCardTheme1 } from "../ProductCard";
+import { ButtonRaw } from "../ButtonRaw";
+import { Ledger } from "../Ledger";
+import ProfileLogInContent from "../ProfileLogInContent";
 
 const MenuDesktop = props => {
+  const [opened, setOpened] = useState(false);
+  const [profileOpened, setProfileOpened] = useState(false);
+
   const basketProducts = data.products;
 
   const theme = useTheme();
@@ -101,29 +111,24 @@ const MenuDesktop = props => {
                   }
                   right={
                     <div>
-                      <MenuButton>
+                      <MenuButton
+                        onClick={() => {
+                          setProfileOpened(true);
+                        }}
+                      >
                         <IconAccount />
                       </MenuButton>
                       <MenuButton>
                         <IconSearch />
                       </MenuButton>
-                      <StatefulPopover
-                        content={
-                          <MiniBasketContent products={basketProducts} />
-                        }
-                        accessibilityType={"tooltip"}
-                        placement={StatefulPopover.PLACEMENT.bottomRight}
-                        overrides={{
-                          Inner: {
-                            style: `background: white;`
-                          }
+                      <MenuButton
+                        onClick={() => {
+                          setOpened(true);
                         }}
                       >
-                        <MenuButton>
-                          <IconCart />
-                          <span>{basketProducts.length}</span>
-                        </MenuButton>
-                      </StatefulPopover>
+                        <IconCart />
+                        <span>{basketProducts.length}</span>
+                      </MenuButton>
                     </div>
                   }
                   center={buttons}
@@ -238,6 +243,92 @@ const MenuDesktop = props => {
                 );
               })}
             </div>
+            <Modal
+              isOpen={opened}
+              onRequestClose={() => setOpened(false)}
+              config={{
+                mode: "right",
+                width: {
+                  xs: "90vw",
+                  md: "50vw",
+                  lg: "33vw"
+                }
+              }}
+              header={"Your Bag"}
+              footer={() => (
+                <div
+                  css={css`
+                    padding: ${theme.spacings.s30}px;
+                  `}
+                >
+                  <div
+                    css={css`
+                      padding: ${theme.spacings.s30}px;
+                    `}
+                  >
+                    <Ledger
+                      rows={[
+                        {
+                          label: "Subtotal",
+                          value: "€399"
+                        },
+                        {
+                          label: "Tax",
+                          value: "€0"
+                        },
+                        {
+                          label: "Total",
+                          isTotal: true,
+                          value: "€399"
+                        }
+                      ]}
+                    />
+                  </div>
+                  <div
+                    css={css`
+                      display: flex;
+                      width: 100%;
+                      & > div {
+                        flex-basis: 50%;
+                        padding: ${theme.spacings.s30}px;
+                      }
+                    `}
+                  >
+                    <div>
+                      <Button kind={"secondary"} fitContainer>
+                        View Basket ({data.products.length})
+                      </Button>
+                    </div>
+                    <div>
+                      <Button fitContainer>Checkout</Button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            >
+              <MiniBasketContent products={basketProducts} />
+            </Modal>
+
+            <Modal
+              isOpen={profileOpened}
+              onRequestClose={() => setProfileOpened(false)}
+              config={{
+                mode: "center",
+                width: {
+                  xs: "90%",
+                  lg: "400px"
+                }
+              }}
+              header={""}
+            >
+              <div
+                css={css`
+                  padding: ${theme.spacings.s80}px;
+                `}
+              >
+                <ProfileLogInContent />
+              </div>
+            </Modal>
           </div>
         )
       }}
