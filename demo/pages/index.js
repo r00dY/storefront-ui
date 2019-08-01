@@ -71,23 +71,19 @@ const Home = () => {
         <MenuDesktop
           data={[
             {
-              label: "Men",
+              label: "Home",
               href: "/category"
             },
             {
-              label: "Women",
+              label: "Beauty",
               href: "/category"
             },
             {
-              label: "Kids",
+              label: "Food",
               href: "/category"
             },
             {
-              label: "Customize",
-              href: "/category"
-            },
-            {
-              label: "Gifts",
+              label: "Health",
               href: "/category"
             }
           ]}
