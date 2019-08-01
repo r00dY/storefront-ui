@@ -50,6 +50,7 @@ const AccordionRaw = props => {
         <div
           css={css`
             position: ${height === null ? "relative" : "absolute"};
+            width: 100%;
           `}
           ref={containerRef}
         >

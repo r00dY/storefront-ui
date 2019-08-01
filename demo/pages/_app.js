@@ -60,8 +60,7 @@ export default class MyApp extends App {
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
     const hideDesktopMenu = Component.hideDesktopMenu === true;
-
-    console.log("hide desktop menu", hideDesktopMenu);
+    const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
       <Root theme={theme}>
@@ -74,7 +73,7 @@ export default class MyApp extends App {
                 `}
               >
                 {content}
-                <Footer />
+                {showFooterOnMobile && <Footer />}
               </div>
 
               <div
@@ -111,7 +110,7 @@ export default class MyApp extends App {
           {!showTabbar && (
             <>
               {content}
-              <Footer />
+              {showFooterOnMobile && <Footer />}
             </>
           )}
         </Device>

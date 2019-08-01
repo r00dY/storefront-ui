@@ -143,5 +143,6 @@ const Home = () => {
 };
 
 Home.tabbar = 0;
+Home.showFooterOnMobile = true;
 
 export default Home;

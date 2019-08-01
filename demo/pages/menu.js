@@ -215,6 +215,7 @@ const Menu = () => {
               css={css`&:not(:first-of-type) {margin-top: ${
                 theme.spacings.s20
               }px;`}
+              scrollTopAtOpen={true}
             >
               {category.subcategories.map((subcategory, j) => {
                 return <CategoryItem key={j}>{subcategory.label}</CategoryItem>;
@@ -223,11 +224,6 @@ const Menu = () => {
           );
         })}
       </div>
-      <div
-        css={css`
-          height: 200px;
-        `}
-      />
     </div>
   );
 };
