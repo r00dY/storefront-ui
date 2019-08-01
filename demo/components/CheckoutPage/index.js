@@ -13,7 +13,7 @@ import { css, jsx } from "@emotion/core";
 const CheckoutPage = props => {
   const theme = useTheme();
   return (
-    <Page>
+    <div>
       <Container>
         <Grid>
           <GridItem
@@ -39,7 +39,7 @@ const CheckoutPage = props => {
           </GridItem>
         </Grid>
       </Container>
-    </Page>
+    </div>
   );
 };
 

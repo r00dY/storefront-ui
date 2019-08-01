@@ -21,7 +21,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-export default () => {
+const Form1 = () => {
   const theme = useTheme();
 
   const [select1, setSelect1] = useState(null);
@@ -149,3 +149,7 @@ export default () => {
     </CheckoutPage>
   );
 };
+
+Form1.hideDesktopMenu = true;
+
+export default Form1;

@@ -45,30 +45,32 @@ function ProductHead(props) {
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer
       mode={"horizontal"}
-      itemsVisible={{ xs: 1 }}
-      snap={"center"}
+      // itemsVisible={{ xs: 1 }}
+      // snap={"center"}
     >
       {props.mosaicImages.map((image, index) => {
         return (
-          <div
-            key={index}
-            onClick={() => {
-              setConfig({
-                mode: "bottom",
-                height: "100%"
-              });
-              setSelectedImage(index);
-              setOpened(true);
-            }}
-          >
-            <Image
-              mode={"natural"}
-              image={image}
-              css={css`
-                ${R.from("sm").css(`padding-left: 10vw; padding-right: 10vw;`)}
-              `}
-            />
-          </div>
+          <Image mode={"natural"} image={image} />
+
+          // <div
+          //   key={index}
+          //   onClick={() => {
+          //     setConfig({
+          //       mode: "bottom",
+          //       height: "100%"
+          //     });
+          //     setSelectedImage(index);
+          //     setOpened(true);
+          //   }}
+          // >
+          //   <Image
+          //     mode={"natural"}
+          //     image={image}
+          //     css={css`
+          //       ${R.from("sm").css(`padding-left: 10vw; padding-right: 10vw;`)}
+          //     `}
+          //   />
+          // </div>
         );
       })}
     </SwipeableItemsContainer>
@@ -289,6 +291,7 @@ function ProductHead(props) {
       >
         <ModalContent {...props} />
       </Modal>
+
       <Device mobile>
         <Container
           css={css`
@@ -321,7 +324,7 @@ function ProductHead(props) {
             `}
           >
             <Container>
-              <ScrollBar swipeableItemsContainer={swiper} />
+              {/*<ScrollBar swipeableItemsContainer={swiper} />*/}
             </Container>
           </div>
         </div>

@@ -84,7 +84,7 @@ const MenuDesktop = props => {
             >
               <Container>
                 <LayoutLeftCenterRight
-                  height={50}
+                  height={70}
                   left={
                     <LayoutRow>
                       <div

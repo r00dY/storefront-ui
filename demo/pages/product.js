@@ -113,23 +113,24 @@ const Product = () => {
 
   return (
     <div>
-      <div
-        css={css`
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 1;
-          transition: transform 0.2s ease-out;
-          ${theme.fonts.body1.css}
-          ${segment === "not-top"
-            ? "transform: none;"
-            : "transform: translateY(-50px);"}
-        `}
-      >
-        <NavBarMobile title={product.name} />
-      </div>
       <Device mobile>
+        <div
+          css={css`
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            transition: transform 0.2s ease-out;
+            ${theme.fonts.body1.css}
+            ${segment === "not-top"
+              ? "transform: none;"
+              : "transform: translateY(-50px);"}
+          `}
+        >
+          <NavBarMobile title={product.name} />
+        </div>
+
         <div
           css={css`
               position: fixed;
@@ -160,18 +161,19 @@ const Product = () => {
             />
           </Container>
         </div>
+
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+          `}
+        >
+          <NavBarMobile title={""} transparent={true} />
+        </div>
       </Device>
-      <div
-        css={css`
-          position: absolute;
-          top: 0;
-          left: 0;
-          width: 100%;
-          z-index: 1;
-        `}
-      >
-        <NavBarMobile title={""} transparent={true} />
-      </div>
 
       <ProductHead
         mosaicImages={product.images}
@@ -223,15 +225,16 @@ const Product = () => {
         }
         accordion={accordions}
       />
-      <Spacer />
-      <EditorialIntro
-        title={"Magically Energetic Foam"}
-        titleFont={theme.fonts.h1}
-        paragraphFont={theme.fonts.body2}
-        paragraph={
-          "Our lightweight Nike ZoomX foam cushioning uses cutting-edge engineering to give you the greatest possible energy return, turning the impact of your step into energy for your next stride."
-        }
-      />
+
+      {/*<Spacer />*/}
+      {/*<EditorialIntro*/}
+      {/*title={"Magically Energetic Foam"}*/}
+      {/*titleFont={theme.fonts.h1}*/}
+      {/*paragraphFont={theme.fonts.body2}*/}
+      {/*paragraph={*/}
+      {/*"Our lightweight Nike ZoomX foam cushioning uses cutting-edge engineering to give you the greatest possible energy return, turning the impact of your step into energy for your next stride."*/}
+      {/*}*/}
+      {/*/>*/}
       <Spacer />
       <EditorialHalfImage
         imageFirst
@@ -250,6 +253,7 @@ const Product = () => {
         elementPosition={"center"}
       />
       <Spacer />
+
       <ProductSlider boxes={boxes} title={"You may also like"} />
       <Spacer />
     </div>

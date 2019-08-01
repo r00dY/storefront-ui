@@ -8,8 +8,11 @@ import MainTabBar from "../theme/MainTabBar";
 import NavBarMobile from "../theme/NavBarMobile";
 import Router from "next/router";
 
+import Device from "storefront-ui/Device";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import MenuDesktop from "../theme/MenuDesktop";
 
 const tabs = [
   {
@@ -55,51 +58,93 @@ export default class MyApp extends App {
     );
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
+    const hideDesktopMenu = Component.hideDesktopMenu === true;
+
+    console.log("hide desktop menu", hideDesktopMenu);
 
     return (
       <Root theme={theme}>
-        {showTabbar && (
-          <div>
-            <div
-              css={css`
-                margin-bottom: 50px;
-              `}
-            >
-              {content}
-            </div>
+        <Device mobile>
+          {showTabbar && (
+            <div>
+              <div
+                css={css`
+                  margin-bottom: 50px;
+                `}
+              >
+                {content}
+              </div>
 
-            <div
-              css={css`
-                position: fixed;
-                bottom: 0;
-                left: 0;
-                width: 100%;
-              `}
-            >
-              <MainTabBar
-                data={tabs}
-                active={Component.tabbar}
-                onChange={index => {
-                  if (index === 0) {
-                    Router.push("/");
-                  } else if (index === 1) {
-                    Router.push("/menu");
-                  } else if (index === 2) {
-                    Router.push("/wishlist");
-                  } else if (index === 3) {
-                    Router.push("/cart");
-                  } else if (index === 4) {
-                    Router.push("/profile");
+              <div
+                css={css`
+                  position: fixed;
+                  bottom: 0;
+                  left: 0;
+                  width: 100%;
+                `}
+              >
+                <MainTabBar
+                  data={tabs}
+                  active={Component.tabbar}
+                  onChange={index => {
+                    if (index === 0) {
+                      Router.push("/");
+                    } else if (index === 1) {
+                      Router.push("/menu");
+                    } else if (index === 2) {
+                      Router.push("/wishlist");
+                    } else if (index === 3) {
+                      Router.push("/cart");
+                    } else if (index === 4) {
+                      Router.push("/profile");
+                    }
+                  }}
+                  scrollable={false}
+                  align={"fit"}
+                />
+              </div>
+            </div>
+          )}
+
+          {!showTabbar && content}
+        </Device>
+
+        <Device desktop>
+          {hideDesktopMenu && content}
+
+          {!hideDesktopMenu && (
+            <>
+              <MenuDesktop
+                data={[
+                  {
+                    label: "Home",
+                    href: "/category"
+                  },
+                  {
+                    label: "Beauty",
+                    href: "/category"
+                  },
+                  {
+                    label: "Food",
+                    href: "/category"
+                  },
+                  {
+                    label: "Health",
+                    href: "/category"
                   }
-                }}
-                scrollable={false}
-                align={"fit"}
+                ]}
               />
-            </div>
-          </div>
-        )}
 
-        {!showTabbar && content}
+              <div
+                css={css`
+                  padding-top: 70px;
+                `}
+              >
+                {content}
+              </div>
+            </>
+          )}
+        </Device>
       </Root>
     );
   }

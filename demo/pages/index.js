@@ -67,53 +67,35 @@ const Home = () => {
 
   return (
     <div>
-      <Device desktop>
-        <MenuDesktop
-          data={[
-            {
-              label: "Home",
-              href: "/category"
-            },
-            {
-              label: "Beauty",
-              href: "/category"
-            },
-            {
-              label: "Food",
-              href: "/category"
-            },
-            {
-              label: "Health",
-              href: "/category"
-            }
-          ]}
-        />
+      <Device mobile>
+        <Container
+          css={css`
+            ${rslin(theme.spacings.s80, theme.spacings.s100).css(
+              "margin-bottom"
+            )}
+          `}
+        >
+          <div
+            css={css`
+              text-align: center;
+              padding: 100px 0 60px;
+              ${theme.fonts.h2.css}
+            `}
+          >
+            SuperStore
+          </div>
+          <Grid>
+            <GridItem params={{ xs: 24, md: [6, 9] }}>
+              <StatefulInput
+                placeholder={"What you're looking for?"}
+                onFocus={() => {
+                  Router.push("/search");
+                }}
+              />
+            </GridItem>
+          </Grid>
+        </Container>
       </Device>
-      {/*<Container*/}
-      {/*css={css`*/}
-      {/*${rslin(theme.spacings.s80, theme.spacings.s100).css("margin-bottom")}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*<div*/}
-      {/*css={css`*/}
-      {/*text-align: center;*/}
-      {/*padding: 100px 0 60px;*/}
-      {/*${theme.fonts.h2.css}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*SuperStore*/}
-      {/*</div>*/}
-      {/*<Grid>*/}
-      {/*<GridItem params={{ xs: 24, md: [6, 9] }}>*/}
-      {/*<StatefulInput*/}
-      {/*placeholder={"What you're looking for?"}*/}
-      {/*onFocus={() => {*/}
-      {/*Router.push("/search");*/}
-      {/*}}*/}
-      {/*/>*/}
-      {/*</GridItem>*/}
-      {/*</Grid>*/}
-      {/*</Container>*/}
 
       <div
         css={css`
@@ -124,9 +106,9 @@ const Home = () => {
         `}
       >
         <Container>
-          <SectionTitle>Big Thing</SectionTitle>
           <Banner
             image={data.images.landscape1}
+            imageMobile={data.images.products[0]}
             element={
               <BannerInner
                 label={"Truly Transparent"}

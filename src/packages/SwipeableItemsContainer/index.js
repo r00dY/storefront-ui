@@ -272,8 +272,10 @@ let SwipeableItemsContainerPure = props => {
   };
 
   const applyState = () => {
-    containerRef.current.style.transform = `translate3d(${instance.state
-      .slides[0].coord - instance.state.leftOffset}px, 0, 0)`;
+    if (containerRef.current) {
+      containerRef.current.style.transform = `translate3d(${instance.state
+        .slides[0].coord - instance.state.leftOffset}px, 0, 0)`;
+    }
   };
 
   if (instance) {

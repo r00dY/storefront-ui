@@ -28,6 +28,7 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import CategoryCard from "../theme/CategoryCard";
 import Image from "storefront-ui/Image";
+import Device from "storefront-ui/Device";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
@@ -85,117 +86,119 @@ export default () => {
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const theme = useTheme();
 
+  const content = (
+    <Container>
+      <Grid
+        gutterVertical={L.gutter}
+        css={css`
+          padding-top: ${theme.spacings.s140}px;
+        `}
+      >
+        <GridItem params={{ xs: 24, md: 12 }}>
+          <div
+            css={css`
+              ${theme.fonts.h2.css} margin-bottom: 0.5em;
+            `}
+          >
+            Snacks
+          </div>
+          <div
+            css={css`
+              ${theme.fonts.body1.css}
+            `}
+          >
+            Our snacks are all non GMO with lots of gluten free, vegan, and
+            organic options. Our jerky comes in savory flavors and may be your
+            new protein treat. Prefer sweet? How about Chocolate Quinoa Bites?
+            Find your faves here.
+          </div>
+        </GridItem>
+        <GridItem
+          params={{ xs: 24, md: [8, 4] }}
+          css={css`
+            ${R.to("sm").css("display: none;")}
+          `}
+        >
+          <Image image={data.images.landscape1} />
+        </GridItem>
+        {data.categories[0].subcats.map((category, index) => {
+          if (index === 0) {
+            return;
+          }
+          return (
+            <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+              <CategoryCard
+                image={
+                  data.images["landscape" + (index > 3 ? index - 2 : index + 1)]
+                }
+                text={category.name}
+              />
+            </GridItem>
+          );
+        })}
+      </Grid>
+
+      <div
+        css={css`
+          padding-bottom: ${theme.spacings.s120}px;
+          padding-top: ${theme.spacings.s140}px;
+          ${theme.fonts.body2.css}
+          text-align: center;
+          color: ${theme.colors.mono500.css};
+        `}
+      >
+        Found 35 items
+      </div>
+      <Grid>
+        <GridItem params={{ xs: 0, md: 6 }}>
+          <FiltersColumn data={filters} onChange={onChange} />
+        </GridItem>
+        <GridItem params={{ xs: 24, md: 18 }}>
+          <Grid gutterVertical={16}>
+            {[...data.products].map((product, index) => (
+              <GridItem params={{ xs: 12, md: 8, lg: 8, xl: 6 }} key={index}>
+                <ProductCardTheme1 product={product} />
+              </GridItem>
+            ))}
+            <div
+              css={css`
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                margin-top: ${theme.spacings.s80}px;
+              `}
+            >
+              <StatefulPagination
+                count={20}
+                initPage={5}
+                onChange={page => console.log(page)}
+              />
+            </div>
+          </Grid>
+        </GridItem>
+      </Grid>
+    </Container>
+  );
+
   return (
     <div>
       <div>
-        <NavBarCollection
-          onFilterOpen={() => {
-            setFiltersModalOpened(true);
-          }}
-        />
+        <Device mobile>
+          <NavBarCollection
+            onFilterOpen={() => {
+              setFiltersModalOpened(true);
+            }}
+          />
+          <div
+            css={css`
+              margin-top: 100px;
+            `}
+          >
+            {content}
+          </div>
+        </Device>
 
-        <div
-          css={css`
-            margin-top: 100px;
-          `}
-        >
-          <Container>
-            <Grid
-              gutterVertical={L.gutter}
-              css={css`
-                padding-top: ${theme.spacings.s140}px;
-              `}
-            >
-              <GridItem params={{ xs: 24, md: 12 }}>
-                <div
-                  css={css`
-                    ${theme.fonts.h2.css} margin-bottom: 0.5em;
-                  `}
-                >
-                  Snacks
-                </div>
-                <div
-                  css={css`
-                    ${theme.fonts.body1.css}
-                  `}
-                >
-                  Our snacks are all non GMO with lots of gluten free, vegan,
-                  and organic options. Our jerky comes in savory flavors and may
-                  be your new protein treat. Prefer sweet? How about Chocolate
-                  Quinoa Bites? Find your faves here.
-                </div>
-              </GridItem>
-              <GridItem
-                params={{ xs: 24, md: [8, 4] }}
-                css={css`
-                  ${R.to("sm").css("display: none;")}
-                `}
-              >
-                <Image image={data.images.landscape1} />
-              </GridItem>
-              {data.categories[0].subcats.map((category, index) => {
-                if (index === 0) {
-                  return;
-                }
-                return (
-                  <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-                    <CategoryCard
-                      image={
-                        data.images[
-                          "landscape" + (index > 3 ? index - 2 : index + 1)
-                        ]
-                      }
-                      text={category.name}
-                    />
-                  </GridItem>
-                );
-              })}
-            </Grid>
-
-            <div
-              css={css`
-                padding-bottom: ${theme.spacings.s120}px;
-                padding-top: ${theme.spacings.s140}px;
-                ${theme.fonts.body2.css}
-                text-align: center;
-                color: ${theme.colors.mono500.css};
-              `}
-            >
-              Found 35 items
-            </div>
-            <Grid>
-              <GridItem params={{ xs: 0, md: 6 }}>
-                <FiltersColumn data={filters} onChange={onChange} />
-              </GridItem>
-              <GridItem params={{ xs: 24, md: 18 }}>
-                <Grid gutterVertical={16}>
-                  {[...data.products].map((product, index) => (
-                    <GridItem
-                      params={{ xs: 12, md: 8, lg: 8, xl: 6 }}
-                      key={index}
-                    >
-                      <ProductCardTheme1 product={product} />
-                    </GridItem>
-                  ))}
-                  <div
-                    css={css`
-                      display: flex;
-                      justify-content: center;
-                      width: 100%;
-                      margin-top: ${theme.spacings.s80}px;
-                    `}
-                  >
-                    <StatefulPagination
-                      count={20}
-                      initPage={5}
-                      onChange={page => console.log(page)}
-                    />
-                  </div>
-                </Grid>
-              </GridItem>
-            </Grid>
-          </Container>
-        </div>
+        <Device desktop>{content}</Device>
       </div>
 
       <Modal

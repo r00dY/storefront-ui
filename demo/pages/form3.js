@@ -25,7 +25,7 @@ import CheckoutSidebar from "../components/CheckoutSidebar";
 import { Checkbox } from "../theme/Checkbox";
 import CheckoutPage from "../components/CheckoutPage";
 
-export default () => {
+const Form3 = () => {
   const theme = useTheme();
   const spacer = rslin(theme.spacings.s100, theme.spacings.s140).css(
     "margin-top"
@@ -152,3 +152,7 @@ export default () => {
     </CheckoutPage>
   );
 };
+
+Form3.hideDesktopMenu = true;
+
+export default Form3;

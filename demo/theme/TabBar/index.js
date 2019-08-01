@@ -10,14 +10,10 @@ export const TabBar = props => {
   return (
     <TabBar$
       overrides={{
-        TabsContainer: {
-          style: `width: 100%; &> button{width: 50%;}`
-        },
-
         Tab: ({ tabData, focus }) => (
           <div
             css={css`
-              flex-grow: 1;
+              padding: 16px;
               height: ${theme.spacings.s120}px;
               ${theme.fonts.body1.css}
               &:hover {

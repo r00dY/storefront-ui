@@ -24,7 +24,7 @@ import OrderDetails from "../theme/OrderDetails";
 import { ProgressSteps } from "../theme/ProgressSteps";
 import CheckoutPage from "../components/CheckoutPage";
 
-export default () => {
+const Form2 = () => {
   const theme = useTheme();
   const spacer = rslin(theme.spacings.s100, theme.spacings.s140).css(
     "margin-top"
@@ -112,3 +112,7 @@ export default () => {
     </CheckoutPage>
   );
 };
+
+Form2.hideDesktopMenu = true;
+
+export default Form2;
