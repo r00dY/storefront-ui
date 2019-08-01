@@ -3,6 +3,7 @@ import React from "react";
 import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
+import Device from "storefront-ui/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -16,6 +17,15 @@ import NavBarMobileSearch from "./search";
 import { Button } from "../theme/Button";
 import { Ledger } from "../theme/Ledger";
 import { Spacer } from "../theme/Spacer";
+import PageTitle from "../theme/PageTitle";
+
+const cartGridContainerParams = {
+  xs: 24,
+  sm: 14,
+  md: 15,
+  lg: [12, 2],
+  xl: [10, 3]
+};
 
 const Cart = () => {
   const router = useRouter();
@@ -27,28 +37,13 @@ const Cart = () => {
       {noRoot && <NavBarMobile title={"Cart"} />}
       <Container>
         {!noRoot && (
-          <>
-            <div
-              css={css`
-                ${theme.fonts.h4.css}
-                margin-top: 20px;
-              `}
-            >
-              Your Bag
-            </div>
-            <div
-              css={css`
-              ${theme.fonts.body2.css}
-              color: ${theme.colors.mono600.css};
-              margin-bottom: 20px;
-            `}
-            >
-              {data.products.length} items
-            </div>
-          </>
+          <PageTitle
+            title={"Your Bag"}
+            subtitle={`${data.products.length} items`}
+          />
         )}
         <Grid>
-          <GridItem params={{ xs: 24, sm: 12 }}>
+          <GridItem params={cartGridContainerParams}>
             <div
               css={css`
                 & > div:not(:first-of-type) {
@@ -69,41 +64,57 @@ const Cart = () => {
             </div>
             <Spacer />
           </GridItem>
-          <GridItem params={{ xs: 24, sm: 12, md: [10, 2] }}>
+          <GridItem
+            params={{ xs: 24, sm: 10, md: [8, 1], lg: [7, 1], xl: [6, 2] }}
+          >
             <div
-              css={css`${theme.fonts.h6.css} border-bottom: 1px solid ${
-                theme.colors.mono400.css
-              }; margin-bottom: 0.5em;`}
+              css={css`
+                position: sticky;
+                top: 80px;
+              `}
             >
-              Summary
+              <div
+                css={css`${theme.fonts.h6.css} border-bottom: 1px solid ${
+                  theme.colors.mono400.css
+                }; margin-bottom: 0.5em;`}
+              >
+                Summary
+              </div>
+              <Ledger
+                rows={[
+                  { label: "Shipping", value: "free" },
+                  { label: "Total", value: "$399.00", isTotal: true }
+                ]}
+              />
+              <Device desktop>
+                <Spacer />
+                <Button fitContainer>Checkout</Button>
+              </Device>
             </div>
-            <Ledger
-              rows={[
-                { label: "Shipping", value: "free" },
-                { label: "Total", value: "$399.00", isTotal: true }
-              ]}
-            />
           </GridItem>
         </Grid>
       </Container>
       <Spacer />
-      <div
-        css={css`
-          position: fixed;
-          ${noRoot ? "bottom: 0px;" : " bottom: 50px;"}
-          left: 0;
-          width: 100%;
-          z-index: 1;
-          background: white;
-          padding-bottom: 10px;
-          box-sizing: border-box;
-        `}
-      >
-        <Container>
-          <Ledger rows={[{ label: "Total", value: "$399.00" }]} />
-          <Button fitContainer>Checkout</Button>
-        </Container>
-      </div>
+
+      <Device mobile>
+        <div
+          css={css`
+            position: fixed;
+            ${noRoot ? "bottom: 0px;" : " bottom: 50px;"}
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            background: white;
+            padding-bottom: 10px;
+            box-sizing: border-box;
+          `}
+        >
+          <Container>
+            <Ledger rows={[{ label: "Total", value: "$399.00" }]} />
+            <Button fitContainer>Checkout</Button>
+          </Container>
+        </div>
+      </Device>
     </div>
   );
 };

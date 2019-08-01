@@ -124,7 +124,6 @@ const Home = () => {
         `}
       >
         <Container>
-          <SectionTitle>Big Thing</SectionTitle>
           <Banner
             image={data.images.landscape1}
             element={

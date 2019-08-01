@@ -1,6 +1,5 @@
 import React from "react";
 
-import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 
@@ -11,7 +10,9 @@ import { useTheme } from "storefront-ui/Theme";
 import { useRouter } from "next/router";
 import NavBarMobile from "../theme/NavBarMobile";
 import data from "../data";
-import { ProductRowTheme1 } from "../theme/ProductRow";
+import PageTitle from "../theme/PageTitle";
+import { ProductCardTheme1 } from "../theme/ProductCard";
+import { Button } from "../theme/Button";
 
 const Wishlist = () => {
   const router = useRouter();
@@ -23,43 +24,38 @@ const Wishlist = () => {
       {noRoot && <NavBarMobile title={"Wishlist"} />}
       <Container>
         {!noRoot && (
-          <>
-            <div
-              css={css`
-                ${theme.fonts.h4.css}
-                margin-top: 20px;
-              `}
-            >
-              Your Wishlist
-            </div>
-            <div
-              css={css`
-              ${theme.fonts.body2.css}
-              color: ${theme.colors.mono600.css};
-            `}
-            >
-              {data.products.length} items
-            </div>
-          </>
+          <PageTitle
+            title={"Your Wishlist"}
+            subtitle={`${data.products.length} items`}
+          />
         )}
-        <Grid
-          gutterVertical={40}
-          gutter={40}
-          css={css`
-            margin-top: 20px;
-            padding-bottom: 40px;
-          `}
-        >
-          {data.products.map((product, index) => (
-            <GridItem key={index} params={{ xs: 24, sm: 12, lg: 8 }}>
-              <ProductRowTheme1
-                product={product}
-                price={product.price}
-                layout={"compact"}
-                mode={"wishlist"}
-              />
-            </GridItem>
-          ))}
+        <Grid>
+          <GridItem params={{ xs: 24, lg: [20, 2], xl: [16, 4] }}>
+            <Grid gutterVertical={50} colNumber={{ xs: 24, lg: 20, xl: 16 }}>
+              {data.products.map((product, index) => (
+                <GridItem
+                  key={index}
+                  params={{ xs: 12, sm: 8, md: 6, lg: 5, xl: 4 }}
+                  css={css`
+                    display: flex;
+                    flex-direction: column;
+                  `}
+                >
+                  <ProductCardTheme1 product={product} />
+                  <div
+                    css={css`
+                      flex-grow: 1;
+                      display: flex;
+                      align-items: flex-end;
+                      margin-top: ${theme.spacings.s40}px;
+                    `}
+                  >
+                    <Button fitContainer>Add to cart</Button>
+                  </div>
+                </GridItem>
+              ))}
+            </Grid>
+          </GridItem>
         </Grid>
       </Container>
     </div>
