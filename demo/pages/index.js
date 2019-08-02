@@ -48,7 +48,7 @@ const Home = () => {
       element={<BannerInner text={"The Tonal Trend"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
-      href={"/product"}
+      href={"/collection"}
     />
   );
   const banner2 = (
@@ -61,7 +61,7 @@ const Home = () => {
       element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
-      href={"/product"}
+      href={"/collection"}
     />
   );
 
@@ -109,7 +109,7 @@ const Home = () => {
           <Banner
             image={data.images.landscape1}
             imageMobile={data.images.products[0]}
-            href={"/product"}
+            href={"/collection"}
             element={
               <BannerInner
                 label={"Truly Transparent"}
