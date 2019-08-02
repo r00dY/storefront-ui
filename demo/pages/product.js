@@ -19,7 +19,6 @@ import NavBarMobile from "../theme/NavBarMobile";
 import { Button } from "../theme/Button";
 import ProductHead from "../theme/ProductHead/ProductHead";
 import { Accordion } from "../theme/Accordion";
-import EditorialIntro from "../theme/Editorial/EditorialIntro/EditorialIntro";
 import EditorialHalfImage from "../theme/Editorial/EditorialHalfImage/EditorialHalfImage";
 import EditorialHeadline from "../theme/Editorial/EditorialHeadline/EditorialHeadline";
 import SizePicker from "../theme/SizePicker/SizePicker";
@@ -30,6 +29,7 @@ import { Spacer } from "../theme/Spacer";
 import Device from "storefront-ui/Device";
 
 import data from "../data";
+import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
 const Product = () => {
   const theme = useTheme();
@@ -173,6 +173,27 @@ const Product = () => {
         >
           <NavBarMobile title={""} transparent={true} />
         </div>
+      </Device>
+
+      <Device desktop>
+        <Container>
+          <ProgressStepsAsBreadcrumbs
+            data={[
+              {
+                label: "Food",
+                href: "#"
+              },
+              {
+                label: "Snacks",
+                href: "#"
+              },
+              {
+                label: "Snacks",
+                href: "#"
+              }
+            ]}
+          />
+        </Container>
       </Device>
 
       <ProductHead

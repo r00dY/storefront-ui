@@ -12,10 +12,7 @@ import {
 } from "./styled-components";
 import { getOverrides } from "../base/helpers/overrides";
 import { Popover$, StatefulPopover$ } from "../Popover";
-import { StatefulPopover } from "../../../demo/theme/Popover";
 import { ButtonRaw$ } from "../ButtonRaw";
-
-import { Modal$ } from "../Modal";
 
 /**
  * Problems with native select

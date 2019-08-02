@@ -1,15 +1,13 @@
 import React, { useState } from "react";
 
-import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
+import { rslin } from "responsive-helpers";
 import Container from "storefront-ui/Container";
 import { FiltersColumn } from "../theme/Filters";
 import { Button } from "../theme/Button";
 import { L, R } from "storefront-ui/Config";
-import LayoutRow from "storefront-ui/LayoutRow";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-
-import { StatefulPopover } from "../theme/Popover";
+import Device from "storefront-ui/Device";
 
 import { Modal } from "../theme/Modal";
 
@@ -26,9 +24,12 @@ import { ProductCardTheme1 } from "../theme/ProductCard";
 import NavBarMobile from "../theme/NavBarMobile";
 import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
+import { Select } from "../theme/Select";
 import CategoryCard from "../theme/CategoryCard";
-import Image from "storefront-ui/Image";
-import Device from "storefront-ui/Device";
+import {
+  ProgressSteps,
+  ProgressStepsAsBreadcrumbs
+} from "../theme/ProgressSteps";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
@@ -80,10 +81,17 @@ const NavBarCollection = props => {
     </div>
   );
 };
+const stringOptions = [
+  "Newest",
+  "Price (high to low)",
+  "Price (low to high)",
+  "Most popular"
+];
 
 export default () => {
   const [filters, onChange] = useFiltersData(data.filters);
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
+  const [select1, setSelect1] = useState(stringOptions[0]);
   const theme = useTheme();
 
   const content = (
@@ -91,35 +99,32 @@ export default () => {
       <Grid
         gutterVertical={L.gutter}
         css={css`
-          padding-top: ${theme.spacings.s140}px;
+          ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
         `}
       >
-        <GridItem params={{ xs: 24, md: 12 }}>
+        <GridItem>
+          <Device desktop>
+            <ProgressStepsAsBreadcrumbs
+              data={[
+                {
+                  label: "Food",
+                  href: "#"
+                },
+                {
+                  label: "Snacks",
+                  href: "#"
+                }
+              ]}
+            />
+          </Device>
           <div
             css={css`
-              ${theme.fonts.h2.css} margin-bottom: 0.5em;
+              margin-top: 0.5em;
+              ${theme.fonts.h2.css}
             `}
           >
             Snacks
           </div>
-          <div
-            css={css`
-              ${theme.fonts.body1.css}
-            `}
-          >
-            Our snacks are all non GMO with lots of gluten free, vegan, and
-            organic options. Our jerky comes in savory flavors and may be your
-            new protein treat. Prefer sweet? How about Chocolate Quinoa Bites?
-            Find your faves here.
-          </div>
-        </GridItem>
-        <GridItem
-          params={{ xs: 24, md: [8, 4] }}
-          css={css`
-            ${R.to("sm").css("display: none;")}
-          `}
-        >
-          <Image image={data.images.landscape1} />
         </GridItem>
         {data.categories[0].subcats.map((category, index) => {
           if (index === 0) {
@@ -138,24 +143,48 @@ export default () => {
           );
         })}
       </Grid>
-
-      <div
+      <Grid
         css={css`
-          padding-bottom: ${theme.spacings.s120}px;
-          padding-top: ${theme.spacings.s140}px;
-          ${theme.fonts.body2.css}
-          text-align: center;
-          color: ${theme.colors.mono500.css};
+          ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
         `}
       >
-        Found 35 items
-      </div>
-      <Grid>
         <GridItem params={{ xs: 0, md: 6 }}>
           <FiltersColumn data={filters} onChange={onChange} />
         </GridItem>
         <GridItem params={{ xs: 24, md: 18 }}>
           <Grid gutterVertical={16}>
+            <GridItem
+              css={css`
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                ${theme.fonts.body2.css}
+              `}
+            >
+              <div
+                css={css`
+                  flex-grow: 1;
+                  ${R.to("sm").css("text-align: center;")}
+                `}
+              >
+                {data.products.length} items
+              </div>
+              <Device desktop>
+                <div
+                  css={css`
+                    margin-right: 1em;
+                    white-space: nowrap;
+                  `}
+                >
+                  Sort by:
+                </div>
+                <Select
+                  options={stringOptions}
+                  onChange={setSelect1}
+                  value={select1}
+                />
+              </Device>
+            </GridItem>
             {[...data.products].map((product, index) => (
               <GridItem params={{ xs: 12, md: 8, lg: 8, xl: 6 }} key={index}>
                 <ProductCardTheme1 product={product} />
