@@ -56,10 +56,10 @@ export const BaseButton = styled(
     transitionProperty: "background",
     transitionDuration: $theme.animation.timing100,
     transitionTimingFunction: $theme.animation.easeOutCurve,
-    ":disabled": {
-      backgroundColor: $theme.colors.buttonDisabledFill,
-      color: $theme.colors.buttonDisabledText
-    },
+    // ":disabled": {
+    //   backgroundColor: $theme.colors.buttonDisabledFill,
+    //   color: $theme.colors.buttonDisabledText
+    // },
     cursor: $disabled ? "auto" : "pointer",
     // Padding For Shape and Size
     ...getStyleForShape({ $theme, $shape, $size }),
@@ -147,41 +147,45 @@ export function getLoadingSpinnerColors({
 }
 
 export function getStyleForShape({ $theme, $shape, $size }: StylePropsT) {
-  switch ($shape) {
-    case SHAPE.round:
-    case SHAPE.square:
-      return {
-        paddingTop:
-          $size === SIZE.compact
-            ? $theme.sizing.scale400
-            : $theme.sizing.scale500,
-        paddingBottom:
-          $size === SIZE.compact
-            ? $theme.sizing.scale400
-            : $theme.sizing.scale500,
-        paddingLeft:
-          $size === SIZE.compact
-            ? $theme.sizing.scale400
-            : $theme.sizing.scale500,
-        paddingRight:
-          $size === SIZE.compact
-            ? $theme.sizing.scale400
-            : $theme.sizing.scale500
-      };
-    default:
-      return {
-        paddingTop:
-          $size === SIZE.compact
-            ? $theme.sizing.scale200
-            : $theme.sizing.scale300,
-        paddingBottom:
-          $size === SIZE.compact
-            ? $theme.sizing.scale200
-            : $theme.sizing.scale300,
-        paddingLeft: $theme.sizing.scale600,
-        paddingRight: $theme.sizing.scale600
-      };
+  if ($shape === SHAPE.round || $shape === SHAPE.square) {
+    let padding;
+
+    if ($size === SIZE.compact) {
+      padding = $theme.sizing.scale400;
+    } else if ($size === SIZE.large) {
+      padding = $theme.sizing.scale600;
+    } else {
+      padding = $theme.sizing.scale400;
+    }
+
+    return {
+      paddingTop: padding,
+      paddingBottom: padding,
+      paddingLeft: padding,
+      paddingRight: padding
+    };
   }
+
+  let paddingHorizontal;
+  let paddingVertical;
+
+  if ($size === SIZE.compact) {
+    paddingVertical = $theme.sizing.scale200;
+    paddingHorizontal = $theme.sizing.scale600;
+  } else if ($size === SIZE.large) {
+    paddingVertical = $theme.sizing.scale700;
+    paddingHorizontal = $theme.sizing.scale900;
+  } else {
+    paddingVertical = $theme.sizing.scale500;
+    paddingHorizontal = $theme.sizing.scale600;
+  }
+
+  return {
+    paddingTop: paddingVertical,
+    paddingBottom: paddingVertical,
+    paddingLeft: paddingHorizontal,
+    paddingRight: paddingHorizontal
+  };
 }
 
 export function getStyleForKind({
@@ -192,7 +196,10 @@ export function getStyleForKind({
   $disabled
 }: StylePropsT) {
   if ($disabled) {
-    return {};
+    return {
+      backgroundColor: $theme.colors.buttonDisabledFill,
+      color: $theme.colors.buttonDisabledText
+    };
   }
 
   switch ($kind) {

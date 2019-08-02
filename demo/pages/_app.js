@@ -6,13 +6,16 @@ import Root from "storefront-ui/Root";
 
 import MainTabBar from "../theme/MainTabBar";
 import NavBarMobile from "../theme/NavBarMobile";
-import Router from "next/router";
+import routerPush from "../helpers/routerPush";
 
 import Device from "storefront-ui/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import MenuDesktop from "../theme/MenuDesktop";
+import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
+
+import Footer from "../theme/Footer";
+import data from "../data";
 
 const tabs = [
   {
@@ -59,8 +62,7 @@ export default class MyApp extends App {
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
     const hideDesktopMenu = Component.hideDesktopMenu === true;
-
-    console.log("hide desktop menu", hideDesktopMenu);
+    const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
       <Root theme={theme}>
@@ -73,6 +75,7 @@ export default class MyApp extends App {
                 `}
               >
                 {content}
+                {showFooterOnMobile && <Footer />}
               </div>
 
               <div
@@ -88,15 +91,15 @@ export default class MyApp extends App {
                   active={Component.tabbar}
                   onChange={index => {
                     if (index === 0) {
-                      Router.push("/");
+                      routerPush("/");
                     } else if (index === 1) {
-                      Router.push("/menu");
+                      routerPush("/menu");
                     } else if (index === 2) {
-                      Router.push("/wishlist");
+                      routerPush("/wishlist");
                     } else if (index === 3) {
-                      Router.push("/cart");
+                      routerPush("/cart");
                     } else if (index === 4) {
-                      Router.push("/profile");
+                      routerPush("/profile");
                     }
                   }}
                   scrollable={false}
@@ -106,7 +109,12 @@ export default class MyApp extends App {
             </div>
           )}
 
-          {!showTabbar && content}
+          {!showTabbar && (
+            <>
+              {content}
+              {showFooterOnMobile && <Footer />}
+            </>
+          )}
         </Device>
 
         <Device desktop>
@@ -118,19 +126,37 @@ export default class MyApp extends App {
                 data={[
                   {
                     label: "Home",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent category={data.categories[0]} />
+                    )
                   },
                   {
                     label: "Beauty",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent
+                        category={data.categories[1]}
+                        alternative={true}
+                      />
+                    )
                   },
                   {
                     label: "Food",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent category={data.categories[2]} />
+                    )
                   },
                   {
                     label: "Health",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent
+                        category={data.categories[3]}
+                        alternative={true}
+                      />
+                    )
                   }
                 ]}
               />
@@ -141,6 +167,8 @@ export default class MyApp extends App {
                 `}
               >
                 {content}
+
+                <Footer />
               </div>
             </>
           )}

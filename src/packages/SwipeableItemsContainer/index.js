@@ -79,7 +79,6 @@ const Wrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  text-align: center;
   ${props =>
     props.config.overflowAlwaysHidden
       ? "overflow: hidden"

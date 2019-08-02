@@ -142,7 +142,7 @@ const Form1 = () => {
         >
           <div />
           <div>
-            <Button>Continue to shipping method</Button>
+            <Button size={"large"}>Continue to shipping method</Button>
           </div>
         </GridItem>
       </Grid>

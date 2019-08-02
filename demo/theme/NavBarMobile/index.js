@@ -15,6 +15,7 @@ import { useTheme } from "storefront-ui/Theme";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import LayoutRow from "storefront-ui/LayoutRow";
 
+import routerPush from "../../helpers/routerPush";
 import Router from "next/router";
 
 const NavBarMobile = props => {
@@ -68,7 +69,7 @@ const NavBarMobile = props => {
                   }
                 `}
                 onClick={() => {
-                  Router.push("/cart?noRoot", "/cart");
+                  routerPush("/cart?noRoot", "/cart");
                 }}
               >
                 <IconCart />
@@ -81,7 +82,7 @@ const NavBarMobile = props => {
                   }
                 `}
                 onClick={() => {
-                  Router.push("/wishlist?noRoot", "/wishlist");
+                  routerPush("/wishlist?noRoot", "/wishlist");
                 }}
               >
                 <IconHeart />
@@ -94,7 +95,7 @@ const NavBarMobile = props => {
                   }
                 `}
                 onClick={() => {
-                  Router.push("/search");
+                  routerPush("/search");
                 }}
               >
                 <IconSearch />

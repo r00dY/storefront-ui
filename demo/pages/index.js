@@ -10,14 +10,12 @@ import { rslin } from "responsive-helpers";
 
 import { Input, StatefulInput } from "../theme/Input";
 
-import Router from "next/router";
+import routerPush from "../helpers/routerPush";
 
 import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import MenuDesktop from "../theme/MenuDesktop";
-import Footer from "../theme/Footer";
 import { Banner, BannerInner } from "../theme/Banner";
 import TwoBanners from "../theme/TwoBanners";
 
@@ -50,6 +48,7 @@ const Home = () => {
       element={<BannerInner text={"The Tonal Trend"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
+      href={"/collection"}
     />
   );
   const banner2 = (
@@ -62,6 +61,7 @@ const Home = () => {
       element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
+      href={"/collection"}
     />
   );
 
@@ -89,7 +89,7 @@ const Home = () => {
               <StatefulInput
                 placeholder={"What you're looking for?"}
                 onFocus={() => {
-                  Router.push("/search");
+                  routerPush("/search");
                 }}
               />
             </GridItem>
@@ -109,6 +109,7 @@ const Home = () => {
           <Banner
             image={data.images.landscape1}
             imageMobile={data.images.products[0]}
+            href={"/collection"}
             element={
               <BannerInner
                 label={"Truly Transparent"}
@@ -131,19 +132,22 @@ const Home = () => {
             <Grid gutterVertical={L.gutter}>
               {categories.map((category, index) => (
                 <GridItem key={index} params={{ xs: 12, sm: 12, lg: 6 }}>
-                  <CategoryCard image={category.image} text={category.name} />
+                  <CategoryCard
+                    image={category.image}
+                    text={category.name}
+                    href={"/collection"}
+                  />
                 </GridItem>
               ))}
             </Grid>
           </Container>
         </div>
-
-        <Footer />
       </div>
     </div>
   );
 };
 
 Home.tabbar = 0;
+Home.showFooterOnMobile = true;
 
 export default Home;

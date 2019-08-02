@@ -10,6 +10,9 @@ import Link from "next/link";
 import { useTheme } from "storefront-ui/Theme";
 import { Button } from "../Button";
 
+import Router from "next/router";
+import routerPush from "../../helpers/routerPush";
+
 const BannerButton = props => {
   const theme = useTheme();
   return (
@@ -114,7 +117,9 @@ const Banner = props => {
     <div
       css={css`
         position: relative;
+        cursor: pointer;
       `}
+      onClick={() => routerPush(props.href)}
     >
       <div>
         {props.imageMobile || props.videoMobile
@@ -175,17 +180,7 @@ const Banner = props => {
     </div>
   );
 
-  return (
-    <>
-      {props.href ? (
-        <Link href={"/category"}>
-          <a>{sectionElem}</a>
-        </Link>
-      ) : (
-        sectionElem
-      )}
-    </>
-  );
+  return sectionElem;
 };
 Banner.defaultProps = {
   imageBackground: "transparent",

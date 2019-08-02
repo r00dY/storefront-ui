@@ -34,13 +34,11 @@ function ProductSlider(props) {
             background-color: rgba(250,250,250,1);
             svg {fill: ${theme.colors.mono800.css};}
         }
-        ${R.to("sm").css("display: none;")}
     `;
   const ArrowLeft = () => (
     <div
       css={css`
         ${_arrowCss}
-        margin-left: -25px;
       `}
     >
       <IconArrowLeft />
@@ -50,7 +48,6 @@ function ProductSlider(props) {
     <div
       css={css`
         ${_arrowCss}
-        margin-right: -25px;
       `}
     >
       <IconArrowRight />
@@ -80,8 +77,9 @@ function ProductSlider(props) {
             <ArrowRight />
           </ButtonRaw>
         ),
-        offset: rs({ xs: 20, md: 50, lg: 80 }),
-        hideWhenInactive: true
+        offset: L.margin.subtract(25),
+        hideWhenInactive: true,
+        hideOnTouchDevices: true
       }}
     >
       {props.boxes.map((box, index) => {

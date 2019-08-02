@@ -12,13 +12,12 @@ import { rslin } from "responsive-helpers";
 
 import { Accordion$ } from "storefront-ui/Accordion";
 import { StatefulInput } from "../theme/Input";
-import Router from "next/dist/client/router";
 import { useTheme } from "storefront-ui/Theme";
-import { Button } from "../theme/Button";
-import { FiltersColumn } from "../theme/Filters";
-import { Modal } from "../theme/Modal";
 import data from "../data";
 import Image from "storefront-ui/Image";
+
+import routerPush from "../helpers/routerPush";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 const Menu = () => {
   const theme = useTheme();
@@ -175,9 +174,16 @@ const Menu = () => {
         theme.colors.mono300.css
       }; }`}
     >
-      <Container>
-        <span>{props.children}</span>
-      </Container>
+      <ButtonRaw
+        onClick={() => routerPush("/collection")}
+        css={css`
+          width: 100%;
+        `}
+      >
+        <Container>
+          <span>{props.children}</span>
+        </Container>
+      </ButtonRaw>
     </div>
   );
 
@@ -197,7 +203,7 @@ const Menu = () => {
             <StatefulInput
               placeholder={"What you're looking for?"}
               onFocus={() => {
-                Router.push("/search");
+                routerPush("/search");
               }}
             />
           </GridItem>
@@ -215,6 +221,7 @@ const Menu = () => {
               css={css`&:not(:first-of-type) {margin-top: ${
                 theme.spacings.s20
               }px;`}
+              scrollTopAtOpen={true}
             >
               {category.subcategories.map((subcategory, j) => {
                 return <CategoryItem key={j}>{subcategory.label}</CategoryItem>;
@@ -223,11 +230,6 @@ const Menu = () => {
           );
         })}
       </div>
-      <div
-        css={css`
-          height: 200px;
-        `}
-      />
     </div>
   );
 };
