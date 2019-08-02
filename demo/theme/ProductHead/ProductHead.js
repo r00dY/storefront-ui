@@ -27,8 +27,6 @@ import { ButtonRaw } from "../ButtonRaw";
 import { ButtonGroup } from "../ButtonGroup";
 import Price from "../Price";
 
-const Root = styled.div``;
-
 const MetaRow = styled.div`
   &:not(:first-of-type) {
     ${rslin(40, 50).css("margin-top")}
@@ -43,35 +41,9 @@ function ProductHead(props) {
   const [config, setConfig] = useState(null);
 
   let swiper = useSwipeableItemsContainer(
-    <SwipeableItemsContainer
-      mode={"horizontal"}
-      // itemsVisible={{ xs: 1 }}
-      // snap={"center"}
-    >
+    <SwipeableItemsContainer mode={"horizontal"}>
       {props.mosaicImages.map((image, index) => {
-        return (
-          <Image mode={"natural"} image={image} />
-
-          // <div
-          //   key={index}
-          //   onClick={() => {
-          //     setConfig({
-          //       mode: "bottom",
-          //       height: "100%"
-          //     });
-          //     setSelectedImage(index);
-          //     setOpened(true);
-          //   }}
-          // >
-          //   <Image
-          //     mode={"natural"}
-          //     image={image}
-          //     css={css`
-          //       ${R.from("sm").css(`padding-left: 10vw; padding-right: 10vw;`)}
-          //     `}
-          //   />
-          // </div>
-        );
+        return <Image mode={"natural"} image={image} />;
       })}
     </SwipeableItemsContainer>
   );
@@ -195,13 +167,7 @@ function ProductHead(props) {
           {props.description}
         </div>
       </MetaRow>
-      <MetaRow
-        css={css`
-          border-bottom: 1px solid ${theme.colors.mono300.css};
-        `}
-      >
-        {props.accordion}
-      </MetaRow>
+      <MetaRow>{props.accordion}</MetaRow>
     </div>
   );
 
@@ -277,7 +243,7 @@ function ProductHead(props) {
     );
   };
   return (
-    <Root>
+    <div>
       <Modal
         config={config}
         isOpen={opened}
@@ -321,11 +287,7 @@ function ProductHead(props) {
               left: 0;
               width: 100%;
             `}
-          >
-            <Container>
-              {/*<ScrollBar swipeableItemsContainer={swiper} />*/}
-            </Container>
-          </div>
+          />
         </div>
 
         <div
@@ -370,7 +332,7 @@ function ProductHead(props) {
         </Grid>
       </Container>
       <div id={"overlaysContainer"} />
-    </Root>
+    </div>
   );
 }
 

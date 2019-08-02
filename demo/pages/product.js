@@ -2,6 +2,7 @@ import React from "react";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
+import { rslin } from "responsive-helpers";
 import { useTheme } from "storefront-ui/Theme";
 import useScrollDirection from "storefront-ui/useScrollDirection";
 import useScrollSegment from "storefront-ui/useScrollSegment";
@@ -176,7 +177,14 @@ const Product = () => {
       </Device>
 
       <Device desktop>
-        <Container>
+        <Container
+          css={css`
+            ${rslin(theme.spacings.s40, theme.spacings.s100).css("margin-top")}
+            ${rslin(theme.spacings.s40, theme.spacings.s100).css(
+              "margin-bottom"
+            )}
+          `}
+        >
           <ProgressStepsAsBreadcrumbs
             data={[
               {
@@ -188,7 +196,7 @@ const Product = () => {
                 href: "#"
               },
               {
-                label: "Snacks",
+                label: "Bottle",
                 href: "#"
               }
             ]}
@@ -247,15 +255,6 @@ const Product = () => {
         accordion={accordions}
       />
 
-      {/*<Spacer />*/}
-      {/*<EditorialIntro*/}
-      {/*title={"Magically Energetic Foam"}*/}
-      {/*titleFont={theme.fonts.h1}*/}
-      {/*paragraphFont={theme.fonts.body2}*/}
-      {/*paragraph={*/}
-      {/*"Our lightweight Nike ZoomX foam cushioning uses cutting-edge engineering to give you the greatest possible energy return, turning the impact of your step into energy for your next stride."*/}
-      {/*}*/}
-      {/*/>*/}
       <Spacer />
       <EditorialHalfImage
         imageFirst
