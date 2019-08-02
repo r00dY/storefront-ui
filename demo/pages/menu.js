@@ -17,6 +17,7 @@ import data from "../data";
 import Image from "storefront-ui/Image";
 
 import routerPush from "../helpers/routerPush";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 const Menu = () => {
   const theme = useTheme();
@@ -173,9 +174,16 @@ const Menu = () => {
         theme.colors.mono300.css
       }; }`}
     >
-      <Container>
-        <span>{props.children}</span>
-      </Container>
+      <ButtonRaw
+        onClick={() => routerPush("/collection")}
+        css={css`
+          width: 100%;
+        `}
+      >
+        <Container>
+          <span>{props.children}</span>
+        </Container>
+      </ButtonRaw>
     </div>
   );
 

@@ -205,12 +205,18 @@ export default () => {
           justify-content: space-between;
         `}
       >
-        <Button kind={"minimal"} startEnhancer={<IconArrowBack />}>
+        <Button
+          kind={"minimal"}
+          size={"large"}
+          startEnhancer={<IconArrowBack />}
+        >
           Return to Address
         </Button>
         <ButtonGroup>
-          <Button kind={"secondary"}>Reset</Button>
-          <Button>Continue to payment method</Button>
+          <Button kind={"secondary"} size={"large"}>
+            Reset
+          </Button>
+          <Button size={"large"}>Continue to payment method</Button>
         </ButtonGroup>
       </div>
     </div>

@@ -12,8 +12,10 @@ import Device from "storefront-ui/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import MenuDesktop from "../theme/MenuDesktop";
+import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
+
 import Footer from "../theme/Footer";
+import data from "../data";
 
 const tabs = [
   {
@@ -124,19 +126,37 @@ export default class MyApp extends App {
                 data={[
                   {
                     label: "Home",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent category={data.categories[0]} />
+                    )
                   },
                   {
                     label: "Beauty",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent
+                        category={data.categories[1]}
+                        alternative={true}
+                      />
+                    )
                   },
                   {
                     label: "Food",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent category={data.categories[2]} />
+                    )
                   },
                   {
                     label: "Health",
-                    href: "/category"
+                    href: "/category",
+                    content: (
+                      <MenuDesktopContent
+                        category={data.categories[3]}
+                        alternative={true}
+                      />
+                    )
                   }
                 ]}
               />
