@@ -196,7 +196,7 @@ const Product = () => {
                 href: "#"
               },
               {
-                label: "Snacks",
+                label: "Bottle",
                 href: "#"
               }
             ]}
