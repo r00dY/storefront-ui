@@ -30,7 +30,6 @@ import { ProductCardTheme1 } from "../ProductCard";
 import { ButtonRaw } from "../ButtonRaw";
 import { Ledger } from "../Ledger";
 import ProfileLogInContent from "../ProfileLogInContent";
-import Link from "next/link";
 
 export const MenuDesktopContent = props => {
   const { category, alternative } = props;
