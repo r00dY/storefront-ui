@@ -247,15 +247,6 @@ const Product = () => {
         accordion={accordions}
       />
 
-      {/*<Spacer />*/}
-      {/*<EditorialIntro*/}
-      {/*title={"Magically Energetic Foam"}*/}
-      {/*titleFont={theme.fonts.h1}*/}
-      {/*paragraphFont={theme.fonts.body2}*/}
-      {/*paragraph={*/}
-      {/*"Our lightweight Nike ZoomX foam cushioning uses cutting-edge engineering to give you the greatest possible energy return, turning the impact of your step into energy for your next stride."*/}
-      {/*}*/}
-      {/*/>*/}
       <Spacer />
       <EditorialHalfImage
         imageFirst
