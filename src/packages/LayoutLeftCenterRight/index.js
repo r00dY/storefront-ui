@@ -23,7 +23,7 @@ export default ({
       <div
         css={css`
           position: relative;
-          flex-grow: 1;
+          flex: 1;
         `}
       >
         {left}
@@ -32,7 +32,7 @@ export default ({
       <div
         css={css`
           position: relative;
-          flex-grow: 1;
+          flex: 1;
         `}
       >
         <div
@@ -50,7 +50,7 @@ export default ({
       <div
         css={css`
           position: relative;
-          flex-grow: 1;
+          flex: 1;
         `}
       >
         <div

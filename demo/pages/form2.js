@@ -100,12 +100,16 @@ const Form2 = () => {
           `}
         >
           <div>
-            <Button kind={"minimal"} startEnhancer={<IconArrowBack />}>
+            <Button
+              size={"large"}
+              kind={"minimal"}
+              startEnhancer={<IconArrowBack />}
+            >
               Return to customer information
             </Button>
           </div>
           <div>
-            <Button>Continue to payment method</Button>
+            <Button size={"large"}>Continue to payment method</Button>
           </div>
         </GridItem>
       </Grid>

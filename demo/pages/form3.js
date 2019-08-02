@@ -140,12 +140,16 @@ const Form3 = () => {
           `}
         >
           <div>
-            <Button kind={"minimal"} startEnhancer={<IconArrowBack />}>
+            <Button
+              size={"large"}
+              kind={"minimal"}
+              startEnhancer={<IconArrowBack />}
+            >
               Return to shipping method
             </Button>
           </div>
           <div>
-            <Button>Complete order</Button>
+            <Button size={"large"}>Complete order</Button>
           </div>
         </GridItem>
       </Grid>

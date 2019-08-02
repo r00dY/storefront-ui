@@ -291,12 +291,14 @@ const MenuDesktop = props => {
                     `}
                   >
                     <div>
-                      <Button kind={"secondary"} fitContainer>
+                      <Button kind={"secondary"} fitContainer size={"large"}>
                         View Basket ({data.products.length})
                       </Button>
                     </div>
                     <div>
-                      <Button fitContainer>Checkout</Button>
+                      <Button fitContainer size={"large"}>
+                        Checkout
+                      </Button>
                     </div>
                   </div>
                 </div>

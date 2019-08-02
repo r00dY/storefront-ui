@@ -151,24 +151,23 @@ function ProductHead(props) {
       </Device>
       <MetaRow>{props.sizes}</MetaRow>
       <MetaRow>
-        <div
+        <Button
+          size={"large"}
+          fitContainer={true}
           css={css`
-            width: 100%;
+            margin-bottom: 10px;
           `}
         >
-          <ButtonGroup>
-            <Button fitContainer>Add to Cart</Button>
-            <Button
-              css={css`
-                svg {
-                  fill: currentColor;
-                }
-              `}
-            >
-              <HeartIcon />
-            </Button>
-          </ButtonGroup>
-        </div>
+          Add to Cart
+        </Button>
+        <Button
+          size={"large"}
+          kind={"secondary"}
+          fitContainer={true}
+          endEnhancer={() => <HeartIcon />}
+        >
+          Add to wishlist
+        </Button>
       </MetaRow>
       <MetaRow>
         <div
