@@ -10,27 +10,43 @@ import Link from "next/link";
 
 import IconArrow from "./outline-arrow_forward_ios-24px.svg";
 import { useTheme } from "storefront-ui/Theme";
+import routerPush from "../../helpers/routerPush";
 
 const overrides = {
-  Separator: ({ $theme, nextStepIsCompleted }) => (
-    <IconArrow
-      css={css`
-        width: 16px;
-        height: 16px;
-        ${!nextStepIsCompleted ? "opacity: 0.4;" : ""}
-      `}
-    />
-  ),
-  Step: ({ $theme, active, label, href, completed, activate }) => (
-    <Button
-      href={href}
-      disabled={!completed}
-      kind={active ? "primary" : "secondary"}
-      onClick={activate}
-    >
-      {label}
-    </Button>
-  )
+  Separator: ({ $theme, nextStepIsCompleted }) => {
+    const theme = useTheme();
+    return (
+      <IconArrow
+        css={css`
+          width: 16px;
+          height: 16px;
+          fill: ${theme.colors.mono300.css};
+        `}
+      />
+    );
+  },
+  Step: ({ $theme, active, label, href, completed, activate }) => {
+    const theme = useTheme();
+    return (
+      <div
+        css={css`
+      ${theme.fonts.body1.css}
+      color: ${active ? theme.colors.mono900.css : theme.colors.mono400.css};
+      a {
+        color: ${theme.colors.primary.css}; text-decoration: none;
+      }
+    `}
+      >
+        {completed ? (
+          <Link href={href}>
+            <a>{label}</a>
+          </Link>
+        ) : (
+          label
+        )}
+      </div>
+    );
+  }
 };
 
 const ProgressSteps = props => (

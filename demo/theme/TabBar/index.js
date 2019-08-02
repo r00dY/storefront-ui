@@ -1,4 +1,3 @@
-import { Button } from "../Button";
 import { TabBar$ } from "storefront-ui/TabBar";
 import { useTheme } from "storefront-ui/Theme";
 
@@ -34,6 +33,8 @@ export const TabBar = props => {
         }
       }}
       gutter={5}
+      align={"fit"}
+      scrollable={"false"}
       {...props}
     />
   );

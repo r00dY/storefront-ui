@@ -7,6 +7,8 @@ import IconArrowBack from "../../data/svg/arrow_back.svg";
 
 import { Radio$ } from "storefront-ui/Radio";
 import RadioBorder from "../theme/RadioBorder";
+import Device from "storefront-ui/Device";
+import { R } from "storefront-ui/Config";
 
 import {
   SelectNative$,
@@ -23,6 +25,7 @@ import React, { useState } from "react";
 import OrderDetails from "../theme/OrderDetails";
 import { ProgressSteps } from "../theme/ProgressSteps";
 import CheckoutPage from "../components/CheckoutPage";
+import routerPush from "../helpers/routerPush";
 
 const Form2 = () => {
   const theme = useTheme();
@@ -33,27 +36,29 @@ const Form2 = () => {
     <CheckoutPage>
       <Grid gutterVertical={20}>
         <GridItem>
-          <ProgressSteps
-            data={[
-              {
-                label: "Consumer information",
-                href: "#"
-              },
-              {
-                label: "Shipping method",
-                href: "#"
-              },
-              {
-                label: "Payment method",
-                href: "#"
-              }
-            ]}
-            active={1}
-            lastCompleted={1}
-            onClick={stepIndex => {
-              console.log("clicked step " + stepIndex);
-            }}
-          />
+          <Device desktop>
+            <ProgressSteps
+              data={[
+                {
+                  label: "Consumer information",
+                  href: "/form1"
+                },
+                {
+                  label: "Shipping method",
+                  href: "/form2"
+                },
+                {
+                  label: "Payment method",
+                  href: "/form3"
+                }
+              ]}
+              active={1}
+              lastCompleted={0}
+              onClick={stepIndex => {
+                console.log("clicked step " + stepIndex);
+              }}
+            />
+          </Device>
         </GridItem>
         <GridItem
           css={css`
@@ -64,11 +69,13 @@ const Form2 = () => {
             rows={[
               {
                 label: "Contact",
-                value: "john@mail.com"
+                value: "john@mail.com",
+                href: "/form1"
               },
               {
                 label: "Ship to",
-                value: "Poland, Gdansk PA 16754, United States"
+                value: "Poland, Gdansk PA 16754, United States",
+                href: "/form1"
               }
             ]}
           />
@@ -96,20 +103,38 @@ const Form2 = () => {
         <GridItem
           css={css`
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            ${R.from("md").css("justify-content: space-between;")}
+            ${R.to("sm").css("&>div{width: 100%;}")}
           `}
         >
-          <div>
+          <div
+            css={css`
+              ${R.to("sm").css("order: 1;")}
+            `}
+          >
             <Button
               size={"large"}
               kind={"minimal"}
               startEnhancer={<IconArrowBack />}
+              onClick={() => {
+                routerPush("/form1");
+              }}
+              fitContainer
             >
               Return to customer information
             </Button>
           </div>
           <div>
-            <Button size={"large"}>Continue to payment method</Button>
+            <Button
+              size={"large"}
+              fitContainer
+              onClick={() => {
+                routerPush("/form3");
+              }}
+            >
+              Continue to payment method
+            </Button>
           </div>
         </GridItem>
       </Grid>

@@ -108,11 +108,11 @@ export default () => {
               data={[
                 {
                   label: "Food",
-                  href: "#"
+                  href: "/collection"
                 },
                 {
                   label: "Snacks",
-                  href: "#"
+                  href: "/collection"
                 }
               ]}
             />

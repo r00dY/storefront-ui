@@ -116,7 +116,13 @@ const ProfileLogInContent = props => {
   ];
 
   return (
-    <TabBar data={tabs} active={tab} onChange={setTab} showPanels={true} />
+    <TabBar
+      data={tabs}
+      active={tab}
+      onChange={setTab}
+      showPanels={true}
+      align={"fit"}
+    />
   );
 };
 

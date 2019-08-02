@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 
 import { Modal } from "../Modal";
-import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
 
 import { MenuDesktop$ } from "storefront-ui/MenuDesktop";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
@@ -14,20 +13,17 @@ import Link from "next/link";
 
 import { Button } from "../Button";
 import data from "../../data";
+import routerPush from "../../helpers/routerPush";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { StatefulPopover } from "../Popover";
 import MiniBasketContent from "../MiniBasketContent";
 
 import IconSearch from "./outline-search-24px.svg";
 import IconCart from "./outline-shopping_cart-24px.svg";
-import IconClose from "./outline-clear-24px.svg";
-import IconMenu from "./baseline-menu-24px.svg";
 import IconAccount from "./baseline-account_circle-24px.svg";
-import SectionTitle from "../../pages";
 import { Banner, BannerInner } from "../Banner";
 import { ProductCardTheme1 } from "../ProductCard";
-import { ButtonRaw } from "../ButtonRaw";
 import { Ledger } from "../Ledger";
 import ProfileLogInContent from "../ProfileLogInContent";
 
@@ -48,9 +44,6 @@ export const MenuDesktopContent = props => {
             padding: ${theme.spacings.s100}px 0;
           `}
         >
-          {/*<div css={css`${theme.fonts.h5.css}`}>*/}
-          {/*{category.name}*/}
-          {/*</div>*/}
           <div
             css={css`
               display: flex;
@@ -78,13 +71,19 @@ export const MenuDesktopContent = props => {
                   `}
                 >
                   <div
-                    css={css`${theme.fonts.h6.css} margin-bottom: ${
-                      theme.spacings.s40
-                    }px; color: ${theme.colors.primary.css}; a:hover {color:${
-                      theme.colors.primary600.css
-                    }; }`}
+                    css={css`
+                      padding-right: 1em;
+                      margin-bottom: ${theme.spacings.s40}px;
+                      color: ${theme.colors.primary.css};
+                      a:hover {
+                        color: ${theme.colors.primary600.css};
+                      }
+                      ${theme.fonts.h6.css}
+                    `}
                   >
-                    <a href="#">{subcat.name}</a>
+                    <Link href={"/collection"}>
+                      <a>{subcat.name}</a>
+                    </Link>
                   </div>
                   <div
                     css={css`
@@ -100,7 +99,9 @@ export const MenuDesktopContent = props => {
                             theme.colors.mono500.css
                           };`}
                         >
-                          <a href="">{link}</a>
+                          <Link href={"/collection"}>
+                            <a>{link}</a>
+                          </Link>
                         </div>
                       ))}
                   </div>
@@ -168,6 +169,9 @@ const MenuDesktop = props => {
             key={index}
             kind={"minimal"}
             isSelected={isActive}
+            onClick={() => {
+              routerPush("/collection");
+            }}
             {...buttonProps}
           >
             {menu.label}
@@ -291,12 +295,27 @@ const MenuDesktop = props => {
                     `}
                   >
                     <div>
-                      <Button kind={"secondary"} fitContainer size={"large"}>
-                        View Basket ({data.products.length})
+                      <Button
+                        kind={"secondary"}
+                        fitContainer
+                        size={"large"}
+                        onClick={() => {
+                          setOpened(false);
+                          routerPush("/cart");
+                        }}
+                      >
+                        View Bag ({data.products.length})
                       </Button>
                     </div>
                     <div>
-                      <Button fitContainer size={"large"}>
+                      <Button
+                        fitContainer
+                        size={"large"}
+                        onClick={() => {
+                          setOpened(false);
+                          routerPush("/form1");
+                        }}
+                      >
                         Checkout
                       </Button>
                     </div>
