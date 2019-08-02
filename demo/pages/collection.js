@@ -147,10 +147,10 @@ export default () => {
           ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
         `}
       >
-        <GridItem params={{ xs: 0, md: 6 }}>
+        <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
           <FiltersColumn data={filters} onChange={onChange} />
         </GridItem>
-        <GridItem params={{ xs: 24, md: 18 }}>
+        <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
           <Grid gutterVertical={16}>
             <GridItem
               css={css`

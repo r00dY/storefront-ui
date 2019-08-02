@@ -10,6 +10,7 @@ import useScrollDirection from "storefront-ui/useScrollDirection";
 import useScrollSegment from "storefront-ui/useScrollSegment";
 import Container from "storefront-ui/Container";
 import { useTheme } from "storefront-ui/Theme";
+import Link from "next/link";
 
 import { Button } from "../Button";
 import data from "../../data";
@@ -105,7 +106,9 @@ const MenuDesktop = props => {
                           }
                         `}
                       >
-                        <a href={"#"}>SuperStore</a>
+                        <Link href={"/"}>
+                          <a>SuperStore</a>
+                        </Link>
                       </div>
                     </LayoutRow>
                   }
