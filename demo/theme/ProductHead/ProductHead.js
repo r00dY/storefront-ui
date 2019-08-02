@@ -27,8 +27,6 @@ import { ButtonRaw } from "../ButtonRaw";
 import { ButtonGroup } from "../ButtonGroup";
 import Price from "../Price";
 
-const Root = styled.div``;
-
 const MetaRow = styled.div`
   &:not(:first-of-type) {
     ${rslin(40, 50).css("margin-top")}
@@ -246,7 +244,7 @@ function ProductHead(props) {
     );
   };
   return (
-    <Root>
+    <div>
       <Modal
         config={config}
         isOpen={opened}
@@ -335,7 +333,7 @@ function ProductHead(props) {
         </Grid>
       </Container>
       <div id={"overlaysContainer"} />
-    </Root>
+    </div>
   );
 }
 
