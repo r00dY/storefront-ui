@@ -12,13 +12,11 @@ import { rslin } from "responsive-helpers";
 
 import { Accordion$ } from "storefront-ui/Accordion";
 import { StatefulInput } from "../theme/Input";
-import Router from "next/dist/client/router";
 import { useTheme } from "storefront-ui/Theme";
-import { Button } from "../theme/Button";
-import { FiltersColumn } from "../theme/Filters";
-import { Modal } from "../theme/Modal";
 import data from "../data";
 import Image from "storefront-ui/Image";
+
+import routerPush from "../helpers/routerPush";
 
 const Menu = () => {
   const theme = useTheme();
@@ -197,7 +195,7 @@ const Menu = () => {
             <StatefulInput
               placeholder={"What you're looking for?"}
               onFocus={() => {
-                Router.push("/search");
+                routerPush("/search");
               }}
             />
           </GridItem>

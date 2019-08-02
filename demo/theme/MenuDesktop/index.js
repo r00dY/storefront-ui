@@ -29,6 +29,7 @@ import { ProductCardTheme1 } from "../ProductCard";
 import { ButtonRaw } from "../ButtonRaw";
 import { Ledger } from "../Ledger";
 import ProfileLogInContent from "../ProfileLogInContent";
+import Link from "next/link";
 
 const MenuDesktop = props => {
   const [opened, setOpened] = useState(false);
@@ -105,7 +106,9 @@ const MenuDesktop = props => {
                           }
                         `}
                       >
-                        <a href={"#"}>SuperStore</a>
+                        <Link href={"/"}>
+                          <a>SuperStore</a>
+                        </Link>
                       </div>
                     </LayoutRow>
                   }

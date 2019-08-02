@@ -6,7 +6,7 @@ import Root from "storefront-ui/Root";
 
 import MainTabBar from "../theme/MainTabBar";
 import NavBarMobile from "../theme/NavBarMobile";
-import Router from "next/router";
+import routerPush from "../helpers/routerPush";
 
 import Device from "storefront-ui/Device";
 
@@ -89,15 +89,15 @@ export default class MyApp extends App {
                   active={Component.tabbar}
                   onChange={index => {
                     if (index === 0) {
-                      Router.push("/");
+                      routerPush("/");
                     } else if (index === 1) {
-                      Router.push("/menu");
+                      routerPush("/menu");
                     } else if (index === 2) {
-                      Router.push("/wishlist");
+                      routerPush("/wishlist");
                     } else if (index === 3) {
-                      Router.push("/cart");
+                      routerPush("/cart");
                     } else if (index === 4) {
-                      Router.push("/profile");
+                      routerPush("/profile");
                     }
                   }}
                   scrollable={false}

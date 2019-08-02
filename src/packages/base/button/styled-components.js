@@ -56,10 +56,10 @@ export const BaseButton = styled(
     transitionProperty: "background",
     transitionDuration: $theme.animation.timing100,
     transitionTimingFunction: $theme.animation.easeOutCurve,
-    ":disabled": {
-      backgroundColor: $theme.colors.buttonDisabledFill,
-      color: $theme.colors.buttonDisabledText
-    },
+    // ":disabled": {
+    //   backgroundColor: $theme.colors.buttonDisabledFill,
+    //   color: $theme.colors.buttonDisabledText
+    // },
     cursor: $disabled ? "auto" : "pointer",
     // Padding For Shape and Size
     ...getStyleForShape({ $theme, $shape, $size }),
@@ -192,7 +192,10 @@ export function getStyleForKind({
   $disabled
 }: StylePropsT) {
   if ($disabled) {
-    return {};
+    return {
+      backgroundColor: $theme.colors.buttonDisabledFill,
+      color: $theme.colors.buttonDisabledText
+    };
   }
 
   switch ($kind) {

@@ -132,6 +132,7 @@ export default () => {
                   data.images["landscape" + (index > 3 ? index - 2 : index + 1)]
                 }
                 text={category.name}
+                href={"/collection"}
               />
             </GridItem>
           );
