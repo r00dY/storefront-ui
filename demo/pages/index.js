@@ -43,8 +43,7 @@ const Home = () => {
 
   const banner1 = (
     <Banner
-      image={data.products[1].images[0]}
-      // imageMobile={new ImgixImage(DATA.home.image3_mobile)}
+      image={data.images.boxes.half_box_10}
       element={<BannerInner text={"The Tonal Trend"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
@@ -53,10 +52,7 @@ const Home = () => {
   );
   const banner2 = (
     <Banner
-      image={data.products[2].images[0]}
-      // imageMobile={new ImgixImage(DATA.home.image4_mobile)}
-      // video={DATA.home.video1}
-      // videoMobile={DATA.home.video1}
+      image={data.images.boxes.half_box_04}
       modeCover
       element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
       elementFlexAlign={"flex-end"}
@@ -107,8 +103,8 @@ const Home = () => {
       >
         <Container>
           <Banner
-            image={data.images.landscape1}
-            imageMobile={data.images.products[0]}
+            image={data.images.boxes.full_box_03}
+            imageMobile={data.images.boxes.half_box_03}
             href={"/collection"}
             element={
               <BannerInner

@@ -49,6 +49,39 @@ const images = {
     ],
     alt: "landscape1.jpg"
   },
+  boxes: (() => {
+    let photos = {};
+
+    for (let i = 1; i <= 10; i++) {
+      let name = `full_box_${i < 10 ? "0" : ""}${i}`;
+
+      photos[name] = {
+        alt: name,
+        src: [
+          {
+            url: `/static/images/boxes/${name}.jpg`,
+            w: 3613,
+            h: 1400
+          }
+        ]
+      };
+
+      name = `half_box_${i < 10 ? "0" : ""}${i}`;
+
+      photos[name] = {
+        alt: name,
+        src: [
+          {
+            url: `/static/images/boxes/${name}.jpg`,
+            w: 1792,
+            h: 1400
+          }
+        ]
+      };
+    }
+
+    return photos;
+  })(),
   products: [
     {
       src: [
