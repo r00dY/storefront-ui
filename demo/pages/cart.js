@@ -18,6 +18,7 @@ import { Button } from "../theme/Button";
 import { Ledger } from "../theme/Ledger";
 import { Spacer } from "../theme/Spacer";
 import PageTitle from "../theme/PageTitle";
+import routerPush from "../helpers/routerPush";
 
 const cartGridContainerParams = {
   xs: 24,
@@ -88,7 +89,14 @@ const Cart = () => {
               />
               <Device desktop>
                 <Spacer />
-                <Button fitContainer>Checkout</Button>
+                <Button
+                  fitContainer
+                  onClick={() => {
+                    routerPush("/form1");
+                  }}
+                >
+                  Checkout
+                </Button>
               </Device>
             </div>
           </GridItem>
@@ -111,7 +119,14 @@ const Cart = () => {
         >
           <Container>
             <Ledger rows={[{ label: "Total", value: "$399.00" }]} />
-            <Button fitContainer>Checkout</Button>
+            <Button
+              fitContainer
+              onClick={() => {
+                routerPush("/form1");
+              }}
+            >
+              Checkout
+            </Button>
           </Container>
         </div>
       </Device>

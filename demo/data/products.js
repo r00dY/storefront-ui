@@ -12,6 +12,7 @@ let productImages = images.products;
 
 const products = [
   {
+    id: 1,
     name: "Transparent Bottle",
     price: {
       regular: "99",
@@ -43,6 +44,7 @@ const products = [
   },
 
   {
+    id: 2,
     name: "Long A-line Jersey Dress",
     price: {
       regular: "99",
@@ -58,6 +60,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 3,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -79,6 +82,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 4,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -100,6 +104,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 5,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -121,6 +126,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 6,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -142,6 +148,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 7,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -163,6 +170,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 8,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -184,6 +192,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 9,
     name: "Assymetric Tie Dress",
     price: {
       regular: "99",
@@ -215,6 +224,7 @@ const products = [
   },
 
   {
+    id: 10,
     name: "Long A-line Jersey Dress",
     price: {
       regular: "99",
@@ -230,6 +240,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 11,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -251,6 +262,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 12,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -272,6 +284,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 13,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -293,6 +306,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 14,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -314,6 +328,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 15,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -335,6 +350,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 16,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -356,6 +372,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 17,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -377,6 +394,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 18,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -398,6 +416,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 19,
     name: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
       regular: "129",
@@ -419,6 +438,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 20,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -440,6 +460,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 21,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -461,6 +482,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 22,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -482,6 +504,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 23,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -503,6 +526,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 24,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -524,6 +548,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 25,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -545,6 +570,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 26,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -566,6 +592,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 27,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -587,6 +614,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 28,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -608,6 +636,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 29,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",
@@ -629,6 +658,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
+    id: 30,
     name: "Shaped A-line Cotton Dress",
     price: {
       regular: "99",

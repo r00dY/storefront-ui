@@ -41,7 +41,7 @@ const ProgressSteps$ = props => {
               {...stepProps}
               label={step.label}
               href={step.href}
-              completed={index <= _lastCompleted}
+              completed={index < _lastCompleted}
               active={index === active}
               activate={() => onClick(index)}
             />

@@ -7,6 +7,7 @@ import {
   SelectNative$,
   StatefulSelectNative$
 } from "storefront-ui/SelectNative";
+import Device from "storefront-ui/Device";
 
 import { FormHeader } from "../theme/FormHeader";
 import { FormControl } from "../theme/FormControl";
@@ -15,6 +16,10 @@ import { Button } from "../theme/Button";
 import { ProgressSteps } from "../theme/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
+
+import { R } from "storefront-ui/Config";
+
+import routerPush from "../helpers/routerPush";
 
 import { rslin } from "responsive-helpers";
 
@@ -41,27 +46,29 @@ const Form1 = () => {
     <CheckoutPage>
       <Grid gutterVertical={20}>
         <GridItem>
-          <ProgressSteps
-            data={[
-              {
-                label: "Consumer information",
-                href: "#"
-              },
-              {
-                label: "Shipping method",
-                href: "#"
-              },
-              {
-                label: "Payment method",
-                href: "#"
-              }
-            ]}
-            active={0}
-            lastCompleted={0}
-            onClick={stepIndex => {
-              console.log("clicked step " + stepIndex);
-            }}
-          />
+          <Device desktop>
+            <ProgressSteps
+              data={[
+                {
+                  label: "Consumer information",
+                  href: "/form1"
+                },
+                {
+                  label: "Shipping method",
+                  href: "/form2"
+                },
+                {
+                  label: "Payment method",
+                  href: "/form3"
+                }
+              ]}
+              active={0}
+              lastCompleted={-1}
+              onClick={stepIndex => {
+                console.log("clicked step " + stepIndex);
+              }}
+            />
+          </Device>
         </GridItem>
         <GridItem
           css={css`
@@ -137,12 +144,22 @@ const Form1 = () => {
         <GridItem
           css={css`
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            ${R.from("md").css("justify-content: space-between;")}
+            ${R.to("sm").css("&>div{width: 100%;}")}
           `}
         >
           <div />
           <div>
-            <Button size={"large"}>Continue to shipping method</Button>
+            <Button
+              size={"large"}
+              fitContainer
+              onClick={() => {
+                routerPush("/form2");
+              }}
+            >
+              Continue to shipping method
+            </Button>
           </div>
         </GridItem>
       </Grid>

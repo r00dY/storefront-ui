@@ -12,6 +12,15 @@ import { Button } from "../../theme/Button";
 import { Ledger } from "../../theme/Ledger";
 
 import { useTheme } from "storefront-ui/Theme";
+import Device from "storefront-ui/Device";
+
+let products = [
+  data.products[0],
+  data.products[1],
+  data.products[2],
+  data.products[3],
+  data.products[4]
+];
 
 const CheckoutSidebar = props => {
   const theme = useTheme();
@@ -20,7 +29,7 @@ const CheckoutSidebar = props => {
     <>
       <FormHeader title={"Your Bag"} />
       <div>
-        {data.products.slice(0, 3).map((product, index) => (
+        {products.map((product, index) => (
           <div
             css={css`&:not(:last-of-type) {margin-bottom: ${
               theme.spacings.s40
@@ -36,26 +45,30 @@ const CheckoutSidebar = props => {
           </div>
         ))}
       </div>
-      <Divider />
-      <div
-        css={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: flex-end;
-        `}
-      >
-        <div
-          css={css`
-            flex-grow: 1;
-            margin-right: ${theme.spacings.s40}px;
-          `}
-        >
-          <FormControl label={"Gift card"}>
-            <StatefulInput />
-          </FormControl>
-        </div>
-        <Button>Apply</Button>
-      </div>
+      {!props.hideGiftCard && (
+        <>
+          <Divider />
+          <div
+            css={css`
+              display: flex;
+              justify-content: space-between;
+              align-items: flex-end;
+            `}
+          >
+            <div
+              css={css`
+                flex-grow: 1;
+                margin-right: ${theme.spacings.s40}px;
+              `}
+            >
+              <FormControl label={"Gift card"}>
+                <StatefulInput />
+              </FormControl>
+            </div>
+            <Button>Apply</Button>
+          </div>
+        </>
+      )}
       <Divider />
       <Ledger
         rows={[

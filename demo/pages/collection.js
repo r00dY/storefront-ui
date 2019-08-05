@@ -88,11 +88,64 @@ const stringOptions = [
   "Most popular"
 ];
 
-export default () => {
+const Filters = props => {
   const [filters, onChange] = useFiltersData(data.filters);
+
+  return (
+    <FiltersColumn
+      data={props.data.filters}
+      onChange={(key, val) => {
+        onChange(key, val);
+        props.onChange();
+      }}
+    />
+  );
+};
+
+function shuffle(array) {
+  var currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+
+  // While there remain elements to shuffle...
+  while (0 !== currentIndex) {
+    // Pick a remaining element...
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    // And swap it with the current element.
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+
+  return array;
+}
+
+let timeout;
+
+export default () => {
+  const [filters, onFiltersChange] = useFiltersData(data.filters);
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const [select1, setSelect1] = useState(stringOptions[0]);
   const theme = useTheme();
+
+  const [products, setProducts] = useState(data.products);
+  const [isLoading, setLoading] = useState(false);
+
+  const onChange = scrollTop => {
+    setLoading(true);
+    clearTimeout(timeout);
+
+    timeout = setTimeout(() => {
+      setProducts([...shuffle(products)]);
+      setLoading(false);
+
+      if (scrollTop) {
+        window.scrollTo({ top: 0 });
+      }
+    }, 500);
+  };
 
   const content = (
     <Container>
@@ -108,11 +161,11 @@ export default () => {
               data={[
                 {
                   label: "Food",
-                  href: "#"
+                  href: "/collection"
                 },
                 {
                   label: "Snacks",
-                  href: "#"
+                  href: "/collection"
                 }
               ]}
             />
@@ -148,10 +201,17 @@ export default () => {
           ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
         `}
       >
-        <GridItem params={{ xs: 0, md: 6 }}>
-          <FiltersColumn data={filters} onChange={onChange} />
+        <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
+          <FiltersColumn
+            data={filters}
+            onChange={(key, val) => {
+              onFiltersChange(key, val);
+              onChange();
+            }}
+          />
         </GridItem>
-        <GridItem params={{ xs: 24, md: 18 }}>
+
+        <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
           <Grid gutterVertical={16}>
             <GridItem
               css={css`
@@ -180,16 +240,28 @@ export default () => {
                 </div>
                 <Select
                   options={stringOptions}
-                  onChange={setSelect1}
+                  onChange={val => {
+                    setSelect1(val);
+                    onChange();
+                  }}
                   value={select1}
                 />
               </Device>
             </GridItem>
-            {[...data.products].map((product, index) => (
-              <GridItem params={{ xs: 12, md: 8, lg: 8, xl: 6 }} key={index}>
+
+            {[...products].map((product, index) => (
+              <GridItem
+                params={{ xs: 12, md: 8, lg: 8, xl: 6 }}
+                key={product.id}
+                css={css`
+                  opacity: ${isLoading ? 0.3 : 1};
+                  transition: opacity 0.15s;
+                `}
+              >
                 <ProductCardTheme1 product={product} />
               </GridItem>
             ))}
+
             <div
               css={css`
                 display: flex;
@@ -201,7 +273,9 @@ export default () => {
               <StatefulPagination
                 count={20}
                 initPage={5}
-                onChange={page => console.log(page)}
+                onChange={page => {
+                  onChange(true);
+                }}
               />
             </div>
           </Grid>
@@ -253,13 +327,26 @@ export default () => {
                 </Button>
               </GridItem>
               <GridItem params={12}>
-                <Button fitContainer={true}>Apply (55)</Button>
+                <Button
+                  fitContainer={true}
+                  onClick={() => {
+                    setFiltersModalOpened(false);
+                    onChange(true);
+                  }}
+                >
+                  Apply (55)
+                </Button>
               </GridItem>
             </Grid>
           </div>
         )}
       >
-        <FiltersColumn data={filters} onChange={onChange} />
+        <FiltersColumn
+          data={filters}
+          onChange={(key, val) => {
+            onFiltersChange(key, val);
+          }}
+        />
       </Modal>
     </div>
   );

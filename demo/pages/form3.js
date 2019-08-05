@@ -4,7 +4,7 @@ import { FormHeader } from "../theme/FormHeader";
 import { StatefulRadioGroup, Radio } from "../theme/Radio";
 import { Button } from "../theme/Button";
 import IconArrowBack from "../../data/svg/arrow_back.svg";
-
+import { R } from "storefront-ui/Config";
 import RadioBorder from "../theme/RadioBorder";
 import OrderDetails from "../theme/OrderDetails";
 
@@ -17,6 +17,7 @@ import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import Device from "storefront-ui/Device";
 
 import { useTheme } from "storefront-ui/Theme";
 import React, { useState } from "react";
@@ -24,6 +25,12 @@ import { ProgressSteps } from "../theme/ProgressSteps";
 import CheckoutSidebar from "../components/CheckoutSidebar";
 import { Checkbox } from "../theme/Checkbox";
 import CheckoutPage from "../components/CheckoutPage";
+import routerPush from "../helpers/routerPush";
+
+import IconAmex from "../svg/amex.svg";
+import IconVisa from "../svg/visa.svg";
+import IconMastercard from "../svg/mastercard.svg";
+import IconPaypal from "../svg/paypal.svg";
 
 const Form3 = () => {
   const theme = useTheme();
@@ -35,27 +42,29 @@ const Form3 = () => {
     <CheckoutPage>
       <Grid gutterVertical={20}>
         <GridItem>
-          <ProgressSteps
-            data={[
-              {
-                label: "Consumer information",
-                href: "#"
-              },
-              {
-                label: "Shipping method",
-                href: "#"
-              },
-              {
-                label: "Payment method",
-                href: "#"
-              }
-            ]}
-            active={2}
-            lastCompleted={2}
-            onClick={stepIndex => {
-              console.log("clicked step " + stepIndex);
-            }}
-          />
+          <Device desktop>
+            <ProgressSteps
+              data={[
+                {
+                  label: "Consumer information",
+                  href: "/form1"
+                },
+                {
+                  label: "Shipping method",
+                  href: "/form2"
+                },
+                {
+                  label: "Payment method",
+                  href: "/form3"
+                }
+              ]}
+              active={2}
+              lastCompleted={2}
+              onClick={stepIndex => {
+                console.log("clicked step " + stepIndex);
+              }}
+            />
+          </Device>
         </GridItem>
         <GridItem
           css={css`
@@ -66,15 +75,18 @@ const Form3 = () => {
             rows={[
               {
                 label: "Contact",
-                value: "john@mail.com"
+                value: "john@mail.com",
+                href: "/form1"
               },
               {
                 label: "Ship to",
-                value: "Poland, Gdansk PA 16754, United States"
+                value: "Poland, Gdansk PA 16754, United States",
+                href: "/form1"
               },
               {
                 label: "Method",
-                value: "Free Shipping - Free"
+                value: "Free Shipping - Free",
+                href: "/form2"
               }
             ]}
           />
@@ -95,9 +107,50 @@ const Form3 = () => {
             initialState={{ value: "payment1" }}
             name={"payment"}
           >
-            <RadioBorder value="payment1">Credit card</RadioBorder>
-            <RadioBorder value="payment2">PayPal</RadioBorder>
-            <RadioBorder value="payment3">Amazon Pay</RadioBorder>
+            <RadioBorder
+              value="payment1"
+              rightLabel={
+                <div
+                  css={css`
+                    display: flex;
+                    svg {
+                      height: 24px;
+                      width: auto;
+                      margin-left: 8px;
+                    }
+                  `}
+                >
+                  <IconVisa />
+                  <IconMastercard />
+                  <IconAmex />
+                </div>
+              }
+            >
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                  height: 100%;
+                `}
+              >
+                Credit card
+              </div>
+            </RadioBorder>
+            <RadioBorder value="payment2">
+              <div
+                css={css`
+                  display: flex;
+                  align-items: center;
+                `}
+              >
+                <IconPaypal
+                  css={css`
+                    width: auto;
+                    height: 20px;
+                  `}
+                />
+              </div>
+            </RadioBorder>
           </StatefulRadioGroup>
         </GridItem>
 
@@ -136,20 +189,38 @@ const Form3 = () => {
         <GridItem
           css={css`
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            ${R.from("md").css("justify-content: space-between;")}
+            ${R.to("sm").css("&>div{width: 100%;}")}
           `}
         >
-          <div>
+          <div
+            css={css`
+              ${R.to("sm").css("order: 1; width: 100%;")}
+            `}
+          >
             <Button
               size={"large"}
               kind={"minimal"}
               startEnhancer={<IconArrowBack />}
+              onClick={() => {
+                routerPush("/form2");
+              }}
+              fitContainer
             >
               Return to shipping method
             </Button>
           </div>
           <div>
-            <Button size={"large"}>Complete order</Button>
+            <Button
+              size={"large"}
+              fitContainer
+              onClick={() => {
+                routerPush("/summary");
+              }}
+            >
+              Complete order
+            </Button>
           </div>
         </GridItem>
       </Grid>
