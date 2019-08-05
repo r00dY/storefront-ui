@@ -31,11 +31,14 @@ import Device from "storefront-ui/Device";
 
 import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import useAddToCart from "../helpers/useAddToCart";
 
 const Product = () => {
   const theme = useTheme();
   const direction = useScrollDirection();
   const segment = useScrollSegment({ 400: "not-top" });
+
+  const [addToCart, isLoading] = useAddToCart();
 
   let boxes = [];
 
@@ -157,7 +160,11 @@ const Product = () => {
                   <Price price={product.price} />
                 </>
               }
-              right={<Button>Add to cart</Button>}
+              right={
+                <Button onClick={addToCart} isLoading={isLoading}>
+                  Add to cart
+                </Button>
+              }
               height={50}
             />
           </Container>

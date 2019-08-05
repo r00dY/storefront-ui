@@ -188,13 +188,17 @@ const MenuDesktop = props => {
                 background-color: white;
                 transition: all 0.15s ease-out;
 
-                transform: ${segment === "hideable" && direction === true
-                  ? "translateY(-100%)"
-                  : "none"};
+                /*transform: ${
+                  segment === "hideable" && direction === true
+                    ? "translateY(-100%)"
+                    : "none"
+                };*/
 
-                box-shadow: ${segment === "hideable" || segment === "not-top"
-                  ? "0 4px 16px rgba(0,0,0,0.16)"
-                  : "none"};
+                box-shadow: ${
+                  segment === "hideable" || segment === "not-top"
+                    ? "0 4px 16px rgba(0,0,0,0.16)"
+                    : "none"
+                };
               `}
             >
               <Container>

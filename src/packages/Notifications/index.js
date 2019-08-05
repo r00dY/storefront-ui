@@ -73,45 +73,6 @@ class NotificationsContainer extends React.Component {
   }
 
   render() {
-    const theme = {
-      notifications: {
-        topLeft: {
-          x: 16,
-          y: 16,
-          spacer: 8,
-          width: 300
-        },
-        topRight: {
-          x: 16,
-          y: 16,
-          spacer: 8,
-          width: 300
-        },
-        bottomLeft: {
-          x: 16,
-          y: 16,
-          spacer: 8,
-          width: 300
-        },
-        bottomRight: {
-          x: 16,
-          y: 16,
-          spacer: 8,
-          width: 300
-        },
-        mobileTop: {
-          x: 0,
-          y: 0,
-          spacer: 0
-        },
-        mobileBottom: {
-          x: 16,
-          y: 16,
-          spacer: 8
-        }
-      }
-    };
-
     return (
       <ThemeContext.Consumer>
         {theme => (

@@ -13,6 +13,30 @@ import data from "../data";
 import PageTitle from "../theme/PageTitle";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import { Button } from "../theme/Button";
+import useAddToCart from "../helpers/useAddToCart";
+
+const ProductCartWithButton = ({ product }) => {
+  const [addToCart, isLoading] = useAddToCart();
+  const theme = useTheme();
+
+  return (
+    <>
+      <ProductCardTheme1 product={product} />
+      <div
+        css={css`
+          flex-grow: 1;
+          display: flex;
+          align-items: flex-end;
+          margin-top: ${theme.spacings.s40}px;
+        `}
+      >
+        <Button fitContainer onClick={addToCart} isLoading={isLoading}>
+          Add to cart
+        </Button>
+      </div>
+    </>
+  );
+};
 
 const Wishlist = () => {
   const router = useRouter();
@@ -41,17 +65,7 @@ const Wishlist = () => {
                     flex-direction: column;
                   `}
                 >
-                  <ProductCardTheme1 product={product} />
-                  <div
-                    css={css`
-                      flex-grow: 1;
-                      display: flex;
-                      align-items: flex-end;
-                      margin-top: ${theme.spacings.s40}px;
-                    `}
-                  >
-                    <Button fitContainer>Add to cart</Button>
-                  </div>
+                  <ProductCartWithButton product={product} />
                 </GridItem>
               ))}
             </Grid>

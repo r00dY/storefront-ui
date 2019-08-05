@@ -9,7 +9,7 @@ import IconClose from "./close.svg";
 import { rs, rslin } from "responsive-helpers";
 import { R, F, C, L, Color } from "storefront-ui/Config";
 
-import Image from "storefront-ui/Image";
+import Image, { ImageZoomable } from "storefront-ui/Image";
 import StickyColumn from "storefront-ui/StickyColumn";
 import Container from "storefront-ui/Container";
 import SwipeableItemsContainer, {
@@ -21,11 +21,17 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
 
-import HeartIcon from "./outline-favorite_border-18px.svg";
+import IconHeart from "../../svg/heart.svg";
+import IconHeartFill from "../../svg/heart_fill.svg";
+
 import { Button } from "../Button";
 import { ButtonRaw } from "../ButtonRaw";
 import { ButtonGroup } from "../ButtonGroup";
 import Price from "../Price";
+
+import { showNotification } from "storefront-ui/Notifications";
+import Notification from "../../components/Notification";
+import useAddToCart from "../../helpers/useAddToCart";
 
 const MetaRow = styled.div`
   &:not(:first-of-type) {
@@ -39,6 +45,10 @@ function ProductHead(props) {
   const [opened, setOpened] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
   const [config, setConfig] = useState(null);
+
+  const [addToCart, isLoading] = useAddToCart();
+
+  const [isFav, setFav] = useState(false);
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
@@ -115,6 +125,7 @@ function ProductHead(props) {
       })}
     </div>
   );
+
   let metaElem = (
     <div>
       <Device desktop>
@@ -129,6 +140,8 @@ function ProductHead(props) {
           css={css`
             margin-bottom: 10px;
           `}
+          onClick={addToCart}
+          isLoading={isLoading}
         >
           Add to Cart
         </Button>
@@ -136,9 +149,14 @@ function ProductHead(props) {
           size={"large"}
           kind={"secondary"}
           fitContainer={true}
-          endEnhancer={() => <HeartIcon />}
+          endEnhancer={() => {
+            return isFav ? <IconHeartFill /> : <IconHeart />;
+          }}
+          onClick={() => {
+            setFav(!isFav);
+          }}
         >
-          Add to wishlist
+          {isFav ? "Saved in wishlist" : "Add to wishlist"}
         </Button>
       </MetaRow>
       <MetaRow>
@@ -234,7 +252,7 @@ function ProductHead(props) {
                 onClick={() => setOpened(true)}
                 ref={items[index]}
               >
-                <Image image={item} />
+                <ImageZoomable image={item} />
               </div>
             ))}
           </div>
@@ -313,7 +331,7 @@ function ProductHead(props) {
               >
                 {props.mosaicImages.map((item, index) => (
                   <div key={index}>
-                    <Image image={item} />
+                    <ImageZoomable image={item} />
                   </div>
                 ))}
               </div>

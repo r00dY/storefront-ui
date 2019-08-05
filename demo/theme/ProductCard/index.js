@@ -1,18 +1,58 @@
-import React from "react";
 import ProductCard$ from "storefront-ui/ProductCard";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import IconFav from "./outline-favorite_border-24px.svg";
+import IconHeart from "../../svg/heart.svg";
+import IconHeartFill from "../../svg/heart_fill.svg";
+
 import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 import Price from "../Price";
 import { rslin } from "responsive-helpers";
 
-const overrides = {
-  Price: ({ price }) => <Price price={price} />
+import React, { useState, useEffect } from "react";
+
+// Temporary Favourite button mocking state management (saving to favs).
+const FavouriteButton = ({ product }) => {
+  const [isFav, setFav] = useState(false);
+
+  return (
+    <ButtonRaw$
+      onClick={() => {
+        setFav(!isFav);
+      }}
+      css={css`
+        pointer-events: all;
+      `}
+    >
+      <div
+        css={css`
+          background: rgba(255, 255, 255, 0.8);
+          width: 34px;
+          height: 34px;
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+          svg {
+            width: 16px;
+            height: 16px;
+          }
+        `}
+      >
+        {isFav && <IconHeartFill />}
+        {!isFav && <IconHeart />}
+      </div>
+    </ButtonRaw$>
+  );
 };
-const overrides2 = {
+
+const overrides = props => ({
+  Price: ({ price }) => <Price price={price} />
+});
+
+const overrides2 = props => ({
   Price: ({ price }) => <Price price={price} />,
   Name: {
     style: ({ $theme }) => `margin-bottom: ${$theme.spacings.s30}px;`
@@ -45,31 +85,7 @@ const overrides2 = {
           justify-content: flex-end;
         `}
       >
-        <ButtonRaw$
-          onClick={onSaveToFavourites}
-          css={css`
-            pointer-events: all;
-          `}
-        >
-          <div
-            css={css`
-              background: rgba(255, 255, 255, 0.8);
-              width: 34px;
-              height: 34px;
-              border-radius: 50%;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
-              svg {
-                width: 16px;
-                height: 16px;
-              }
-            `}
-          >
-            <IconFav />
-          </div>
-        </ButtonRaw$>
+        <FavouriteButton product={props.product} />
       </div>
       <div
         css={css`
@@ -92,10 +108,13 @@ const overrides2 = {
       {price}
     </>
   )
-};
-const ProductCard = props => <ProductCard$ {...props} overrides={overrides} />;
-const ProductCardTheme1 = props => (
-  <ProductCard$ {...props} overrides={overrides2} />
+});
+
+const ProductCard = props => (
+  <ProductCard$ {...props} overrides={overrides(props)} />
 );
+const ProductCardTheme1 = props => {
+  return <ProductCard$ {...props} overrides={overrides2(props)} />;
+};
 
 export { ProductCard, ProductCardTheme1 };

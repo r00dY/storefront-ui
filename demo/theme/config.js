@@ -2,14 +2,19 @@ import { createTheme } from "storefront-ui/Theme";
 import Layout from "storefront-ui/Layout";
 import Font from "../../src/packages/Font";
 
-import { rslin } from "responsive-helpers";
+import { rslin, rs } from "responsive-helpers";
+
+const layout = new Layout({
+  container: {
+    xs: "90vw",
+    1921: 1728
+  },
+  gutter: 20,
+  colNumber: 24
+});
 
 const theme = createTheme({
-  layout: new Layout({
-    container: "90vw",
-    gutter: 20,
-    colNumber: 24
-  }),
+  layout: layout,
   borders: {
     useRoundedCorners: false
   },
@@ -64,6 +69,20 @@ const theme = createTheme({
     font-size: 10px;
     font-weight: 400;
   `)
+  },
+  notifications: {
+    topLeft: {
+      x: layout.margin,
+      y: 70 + 16,
+      spacer: 16,
+      width: 350
+    },
+    topRight: {
+      x: layout.margin,
+      y: 70 + 16,
+      spacer: 16,
+      width: 350
+    }
   }
 });
 
