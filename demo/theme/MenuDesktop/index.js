@@ -135,7 +135,7 @@ const MenuDesktop = props => {
   const [opened, setOpened] = useState(false);
   const [profileOpened, setProfileOpened] = useState(false);
 
-  const basketProducts = data.products;
+  const basketProducts = data.products.slice(0, 5);
 
   const theme = useTheme();
   const direction = useScrollDirection();

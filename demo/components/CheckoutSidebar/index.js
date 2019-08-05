@@ -20,7 +20,7 @@ const CheckoutSidebar = props => {
     <>
       <FormHeader title={"Your Bag"} />
       <div>
-        {data.products.map((product, index) => (
+        {data.products.slice(0, 3).map((product, index) => (
           <div
             css={css`&:not(:last-of-type) {margin-bottom: ${
               theme.spacings.s40
