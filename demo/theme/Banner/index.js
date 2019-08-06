@@ -17,7 +17,9 @@ const BannerButton = props => {
   const theme = useTheme();
   return (
     <div>
-      <Button href={props.href}>{props.label}</Button>
+      <Button href={props.href} kind={"white"}>
+        {props.label}
+      </Button>
     </div>
   );
 };
@@ -28,13 +30,14 @@ const BannerInner = props => {
     <div>
       <div
         css={css`
-          margin-bottom: ${theme.spacings.s80}px;
+          margin-bottom: ${theme.spacings.s40}px;
         `}
       >
         {props.label && (
           <div
             css={css`
               ${theme.fonts.body1.css}
+              color: white;
             `}
           >
             {props.label}
@@ -44,6 +47,8 @@ const BannerInner = props => {
           <div
             css={css`
               ${theme.fonts.h2.css}
+              color: white;
+              margin-top: ${theme.spacings.s20}px;
             `}
           >
             {props.title}
@@ -53,6 +58,7 @@ const BannerInner = props => {
           <div
             css={css`
               ${theme.fonts.body1.css}
+              color: white;
               ${props.hideTextOnMobile ? R.to("sm").css("display: none;") : ""}
             `}
           >
@@ -118,6 +124,8 @@ const Banner = props => {
       css={css`
         position: relative;
         cursor: pointer;
+        border-radius: 4px;
+        overflow: hidden;
       `}
       onClick={() => routerPush(props.href)}
     >

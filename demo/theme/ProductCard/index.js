@@ -27,17 +27,22 @@ const FavouriteButton = ({ product }) => {
     >
       <div
         css={css`
-          background: rgba(255, 255, 255, 0.8);
+          /*background: rgba(255, 255, 255, 0.8);*/
           width: 34px;
           height: 34px;
           border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
-          box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);
+          /*box-shadow: 0 0 2px rgba(0, 0, 0, 0.25);*/
           svg {
-            width: 16px;
-            height: 16px;
+            width: 20px;
+            height: 20px;
+          }
+          transition: opacity 0.3s;
+          opacity: ${isFav ? 1 : 0.3};
+          &:hover {
+            opacity: 1;
           }
         `}
       >
@@ -76,6 +81,12 @@ const overrides2 = props => ({
         color: ${type === "discount" ? $theme.colors.negative : "black"};
              
       `
+  },
+  ImageContainer: {
+    style: `
+      overflow: hidden;
+      border-radius: 4px;
+    `
   },
   ImageOverlay: ({ badges, onSaveToFavourites }) => (
     <div

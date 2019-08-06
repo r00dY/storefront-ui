@@ -196,7 +196,7 @@ const MenuDesktop = props => {
 
                 border-bottom: ${
                   segment === "hideable" || segment === "not-top"
-                    ? `1px solid ${theme.colors.mono300.css};`
+                    ? `1px solid ${theme.colors.mono200.css};`
                     : "none"
                 };
               `}

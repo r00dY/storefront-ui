@@ -16,6 +16,8 @@ const CategoryCard = props => {
       css={css`
         position: relative;
         cursor: pointer;
+        border-radius: 12px;
+        overflow: hidden;
       `}
       onClick={() => routerPush(href)}
     >

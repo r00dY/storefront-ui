@@ -95,9 +95,8 @@ const Home = () => {
 
       <div
         css={css`
-          padding-top: 100px;
           & > div:not(:first-of-type) {
-            ${rslin(theme.spacings.s120, theme.spacings.s180).css("margin-top")}
+            ${rslin(theme.spacings.s120, theme.spacings.s160).css("margin-top")}
           }
         `}
       >
