@@ -6,10 +6,11 @@ import { rslin } from "responsive-helpers";
 import { R, L } from "storefront-ui/Config";
 import Container from "storefront-ui/Container";
 import SectionTitle from "../SectionTitle";
-
 import { useTheme } from "storefront-ui/Theme";
 
 function TwoBoxes(props) {
+  const theme = useTheme();
+
   return (
     <div>
       <Container>
@@ -17,8 +18,8 @@ function TwoBoxes(props) {
         <div
           css={css`
             display: grid;
-            grid-row-gap: 10px;
-            ${L.gutter.css("grid-column-gap")}
+            ${theme.layout.gutter.css("grid-grid-gap")}
+            ${theme.layout.gutter.css("grid-column-gap")}
             ${R.from("md").css("grid-template-columns: 1fr 1fr;")}
           `}
         >

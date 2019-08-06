@@ -24,6 +24,7 @@ import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import SectionTitle from "../theme/SectionTitle";
 import CategoryCard from "../theme/CategoryCard";
+import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
 const Home = () => {
   const theme = useTheme();
@@ -124,16 +125,39 @@ const Home = () => {
           <Container>
             <SectionTitle>Top Categories</SectionTitle>
             <Grid gutterVertical={L.gutter}>
-              {categories.map((category, index) => (
-                <GridItem key={index} params={{ xs: 12, sm: 12, lg: 6 }}>
-                  <CategoryCard
-                    image={category.image}
-                    text={category.name}
-                    href={"/collection"}
-                  />
-                </GridItem>
-              ))}
+              {[
+                "Bars",
+                "Candy",
+                "Chips & Pretzels",
+                "Cookies",
+                "Crackers & Crisps",
+                "Fruit & Vegetable Snacks",
+                "Jerky",
+                "Popcorn & Puffs"
+              ].map((category, index) => {
+                return (
+                  <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
+                    <CategoryCard
+                      image={data.images["landscape" + ((index % 4) + 2)]}
+                      text={category}
+                      href={"/collection"}
+                    />
+                  </GridItem>
+                );
+              })}
             </Grid>
+
+            {/*<Grid gutterVertical={L.gutter}>*/}
+            {/*{categories.map((category, index) => (*/}
+            {/*<GridItem key={index} params={{ xs: 12, sm: 12, lg: 6 }}>*/}
+            {/*<CategoryCard*/}
+            {/*image={category.image}*/}
+            {/*text={category.name}*/}
+            {/*href={"/collection"}*/}
+            {/*/>*/}
+            {/*</GridItem>*/}
+            {/*))}*/}
+            {/*</Grid>*/}
           </Container>
         </div>
       </div>

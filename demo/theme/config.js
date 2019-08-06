@@ -1,15 +1,16 @@
 import { createTheme } from "storefront-ui/Theme";
 import Layout from "storefront-ui/Layout";
-import Font from "../../src/packages/Font";
+import Font from "storefront-ui/Font";
+import Color from "storefront-ui/Color";
 
 import { rslin, rs } from "responsive-helpers";
 
 const layout = new Layout({
   container: {
     xs: "90vw",
-    1921: 1728
+    1921: 1680
   },
-  gutter: 20,
+  gutter: 16,
   colNumber: 24
 });
 
@@ -83,6 +84,9 @@ const theme = createTheme({
       spacer: 16,
       width: 350
     }
+  },
+  colors: {
+    primary: new Color("#1aa77d")
   }
 });
 

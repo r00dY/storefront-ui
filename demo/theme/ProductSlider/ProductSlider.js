@@ -22,16 +22,18 @@ function ProductSlider(props) {
 
   const _arrowCss = `
         width: 50px; height: 50px; border-radius: 50%;
-        background-color: rgba(255,255,255,0.6);
+        background-color: white;
+        opacity: 0.8;
+        box-shadow: ${theme.lighting.shadow400};
         display: flex;
         align-items: center; justify-content: center;
         transition: all 100ms;
         svg {
             transition: all 100ms;
-            fill: ${theme.colors.mono400.css};
+            fill: ${theme.colors.mono800.css};
         }
         &:hover {
-            background-color: rgba(250,250,250,1);
+            opacity: 1;
             svg {fill: ${theme.colors.mono800.css};}
         }
     `;

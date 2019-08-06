@@ -15,6 +15,15 @@ const overrides = {
             `
                 : ""
             }
+            ${
+              $kind === "secondary"
+                ? `
+                background: white;
+                border: 1px solid ${$theme.colors.primary.css};
+              `
+                : ""
+            }
+            }
         `
   }
 };

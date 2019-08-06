@@ -43,7 +43,7 @@ const Footer = props => {
           border-top: 1px solid ${theme.colors.mono200.css};
 
           ${rslin(theme.spacings.s100, theme.spacings.s120).css("padding-top")}
-          ${rslin(theme.spacings.s120, theme.spacings.s180).css("margin-top")}
+          ${rslin(theme.spacings.s120, theme.spacings.s160).css("margin-top")}
         `}
       >
         <Container>
