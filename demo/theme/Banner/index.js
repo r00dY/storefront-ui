@@ -34,7 +34,7 @@ const BannerInner = props => {
         {props.label && (
           <div
             css={css`
-              ${theme.fonts.caption.css}
+              ${theme.fonts.body1.css}
             `}
           >
             {props.label}

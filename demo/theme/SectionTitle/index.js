@@ -13,7 +13,7 @@ function SectionTitle(props) {
   return (
     <div
       css={css`
-        ${theme.fonts.h3.css}
+        ${theme.fonts.h5.css}
         ${rslin(theme.spacings.s40, theme.spacings.s80).css("margin-bottom")}
       `}
     >

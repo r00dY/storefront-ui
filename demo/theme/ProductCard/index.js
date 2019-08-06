@@ -54,14 +54,28 @@ const overrides = props => ({
 
 const overrides2 = props => ({
   Price: ({ price }) => <Price price={price} />,
+
+  Description: {
+    style: ({ $theme }) => `
+      margin-bottom: ${$theme.spacings.s30}px;
+      ${$theme.fonts.body2.css}
+      `
+  },
   Name: {
-    style: ({ $theme }) => `margin-bottom: ${$theme.spacings.s30}px;`
+    style: ({ $theme }) => `
+      margin-bottom: ${$theme.spacings.s30}px;
+      ${$theme.fonts.body1.css}
+      `
   },
   Badge: {
     style: ({ $theme, type }) =>
-      `padding: ${$theme.spacings.s10}px; border-radius: ${
-        $theme.borders.radius200
-      }; `
+      `padding: ${$theme.spacings.s20}px ${
+        $theme.spacings.s30
+      }px; border-radius: ${$theme.borders.radius200}; 
+        background: white;
+        color: ${type === "discount" ? $theme.colors.negative : "black"};
+             
+      `
   },
   ImageOverlay: ({ badges, onSaveToFavourites }) => (
     <div

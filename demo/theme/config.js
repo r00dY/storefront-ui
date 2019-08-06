@@ -37,7 +37,7 @@ const theme = createTheme({
     h5: new Font(`
     font-family: sans-serif;
     ${rslin(20, 24).css("font-size")}
-    font-weight: 600;
+    font-weight: 500;
   `),
     h4: new Font(`
     font-family: sans-serif;

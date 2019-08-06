@@ -194,9 +194,9 @@ const MenuDesktop = props => {
                     : "none"
                 };*/
 
-                box-shadow: ${
+                border-bottom: ${
                   segment === "hideable" || segment === "not-top"
-                    ? "0 4px 16px rgba(0,0,0,0.16)"
+                    ? `1px solid ${theme.colors.mono300.css};`
                     : "none"
                 };
               `}

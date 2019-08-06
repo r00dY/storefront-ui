@@ -107,10 +107,9 @@ function ProductSlider(props) {
       <Container>
         <div
           css={css`
-            ${theme.fonts.h4.css} ${rslin(
-              theme.spacings.s20,
-              theme.spacings.s40
-            ).css("margin-bottom")}
+            ${rslin(theme.spacings.s20, theme.spacings.s40).css(
+              "margin-bottom"
+            )}
           `}
         >
           <SectionTitle>{props.title}</SectionTitle>

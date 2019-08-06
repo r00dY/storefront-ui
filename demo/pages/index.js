@@ -110,7 +110,6 @@ const Home = () => {
               <BannerInner
                 label={"Truly Transparent"}
                 title={"Transparent Bottle"}
-                text={"Don't bother about color anymore"}
                 hideTextOnMobile
               />
             }
