@@ -32,6 +32,10 @@ export const rootStyles = ({ $theme }) => `
     cursor: default;
     color: black;
   }
+  
+  &:focus {
+    outline: none;
+  }
 `;
 
 export const RootStyled = styled("button", rootStyles);

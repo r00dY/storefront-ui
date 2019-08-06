@@ -61,7 +61,7 @@ export const Select = props => {
         Popover: ({ popoverProps }) => (
           <Popover
             {...popoverProps}
-            placement={Popover.PLACEMENT.bottomRight}
+            placement={props.placement || Popover.PLACEMENT.bottomRight}
           />
         ),
         Modal: ({ modalProps }) => <Modal {...modalProps} header={"Sort by"} />

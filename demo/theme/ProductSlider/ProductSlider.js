@@ -57,9 +57,9 @@ function ProductSlider(props) {
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer
       mode={"horizontal"}
-      gutter={L.gutter}
-      offsetBefore={L.margin}
-      offsetAfter={L.margin}
+      gutter={theme.layout.gutter}
+      offsetBefore={theme.layout.margin}
+      offsetAfter={theme.layout.margin}
       itemsVisible={{
         xs: 1.33,
         sm: 2.33,
@@ -77,10 +77,11 @@ function ProductSlider(props) {
             <ArrowRight />
           </ButtonRaw>
         ),
-        offset: L.margin.subtract(25),
+        offset: theme.layout.margin.subtract(25),
         hideWhenInactive: true,
         hideOnTouchDevices: true
       }}
+      snap={"center"}
     >
       {props.boxes.map((box, index) => {
         return (
@@ -116,23 +117,23 @@ function ProductSlider(props) {
         </div>
       </Container>
       {swiper.element}
-      {!props.hiddenScrollbar && (
-        <Container
-          css={css`
-            ${R.from("md").css(`
-                            padding-left: 10%;
-                            padding-right: 10%;
-                        `)}
-            ${rslin(S.s3, S.s6).css("padding-top")}
-          `}
-        >
-          <ScrollBar
-            swipeableItemsContainer={swiper}
-            trackColor={C.grey5}
-            backgroundColor={C.grey20}
-          />
-        </Container>
-      )}
+      {/*{!props.hiddenScrollbar && (*/}
+      {/*<Container*/}
+      {/*css={css`*/}
+      {/*${R.from("md").css(`*/}
+      {/*padding-left: 10%;*/}
+      {/*padding-right: 10%;*/}
+      {/*`)}*/}
+      {/*${rslin(S.s3, S.s6).css("padding-top")}*/}
+      {/*`}*/}
+      {/*>*/}
+      {/*<ScrollBar*/}
+      {/*swipeableItemsContainer={swiper}*/}
+      {/*trackColor={C.grey5}*/}
+      {/*backgroundColor={C.grey20}*/}
+      {/*/>*/}
+      {/*</Container>*/}
+      {/*)}*/}
     </div>
   );
 }

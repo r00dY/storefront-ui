@@ -81,12 +81,54 @@ const NavBarCollection = props => {
     </div>
   );
 };
+
 const stringOptions = [
   "Newest",
   "Price (high to low)",
   "Price (low to high)",
   "Most popular"
 ];
+
+const FilterPills = ({ filters, onChange }) => {
+  const theme = useTheme();
+
+  return (
+    <div>
+      {filters.map(filter => {
+        if (filter.type === "range") {
+          let string;
+
+          if (filter.value.from && filter.value.to) {
+            string = `${filter.value.from}${filter.unit} - ${filter.value.to}${
+              filter.unit
+            }`;
+          } else if (filter.value.from) {
+            string = `> ${filter.value.from}${filter.unit}`;
+          } else if (filter.value.to) {
+            string = `< ${filter.value.to}${filter.unit}`;
+          }
+
+          if (string) {
+            return (
+              <div
+                css={css`
+                  box-sizing: content-box;
+                  background-color: #f0f0f0;
+                  color: black;
+                  padding: 8px 12px;
+                  ${theme.fonts.body2}
+                  border-radius: 12px;
+                `}
+              >
+                {string}
+              </div>
+            );
+          }
+        }
+      })}
+    </div>
+  );
+};
 
 const Filters = props => {
   const [filters, onChange] = useFiltersData(data.filters);
@@ -229,6 +271,8 @@ export default () => {
               >
                 {data.products.length} items
               </div>
+              <FilterPills filters={filters} onChange={onChange} />
+
               <Device desktop>
                 <div
                   css={css`

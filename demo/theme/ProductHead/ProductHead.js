@@ -33,6 +33,8 @@ import { showNotification } from "storefront-ui/Notifications";
 import Notification from "../../components/Notification";
 import useAddToCart from "../../helpers/useAddToCart";
 
+import { Select } from "../../theme/Select";
+
 const MetaRow = styled.div`
   &:not(:first-of-type) {
     ${rslin(40, 50).css("margin-top")}
@@ -133,6 +135,18 @@ function ProductHead(props) {
         <MetaRow>{VARIANTS}</MetaRow>
       </Device>
       <MetaRow>{props.sizes}</MetaRow>
+
+      <MetaRow>
+        <div
+          css={css`
+            ${theme.fonts.body2.css}
+            margin-bottom: 16px;
+          `}
+        >
+          Pick your variant
+        </div>
+      </MetaRow>
+
       <MetaRow>
         <Button
           size={"large"}
