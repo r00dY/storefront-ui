@@ -132,6 +132,16 @@ function ProductHead(props) {
       })}
     </div>
   );
+
+  const onAddToCartClick = () => {
+    if (size) {
+      addToCart();
+    } else {
+      setAddToBasketPending(true);
+      setSizeSelectOpen(true);
+    }
+  };
+
   let metaElem = (
     <div>
       <Device desktop>
@@ -180,14 +190,7 @@ function ProductHead(props) {
             css={css`
               margin-bottom: 10px;
             `}
-            onClick={() => {
-              if (size) {
-                addToCart();
-              } else {
-                setAddToBasketPending(true);
-                setSizeSelectOpen(true);
-              }
-            }}
+            onClick={onAddToCartClick}
             isLoading={isLoading}
           >
             Add to Cart
