@@ -16,7 +16,7 @@ import { Button } from "../theme/Button";
 import useAddToCart from "../helpers/useAddToCart";
 
 const ProductCartWithButton = ({ product }) => {
-  const [addToCart, isLoading] = useAddToCart();
+  const [addToCart, isLoading] = useAddToCart(product);
   const theme = useTheme();
 
   return (

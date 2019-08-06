@@ -76,11 +76,13 @@ const Select$ = props => {
     onBlur,
     error,
     size,
+    onRequestClose,
+    onClick,
+    open,
     ...restProps
   } = props;
 
   const [isFocused, setFocused] = useState(autoFocus || false);
-  const [open, setOpen] = useState(false);
 
   const onFocus_ = e => {
     setFocused(true);
@@ -108,7 +110,9 @@ const Select$ = props => {
   const selectedValue = getOptionFields(value, props)[0];
 
   const close = () => {
-    setOpen(false);
+    if (onRequestClose) {
+      onRequestClose();
+    }
   };
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
@@ -158,7 +162,9 @@ const Select$ = props => {
   const popoverProps = {
     isOpen: open && window.innerWidth >= 768,
     onClick: () => {
-      setOpen(!open);
+      if (onClick) {
+        onClick();
+      }
     },
     onClickOutside: close,
     onEsc: close,
@@ -215,6 +221,7 @@ Select$.propTypes = {};
 
 const StatefulSelect$ = props => {
   const [value, setValue] = useState(props.initValue);
+  const [open, setOpen] = useState(false);
 
   return (
     <Select$
@@ -227,6 +234,9 @@ const StatefulSelect$ = props => {
           props.onChange(newValue);
         }
       }}
+      onRequestClose={() => setOpen(false)}
+      onClick={() => setOpen(!open)}
+      open={open}
     />
   );
 };

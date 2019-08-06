@@ -48,9 +48,14 @@ function ProductHead(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [config, setConfig] = useState(null);
 
-  const [addToCart, isLoading] = useAddToCart();
+  const [addToCart, isLoading] = useAddToCart(props.product);
 
   const [isFav, setFav] = useState(false);
+
+  const [size, setSize] = useState(null);
+
+  const [isAddToBasketPending, setAddToBasketPending] = useState(false);
+  const [sizeSelectOpen, setSizeSelectOpen] = useState(false);
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
@@ -127,52 +132,82 @@ function ProductHead(props) {
       })}
     </div>
   );
-
   let metaElem = (
     <div>
       <Device desktop>
         {titleElem}
         <MetaRow>{VARIANTS}</MetaRow>
       </Device>
-      <MetaRow>{props.sizes}</MetaRow>
+      {/*<MetaRow>{props.sizes}</MetaRow>*/}
 
       <MetaRow>
         <div
           css={css`
-            ${theme.fonts.body2.css}
-            margin-bottom: 16px;
-          `}
+                ${theme.fonts.body2.css}
+                margin-bottom: ${theme.spacings.s60}px;
+            `}
         >
-          Pick your variant
+          Pick your size
         </div>
+        <Select
+          options={["30ml", "50ml", "100ml"]}
+          value={size}
+          onChange={val => {
+            setSize(val);
+
+            if (isAddToBasketPending) {
+              setAddToBasketPending(false);
+              addToCart();
+            }
+          }}
+          fitContainer={true}
+          placeholder={"Select size..."}
+          open={sizeSelectOpen}
+          onRequestClose={() => setSizeSelectOpen(false)}
+          onClick={() => setSizeSelectOpen(!sizeSelectOpen)}
+        />
       </MetaRow>
 
       <MetaRow>
-        <Button
-          size={"large"}
-          fitContainer={true}
+        <div
           css={css`
-            margin-bottom: 10px;
+            padding: 1px;
           `}
-          onClick={addToCart}
-          isLoading={isLoading}
         >
-          Add to Cart
-        </Button>
-        <Button
-          size={"large"}
-          kind={"secondary"}
-          fitContainer={true}
-          endEnhancer={() => {
-            return isFav ? <IconHeartFill /> : <IconHeart />;
-          }}
-          onClick={() => {
-            setFav(!isFav);
-          }}
-        >
-          {isFav ? "Saved in wishlist" : "Add to wishlist"}
-        </Button>
+          <Button
+            size={"large"}
+            fitContainer={true}
+            css={css`
+              margin-bottom: 10px;
+            `}
+            onClick={() => {
+              if (size) {
+                addToCart();
+              } else {
+                setAddToBasketPending(true);
+                setSizeSelectOpen(true);
+              }
+            }}
+            isLoading={isLoading}
+          >
+            Add to Cart
+          </Button>
+          <Button
+            size={"large"}
+            kind={"secondary"}
+            fitContainer={true}
+            endEnhancer={() => {
+              return isFav ? <IconHeartFill /> : <IconHeart />;
+            }}
+            onClick={() => {
+              setFav(!isFav);
+            }}
+          >
+            {isFav ? "Saved in wishlist" : "Add to wishlist"}
+          </Button>
+        </div>
       </MetaRow>
+
       <MetaRow>
         <div
           css={css`

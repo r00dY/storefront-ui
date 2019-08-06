@@ -38,11 +38,11 @@ const Product = () => {
   const direction = useScrollDirection();
   const segment = useScrollSegment({ 400: "not-top" });
 
-  const [addToCart, isLoading] = useAddToCart();
-
   let boxes = [];
 
   let product = data.products[0];
+
+  const [addToCart, isLoading] = useAddToCart(product);
 
   let products = [
     data.products[1],
@@ -213,6 +213,7 @@ const Product = () => {
 
       <ProductHead
         mosaicImages={product.images}
+        product={product}
         title={product.name}
         price={product.price}
         variants={product.images}

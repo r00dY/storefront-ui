@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Select$ } from "storefront-ui/Select";
+import { Select$, StatefulSelect$ } from "storefront-ui/Select";
 
 import { Popover$ } from "storefront-ui/Popover";
 import { Popover } from "../../../../demo/theme/Popover";
@@ -54,7 +54,7 @@ export default () => {
     <div>
       <p>String options</p>
 
-      <Select$
+      <StatefulSelect$
         options={stringOptions}
         onChange={setSelect1}
         value={select1}
@@ -103,7 +103,7 @@ export default () => {
           display: inline-block;
         `}
       >
-        <Select$
+        <StatefulSelect$
           options={stringOptions}
           onChange={setSelect1}
           value={select1}
