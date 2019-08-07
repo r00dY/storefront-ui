@@ -143,11 +143,11 @@ const MenuDesktop = props => {
   const direction = useScrollDirection();
   const segment = useScrollSegment({ 1: "not-top", 1000: "hideable" });
 
-  const MenuButton = props => (
-    <Button
-      {...props}
-      kind={"minimal"}
+  const IconButton = props => (
+    <ButtonRaw
       css={css`
+        position: relative;
+
         color: ${theme.colors.mono800.css};
         span {
           ${theme.fonts.caption.css}
@@ -156,10 +156,35 @@ const MenuDesktop = props => {
           width: 24px;
           fill: currentColor;
         }
+
+        &:hover {
+          > div:first-of-type {
+            opacity: 1;
+          }
+        }
       `}
+      {...props}
     >
-      {props.children}
-    </Button>
+      <div
+        css={css`
+          position: absolute;
+          top: -8px;
+          left: -8px;
+          right: -8px;
+          bottom: -8px;
+          background: #fafafa;
+          opacity: 0;
+        `}
+      />
+
+      <div
+        css={css`
+          position: relative;
+        `}
+      >
+        {props.children}
+      </div>
+    </ButtonRaw>
   );
 
   return (
@@ -170,7 +195,6 @@ const MenuDesktop = props => {
             key={index}
             onClick={() => {
               routerPush("/collection");
-              setActive();
             }}
             {...buttonProps}
             css={css`
@@ -232,25 +256,34 @@ const MenuDesktop = props => {
                     </LayoutRow>
                   }
                   right={
-                    <div>
-                      <MenuButton
+                    <div
+                      css={css`
+                        > button {
+                          position: relative;
+                          margin-left: 16px;
+                        }
+                      `}
+                    >
+                      <IconButton
                         onClick={() => {
                           setProfileOpened(true);
                         }}
                       >
                         <IconAccount />
-                      </MenuButton>
-                      <MenuButton>
+                      </IconButton>
+
+                      <IconButton>
                         <IconSearch />
-                      </MenuButton>
-                      <MenuButton
+                      </IconButton>
+
+                      <IconButton
                         onClick={() => {
                           setOpened(true);
                         }}
                       >
                         <IconCart />
                         <span>{basketProducts.length}</span>
-                      </MenuButton>
+                      </IconButton>
                     </div>
                   }
                   center={buttons}

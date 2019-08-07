@@ -26,6 +26,8 @@ import SectionTitle from "../theme/SectionTitle";
 import CategoryCard from "../theme/CategoryCard";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
+import { ButtonRaw } from "../theme/ButtonRaw";
+
 const Home = () => {
   const theme = useTheme();
 
@@ -93,7 +95,6 @@ const Home = () => {
           </Grid>
         </Container>
       </Device>
-
       <div
         css={css`
           & > div:not(:first-of-type) {
