@@ -9,7 +9,7 @@ export const TabBar = props => {
   return (
     <TabBar$
       overrides={{
-        Tab: ({ tabData, focus }) => (
+        Tab: ({ tabData, focus, active }) => (
           <div
             css={css`
               padding: 16px;
@@ -21,7 +21,7 @@ export const TabBar = props => {
               display: flex;
               align-items: center;
               justify-content: center;
-              ${focus ? `color: ${theme.colors.primary.css};` : ""}
+              ${active ? `color: ${theme.colors.primary.css};` : ""}
             `}
           >
             {tabData.label}

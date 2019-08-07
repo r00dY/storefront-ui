@@ -62,7 +62,7 @@ const theme = createTheme({
   `),
     caption1: new Font(`
     font-family: sans-serif;
-    font-size: 12px;
+    ${rslin(12, 12).css("font-size")}
     font-weight: 400;
   `),
     caption2: new Font(`
@@ -86,7 +86,7 @@ const theme = createTheme({
     }
   },
   forms: {
-    inputBorderRadius: "8px"
+    inputBorderRadius: "4px"
   },
   colors: {
     primary: new Color("#1aa77d")

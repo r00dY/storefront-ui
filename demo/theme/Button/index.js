@@ -23,7 +23,14 @@ const overrides = {
               `
                 : ""
             }
+            ${
+              $kind === "primary"
+                ? `
+                border: 1px solid ${$theme.colors.primary.css};
+            `
+                : ""
             }
+            
         `
   }
 };

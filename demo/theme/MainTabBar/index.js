@@ -49,7 +49,7 @@ export default props => {
             </div>
             <div
               css={css`
-                ${theme.fonts.caption2._css}
+                ${theme.fonts.caption2.css}
               `}
             >
               {tabData.label}

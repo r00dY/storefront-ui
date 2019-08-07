@@ -352,7 +352,6 @@ const MenuDesktop = props => {
                       <Button
                         kind={"secondary"}
                         fitContainer
-                        size={"large"}
                         onClick={() => {
                           setOpened(false);
                           routerPush("/cart");
@@ -364,7 +363,6 @@ const MenuDesktop = props => {
                     <div>
                       <Button
                         fitContainer
-                        size={"large"}
                         onClick={() => {
                           setOpened(false);
                           routerPush("/form1");

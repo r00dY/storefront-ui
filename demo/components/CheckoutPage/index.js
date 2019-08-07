@@ -9,6 +9,8 @@ import { L } from "storefront-ui/Config";
 import Page from "../Page";
 import CheckoutSidebar from "../CheckoutSidebar";
 
+import Link from "next/link";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { ButtonRaw } from "../../theme/ButtonRaw";
@@ -27,7 +29,7 @@ const CheckoutPage = props => {
         <Grid>
           <GridItem
             css={css`
-                      text-align: center; ${theme.fonts.h3.css}
+                      text-align: center; ${theme.fonts.h4.css}
                       ${rslin(theme.spacings.s120, theme.spacings.s140).css(
                         "padding-top"
                       )}
@@ -36,7 +38,20 @@ const CheckoutPage = props => {
                       )}
                       `}
           >
-            SuperStore Checkout
+            <Link href={"/"}>
+              <a
+                css={css`
+                  &:active,
+                  &:hover {
+                    text-decoration: none;
+                    color: black;
+                    cursor: pointer;
+                  }
+                `}
+              >
+                Basic Store Checkout
+              </a>
+            </Link>
           </GridItem>
         </Grid>
       </Container>

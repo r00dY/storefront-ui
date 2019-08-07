@@ -8,7 +8,7 @@ export const Spacer = () => {
   return (
     <div
       css={css`
-        height: ${theme.spacings.s170}px;
+        height: ${theme.spacings.s70}px;
       `}
     />
   );

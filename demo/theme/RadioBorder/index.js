@@ -22,7 +22,7 @@ const RadioBorder = props => (
                                 margin: 0;
                                 background-color: ${
                                   $isFocused
-                                    ? $theme.colors.mono200.css
+                                    ? $theme.colors.mono50.css
                                     : "transparent"
                                 };
                     box-sizing: border-box;

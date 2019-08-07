@@ -25,6 +25,7 @@ import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import IconArrowBack from "../svg/arrow_back.svg";
 
 const Form1 = () => {
   const theme = useTheme();
@@ -50,20 +51,24 @@ const Form1 = () => {
             <ProgressSteps
               data={[
                 {
-                  label: "Consumer information",
+                  label: "Cart",
+                  href: "/cart"
+                },
+                {
+                  label: "Information",
                   href: "/form1"
                 },
                 {
-                  label: "Shipping method",
+                  label: "Shipping",
                   href: "/form2"
                 },
                 {
-                  label: "Payment method",
+                  label: "Payment",
                   href: "/form3"
                 }
               ]}
-              active={0}
-              lastCompleted={-1}
+              active={1}
+              lastCompleted={1}
               onClick={stepIndex => {
                 console.log("clicked step " + stepIndex);
               }}
@@ -149,18 +154,25 @@ const Form1 = () => {
             ${R.to("sm").css("&>div{width: 100%;}")}
           `}
         >
-          <div />
-          <div>
-            <Button
-              size={"large"}
-              fitContainer
-              onClick={() => {
-                routerPush("/form2");
-              }}
-            >
-              Continue to shipping method
-            </Button>
-          </div>
+          <Button
+            size={"large"}
+            kind={"minimal"}
+            startEnhancer={<IconArrowBack />}
+            onClick={() => {
+              routerPush("/cart");
+            }}
+          >
+            Return to cart
+          </Button>
+
+          <Button
+            size={"large"}
+            onClick={() => {
+              routerPush("/form2");
+            }}
+          >
+            Continue to shipping method
+          </Button>
         </GridItem>
       </Grid>
     </CheckoutPage>

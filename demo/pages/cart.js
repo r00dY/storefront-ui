@@ -52,7 +52,7 @@ const Cart = () => {
                 }
               `}
             >
-              {data.products.map((product, index) => (
+              {data.products.slice(0, 5).map((product, index) => (
                 <ProductRowTheme1
                   key={index}
                   product={product}
@@ -83,6 +83,7 @@ const Cart = () => {
               </div>
               <Ledger
                 rows={[
+                  { label: "Subtotal", value: "$399.0" },
                   { label: "Shipping", value: "free" },
                   { label: "Total", value: "$399.00", isTotal: true }
                 ]}
@@ -91,6 +92,7 @@ const Cart = () => {
                 <Spacer />
                 <Button
                   fitContainer
+                  size={"large"}
                   onClick={() => {
                     routerPush("/form1");
                   }}

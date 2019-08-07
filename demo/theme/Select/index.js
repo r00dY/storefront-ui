@@ -17,7 +17,7 @@ const overrides = (props, theme) => ({
         &:hover {
           background: ${theme.colors.mono100.css};
         }
-        height: 60px;
+        height: ${props.compact ? "42px" : "60px"};
         color: black;
 
         ${theme.fonts.body2.css}
@@ -38,7 +38,7 @@ const overrides = (props, theme) => ({
   Root: {
     style: `
                   width: ${props.fitContainer === true ? "100%" : "auto"};
-                  height: 60px;
+                  height:  ${props.compact ? "42px" : "60px"};
                   box-sizing: border-box;
 
                 `

@@ -25,15 +25,17 @@ const Divider$ = props => {
   const [Line, lineProps] = getOverrides(LineOverride, LineStyled);
 
   return (
-    <Root>
+    <Root {...rootProps}>
       {label && (
         <>
-          <Line />
-          <Label label={label}>{label}</Label>
-          <Line />
+          <Line {...lineProps} />
+          <Label {...labelProps} label={label}>
+            {label}
+          </Label>
+          <Line {...lineProps} />
         </>
       )}
-      {!label && <Line />}
+      {!label && <Line {...lineProps} />}
     </Root>
   );
 };

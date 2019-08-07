@@ -12,6 +12,8 @@ import IconRemove from "./outline-remove-24px.svg";
 import { useTheme } from "storefront-ui/Theme";
 import { Button } from "../Button";
 
+import { rslin } from "responsive-helpers";
+
 const overrides = {
   Price: ({ price }) => <Price price={price} alignRight />
 };
@@ -59,10 +61,16 @@ const Quantity = ({ quantity, mode, isWishlistItem }) => {
 const overridesTheme1 = {
   Price: ({ price }) => <Price price={price} alignRight />,
   Name: {
-    style: ({ $theme, mode }) =>
-      `margin-bottom: 0.5em; ${
-        mode === "compact" ? $theme.fonts.body1.css : ""
-      }`
+    style: ({ $theme, mode }) => `
+        margin-bottom: 0.5em;
+        ${$theme.fonts.body1.css}
+        margin-right: 8px;
+      `
+  },
+  ImageContainer: {
+    style: ({ $theme, mode }) => `
+      ${rslin(80, 80).css("width")}
+    `
   },
   Remove: ({ mode }) => (
     <>

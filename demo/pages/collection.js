@@ -24,7 +24,7 @@ import { ProductCardTheme1 } from "../theme/ProductCard";
 import NavBarMobile from "../theme/NavBarMobile";
 import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
-import { Select } from "../theme/Select";
+import { StatefulSelect } from "../theme/Select";
 import CategoryCard from "../theme/CategoryCard";
 import {
   ProgressSteps,
@@ -70,7 +70,7 @@ const NavBarCollection = props => {
                   ${theme.fonts.body2.css}
                 `}
               >
-                something
+                30 items
               </div>
             }
             right={<Button onClick={props.onFilterOpen}>Filter</Button>}
@@ -214,7 +214,8 @@ export default () => {
           </Device>
           <div
             css={css`
-              margin-top: 0.5em;
+              margin-top: 0.2em;
+              margin-bottom: 0.4em;
               ${theme.fonts.h2.css}
             `}
           >
@@ -240,7 +241,7 @@ export default () => {
       </Grid>
       <Grid
         css={css`
-          ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
+          ${rslin(theme.spacings.s100, theme.spacings.s120).css("padding-top")}
         `}
       >
         <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
@@ -254,45 +255,51 @@ export default () => {
         </GridItem>
 
         <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
-          <Grid gutterVertical={16}>
-            <GridItem
-              css={css`
+          <div
+            css={css`
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                ${rslin(theme.spacings.s70, theme.spacings.s70).css(
+                  "margin-bottom"
+                )}
                 ${theme.fonts.body2.css}
+                ${R.to("sm").css("display: none;")}
+              `}
+          >
+            <div
+              css={css`
+                flex-grow: 1;
+                ${R.to("sm").css("text-align: center;")}
               `}
             >
+              {data.products.length} items
+            </div>
+            <FilterPills filters={filters} onChange={onChange} />
+
+            <Device desktop>
               <div
                 css={css`
-                  flex-grow: 1;
-                  ${R.to("sm").css("text-align: center;")}
+                  margin-right: 1em;
+                  white-space: nowrap;
                 `}
               >
-                {data.products.length} items
+                Sort by:
               </div>
-              <FilterPills filters={filters} onChange={onChange} />
+              <StatefulSelect
+                compact
+                options={stringOptions}
+                onChange={val => {
+                  setSelect1(val);
+                  onChange();
+                }}
+                value={select1}
+                initValue={stringOptions[0]}
+              />
+            </Device>
+          </div>
 
-              <Device desktop>
-                <div
-                  css={css`
-                    margin-right: 1em;
-                    white-space: nowrap;
-                  `}
-                >
-                  Sort by:
-                </div>
-                <Select
-                  options={stringOptions}
-                  onChange={val => {
-                    setSelect1(val);
-                    onChange();
-                  }}
-                  value={select1}
-                />
-              </Device>
-            </GridItem>
-
+          <Grid gutterVertical={theme.spacings.s120}>
             {[...products].map((product, index) => (
               <GridItem
                 params={{ xs: 12, md: 8, lg: 8, xl: 6 }}

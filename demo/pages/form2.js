@@ -40,20 +40,24 @@ const Form2 = () => {
             <ProgressSteps
               data={[
                 {
-                  label: "Consumer information",
+                  label: "Cart",
+                  href: "/cart"
+                },
+                {
+                  label: "Information",
                   href: "/form1"
                 },
                 {
-                  label: "Shipping method",
+                  label: "Shipping",
                   href: "/form2"
                 },
                 {
-                  label: "Payment method",
+                  label: "Payment",
                   href: "/form3"
                 }
               ]}
-              active={1}
-              lastCompleted={0}
+              active={2}
+              lastCompleted={2}
               onClick={stepIndex => {
                 console.log("clicked step " + stepIndex);
               }}

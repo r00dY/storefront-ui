@@ -122,6 +122,7 @@ const ProfileLogInContent = props => {
       onChange={setTab}
       showPanels={true}
       align={"fit"}
+      scrollable={false}
     />
   );
 };

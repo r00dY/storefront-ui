@@ -15,7 +15,7 @@ const OrderDetails = ({ rows }) => {
       css={css`
         width: 100%;
         border-spacing: 0;
-        background: ${theme.colors.mono100.css};
+        background: ${theme.colors.mono50.css};
         ${theme.fonts.body2.css}
         td {
           padding: ${theme.spacings.s40}px ${theme.spacings.s40}px
@@ -25,9 +25,9 @@ const OrderDetails = ({ rows }) => {
     >
       {rows.map((row, index) => (
         <tr
-          css={css`&:not(:last-of-type) td {border-bottom: 1px solid ${
-            theme.colors.mono300.css
-          };`}
+          css={css`
+            &: not(: last-of-type);
+          `}
         >
           <td>{row.label}</td>
           <td>{row.value}</td>
