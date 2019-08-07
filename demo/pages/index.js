@@ -47,6 +47,7 @@ const Home = () => {
   const banner1 = (
     <Banner
       image={data.images.boxes.half_box_10}
+      imageMobile={data.images.boxes.mobile_box_10}
       element={<BannerInner text={"The Tonal Trend"} />}
       elementFlexAlign={"flex-end"}
       elementFullWidth
@@ -56,6 +57,7 @@ const Home = () => {
   const banner2 = (
     <Banner
       image={data.images.boxes.half_box_04}
+      imageMobile={data.images.boxes.mobile_box_04}
       modeCover
       element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
       elementFlexAlign={"flex-end"}
@@ -72,27 +74,34 @@ const Home = () => {
             ${rslin(theme.spacings.s80, theme.spacings.s100).css(
               "margin-bottom"
             )}
+
+            ${rslin(theme.spacings.s100, theme.spacings.s100).css("margin-top")}
           `}
         >
           <div
             css={css`
-              text-align: center;
-              padding: 100px 0 60px;
-              ${theme.fonts.h2.css}
+              display: flex;
+              flex-direction: column;
+              align-items: center;
             `}
           >
-            SuperStore
+            {/*<div*/}
+            {/*css={css`*/}
+            {/*${theme.fonts.h4.css}*/}
+            {/*margin-bottom: 32px;*/}
+            {/*`}*/}
+            {/*>*/}
+            {/*Basic&nbsp;Store*/}
+            {/*</div>*/}
+
+            <StatefulInput
+              placeholder={"Search"}
+              onFocus={() => {
+                routerPush("/search");
+              }}
+              search
+            />
           </div>
-          <Grid>
-            <GridItem params={{ xs: 24, md: [6, 9] }}>
-              <StatefulInput
-                placeholder={"What you're looking for?"}
-                onFocus={() => {
-                  routerPush("/search");
-                }}
-              />
-            </GridItem>
-          </Grid>
         </Container>
       </Device>
       <div
@@ -105,7 +114,7 @@ const Home = () => {
         <Container>
           <Banner
             image={data.images.boxes.full_box_01}
-            imageMobile={data.images.boxes.half_box_01}
+            imageMobile={data.images.boxes.mobile_box_01}
             href={"/collection"}
             element={
               <BannerInner

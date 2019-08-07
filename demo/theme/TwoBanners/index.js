@@ -18,7 +18,7 @@ function TwoBoxes(props) {
         <div
           css={css`
             display: grid;
-            ${theme.layout.gutter.css("grid-grid-gap")}
+            ${theme.layout.gutter.css("grid-row-gap")}
             ${theme.layout.gutter.css("grid-column-gap")}
             ${R.from("md").css("grid-template-columns: 1fr 1fr;")}
           `}

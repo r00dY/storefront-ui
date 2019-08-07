@@ -78,6 +78,19 @@ const images = {
           }
         ]
       };
+
+      name = `mobile_box_${i < 10 ? "0" : ""}${i}`;
+
+      photos[name] = {
+        alt: name,
+        src: [
+          {
+            url: `/static/images/boxes/${name}.jpg`,
+            w: 748,
+            h: 1000
+          }
+        ]
+      };
     }
 
     return photos;
