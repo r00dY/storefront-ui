@@ -85,17 +85,17 @@ const Home = () => {
               align-items: center;
             `}
           >
-            {/*<div*/}
-            {/*css={css`*/}
-            {/*${theme.fonts.h4.css}*/}
-            {/*margin-bottom: 32px;*/}
-            {/*`}*/}
-            {/*>*/}
-            {/*Basic&nbsp;Store*/}
-            {/*</div>*/}
+            <div
+              css={css`
+                ${theme.fonts.h4.css}
+                margin-bottom: 32px;
+              `}
+            >
+              Basic&nbsp;Store
+            </div>
 
             <StatefulInput
-              placeholder={"Search"}
+              placeholder={"What you're looking for?"}
               onFocus={() => {
                 routerPush("/search");
               }}

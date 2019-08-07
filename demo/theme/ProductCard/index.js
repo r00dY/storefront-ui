@@ -92,15 +92,14 @@ const overrides2 = props => ({
         width: 100%;
         height: 100%;
         pointer-events: none;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 10px;
         box-sizing: border-box;
       `}
     >
       <div
         css={css`
+          position: absolute;
+          top: 10px;
+          right: 10px;
           display: flex;
           justify-content: flex-end;
         `}
@@ -109,6 +108,9 @@ const overrides2 = props => ({
       </div>
       <div
         css={css`
+          position: absolute;
+          top: 10px;
+          left: 10px;
           display: flex;
           flex-wrap: wrap;
           div {

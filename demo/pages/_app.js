@@ -128,7 +128,10 @@ export default class MyApp extends App {
                     label: "Home",
                     href: "/category",
                     content: (
-                      <MenuDesktopContent category={data.categories[0]} />
+                      <MenuDesktopContent
+                        category={data.categories[0]}
+                        index={0}
+                      />
                     )
                   },
                   {
@@ -137,7 +140,7 @@ export default class MyApp extends App {
                     content: (
                       <MenuDesktopContent
                         category={data.categories[1]}
-                        alternative={true}
+                        index={1}
                       />
                     )
                   },
@@ -145,7 +148,10 @@ export default class MyApp extends App {
                     label: "Food",
                     href: "/category",
                     content: (
-                      <MenuDesktopContent category={data.categories[2]} />
+                      <MenuDesktopContent
+                        category={data.categories[2]}
+                        index={2}
+                      />
                     )
                   },
                   {
@@ -154,7 +160,7 @@ export default class MyApp extends App {
                     content: (
                       <MenuDesktopContent
                         category={data.categories[3]}
-                        alternative={true}
+                        index={3}
                       />
                     )
                   }

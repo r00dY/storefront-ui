@@ -6,7 +6,7 @@ import React, { useEffect } from "react";
 import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 
-import IconHome from "./outline-home-24px.svg";
+import IconHome from "../../svg/home.svg";
 import IconMenu from "../../svg/menu.svg";
 import IconFavs from "../../svg/heart.svg";
 import IconBasket from "../../svg/cart.svg";
@@ -27,19 +27,17 @@ export default props => {
                 border-top: 1px solid ${theme.colors.mono200.css};
             `
         },
-        Tab: ({ tabData, focus }) => (
+        Tab: ({ tabData, active }) => (
           <div
             css={css`
               height: 50px;
-              &:hover {
-                background: lightgrey;
-              }
               display: flex;
               flex-direction: column;
               align-items: center;
               justify-content: center;
-
-              ${focus ? "background: lightgrey;" : ""}
+              color: ${active
+                ? theme.colors.primary.css
+                : theme.colors.mono600.css};
             `}
           >
             <div>
@@ -59,7 +57,7 @@ export default props => {
           </div>
         ),
         Line: {
-          style: `height: 2px;`
+          style: `height: 2px; background: ${theme.colors.primary.css};`
         }
       }}
       gutter={5}

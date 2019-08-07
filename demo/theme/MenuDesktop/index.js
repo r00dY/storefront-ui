@@ -20,9 +20,9 @@ import routerPush from "../../helpers/routerPush";
 import { css, jsx } from "@emotion/core";
 import MiniBasketContent from "../MiniBasketContent";
 
-import IconSearch from "./outline-search-24px.svg";
-import IconCart from "./outline-shopping_cart-24px.svg";
-import IconAccount from "./baseline-account_circle-24px.svg";
+import IconSearch from "../../svg/search.svg";
+import IconCart from "../../svg/cart.svg";
+import IconAccount from "../../svg/account.svg";
 import { Banner, BannerInner } from "../Banner";
 import { ProductCardTheme1 } from "../ProductCard";
 import { Ledger } from "../Ledger";
@@ -115,16 +115,22 @@ export const MenuDesktopContent = props => {
                 padding-left: ${theme.spacings.s40}px;
               `}
             >
-              {alternative && <ProductCardTheme1 product={data.products[0]} />}
-              {!alternative && (
-                <Banner
-                  image={data.products[1].images[0]}
-                  href={"/collection"}
-                  element={<BannerInner text={"The Tonal Trend"} />}
-                  elementFlexAlign={"flex-end"}
-                  elementFullWidth
-                />
-              )}
+              {/*{alternative && <ProductCardTheme1 product={data.products[0]} />}*/}
+
+              <Banner
+                image={
+                  [
+                    data.images.boxes.half_box_01,
+                    data.images.boxes.half_box_04,
+                    data.images.boxes.half_box_03,
+                    data.images.boxes.half_box_08
+                  ][props.index]
+                }
+                href={"/collection"}
+                element={<BannerInner text={"The Tonal Trend"} />}
+                elementFlexAlign={"flex-end"}
+                elementFullWidth
+              />
             </div>
           </div>
         </div>
