@@ -90,8 +90,10 @@ function ProductSlider(props) {
           <div
             key={index}
             css={css`
+              position: relative;
               user-select: none;
               user-drag: none;
+              width: 100%;
             `}
           >
             {box}

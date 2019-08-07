@@ -103,8 +103,8 @@ const Home = () => {
       >
         <Container>
           <Banner
-            image={data.images.boxes.full_box_03}
-            imageMobile={data.images.boxes.half_box_03}
+            image={data.images.boxes.full_box_01}
+            imageMobile={data.images.boxes.half_box_01}
             href={"/collection"}
             element={
               <BannerInner

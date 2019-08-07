@@ -75,6 +75,24 @@ export default () => (
     </SwipeableItemsContainer>
 
     <p>
+      <code>itemsVisible</code> -> long text shouldn't increase width of slide
+    </p>
+    <SwipeableItemsContainer
+      mode={"horizontal"}
+      gutter={L.gutter}
+      itemsVisible={3}
+    >
+      <Rectangle color={"coral"}>
+        Lorem ipsum dolor sit amet long text long text long text long text
+      </Rectangle>
+      <Rectangle color={"darkgoldenrod"}>2</Rectangle>
+      <Rectangle color={"maroon"}>3</Rectangle>
+      <Rectangle color={"navy"}>4</Rectangle>
+      <Rectangle color={"firebrick"}>5</Rectangle>
+      <Rectangle color={"forestgreen"}>6</Rectangle>
+    </SwipeableItemsContainer>
+
+    <p>
       <code>itemsVisible</code> with responsive amount of elements
     </p>
     <SwipeableItemsContainer

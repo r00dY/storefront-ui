@@ -12,6 +12,7 @@ import { useTheme } from "storefront-ui/Theme";
 import Link from "next/link";
 
 import { Button } from "../Button";
+import { ButtonRaw } from "../ButtonRaw";
 import data from "../../data";
 import routerPush from "../../helpers/routerPush";
 
@@ -165,19 +166,36 @@ const MenuDesktop = props => {
     <MenuDesktop$
       overrides={{
         MenuButton: ({ index, menu, isActive, setActive, buttonProps }) => (
-          <MenuButton
+          <ButtonRaw
             key={index}
-            kind={"minimal"}
-            isSelected={isActive}
             onClick={() => {
               routerPush("/collection");
+              setActive();
             }}
             {...buttonProps}
+            css={css`
+              position: relative;
+              box-sizing: content-box;
+              height: 70px;
+              padding: 0 24px;
+              ${theme.fonts.body1.css}
+
+              &:after {
+                content: "";
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background: black;
+                opacity: ${isActive ? "1" : "0"};
+              }
+            `}
           >
             {menu.label}
-          </MenuButton>
+          </ButtonRaw>
         ),
-        MenuBar: ({ buttons }) => (
+        MenuBar: ({ buttons, activeMenu }) => (
           <div
             css={css`
               position: relative;
@@ -186,19 +204,12 @@ const MenuDesktop = props => {
             <div
               css={css`
                 background-color: white;
-                transition: all 0.15s ease-out;
 
-                /*transform: ${
-                  segment === "hideable" && direction === true
-                    ? "translateY(-100%)"
-                    : "none"
-                };*/
-
-                border-bottom: ${
-                  segment === "hideable" || segment === "not-top"
-                    ? `1px solid ${theme.colors.mono200.css};`
-                    : "none"
-                };
+                border-bottom: ${segment === "hideable" ||
+                segment === "not-top" ||
+                activeMenu
+                  ? `1px solid ${theme.colors.mono200.css};`
+                  : "none"};
               `}
             >
               <Container>
