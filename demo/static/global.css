@@ -4,3 +4,7 @@ a:active,
 a:visited {
   color: #1aa77d;
 }
+
+* {
+  -webkit-tap-highlight-color: transparent !important;
+}

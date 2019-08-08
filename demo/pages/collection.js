@@ -313,22 +313,25 @@ const CollectionPage = () => {
               </GridItem>
             ))}
 
-            <div
-              css={css`
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                margin-top: ${theme.spacings.s80}px;
-              `}
-            >
-              <StatefulPagination
-                count={20}
-                initPage={5}
-                onChange={page => {
-                  onChange(true);
-                }}
-              />
-            </div>
+            <Device desktop>
+              <div
+                css={css`
+                  display: flex;
+                  justify-content: center;
+                  width: 100%;
+                  margin-top: ${theme.spacings.s80}px;
+                  margin-bottom: ${theme.spacings.s100}px;
+                `}
+              >
+                <StatefulPagination
+                  count={20}
+                  initPage={5}
+                  onChange={page => {
+                    onChange(true);
+                  }}
+                />
+              </div>
+            </Device>
           </Grid>
         </GridItem>
       </Grid>

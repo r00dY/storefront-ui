@@ -13,7 +13,11 @@ const Profile = () => {
   const theme = useTheme();
 
   return (
-    <div>
+    <div
+      css={css`
+        padding-bottom: 50px;
+      `}
+    >
       <Container>
         <PageTitle title={"Profile"} />
         <Grid>

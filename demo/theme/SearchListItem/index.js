@@ -21,7 +21,7 @@ const SearchListItem = ({ focused, item, icon }) => {
         align-items: center;
         ${theme.fonts.body1.css}
         &:hover {
-          background-color: lightgrey;
+          background-color: ${theme.colors.mono200.css};
         }
         cursor: pointer;
         svg {
