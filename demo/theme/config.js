@@ -14,6 +14,8 @@ const layout = new Layout({
   colNumber: 24
 });
 
+const COLOR_PRIMARY = new Color("#1aa77d");
+
 const theme = createTheme({
   layout: layout,
   borders: {
@@ -86,10 +88,12 @@ const theme = createTheme({
     }
   },
   forms: {
-    inputBorderRadius: "4px"
+    inputBorderRadius: "4px",
+    inputBoxShadowFocused: "none",
+    inputBoxShadowErrorFocused: "none"
   },
   colors: {
-    primary: new Color("#1aa77d")
+    primary: COLOR_PRIMARY
   }
 });
 

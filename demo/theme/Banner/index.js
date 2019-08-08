@@ -124,8 +124,6 @@ const Banner = props => {
       css={css`
         position: relative;
         cursor: pointer;
-        border-radius: 4px;
-        overflow: hidden;
       `}
       onClick={() => routerPush(props.href)}
     >

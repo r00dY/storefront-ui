@@ -79,7 +79,7 @@ export const MenuDesktopContent = props => {
                       a:hover {
                         color: ${theme.colors.primary600.css};
                       }
-                      ${theme.fonts.h6.css}
+                      ${theme.fonts.body1.css}
                     `}
                   >
                     <Link href={"/collection"}>
@@ -256,7 +256,7 @@ const MenuDesktop = props => {
                         `}
                       >
                         <Link href={"/"}>
-                          <a>SuperStore</a>
+                          <a>Basic Store</a>
                         </Link>
                       </div>
                     </LayoutRow>

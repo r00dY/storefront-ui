@@ -17,7 +17,6 @@ export const ModalHeader = ({ onRequestClose, title }) => {
         box-sizing: border-box;
         height: 50px;
         padding: ${theme.spacings.s40}px;
-        border-bottom: 1px solid ${theme.colors.mono300.css};
         ${theme.fonts.body1.css}
       `}
     >

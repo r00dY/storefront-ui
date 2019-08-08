@@ -10,6 +10,8 @@ import { Button } from "../Button";
 import { Divider } from "../Divider";
 import { useTheme } from "storefront-ui/Theme";
 
+import { Grid, GridItem } from "storefront-ui/Grid";
+
 import IconFacebook from "./facebook_logo.svg";
 
 const ProfileLogInContent = props => {
@@ -32,13 +34,19 @@ const ProfileLogInContent = props => {
       label: "Log in",
       panel: (
         <Panel>
-          <FormControl label="Email address">
-            <StatefulInput />
-          </FormControl>
+          <Grid gutterVertical={8}>
+            <GridItem>
+              <FormControl label="Email address">
+                <StatefulInput />
+              </FormControl>
+            </GridItem>
+            <GridItem>
+              <FormControl label="Password">
+                <StatefulInput />
+              </FormControl>
+            </GridItem>
+          </Grid>
 
-          <FormControl label="Password">
-            <StatefulInput />
-          </FormControl>
           <Button
             fitContainer
             css={css`
@@ -57,7 +65,7 @@ const ProfileLogInContent = props => {
               />
             )}
             fitContainer
-            kind={"secondary"}
+            kind={"facebook"}
           >
             Log in with Facebook
           </Button>
@@ -77,21 +85,30 @@ const ProfileLogInContent = props => {
               />
             )}
             fitContainer
-            kind={"secondary"}
+            kind={"facebook"}
           >
             Register with Facebook
           </Button>
           <Divider label={"OR"} />
 
-          <FormControl label="Email address">
-            <StatefulInput />
-          </FormControl>
-          <FormControl label="Password">
-            <StatefulInput />
-          </FormControl>
-          <FormControl label="Full Name">
-            <StatefulInput />
-          </FormControl>
+          <Grid gutterVertical={8}>
+            <GridItem>
+              <FormControl label="Email address">
+                <StatefulInput />
+              </FormControl>
+            </GridItem>
+            <GridItem>
+              <FormControl label="Password">
+                <StatefulInput />
+              </FormControl>
+            </GridItem>
+
+            <GridItem>
+              <FormControl label="Full Name">
+                <StatefulInput />
+              </FormControl>
+            </GridItem>
+          </Grid>
 
           <div
             css={css`${theme.fonts.caption.css} margin-top: ${

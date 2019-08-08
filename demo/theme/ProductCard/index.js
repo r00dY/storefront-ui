@@ -79,8 +79,6 @@ const overrides2 = props => ({
   },
   ImageContainer: {
     style: `
-      overflow: hidden;
-      border-radius: 4px;
     `
   },
   ImageOverlay: ({ badges, onSaveToFavourites }) => (

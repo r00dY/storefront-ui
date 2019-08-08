@@ -16,6 +16,17 @@ const overrides = {
                 : ""
             }
             ${
+              $kind === "facebook"
+                ? `
+                background:  #0084ff;
+                border: 1px solid #0084ff;
+                color: white;
+                
+              `
+                : ""
+            }
+        }
+            ${
               $kind === "secondary"
                 ? `
                 background: white;
