@@ -34,6 +34,7 @@ import Notification from "../../components/Notification";
 import useAddToCart from "../../helpers/useAddToCart";
 
 import { Select } from "../../theme/Select";
+import useAddToCartWithSize from "../../helpers/useAddToCartWithSize";
 
 const MetaRow = styled.div`
   &:not(:first-of-type) {
@@ -48,14 +49,9 @@ function ProductHead(props) {
   const [selectedImage, setSelectedImage] = useState(null);
   const [config, setConfig] = useState(null);
 
-  const [addToCart, isLoading] = useAddToCart(props.product);
-
   const [isFav, setFav] = useState(false);
 
-  const [size, setSize] = useState(null);
-
-  const [isAddToBasketPending, setAddToBasketPending] = useState(false);
-  const [sizeSelectOpen, setSizeSelectOpen] = useState(false);
+  const { buttonProps, selectProps } = useAddToCartWithSize(props.product);
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
@@ -133,15 +129,6 @@ function ProductHead(props) {
     </div>
   );
 
-  const onAddToCartClick = () => {
-    if (size) {
-      addToCart();
-    } else {
-      setAddToBasketPending(true);
-      setSizeSelectOpen(true);
-    }
-  };
-
   let metaElem = (
     <div>
       <Device desktop>
@@ -150,79 +137,64 @@ function ProductHead(props) {
       </Device>
       {/*<MetaRow>{props.sizes}</MetaRow>*/}
 
-      <MetaRow>
-        <div
-          css={css`
+      <Device desktop>
+        <MetaRow>
+          <div
+            css={css`
                 ${theme.fonts.body2.css}
                 margin-bottom: ${theme.spacings.s60}px;
             `}
-        >
-          Pick your size
-        </div>
-        <Select
-          options={["30ml", "50ml", "100ml"]}
-          value={size}
-          onChange={val => {
-            setSize(val);
+          >
+            Pick your size
+          </div>
+          <Select fitContainer={true} {...selectProps} />
+        </MetaRow>
 
-            if (isAddToBasketPending) {
-              setAddToBasketPending(false);
-              addToCart();
-            }
-          }}
-          fitContainer={true}
-          placeholder={"Select size"}
-          open={sizeSelectOpen}
-          onRequestClose={() => setSizeSelectOpen(false)}
-          onClick={() => setSizeSelectOpen(!sizeSelectOpen)}
-        />
-      </MetaRow>
-
-      <MetaRow>
-        <div
-          css={css`
-            padding: 1px;
-          `}
-        >
-          <Button
-            size={"large"}
-            fitContainer={true}
+        <MetaRow>
+          <div
             css={css`
-              margin-bottom: 10px;
+              padding: 1px;
             `}
-            onClick={onAddToCartClick}
-            isLoading={isLoading}
           >
-            Add to Cart
-          </Button>
-          <Button
-            size={"large"}
-            kind={"secondary"}
-            fitContainer={true}
-            endEnhancer={() => {
-              return isFav ? <IconHeartFill /> : <IconHeart />;
-            }}
-            onClick={() => {
-              setFav(!isFav);
-            }}
-          >
-            {isFav ? "Saved in wishlist" : "Add to wishlist"}
-          </Button>
-        </div>
-      </MetaRow>
+            <Button
+              size={"large"}
+              fitContainer={true}
+              css={css`
+                margin-bottom: 10px;
+              `}
+              {...buttonProps}
+            >
+              Add to Cart
+            </Button>
+            <Button
+              size={"large"}
+              kind={"secondary"}
+              fitContainer={true}
+              endEnhancer={() => {
+                return isFav ? <IconHeartFill /> : <IconHeart />;
+              }}
+              onClick={() => {
+                setFav(!isFav);
+              }}
+            >
+              {isFav ? "Saved in wishlist" : "Add to wishlist"}
+            </Button>
+          </div>
+        </MetaRow>
+      </Device>
 
-      <MetaRow>
-        <div
-          css={css`
-            ${theme.fonts.body2.css} a {
-              text-decoration: underline;
-            }
-          `}
-        >
-          This is a demo store. You can purchase products like this from{" "}
-          <a href="https://nike.com">Nike</a>.
-        </div>
-      </MetaRow>
+      {/*<MetaRow>*/}
+      {/*<div*/}
+      {/*css={css`*/}
+      {/*${theme.fonts.body2.css} a {*/}
+      {/*text-decoration: underline;*/}
+      {/*}*/}
+      {/*`}*/}
+      {/*>*/}
+      {/*This is a demo store. You can purchase products like this from{" "}*/}
+      {/*<a href="https://nike.com">Nike</a>.*/}
+      {/*</div>*/}
+      {/*</MetaRow>*/}
       <MetaRow>
         <div
           css={css`
@@ -328,13 +300,6 @@ function ProductHead(props) {
       </Modal>
 
       <Device mobile>
-        {/*<Container*/}
-        {/*css={css`*/}
-        {/*padding: 50px 0;*/}
-        {/*`}*/}
-        {/*>*/}
-        {/*{titleElem}*/}
-        {/*</Container>*/}
         <div
           css={css`
             position: relative;
@@ -367,40 +332,50 @@ function ProductHead(props) {
         >
           {VARIANTS}
         </div>
+
+        <div
+          css={css`
+            padding: 0 10px;
+          `}
+        >
+          <MetaRow>{props.accordion}</MetaRow>
+        </div>
       </Device>
 
-      <Container>
-        <Grid>
-          <GridItem params={{ xs: 24, 768: 14, lg: 16 }}>
-            <Device desktop>
-              <div
+      <Device desktop>
+        <Container>
+          <Grid>
+            <GridItem params={{ xs: 24, 768: 14, lg: 16 }}>
+              <Device desktop>
+                <div
+                  css={css`
+                    display: grid;
+                    grid-column-gap: 15px;
+                    grid-row-gap: 15px;
+                    ${R.from("md").css("grid-template-columns: 1fr 1fr;")}
+                  `}
+                >
+                  {props.mosaicImages.map((item, index) => (
+                    <div key={index}>
+                      <ImageZoomable image={item} />
+                    </div>
+                  ))}
+                </div>
+              </Device>
+            </GridItem>
+            <GridItem params={{ xs: 24, 768: 10, lg: [7, 1] }}>
+              <StickyColumn
                 css={css`
-                  display: grid;
-                  grid-column-gap: 15px;
-                  grid-row-gap: 15px;
-                  ${R.from("md").css("grid-template-columns: 1fr 1fr;")}
+                  height: 100%;
                 `}
+                offset={[80, 80]}
               >
-                {props.mosaicImages.map((item, index) => (
-                  <div key={index}>
-                    <ImageZoomable image={item} />
-                  </div>
-                ))}
-              </div>
-            </Device>
-          </GridItem>
-          <GridItem params={{ xs: 24, 768: 10, lg: [7, 1] }}>
-            <StickyColumn
-              css={css`
-                height: 100%;
-              `}
-              offset={[80, 80]}
-            >
-              {metaElem}
-            </StickyColumn>
-          </GridItem>
-        </Grid>
-      </Container>
+                {metaElem}
+              </StickyColumn>
+            </GridItem>
+          </Grid>
+        </Container>
+      </Device>
       <div id={"overlaysContainer"} />
     </div>
   );

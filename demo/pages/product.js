@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
@@ -32,6 +32,10 @@ import Device from "storefront-ui/Device";
 import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 import useAddToCart from "../helpers/useAddToCart";
+import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
+import { Select } from "../theme/Select";
+
+import LayoutRow from "storefront-ui/LayoutRow";
 
 const Product = () => {
   const theme = useTheme();
@@ -42,7 +46,10 @@ const Product = () => {
 
   let product = data.products[0];
 
-  const [addToCart, isLoading] = useAddToCart(product);
+  /**
+   * Select + Add to Cart button
+   **/
+  const { buttonProps, selectProps } = useAddToCartWithSize(product);
 
   let products = [
     data.products[1],
@@ -143,35 +150,47 @@ const Product = () => {
               width: 100%;
               z-index: 1;
               background white;
+              padding: 0 12px;
               border-top: 1px solid ${theme.colors.mono200.css};
           `}
         >
-          <Container>
-            <LayoutLeftCenterRight
-              left={
-                <>
-                  <div
-                    css={css`
-                      ${theme.fonts.body1.css}
-                    `}
-                  >
-                    {product.name}
-                  </div>
-                  <Price price={product.price} />
-                </>
-              }
-              right={
-                <Button
-                  onClick={addToCart}
-                  isLoading={isLoading}
-                  size={"compact"}
+          <LayoutLeftCenterRight
+            left={
+              <>
+                <div
+                  css={css`
+                    ${theme.fonts.body1.css}
+                  `}
                 >
-                  Add to cart
-                </Button>
+                  {product.name}
+                </div>
+              </>
+            }
+            right={<Price price={product.price} />}
+            height={50}
+          />
+
+          <div
+            css={css`
+              display: flex;
+              flex-direction: row;
+              > * {
+                width: 48%;
               }
-              height={60}
-            />
-          </Container>
+              justify-content: space-between;
+              margin-bottom: 12px;
+            `}
+          >
+            <div>
+              <Select fitContainer={true} compact={true} {...selectProps} />
+            </div>
+
+            <div>
+              <Button {...buttonProps} fitContainer={true}>
+                Add to cart
+              </Button>
+            </div>
+          </div>
         </div>
 
         <div
@@ -221,6 +240,7 @@ const Product = () => {
         title={product.name}
         price={product.price}
         variants={product.images}
+        product={product}
         sizes={
           <SizePicker
             sizes={[
@@ -267,27 +287,42 @@ const Product = () => {
         accordion={accordions}
       />
 
+      {/*<Spacer />*/}
+      {/*<EditorialHalfImage*/}
+      {/*imageFirst*/}
+      {/*image={product.images[0]}*/}
+      {/*element={*/}
+      {/*<EditorialHeadline*/}
+      {/*titleFont={theme.fonts.h3}*/}
+      {/*textalign={"center"}*/}
+      {/*paragraphFont={theme.fonts.body1}*/}
+      {/*title={"WHAT IS NIKEZOOMX?"}*/}
+      {/*paragraph={*/}
+      {/*"Nike ZoomX is lighter, softer and more responsive than any Nike foam, designed to maximize speed by delivering greater energy return. ZoomX was derived from a foam traditionally used in aerospace innovation, applied for the first time in performance footwear in the Nike Zoom Vaporfly Elite and 4%."*/}
+      {/*}*/}
+      {/*/>*/}
+      {/*}*/}
+      {/*elementPosition={"center"}*/}
+      {/*/>*/}
       <Spacer />
-      <EditorialHalfImage
-        imageFirst
-        image={product.images[0]}
-        element={
-          <EditorialHeadline
-            titleFont={theme.fonts.h3}
-            textalign={"center"}
-            paragraphFont={theme.fonts.body1}
-            title={"WHAT IS NIKEZOOMX?"}
-            paragraph={
-              "Nike ZoomX is lighter, softer and more responsive than any Nike foam, designed to maximize speed by delivering greater energy return. ZoomX was derived from a foam traditionally used in aerospace innovation, applied for the first time in performance footwear in the Nike Zoom Vaporfly Elite and 4%."
-            }
-          />
-        }
-        elementPosition={"center"}
-      />
       <Spacer />
 
       <ProductSlider boxes={boxes} title={"You may also like"} />
       <Spacer />
+
+      <Spacer />
+
+      <ProductSlider
+        boxes={boxes.slice().reverse()}
+        title={"Other Beauty products"}
+      />
+      <Spacer />
+
+      <div
+        css={css`
+          margin-bottom: 160px;
+        `}
+      />
     </div>
   );
 };

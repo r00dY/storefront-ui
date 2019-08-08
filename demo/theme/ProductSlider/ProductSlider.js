@@ -63,7 +63,7 @@ function ProductSlider(props) {
       offsetBefore={theme.layout.margin}
       offsetAfter={theme.layout.margin}
       itemsVisible={{
-        xs: 1.33,
+        xs: 1.66,
         sm: 2.33,
         md: 3,
         lg: 4
