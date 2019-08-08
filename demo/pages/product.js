@@ -35,12 +35,18 @@ import useAddToCart from "../helpers/useAddToCart";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
 import { Select } from "../theme/Select";
 
+import IconHeart from "../svg/heart.svg";
+import IconHeartFill from "../svg/heart_fill.svg";
+
 import LayoutRow from "storefront-ui/LayoutRow";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 const Product = () => {
   const theme = useTheme();
   const direction = useScrollDirection();
   const segment = useScrollSegment({ 400: "not-top" });
+
+  const [isFav, setFav] = useState(false);
 
   let boxes = [];
 
@@ -79,6 +85,23 @@ const Product = () => {
     >
       {props.children}
     </div>
+  );
+
+  const favButton = (
+    <ButtonRaw
+      css={css`
+        svg {
+          line-height: 1;
+          display: block;
+        }
+        display: block;
+      `}
+      onClick={() => {
+        setFav(!isFav);
+      }}
+    >
+      {isFav ? <IconHeartFill /> : <IconHeart />}
+    </ButtonRaw>
   );
 
   let accordions = (
@@ -139,7 +162,7 @@ const Product = () => {
               : "transform: translateY(-50px);"}
           `}
         >
-          <NavBarMobile title={""} cart={true} />
+          <NavBarMobile title={""} right={favButton} />
         </div>
 
         <div
@@ -202,7 +225,7 @@ const Product = () => {
             z-index: 1;
           `}
         >
-          <NavBarMobile title={""} transparent={true} cart={true} />
+          <NavBarMobile title={""} transparent={true} right={favButton} />
         </div>
       </Device>
 
