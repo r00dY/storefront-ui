@@ -18,6 +18,7 @@ const CategoryCardCompact = props => {
         cursor: pointer;
         border-radius: 12px;
         overflow: hidden;
+        box-shadow: ${theme.lighting.shadow400};
       `}
       onClick={() => routerPush(href)}
     >
@@ -36,7 +37,6 @@ const CategoryCardCompact = props => {
 
           color: black;
           ${theme.fonts.body1.css}
-          background: ${theme.colors.mono50.css};
         `}
       >
         <strong>{text}</strong>

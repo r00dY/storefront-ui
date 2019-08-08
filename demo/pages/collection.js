@@ -225,22 +225,19 @@ const CollectionPage = () => {
           />
         </GridItem>
 
-        {data.categories[0].subcats.map((category, index) => {
-          if (index === 0) {
-            return;
+        {["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
+          (category, index) => {
+            return (
+              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+                <CategoryCardCompact
+                  image={data.images.categories[category.toLowerCase()]}
+                  text={category}
+                  href={"/collection"}
+                />
+              </GridItem>
+            );
           }
-          return (
-            <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-              <CategoryCardCompact
-                image={
-                  data.images["landscape" + (index > 3 ? index - 2 : index + 1)]
-                }
-                text={category.name}
-                href={"/collection"}
-              />
-            </GridItem>
-          );
-        })}
+        )}
       </Grid>
       <Grid
         css={css`

@@ -104,35 +104,39 @@ const Form2 = () => {
             </RadioBorder>
           </StatefulRadioGroup>
         </GridItem>
+
         <GridItem
           css={css`
             display: flex;
             flex-wrap: wrap;
             ${R.from("md").css("justify-content: space-between;")}
-            ${R.to("sm").css("&>div{width: 100%;}")}
+            ${R.to("sm").css("&>div{margin-bottom: 16px; width: 100%;}")}
           `}
         >
           <div
             css={css`
-              ${R.to("sm").css("order: 1;")}
+              ${R.to("sm").css("order: 2;")}
+              display: flex;
+              align-items: center;
             `}
           >
             <Button
               size={"large"}
               kind={"minimal"}
+              fitContainer={true}
               startEnhancer={<IconArrowBack />}
               onClick={() => {
                 routerPush("/form1");
               }}
-              fitContainer
             >
               Return to customer information
             </Button>
           </div>
-          <div>
+
+          <div css={css``}>
             <Button
+              fitContainer={true}
               size={"large"}
-              fitContainer
               onClick={() => {
                 routerPush("/form3");
               }}

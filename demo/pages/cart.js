@@ -115,12 +115,18 @@ const Cart = () => {
             width: 100%;
             z-index: 1;
             background: white;
-            padding-bottom: 10px;
             box-sizing: border-box;
+            padding-bottom: 4px;
           `}
         >
           <Container>
-            <Ledger rows={[{ label: "Total", value: "$399.00" }]} />
+            <div
+              css={css`
+                padding: 8px 0;
+              `}
+            >
+              <Ledger rows={[{ label: "Total", value: "$399.00" }]} />
+            </div>
             <Button
               fitContainer
               onClick={() => {
@@ -131,6 +137,12 @@ const Cart = () => {
             </Button>
           </Container>
         </div>
+
+        <div
+          css={css`
+            padding-bottom: 100px;
+          `}
+        />
       </Device>
     </div>
   );

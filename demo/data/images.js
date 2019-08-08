@@ -49,6 +49,24 @@ const images = {
     ],
     alt: "landscape1.jpg"
   },
+  categories: (() => {
+    let photos = {};
+
+    ["baby", "bath", "body", "face", "hair", "oral"].map(name => {
+      photos[name] = {
+        alt: name,
+        src: [
+          {
+            url: `/static/images/categories/${name}.jpg`,
+            w: 2667,
+            h: 1000
+          }
+        ]
+      };
+    });
+
+    return photos;
+  })(),
   boxes: (() => {
     let photos = {};
 
