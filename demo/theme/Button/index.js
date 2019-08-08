@@ -31,14 +31,30 @@ const overrides = {
                 ? `
                 background: white;
                 border: 1px solid ${$theme.colors.primary.css};
+                &:hover, &:focus {
+                  background: white;
+                  border: 1px solid ${$theme.colors.primary600.css};
+                  color: ${$theme.colors.primary600.css};
+                }
               `
                 : ""
             }
             ${
               $kind === "primary"
                 ? `
-                border: 1px solid ${$theme.colors.primary.css};
-            `
+                  border: 1px solid ${$theme.colors.primary.css};
+              `
+                : ""
+            }
+            ${
+              $kind === "minimal"
+                ? `
+                  padding: 6px 0;
+                  &:hover, &:focus {
+                    background: none;
+                    color: ${$theme.colors.primary600.css};
+                  }
+                `
                 : ""
             }
             

@@ -4,6 +4,9 @@ import { RangePicker$ } from "storefront-ui/RangePicker";
 import { Input } from "../Input";
 import { Button } from "../Button";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
 export const RangePicker = props => (
   <RangePicker$
     overrides={{
@@ -14,7 +17,14 @@ export const RangePicker = props => (
         <Input {...inputProps} placeholder={"to"} unit={props.unit} />
       ),
       ClearButton: ({ clear }) => (
-        <Button onClick={clear} kind={"minimal"}>
+        <Button
+          onClick={clear}
+          kind={"minimal"}
+          size="compact"
+          css={css`
+            margin-left: 12px;
+          `}
+        >
           clear
         </Button>
       )
