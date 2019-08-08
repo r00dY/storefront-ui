@@ -392,12 +392,19 @@ export default () => {
           </div>
         )}
       >
-        <FiltersColumn
-          data={filters}
-          onChange={(key, val) => {
-            onFiltersChange(key, val);
-          }}
-        />
+        <div
+          css={css`
+            padding: 0;
+          `}
+        >
+          <FiltersColumn
+            data={filters}
+            onChange={(key, val) => {
+              onFiltersChange(key, val);
+            }}
+            isMobile={true}
+          />
+        </div>
       </Modal>
     </div>
   );

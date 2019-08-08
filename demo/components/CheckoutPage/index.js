@@ -41,11 +41,15 @@ const CheckoutPage = props => {
             <Link href={"/"}>
               <a
                 css={css`
+                  text-decoration: none;
+                  color: black;
+                  cursor: pointer;
+
                   &:active,
-                  &:hover {
+                  &:hover,
+                  &:visited {
                     text-decoration: none;
                     color: black;
-                    cursor: pointer;
                   }
                 `}
               >

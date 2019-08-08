@@ -13,18 +13,24 @@ import ICON_TICK from "./tick.svg";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const ColorFilterComponent = ({ filter, onChange }) => {
+const ColorFilterComponent = ({ filter, onChange, isMobile }) => {
   const theme = useTheme();
 
   return (
     <div
       css={css`
         display: grid;
-        grid-template-columns: repeat(5, 40px);
+        // grid-template-columns: repeat(5, 40px);
+        grid-template-columns: repeat(
+          auto-fill,
+          minmax(${isMobile ? "48px" : "40px"}, 1fr)
+        );
         justify-content: space-between;
         grid-row-gap: 12px;
         width: 100%;
         padding-top: 20px;
+        padding-left: 4px;
+        padding-right: 4px;
       `}
     >
       {filter.items.map(option => {
@@ -36,7 +42,8 @@ const ColorFilterComponent = ({ filter, onChange }) => {
             css={css`
               position: relative;
               line-height: 0;
-              padding: 5px;
+              padding: 4px;
+              margin: 4px;
               transition: 100ms;
             `}
             onClick={() =>
@@ -81,12 +88,18 @@ const ColorFilterComponent = ({ filter, onChange }) => {
   );
 };
 
-const overrides = {
+const overrides = props => ({
   Header: AccordionHeader,
   filterComponents: {
     select: ({ filter, onChange }) => {
       if (filter.id === "color") {
-        return <ColorFilterComponent filter={filter} onChange={onChange} />;
+        return (
+          <ColorFilterComponent
+            filter={filter}
+            onChange={onChange}
+            isMobile={props.isMobile}
+          />
+        );
       }
 
       return (
@@ -109,10 +122,10 @@ const overrides = {
       />
     )
   }
-};
+});
 
 const FiltersColumn = props => (
-  <FiltersColumn$ overrides={overrides} {...props} />
+  <FiltersColumn$ overrides={overrides(props)} {...props} />
 );
 
 export { FiltersColumn };

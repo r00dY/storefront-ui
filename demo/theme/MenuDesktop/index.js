@@ -156,7 +156,6 @@ const MenuDesktop = props => {
 
         color: ${theme.colors.mono800.css};
         span {
-          position: absolute;
           ${theme.fonts.caption.css}
         }
         svg {
