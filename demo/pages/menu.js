@@ -205,6 +205,7 @@ const Menu = () => {
               onFocus={() => {
                 routerPush("/search");
               }}
+              search={true}
             />
           </GridItem>
         </Grid>

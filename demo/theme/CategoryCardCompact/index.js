@@ -7,7 +7,7 @@ import Image from "storefront-ui/Image";
 import { css, jsx } from "@emotion/core";
 import routerPush from "../../helpers/routerPush";
 
-const CategoryCard = props => {
+const CategoryCardCompact = props => {
   const { image, text, href } = props;
   const theme = useTheme();
 
@@ -24,16 +24,19 @@ const CategoryCard = props => {
       <Image image={image} />
       <div
         css={css`
-          position: absolute;
-          width: 60%;
+          width: 100%;
           height: 100%;
           top: 0;
           left: 0;
-          padding: ${theme.spacings.s80}px;
-          color: ${theme.colors.mono800.css};
+          padding: 12px;
+
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          color: black;
           ${theme.fonts.body1.css}
-          display: flex;
-          align-items: center;
+          background: ${theme.colors.mono50.css};
         `}
       >
         <strong>{text}</strong>
@@ -42,8 +45,8 @@ const CategoryCard = props => {
   );
 };
 
-CategoryCard.defaultProps = {
+CategoryCardCompact.defaultProps = {
   href: "#"
 };
 
-export default CategoryCard;
+export default CategoryCardCompact;

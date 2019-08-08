@@ -4,6 +4,7 @@ const overrides = {
   BaseButton: {
     style: ({ $theme, $kind }) => `
             border-radius: 4px;
+            -webkit-tap-highlight-color: transparent;
             ${
               $kind === "white"
                 ? `

@@ -132,7 +132,7 @@ const Product = () => {
               : "transform: translateY(-50px);"}
           `}
         >
-          <NavBarMobile title={product.name} />
+          <NavBarMobile title={""} cart={true} />
         </div>
 
         <div
@@ -142,8 +142,8 @@ const Product = () => {
               left: 0;
               width: 100%;
               z-index: 1;
-              background #fafafa;
-              border-top: 1px solid lightgrey;
+              background white;
+              border-top: 1px solid ${theme.colors.mono200.css};
           `}
         >
           <Container>
@@ -161,11 +161,15 @@ const Product = () => {
                 </>
               }
               right={
-                <Button onClick={addToCart} isLoading={isLoading}>
+                <Button
+                  onClick={addToCart}
+                  isLoading={isLoading}
+                  size={"compact"}
+                >
                   Add to cart
                 </Button>
               }
-              height={50}
+              height={60}
             />
           </Container>
         </div>
@@ -179,7 +183,7 @@ const Product = () => {
             z-index: 1;
           `}
         >
-          <NavBarMobile title={""} transparent={true} />
+          <NavBarMobile title={""} transparent={true} cart={true} />
         </div>
       </Device>
 

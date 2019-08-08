@@ -170,8 +170,8 @@ export function getStyleForShape({ $theme, $shape, $size }: StylePropsT) {
   let paddingVertical;
 
   if ($size === SIZE.compact) {
-    paddingVertical = $theme.sizing.scale200;
-    paddingHorizontal = $theme.sizing.scale900;
+    paddingVertical = $theme.sizing.scale300;
+    paddingHorizontal = $theme.sizing.scale600;
   } else if ($size === SIZE.large) {
     paddingVertical = $theme.sizing.scale700;
     paddingHorizontal = $theme.sizing.scale900;

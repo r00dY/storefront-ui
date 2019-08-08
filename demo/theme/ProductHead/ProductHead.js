@@ -59,7 +59,7 @@ function ProductHead(props) {
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
-      {props.mosaicImages.map((image, index) => {
+      {props.mosaicImages.slice(1).map((image, index) => {
         return <Image mode={"natural"} image={image} />;
       })}
     </SwipeableItemsContainer>
@@ -171,7 +171,7 @@ function ProductHead(props) {
             }
           }}
           fitContainer={true}
-          placeholder={"Select size..."}
+          placeholder={"Select size"}
           open={sizeSelectOpen}
           onRequestClose={() => setSizeSelectOpen(false)}
           onClick={() => setSizeSelectOpen(!sizeSelectOpen)}
@@ -328,13 +328,13 @@ function ProductHead(props) {
       </Modal>
 
       <Device mobile>
-        <Container
-          css={css`
-            padding: 50px 0;
-          `}
-        >
-          {titleElem}
-        </Container>
+        {/*<Container*/}
+        {/*css={css`*/}
+        {/*padding: 50px 0;*/}
+        {/*`}*/}
+        {/*>*/}
+        {/*{titleElem}*/}
+        {/*</Container>*/}
         <div
           css={css`
             position: relative;

@@ -26,6 +26,7 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import { StatefulSelect } from "../theme/Select";
 import CategoryCard from "../theme/CategoryCard";
+import CategoryCardCompact from "../theme/CategoryCardCompact";
 import {
   ProgressSteps,
   ProgressStepsAsBreadcrumbs
@@ -33,50 +34,33 @@ import {
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
-  const segment = useScrollSegment({ 50: "not-top" });
+  const segment = useScrollSegment({ 1: "not-top", 250: "far" });
 
   const theme = useTheme();
 
   return (
-    <div
-      css={css`
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        z-index: 1;
-        transition: transform 0.2s ease-out;
-        transform: ${direction === true && segment === "not-top"
-          ? "translateY(-51px)"
-          : "none"};
-      `}
-    >
-      <NavBarMobile title={"All Food"} />
+    <div>
+      <NavBarMobile title={""} noBorder={true} />
 
       <div
         css={css`
-          position: relative;
+          position: fixed;
+          top: 0;
+          left: 0;
           width: 100%;
-          height: 50px;
-          background: #fafafa;
-          border-bottom: 1px solid lightgrey;
+          z-index: 1;
+          transition: transform 0.2s ease-out;
+          transform: ${segment !== "far" ? "translateY(-51px)" : "none"};
         `}
       >
-        <Container>
-          <LayoutLeftCenterRight
-            left={
-              <div
-                css={css`
-                  ${theme.fonts.body2.css}
-                `}
-              >
-                30 items
-              </div>
-            }
-            right={<Button onClick={props.onFilterOpen}>Filter</Button>}
-            height={50}
-          />
-        </Container>
+        <NavBarMobile
+          title={"Snacks"}
+          right={
+            <Button size={"compact"} onClick={props.onFilterOpen}>
+              Filter
+            </Button>
+          }
+        />
       </div>
     </div>
   );
@@ -166,7 +150,7 @@ function shuffle(array) {
 
 let timeout;
 
-export default () => {
+const CollectionPage = () => {
   const [filters, onFiltersChange] = useFiltersData(data.filters);
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const [select1, setSelect1] = useState(stringOptions[0]);
@@ -194,7 +178,7 @@ export default () => {
       <Grid
         gutterVertical={L.gutter}
         css={css`
-          ${rslin(theme.spacings.s100, theme.spacings.s140).css("padding-top")}
+          ${rslin(theme.spacings.s50, theme.spacings.s140).css("padding-top")}
         `}
       >
         <GridItem>
@@ -212,23 +196,42 @@ export default () => {
               ]}
             />
           </Device>
-          <div
-            css={css`
-              margin-top: 0.2em;
-              margin-bottom: 0.4em;
-              ${theme.fonts.h2.css}
-            `}
-          >
-            Snacks
-          </div>
+
+          <LayoutLeftCenterRight
+            left={
+              <div
+                css={css`
+                  margin-top: 0.2em;
+                  margin-bottom: 0.4em;
+                  ${theme.fonts.h2.css}
+                `}
+              >
+                Snacks
+              </div>
+            }
+            right={
+              <Button
+                size={"compact"}
+                onClick={() => {
+                  setFiltersModalOpened(true);
+                }}
+                css={css`
+                  ${R.from("md").css("display: none;")}
+                `}
+              >
+                Filter
+              </Button>
+            }
+          />
         </GridItem>
+
         {data.categories[0].subcats.map((category, index) => {
           if (index === 0) {
             return;
           }
           return (
             <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-              <CategoryCard
+              <CategoryCardCompact
                 image={
                   data.images["landscape" + (index > 3 ? index - 2 : index + 1)]
                 }
@@ -335,6 +338,11 @@ export default () => {
     </Container>
   );
 
+  const onFilterClick = () => {
+    setFiltersModalOpened(false);
+    onChange(true);
+  };
+
   return (
     <div>
       <div>
@@ -346,7 +354,7 @@ export default () => {
           />
           <div
             css={css`
-              margin-top: 100px;
+              margin-top: 0px;
             `}
           >
             {content}
@@ -409,3 +417,7 @@ export default () => {
     </div>
   );
 };
+
+CollectionPage.tabbar = 0;
+
+export default CollectionPage;
