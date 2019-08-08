@@ -156,6 +156,7 @@ const MenuDesktop = props => {
 
         color: ${theme.colors.mono800.css};
         span {
+          position: absolute;
           ${theme.fonts.caption.css}
         }
         svg {
@@ -164,9 +165,7 @@ const MenuDesktop = props => {
         }
 
         &:hover {
-          > div:first-of-type {
-            opacity: 1;
-          }
+          opacity: 0.66;
         }
       `}
       {...props}
@@ -178,8 +177,9 @@ const MenuDesktop = props => {
           left: -8px;
           right: -8px;
           bottom: -8px;
-          background: #fafafa;
+          background: white;
           opacity: 0;
+          border-radius: 50%;
         `}
       />
 
