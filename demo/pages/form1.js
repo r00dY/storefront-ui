@@ -45,62 +45,65 @@ const Form1 = () => {
   );
   return (
     <CheckoutPage>
-      <Grid gutterVertical={20}>
-        <GridItem>
-          <Device desktop>
-            <ProgressSteps
-              data={[
-                {
-                  label: "Cart",
-                  href: "/cart"
-                },
-                {
-                  label: "Information",
-                  href: "/form1"
-                },
-                {
-                  label: "Shipping",
-                  href: "/form2"
-                },
-                {
-                  label: "Payment",
-                  href: "/form3"
-                }
-              ]}
-              active={1}
-              lastCompleted={1}
-              onClick={stepIndex => {
-                console.log("clicked step " + stepIndex);
-              }}
-            />
-          </Device>
-        </GridItem>
-        <GridItem
-          css={css`
-            ${spacer}
-          `}
-        >
-          <FormHeader
-            title={"Contact"}
-            description={
-              <>
-                Already have an account? <a href="#">Log in.</a>
-              </>
+      <Device desktop>
+        <ProgressSteps
+          data={[
+            {
+              label: "Cart",
+              href: "/cart"
+            },
+            {
+              label: "Information",
+              href: "/form1"
+            },
+            {
+              label: "Shipping",
+              href: "/form2"
+            },
+            {
+              label: "Payment",
+              href: "/form3"
             }
-          />
-        </GridItem>
+          ]}
+          active={1}
+          lastCompleted={1}
+          onClick={stepIndex => {
+            console.log("clicked step " + stepIndex);
+          }}
+        />
+      </Device>
+
+      <div
+        css={css`
+          ${spacer}
+        `}
+      />
+
+      <FormHeader
+        title={"Contact"}
+        description={
+          <>
+            Already have an account? <a href="#">Log in.</a>
+          </>
+        }
+      />
+
+      <Grid gutterVertical={16}>
         <GridItem>
           <FormControl label="E-mail">
             <StatefulInput />
           </FormControl>
         </GridItem>
-        <GridItem
-          css={css`
-            ${spacer}
-          `}
-        >
-          <FormHeader title={"Shipping Address"} />
-        </GridItem>
+      </Grid>
+
+      <div
+        css={css`
+          ${spacer}
+        `}
+      />
+      <FormHeader title={"Shipping Address"} />
+
+      <Grid gutterVertical={16}>
         <GridItem params={"1/2"}>
           <FormControl label={"First name"}>
             <StatefulInput />
