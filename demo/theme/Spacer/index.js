@@ -3,12 +3,14 @@ import { css, jsx } from "@emotion/core";
 import React from "react";
 import { useTheme } from "storefront-ui/Theme";
 
+import { rslin } from "responsive-helpers";
+
 export const Spacer = () => {
   const theme = useTheme();
   return (
     <div
       css={css`
-        height: ${theme.spacings.s70}px;
+        ${rslin(theme.spacings.s70, theme.spacings.s120).css("height")};
       `}
     />
   );
