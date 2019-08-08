@@ -29,8 +29,8 @@ const SearchListItem = ({ focused, item, icon }) => {
         }
       `}
     >
-      {icon === "history" && <IconHistory />}
-      {icon === "go" && <IconGo />}
+      {/*{icon === "history" && <IconHistory />}*/}
+      {/*{icon === "go" && <IconGo />}*/}
       {item.name}
     </div>
   );
