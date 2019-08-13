@@ -13,10 +13,10 @@ export const rootChildren = ({ content, image }) => (
 );
 export const RootStyled = styled("div", rootStyles, rootChildren);
 
-export const imageContainerStyles = ({ $theme, mode }) =>
-  `position: relative; height: 100%; display: flex; align-items: center; ${
-    mode === "compact"
-      ? rslin(100, 100).css("width")
+export const imageContainerStyles = ({ $theme, layout }) =>
+  `position: relative; height: 100%; display: flex;  ${
+    layout === "compact"
+      ? rslin(80, 80).css("width")
       : rslin(80, 140).css("width")
   }`;
 export const ImageContainerStyled = styled("div", imageContainerStyles);
@@ -25,10 +25,10 @@ export const quantityStyles = ({ $theme }) =>
   `${$theme.fonts.body1.css} display: flex; align-items: center; `;
 export const QuantityStyled = styled("div", quantityStyles);
 
-export const nameStyles = ({ $theme, mode }) => `${$theme.fonts.h6.css} 
-   overflow: hidden;
-  max-height: calc(2 * 1.2em);
-  a {text-decoration: none; color: ${$theme.colors.mono900.css};}`;
+export const nameStyles = ({ $theme, layout }) => `${$theme.fonts.h6.css} 
+   a {text-decoration: none; color: ${$theme.colors.mono900.css};} ${
+  layout === "compact" ? `max-height: calc(2*1.15em); overflow: hidden;` : ""
+}`;
 export const NameStyled = styled("div", nameStyles);
 
 export const descriptionStyles = ({ $theme }) => `

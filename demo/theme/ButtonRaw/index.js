@@ -1,1 +1,3 @@
-export { ButtonRaw$ as ButtonRaw } from "storefront-ui/ButtonRaw";
+import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
+
+export const ButtonRaw = props => <ButtonRaw$ {...props} />;

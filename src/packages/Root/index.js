@@ -5,6 +5,8 @@ import ReactModal from "react-modal";
 /** @jsx jsx */
 import { css, Global, jsx } from "@emotion/core";
 
+import { NotificationsContainer } from "../Notifications";
+
 export default ({ theme, children }) => {
   useEffect(() => {
     ReactModal.setAppElement("#__app__");
@@ -39,6 +41,16 @@ export default ({ theme, children }) => {
         `}
         id={"__layers__"}
       />
+
+      <div
+        css={css`
+          position: absolute;
+          z-index: 10001;
+        `}
+        id={"__notifications__"}
+      >
+        <NotificationsContainer />
+      </div>
     </ThemeProvider>
   );
 };

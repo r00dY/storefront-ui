@@ -82,97 +82,100 @@ const filters = [
     type: "select",
     items: [
       {
-        id: "white",
-        name: "white",
-        amount: 46,
-        data: {
-          hex: "#ffffff"
-        }
-      },
-      {
         id: "grey",
-        name: "grey",
+        name: "Grey",
         amount: 21,
+        selected: false,
         data: {
           hex: "#E5E5E7"
         }
       },
       {
         id: "black",
-        name: "black",
+        name: "Black",
         amount: 12,
+        selected: false,
         data: {
           hex: "#000000"
         }
       },
       {
         id: "blue",
-        name: "blue",
+        name: "Blue",
         amount: 0,
+        selected: false,
         data: {
           hex: "#295F9A"
         }
       },
       {
         id: "olive",
-        name: "olive",
+        name: "Olive",
         amount: 12,
+        selected: false,
         data: {
           hex: "#62664D"
         }
       },
       {
         id: "beige",
-        name: "beige",
+        name: "Beige",
         amount: 54,
+        selected: false,
         data: {
           hex: "#BBB09E"
         }
       },
       {
         id: "orange",
-        name: "orange",
+        name: "Orange",
         amount: 32,
+        selected: false,
         data: {
           hex: "#D8922C"
         }
       },
       {
         id: "red",
-        name: "red",
+        name: "Red",
         amount: 75,
+        selected: true,
         data: {
           hex: "#C52E35"
         }
       },
       {
         id: "pink",
-        name: "pink",
+        name: "Pink",
         amount: 2,
+        selected: false,
         data: {
           hex: "#F1D4CF"
         }
       },
       {
         id: "purple",
-        name: "purple",
+        name: "Purple",
         amount: 2,
+        selected: false,
         data: {
           hex: "#4F3B75"
         }
       },
       {
         id: "brown",
-        name: "brown",
+        name: "Brown",
         amount: 2,
+        selected: false,
         data: {
           hex: "#9C673B"
         }
       },
       {
         id: "honey",
-        name: "honey",
+        name: "Honey",
         amount: 2,
+        selected: false,
         data: {
           hex: "#ECB91E"
         }

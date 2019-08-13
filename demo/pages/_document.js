@@ -15,6 +15,7 @@ class MyDocument extends Document {
       <Html>
         <Head>
           <link rel="stylesheet" type="text/css" href="/static/normalize.css" />
+          <link rel="stylesheet" type="text/css" href="/static/global.css" />
         </Head>
         <body>
           <Main />

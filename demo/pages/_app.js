@@ -13,6 +13,10 @@ import withApolloClient from "../lib/with-apollo-client";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
+
+import Footer from "../theme/Footer";
+import data from "../data";
 import { parseCookies, setCookie } from "../helpers/cookie";
 import fetchCheckout from "../actions/fetchCheckout";
 import createEmptyCheckout from "../actions/createEmptyCheckout";
@@ -81,53 +85,126 @@ class MyApp extends App {
     );
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
+    const hideDesktopMenu = Component.hideDesktopMenu === true;
+    const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
       <ApolloProvider client={apolloClient}>
         <ApolloHooksProvider client={apolloClient}>
           <Root theme={theme}>
-            {showTabbar && (
-              <div>
-                <div
-                  css={css`
-                    margin-bottom: 50px;
-                  `}
-                >
+            <Device mobile>
+              {showTabbar && (
+                <div>
+                  <div
+                    css={css`
+                      margin-bottom: 50px;
+                    `}
+                  >
+                    {content}
+                    {showFooterOnMobile && <Footer />}
+                  </div>
+
+                  <div
+                    css={css`
+                      position: fixed;
+                      bottom: 0;
+                      left: 0;
+                      width: 100%;
+                    `}
+                  >
+                    <MainTabBar
+                      data={tabs}
+                      active={Component.tabbar}
+                      onChange={index => {
+                        if (index === 0) {
+                          routerPush("/");
+                        } else if (index === 1) {
+                          routerPush("/menu");
+                        } else if (index === 2) {
+                          routerPush("/wishlist");
+                        } else if (index === 3) {
+                          routerPush("/cart");
+                        } else if (index === 4) {
+                          routerPush("/profile");
+                        }
+                      }}
+                      scrollable={false}
+                      align={"fit"}
+                    />
+                  </div>
+                </div>
+              )}
+
+              {!showTabbar && (
+                <>
                   {content}
-                </div>
+                  {showFooterOnMobile && <Footer />}
+                </>
+              )}
+            </Device>
 
-                <div
-                  css={css`
-                    position: fixed;
-                    bottom: 0;
-                    left: 0;
-                    width: 100%;
-                  `}
-                >
-                  <MainTabBar
-                    data={tabs}
-                    active={Component.tabbar}
-                    onChange={index => {
-                      if (index === 0) {
-                        Router.push("/");
-                      } else if (index === 1) {
-                        Router.push("/menu");
-                      } else if (index === 2) {
-                        Router.push("/wishlist");
-                      } else if (index === 3) {
-                        Router.push("/cart");
-                      } else if (index === 4) {
-                        Router.push("/profile");
+            <Device desktop>
+              {hideDesktopMenu && content}
+
+              {!hideDesktopMenu && (
+                <>
+                  <MenuDesktop
+                    data={[
+                      {
+                        label: "Home",
+                        href: "/category",
+                        content: (
+                          <MenuDesktopContent
+                            category={data.categories[0]}
+                            index={0}
+                          />
+                        )
+                      },
+                      {
+                        label: "Beauty",
+                        href: "/category",
+                        content: (
+                          <MenuDesktopContent
+                            category={data.categories[1]}
+                            index={1}
+                          />
+                        )
+                      },
+                      {
+                        label: "Food",
+                        href: "/category",
+                        content: (
+                          <MenuDesktopContent
+                            category={data.categories[2]}
+                            index={2}
+                          />
+                        )
+                      },
+                      {
+                        label: "Health",
+                        href: "/category",
+                        content: (
+                          <MenuDesktopContent
+                            category={data.categories[3]}
+                            index={3}
+                          />
+                        )
                       }
-                    }}
-                    scrollable={false}
-                    align={"fit"}
+                    ]}
                   />
-                </div>
-              </div>
-            )}
 
-            {!showTabbar && content}
+                  <div
+                    css={css`
+                      padding-top: 70px;
+                    `}
+                  >
+                    {content}
+
+                    <Footer />
+                  </div>
+                </>
+              )}
+            </Device>
           </Root>
         </ApolloHooksProvider>
       </ApolloProvider>

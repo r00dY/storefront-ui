@@ -6,101 +6,27 @@ import { useTheme } from "storefront-ui/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { TabBar } from "../theme/TabBar";
-import { FormControl } from "../theme/FormControl";
-import { StatefulInput } from "../theme/Input";
-import { Button } from "../theme/Button";
+import PageTitle from "../theme/PageTitle";
+import ProfileLogInContent from "../theme/ProfileLogInContent";
+
 const Profile = () => {
   const theme = useTheme();
-  const [tab, setTab] = useState(0);
-
-  const Panel = props => (
-    <div
-      css={css`
-        ${theme.fonts.body1.css}
-        margin-top: 20px;
-      `}
-    >
-      {props.children}
-    </div>
-  );
-
-  const tabs = [
-    {
-      label: "Join",
-      panel: (
-        <Panel>
-          <FormControl label="E-mail">
-            <StatefulInput />
-          </FormControl>
-
-          <FormControl label="Password">
-            <StatefulInput />
-          </FormControl>
-          <FormControl label="Re-type password">
-            <StatefulInput />
-          </FormControl>
-          <Button
-            fitContainer
-            css={css`
-              margin-top: 20px;
-            `}
-          >
-            Join
-          </Button>
-        </Panel>
-      )
-    },
-    {
-      label: "Sign in",
-      panel: (
-        <Panel>
-          <FormControl label="E-mail">
-            <StatefulInput />
-          </FormControl>
-
-          <FormControl label="Password">
-            <StatefulInput />
-          </FormControl>
-          <Button
-            fitContainer
-            css={css`
-              margin-top: 20px;
-            `}
-          >
-            Sign in
-          </Button>
-        </Panel>
-      )
-    }
-  ];
 
   return (
     <div>
       <Container>
-        <div
-          css={css`
-            ${theme.fonts.h4.css}
-            margin-top: 20px;
-          `}
-        >
-          Profile
-        </div>
-
-        <div
-          css={css`
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-          `}
-        >
-          <TabBar
-            data={tabs}
-            active={tab}
-            onChange={setTab}
-            showPanels={true}
-          />
-        </div>
+        <PageTitle title={"Profile"} />
+        <Grid>
+          <GridItem params={{ xs: 24, sm: [8, 8] }}>
+            <div
+              css={css`
+                margin-top: ${theme.spacings.s80}px;
+              `}
+            >
+              <ProfileLogInContent />
+            </div>
+          </GridItem>
+        </Grid>
       </Container>
     </div>
   );

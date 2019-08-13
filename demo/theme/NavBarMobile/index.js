@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/core";
 import Container from "storefront-ui/Container";
 import { ButtonRaw } from "../ButtonRaw";
 
-import IconArrowBack from "../../svg/arrow_back.svg";
+import IconArrowBack from "../../svg/back.svg";
 import IconHeart from "../../svg/heart.svg";
 import IconSearch from "../../svg/search.svg";
 import IconCart from "../../svg/cart.svg";
@@ -15,10 +15,53 @@ import { useTheme } from "storefront-ui/Theme";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import LayoutRow from "storefront-ui/LayoutRow";
 
+import routerPush from "../../helpers/routerPush";
 import Router from "next/router";
+
+import { Button } from "../Button";
 
 const NavBarMobile = props => {
   const theme = useTheme();
+  //
+  // let icon =<ButtonRaw
+  //     css={css`
+  //                 svg {
+  //                   line-height: 1;
+  //                   display: block;
+  //                 }
+  //                 display: block;
+  //               `}
+  //     onClick={() => {
+  //       routerPush("/search");
+  //     }}
+  // >
+  //   <IconSearch />
+  // </ButtonRaw>;
+  //
+  // if (props.cart) {
+  //   icon = <ButtonRaw
+  //       css={css`
+  //                 svg {
+  //                   line-height: 1;
+  //                   display: block;
+  //                 }
+  //                 display: block;
+  //               `}
+  //       onClick={() => {
+  //         routerPush("/cart?noRoot", "/cart");
+  //       }}
+  //   >
+  //     <IconCart />
+  //   </ButtonRaw>
+  // }
+  //
+  // if (props.button) {
+  //   icon = <Button size={"compact"}>{props.button}</Button>;
+  // }
+  //
+  // if (props.noIcons) {
+  //   icon = undefined;
+  // }
 
   return (
     <div
@@ -26,8 +69,10 @@ const NavBarMobile = props => {
         ${props.transparent
           ? ""
           : `
-        background: #fafafa;
-        border-bottom: 1px solid lightgrey;
+        background: white;
+        border-bottom: ${
+          props.noBorder ? "none" : `1px solid ${theme.colors.mono200.css}`
+        };
         `}
       `}
     >
@@ -35,12 +80,14 @@ const NavBarMobile = props => {
         <LayoutLeftCenterRight
           height={50}
           left={
-            <LayoutRow gutter={16}>
+            <LayoutRow gutter={8}>
               <ButtonRaw
                 css={css`
                   svg {
-                    line-height: 1;
+                    display: block;
                   }
+                  display: block;
+                  margin-left: -4px;
                 `}
                 onClick={() => {
                   Router.back();
@@ -48,59 +95,19 @@ const NavBarMobile = props => {
               >
                 <IconArrowBack />
               </ButtonRaw>
-
-              <div
-                css={css`
-                  ${theme.fonts.h6}
-                  line-height: 1;
-                `}
-              >
-                {props.title}
-              </div>
             </LayoutRow>
           }
-          right={
-            <LayoutRow gutter={12}>
-              <ButtonRaw
-                css={css`
-                  svg {
-                    line-height: 1;
-                  }
-                `}
-                onClick={() => {
-                  Router.push("/cart?noRoot", "/cart");
-                }}
-              >
-                <IconCart />
-              </ButtonRaw>
-
-              <ButtonRaw
-                css={css`
-                  svg {
-                    line-height: 1;
-                  }
-                `}
-                onClick={() => {
-                  Router.push("/wishlist?noRoot", "/wishlist");
-                }}
-              >
-                <IconHeart />
-              </ButtonRaw>
-
-              <ButtonRaw
-                css={css`
-                  svg {
-                    line-height: 1;
-                  }
-                `}
-                onClick={() => {
-                  Router.push("/search");
-                }}
-              >
-                <IconSearch />
-              </ButtonRaw>
-            </LayoutRow>
+          center={
+            <div
+              css={css`
+                ${theme.fonts.body1.css}
+                line-height: 1;
+              `}
+            >
+              {props.title}
+            </div>
           }
+          right={<LayoutRow gutter={12}>{props.right}</LayoutRow>}
         />
       </Container>
     </div>

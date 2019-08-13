@@ -8,7 +8,8 @@ LICENSE file in the root directory of this source tree.
 // @flow
 
 import Color from "../../Color";
-import Font from "../../Color";
+import Font from "../../Font";
+import { RangeSet, RangeMap, ResponsiveSize } from "responsive-helpers";
 
 export default function deepMerge(
   target?: ?{},
@@ -36,7 +37,13 @@ export default function deepMerge(
 
 /* eslint-disable-next-line flowtype/no-weak-types */
 function isCloneable(obj: mixed) {
-  if (obj instanceof Color || obj instanceof Font) {
+  if (
+    obj instanceof Color ||
+    obj instanceof Font ||
+    obj instanceof RangeMap ||
+    obj instanceof RangeSet ||
+    obj instanceof ResponsiveSize
+  ) {
     return false;
   }
   return Array.isArray(obj) || {}.toString.call(obj) == "[object Object]";

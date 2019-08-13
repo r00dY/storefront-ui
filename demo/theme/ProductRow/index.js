@@ -6,20 +6,20 @@ import { css, jsx } from "@emotion/core";
 
 import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 
-import IconClear from "./outline-clear-24px.svg";
+import IconClear from "./outline-delete-24px.svg";
 import IconAdd from "./outline-add-24px.svg";
 import IconRemove from "./outline-remove-24px.svg";
 import { useTheme } from "storefront-ui/Theme";
+import { Button } from "../Button";
+
+import { rslin } from "responsive-helpers";
 
 const overrides = {
   Price: ({ price }) => <Price price={price} alignRight />
 };
 
-const Quantity = ({ quantity, editable }) => {
+const Quantity = ({ quantity, mode, isWishlistItem }) => {
   const theme = useTheme();
-  if (!quantity) {
-    return false;
-  }
   return (
     <div
       css={css`
@@ -33,24 +33,27 @@ const Quantity = ({ quantity, editable }) => {
         }
       `}
     >
-      {editable && (
+      {mode === "basket" && (
         <ButtonRaw$>
           <IconRemove />
         </ButtonRaw$>
       )}
-      <div
-        css={css`
-          width: 36px;
-          ${editable ? "text-align: center;" : ""}
-        `}
-      >
-        {quantity}
-      </div>
-      {editable && (
+      {(mode === "basket" || mode === "default") && (
+        <div
+          css={css`
+            width: 36px;
+            ${mode === "basket" ? "text-align: center;" : ""}
+          `}
+        >
+          {quantity}
+        </div>
+      )}
+      {mode === "basket" && (
         <ButtonRaw$>
           <IconAdd />
         </ButtonRaw$>
       )}
+      {mode === "wishlist" && <Button>Add to basket</Button>}
     </div>
   );
 };
@@ -58,14 +61,20 @@ const Quantity = ({ quantity, editable }) => {
 const overridesTheme1 = {
   Price: ({ price }) => <Price price={price} alignRight />,
   Name: {
-    style: ({ $theme, mode }) =>
-      `margin-bottom: 0.5em; ${
-        mode === "compact" ? $theme.fonts.body1.css : ""
-      }`
+    style: ({ $theme, mode }) => `
+        margin-bottom: 0.5em;
+        ${$theme.fonts.body1.css}
+        margin-right: 8px;
+      `
   },
-  Remove: ({ editable }) => (
+  ImageContainer: {
+    style: ({ $theme, mode }) => `
+      ${rslin(80, 80).css("width")}
+    `
+  },
+  Remove: ({ mode }) => (
     <>
-      {editable && (
+      {(mode === "basket" || mode === "wishlist") && (
         <ButtonRaw$>
           <IconClear
             css={css`
@@ -77,6 +86,9 @@ const overridesTheme1 = {
       )}
     </>
   ),
+  Content: {
+    style: ({ $theme, gutter }) => `padding: 0 ${gutter}px; background: red;`
+  },
   Quantity: Quantity
 };
 const ProductRow = props => <ProductRow$ {...props} overrides={overrides} />;

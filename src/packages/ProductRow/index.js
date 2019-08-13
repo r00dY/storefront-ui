@@ -7,7 +7,6 @@ import {
   ImageContainerStyled,
   NameStyled,
   DescriptionStyled,
-  DataStyled,
   VariantStyled,
   QuantityStyled
 } from "./styled-components";
@@ -21,6 +20,7 @@ import { css, jsx } from "@emotion/core";
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
 import { ButtonRaw$ } from "../ButtonRaw";
+import { Button$ } from "../Button";
 
 const ProductRow$ = props => {
   const {
@@ -28,9 +28,9 @@ const ProductRow$ = props => {
     price,
     quantity,
     gutter,
-    mode,
+    layout,
     breakpoint,
-    editable,
+    mode,
     overrides: {
       Root: RootOverride,
       ImageContainer: ImageContainerOverride,
@@ -60,11 +60,12 @@ const ProductRow$ = props => {
       removeElem,
       quantityElem,
       priceElem,
+      layout,
       mode,
-      editable
+      gutter
     }) => {
       let _breakpoint = breakpoint;
-      if (mode === "compact") {
+      if (layout === "compact") {
         _breakpoint = undefined;
       }
 
@@ -72,7 +73,7 @@ const ProductRow$ = props => {
         <div
           css={css`
             width: 100%;
-            padding: ${gutter}px;
+            padding-left: ${gutter}px;
             display: flex;
             flex-wrap: wrap;
             align-content: space-between;
@@ -90,7 +91,7 @@ const ProductRow$ = props => {
               width: 100%;
               min-width: 0;
               padding-bottom: ${gutter}px;
-              ${editable ? "padding-right: 30px;" : ""}
+              ${mode !== "default" ? "padding-right: 30px;" : ""}
               ${_breakpoint
                 ? R.from(_breakpoint).css(
                     `padding-right: ${gutter}px; padding-bottom: 0; width: 50%;`
@@ -105,8 +106,8 @@ const ProductRow$ = props => {
           <div
             css={css`
               position: absolute;
-              top: ${gutter}px;
-              right: ${gutter}px;
+              top: 0;
+              right: 0;
               ${_breakpoint
                 ? R.from(_breakpoint).css(
                     `position: relative; top: auto; right: auto; order: 3; padding-left: ${gutter}px;`
@@ -152,8 +153,12 @@ const ProductRow$ = props => {
     DescriptionOverride,
     DescriptionStyled
   );
-  const [Remove, removeProps] = getOverrides(RemoveOverride, ({ editable }) => (
-    <>{editable && <ButtonRaw$>Remove</ButtonRaw$>}</>
+  const [Remove, removeProps] = getOverrides(RemoveOverride, ({ mode }) => (
+    <>
+      {(mode === "basket" || mode === "wishlist") && (
+        <ButtonRaw$>Remove</ButtonRaw$>
+      )}
+    </>
   ));
   const [Quantity, quantityProps] = getOverrides(
     QuantityOverride,
@@ -161,7 +166,7 @@ const ProductRow$ = props => {
   );
 
   const nameElem = (
-    <Name {...nameProps} mode={mode}>
+    <Name {...nameProps} layout={layout}>
       <a href={href}>{name}</a>
     </Name>
   );
@@ -174,13 +179,14 @@ const ProductRow$ = props => {
     </Variant>
   );
   const priceElem = <Price price={price} />;
-  const removeElem = <Remove {...removeProps} editable={editable} />;
+  const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
-    <Quantity {...quantityProps} quantity={quantity} editable={editable}>
-      {editable && <ButtonRaw$>[-]</ButtonRaw$>}
+    <Quantity {...quantityProps} quantity={quantity} mode={mode}>
+      {mode === "basket" && <ButtonRaw$>[-]</ButtonRaw$>}
       {quantity}
-      {editable && <ButtonRaw$>[+]</ButtonRaw$>}
+      {mode === "basket" && <ButtonRaw$>[+]</ButtonRaw$>}
+      {mode === "wishlist" && <Button$>Add to basket</Button$>}
     </Quantity>
   );
   const contentElem = (
@@ -192,19 +198,20 @@ const ProductRow$ = props => {
       removeElem={removeElem}
       quantityElem={quantityElem}
       priceElem={priceElem}
-      mode={mode}
+      layout={layout}
       name={name}
       description={description}
       variant={variant}
       quantity={quantity}
       price={price}
-      editable={editable}
+      mode={mode}
+      gutter={gutter}
     />
   );
 
   const imageElem = (
     <a href={href} tabIndex={"-1"}>
-      <ImageContainer {...imageContainerProps} mode={mode}>
+      <ImageContainer {...imageContainerProps} layout={layout}>
         <Image
           image={images[0]}
           css={css`
@@ -218,16 +225,17 @@ const ProductRow$ = props => {
 };
 ProductRow$.defaultProps = {
   gutter: 16,
-  mode: "full",
+  layout: "full",
   breakpoint: "md",
-  editable: false
+  mode: "default"
 };
 
 ProductRow$.propTypes = {
   product: PropTypes.object.isRequired,
   price: PropTypes.object.isRequired,
   quantity: PropTypes.string.isRequired,
-  mode: PropTypes.string,
+  mode: PropTypes.string.isRequired,
+  layout: PropTypes.string,
   gutter: PropTypes.number,
   overrides: PropTypes.object
 };

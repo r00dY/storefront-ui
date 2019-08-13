@@ -108,7 +108,7 @@ function styled(component, arg, childrenFunc) {
           overrideStyles = props.$style;
         }
 
-        let { children, ...restProps } = props;
+        let { children, $ref, ...restProps } = props;
 
         let func = props.$children || childrenFunc;
         if (func) {
@@ -117,8 +117,8 @@ function styled(component, arg, childrenFunc) {
 
         return (
           <Component
-            ref={props.$ref}
             {...restProps}
+            ref={$ref}
             $theme={theme}
             css={css`
               ${stylesToString(styles)}

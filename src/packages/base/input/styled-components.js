@@ -12,9 +12,9 @@ import type { SharedPropsT } from "./types.js";
 export function getInputPadding(size, sizing) {
   return {
     [SIZE.default]: {
-      paddingTop: sizing.scale400,
+      paddingTop: sizing.scale500,
       paddingRight: sizing.scale500,
-      paddingBottom: sizing.scale400,
+      paddingBottom: sizing.scale500,
       paddingLeft: sizing.scale500
     },
     [SIZE.compact]: {
@@ -80,7 +80,7 @@ export const InputEnhancer = styled("div", props => {
   };
 });
 
-const getInputStyle = (style, props) => {
+export const getInputStyle = (style, props) => {
   const {
     $isFocused,
     $error,
@@ -131,6 +131,7 @@ export const getInputContainerStyles = (props: SharedPropsT) => {
     borderColor: getInputStyle("BorderColor", props),
     borderRadius: getInputStyle("BorderRadius", props),
     boxShadow: getInputStyle("BoxShadow", props),
+    overflow: "hidden",
     transitionProperty: "border, boxShadow, backgroundColor",
     transitionDuration: animation.timing100,
     transitionTimingFunction: animation.easeOutCurve
@@ -159,7 +160,7 @@ export const getInputStyles = (props: SharedPropsT) => {
     $size,
     $hideSpinButtons,
     $type,
-    $theme: { colors, sizing, fonts }
+    $theme: { sizing, fonts }
   } = props;
   return {
     ...getFont($size, fonts),

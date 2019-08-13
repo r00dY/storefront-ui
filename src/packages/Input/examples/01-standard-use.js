@@ -15,6 +15,22 @@ export default () => {
 
   return (
     <div>
+      <div
+        css={css`
+          position: fixed;
+          bottom: 0;
+          background: black;
+          color: white;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          height: 50px;
+          width: 100%;
+          left: 0;
+        `}
+      >
+        Coś tu jest
+      </div>
       <p>Standard</p>
       <Input
         onChange={e => setValue(e.target.value)}

@@ -23,34 +23,36 @@ export default ({
       <div
         css={css`
           position: relative;
-          flex-grow: 1;
+          flex: 1;
         `}
       >
         {left}
       </div>
 
-      <div
-        css={css`
-          position: relative;
-          flex-grow: 1;
-        `}
-      >
+      {center && (
         <div
           css={css`
             position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: ${alignItems};
+            flex: 1;
           `}
         >
-          {center}
+          <div
+            css={css`
+              position: relative;
+              display: flex;
+              justify-content: center;
+              align-items: ${alignItems};
+            `}
+          >
+            {center}
+          </div>
         </div>
-      </div>
+      )}
 
       <div
         css={css`
           position: relative;
-          flex-grow: 1;
+          flex: 1;
         `}
       >
         <div

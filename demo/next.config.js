@@ -1,6 +1,8 @@
 const path = require("path");
 const webpack = require("webpack");
 
+console.log("NODE_ENV", process.env.NODE_ENV);
+
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     // Perform customizations to webpack config
@@ -39,5 +41,5 @@ module.exports = {
     // Important: return the modified config
     return config;
   },
-  target: "serverless"
+  target: "server"
 };

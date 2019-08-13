@@ -145,6 +145,16 @@ export default props => {
               <a>Tabs</a>
             </Link>
           </li>
+          <li>
+            <Link href="/select">
+              <a>Select</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/notifications">
+              <a>Notifications</a>
+            </Link>
+          </li>
         </ul>
       </div>
 

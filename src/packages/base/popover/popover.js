@@ -355,7 +355,8 @@ class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {
       $popoverOffset: popoverOffset,
       $placement: placement,
       $isAnimating: isAnimating,
-      $isOpen: isOpen
+      $isOpen: isOpen,
+      $anchorWidth: this.anchorRef.current.clientWidth
     };
   }
 

@@ -32,6 +32,12 @@ export const rootStyles = ({ $theme }) => `
     cursor: default;
     color: black;
   }
+  
+  &:focus {
+    outline: none;
+  }
+  
+  -webkit-tap-highlight-color: transparent;
 `;
 
 export const RootStyled = styled("button", rootStyles);

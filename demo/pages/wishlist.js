@@ -1,6 +1,5 @@
 import React from "react";
 
-import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 
@@ -11,7 +10,33 @@ import { useTheme } from "storefront-ui/Theme";
 import { useRouter } from "next/router";
 import NavBarMobile from "../theme/NavBarMobile";
 import data from "../data";
-import { ProductRowTheme1 } from "../theme/ProductRow";
+import PageTitle from "../theme/PageTitle";
+import { ProductCardTheme1 } from "../theme/ProductCard";
+import { Button } from "../theme/Button";
+import useAddToCart from "../helpers/useAddToCart";
+
+const ProductCartWithButton = ({ product }) => {
+  const [addToCart, isLoading] = useAddToCart(product);
+  const theme = useTheme();
+
+  return (
+    <>
+      <ProductCardTheme1 product={product} />
+      <div
+        css={css`
+          flex-grow: 1;
+          display: flex;
+          align-items: flex-end;
+          margin-top: ${theme.spacings.s40}px;
+        `}
+      >
+        <Button fitContainer onClick={addToCart} isLoading={isLoading}>
+          Add to cart
+        </Button>
+      </div>
+    </>
+  );
+};
 
 const Wishlist = () => {
   const router = useRouter();
@@ -23,33 +48,29 @@ const Wishlist = () => {
       {noRoot && <NavBarMobile title={"Wishlist"} />}
       <Container>
         {!noRoot && (
-          <div
-            css={css`
-              ${theme.fonts.h4.css}
-              margin-top: 20px;
-            `}
-          >
-            Your Wishlist
-          </div>
+          <PageTitle
+            title={"Your Wishlist"}
+            subtitle={`${data.products.length} items`}
+          />
         )}
-        <div
-          css={css`
-            margin-top: 20px;
-            padding-bottom: 40px;
-            & > div:not(:first-of-type) {
-              margin-top: 10px;
-            }
-          `}
-        >
-          {data.products.map((product, index) => (
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              mode={"compact"}
-              editable
-            />
-          ))}
-        </div>
+        <Grid>
+          <GridItem params={{ xs: 24, lg: [20, 2], xl: [16, 4] }}>
+            <Grid gutterVertical={50} colNumber={{ xs: 24, lg: 20, xl: 16 }}>
+              {data.products.map((product, index) => (
+                <GridItem
+                  key={index}
+                  params={{ xs: 12, sm: 8, md: 6, lg: 5, xl: 4 }}
+                  css={css`
+                    display: flex;
+                    flex-direction: column;
+                  `}
+                >
+                  <ProductCartWithButton product={product} />
+                </GridItem>
+              ))}
+            </Grid>
+          </GridItem>
+        </Grid>
       </Container>
     </div>
   );

@@ -14,6 +14,14 @@ export default () => (
 
     <Button$>Primary button</Button$>
 
+    <p>Standard button compact</p>
+
+    <Button$ size={"compact"}>Primary compact </Button$>
+
+    <p>Standard button large</p>
+
+    <Button$ size={"large"}>Primary large </Button$>
+
     <br />
     <br />
     <Button$ kind={"secondary"}>Secondary button</Button$>

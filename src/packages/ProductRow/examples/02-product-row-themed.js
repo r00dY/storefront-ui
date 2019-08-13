@@ -17,8 +17,9 @@ export default () => {
               product={product}
               price={product.price}
               quantity={"1"}
-              mode={"full"}
+              layout={"full"}
               breakpoint={"lg"}
+              mode={"wishlist"}
               onClick={() => console.log("click")}
             />
           </GridItem>

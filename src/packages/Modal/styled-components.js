@@ -1,7 +1,6 @@
 import { styled } from "../base/styles";
 
 export const bodyStyles = ({ $theme }) => `
-    padding: 16px;
 `;
 
 export const BodyStyled = styled("div", bodyStyles);

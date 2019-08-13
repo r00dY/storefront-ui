@@ -79,7 +79,6 @@ const Wrapper = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-  text-align: center;
   ${props =>
     props.config.overflowAlwaysHidden
       ? "overflow: hidden"
@@ -99,7 +98,7 @@ const ItemsContainer = styled.div`
 const Item = styled.div`
   ${props => (props.config.mode === "horizontal" ? "height: 100%;" : "")}
   box-sizing: border-box;
-  ${props => props.size.css("flex-basis")}
+  ${props => props.size.css("width")}
   flex-grow: 0;
   flex-shrink: 0;
 `;
@@ -272,8 +271,10 @@ let SwipeableItemsContainerPure = props => {
   };
 
   const applyState = () => {
-    containerRef.current.style.transform = `translate3d(${instance.state
-      .slides[0].coord - instance.state.leftOffset}px, 0, 0)`;
+    if (containerRef.current) {
+      containerRef.current.style.transform = `translate3d(${instance.state
+        .slides[0].coord - instance.state.leftOffset}px, 0, 0)`;
+    }
   };
 
   if (instance) {
@@ -342,7 +343,7 @@ let SwipeableItemsContainerPure = props => {
       key="spacer-before"
       ref={leftOffsetRef}
       css={css`
-        ${config.offsetBefore.css("flex-basis")}
+        ${config.offsetBefore.css("width")}
         flex-grow: 0;
         flex-shrink: 0;
       `}
@@ -362,7 +363,7 @@ let SwipeableItemsContainerPure = props => {
         <div
           key={`spacer-${i}`}
           css={css`
-            ${config.gutter.css("flex-basis")}
+            ${config.gutter.css("width")}
             flex-grow: 0;
             flex-shrink: 0;
           `}
@@ -377,7 +378,7 @@ let SwipeableItemsContainerPure = props => {
       key="spacer-after"
       ref={rightOffsetRef}
       css={css`
-        ${config.offsetAfter.css("flex-basis")}
+        ${config.offsetAfter.css("width")}
         flex-grow: 0;
         flex-shrink: 0;
       `}

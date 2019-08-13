@@ -30,6 +30,8 @@ const ProgressSteps$ = props => {
     SeparatorStyled
   );
 
+  let _lastCompleted = lastCompleted ? lastCompleted : data.length - 2;
+
   return (
     <Root {...rootProps}>
       {data.map((step, index) => (
@@ -39,7 +41,7 @@ const ProgressSteps$ = props => {
               {...stepProps}
               label={step.label}
               href={step.href}
-              completed={index <= lastCompleted}
+              completed={index < _lastCompleted}
               active={index === active}
               activate={() => onClick(index)}
             />
@@ -48,7 +50,7 @@ const ProgressSteps$ = props => {
             <div>
               <Separator
                 {...separatorProps}
-                nextStepIsCompleted={index < lastCompleted}
+                nextStepIsCompleted={index < _lastCompleted}
               />
             </div>
           )}

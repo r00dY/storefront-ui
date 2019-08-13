@@ -104,8 +104,8 @@ const slide = (
         left: ${(axis === "X" && fromStart) || axis === "Y" ? 0 : "auto"};
         right: ${axis === "X" && !fromStart ? 0 : "auto"};
 
-        ${rs(width).css("width")}
-        ${rs(height).css("height")}
+        ${width === "auto" ? "auto" : rs(width).css("width")}
+        ${height === "auto" ? "auto" : rs(height).css("height")}
     `,
   animation: {
     content: {

@@ -7,6 +7,7 @@ import {
   SelectNative$,
   StatefulSelectNative$
 } from "storefront-ui/SelectNative";
+import Device from "storefront-ui/Device";
 
 import { FormHeader } from "../theme/FormHeader";
 import { FormControl } from "../theme/FormControl";
@@ -16,12 +17,17 @@ import { ProgressSteps } from "../theme/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
 
+import { R } from "storefront-ui/Config";
+
+import routerPush from "../helpers/routerPush";
+
 import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import IconArrowBack from "../svg/arrow_back.svg";
 
-export default () => {
+const Form1 = () => {
   const theme = useTheme();
 
   const [select1, setSelect1] = useState(null);
@@ -39,56 +45,65 @@ export default () => {
   );
   return (
     <CheckoutPage>
-      <Grid gutterVertical={20}>
-        <GridItem>
-          <ProgressSteps
-            data={[
-              {
-                label: "Consumer information",
-                href: "#"
-              },
-              {
-                label: "Shipping method",
-                href: "#"
-              },
-              {
-                label: "Payment method",
-                href: "#"
-              }
-            ]}
-            active={0}
-            lastCompleted={0}
-            onClick={stepIndex => {
-              console.log("clicked step " + stepIndex);
-            }}
-          />
-        </GridItem>
-        <GridItem
-          css={css`
-            ${spacer}
-          `}
-        >
-          <FormHeader
-            title={"Contact"}
-            description={
-              <>
-                Already have an account? <a href="#">Log in.</a>
-              </>
+      <Device desktop>
+        <ProgressSteps
+          data={[
+            {
+              label: "Cart",
+              href: "/cart"
+            },
+            {
+              label: "Information",
+              href: "/form1"
+            },
+            {
+              label: "Shipping",
+              href: "/form2"
+            },
+            {
+              label: "Payment",
+              href: "/form3"
             }
-          />
-        </GridItem>
+          ]}
+          active={1}
+          lastCompleted={1}
+          onClick={stepIndex => {
+            console.log("clicked step " + stepIndex);
+          }}
+        />
+      </Device>
+
+      <div
+        css={css`
+          ${spacer}
+        `}
+      />
+
+      <FormHeader
+        title={"Contact"}
+        description={
+          <>
+            Already have an account? <a href="#">Log in.</a>
+          </>
+        }
+      />
+
+      <Grid gutterVertical={16}>
         <GridItem>
           <FormControl label="E-mail">
             <StatefulInput />
           </FormControl>
         </GridItem>
-        <GridItem
-          css={css`
-            ${spacer}
-          `}
-        >
-          <FormHeader title={"Shipping Address"} />
-        </GridItem>
+      </Grid>
+
+      <div
+        css={css`
+          ${spacer}
+        `}
+      />
+      <FormHeader title={"Shipping Address"} />
+
+      <Grid gutterVertical={16}>
         <GridItem params={"1/2"}>
           <FormControl label={"First name"}>
             <StatefulInput />
@@ -137,15 +152,36 @@ export default () => {
         <GridItem
           css={css`
             display: flex;
-            justify-content: space-between;
+            flex-wrap: wrap;
+            ${R.from("md").css("justify-content: space-between;")}
+            ${R.to("sm").css("&>div{width: 100%;}")}
           `}
         >
-          <div />
-          <div>
-            <Button>Continue to shipping method</Button>
-          </div>
+          <Button
+            size={"large"}
+            kind={"minimal"}
+            startEnhancer={<IconArrowBack />}
+            onClick={() => {
+              routerPush("/cart");
+            }}
+          >
+            Return to cart
+          </Button>
+
+          <Button
+            size={"large"}
+            onClick={() => {
+              routerPush("/form2");
+            }}
+          >
+            Continue to shipping method
+          </Button>
         </GridItem>
       </Grid>
     </CheckoutPage>
   );
 };
+
+Form1.hideDesktopMenu = true;
+
+export default Form1;
