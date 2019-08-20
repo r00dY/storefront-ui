@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { Button } from "../Button";
 
 import { useTheme } from "storefront-ui/Theme";
+import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import routerPush from "../../helpers/routerPush";
+import ThemeLink from "../ThemeLink";
 
 const OrderDetails = ({ rows }) => {
   const theme = useTheme();
@@ -18,8 +20,8 @@ const OrderDetails = ({ rows }) => {
         background: ${theme.colors.mono50.css};
         ${theme.fonts.body2.css}
         td {
-          padding: ${theme.spacings.s40}px ${theme.spacings.s40}px
-            ${theme.spacings.s40}px ${theme.spacings.s80}px;
+          padding: ${theme.spacings.s60}px ${theme.spacings.s80}px
+            ${theme.spacings.s60}px ${theme.spacings.s80}px;
         }
       `}
     >
@@ -36,14 +38,9 @@ const OrderDetails = ({ rows }) => {
               text-align: right;
             `}
           >
-            <Button
-              kind={"minimal"}
-              onClick={() => {
-                routerPush(row.href);
-              }}
-            >
-              Change
-            </Button>
+            <Link href={row.href}>
+              <ThemeLink>Change</ThemeLink>
+            </Link>
           </td>
         </tr>
       ))}

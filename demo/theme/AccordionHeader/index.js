@@ -10,7 +10,14 @@ const AccordionHeader = props => (
         style: ({ $theme }) => `${$theme.fonts.body1.css}`
       },
       Root: {
-        style: ({ $theme }) => `border-bottom: none; height: 50px; `
+        style: ({ $theme }) => `
+        border-bottom: none;
+         height: 50px;
+         padding: 0;
+         &:hover { color: ${$theme.colors.mono600.css};
+         svg {fill: currentColor;}
+         transition: all 150ms;
+         }`
       },
       Toggle: ({ $open }) => ($open ? <IconExpandLess /> : <IconExpandMore />)
     }}

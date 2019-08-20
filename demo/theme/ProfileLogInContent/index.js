@@ -13,6 +13,8 @@ import { useTheme } from "storefront-ui/Theme";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 import IconFacebook from "./facebook_logo.svg";
+import ThemeLink from "../ThemeLink";
+import Link from "next/link";
 
 const ProfileLogInContent = props => {
   const theme = useTheme();
@@ -116,7 +118,18 @@ const ProfileLogInContent = props => {
             }px; color: ${theme.colors.mono500.css};`}
           >
             By creating an account, you agree to Our{" "}
-            <a href="">Privacy Policy and Terms of Use</a>.
+            <Link href={"/privacy"}>
+              <ThemeLink href={"/privacy"} kind={"underline"}>
+                Privacy Policy
+              </ThemeLink>
+            </Link>{" "}
+            and&nbsp;
+            <Link href={"/privacy"}>
+              <ThemeLink href={"/privacy"} kind={"underline"}>
+                Terms of Use
+              </ThemeLink>
+            </Link>
+            .
           </div>
 
           <Button

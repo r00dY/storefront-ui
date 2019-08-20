@@ -10,16 +10,19 @@ const ListItem = ({ selected, focused, item }) => {
   return (
     <div
       css={css`
-        padding: ${theme.spacings.s40}px;
+        padding: ${theme.spacings.s40}px 0;
         display: flex;
         align-items: center;
         background-color: ${focused ? theme.colors.mono100.css : "transparent"};
         ${theme.fonts.body2.css}
+        transition: all 150ms;
         &:hover {
-          background-color: ${theme.colors.mono100.css};
+          color: ${theme.colors.mono600.css};
         }
         svg {
+          transition: all 150ms;
           margin-right: ${theme.spacings.s40}px;
+          fill: currentColor;
         }
         cursor: pointer;
       `}

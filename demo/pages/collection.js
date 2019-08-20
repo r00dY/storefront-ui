@@ -25,12 +25,8 @@ import NavBarMobile from "../theme/NavBarMobile";
 import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import { StatefulSelect } from "../theme/Select";
-import CategoryCard from "../theme/CategoryCard";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
-import {
-  ProgressSteps,
-  ProgressStepsAsBreadcrumbs
-} from "../theme/ProgressSteps";
+import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
 const NavBarCollection = props => {
   const direction = useScrollDirection();
@@ -54,7 +50,7 @@ const NavBarCollection = props => {
         `}
       >
         <NavBarMobile
-          title={"Snacks"}
+          title={"Food"}
           right={
             <Button size={"compact"} onClick={props.onFilterOpen}>
               Filter
@@ -150,7 +146,7 @@ function shuffle(array) {
 
 let timeout;
 
-const CollectionPage = () => {
+const CollectionPage = props => {
   const [filters, onFiltersChange] = useFiltersData(data.filters);
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
   const [select1, setSelect1] = useState(stringOptions[0]);
@@ -182,21 +178,22 @@ const CollectionPage = () => {
         `}
       >
         <GridItem>
-          <Device desktop>
-            <ProgressStepsAsBreadcrumbs
-              data={[
-                {
-                  label: "Food",
-                  href: "/collection"
-                },
-                {
-                  label: "Snacks",
-                  href: "/collection"
-                }
-              ]}
-            />
-          </Device>
-
+          {props.isCategory && (
+            <Device desktop>
+              <ProgressStepsAsBreadcrumbs
+                data={[
+                  {
+                    label: "Beauty",
+                    href: "/collection"
+                  },
+                  {
+                    label: "Bath",
+                    href: "/category"
+                  }
+                ]}
+              />
+            </Device>
+          )}
           <LayoutLeftCenterRight
             left={
               <div
@@ -206,7 +203,8 @@ const CollectionPage = () => {
                   ${theme.fonts.h2.css}
                 `}
               >
-                Snacks
+                {!props.isCategory && "Beauty"}
+                {props.isCategory && "Bath"}
               </div>
             }
             right={
@@ -225,19 +223,20 @@ const CollectionPage = () => {
           />
         </GridItem>
 
-        {["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
-          (category, index) => {
-            return (
-              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-                <CategoryCardCompact
-                  image={data.images.categories[category.toLowerCase()]}
-                  text={category}
-                  href={"/collection"}
-                />
-              </GridItem>
-            );
-          }
-        )}
+        {!props.isCategory &&
+          ["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
+            (category, index) => {
+              return (
+                <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+                  <CategoryCardCompact
+                    image={data.images.categories[category.toLowerCase()]}
+                    text={category}
+                    href={"/collection"}
+                  />
+                </GridItem>
+              );
+            }
+          )}
       </Grid>
       <Grid
         css={css`
@@ -260,10 +259,11 @@ const CollectionPage = () => {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                height: 50px;
                 ${rslin(theme.spacings.s70, theme.spacings.s70).css(
                   "margin-bottom"
                 )}
-                ${theme.fonts.body2.css}
+                ${theme.fonts.body1.css}
                 ${R.to("sm").css("display: none;")}
               `}
           >
@@ -416,6 +416,10 @@ const CollectionPage = () => {
       </Modal>
     </div>
   );
+};
+
+CollectionPage.defaultProps = {
+  isCategory: false
 };
 
 CollectionPage.tabbar = 0;

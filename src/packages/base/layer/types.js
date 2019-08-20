@@ -22,7 +22,7 @@ export type LayersContextT = {
 export type LayerPropsT = {
   /** Content to be rendered in the Layer. */
   children: React.Node,
-  /** A DOM element where the Layer will be inserted into as a child.
+  /** ThemeLink DOM element where the Layer will be inserted into as a child.
    The host value comes from the layers context provider.
    If there is no `LayersManager` added and therefore no host element
    in the context, `document.body` will be used as a container element. */
@@ -30,12 +30,12 @@ export type LayerPropsT = {
   /** Defines the location (child order) at which the layer will be inserted in
    the `host` element. */
   index?: number,
-  /** A custom DOM element where the layer is inserted to as a child.
+  /** ThemeLink custom DOM element where the layer is inserted to as a child.
    Note that the `index` prop does not work with a custom `mountNode`. */
   mountNode?: HTMLElement,
-  /** A handler that is called when the Layer is mounted. */
+  /** ThemeLink handler that is called when the Layer is mounted. */
   onMount?: () => mixed,
-  /** A handler that is called when the Layer is unmounted. */
+  /** ThemeLink handler that is called when the Layer is unmounted. */
   onUnmount?: () => mixed
 };
 
@@ -100,7 +100,7 @@ export type TetherPropsT = {
   popperRef: ?HTMLElement,
   /** Content to be rendered in the Popper. */
   children: React.Node,
-  /** A handler that is called when popper positioning changes. */
+  /** ThemeLink handler that is called when popper positioning changes. */
   onPopperUpdate: (NormalizedOffsetsT, PopperDataObjectT) => mixed,
   /** Recommended placement of the popper. */
   placement: TetherPlacementT,

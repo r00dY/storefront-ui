@@ -26,6 +26,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import IconArrowBack from "../svg/arrow_back.svg";
+import ThemeLink from "../theme/ThemeLink";
 
 const Form1 = () => {
   const theme = useTheme();
@@ -83,7 +84,10 @@ const Form1 = () => {
         title={"Contact"}
         description={
           <>
-            Already have an account? <a href="#">Log in.</a>
+            Already have an account?{" "}
+            <ThemeLink href="#" secondary>
+              Log in.
+            </ThemeLink>
           </>
         }
       />

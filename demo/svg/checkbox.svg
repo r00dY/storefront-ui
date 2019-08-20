@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zM17.99 9l-1.41-1.42-6.59 6.59-2.58-2.57-1.42 1.41 4 3.99z"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 54.1 (76490) - https://sketchapp.com -->
+    <title>checkbox_full</title>
+    <desc>Created with Sketch.</desc>
+    <g id="checkbox_full" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect id="Rectangle" stroke="#BCBCBC" x="3.5" y="3.5" width="17" height="17" rx="2"></rect>
+        <polygon id="Path-3" fill="#000000" fill-rule="nonzero" points="6.65801128 10.5743024 5.55570645 11.5916146 9.60820561 15.982685 17.6912746 8.92791702 16.7049372 7.79781142 9.72104246 13.8932385"></polygon>
+    </g>
+</svg>

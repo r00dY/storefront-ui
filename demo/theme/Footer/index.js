@@ -8,30 +8,31 @@ import { rslin } from "responsive-helpers";
 import { R } from "storefront-ui/Config";
 
 import { ButtonRaw } from "../ButtonRaw";
+import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 const _columns = [
   [
-    { label: "About" },
-    { label: "Customer Service" },
-    { label: "Delivery Information" },
-    { label: "Returns & Refunds" },
-    { label: "Product Care" }
+    { label: "About", href: "/shipping" },
+    { label: "Customer Service", href: "/shipping" },
+    { label: "Delivery Information", href: "/shipping" },
+    { label: "Returns & Refunds", href: "/shipping" },
+    { label: "Product Care", href: "/shipping" }
   ],
   [
-    { label: "Store Locator" },
-    { label: "Careers" },
-    { label: "Press" },
-    { label: "Contact Us" }
+    { label: "Store Locator", href: "/shipping" },
+    { label: "Careers", href: "/shipping" },
+    { label: "Press", href: "/shipping" },
+    { label: "Contact Us", href: "/shipping" }
   ]
 ];
 
 import IconInstagram from "./instagram.svg";
 import IconPinterest from "./pinterest.svg";
 import IconTwitter from "./twitter.svg";
-import { Button } from "../Button";
+import ThemeLink from "../ThemeLink";
 
 const Footer = props => {
   const theme = useTheme();
@@ -67,17 +68,13 @@ const Footer = props => {
                         css={css`
                           ${theme.fonts.caption.css}
                           line-height: 2.4;
-                          a {
-                            color: ${theme.colors.mono700.css};
-                            text-decoration: none;
-                            transition: color 200ms;
-                            &:hover {
-                              color: ${theme.colors.mono500.css};
-                            }
-                          }
                         `}
                       >
-                        <a href="">{link.label}</a>
+                        <Link href={link.href}>
+                          <ThemeLink href={link.href} kind={"secondary"}>
+                            {link.label}
+                          </ThemeLink>
+                        </Link>
                       </div>
                     );
                   })}
@@ -148,16 +145,11 @@ const Footer = props => {
                   >
                     {index > 0 && "|"}
                   </div>
-                  <a
-                    href={"#"}
-                    kind={"minimal"}
-                    css={css`
-                      color: ${theme.colors.mono500.css};
-                      text-decoration: none;
-                    `}
-                  >
-                    {link}
-                  </a>
+                  <Link href={"/privacy"}>
+                    <ThemeLink href={"/privacy"} kind={"hoverUnderline"}>
+                      {link}
+                    </ThemeLink>
+                  </Link>
                 </>
               ))}
             </div>

@@ -27,6 +27,7 @@ import { Banner, BannerInner } from "../Banner";
 import { ProductCardTheme1 } from "../ProductCard";
 import { Ledger } from "../Ledger";
 import ProfileLogInContent from "../ProfileLogInContent";
+import ThemeLink from "../ThemeLink";
 
 export const MenuDesktopContent = props => {
   const { category, alternative } = props;
@@ -65,25 +66,17 @@ export const MenuDesktopContent = props => {
                 <div
                   css={css`
                     width: 33.33%;
-                    a {
-                      color: inherit;
-                      text-decoration: none;
-                    }
                   `}
                 >
                   <div
                     css={css`
                       padding-right: 1em;
                       margin-bottom: ${theme.spacings.s40}px;
-                      color: ${theme.colors.primary.css};
-                      a:hover {
-                        color: ${theme.colors.primary600.css};
-                      }
                       ${theme.fonts.body1.css}
                     `}
                   >
                     <Link href={"/collection"}>
-                      <a>{subcat.name}</a>
+                      <ThemeLink href={"/collection"}>{subcat.name}</ThemeLink>
                     </Link>
                   </div>
                   <div
@@ -100,8 +93,10 @@ export const MenuDesktopContent = props => {
                             theme.colors.mono500.css
                           };`}
                         >
-                          <Link href={"/collection"}>
-                            <a>{link}</a>
+                          <Link href={"/category"}>
+                            <ThemeLink href={"/category"} kind={"secondary"}>
+                              {link}
+                            </ThemeLink>
                           </Link>
                         </div>
                       ))}

@@ -79,7 +79,7 @@ const Product = () => {
   const InnerStyled = props => (
     <div
       css={css`
-        padding: 10px;
+        padding-bottom: 20px;
         ${theme.fonts.body2.css}
       `}
     >
@@ -241,15 +241,15 @@ const Product = () => {
           <ProgressStepsAsBreadcrumbs
             data={[
               {
-                label: "Food",
+                label: "Beauty",
                 href: "/collection"
               },
               {
-                label: "Snacks",
-                href: "/collection"
+                label: "Bath",
+                href: "/category"
               },
               {
-                label: "Bottle",
+                label: "Transparent Bottle",
                 href: "#"
               }
             ]}
