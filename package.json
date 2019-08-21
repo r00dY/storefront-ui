@@ -1,5 +1,5 @@
 {
-  "name": "storefront-ui",
+  "name": "@r00dy/storefront-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
@@ -64,5 +64,5 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.4.12"
+  "version": "0.4.13"
 }
