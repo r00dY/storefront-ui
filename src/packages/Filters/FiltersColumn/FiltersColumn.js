@@ -59,10 +59,10 @@ const FiltersColumn$ = props => {
                 openAtInit={expand || filter.forceExpand === true}
               >
                 <Body {...bodyProps}>
-                  <Component
-                    filter={filter}
-                    onChange={value => onChange(filter.id, value)}
-                  />
+                  {Component({
+                    filter,
+                    onChange: value => onChange(filter.id, value)
+                  })}
                 </Body>
               </Accordion$>
             </div>

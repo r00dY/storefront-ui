@@ -6,7 +6,7 @@
     "watch": "babel src/packages --out-dir dist --watch",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
-    "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"
+    "copy": "npm run build && rm -Rf ../frontend/node_modules/@r00dy/storefront-ui/* && cp -R dist/* ../frontend/node_modules/@r00dy/storefront-ui"
   },
   "dependencies": {
     "headroom.js": "^0.9.4",
