@@ -19,6 +19,7 @@ const FiltersColumn$ = props => {
 
   const {
     data,
+    value,
     overrides: {
       Header: Header,
 
@@ -61,7 +62,8 @@ const FiltersColumn$ = props => {
                 <Body {...bodyProps}>
                   {Component({
                     filter,
-                    onChange: value => onChange(filter.id, value)
+                    value: value[filter.id],
+                    onChange: newValue => onChange(filter.id, newValue)
                   })}
                 </Body>
               </Accordion$>
@@ -77,7 +79,8 @@ const FiltersColumn$ = props => {
 FiltersColumn$.defaultProps = {
   gutter: 16,
   overrides: {},
-  expand: true
+  expand: true,
+  value: {}
 };
 
 FiltersColumn$.propTypes = {
