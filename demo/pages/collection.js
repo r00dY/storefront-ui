@@ -9,7 +9,6 @@ import { L, R } from "storefront-ui/Config";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import Device from "storefront-ui/Device";
 import { Modal } from "../theme/Modal";
-import useFiltersData from "storefront-ui/Filters/useFiltersData";
 import useScrollSegment from "storefront-ui/useScrollSegment";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import NavBarMobile from "../theme/NavBarMobile";
@@ -19,7 +18,6 @@ import { StatefulSelect } from "../theme/Select";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
-import shuffle from "../utils/shuffle";
 import data from "../data";
 import useProducts from "../helpers/useProducts";
 

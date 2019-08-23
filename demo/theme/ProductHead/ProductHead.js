@@ -131,7 +131,6 @@ function ProductHead(props) {
         {titleElem}
         <MetaRow>{VARIANTS}</MetaRow>
       </Device>
-      {/*<MetaRow>{props.sizes}</MetaRow>*/}
 
       <Device desktop>
         <MetaRow>
@@ -179,18 +178,6 @@ function ProductHead(props) {
         </MetaRow>
       </Device>
 
-      {/*<MetaRow>*/}
-      {/*<div*/}
-      {/*css={css`*/}
-      {/*${theme.fonts.body2.css} a {*/}
-      {/*text-decoration: underline;*/}
-      {/*}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*This is a demo store. You can purchase products like this from{" "}*/}
-      {/*<a href="https://nike.com">Nike</a>.*/}
-      {/*</div>*/}
-      {/*</MetaRow>*/}
       <MetaRow>
         <div
           css={css`

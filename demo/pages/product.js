@@ -4,75 +4,54 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 import { rslin } from "responsive-helpers";
 import { useTheme } from "storefront-ui/Theme";
-import useScrollDirection from "storefront-ui/useScrollDirection";
 import useScrollSegment from "storefront-ui/useScrollSegment";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import SwipeableItemsContainer, {
-  useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import { Image } from "../theme/Image";
-
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-
+import { useSwipeableItemsContainer } from "storefront-ui/SwipeableItemsContainer";
 import NavBarMobile from "../theme/NavBarMobile";
-
 import { Button } from "../theme/Button";
 import ProductHead from "../theme/ProductHead/ProductHead";
 import { Accordion } from "../theme/Accordion";
 import SizePicker from "../theme/SizePicker/SizePicker";
 import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import { ProductCardTheme1 } from "../theme/ProductCard";
 import Price from "../theme/Price";
 import { Spacer } from "../theme/Spacer";
 import Device from "storefront-ui/Device";
 
-import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
 import { Select } from "../theme/Select";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import { ButtonRaw } from "../theme/ButtonRaw";
+import data from "../data";
 
-const Product = () => {
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
+const sliderProducts1 = [
+  data.products[1],
+  data.products[2],
+  data.products[3],
+  data.products[4],
+  data.products[5],
+  data.products[6]
+];
+
+const sliderProducts2 = [
+  data.products[6],
+  data.products[5],
+  data.products[4],
+  data.products[3],
+  data.products[2],
+  data.products[1]
+];
+
+const InnerStyled = props => {
   const theme = useTheme();
-  const direction = useScrollDirection();
-  const segment = useScrollSegment({ 400: "not-top" });
 
-  const [isFav, setFav] = useState(false);
-
-  let boxes = [];
-
-  let product = data.products[0];
-
-  /**
-   * Select + Add to Cart button
-   **/
-  const { buttonProps, selectProps } = useAddToCartWithSize(product);
-
-  let products = [
-    data.products[1],
-    data.products[2],
-    data.products[3],
-    data.products[4],
-    data.products[5],
-    data.products[6]
-  ];
-
-  products.map((product, index) => {
-    boxes.push(
-      <ProductCardTheme1
-        product={product}
-        onClick={() => console.log("click")}
-        onSaveToFavourites={() => console.log("fav click")}
-      />
-    );
-  });
-
-  const InnerStyled = props => (
+  return (
     <div
       css={css`
         padding: 10px;
@@ -82,6 +61,17 @@ const Product = () => {
       {props.children}
     </div>
   );
+};
+
+const Product = () => {
+  const theme = useTheme();
+  const segment = useScrollSegment({ 400: "not-top" });
+
+  const [isFav, setFav] = useState(false);
+
+  let product = data.products[0];
+
+  const { buttonProps, selectProps } = useAddToCartWithSize(product);
 
   const favButton = (
     <ButtonRaw
@@ -259,7 +249,6 @@ const Product = () => {
         title={product.name}
         price={product.price}
         variants={product.images}
-        product={product}
         sizes={
           <SizePicker
             sizes={[
@@ -308,14 +297,11 @@ const Product = () => {
 
       <Spacer />
       <Spacer />
-
-      <ProductSlider boxes={boxes} title={"You may also like"} />
+      <ProductSlider products={sliderProducts1} title={"You may also like"} />
       <Spacer />
-
       <Spacer />
-
       <ProductSlider
-        boxes={boxes.slice().reverse()}
+        products={sliderProducts2}
         title={"Other Beauty products"}
       />
       <Spacer />
