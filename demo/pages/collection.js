@@ -65,7 +65,13 @@ const sortOptions = [
   "Most popular"
 ];
 
-let timeout;
+const categories = ["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
+  (category, index) => ({
+    title: category,
+    image: data.images.categories[category.toLowerCase()],
+    href: "/collection"
+  })
+);
 
 const CollectionPage = () => {
   const theme = useTheme();
@@ -131,19 +137,17 @@ const CollectionPage = () => {
           />
         </GridItem>
 
-        {["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
-          (category, index) => {
-            return (
-              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-                <CategoryCardCompact
-                  image={data.images.categories[category.toLowerCase()]}
-                  text={category}
-                  href={"/collection"}
-                />
-              </GridItem>
-            );
-          }
-        )}
+        {categories.map((category, index) => {
+          return (
+            <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+              <CategoryCardCompact
+                image={category.image}
+                text={category.title}
+                href={category.href}
+              />
+            </GridItem>
+          );
+        })}
       </Grid>
       <Grid
         css={css`
