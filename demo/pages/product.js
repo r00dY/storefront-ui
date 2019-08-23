@@ -48,21 +48,6 @@ const sliderProducts2 = [
   data.products[1]
 ];
 
-const InnerStyled = props => {
-  const theme = useTheme();
-
-  return (
-    <div
-      css={css`
-        padding: 10px;
-        ${theme.fonts.body2.css}
-      `}
-    >
-      {props.children}
-    </div>
-  );
-};
-
 const Product = () => {
   const theme = useTheme();
   const segment = useScrollSegment({ 400: "not-top" });
@@ -88,47 +73,6 @@ const Product = () => {
     >
       {isFav ? <IconHeartFill /> : <IconHeart />}
     </ButtonRaw>
-  );
-
-  let accordions = (
-    <>
-      <Accordion title={"Details"} openAtInit={false}>
-        <InnerStyled>
-          <p>98% Cotton / 2% Elastane / Dry clean</p>
-          <p>
-            Make sure that your favourite items remain long-loved pieces for
-            years to come; read our product care guide and explore our selection
-            of carefully chosen garment care products.
-          </p>
-          <p>Product No: 0708645002</p>
-        </InnerStyled>
-      </Accordion>
-      <Accordion title={"Delivery"} openAtInit={false}>
-        <InnerStyled>
-          <p>Shipping to: Poland</p>
-          <p>
-            Standard Home Delivery €9 / Free over €125 / Delivery in 3-5 working
-            days
-            <br />
-            Standard Pickup Location €9 / Free over €125 / Delivery in 3-5
-            working days
-          </p>
-          <p>
-            Express Home Delivery €15 / Orders placed before 3pm Monday to
-            Friday and before 10:30am on Saturday will be delivered the next
-            working day
-          </p>
-          <p>Free returns on all orders</p>
-          <p>We accept MasterCard, VISA and PayPal</p>
-          <p>Minimum order value is €5</p>
-        </InnerStyled>
-      </Accordion>
-      <Accordion title={"Reviews"} openAtInit={false}>
-        <InnerStyled>
-          <p>Reviews content goes here</p>
-        </InnerStyled>
-      </Accordion>
-    </>
   );
 
   return (
@@ -171,11 +115,16 @@ const Product = () => {
                     ${theme.fonts.body1.css}
                   `}
                 >
-                  {product.name}
+                  {product.title}
                 </div>
               </>
             }
-            right={<Price price={product.price} />}
+            right={
+              <Price
+                price={product.price}
+                priceDiscount={product.priceDiscount}
+              />
+            }
             height={50}
           />
 
@@ -243,57 +192,7 @@ const Product = () => {
         </Container>
       </Device>
 
-      <ProductHead
-        mosaicImages={product.images}
-        product={product}
-        title={product.name}
-        price={product.price}
-        variants={product.images}
-        sizes={
-          <SizePicker
-            sizes={[
-              {
-                value: "size-xs",
-                label: "XS",
-                available: true,
-                tooltip: "XS"
-              },
-              {
-                value: "size-s",
-                label: "S",
-                available: true,
-                tooltip: "S"
-              },
-              {
-                value: "size-m",
-                label: "M",
-                available: false,
-                tooltip: "M out of stock"
-              },
-              {
-                value: "size-l",
-                label: "L",
-                available: false,
-                tooltip: "L out of stock"
-              },
-              {
-                value: "size-xl",
-                label: "XL",
-                available: true,
-                tooltip: "XL"
-              },
-              {
-                value: "size-xxl",
-                label: "XXL",
-                available: true,
-                tooltip: "XXL"
-              }
-            ]}
-            name={"SizePicker1"}
-          />
-        }
-        accordion={accordions}
-      />
+      <ProductHead product={product} />
 
       <Spacer />
       <Spacer />

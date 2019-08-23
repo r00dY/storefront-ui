@@ -22,7 +22,7 @@ export default function useAddToCartWithSize(product) {
   };
 
   const selectProps = {
-    options: ["30ml", "50ml", "100ml"],
+    options: product.options.find(x => x.name === "size").values,
     value: size,
     onChange: val => {
       setSize(val);

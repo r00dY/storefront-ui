@@ -1,13 +1,5 @@
 import images from "./images";
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
-const sizes = ["XS", "S", "M", "L"];
-
 let productImages = images.products;
 
 const products = [
@@ -37,7 +29,6 @@ const products = [
       }
     ]
   },
-
   {
     id: 2,
     title: "Long A-line Jersey Dress",
@@ -610,5 +601,30 @@ const products = [
     href: "/product"
   }
 ];
+
+/**
+ * Assign random options to products
+ */
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+products.forEach(product => {
+  let option = {
+    name: "size",
+    values: []
+  };
+
+  const numOfSizes = getRandomInt(2, 10);
+
+  for (let i = 1; i <= numOfSizes; i++) {
+    option.values.push(i * 100 + "ml");
+  }
+
+  product.options = [option];
+});
 
 export default products;
