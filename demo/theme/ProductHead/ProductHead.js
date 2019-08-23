@@ -9,7 +9,7 @@ import IconClose from "./close.svg";
 import { rs, rslin } from "responsive-helpers";
 import { R, F, C, L, Color } from "storefront-ui/Config";
 
-import Image, { ImageZoomable } from "storefront-ui/Image";
+import { Image, ImageZoomable } from "../Image";
 import StickyColumn from "storefront-ui/StickyColumn";
 import Container from "storefront-ui/Container";
 import SwipeableItemsContainer, {

@@ -5,7 +5,7 @@ import { css, jsx } from "@emotion/core";
 
 import { rslin, rs, rm } from "responsive-helpers";
 import { F, L, Color, S, R } from "storefront-ui/Config";
-import Image from "storefront-ui/Image";
+import { Image } from "../Image";
 import Link from "next/link";
 import { useTheme } from "storefront-ui/Theme";
 import { Button } from "../Button";

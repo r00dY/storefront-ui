@@ -10,7 +10,7 @@ import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "storefront-ui/SwipeableItemsContainer";
-import Image from "storefront-ui/Image";
+import { Image } from "../theme/Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -20,8 +20,6 @@ import NavBarMobile from "../theme/NavBarMobile";
 import { Button } from "../theme/Button";
 import ProductHead from "../theme/ProductHead/ProductHead";
 import { Accordion } from "../theme/Accordion";
-import EditorialHalfImage from "../theme/Editorial/EditorialHalfImage/EditorialHalfImage";
-import EditorialHeadline from "../theme/Editorial/EditorialHeadline/EditorialHeadline";
 import SizePicker from "../theme/SizePicker/SizePicker";
 import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import { ProductCardTheme1 } from "../theme/ProductCard";
@@ -31,14 +29,12 @@ import Device from "storefront-ui/Device";
 
 import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
-import useAddToCart from "../helpers/useAddToCart";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
 import { Select } from "../theme/Select";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import LayoutRow from "storefront-ui/LayoutRow";
 import { ButtonRaw } from "../theme/ButtonRaw";
 
 const Product = () => {
