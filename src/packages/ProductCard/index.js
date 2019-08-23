@@ -1,6 +1,5 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Image from "../Image";
 
 import {
   RootStyled,
@@ -24,6 +23,7 @@ const ProductCard$ = props => {
     onSaveToFavourites,
     overrides: {
       Root: RootOverride,
+      Image: Image,
       ImageContainer: ImageContainerOverride,
       Title: TitleOverride,
       Description: DescriptionOverride,

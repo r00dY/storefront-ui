@@ -12,6 +12,8 @@ import { rslin } from "responsive-helpers";
 
 import React, { useState, useEffect } from "react";
 
+import { Image } from "../Image";
+
 // Temporary Favourite button mocking state management (saving to favs).
 const FavouriteButton = ({ product }) => {
   const [isFav, setFav] = useState(false);
@@ -49,12 +51,14 @@ const FavouriteButton = ({ product }) => {
 };
 
 const overrides = props => ({
+  Image: Image,
   Price: ({ product }) => (
     <Price price={product.price} priceDiscount={product.priceDiscount} />
   )
 });
 
 const overrides2 = props => ({
+  Image: Image,
   Price: ({ product }) => (
     <Price price={product.price} priceDiscount={product.priceDiscount} />
   ),

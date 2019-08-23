@@ -2,8 +2,8 @@ import LazyAsset from "./LazyAsset";
 import React, { useEffect, useState } from "react";
 import Color from "../Color";
 
-function Image(props) {
-  // appearance: backgroundColor, animationTime, offset, draggable, placeholder -> will do for now (Image.defaultProps)
+function Image$(props) {
+  // appearance: backgroundColor, animationTime, offset, draggable, placeholder -> will do for now (Image$.defaultProps)
 
   const [loaded, setLoaded] = useState(props.load || false);
 
@@ -15,30 +15,24 @@ function Image(props) {
 
   let newProps;
 
-  if (props.image) {
-    newProps = {
-      ...props,
-      load: loaded,
-      backgroundColor: props.backgroundColor.css,
-      images: props.image.src,
-      alt: props.image.alt,
-      loadWhenInViewport: props.loadWhenInViewport
-    };
-  } else if (props.video) {
-    newProps = {
-      ...props,
-      load: loaded,
-      backgroundColor: props.backgroundColor.css,
-      videos: props.video.src,
-      alt: props.video.alt,
-      loadWhenInViewport: props.loadWhenInViewport
-    };
-  }
+  const image = props.dataMapper(props.image);
+
+  const isImage =
+    typeof image.type === "undefined" || props.image.type !== "video";
+
+  newProps = {
+    ...props,
+    load: loaded,
+    backgroundColor: props.backgroundColor.css,
+    [isImage ? "images" : "videos"]: image.src,
+    alt: image.alt,
+    loadWhenInViewport: props.loadWhenInViewport
+  };
 
   return <LazyAsset {...newProps} />;
 }
 
-Image.defaultProps = {
+Image$.defaultProps = {
   mode: "natural",
   loadWhenInViewport: false,
   load: true,
@@ -47,4 +41,4 @@ Image.defaultProps = {
   dataMapper: x => x
 };
 
-export default Image;
+export default Image$;
