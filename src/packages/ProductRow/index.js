@@ -1,11 +1,10 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Image from "../Image";
 import { rslin } from "responsive-helpers";
 import {
   RootStyled,
   ImageContainerStyled,
-  NameStyled,
+  TitleStyled,
   DescriptionStyled,
   VariantStyled,
   QuantityStyled
@@ -24,7 +23,6 @@ import { Button$ } from "../Button";
 
 const ProductRow$ = props => {
   const {
-    product,
     price,
     quantity,
     gutter,
@@ -33,8 +31,9 @@ const ProductRow$ = props => {
     mode,
     overrides: {
       Root: RootOverride,
+      Image: Image,
       ImageContainer: ImageContainerOverride,
-      Name: NameOverride,
+      Title: TitleOverride,
       Description: DescriptionOverride,
       Variant: VariantOverride,
       Price: Price,
@@ -44,7 +43,9 @@ const ProductRow$ = props => {
     }
   } = props;
 
-  const { name, description, variant, href, images } = product;
+  const product = props.dataMapper(props.product);
+
+  const { title, description, variant, href, images } = product;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -54,7 +55,7 @@ const ProductRow$ = props => {
   const [Content, contentProps] = getOverrides(
     ContentOverride,
     ({
-      nameElem,
+      titleElem,
       descriptionElem,
       variantElem,
       removeElem,
@@ -99,7 +100,7 @@ const ProductRow$ = props => {
                 : ""}
             `}
           >
-            {nameElem}
+            {titleElem}
             {descriptionElem}
             {variantElem}
           </div>
@@ -148,7 +149,7 @@ const ProductRow$ = props => {
     }
   );
   const [Variant, variantProps] = getOverrides(VariantOverride, VariantStyled);
-  const [Name, nameProps] = getOverrides(NameOverride, NameStyled);
+  const [Title, titleProps] = getOverrides(TitleOverride, TitleStyled);
   const [Description, descriptionProps] = getOverrides(
     DescriptionOverride,
     DescriptionStyled
@@ -165,10 +166,10 @@ const ProductRow$ = props => {
     QuantityStyled
   );
 
-  const nameElem = (
-    <Name {...nameProps} layout={layout}>
-      <a href={href}>{name}</a>
-    </Name>
+  const titleElem = (
+    <Title {...titleProps} layout={layout}>
+      <a href={href}>{title}</a>
+    </Title>
   );
   const descriptionElem = (
     <Description {...descriptionProps}>{description}</Description>
@@ -178,7 +179,7 @@ const ProductRow$ = props => {
       Size: {variant}
     </Variant>
   );
-  const priceElem = <Price price={price} />;
+  const priceElem = <Price product={product} />;
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
@@ -192,20 +193,16 @@ const ProductRow$ = props => {
   const contentElem = (
     <Content
       {...contentProps}
-      nameElem={nameElem}
+      titleElem={titleElem}
       descriptionElem={descriptionElem}
       variantElem={variantElem}
       removeElem={removeElem}
       quantityElem={quantityElem}
       priceElem={priceElem}
       layout={layout}
-      name={name}
-      description={description}
-      variant={variant}
-      quantity={quantity}
-      price={price}
       mode={mode}
       gutter={gutter}
+      product={product}
     />
   );
 
@@ -227,7 +224,8 @@ ProductRow$.defaultProps = {
   gutter: 16,
   layout: "full",
   breakpoint: "md",
-  mode: "default"
+  mode: "default",
+  dataMapper: x => x
 };
 
 ProductRow$.propTypes = {
