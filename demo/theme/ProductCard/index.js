@@ -49,11 +49,15 @@ const FavouriteButton = ({ product }) => {
 };
 
 const overrides = props => ({
-  Price: ({ price }) => <Price price={price} />
+  Price: ({ product }) => (
+    <Price price={product.price} priceDiscount={product.priceDiscount} />
+  )
 });
 
 const overrides2 = props => ({
-  Price: ({ price }) => <Price price={price} />,
+  Price: ({ product }) => (
+    <Price price={product.price} priceDiscount={product.priceDiscount} />
+  ),
 
   Description: {
     style: ({ $theme }) => `
@@ -61,7 +65,7 @@ const overrides2 = props => ({
       ${$theme.fonts.body2.css}
       `
   },
-  Name: {
+  Title: {
     style: ({ $theme }) => `
       margin-bottom: ${$theme.spacings.s30}px;
       ${$theme.fonts.body1.css}
@@ -81,7 +85,7 @@ const overrides2 = props => ({
     style: `
     `
   },
-  ImageOverlay: ({ badges, onSaveToFavourites }) => (
+  ImageOverlay: ({ badgesElem, onSaveToFavourites }) => (
     <div
       css={css`
         position: absolute;
@@ -117,15 +121,15 @@ const overrides2 = props => ({
           }
         `}
       >
-        {badges}
+        {badgesElem}
       </div>
     </div>
   ),
-  Content: ({ name, description, price }) => (
+  Content: ({ titleElem, descriptionElem, priceElem }) => (
     <>
-      {description}
-      {name}
-      {price}
+      {descriptionElem}
+      {titleElem}
+      {priceElem}
     </>
   )
 });

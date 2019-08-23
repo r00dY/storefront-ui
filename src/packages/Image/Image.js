@@ -43,7 +43,8 @@ Image.defaultProps = {
   loadWhenInViewport: false,
   load: true,
   backgroundColor: new Color("#f5f5f5"),
-  autoload: true
+  autoload: true,
+  dataMapper: x => x
 };
 
 export default Image;

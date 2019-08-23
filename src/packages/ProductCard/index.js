@@ -5,7 +5,7 @@ import Image from "../Image";
 import {
   RootStyled,
   ImageContainerStyled,
-  NameStyled,
+  TitleStyled,
   DescriptionStyled,
   ContentStyled,
   ImageOverlayStyled,
@@ -20,12 +20,12 @@ import { getOverrides } from "../base/helpers/overrides";
 
 const ProductCard$ = props => {
   const {
-    product,
+    dataMapper,
     onSaveToFavourites,
     overrides: {
       Root: RootOverride,
       ImageContainer: ImageContainerOverride,
-      Name: NameOverride,
+      Title: TitleOverride,
       Description: DescriptionOverride,
       Content: ContentOverride,
       ImageOverlay: ImageOverlayOverride,
@@ -34,7 +34,7 @@ const ProductCard$ = props => {
     }
   } = props;
 
-  const { name, href, description, price, images, badges } = product;
+  const product = dataMapper(props.product); // map product
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -42,32 +42,38 @@ const ProductCard$ = props => {
     ImageContainerStyled
   );
   const [Content, contentProps] = getOverrides(ContentOverride, ContentStyled);
-  const [Name, nameProps] = getOverrides(NameOverride, NameStyled);
+  const [Title, titleProps] = getOverrides(TitleOverride, TitleStyled);
   const [Description, descriptionProps] = getOverrides(
     DescriptionOverride,
     DescriptionStyled
   );
+
   const [ImageOverlay, imageOverlayProps] = getOverrides(
     ImageOverlayOverride,
     ImageOverlayStyled
   );
+
   const [Badge, badgeProps] = getOverrides(BadgeOverride, BadgeStyled);
 
-  const nameElem = (
+  const titleElem = (
     <>
-      <Name {...nameProps}>
-        <a href={href}>{name} </a>
-      </Name>
+      <Title {...titleProps} product={product}>
+        <a href={product.href}>{product.title}</a>
+      </Title>
     </>
   );
+
   const descriptionElem = (
-    <Description {...descriptionProps}>{description}</Description>
+    <Description {...descriptionProps} product={product}>
+      {product.description}
+    </Description>
   );
-  const priceElem = <Price price={price} />;
+  const priceElem = <Price product={product} />;
+
   const badgesElem = (
     <>
-      {badges &&
-        badges.map((badge, i) => (
+      {product.badges &&
+        product.badges.map((badge, i) => (
           <Badge key={i} {...badgeProps} label={badge.label} type={badge.type}>
             {badge.label}
           </Badge>
@@ -78,28 +84,25 @@ const ProductCard$ = props => {
   const contentElem = (
     <Content
       {...contentProps}
-      name={nameElem}
-      description={descriptionElem}
-      price={priceElem}
-      badges={badges}
+      titleElem={titleElem}
+      descriptionElem={descriptionElem}
+      priceElem={priceElem}
+      product={product}
     />
   );
+
   const imageElem = (
     <ImageContainer
       {...imageContainerProps}
-      images={images}
-      badges={badges}
-      name={name}
-      description={description}
-      price={price}
+      product={product}
       onSaveToFavourites={onSaveToFavourites}
     >
       <a href={product.href} tabIndex={"-1"}>
-        <Image image={images[0]} />
+        <Image image={product.images[0]} />
       </a>
       <ImageOverlay
         {...imageOverlayProps}
-        badges={badgesElem}
+        badgesElem={badgesElem}
         onSaveToFavourites={onSaveToFavourites}
       />
     </ImageContainer>
@@ -107,13 +110,9 @@ const ProductCard$ = props => {
 
   return (
     <Root
-      content={contentElem}
-      image={imageElem}
-      name={name}
-      description={description}
-      price={price}
-      images={images}
-      badges={badges}
+      contentElem={contentElem}
+      imageElem={imageElem}
+      product={product}
       onSaveToFavourites={onSaveToFavourites}
       {...rootProps}
     />
@@ -121,7 +120,8 @@ const ProductCard$ = props => {
 };
 
 ProductCard$.defaultProps = {
-  overrides: {}
+  overrides: {},
+  dataMapper: x => x
 };
 
 ProductCard$.propTypes = {

@@ -15,14 +15,14 @@ const sizes = ["XS", "S", "M", "L"];
 
 const products = [
   {
-    name: "Assymetric Tie Dress",
+    title: "Assymetric Tie Dress",
     price: {
-      regular: "99",
-      discount: "69",
-      currency: {
-        code: "EUR",
-        symbol: "€"
-      }
+      amount: 9900,
+      currencyCode: "EUR"
+    },
+    priceDiscount: {
+      amount: 6900,
+      currencyCode: "EUR"
     },
     description: "A-line Dresses",
     badges: [
@@ -36,34 +36,23 @@ const products = [
       }
     ],
     images: productPhotos2,
-    href: "assymetric-tie-dress",
-    variant: sizes[getRandomInt(0, 3)]
+    href: "assymetric-tie-dress"
   },
-
   {
-    name: "Long A-line Jersey Dress",
+    title: "Long A-line Jersey Dress",
     price: {
-      regular: "99",
-      discount: null,
-      currency: {
-        code: "EUR",
-        symbol: "€"
-      }
+      amount: 9900,
+      currencyCode: "EUR"
     },
     description: "Jersey Dresses",
     images: productPhotos3,
-    href: "long-a-line-jersey-dress",
-    variant: sizes[getRandomInt(0, 3)]
+    href: "long-a-line-jersey-dress"
   },
   {
-    name: "Bubble-shaped Jersey Dress Very Long Product Name",
+    title: "Bubble-shaped Jersey Dress Very Long Product Name",
     price: {
-      regular: "129",
-      discount: null,
-      currency: {
-        code: "EUR",
-        symbol: "€"
-      }
+      amount: 129000,
+      currencyCode: "EUR"
     },
     description: "Jersey Dresses",
     badges: [
@@ -73,18 +62,17 @@ const products = [
       }
     ],
     images: productPhotos4,
-    href: "bubble-shaped-jersey-dress",
-    variant: sizes[getRandomInt(0, 3)]
+    href: "bubble-shaped-jersey-dress"
   },
   {
-    name: "Shaped A-line Cotton Dress",
+    title: "Shaped A-line Cotton Dress",
     price: {
-      regular: "99",
-      discount: "79",
-      currency: {
-        code: "EUR",
-        symbol: "€"
-      }
+      amount: 879900,
+      currencyCode: "EUR"
+    },
+    priceDiscount: {
+      amount: 699900,
+      currencyCode: "EUR"
     },
     description: "Evening & Occasion Dresses Very Long Description",
     badges: [
@@ -94,8 +82,7 @@ const products = [
       }
     ],
     images: productPhotos5,
-    href: "shaped-a-line-cotton-dress",
-    variant: sizes[getRandomInt(0, 3)]
+    href: "shaped-a-line-cotton-dress"
   }
 ];
 
