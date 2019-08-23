@@ -15,7 +15,6 @@ import Container from "storefront-ui/Container";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "storefront-ui/SwipeableItemsContainer";
-import ScrollBar from "storefront-ui/ScrollBar";
 import { Modal } from "../Modal";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
@@ -26,12 +25,9 @@ import IconHeartFill from "../../svg/heart_fill.svg";
 
 import { Button } from "../Button";
 import { ButtonRaw } from "../ButtonRaw";
-import { ButtonGroup } from "../ButtonGroup";
 import Price from "../Price";
 
 import { showNotification } from "storefront-ui/Notifications";
-import Notification from "../../components/Notification";
-import useAddToCart from "../../helpers/useAddToCart";
 
 import { Select } from "../../theme/Select";
 import useAddToCartWithSize from "../../helpers/useAddToCartWithSize";

@@ -306,23 +306,6 @@ const Product = () => {
         accordion={accordions}
       />
 
-      {/*<Spacer />*/}
-      {/*<EditorialHalfImage*/}
-      {/*imageFirst*/}
-      {/*image={product.images[0]}*/}
-      {/*element={*/}
-      {/*<EditorialHeadline*/}
-      {/*titleFont={theme.fonts.h3}*/}
-      {/*textalign={"center"}*/}
-      {/*paragraphFont={theme.fonts.body1}*/}
-      {/*title={"WHAT IS NIKEZOOMX?"}*/}
-      {/*paragraph={*/}
-      {/*"Nike ZoomX is lighter, softer and more responsive than any Nike foam, designed to maximize speed by delivering greater energy return. ZoomX was derived from a foam traditionally used in aerospace innovation, applied for the first time in performance footwear in the Nike Zoom Vaporfly Elite and 4%."*/}
-      {/*}*/}
-      {/*/>*/}
-      {/*}*/}
-      {/*elementPosition={"center"}*/}
-      {/*/>*/}
       <Spacer />
       <Spacer />
 
