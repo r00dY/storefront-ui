@@ -1,4 +1,5 @@
 import images from "./images";
+import randomInt from "../utils/randomInt";
 
 let productImages = images.products;
 
@@ -606,19 +607,13 @@ const products = [
  * Assign random options to products
  */
 
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 products.forEach(product => {
   let option = {
     name: "size",
     values: []
   };
 
-  const numOfSizes = getRandomInt(2, 10);
+  const numOfSizes = randomInt(2, 10);
 
   for (let i = 1; i <= numOfSizes; i++) {
     option.values.push(i * 100 + "ml");

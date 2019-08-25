@@ -1,6 +1,13 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { rslin } from "responsive-helpers";
+import { R } from "storefront-ui/Config";
+import { Grid, GridItem } from "storefront-ui/Grid";
+import { rs } from "responsive-helpers";
+import { getOverrides } from "../base/helpers/overrides";
+import { ButtonRaw$ } from "../ButtonRaw";
+import { Button$ } from "../Button";
+
 import {
   RootStyled,
   ImageContainerStyled,
@@ -10,20 +17,11 @@ import {
   QuantityStyled
 } from "./styled-components";
 
-import { R } from "storefront-ui/Config";
-import { Grid, GridItem } from "storefront-ui/Grid";
-
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { rs } from "responsive-helpers";
-import { getOverrides } from "../base/helpers/overrides";
-import { ButtonRaw$ } from "../ButtonRaw";
-import { Button$ } from "../Button";
-
 const ProductRow$ = props => {
   const {
-    price,
     quantity,
     gutter,
     layout,
@@ -179,7 +177,13 @@ const ProductRow$ = props => {
       Size: {variant}
     </Variant>
   );
-  const priceElem = <Price product={product} />;
+  const priceElem = (
+    <Price
+      product={product}
+      price={product.price}
+      priceDiscount={product.priceDiscount}
+    />
+  );
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
