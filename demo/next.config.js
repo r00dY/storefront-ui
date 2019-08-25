@@ -1,14 +1,14 @@
 const path = require("path");
 const webpack = require("webpack");
 
-console.log("NODE_ENV", process.env.NODE_ENV);
-
 module.exports = {
   webpack: (config, { buildId, dev, isServer, defaultLoaders }) => {
     // Perform customizations to webpack config
     // Important: return the modified config
 
-    config.resolve.alias["storefront-ui"] = path.resolve(__dirname, "../dist/");
+    // config.resolve.alias["storefront-ui"] = path.resolve(__dirname, "../dist/");
+
+    config.resolve.alias["storefront-ui"] = `@r00dy/storefront-ui/`;
 
     config.module.rules.push({
       test: /\.svg$/,

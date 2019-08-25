@@ -7,7 +7,7 @@ import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import { ButtonRaw } from "../ButtonRaw";
 import { useTheme } from "storefront-ui/Theme";
 
-import IconClose from "../../../data/svg/close.svg";
+import IconClose from "../../svg/close.svg";
 
 export const ModalHeader = ({ onRequestClose, title }) => {
   const theme = useTheme();
