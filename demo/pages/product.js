@@ -48,13 +48,13 @@ const sliderProducts2 = [
   data.products[1]
 ];
 
+let product = data.products[0];
+
 const Product = () => {
   const theme = useTheme();
   const segment = useScrollSegment({ 400: "not-top" });
 
   const [isFav, setFav] = useState(false);
-
-  let product = data.products[0];
 
   const { buttonProps, selectProps } = useAddToCartWithSize(product);
 
