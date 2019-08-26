@@ -4,7 +4,10 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import products from "../../../../docs-utils/products";
+import products from "../../../../data/products";
+import checkout from "../../../../data/checkout";
+
+console.log(checkout);
 
 export default () => {
   return (

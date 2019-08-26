@@ -4,14 +4,13 @@ import {
   productPhotos4,
   productPhotos5
 } from "../data/images";
+import randomInt from "../demo/utils/randomInt";
 
 function getRandomInt(min, max) {
   min = Math.ceil(min);
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1)) + min;
 }
-
-const sizes = ["XS", "S", "M", "L"];
 
 const products = [
   {
@@ -85,5 +84,26 @@ const products = [
     href: "shaped-a-line-cotton-dress"
   }
 ];
+
+/**
+ * Assign random options to products
+ */
+
+const sizes = ["XS", "S", "M", "L", "XL"];
+
+products.forEach(product => {
+  let option = {
+    name: "size",
+    values: []
+  };
+
+  const numOfSizes = randomInt(0, sizes.length - 1);
+
+  for (let i = 1; i <= numOfSizes; i++) {
+    option.values.push(sizes[i]);
+  }
+
+  product.options = [option];
+});
 
 export default products;
