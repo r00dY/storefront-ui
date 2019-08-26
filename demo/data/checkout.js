@@ -42,6 +42,4 @@ const checkout = {
   }
 };
 
-console.log("checkout", checkout);
-
 export default checkout;
