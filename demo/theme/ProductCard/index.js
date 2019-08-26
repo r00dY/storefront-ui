@@ -10,7 +10,7 @@ import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
 import Price from "../Price";
 import { rslin } from "responsive-helpers";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { Image } from "../Image";
 

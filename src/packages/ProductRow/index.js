@@ -224,6 +224,7 @@ const ProductRow$ = props => {
   );
   return <Root image={imageElem} content={contentElem} {...rootProps} />;
 };
+
 ProductRow$.defaultProps = {
   gutter: 16,
   layout: "full",
