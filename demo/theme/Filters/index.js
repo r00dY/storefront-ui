@@ -13,7 +13,7 @@ import ICON_TICK from "./tick.svg";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const ColorFilterComponent = ({ filter, onChange, isMobile }) => {
+const ColorFilterComponent = ({ filter, value, onChange, isMobile }) => {
   const theme = useTheme();
 
   return (
@@ -34,7 +34,7 @@ const ColorFilterComponent = ({ filter, onChange, isMobile }) => {
       `}
     >
       {filter.items.map(option => {
-        let isChecked = filter.value.includes(option);
+        let isChecked = value.includes(option);
 
         return (
           <ButtonRaw
@@ -48,9 +48,7 @@ const ColorFilterComponent = ({ filter, onChange, isMobile }) => {
             `}
             onClick={() =>
               onChange(
-                isChecked
-                  ? filter.value.filter(x => x !== option)
-                  : [...filter.value, option]
+                isChecked ? value.filter(x => x !== option) : [...value, option]
               )
             }
           >
@@ -91,29 +89,30 @@ const ColorFilterComponent = ({ filter, onChange, isMobile }) => {
 const overrides = props => ({
   Header: AccordionHeader,
   filterComponents: {
-    select: ({ filter, onChange }) => {
-      if (filter.id === "color") {
-        return (
-          <ColorFilterComponent
-            filter={filter}
-            onChange={onChange}
-            isMobile={props.isMobile}
-          />
-        );
-      }
+    select: ({ filter, value, onChange }) => {
+      // if (filter.id === "color") {
+      //   return (
+      //     <ColorFilterComponent
+      //       filter={filter}
+      //       value={value}
+      //       onChange={onChange}
+      //       isMobile={props.isMobile}
+      //     />
+      //   );
+      // }
 
       return (
         <ItemListAccordion
           items={filter.items}
-          value={filter.value}
+          value={value}
           onChange={onChange}
           multiple={filter.multiple}
         />
       );
     },
-    range: ({ filter, onChange }) => (
+    range: ({ filter, value, onChange }) => (
       <RangePicker
-        value={filter.value}
+        value={value}
         onChange={onChange}
         min={filter.min}
         max={filter.max}

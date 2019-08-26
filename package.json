@@ -1,12 +1,12 @@
 {
-  "name": "storefront-ui",
+  "name": "@r00dy/storefront-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
     "watch": "babel src/packages --out-dir dist --watch",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
-    "copy": "npm run build && rm -Rf ../frontend/node_modules/storefront-ui/* && cp -R dist/* ../frontend/node_modules/storefront-ui"
+    "copy": "npm run build && rm -Rf ../frontend/node_modules/@r00dy/storefront-ui/* && cp -R dist/* ../frontend/node_modules/@r00dy/storefront-ui"
   },
   "dependencies": {
     "headroom.js": "^0.9.4",
@@ -64,5 +64,5 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.4.12"
+  "version": "0.4.15"
 }

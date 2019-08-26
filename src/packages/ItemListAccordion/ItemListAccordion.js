@@ -48,10 +48,16 @@ const ItemListAccordion$ = props => {
     ToggleContainerStyled
   );
 
+  let isSelected = {};
+
+  items.forEach(item => {
+    isSelected[item.id] = value.find(x => x.id === item.id) !== undefined;
+  });
+
   const onItemClick = item => {
     if (onChange) {
-      if (value.includes(item)) {
-        onChange(value.filter(x => x !== item));
+      if (isSelected[item.id]) {
+        onChange(value.filter(x => x.id !== item.id));
       } else {
         if (multiple) {
           onChange([...value, item]);
@@ -69,7 +75,7 @@ const ItemListAccordion$ = props => {
           <div onClick={() => onItemClick(item)} key={item.id}>
             <ListItem
               focused={false}
-              selected={value.includes(item)}
+              selected={isSelected[item.id]}
               item={item}
             />
           </div>

@@ -26,9 +26,12 @@ class NotificationsContainer extends React.Component {
 
   componentDidMount() {
     if (instance) {
-      throw new Error(
+      console.log(
         "[NotificationsContainer] There can be only one instance of NotificationsContainer in the application"
       );
+      // throw new Error(
+      //   "[NotificationsContainer] There can be only one instance of NotificationsContainer in the application"
+      // );
     }
 
     instance = this;
