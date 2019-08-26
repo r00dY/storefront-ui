@@ -28,8 +28,6 @@
     "@emotion/styled": "^10.0.7"
   },
   "devDependencies": {
-    "styletron-engine-atomic": "^1.1.2",
-    "styletron-react": "^5.0.1",
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.1.6",
     "@babel/node": "^7.2.2",
@@ -48,6 +46,7 @@
     "eslint-plugin-react": "^7.12.4",
     "extract-react-types-loader": "^0.3.1",
     "husky": "^1.2.0",
+    "imgix-core-js": "^2.1.0",
     "markdown-to-jsx": "^6.9.3",
     "prettier": "1.15.2",
     "pretty-quick": "^1.8.0",
@@ -56,6 +55,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.0.6",
+    "styletron-engine-atomic": "^1.1.2",
+    "styletron-react": "^5.0.1",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.2.1"
   },
