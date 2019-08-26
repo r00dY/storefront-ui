@@ -48,6 +48,7 @@ import { StatefulInput } from "../theme/Input";
 import { FormControl } from "../theme/FormControl";
 import routerPush from "../helpers/routerPush";
 import { Radio } from "../theme/Radio";
+import { StatefulTextarea } from "../theme/Textarea";
 
 const WriteReview = () => {
   const theme = useTheme();
@@ -99,7 +100,7 @@ const WriteReview = () => {
               </GridItem>
               <GridItem params={{ xs: "1/1", md: "1/1" }}>
                 <FormControl label={"Review"}>
-                  <StatefulInput />
+                  <StatefulTextarea />
                 </FormControl>
               </GridItem>
               <GridItem />
