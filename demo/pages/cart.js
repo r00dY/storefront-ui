@@ -12,7 +12,7 @@ import { useRouter } from "next/router";
 import NavBarMobile from "../theme/NavBarMobile";
 
 import data from "../data";
-import { ProductRowTheme1 } from "../theme/ProductRow";
+import { CheckoutLineItemRowTheme1 } from "../theme/CheckoutLineItemRow";
 import NavBarMobileSearch from "./search";
 import { Button } from "../theme/Button";
 import { Ledger } from "../theme/Ledger";
@@ -52,12 +52,10 @@ const Cart = () => {
                 }
               `}
             >
-              {data.products.slice(0, 5).map((product, index) => (
-                <ProductRowTheme1
+              {data.checkout.lineItems.slice(0, 5).map((item, index) => (
+                <CheckoutLineItemRowTheme1
                   key={index}
-                  product={product}
-                  price={product.price}
-                  quantity={"1"}
+                  checkoutLineItem={item}
                   mode={"basket"}
                   layout={"full"}
                 />

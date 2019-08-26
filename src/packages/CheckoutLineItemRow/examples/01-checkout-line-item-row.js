@@ -1,25 +1,23 @@
 import React from "react";
-import { ProductRowTheme1 } from "../../../../demo/theme/ProductRow";
+import { CheckoutLineItemRow } from "../../../../demo/theme/CheckoutLineItemRow";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-
 import products from "../../../../data/products";
+import checkout from "../../../../data/checkout";
+
+// console.log(products);
+console.log(checkout);
 
 export default () => {
   return (
     <div>
       <Grid gutter={20} gutterVertical={20}>
-        {products.map((product, index) => (
-          <GridItem params={{ xs: 24, md: [24], lg: [24] }} key={index}>
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              quantity={"1"}
-              layout={"full"}
-              breakpoint={"lg"}
-              mode={"wishlist"}
+        {checkout.lineItems.map((item, index) => (
+          <GridItem params={{ xs: 24 }} key={index}>
+            <CheckoutLineItemRow
+              checkoutLineItem={item}
               onClick={() => console.log("click")}
             />
           </GridItem>

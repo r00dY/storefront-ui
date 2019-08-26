@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { showNotification } from "storefront-ui/Notifications";
-import { ProductRowTheme1 } from "../theme/ProductRow";
+import { CheckoutLineItemRowTheme1 } from "../theme/CheckoutLineItemRow";
 import { useTheme } from "storefront-ui/Theme";
 
 import { Button } from "../theme/Button";
@@ -33,7 +33,7 @@ const Notification = ({ product, close }) => {
       >
         Just added
       </div>
-      <ProductRowTheme1
+      <CheckoutLineItemRowTheme1
         product={product}
         price={product.price}
         quantity={"1"}

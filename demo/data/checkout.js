@@ -17,12 +17,28 @@ const checkoutLineItems = [
     selectedOptions: {
       name: "size",
       value: selectedValue
+    },
+    price: {
+      amount: 99,
+      currencyCode: "USD"
+    },
+    discountPrice: {
+      amount: 79,
+      currencyCode: "USD"
     }
   };
 
   return {
     productVariant: productVariant,
-    quantity: randomInt(1, 5)
+    quantity: randomInt(1, 5),
+    price: {
+      amount: 299,
+      currencyCode: "USD"
+    },
+    discountPrice: {
+      amount: 199,
+      currencyCode: "USD"
+    }
   };
 });
 

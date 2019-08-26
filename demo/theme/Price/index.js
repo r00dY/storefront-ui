@@ -8,24 +8,24 @@ import { css, jsx } from "@emotion/core";
 import Money from "storefront-ui/utils/Money";
 
 const Price = props => {
-  const { price, priceDiscount, alignRight } = props;
+  const { price, discountPrice, alignRight } = props;
 
   return (
     <Root>
-      {priceDiscount && (
+      {discountPrice && (
         <div
           css={css`
             ${alignRight && "margin-left: 0.25em;"}
             ${!alignRight && "margin-right: 0.25em;"}
           `}
         >
-          {Money.getCurrencySymbol(priceDiscount)}
-          {Money.getAmountString(priceDiscount)}
+          {Money.getCurrencySymbol(discountPrice)}
+          {Money.getAmountString(discountPrice)}
         </div>
       )}
       <div
         css={css`
-          ${priceDiscount && "text-decoration: line-through; opacity: 0.5;"}
+          ${discountPrice && "text-decoration: line-through; opacity: 0.5;"}
           ${alignRight && "order: -1;"}
         `}
       >
