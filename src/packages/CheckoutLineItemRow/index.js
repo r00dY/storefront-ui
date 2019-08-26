@@ -168,7 +168,7 @@ const CheckoutLineItemRow$ = props => {
 
   const titleElem = (
     <Title {...titleProps} layout={layout}>
-      <a href={productVariant.href}>{productVariant.product.title}</a>
+      <a href={productVariant.product.href}>{productVariant.product.title}</a>
     </Title>
   );
   const descriptionElem = (
@@ -208,7 +208,7 @@ const CheckoutLineItemRow$ = props => {
   );
 
   const imageElem = (
-    <a href={productVariant.href} tabIndex={"-1"}>
+    <a href={productVariant.product.href} tabIndex={"-1"}>
       <ImageContainer {...imageContainerProps} layout={layout}>
         <Image
           image={productVariant.product.images[0]}
