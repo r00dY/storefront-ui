@@ -9,6 +9,8 @@ import { R } from "storefront-ui/Config";
 
 import { ButtonRaw } from "../ButtonRaw";
 
+import Link from "next/link";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -160,6 +162,41 @@ const Footer = props => {
                   </a>
                 </>
               ))}
+
+              {/* Prefetching of links - so far lame version */}
+              <Link href={"/product"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/collection"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/search"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/menu"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/wishlist"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/cart"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/profile"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/form1"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/form2"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/form3"} prefetch={true}>
+                <a />
+              </Link>
+              <Link href={"/summary"} prefetch={true}>
+                <a />
+              </Link>
             </div>
           </Container>
         </div>
