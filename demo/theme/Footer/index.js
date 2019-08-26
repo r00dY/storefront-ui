@@ -134,16 +134,17 @@ const Footer = props => {
                 "Vendor Code of Conduct",
                 "Sitemap Pages",
                 "Sitemap Products"
-              ].map((link, index) => (
+              ].map((link, index3) => (
                 <>
                   <div
+                    key={index3}
                     css={css`
                        {
                         margin: 0 ${theme.spacings.s60}px;
                       }
                     `}
                   >
-                    {index > 0 && "|"}
+                    {index3 > 0 && "|"}
                   </div>
                   <Link href={"/privacy"}>
                     <ThemeLink href={"/privacy"} kind={"hoverUnderline"}>

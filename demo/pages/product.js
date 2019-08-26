@@ -40,6 +40,8 @@ import IconHeartFill from "../svg/heart_fill.svg";
 
 import LayoutRow from "storefront-ui/LayoutRow";
 import { ButtonRaw } from "../theme/ButtonRaw";
+import { Stars } from "../theme/Stars";
+import ThemeLink from "../theme/ThemeLink";
 
 const Product = () => {
   const theme = useTheme();
@@ -137,9 +139,83 @@ const Product = () => {
           <p>Minimum order value is €5</p>
         </InnerStyled>
       </Accordion>
-      <Accordion title={"Reviews"} openAtInit={false}>
+      <Accordion
+        title={
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+              padding-right: 1em;
+            `}
+          >
+            <div
+              css={css`
+                margin-right: 1em;
+              `}
+            >
+              Reviews (15)
+            </div>{" "}
+            <Stars rating={data.reviews.rating} />
+          </div>
+        }
+        openAtInit={false}
+      >
         <InnerStyled>
-          <p>Reviews content goes here</p>
+          <div
+            css={css`
+              display: flex;
+              ${theme.fonts.body1.css} margin: 2em 0;
+              justify-content: space-between;
+            `}
+          >
+            <div>
+              <Stars inline rating={data.reviews.rating} /> &nbsp;
+              {data.reviews.rating} Stars
+            </div>{" "}
+            <ThemeLink href={"#"} kind={"inheritUnderline"}>
+              Write a Review
+            </ThemeLink>
+          </div>
+          <div>
+            {[
+              data.reviews.items[0],
+              data.reviews.items[1],
+              data.reviews.items[2],
+              data.reviews.items[3]
+            ].map((review, j) => {
+              return (
+                <div
+                  css={css`
+                    margin-bottom: ${theme.spacings.s120}px;
+                  `}
+                >
+                  <div
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      color: ${theme.colors.mono500.css};
+                      margin-bottom: 1em;
+                    `}
+                  >
+                    <Stars rating={review.rating} smaller />
+                    <div
+                      css={css`
+                        margin-left: 1em;
+                      `}
+                    >
+                      {review.name} &mdash; {review.timestamp}
+                    </div>
+                  </div>
+                  <div>{review.content}</div>
+                </div>
+              );
+            })}
+          </div>
+          <ThemeLink href={"#"} kind={"inheritUnderline"}>
+            More reviews
+          </ThemeLink>
         </InnerStyled>
       </Accordion>
     </>
@@ -310,23 +386,6 @@ const Product = () => {
         accordion={accordions}
       />
 
-      {/*<Spacer />*/}
-      {/*<EditorialHalfImage*/}
-      {/*imageFirst*/}
-      {/*image={product.images[0]}*/}
-      {/*element={*/}
-      {/*<EditorialHeadline*/}
-      {/*titleFont={theme.fonts.h3}*/}
-      {/*textalign={"center"}*/}
-      {/*paragraphFont={theme.fonts.body1}*/}
-      {/*title={"WHAT IS NIKEZOOMX?"}*/}
-      {/*paragraph={*/}
-      {/*"Nike ZoomX is lighter, softer and more responsive than any Nike foam, designed to maximize speed by delivering greater energy return. ZoomX was derived from a foam traditionally used in aerospace innovation, applied for the first time in performance footwear in the Nike Zoom Vaporfly Elite and 4%."*/}
-      {/*}*/}
-      {/*/>*/}
-      {/*}*/}
-      {/*elementPosition={"center"}*/}
-      {/*/>*/}
       <Spacer />
       <Spacer />
 

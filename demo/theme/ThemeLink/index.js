@@ -77,6 +77,17 @@ const ThemeLink = props => {
       &:hover {text-decoration: underline;}
     `
         : ""}
+    ${props =>
+      props.kind === "inheritUnderline"
+        ? `
+    &,
+      &:active,
+      &:visited {
+        color: inherit;
+      }
+      text-decoration: underline;
+    `
+        : ""}
   `;
   return (
     <Elem kind={props.kind} {...props}>

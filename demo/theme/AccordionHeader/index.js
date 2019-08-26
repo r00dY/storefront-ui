@@ -7,7 +7,7 @@ const AccordionHeader = props => (
     {...props}
     overrides={{
       Title: {
-        style: ({ $theme }) => `${$theme.fonts.body1.css}`
+        style: ({ $theme }) => `${$theme.fonts.body1.css} flex-grow: 1;`
       },
       Root: {
         style: ({ $theme }) => `
@@ -15,7 +15,6 @@ const AccordionHeader = props => (
          height: 50px;
          padding: 0;
          &:hover { color: ${$theme.colors.mono600.css};
-         svg {fill: currentColor;}
          transition: all 150ms;
          }`
       },
