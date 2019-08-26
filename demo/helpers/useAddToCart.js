@@ -12,6 +12,10 @@ import { css, jsx } from "@emotion/core";
 
 let timeout;
 
+import data from "../data";
+
+const checkoutLineItem = data.checkout.lineItems[0];
+
 const Notification = ({ product, close }) => {
   const theme = useTheme();
 
@@ -34,9 +38,7 @@ const Notification = ({ product, close }) => {
         Just added
       </div>
       <CheckoutLineItemRowTheme1
-        product={product}
-        price={product.price}
-        quantity={"1"}
+        checkoutLineItem={checkoutLineItem}
         layout={"compact"}
         mode={"default"}
       />

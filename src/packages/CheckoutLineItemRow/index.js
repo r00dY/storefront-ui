@@ -7,6 +7,7 @@ import { rs } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
 import { ButtonRaw$ } from "../ButtonRaw";
 import { Button$ } from "../Button";
+import Link from "next/link";
 
 import {
   RootStyled,
@@ -22,7 +23,6 @@ import { css, jsx } from "@emotion/core";
 
 const CheckoutLineItemRow$ = props => {
   const {
-    checkoutLineItem,
     gutter,
     layout,
     breakpoint,
@@ -42,6 +42,8 @@ const CheckoutLineItemRow$ = props => {
   } = props;
 
   // const product = props.dataMapper(props.product);
+
+  const checkoutLineItem = props.dataMapper(props.checkoutLineItem);
 
   const { productVariant, price, discountPrice, quantity } = checkoutLineItem;
 
@@ -168,7 +170,9 @@ const CheckoutLineItemRow$ = props => {
 
   const titleElem = (
     <Title {...titleProps} layout={layout}>
-      <a href={productVariant.product.href}>{productVariant.product.title}</a>
+      <Link href={productVariant.product.href}>
+        <a>{productVariant.product.title}</a>
+      </Link>
     </Title>
   );
   const descriptionElem = (
@@ -177,8 +181,11 @@ const CheckoutLineItemRow$ = props => {
     </Description>
   );
   const variantElem = (
-    <Variant {...variantProps} variant={productVariant.selectedOptions.value}>
-      Size: {productVariant.selectedOptions.value}
+    <Variant
+      {...variantProps}
+      variant={productVariant.selectedOptions[0].value}
+    >
+      Size: {productVariant.selectedOptions[0].value}
     </Variant>
   );
   const priceElem = <Price price={price} discountPrice={discountPrice} />;
@@ -208,16 +215,18 @@ const CheckoutLineItemRow$ = props => {
   );
 
   const imageElem = (
-    <a href={productVariant.product.href} tabIndex={"-1"}>
-      <ImageContainer {...imageContainerProps} layout={layout}>
-        <Image
-          image={productVariant.product.images[0]}
-          css={css`
-            width: 100%;
-          `}
-        />
-      </ImageContainer>
-    </a>
+    <Link href={productVariant.product.href}>
+      <a tabIndex={"-1"}>
+        <ImageContainer {...imageContainerProps} layout={layout}>
+          <Image
+            image={productVariant.product.images[0]}
+            css={css`
+              width: 100%;
+            `}
+          />
+        </ImageContainer>
+      </a>
+    </Link>
   );
   return <Root image={imageElem} content={contentElem} {...rootProps} />;
 };
@@ -226,8 +235,8 @@ CheckoutLineItemRow$.defaultProps = {
   gutter: 16,
   layout: "full",
   breakpoint: "md",
-  mode: "default"
-  // dataMapper: x => x
+  mode: "default",
+  dataMapper: x => x
 };
 
 CheckoutLineItemRow$.propTypes = {

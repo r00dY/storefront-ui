@@ -8,10 +8,12 @@ const checkoutLineItems = products.map(product => {
 
   const productVariant = {
     product: product,
-    selectedOptions: {
-      name: "size",
-      value: selectedValue
-    },
+    selectedOptions: [
+      {
+        name: "size",
+        value: selectedValue
+      }
+    ],
     price: {
       amount: 99,
       currencyCode: "USD"

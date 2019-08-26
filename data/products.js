@@ -97,7 +97,7 @@ products.forEach(product => {
     values: []
   };
 
-  const numOfSizes = randomInt(0, sizes.length - 1);
+  const numOfSizes = randomInt(1, sizes.length - 1);
 
   for (let i = 1; i <= numOfSizes; i++) {
     option.values.push(sizes[i]);
