@@ -16,6 +16,7 @@ import { css, jsx } from "@emotion/core";
 
 import { rs } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
+import Link from "next/link";
 
 const ProductCard$ = props => {
   const {
@@ -58,7 +59,9 @@ const ProductCard$ = props => {
   const titleElem = (
     <>
       <Title {...titleProps} product={product}>
-        <a href={product.href}>{product.title}</a>
+        <Link href={product.href}>
+          <a>{product.title}</a>
+        </Link>
       </Title>
     </>
   );
@@ -97,9 +100,11 @@ const ProductCard$ = props => {
       product={product}
       onSaveToFavourites={onSaveToFavourites}
     >
-      <a href={product.href} tabIndex={"-1"}>
-        <Image image={product.images[0]} />
-      </a>
+      <Link href={product.href}>
+        <a tabIndex={"-1"}>
+          <Image image={product.images[0]} />
+        </a>
+      </Link>
       <ImageOverlay
         {...imageOverlayProps}
         badgesElem={badgesElem}
