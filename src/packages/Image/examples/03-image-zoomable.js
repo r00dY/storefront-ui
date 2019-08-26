@@ -1,5 +1,5 @@
 import React from "react";
-import { ImageZoomable } from "storefront-ui/Image";
+import { ImageZoomable } from "../../../../demo/theme/Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

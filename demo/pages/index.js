@@ -8,63 +8,37 @@ import { L } from "storefront-ui/Config";
 
 import { rslin } from "responsive-helpers";
 
-import { Input, StatefulInput } from "../theme/Input";
+import { StatefulInput } from "../theme/Input";
+import Banner from "../components/Banner";
+import TwoBanners from "../theme/TwoBanners";
+import ProductSlider from "../theme/ProductSlider/ProductSlider";
+import SectionTitle from "../theme/SectionTitle";
+import CategoryCard from "../theme/CategoryCard";
 
+import data from "../data";
 import routerPush from "../helpers/routerPush";
-
-import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { Banner, BannerInner } from "../theme/Banner";
-import TwoBanners from "../theme/TwoBanners";
 
-import data from "../data";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import SectionTitle from "../theme/SectionTitle";
-import CategoryCard from "../theme/CategoryCard";
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
-
-import { ButtonRaw } from "../theme/ButtonRaw";
+// Categories displayed at the bottom
+const categories = [
+  "Bars",
+  "Candy",
+  "Chips & Pretzels",
+  "Cookies",
+  "Crackers & Crisps",
+  "Fruit & Vegetable Snacks",
+  "Jerky",
+  "Popcorn & Puffs"
+].map((category, index) => ({
+  title: category,
+  image: data.images["landscape" + ((index % 4) + 2)],
+  href: "/collection"
+}));
 
 const Home = () => {
   const theme = useTheme();
-
-  let sliderItems = [];
-
-  data.products.map((product, index) => {
-    sliderItems.push(<ProductCardTheme1 product={product} key={index} />);
-  });
-
-  const categories = [
-    { name: "Home", image: data.images.products[4] },
-    { name: "Beauty", image: data.images.products[8] },
-    { name: "Food", image: data.images.products[10] },
-    { name: "Health", image: data.images.products[11] }
-  ];
-
-  const banner1 = (
-    <Banner
-      image={data.images.boxes.half_box_10}
-      imageMobile={data.images.boxes.mobile_box_10}
-      element={<BannerInner text={"The Tonal Trend"} />}
-      elementFlexAlign={"flex-end"}
-      elementFullWidth
-      href={"/collection"}
-    />
-  );
-  const banner2 = (
-    <Banner
-      image={data.images.boxes.half_box_04}
-      imageMobile={data.images.boxes.mobile_box_04}
-      modeCover
-      element={<BannerInner text={"Summer Must-Haves: Air Max Dia"} />}
-      elementFlexAlign={"flex-end"}
-      elementFullWidth
-      href={"/collection"}
-    />
-  );
 
   return (
     <div>
@@ -104,6 +78,7 @@ const Home = () => {
           </div>
         </Container>
       </Device>
+
       <div
         css={css`
           & > div:not(:first-of-type) {
@@ -116,58 +91,48 @@ const Home = () => {
             image={data.images.boxes.full_box_01}
             imageMobile={data.images.boxes.mobile_box_01}
             href={"/collection"}
-            element={
-              <BannerInner
-                label={"Truly Transparent"}
-                title={"Transparent Bottle"}
-                hideTextOnMobile
-              />
-            }
-            elementFlexAlign={{ xs: "flex-end", md: "flex-end" }}
+            label={"Truly Transparent"}
+            title={"Transparent Bottle"}
           />
         </Container>
 
-        <ProductSlider boxes={sliderItems} title={"Top Picks"} />
+        <ProductSlider
+          products={data.products.slice(0, 12)}
+          title={"Top Picks"}
+        />
 
-        <TwoBanners title={"Trending Now"} banners={[banner1, banner2]} />
+        <TwoBanners
+          title={"Trending Now"}
+          banners={[
+            <Banner
+              image={data.images.boxes.half_box_10}
+              imageMobile={data.images.boxes.mobile_box_10}
+              label={"The Tonal Trend"}
+              href={"/collection"}
+            />,
+            <Banner
+              image={data.images.boxes.half_box_04}
+              imageMobile={data.images.boxes.mobile_box_04}
+              label={"Summer Must-Haves: Air Max Dia"}
+              href={"/collection"}
+            />
+          ]}
+        />
 
         <div>
           <Container>
             <SectionTitle>Top Categories</SectionTitle>
             <Grid gutterVertical={L.gutter}>
-              {[
-                "Bars",
-                "Candy",
-                "Chips & Pretzels",
-                "Cookies",
-                "Crackers & Crisps",
-                "Fruit & Vegetable Snacks",
-                "Jerky",
-                "Popcorn & Puffs"
-              ].map((category, index) => {
-                return (
-                  <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
-                    <CategoryCard
-                      image={data.images["landscape" + ((index % 4) + 2)]}
-                      text={category}
-                      href={"/collection"}
-                    />
-                  </GridItem>
-                );
-              })}
+              {categories.map((category, index) => (
+                <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
+                  <CategoryCard
+                    image={category.image}
+                    text={category.title}
+                    href={category.href}
+                  />
+                </GridItem>
+              ))}
             </Grid>
-
-            {/*<Grid gutterVertical={L.gutter}>*/}
-            {/*{categories.map((category, index) => (*/}
-            {/*<GridItem key={index} params={{ xs: 12, sm: 12, lg: 6 }}>*/}
-            {/*<CategoryCard*/}
-            {/*image={category.image}*/}
-            {/*text={category.name}*/}
-            {/*href={"/collection"}*/}
-            {/*/>*/}
-            {/*</GridItem>*/}
-            {/*))}*/}
-            {/*</Grid>*/}
           </Container>
         </div>
       </div>

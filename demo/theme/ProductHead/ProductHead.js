@@ -1,22 +1,18 @@
 import React, { useState, useEffect, useRef } from "react";
-import PropTypes from "prop-types";
 import styled from "@emotion/styled";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import IconClose from "./close.svg";
 import { rs, rslin } from "responsive-helpers";
 import { R, F, C, L, Color } from "storefront-ui/Config";
 
-import Image, { ImageZoomable } from "storefront-ui/Image";
+import { Image, ImageZoomable } from "../Image";
 import StickyColumn from "storefront-ui/StickyColumn";
 import Container from "storefront-ui/Container";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "storefront-ui/SwipeableItemsContainer";
-import ScrollBar from "storefront-ui/ScrollBar";
-import { Modal } from "../Modal";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
@@ -25,16 +21,13 @@ import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
 
 import { Button } from "../Button";
-import { ButtonRaw } from "../ButtonRaw";
-import { ButtonGroup } from "../ButtonGroup";
 import Price from "../Price";
 
 import { showNotification } from "storefront-ui/Notifications";
-import Notification from "../../components/Notification";
-import useAddToCart from "../../helpers/useAddToCart";
 
 import { Select } from "../../theme/Select";
 import useAddToCartWithSize from "../../helpers/useAddToCartWithSize";
+import { Accordion } from "../Accordion";
 
 const MetaRow = styled.div`
   &:not(:first-of-type) {
@@ -42,12 +35,23 @@ const MetaRow = styled.div`
   }
 `;
 
-function ProductHead(props) {
+const InnerStyled = props => {
   const theme = useTheme();
 
-  const [opened, setOpened] = useState(false);
-  const [selectedImage, setSelectedImage] = useState(null);
-  const [config, setConfig] = useState(null);
+  return (
+    <div
+      css={css`
+        padding: 10px;
+        ${theme.fonts.body2.css}
+      `}
+    >
+      {props.children}
+    </div>
+  );
+};
+
+function ProductHead(props) {
+  const theme = useTheme();
 
   const [isFav, setFav] = useState(false);
 
@@ -55,10 +59,51 @@ function ProductHead(props) {
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
-      {props.mosaicImages.slice(1).map((image, index) => {
+      {props.product.images.slice(1).map((image, index) => {
         return <Image mode={"natural"} image={image} />;
       })}
     </SwipeableItemsContainer>
+  );
+
+  const accordions = (
+    <>
+      <Accordion title={"Details"} openAtInit={false}>
+        <InnerStyled>
+          <p>98% Cotton / 2% Elastane / Dry clean</p>
+          <p>
+            Make sure that your favourite items remain long-loved pieces for
+            years to come; read our product care guide and explore our selection
+            of carefully chosen garment care products.
+          </p>
+          <p>Product No: 0708645002</p>
+        </InnerStyled>
+      </Accordion>
+      <Accordion title={"Delivery"} openAtInit={false}>
+        <InnerStyled>
+          <p>Shipping to: Poland</p>
+          <p>
+            Standard Home Delivery €9 / Free over €125 / Delivery in 3-5 working
+            days
+            <br />
+            Standard Pickup Location €9 / Free over €125 / Delivery in 3-5
+            working days
+          </p>
+          <p>
+            Express Home Delivery €15 / Orders placed before 3pm Monday to
+            Friday and before 10:30am on Saturday will be delivered the next
+            working day
+          </p>
+          <p>Free returns on all orders</p>
+          <p>We accept MasterCard, VISA and PayPal</p>
+          <p>Minimum order value is €5</p>
+        </InnerStyled>
+      </Accordion>
+      <Accordion title={"Reviews"} openAtInit={false}>
+        <InnerStyled>
+          <p>Reviews content goes here</p>
+        </InnerStyled>
+      </Accordion>
+    </>
   );
 
   let titleElem = (
@@ -75,7 +120,7 @@ function ProductHead(props) {
           ${theme.fonts.h4.css}
         `}
       >
-        {props.title}
+        {props.product.title}
       </div>
       <div
         css={css`
@@ -87,47 +132,53 @@ function ProductHead(props) {
           }
         `}
       >
-        <Price price={props.price} alignRight />
+        <Price
+          price={props.product.price}
+          priceDiscount={props.product.priceDiscount}
+          alignRight
+        />
       </div>
     </div>
   );
-  let VARIANTS = (
-    <div
-      css={css`
-        display: grid;
-        grid-template-columns: repeat(5, 1fr);
-        grid-column-gap: 5px;
-      `}
-    >
-      {props.variants.map((variant, index) => {
-        return (
-          <a
-            href={"#"}
-            key={index}
-            css={css`
-              margin-top: 5px;
-              transition: 100ms;
-            `}
-          >
-            <div
-              css={css`
-                position: relative;
-              `}
-            >
-              <Image mode={"natural"} image={variant} />
-              <div
-                css={css`
-                  ${index === 0
-                    ? `position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.15);`
-                    : ""}
-                `}
-              />
-            </div>
-          </a>
-        );
-      })}
-    </div>
-  );
+  // let VARIANTS = (
+  //   <div
+  //     css={css`
+  //       display: grid;
+  //       grid-template-columns: repeat(5, 1fr);
+  //       grid-column-gap: 5px;
+  //     `}
+  //   >
+  //     {props.variants.map((variant, index) => {
+  //       return (
+  //         <a
+  //           href={"#"}
+  //           key={index}
+  //           css={css`
+  //             margin-top: 5px;
+  //             transition: 100ms;
+  //           `}
+  //         >
+  //           <div
+  //             css={css`
+  //               position: relative;
+  //             `}
+  //           >
+  //             <Image mode={"natural"} image={variant} />
+  //             <div
+  //               css={css`
+  //                 ${index === 0
+  //                   ? `position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.15);`
+  //                   : ""}
+  //               `}
+  //             />
+  //           </div>
+  //         </a>
+  //       );
+  //     })}
+  //   </div>
+  // );
+
+  let VARIANTS = <div />;
 
   let metaElem = (
     <div>
@@ -135,7 +186,6 @@ function ProductHead(props) {
         {titleElem}
         <MetaRow>{VARIANTS}</MetaRow>
       </Device>
-      {/*<MetaRow>{props.sizes}</MetaRow>*/}
 
       <Device desktop>
         <MetaRow>
@@ -183,18 +233,6 @@ function ProductHead(props) {
         </MetaRow>
       </Device>
 
-      {/*<MetaRow>*/}
-      {/*<div*/}
-      {/*css={css`*/}
-      {/*${theme.fonts.body2.css} a {*/}
-      {/*text-decoration: underline;*/}
-      {/*}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*This is a demo store. You can purchase products like this from{" "}*/}
-      {/*<a href="https://nike.com">Nike</a>.*/}
-      {/*</div>*/}
-      {/*</MetaRow>*/}
       <MetaRow>
         <div
           css={css`
@@ -206,99 +244,15 @@ function ProductHead(props) {
             ${theme.fonts.body2.css}
           `}
         >
-          {props.description}
+          {props.product.description}
         </div>
       </MetaRow>
-      <MetaRow>{props.accordion}</MetaRow>
+      <MetaRow>{accordions}</MetaRow>
     </div>
   );
 
-  const ModalContent = props => {
-    const ref = useRef(null);
-
-    const items = Array.from({ length: props.mosaicImages.length }, a =>
-      useRef(null)
-    );
-
-    useEffect(() => {
-      let item = items[selectedImage].current;
-      ref.current.scrollTop =
-        item.offsetHeight / 2 + item.offsetTop - window.innerHeight / 2;
-    }, []);
-
-    return (
-      <div>
-        <div
-          css={css`
-            position: absolute;
-            background-color: white;
-            width: 100%;
-            height: 100%;
-          `}
-        />
-        <ButtonRaw
-          onClick={() => setOpened(false)}
-          css={css`
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            transition: 100ms;
-            background: transparent;
-          `}
-        >
-          <IconClose />
-        </ButtonRaw>
-        <div
-          css={css`
-            position: relative;
-            height: 100vh;
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-          `}
-          ref={ref}
-        >
-          <div
-            css={css`
-              display: grid;
-              grid-template-columns: 1fr;
-              grid-row-gap: 10px;
-            `}
-          >
-            {props.mosaicImages.map((item, index) => (
-              <div
-                key={index}
-                onClick={() => setOpened(true)}
-                ref={items[index]}
-              >
-                <ImageZoomable image={item} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
-    );
-  };
   return (
     <div>
-      <Modal
-        config={config}
-        isOpen={opened}
-        onRequestClose={() => setOpened(false)}
-        overrides={{
-          Body: {
-            style: `padding: 0;`
-          }
-        }}
-      >
-        <ModalContent {...props} />
-      </Modal>
-
       <Device mobile>
         <div
           css={css`
@@ -338,7 +292,7 @@ function ProductHead(props) {
             padding: 0 10px;
           `}
         >
-          <MetaRow>{props.accordion}</MetaRow>
+          <MetaRow>{accordions}</MetaRow>
         </div>
       </Device>
 
@@ -355,9 +309,9 @@ function ProductHead(props) {
                     ${R.from("md").css("grid-template-columns: 1fr 1fr;")}
                   `}
                 >
-                  {props.mosaicImages.map((item, index) => (
+                  {props.product.images.map((image, index) => (
                     <div key={index}>
-                      <ImageZoomable image={item} />
+                      <ImageZoomable image={image} />
                     </div>
                   ))}
                 </div>
@@ -381,14 +335,6 @@ function ProductHead(props) {
   );
 }
 
-ProductHead.propTypes = {
-  mosaicImages: PropTypes.array,
-  title: PropTypes.string,
-  price: PropTypes.object,
-  variants: PropTypes.array,
-  sizes: PropTypes.element,
-  description: PropTypes.element,
-  accordion: PropTypes.element
-};
+ProductHead.propTypes = {};
 
 export default ProductHead;

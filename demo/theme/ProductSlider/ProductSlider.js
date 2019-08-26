@@ -9,13 +9,13 @@ import { R, F, C, S, L } from "storefront-ui/Config";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "storefront-ui/SwipeableItemsContainer";
-import ScrollBar from "storefront-ui/ScrollBar";
 import Container from "storefront-ui/Container";
 
 import IconArrowLeft from "./baseline-keyboard_arrow_left-24px.svg";
 import IconArrowRight from "./baseline-keyboard_arrow_right-24px.svg";
 import { ButtonRaw } from "../ButtonRaw";
 import SectionTitle from "../SectionTitle";
+import { ProductCardTheme1 } from "../ProductCard";
 
 function ProductSlider(props) {
   const theme = useTheme();
@@ -85,7 +85,7 @@ function ProductSlider(props) {
       }}
       snap={"center"}
     >
-      {props.boxes.map((box, index) => {
+      {props.products.map((product, index) => {
         return (
           <div
             key={index}
@@ -96,7 +96,7 @@ function ProductSlider(props) {
               width: 100%;
             `}
           >
-            {box}
+            <ProductCardTheme1 product={product} key={index} />
           </div>
         );
       })}
@@ -120,23 +120,6 @@ function ProductSlider(props) {
         </div>
       </Container>
       {swiper.element}
-      {/*{!props.hiddenScrollbar && (*/}
-      {/*<Container*/}
-      {/*css={css`*/}
-      {/*${R.from("md").css(`*/}
-      {/*padding-left: 10%;*/}
-      {/*padding-right: 10%;*/}
-      {/*`)}*/}
-      {/*${rslin(S.s3, S.s6).css("padding-top")}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*<ScrollBar*/}
-      {/*swipeableItemsContainer={swiper}*/}
-      {/*trackColor={C.grey5}*/}
-      {/*backgroundColor={C.grey20}*/}
-      {/*/>*/}
-      {/*</Container>*/}
-      {/*)}*/}
     </div>
   );
 }

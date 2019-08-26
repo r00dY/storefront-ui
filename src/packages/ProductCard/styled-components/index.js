@@ -2,10 +2,10 @@ import { styled } from "../../base/styles";
 import React from "react";
 
 export const rootStyles = ({ $theme }) => `position: relative;`;
-export const rootChildren = ({ content, image }) => (
+export const rootChildren = ({ contentElem, imageElem }) => (
   <>
-    {image}
-    {content}
+    {imageElem}
+    {contentElem}
   </>
 );
 export const RootStyled = styled("div", rootStyles, rootChildren);
@@ -15,22 +15,22 @@ export const imageContainerStyles = ({ $theme }) =>
 export const ImageContainerStyled = styled("div", imageContainerStyles);
 
 export const contentStyles = ({ $theme }) => ``;
-export const contentChildren = ({ name, description, price }) => (
+export const contentChildren = ({ titleElem, descriptionElem, priceElem }) => (
   <>
-    {name}
-    {description}
-    {price}
+    {titleElem}
+    {descriptionElem}
+    {priceElem}
   </>
 );
 export const ContentStyled = styled("div", contentStyles, contentChildren);
 
-export const nameStyles = ({ $theme }) => `
+export const titleStyles = ({ $theme }) => `
    overflow: hidden;
   ${$theme.fonts.h6.css}
   max-height: calc(2 * 1.2em);
   a {text-decoration: none; color: ${$theme.colors.mono900.css}; }
 `;
-export const NameStyled = styled("div", nameStyles);
+export const TitleStyled = styled("div", titleStyles);
 
 export const descriptionStyles = ({ $theme }) => `
     white-space: nowrap; 
@@ -56,7 +56,7 @@ export const BadgeStyled = styled("div", badgeStyles);
 export const imageOverlayStyles = ({ $theme }) =>
   `position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; 
   `;
-export const imageOverlayChildren = ({ badges }) => <>{badges}</>;
+export const imageOverlayChildren = ({ badgesElem }) => <>{badgesElem}</>;
 export const ImageOverlayStyled = styled(
   "div",
   imageOverlayStyles,
