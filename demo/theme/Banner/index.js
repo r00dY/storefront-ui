@@ -96,6 +96,7 @@ const Banner = props => {
       image={props.image}
       backgroundColor={props.imageBackground}
       video={props.video}
+      sizes={"100vw"}
     />
   );
   const imageWithMobileElem = (
@@ -107,6 +108,7 @@ const Banner = props => {
         image={props.image}
         video={props.video}
         backgroundColor={props.imageBackground}
+        sizes={"100vw"}
       />
       <Image
         css={css`
@@ -115,6 +117,7 @@ const Banner = props => {
         image={props.imageMobile}
         video={props.videoMobile}
         backgroundColor={props.imageBackground}
+        sizes={"320px"}
       />
     </div>
   );
