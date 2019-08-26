@@ -121,8 +121,8 @@ export default props => {
             </Link>
           </li>
           <li>
-            <Link href="/product-row">
-              <a>ProductRow</a>
+            <Link href="/checkout-line-item-row">
+              <a>CheckoutLineItemRow</a>
             </Link>
           </li>
           <li>

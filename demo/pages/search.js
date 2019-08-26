@@ -10,7 +10,7 @@ import Container from "storefront-ui/Container";
 import { useRouter } from "next/router";
 
 // import data from "../data";
-// import { ProductRow } from "../theme/ProductRow";
+// import { CheckoutLineItemRow } from "../theme/CheckoutLineItemRow";
 
 import NavBarMobileSearch from "../theme/NavBarMobileSearch";
 import { SearchListItem } from "../theme/SearchListItem";

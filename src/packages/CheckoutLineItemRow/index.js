@@ -20,9 +20,9 @@ import {
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-const ProductRow$ = props => {
+const CheckoutLineItemRow$ = props => {
   const {
-    quantity,
+    checkoutLineItem,
     gutter,
     layout,
     breakpoint,
@@ -41,9 +41,11 @@ const ProductRow$ = props => {
     }
   } = props;
 
-  const product = props.dataMapper(props.product);
+  // const product = props.dataMapper(props.product);
 
-  const { title, description, variant, href, images } = product;
+  const { productVariant, price, discountPrice, quantity } = checkoutLineItem;
+
+  // const { title, description, variant, href, images } = productVariant;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -166,24 +168,20 @@ const ProductRow$ = props => {
 
   const titleElem = (
     <Title {...titleProps} layout={layout}>
-      <a href={href}>{title}</a>
+      <a href={productVariant.href}>{productVariant.product.title}</a>
     </Title>
   );
   const descriptionElem = (
-    <Description {...descriptionProps}>{description}</Description>
+    <Description {...descriptionProps}>
+      {productVariant.product.description}
+    </Description>
   );
   const variantElem = (
-    <Variant {...variantProps} variant={variant}>
-      Size: {variant}
+    <Variant {...variantProps} variant={productVariant.selectedOptions.value}>
+      Size: {productVariant.selectedOptions.value}
     </Variant>
   );
-  const priceElem = (
-    <Price
-      product={product}
-      price={product.price}
-      priceDiscount={product.priceDiscount}
-    />
-  );
+  const priceElem = <Price price={price} discountPrice={discountPrice} />;
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
@@ -206,15 +204,14 @@ const ProductRow$ = props => {
       layout={layout}
       mode={mode}
       gutter={gutter}
-      product={product}
     />
   );
 
   const imageElem = (
-    <a href={href} tabIndex={"-1"}>
+    <a href={productVariant.href} tabIndex={"-1"}>
       <ImageContainer {...imageContainerProps} layout={layout}>
         <Image
-          image={images[0]}
+          image={productVariant.product.images[0]}
           css={css`
             width: 100%;
           `}
@@ -225,22 +222,20 @@ const ProductRow$ = props => {
   return <Root image={imageElem} content={contentElem} {...rootProps} />;
 };
 
-ProductRow$.defaultProps = {
+CheckoutLineItemRow$.defaultProps = {
   gutter: 16,
   layout: "full",
   breakpoint: "md",
-  mode: "default",
-  dataMapper: x => x
+  mode: "default"
+  // dataMapper: x => x
 };
 
-ProductRow$.propTypes = {
-  product: PropTypes.object.isRequired,
-  price: PropTypes.object.isRequired,
-  quantity: PropTypes.string.isRequired,
+CheckoutLineItemRow$.propTypes = {
+  checkoutLineItem: PropTypes.object.isRequired,
   mode: PropTypes.string.isRequired,
   layout: PropTypes.string,
   gutter: PropTypes.number,
   overrides: PropTypes.object
 };
 
-export default ProductRow$;
+export default CheckoutLineItemRow$;

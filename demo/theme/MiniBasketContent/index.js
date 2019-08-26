@@ -5,7 +5,7 @@ import { css, jsx } from "@emotion/core";
 
 import { useTheme } from "storefront-ui/Theme";
 
-import { ProductRowTheme1 } from "../ProductRow";
+import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
 
 const MiniBasketContent = props => {
   const {} = props;
@@ -25,11 +25,8 @@ const MiniBasketContent = props => {
     >
       {props.lineItems.map((lineItem, index) => (
         <div>
-          <ProductRowTheme1
-            product={lineItem.product}
-            price={lineItem.product.price}
-            priceDiscount={lineItem.product.priceDiscount}
-            quantity={"1"}
+          <CheckoutLineItemRowTheme1
+            checkoutLineItem={lineItem}
             layout={"compact"}
             mode={"basket"}
           />
