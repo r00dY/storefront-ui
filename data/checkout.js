@@ -18,7 +18,7 @@ const checkoutLineItems = products.map(product => {
       amount: 99,
       currencyCode: "USD"
     },
-    discountPrice: {
+    priceDiscount: {
       amount: 79,
       currencyCode: "USD"
     }
@@ -31,7 +31,7 @@ const checkoutLineItems = products.map(product => {
       amount: 299,
       currencyCode: "USD"
     },
-    discountPrice: {
+    priceDiscount: {
       amount: 199,
       currencyCode: "USD"
     }

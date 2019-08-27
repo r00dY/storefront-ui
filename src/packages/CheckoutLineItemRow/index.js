@@ -45,7 +45,7 @@ const CheckoutLineItemRow$ = props => {
 
   const checkoutLineItem = props.dataMapper(props.checkoutLineItem);
 
-  const { productVariant, price, discountPrice, quantity } = checkoutLineItem;
+  const { productVariant, price, priceDiscount, quantity } = checkoutLineItem;
 
   // const { title, description, variant, href, images } = productVariant;
 
@@ -188,7 +188,7 @@ const CheckoutLineItemRow$ = props => {
       Size: {productVariant.selectedOptions[0].value}
     </Variant>
   );
-  const priceElem = <Price price={price} discountPrice={discountPrice} />;
+  const priceElem = <Price price={price} priceDiscount={priceDiscount} />;
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (

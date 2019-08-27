@@ -9,7 +9,7 @@
   "dependencies": {
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
-    "@r00dy/storefront-ui": "^0.4.15",
+    "@r00dy/storefront-ui": "^0.5.1",
     "@svgr/webpack": "^4.2.0",
     "imgix-core-js": "^2.1.0",
     "next": "^8.0.3",
