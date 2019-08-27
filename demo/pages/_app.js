@@ -15,6 +15,7 @@ import withApolloClient from "../lib/with-apollo-client";
 import { css, jsx } from "@emotion/core";
 import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
 
+import Device from "storefront-ui/Device";
 import Footer from "../theme/Footer";
 import data from "../data";
 import { parseCookies, setCookie } from "../helpers/cookie";
