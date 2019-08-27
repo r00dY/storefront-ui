@@ -31,7 +31,7 @@ const overrides = (props, theme) => ({
       css={css`
         width: 100%;
         height: 1px;
-        background: ${theme.colors.mono200.css};
+        background: ${theme.colors.mono100.css};
       `}
     />
   ),

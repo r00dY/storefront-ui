@@ -24,7 +24,11 @@ const CheckoutPage = props => {
   const [open, setOpen] = useState(false);
 
   return (
-    <div>
+    <div
+      css={css`
+        padding-bottom: 50px;
+      `}
+    >
       <Container>
         <Grid>
           <GridItem

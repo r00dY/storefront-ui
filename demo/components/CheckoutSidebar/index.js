@@ -1,10 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { FormHeader } from "../../theme/FormHeader";
 import data from "../../data";
-import { ProductRowTheme1 } from "../../theme/ProductRow";
+import { CheckoutLineItemRowTheme1 } from "../../theme/CheckoutLineItemRow";
 import { Divider } from "../../theme/Divider";
 import { FormControl } from "../../theme/FormControl";
 import { StatefulInput } from "../../theme/Input";
@@ -13,32 +13,32 @@ import { Ledger } from "../../theme/Ledger";
 
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
-
-let products = [
-  data.products[0],
-  data.products[1],
-  data.products[2],
-  data.products[3],
-  data.products[4]
-];
+//
+// let products = [
+//   data.products[0],
+//   data.products[1],
+//   data.products[2],
+//   data.products[3],
+//   data.products[4]
+// ];
 
 const CheckoutSidebar = props => {
   const theme = useTheme();
+
+  const [open, setOpen] = useState(false);
 
   return (
     <>
       <FormHeader title={"Your Bag"} />
       <div>
-        {products.map((product, index) => (
+        {data.checkout.lineItems.slice(0, 5).map((item, index) => (
           <div
             css={css`&:not(:last-of-type) {margin-bottom: ${
               theme.spacings.s40
             }px;)`}
           >
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              quantity={"1"}
+            <CheckoutLineItemRowTheme1
+              checkoutLineItem={item}
               layout={"compact"}
               mode={"default"}
             />
@@ -47,26 +47,47 @@ const CheckoutSidebar = props => {
       </div>
       {!props.hideGiftCard && (
         <>
-          <Divider />
           <div
             css={css`
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-end;
+              height: ${theme.spacings.s80}px;
             `}
-          >
+          />
+          {open && (
             <div
               css={css`
-                flex-grow: 1;
-                margin-right: ${theme.spacings.s40}px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
               `}
             >
-              <FormControl label={"Gift card"}>
-                <StatefulInput />
-              </FormControl>
+              <div
+                css={css`
+                  flex-grow: 1;
+                  margin-right: ${theme.spacings.s40}px;
+                `}
+              >
+                <FormControl label={"Promo code"}>
+                  <StatefulInput />
+                </FormControl>
+              </div>
+              <Button onClick={() => setOpen()}>Apply</Button>
             </div>
-            <Button>Apply</Button>
-          </div>
+          )}
+          {!open && (
+            <Button
+              kind={"minimal"}
+              onClick={() => setOpen(!open)}
+              css={css`
+                color: ${theme.colors.mono900.css};
+                &:hover {
+                  color: ${theme.colors.mono900.css};
+                  text-decoration: underline;
+                }
+              `}
+            >
+              I have a promo code
+            </Button>
+          )}
         </>
       )}
       <Divider />

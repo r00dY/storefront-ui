@@ -26,6 +26,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import IconArrowBack from "../svg/arrow_back.svg";
+import ThemeLink from "../theme/ThemeLink";
 
 const Form1 = () => {
   const theme = useTheme();
@@ -83,7 +84,10 @@ const Form1 = () => {
         title={"Contact"}
         description={
           <>
-            Already have an account? <a href="#">Log in.</a>
+            Already have an account?{" "}
+            <ThemeLink href="#" secondary>
+              Log in.
+            </ThemeLink>
           </>
         }
       />
@@ -104,12 +108,12 @@ const Form1 = () => {
       <FormHeader title={"Shipping Address"} />
 
       <Grid gutterVertical={16}>
-        <GridItem params={"1/2"}>
+        <GridItem params={{ xs: "1/1", md: "1/2" }}>
           <FormControl label={"First name"}>
             <StatefulInput />
           </FormControl>
         </GridItem>
-        <GridItem params={"1/2"}>
+        <GridItem params={{ xs: "1/1", md: "1/2" }}>
           <FormControl label={"Last name"}>
             <StatefulInput />
           </FormControl>
@@ -149,33 +153,46 @@ const Form1 = () => {
           </FormControl>
         </GridItem>
         <GridItem />
+
         <GridItem
           css={css`
             display: flex;
             flex-wrap: wrap;
             ${R.from("md").css("justify-content: space-between;")}
-            ${R.to("sm").css("&>div{width: 100%;}")}
+            ${R.to("sm").css("&>div{margin-bottom: 16px; width: 100%;}")}
           `}
         >
-          <Button
-            size={"large"}
-            kind={"minimal"}
-            startEnhancer={<IconArrowBack />}
-            onClick={() => {
-              routerPush("/cart");
-            }}
+          <div
+            css={css`
+              ${R.to("sm").css("order: 2;")}
+              display: flex;
+              align-items: center;
+            `}
           >
-            Return to cart
-          </Button>
+            <Button
+              size={"large"}
+              kind={"minimal"}
+              fitContainer={true}
+              startEnhancer={<IconArrowBack />}
+              onClick={() => {
+                routerPush("/cart");
+              }}
+            >
+              Return to cart
+            </Button>
+          </div>
 
-          <Button
-            size={"large"}
-            onClick={() => {
-              routerPush("/form2");
-            }}
-          >
-            Continue to shipping method
-          </Button>
+          <div css={css``}>
+            <Button
+              fitContainer={true}
+              size={"large"}
+              onClick={() => {
+                routerPush("/form2");
+              }}
+            >
+              Continue to shipping method
+            </Button>
+          </div>
         </GridItem>
       </Grid>
     </CheckoutPage>

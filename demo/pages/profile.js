@@ -13,16 +13,16 @@ const Profile = () => {
   const theme = useTheme();
 
   return (
-    <div>
+    <div
+      css={css`
+        padding-bottom: 50px;
+      `}
+    >
       <Container>
         <PageTitle title={"Profile"} />
         <Grid>
           <GridItem params={{ xs: 24, sm: [8, 8] }}>
-            <div
-              css={css`
-                margin-top: ${theme.spacings.s80}px;
-              `}
-            >
+            <div css={css``}>
               <ProfileLogInContent />
             </div>
           </GridItem>

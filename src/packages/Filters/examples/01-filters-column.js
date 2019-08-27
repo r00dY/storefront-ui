@@ -4,11 +4,10 @@ import { FiltersColumn } from "../../../../demo/theme/Filters";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import filterData from "../../../../docs-utils/filtersData";
-import useFiltersData from "storefront-ui/Filters/useFiltersData";
+import filters from "../../../../data/filters";
 
 export default () => {
-  const [data, onChange] = useFiltersData(filterData);
+  const [value, setValue] = useState({});
 
   return (
     <div
@@ -16,7 +15,13 @@ export default () => {
         width: 400px;
       `}
     >
-      <FiltersColumn data={data} onChange={onChange} />
+      <FiltersColumn
+        data={filters}
+        value={value}
+        onChange={(id, newVal) => {
+          setValue({ ...value, [id]: newVal });
+        }}
+      />
     </div>
   );
 };

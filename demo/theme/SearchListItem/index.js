@@ -21,7 +21,7 @@ const SearchListItem = ({ focused, item, icon }) => {
         align-items: center;
         ${theme.fonts.body1.css}
         &:hover {
-          background-color: lightgrey;
+          background-color: ${theme.colors.mono200.css};
         }
         cursor: pointer;
         svg {
@@ -29,8 +29,8 @@ const SearchListItem = ({ focused, item, icon }) => {
         }
       `}
     >
-      {icon === "history" && <IconHistory />}
-      {icon === "go" && <IconGo />}
+      {/*{icon === "history" && <IconHistory />}*/}
+      {/*{icon === "go" && <IconGo />}*/}
       {item.name}
     </div>
   );

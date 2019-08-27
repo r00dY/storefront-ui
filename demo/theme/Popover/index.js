@@ -5,7 +5,12 @@ const overrides = {
     style: ({ $anchorWidth }) => `
       width: 320px;
       max-height: 500px;
+      border-radius: 4px;
+      overflow: hidden;
     `
+  },
+  Root: {
+    // style: `border-radius: 4px;`
   }
 };
 

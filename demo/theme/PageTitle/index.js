@@ -27,7 +27,7 @@ const PageTitle = props => {
           css={css`
               ${theme.fonts.body2.css}
               color: ${theme.colors.mono600.css};
-              ${rslin(theme.spacings.s80, theme.spacings.s120).css(
+              ${rslin(theme.spacings.s120, theme.spacings.s120).css(
                 "padding-bottom"
               )}
             `}

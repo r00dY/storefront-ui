@@ -14,7 +14,7 @@ import { Accordion$ } from "storefront-ui/Accordion";
 import { StatefulInput } from "../theme/Input";
 import { useTheme } from "storefront-ui/Theme";
 import data from "../data";
-import Image from "storefront-ui/Image";
+import { Image } from "../theme/Image";
 
 import routerPush from "../helpers/routerPush";
 import { ButtonRaw } from "../theme/ButtonRaw";

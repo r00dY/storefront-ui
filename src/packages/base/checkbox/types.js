@@ -120,7 +120,7 @@ export type StatefulContainerPropsT = {
   children?: (*) => React$Node,
   /** Defines the components initial state value */
   initialState?: StateT,
-  /** A state change handler. Used to override default state transitions. */
+  /** ThemeLink state change handler. Used to override default state transitions. */
   stateReducer: StateReducerT,
   /** Handler for change events on trigger element. */
   onChange?: (e: SyntheticInputEvent<HTMLInputElement>) => mixed,

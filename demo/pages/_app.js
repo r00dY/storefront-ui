@@ -1,12 +1,12 @@
 import React from "react";
 import App, { Container } from "next/app";
 
+import { GridDebugger } from "storefront-ui/Grid";
+
 import theme from "../theme/config";
 import Root from "storefront-ui/Root";
 
 import MainTabBar from "../theme/MainTabBar";
-import NavBarMobile from "../theme/NavBarMobile";
-import Router from "next/router";
 import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
 import withApolloClient from "../lib/with-apollo-client";
@@ -93,6 +93,7 @@ class MyApp extends App {
       <ApolloProvider client={apolloClient}>
         <ApolloHooksProvider client={apolloClient}>
           <Root theme={theme}>
+            <GridDebugger />
             <Device mobile>
               {showTabbar && (
                 <div>
@@ -104,7 +105,6 @@ class MyApp extends App {
                     {content}
                     {showFooterOnMobile && <Footer />}
                   </div>
-
                   <div
                     css={css`
                       position: fixed;

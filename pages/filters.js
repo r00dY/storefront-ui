@@ -15,11 +15,7 @@ There are different ways of building filtering in \`storefront-ui\`. You could s
 
 All filter components in \`storefront-ui\` require unified filter format which is as follows:
 
-${(
-  <CodeBlock
-    code={require("!!raw-loader!../docs-utils/filtersData.js").default}
-  />
-)}
+${<CodeBlock code={require("!!raw-loader!../data/filters.js").default} />}
 
 ## \`FilterColumn\`
 

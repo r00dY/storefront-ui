@@ -32,3 +32,7 @@ export const RangePicker = props => (
     {...props}
   />
 );
+
+RangePicker.defaultProps = {
+  value: {}
+};

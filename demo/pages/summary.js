@@ -3,7 +3,7 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import { FormHeader } from "../theme/FormHeader";
 import { StatefulRadioGroup, Radio } from "../theme/Radio";
 import { Button } from "../theme/Button";
-import IconArrowBack from "../../data/svg/arrow_back.svg";
+import IconArrowBack from "../svg/arrow_back.svg";
 import { R } from "storefront-ui/Config";
 import RadioBorder from "../theme/RadioBorder";
 import OrderDetails from "../theme/OrderDetails";
@@ -57,7 +57,7 @@ const Form3 = () => {
             margin-bottom: 2em;
           }
           h1 {
-            ${theme.fonts.h3.css}
+            ${theme.fonts.h3.css} margin-top: 0;
           }
           h2 {
             ${theme.fonts.h6.css}

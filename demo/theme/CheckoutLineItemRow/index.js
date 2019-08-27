@@ -1,5 +1,5 @@
 import React from "react";
-import ProductRow$ from "storefront-ui/ProductRow";
+import CheckoutLineItemRow$ from "storefront-ui/CheckoutLineItemRow";
 import Price from "../Price";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -12,10 +12,15 @@ import IconRemove from "./outline-remove-24px.svg";
 import { useTheme } from "storefront-ui/Theme";
 import { Button } from "../Button";
 
+import { Image } from "../Image";
+
 import { rslin } from "responsive-helpers";
 
 const overrides = {
-  Price: ({ price }) => <Price price={price} alignRight />
+  Image: Image,
+  Price: ({ price, discountPrice }) => (
+    <Price price={price} discountPrice={discountPrice} alignRight />
+  )
 };
 
 const Quantity = ({ quantity, mode, isWishlistItem }) => {
@@ -59,8 +64,11 @@ const Quantity = ({ quantity, mode, isWishlistItem }) => {
 };
 
 const overridesTheme1 = {
-  Price: ({ price }) => <Price price={price} alignRight />,
-  Name: {
+  Image: Image,
+  Price: ({ price, discountPrice }) => (
+    <Price price={price} discountPrice={discountPrice} alignRight />
+  ),
+  Title: {
     style: ({ $theme, mode }) => `
         margin-bottom: 0.5em;
         ${$theme.fonts.body1.css}
@@ -91,9 +99,11 @@ const overridesTheme1 = {
   },
   Quantity: Quantity
 };
-const ProductRow = props => <ProductRow$ {...props} overrides={overrides} />;
-const ProductRowTheme1 = props => (
-  <ProductRow$ {...props} overrides={overridesTheme1} />
+const CheckoutLineItemRow = props => (
+  <CheckoutLineItemRow$ {...props} overrides={overrides} />
+);
+const CheckoutLineItemRowTheme1 = props => (
+  <CheckoutLineItemRow$ {...props} overrides={overridesTheme1} />
 );
 
-export { ProductRow, ProductRowTheme1 };
+export { CheckoutLineItemRow, CheckoutLineItemRowTheme1 };

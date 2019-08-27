@@ -24,7 +24,7 @@ const products = [
         symbol: "€"
       }
     },
-    description: "A-line Dresses",
+    description: "ThemeLink-line Dresses",
     badges: [
       {
         label: "-30%",
@@ -41,7 +41,7 @@ const products = [
   },
 
   {
-    name: "Long A-line Jersey Dress",
+    name: "Long ThemeLink-line Jersey Dress",
     price: {
       regular: "99",
       discount: null,
@@ -77,7 +77,7 @@ const products = [
     variant: sizes[getRandomInt(0, 3)]
   },
   {
-    name: "Shaped A-line Cotton Dress",
+    name: "Shaped ThemeLink-line Cotton Dress",
     price: {
       regular: "99",
       discount: "79",

@@ -10,7 +10,7 @@ import Container from "storefront-ui/Container";
 import { useRouter } from "next/router";
 
 // import data from "../data";
-// import { ProductRow } from "../theme/ProductRow";
+// import { CheckoutLineItemRow } from "../theme/CheckoutLineItemRow";
 
 import NavBarMobileSearch from "../theme/NavBarMobileSearch";
 import { SearchListItem } from "../theme/SearchListItem";
@@ -104,9 +104,9 @@ const Search = props => {
               ${theme.fonts.body1.css}
             `}
           >
-            Last searches
+            Trending now
           </div>
-          <Button kind={"minimal"}>Clear</Button>
+          {/*<Button kind={"minimal"}>Clear</Button>*/}
         </div>
       </Container>
       {items.map((item, index) => (
@@ -117,17 +117,17 @@ const Search = props => {
 
   const currentSearch = ({ phrase, items }) => (
     <div>
-      <Container
-        css={css`
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          height: 40px;
-          ${theme.fonts.body1.css}
-        `}
-      >
-        Current phrase: {phrase}
-      </Container>
+      {/*<Container*/}
+      {/*css={css`*/}
+      {/*display: flex;*/}
+      {/*justify-content: space-between;*/}
+      {/*align-items: center;*/}
+      {/*height: 40px;*/}
+      {/*${theme.fonts.body1.css}*/}
+      {/*`}*/}
+      {/*>*/}
+      {/*Current phrase: {phrase}*/}
+      {/*</Container>*/}
       {items.map((item, index) => (
         <SearchListItem item={item} key={index} icon={"go"} />
       ))}

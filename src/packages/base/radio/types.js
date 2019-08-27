@@ -172,7 +172,7 @@ export type StatefulContainerPropsT = {
 
 export type StatefulRadioGroupPropsT = {
   overrides?: OverridesT,
-  /** A list of `Radio` components. */
+  /** ThemeLink list of `Radio` components. */
   children?: Array<React.Node>,
   /** Initial state populated into the component */
   initialState?: StateT,

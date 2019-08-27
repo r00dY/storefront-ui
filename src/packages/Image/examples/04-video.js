@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "storefront-ui/Image";
+import { Image } from "../../../../demo/theme/Image";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */
@@ -15,7 +15,7 @@ export default () => (
       css={css`
         max-width: 800px;
       `}
-      video={hulaHop}
+      image={hulaHop}
     />
 
     <p>cover mode</p>
@@ -24,7 +24,7 @@ export default () => (
         max-width: 800px;
         height: 800px; // remember to set height in CSS, will be 0 otherwise!
       `}
-      video={hulaHop}
+      image={hulaHop}
       mode={"cover"}
     />
 
@@ -35,7 +35,7 @@ export default () => (
         height: 800px; // remember to set height in CSS, will be 0 otherwise!
         border: 1px solid lightgrey; // added border to show contain mode
       `}
-      video={hulaHop}
+      image={hulaHop}
       mode={"contain"}
     />
 
@@ -46,7 +46,7 @@ export default () => (
         height: 800px; // remember to set height in CSS, will be 0 otherwise!
         border: 1px solid lightgrey; // added border to show contain mode
       `}
-      video={hulaHop}
+      image={hulaHop}
       mode={"contain"}
       backgroundPosition={"left top"}
     />

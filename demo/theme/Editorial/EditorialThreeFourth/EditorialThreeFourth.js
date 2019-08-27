@@ -4,7 +4,7 @@ import { rslin } from "responsive-helpers";
 import { L, F, C, S, R } from "storefront-ui/Config";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
-import Image from "storefront-ui/Image";
+import { Image } from "../../Image";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 

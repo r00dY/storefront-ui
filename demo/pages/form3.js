@@ -3,7 +3,7 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 import { FormHeader } from "../theme/FormHeader";
 import { StatefulRadioGroup, Radio } from "../theme/Radio";
 import { Button } from "../theme/Button";
-import IconArrowBack from "../../data/svg/arrow_back.svg";
+import IconArrowBack from "../svg/arrow_back.svg";
 import { R } from "storefront-ui/Config";
 import RadioBorder from "../theme/RadioBorder";
 import OrderDetails from "../theme/OrderDetails";
@@ -192,33 +192,37 @@ const Form3 = () => {
 
         <GridItem
           css={css`
+            margin-top: 16px;
             display: flex;
             flex-wrap: wrap;
             ${R.from("md").css("justify-content: space-between;")}
-            ${R.to("sm").css("&>div{width: 100%;}")}
+            ${R.to("sm").css("&>div{margin-bottom: 16px; width: 100%;}")}
           `}
         >
           <div
             css={css`
-              ${R.to("sm").css("order: 1; width: 100%;")}
+              ${R.to("sm").css("order: 2;")}
+              display: flex;
+              align-items: center;
             `}
           >
             <Button
               size={"large"}
               kind={"minimal"}
+              fitContainer={true}
               startEnhancer={<IconArrowBack />}
               onClick={() => {
                 routerPush("/form2");
               }}
-              fitContainer
             >
               Return to shipping method
             </Button>
           </div>
-          <div>
+
+          <div css={css``}>
             <Button
+              fitContainer={true}
               size={"large"}
-              fitContainer
               onClick={() => {
                 routerPush("/summary");
               }}

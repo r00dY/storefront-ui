@@ -5,30 +5,32 @@ import { Root } from "./styled-components";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
+import Money from "storefront-ui/utils/Money";
+
 const Price = props => {
-  const { price, alignRight } = props;
+  const { price, discountPrice, alignRight } = props;
 
   return (
     <Root>
-      {price.discount && (
+      {discountPrice && (
         <div
           css={css`
             ${alignRight && "margin-left: 0.25em;"}
             ${!alignRight && "margin-right: 0.25em;"}
           `}
         >
-          {price.currency.symbol}
-          {price.discount}
+          {Money.getCurrencySymbol(discountPrice)}
+          {Money.getAmountString(discountPrice)}
         </div>
       )}
       <div
         css={css`
-          ${price.discount && "text-decoration: line-through; opacity: 0.5;"}
+          ${discountPrice && "text-decoration: line-through; opacity: 0.5;"}
           ${alignRight && "order: -1;"}
         `}
       >
-        {price.currency.symbol}
-        {price.regular}
+        {Money.getCurrencySymbol(price)}
+        {Money.getAmountString(price)}
       </div>
     </Root>
   );

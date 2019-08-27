@@ -13,23 +13,25 @@ import Link from "next/link";
 
 import { Button } from "../Button";
 import { ButtonRaw } from "../ButtonRaw";
-import data from "../../data";
-import routerPush from "../../helpers/routerPush";
 
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
 import MiniBasketContent from "../MiniBasketContent";
 
 import IconSearch from "../../svg/search.svg";
 import IconCart from "../../svg/cart.svg";
 import IconAccount from "../../svg/account.svg";
-import { Banner, BannerInner } from "../Banner";
-import { ProductCardTheme1 } from "../ProductCard";
+import Banner from "../../components/Banner";
 import { Ledger } from "../Ledger";
 import ProfileLogInContent from "../ProfileLogInContent";
+import ThemeLink from "../ThemeLink";
+
+import routerPush from "../../helpers/routerPush";
+import data from "../../data";
+
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
 
 export const MenuDesktopContent = props => {
-  const { category, alternative } = props;
+  const { category } = props;
   const theme = useTheme();
 
   return (
@@ -65,25 +67,17 @@ export const MenuDesktopContent = props => {
                 <div
                   css={css`
                     width: 33.33%;
-                    a {
-                      color: inherit;
-                      text-decoration: none;
-                    }
                   `}
                 >
                   <div
                     css={css`
                       padding-right: 1em;
                       margin-bottom: ${theme.spacings.s40}px;
-                      color: ${theme.colors.primary.css};
-                      a:hover {
-                        color: ${theme.colors.primary600.css};
-                      }
                       ${theme.fonts.body1.css}
                     `}
                   >
                     <Link href={"/collection"}>
-                      <a>{subcat.name}</a>
+                      <ThemeLink href={"/collection"}>{subcat.name}</ThemeLink>
                     </Link>
                   </div>
                   <div
@@ -100,8 +94,10 @@ export const MenuDesktopContent = props => {
                             theme.colors.mono500.css
                           };`}
                         >
-                          <Link href={"/collection"}>
-                            <a>{link}</a>
+                          <Link href={"/category"}>
+                            <ThemeLink href={"/category"} kind={"secondary"}>
+                              {link}
+                            </ThemeLink>
                           </Link>
                         </div>
                       ))}
@@ -115,8 +111,6 @@ export const MenuDesktopContent = props => {
                 padding-left: ${theme.spacings.s40}px;
               `}
             >
-              {/*{alternative && <ProductCardTheme1 product={data.products[0]} />}*/}
-
               <Banner
                 image={
                   [
@@ -127,9 +121,7 @@ export const MenuDesktopContent = props => {
                   ][props.index]
                 }
                 href={"/collection"}
-                element={<BannerInner text={"The Tonal Trend"} />}
-                elementFlexAlign={"flex-end"}
-                elementFullWidth
+                label={"The Tonal Trend"}
               />
             </div>
           </div>
@@ -143,10 +135,7 @@ const MenuDesktop = props => {
   const [opened, setOpened] = useState(false);
   const [profileOpened, setProfileOpened] = useState(false);
 
-  const basketProducts = data.products.slice(0, 5);
-
   const theme = useTheme();
-  const direction = useScrollDirection();
   const segment = useScrollSegment({ 1: "not-top", 1000: "hideable" });
 
   const IconButton = props => (
@@ -287,7 +276,7 @@ const MenuDesktop = props => {
                         }}
                       >
                         <IconCart />
-                        <span>{basketProducts.length}</span>
+                        <span>{data.checkout.lineItems.length}</span>
                       </IconButton>
                     </div>
                   }
@@ -374,7 +363,7 @@ const MenuDesktop = props => {
                 </div>
               )}
             >
-              <MiniBasketContent products={basketProducts} />
+              <MiniBasketContent lineItems={data.checkout.lineItems} />
             </Modal>
 
             <Modal

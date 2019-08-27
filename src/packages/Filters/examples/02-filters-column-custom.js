@@ -5,7 +5,7 @@ import Button from "storefront-ui/Button";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import filterData from "../../../../docs-utils/filtersData";
+import filters from "../../../../data/filters";
 
 const separator = (
   <div
@@ -129,7 +129,7 @@ export default () => {
         css={css`
           width: 400px;
         `}
-        data={filterData}
+        data={filters}
         gutter={20}
         separator={separator}
         header={header}
