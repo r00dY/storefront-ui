@@ -30,7 +30,7 @@ const ProgressSteps$ = props => {
     SeparatorStyled
   );
 
-  let _lastCompleted = lastCompleted ? lastCompleted : data.length - 2;
+  let _lastCompleted = lastCompleted ? lastCompleted : data.length - 1;
 
   return (
     <Root {...rootProps}>

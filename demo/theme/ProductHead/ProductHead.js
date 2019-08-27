@@ -28,6 +28,10 @@ import { showNotification } from "storefront-ui/Notifications";
 import { Select } from "../../theme/Select";
 import useAddToCartWithSize from "../../helpers/useAddToCartWithSize";
 import { Accordion } from "../Accordion";
+import { Stars } from "../Stars";
+import data from "../../data";
+import ThemeLink from "../ThemeLink";
+import Link from "next/link";
 
 const MetaRow = styled.div`
   &:not(:first-of-type) {
@@ -98,9 +102,88 @@ function ProductHead(props) {
           <p>Minimum order value is €5</p>
         </InnerStyled>
       </Accordion>
-      <Accordion title={"Reviews"} openAtInit={false}>
+
+      <Accordion
+        title={
+          <div
+            css={css`
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              width: 100%;
+              padding-right: 1em;
+            `}
+          >
+            <div
+              css={css`
+                margin-right: 1em;
+              `}
+            >
+              Reviews (15)
+            </div>{" "}
+            <Stars rating={data.reviews.rating} />
+          </div>
+        }
+        openAtInit={false}
+      >
         <InnerStyled>
-          <p>Reviews content goes here</p>
+          <div
+            css={css`
+              display: flex;
+              ${theme.fonts.body1.css} margin: 2em 0;
+              justify-content: space-between;
+            `}
+          >
+            <div>
+              <Stars inline rating={data.reviews.rating} /> &nbsp;
+              {data.reviews.rating} Stars
+            </div>{" "}
+            <Link href={"/write-review"}>
+              <ThemeLink href={"/write-review"} kind={"inheritUnderline"}>
+                Write a Review
+              </ThemeLink>
+            </Link>
+          </div>
+          <div>
+            {[
+              data.reviews.items[0],
+              data.reviews.items[1],
+              data.reviews.items[2],
+              data.reviews.items[3]
+            ].map((review, j) => {
+              return (
+                <div
+                  css={css`
+                    margin-bottom: ${theme.spacings.s120}px;
+                  `}
+                >
+                  <div
+                    css={css`
+                      display: flex;
+                      align-items: center;
+                      color: ${theme.colors.mono500.css};
+                      margin-bottom: 1em;
+                    `}
+                  >
+                    <Stars rating={review.rating} smaller />
+                    <div
+                      css={css`
+                        margin-left: 1em;
+                      `}
+                    >
+                      {review.name} &mdash; {review.timestamp}
+                    </div>
+                  </div>
+                  <div>{review.content}</div>
+                </div>
+              );
+            })}
+          </div>
+          <Link href={"/reviews"}>
+            <ThemeLink href={"/reviews"} kind={"inheritUnderline"}>
+              More reviews
+            </ThemeLink>
+          </Link>
         </InnerStyled>
       </Accordion>
     </>

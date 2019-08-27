@@ -71,7 +71,7 @@ const categories = ["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
   })
 );
 
-const CollectionPage = () => {
+const CollectionPage = props => {
   const theme = useTheme();
 
   const [filtersValue, setFiltersValue] = useState({});
@@ -92,21 +92,22 @@ const CollectionPage = () => {
         `}
       >
         <GridItem>
-          <Device desktop>
-            <ProgressStepsAsBreadcrumbs
-              data={[
-                {
-                  label: "Food",
-                  href: "/collection"
-                },
-                {
-                  label: "Snacks",
-                  href: "/collection"
-                }
-              ]}
-            />
-          </Device>
-
+          {props.isCategory && (
+            <Device desktop>
+              <ProgressStepsAsBreadcrumbs
+                data={[
+                  {
+                    label: "Beauty",
+                    href: "/collection"
+                  },
+                  {
+                    label: "Bath",
+                    href: "/category"
+                  }
+                ]}
+              />
+            </Device>
+          )}
           <LayoutLeftCenterRight
             left={
               <div
@@ -116,7 +117,8 @@ const CollectionPage = () => {
                   ${theme.fonts.h2.css}
                 `}
               >
-                Snacks
+                {!props.isCategory && "Beauty"}
+                {props.isCategory && "Bath"}
               </div>
             }
             right={
@@ -135,17 +137,18 @@ const CollectionPage = () => {
           />
         </GridItem>
 
-        {categories.map((category, index) => {
-          return (
-            <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-              <CategoryCardCompact
-                image={category.image}
-                text={category.title}
-                href={category.href}
-              />
-            </GridItem>
-          );
-        })}
+        {!props.isCategory &&
+          categories.map((category, index) => {
+            return (
+              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+                <CategoryCardCompact
+                  image={category.image}
+                  text={category.title}
+                  href={category.href}
+                />
+              </GridItem>
+            );
+          })}
       </Grid>
       <Grid
         css={css`
@@ -169,10 +172,11 @@ const CollectionPage = () => {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+                height: 50px;
                 ${rslin(theme.spacings.s70, theme.spacings.s70).css(
                   "margin-bottom"
                 )}
-                ${theme.fonts.body2.css}
+                ${theme.fonts.body1.css}
                 ${R.to("sm").css("display: none;")}
               `}
           >
@@ -314,6 +318,10 @@ const CollectionPage = () => {
       </div>
     </div>
   );
+};
+
+CollectionPage.defaultProps = {
+  isCategory: false
 };
 
 CollectionPage.tabbar = 0;

@@ -57,7 +57,7 @@ const Form3 = () => {
             margin-bottom: 2em;
           }
           h1 {
-            ${theme.fonts.h3.css}
+            ${theme.fonts.h3.css} margin-top: 0;
           }
           h2 {
             ${theme.fonts.h6.css}

@@ -10,8 +10,6 @@ import { useSwipeableItemsContainer } from "storefront-ui/SwipeableItemsContaine
 import NavBarMobile from "../theme/NavBarMobile";
 import { Button } from "../theme/Button";
 import ProductHead from "../theme/ProductHead/ProductHead";
-import { Accordion } from "../theme/Accordion";
-import SizePicker from "../theme/SizePicker/SizePicker";
 import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import Price from "../theme/Price";
 import { Spacer } from "../theme/Spacer";
@@ -20,11 +18,11 @@ import Device from "storefront-ui/Device";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
 import { Select } from "../theme/Select";
-import { ButtonRaw } from "../theme/ButtonRaw";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
+import { ButtonRaw } from "../theme/ButtonRaw";
 import data from "../data";
 
 /** @jsx jsx */
@@ -176,15 +174,15 @@ const Product = () => {
           <ProgressStepsAsBreadcrumbs
             data={[
               {
-                label: "Food",
+                label: "Beauty",
                 href: "/collection"
               },
               {
-                label: "Snacks",
-                href: "/collection"
+                label: "Bath",
+                href: "/category"
               },
               {
-                label: "Bottle",
+                label: "Transparent Bottle",
                 href: "#"
               }
             ]}

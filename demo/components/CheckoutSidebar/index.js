@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -25,6 +25,8 @@ import Device from "storefront-ui/Device";
 const CheckoutSidebar = props => {
   const theme = useTheme();
 
+  const [open, setOpen] = useState(false);
+
   return (
     <>
       <FormHeader title={"Your Bag"} />
@@ -45,26 +47,47 @@ const CheckoutSidebar = props => {
       </div>
       {!props.hideGiftCard && (
         <>
-          <Divider />
           <div
             css={css`
-              display: flex;
-              justify-content: space-between;
-              align-items: flex-end;
+              height: ${theme.spacings.s80}px;
             `}
-          >
+          />
+          {open && (
             <div
               css={css`
-                flex-grow: 1;
-                margin-right: ${theme.spacings.s40}px;
+                display: flex;
+                justify-content: space-between;
+                align-items: flex-end;
               `}
             >
-              <FormControl label={"Gift card"}>
-                <StatefulInput />
-              </FormControl>
+              <div
+                css={css`
+                  flex-grow: 1;
+                  margin-right: ${theme.spacings.s40}px;
+                `}
+              >
+                <FormControl label={"Promo code"}>
+                  <StatefulInput />
+                </FormControl>
+              </div>
+              <Button onClick={() => setOpen()}>Apply</Button>
             </div>
-            <Button>Apply</Button>
-          </div>
+          )}
+          {!open && (
+            <Button
+              kind={"minimal"}
+              onClick={() => setOpen(!open)}
+              css={css`
+                color: ${theme.colors.mono900.css};
+                &:hover {
+                  color: ${theme.colors.mono900.css};
+                  text-decoration: underline;
+                }
+              `}
+            >
+              I have a promo code
+            </Button>
+          )}
         </>
       )}
       <Divider />
