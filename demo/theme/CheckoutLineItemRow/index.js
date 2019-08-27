@@ -18,8 +18,8 @@ import { rslin } from "responsive-helpers";
 
 const overrides = {
   Image: Image,
-  Price: ({ price, discountPrice }) => (
-    <Price price={price} discountPrice={discountPrice} alignRight />
+  Price: ({ price, priceDiscount }) => (
+    <Price price={price} priceDiscount={priceDiscount} alignRight />
   )
 };
 
@@ -65,8 +65,8 @@ const Quantity = ({ quantity, mode, isWishlistItem }) => {
 
 const overridesTheme1 = {
   Image: Image,
-  Price: ({ price, discountPrice }) => (
-    <Price price={price} discountPrice={discountPrice} alignRight />
+  Price: ({ price, priceDiscount }) => (
+    <Price price={price} priceDiscount={priceDiscount} alignRight />
   ),
   Title: {
     style: ({ $theme, mode }) => `
