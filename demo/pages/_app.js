@@ -1,6 +1,8 @@
 import React from "react";
 import App, { Container } from "next/app";
 
+import { GridDebugger } from "storefront-ui/Grid";
+
 import theme from "../theme/config";
 import Root from "storefront-ui/Root";
 
@@ -66,6 +68,8 @@ export default class MyApp extends App {
 
     return (
       <Root theme={theme}>
+        <GridDebugger />
+
         <Device mobile>
           {showTabbar && (
             <div>

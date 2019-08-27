@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from "react";
 import PropTypes from "prop-types";
 import { Grid, GridItem } from "../Grid";
 import { rs, RangeMap } from "responsive-helpers";
-import { ImageZoomable } from "../Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -23,7 +22,7 @@ import { css, jsx } from "@emotion/core";
  *
  */
 
-class ImageMosaic extends React.Component {
+class ImageMosaic$ extends React.Component {
   constructor(props) {
     super(props);
 
@@ -176,18 +175,16 @@ function useImageMosaic() {
   };
 }
 
-ImageMosaic.propTypes = {
+ImageMosaic$.propTypes = {
   images: PropTypes.arrayOf(PropTypes.any).isRequired,
   imageComponent: PropTypes.func.isRequired,
   layout: PropTypes.any,
   gutter: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.any])
 };
 
-ImageMosaic.defaultProps = {
+ImageMosaic$.defaultProps = {
   layout: 1,
-  gutter: 10,
-  imageComponent: image => <ImageZoomable image={image} />
+  gutter: 10
 };
 
-export default ImageMosaic;
-export { useImageMosaic };
+export { ImageMosaic$, useImageMosaic };

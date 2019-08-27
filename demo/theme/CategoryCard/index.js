@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useTheme } from "storefront-ui/Theme";
-import Image from "storefront-ui/Image";
+import { Image } from "../Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

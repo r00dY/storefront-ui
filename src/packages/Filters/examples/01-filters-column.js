@@ -4,7 +4,7 @@ import { FiltersColumn } from "../../../../demo/theme/Filters";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import filterData from "../../../../docs-utils/filtersData";
+import filters from "../../../../data/filters";
 
 export default () => {
   const [value, setValue] = useState({});
@@ -16,7 +16,7 @@ export default () => {
       `}
     >
       <FiltersColumn
-        data={filterData}
+        data={filters}
         value={value}
         onChange={(id, newVal) => {
           setValue({ ...value, [id]: newVal });

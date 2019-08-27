@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import Image from "storefront-ui/Image";
+import { Image } from "../../../../demo/theme/Image";
 import Color from "storefront-ui/Color";
 
 /** @jsx jsx */

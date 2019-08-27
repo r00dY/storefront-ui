@@ -6,10 +6,10 @@
     "watch": "babel src/packages --out-dir dist --watch",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
+    "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@r00dy/storefront-ui/* && cp -R dist/* ./demo/node_modules/@r00dy/storefront-ui",
     "copy": "npm run build && rm -Rf ../frontend/node_modules/@r00dy/storefront-ui/* && cp -R dist/* ../frontend/node_modules/@r00dy/storefront-ui"
   },
   "dependencies": {
-    "headroom.js": "^0.9.4",
     "mobile-detect": "^1.4.3",
     "popper.js": "^1.14.3",
     "react-input-mask": "^2.0.4",
@@ -18,7 +18,8 @@
     "react-visibility-sensor": "^5.0.2",
     "responsive-helpers": "^0.1.12",
     "simpleswiper": "^0.10.5",
-    "use-debounce": "^2.1.0"
+    "use-debounce": "^2.1.0",
+    "next": "^8.0.3"
   },
   "peerDependencies": {
     "react": "^16.8.6",
@@ -27,8 +28,6 @@
     "@emotion/styled": "^10.0.7"
   },
   "devDependencies": {
-    "styletron-engine-atomic": "^1.1.2",
-    "styletron-react": "^5.0.1",
     "@babel/cli": "^7.2.0",
     "@babel/core": "^7.1.6",
     "@babel/node": "^7.2.2",
@@ -47,8 +46,8 @@
     "eslint-plugin-react": "^7.12.4",
     "extract-react-types-loader": "^0.3.1",
     "husky": "^1.2.0",
+    "imgix-core-js": "^2.1.0",
     "markdown-to-jsx": "^6.9.3",
-    "next": "^8.0.3",
     "prettier": "1.15.2",
     "pretty-quick": "^1.8.0",
     "prismjs": "^1.16.0",
@@ -56,6 +55,8 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-markdown": "^4.0.6",
+    "styletron-engine-atomic": "^1.1.2",
+    "styletron-react": "^5.0.1",
     "webpack": "^4.26.1",
     "webpack-cli": "^3.2.1"
   },
@@ -64,5 +65,5 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.4.15"
+  "version": "0.5.1"
 }

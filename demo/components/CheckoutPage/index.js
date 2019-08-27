@@ -26,7 +26,7 @@ const CheckoutPage = props => {
   return (
     <div
       css={css`
-        padding: 50px;
+        padding-bottom: 50px;
       `}
     >
       <Container>

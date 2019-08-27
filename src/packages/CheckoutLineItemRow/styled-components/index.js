@@ -25,11 +25,11 @@ export const quantityStyles = ({ $theme }) =>
   `${$theme.fonts.body1.css} display: flex; align-items: center; `;
 export const QuantityStyled = styled("div", quantityStyles);
 
-export const nameStyles = ({ $theme, layout }) => `${$theme.fonts.h6.css} 
+export const titleStyles = ({ $theme, layout }) => `${$theme.fonts.h6.css} 
    a {text-decoration: none; color: ${$theme.colors.mono900.css};} ${
   layout === "compact" ? `max-height: calc(2*1.15em); overflow: hidden;` : ""
 }`;
-export const NameStyled = styled("div", nameStyles);
+export const TitleStyled = styled("div", titleStyles);
 
 export const descriptionStyles = ({ $theme }) => `
 color: ${$theme.colors.mono500.css};

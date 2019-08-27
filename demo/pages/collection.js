@@ -8,18 +8,8 @@ import { Button } from "../theme/Button";
 import { L, R } from "storefront-ui/Config";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import Device from "storefront-ui/Device";
-
 import { Modal } from "../theme/Modal";
-
-import useFiltersData from "storefront-ui/Filters/useFiltersData";
-
-import useScrollDirection from "storefront-ui/useScrollDirection";
 import useScrollSegment from "storefront-ui/useScrollSegment";
-
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-
-import data from "../data";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import NavBarMobile from "../theme/NavBarMobile";
 import { useTheme } from "storefront-ui/Theme";
@@ -28,11 +18,15 @@ import { StatefulSelect } from "../theme/Select";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
-const NavBarCollection = props => {
-  const direction = useScrollDirection();
-  const segment = useScrollSegment({ 1: "not-top", 250: "far" });
+import data from "../data";
+import useProducts from "../helpers/useProducts";
 
-  const theme = useTheme();
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
+// navigation bar for collection page (on mobile)
+const NavBarCollection = ({ title, onFilterClick }) => {
+  const segment = useScrollSegment({ 1: "not-top", 250: "far" });
 
   return (
     <div>
@@ -50,9 +44,9 @@ const NavBarCollection = props => {
         `}
       >
         <NavBarMobile
-          title={"Food"}
+          title={title}
           right={
-            <Button size={"compact"} onClick={props.onFilterOpen}>
+            <Button size={"compact"} onClick={onFilterClick}>
               Filter
             </Button>
           }
@@ -62,111 +56,31 @@ const NavBarCollection = props => {
   );
 };
 
-const stringOptions = [
+const sortOptions = [
   "Newest",
   "Price (high to low)",
   "Price (low to high)",
   "Most popular"
 ];
 
-const FilterPills = ({ filters, onChange }) => {
-  const theme = useTheme();
-
-  return (
-    <div>
-      {filters.map(filter => {
-        if (filter.type === "range") {
-          let string;
-
-          if (filter.value.from && filter.value.to) {
-            string = `${filter.value.from}${filter.unit} - ${filter.value.to}${
-              filter.unit
-            }`;
-          } else if (filter.value.from) {
-            string = `> ${filter.value.from}${filter.unit}`;
-          } else if (filter.value.to) {
-            string = `< ${filter.value.to}${filter.unit}`;
-          }
-
-          if (string) {
-            return (
-              <div
-                css={css`
-                  box-sizing: content-box;
-                  background-color: #f0f0f0;
-                  color: black;
-                  padding: 8px 12px;
-                  ${theme.fonts.body2}
-                  border-radius: 12px;
-                `}
-              >
-                {string}
-              </div>
-            );
-          }
-        }
-      })}
-    </div>
-  );
-};
-
-const Filters = props => {
-  const [filters, onChange] = useFiltersData(data.filters);
-
-  return (
-    <FiltersColumn
-      data={props.data.filters}
-      onChange={(key, val) => {
-        onChange(key, val);
-        props.onChange();
-      }}
-    />
-  );
-};
-
-function shuffle(array) {
-  var currentIndex = array.length,
-    temporaryValue,
-    randomIndex;
-
-  // While there remain elements to shuffle...
-  while (0 !== currentIndex) {
-    // Pick a remaining element...
-    randomIndex = Math.floor(Math.random() * currentIndex);
-    currentIndex -= 1;
-
-    // And swap it with the current element.
-    temporaryValue = array[currentIndex];
-    array[currentIndex] = array[randomIndex];
-    array[randomIndex] = temporaryValue;
-  }
-
-  return array;
-}
-
-let timeout;
+const categories = ["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
+  (category, index) => ({
+    title: category,
+    image: data.images.categories[category.toLowerCase()],
+    href: "/collection"
+  })
+);
 
 const CollectionPage = props => {
-  const [filters, onFiltersChange] = useFiltersData(data.filters);
-  const [filtersModalOpened, setFiltersModalOpened] = useState(false);
-  const [select1, setSelect1] = useState(stringOptions[0]);
   const theme = useTheme();
 
-  const [products, setProducts] = useState(data.products);
-  const [isLoading, setLoading] = useState(false);
+  const [filtersValue, setFiltersValue] = useState({});
+  const [filtersModalOpened, setFiltersModalOpened] = useState(false);
 
-  const onChange = scrollTop => {
-    setLoading(true);
-    clearTimeout(timeout);
+  const { products, isLoading, query } = useProducts();
 
-    timeout = setTimeout(() => {
-      setProducts([...shuffle(products)]);
-      setLoading(false);
-
-      if (scrollTop) {
-        window.scrollTo({ top: 0 });
-      }
-    }, 500);
+  const scrollTop = () => {
+    window.scrollTo({ top: 0 });
   };
 
   const content = (
@@ -224,19 +138,17 @@ const CollectionPage = props => {
         </GridItem>
 
         {!props.isCategory &&
-          ["Baby", "Bath", "Body", "Face", "Hair", "Oral"].map(
-            (category, index) => {
-              return (
-                <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-                  <CategoryCardCompact
-                    image={data.images.categories[category.toLowerCase()]}
-                    text={category}
-                    href={"/collection"}
-                  />
-                </GridItem>
-              );
-            }
-          )}
+          categories.map((category, index) => {
+            return (
+              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
+                <CategoryCardCompact
+                  image={category.image}
+                  text={category.title}
+                  href={category.href}
+                />
+              </GridItem>
+            );
+          })}
       </Grid>
       <Grid
         css={css`
@@ -245,10 +157,11 @@ const CollectionPage = props => {
       >
         <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
           <FiltersColumn
-            data={filters}
+            data={data.filters}
+            value={filtersValue}
             onChange={(key, val) => {
-              onFiltersChange(key, val);
-              onChange();
+              setFiltersValue({ ...filtersValue, [key]: val });
+              query();
             }}
           />
         </GridItem>
@@ -275,7 +188,6 @@ const CollectionPage = props => {
             >
               {data.products.length} items
             </div>
-            <FilterPills filters={filters} onChange={onChange} />
 
             <Device desktop>
               <div
@@ -288,13 +200,11 @@ const CollectionPage = props => {
               </div>
               <StatefulSelect
                 compact
-                options={stringOptions}
-                onChange={val => {
-                  setSelect1(val);
-                  onChange();
+                options={sortOptions}
+                onChange={() => {
+                  query();
                 }}
-                value={select1}
-                initValue={stringOptions[0]}
+                initValue={sortOptions[0]}
               />
             </Device>
           </div>
@@ -327,7 +237,7 @@ const CollectionPage = props => {
                   count={20}
                   initPage={5}
                   onChange={page => {
-                    onChange(true);
+                    query(scrollTop);
                   }}
                 />
               </div>
@@ -338,82 +248,74 @@ const CollectionPage = props => {
     </Container>
   );
 
-  const onFilterClick = () => {
-    setFiltersModalOpened(false);
-    onChange(true);
-  };
-
   return (
     <div>
       <div>
         <Device mobile>
           <NavBarCollection
-            onFilterOpen={() => {
+            title={"Snacks"}
+            onFilterClick={() => {
               setFiltersModalOpened(true);
             }}
           />
-          <div
-            css={css`
-              margin-top: 0px;
-            `}
+          {content}
+
+          <Modal
+            config={{
+              mode: "bottom",
+              height: "90%"
+            }}
+            isOpen={filtersModalOpened}
+            onRequestClose={() => setFiltersModalOpened(false)}
+            header={"Filters"}
+            footer={() => (
+              <div
+                css={css`
+                  padding: ${theme.spacings.s40}px;
+                  border-top: 1px solid ${theme.colors.mono300.css};
+                `}
+              >
+                <Grid gutter={10}>
+                  <GridItem params={12}>
+                    <Button kind={"secondary"} fitContainer={true}>
+                      Clear all
+                    </Button>
+                  </GridItem>
+                  <GridItem params={12}>
+                    <Button
+                      fitContainer={true}
+                      onClick={() => {
+                        setFiltersModalOpened(false);
+                        query(scrollTop);
+                      }}
+                    >
+                      Apply (55)
+                    </Button>
+                  </GridItem>
+                </Grid>
+              </div>
+            )}
           >
-            {content}
-          </div>
+            <div
+              css={css`
+                padding: 0;
+              `}
+            >
+              <FiltersColumn
+                data={data.filters}
+                value={filtersValue}
+                onChange={(key, val) => {
+                  setFiltersValue({ ...filtersValue, [key]: val });
+                  query();
+                }}
+                isMobile={true}
+              />
+            </div>
+          </Modal>
         </Device>
 
         <Device desktop>{content}</Device>
       </div>
-
-      <Modal
-        config={{
-          mode: "bottom",
-          height: "90%"
-        }}
-        isOpen={filtersModalOpened}
-        onRequestClose={() => setFiltersModalOpened(false)}
-        header={"Filters"}
-        footer={() => (
-          <div
-            css={css`
-              padding: ${theme.spacings.s40}px;
-              border-top: 1px solid ${theme.colors.mono300.css};
-            `}
-          >
-            <Grid gutter={10}>
-              <GridItem params={12}>
-                <Button kind={"secondary"} fitContainer={true}>
-                  Clear all
-                </Button>
-              </GridItem>
-              <GridItem params={12}>
-                <Button
-                  fitContainer={true}
-                  onClick={() => {
-                    setFiltersModalOpened(false);
-                    onChange(true);
-                  }}
-                >
-                  Apply (55)
-                </Button>
-              </GridItem>
-            </Grid>
-          </div>
-        )}
-      >
-        <div
-          css={css`
-            padding: 0;
-          `}
-        >
-          <FiltersColumn
-            data={filters}
-            onChange={(key, val) => {
-              onFiltersChange(key, val);
-            }}
-            isMobile={true}
-          />
-        </div>
-      </Modal>
     </div>
   );
 };

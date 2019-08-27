@@ -1,4 +1,5 @@
 const hulaHop = {
+  type: "video",
   src: [
     {
       url: "/static/videos/hugo_cos.mp4",

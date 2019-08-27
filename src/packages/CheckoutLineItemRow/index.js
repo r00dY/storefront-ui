@@ -1,40 +1,37 @@
 import PropTypes from "prop-types";
 import React from "react";
-import Image from "../Image";
 import { rslin } from "responsive-helpers";
+import { R } from "storefront-ui/Config";
+import { Grid, GridItem } from "storefront-ui/Grid";
+import { rs } from "responsive-helpers";
+import { getOverrides } from "../base/helpers/overrides";
+import { ButtonRaw$ } from "../ButtonRaw";
+import { Button$ } from "../Button";
+import Link from "next/link";
+
 import {
   RootStyled,
   ImageContainerStyled,
-  NameStyled,
+  TitleStyled,
   DescriptionStyled,
   VariantStyled,
   QuantityStyled
 } from "./styled-components";
 
-import { R } from "storefront-ui/Config";
-import { Grid, GridItem } from "storefront-ui/Grid";
-
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { rs } from "responsive-helpers";
-import { getOverrides } from "../base/helpers/overrides";
-import { ButtonRaw$ } from "../ButtonRaw";
-import { Button$ } from "../Button";
-
-const ProductRow$ = props => {
+const CheckoutLineItemRow$ = props => {
   const {
-    product,
-    price,
-    quantity,
     gutter,
     layout,
     breakpoint,
     mode,
     overrides: {
       Root: RootOverride,
+      Image: Image,
       ImageContainer: ImageContainerOverride,
-      Name: NameOverride,
+      Title: TitleOverride,
       Description: DescriptionOverride,
       Variant: VariantOverride,
       Price: Price,
@@ -44,7 +41,13 @@ const ProductRow$ = props => {
     }
   } = props;
 
-  const { name, description, variant, href, images } = product;
+  // const product = props.dataMapper(props.product);
+
+  const checkoutLineItem = props.dataMapper(props.checkoutLineItem);
+
+  const { productVariant, price, discountPrice, quantity } = checkoutLineItem;
+
+  // const { title, description, variant, href, images } = productVariant;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -54,7 +57,7 @@ const ProductRow$ = props => {
   const [Content, contentProps] = getOverrides(
     ContentOverride,
     ({
-      nameElem,
+      titleElem,
       descriptionElem,
       variantElem,
       removeElem,
@@ -99,7 +102,7 @@ const ProductRow$ = props => {
                 : ""}
             `}
           >
-            {nameElem}
+            {titleElem}
             {descriptionElem}
             {variantElem}
           </div>
@@ -148,7 +151,7 @@ const ProductRow$ = props => {
     }
   );
   const [Variant, variantProps] = getOverrides(VariantOverride, VariantStyled);
-  const [Name, nameProps] = getOverrides(NameOverride, NameStyled);
+  const [Title, titleProps] = getOverrides(TitleOverride, TitleStyled);
   const [Description, descriptionProps] = getOverrides(
     DescriptionOverride,
     DescriptionStyled
@@ -165,20 +168,27 @@ const ProductRow$ = props => {
     QuantityStyled
   );
 
-  const nameElem = (
-    <Name {...nameProps} layout={layout}>
-      <a href={href}>{name}</a>
-    </Name>
+  const titleElem = (
+    <Title {...titleProps} layout={layout}>
+      <Link href={productVariant.product.href}>
+        <a>{productVariant.product.title}</a>
+      </Link>
+    </Title>
   );
   const descriptionElem = (
-    <Description {...descriptionProps}>{description}</Description>
+    <Description {...descriptionProps}>
+      {productVariant.product.description}
+    </Description>
   );
   const variantElem = (
-    <Variant {...variantProps} variant={variant}>
-      Size: {variant}
+    <Variant
+      {...variantProps}
+      variant={productVariant.selectedOptions[0].value}
+    >
+      Size: {productVariant.selectedOptions[0].value}
     </Variant>
   );
-  const priceElem = <Price price={price} />;
+  const priceElem = <Price price={price} discountPrice={discountPrice} />;
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
@@ -192,52 +202,49 @@ const ProductRow$ = props => {
   const contentElem = (
     <Content
       {...contentProps}
-      nameElem={nameElem}
+      titleElem={titleElem}
       descriptionElem={descriptionElem}
       variantElem={variantElem}
       removeElem={removeElem}
       quantityElem={quantityElem}
       priceElem={priceElem}
       layout={layout}
-      name={name}
-      description={description}
-      variant={variant}
-      quantity={quantity}
-      price={price}
       mode={mode}
       gutter={gutter}
     />
   );
 
   const imageElem = (
-    <a href={href} tabIndex={"-1"}>
-      <ImageContainer {...imageContainerProps} layout={layout}>
-        <Image
-          image={images[0]}
-          css={css`
-            width: 100%;
-          `}
-        />
-      </ImageContainer>
-    </a>
+    <Link href={productVariant.product.href}>
+      <a tabIndex={"-1"}>
+        <ImageContainer {...imageContainerProps} layout={layout}>
+          <Image
+            image={productVariant.product.images[0]}
+            css={css`
+              width: 100%;
+            `}
+          />
+        </ImageContainer>
+      </a>
+    </Link>
   );
   return <Root image={imageElem} content={contentElem} {...rootProps} />;
 };
-ProductRow$.defaultProps = {
+
+CheckoutLineItemRow$.defaultProps = {
   gutter: 16,
   layout: "full",
   breakpoint: "md",
-  mode: "default"
+  mode: "default",
+  dataMapper: x => x
 };
 
-ProductRow$.propTypes = {
-  product: PropTypes.object.isRequired,
-  price: PropTypes.object.isRequired,
-  quantity: PropTypes.string.isRequired,
+CheckoutLineItemRow$.propTypes = {
+  checkoutLineItem: PropTypes.object.isRequired,
   mode: PropTypes.string.isRequired,
   layout: PropTypes.string,
   gutter: PropTypes.number,
   overrides: PropTypes.object
 };
 
-export default ProductRow$;
+export default CheckoutLineItemRow$;

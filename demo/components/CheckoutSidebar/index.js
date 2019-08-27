@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { css, jsx } from "@emotion/core";
 import { FormHeader } from "../../theme/FormHeader";
 import data from "../../data";
-import { ProductRowTheme1 } from "../../theme/ProductRow";
+import { CheckoutLineItemRowTheme1 } from "../../theme/CheckoutLineItemRow";
 import { Divider } from "../../theme/Divider";
 import { FormControl } from "../../theme/FormControl";
 import { StatefulInput } from "../../theme/Input";
@@ -13,14 +13,14 @@ import { Ledger } from "../../theme/Ledger";
 
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
-
-let products = [
-  data.products[0],
-  data.products[1],
-  data.products[2],
-  data.products[3],
-  data.products[4]
-];
+//
+// let products = [
+//   data.products[0],
+//   data.products[1],
+//   data.products[2],
+//   data.products[3],
+//   data.products[4]
+// ];
 
 const CheckoutSidebar = props => {
   const theme = useTheme();
@@ -31,16 +31,14 @@ const CheckoutSidebar = props => {
     <>
       <FormHeader title={"Your Bag"} />
       <div>
-        {products.map((product, index) => (
+        {data.checkout.lineItems.slice(0, 5).map((item, index) => (
           <div
             css={css`&:not(:last-of-type) {margin-bottom: ${
               theme.spacings.s40
             }px;)`}
           >
-            <ProductRowTheme1
-              product={product}
-              price={product.price}
-              quantity={"1"}
+            <CheckoutLineItemRowTheme1
+              checkoutLineItem={item}
               layout={"compact"}
               mode={"default"}
             />
