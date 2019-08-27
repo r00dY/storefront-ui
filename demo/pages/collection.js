@@ -16,6 +16,7 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import { StatefulSelect } from "../theme/Select";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
+import FilterResultPills from "../theme/FilterResultPills";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
 import data from "../data";
@@ -182,13 +183,11 @@ const CollectionPage = props => {
           >
             <div
               css={css`
-                flex-grow: 1;
-                ${R.to("sm").css("text-align: center;")}
+                ${R.to("sm").css("text-align: center;")} flex-grow: 1;
               `}
             >
               {data.products.length} items
             </div>
-
             <Device desktop>
               <div
                 css={css`
@@ -207,6 +206,40 @@ const CollectionPage = props => {
                 initValue={sortOptions[0]}
               />
             </Device>
+          </div>
+          <div
+            css={css`
+              margin-bottom: ${theme.spacings.s80}px;
+            `}
+          >
+            <FilterResultPills
+              filters={[
+                {
+                  type: "text",
+                  params: { label: "Certified Organic" }
+                },
+                {
+                  type: "text",
+                  params: { label: "Sulfate Free" }
+                },
+                {
+                  type: "color",
+                  params: { label: "Orange", color: "#e45d46" }
+                },
+                {
+                  type: "text",
+                  params: { label: `Price: $1.50 \u2014 $3.00 ` }
+                },
+                {
+                  type: "text",
+                  params: { label: "Mineral Oil Free" }
+                },
+                {
+                  type: "text",
+                  params: { label: "Non GMO" }
+                }
+              ]}
+            />
           </div>
 
           <Grid gutterVertical={theme.spacings.s120}>
