@@ -308,24 +308,15 @@ const CollectionPage = props => {
                   border-top: 1px solid ${theme.colors.mono300.css};
                 `}
               >
-                <Grid gutter={10}>
-                  <GridItem params={12}>
-                    <Button kind={"secondary"} fitContainer={true}>
-                      Clear all
-                    </Button>
-                  </GridItem>
-                  <GridItem params={12}>
-                    <Button
-                      fitContainer={true}
-                      onClick={() => {
-                        setFiltersModalOpened(false);
-                        query(scrollTop);
-                      }}
-                    >
-                      Apply (55)
-                    </Button>
-                  </GridItem>
-                </Grid>
+                <Button
+                  fitContainer={true}
+                  onClick={() => {
+                    setFiltersModalOpened(false);
+                    query(scrollTop);
+                  }}
+                >
+                  Apply (55)
+                </Button>
               </div>
             )}
           >
@@ -334,15 +325,17 @@ const CollectionPage = props => {
                 padding: 0;
               `}
             >
-              <FiltersColumn
-                data={data.filters}
-                value={filtersValue}
-                onChange={(key, val) => {
-                  setFiltersValue({ ...filtersValue, [key]: val });
-                  query();
-                }}
-                isMobile={true}
-              />
+              <Container>
+                <FiltersColumn
+                  data={data.filters}
+                  value={filtersValue}
+                  onChange={(key, val) => {
+                    setFiltersValue({ ...filtersValue, [key]: val });
+                    query();
+                  }}
+                  isMobile={true}
+                />
+              </Container>
             </div>
           </Modal>
         </Device>

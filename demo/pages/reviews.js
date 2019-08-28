@@ -12,6 +12,9 @@ import SwipeableItemsContainer, {
 } from "storefront-ui/SwipeableItemsContainer";
 import Image from "storefront-ui/Image";
 
+import IconArrowUp from "../svg/arrow_up.svg";
+import IconArrowDown from "../svg/arrow_down.svg";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -27,6 +30,7 @@ import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import { ProductCardTheme1 } from "../theme/ProductCard";
 import Price from "../theme/Price";
 import Device from "storefront-ui/Device";
+import Link from "next/link";
 
 import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
@@ -44,6 +48,33 @@ import ThemeLink from "../theme/ThemeLink";
 import { Divider } from "../theme/Divider";
 import { Spacer } from "../theme/Spacer";
 
+import IconBack from "../svg/arrow_left.svg";
+
+const VoteButton = props => {
+  const theme = useTheme();
+  return (
+    <ButtonRaw
+      css={css`
+        &:not(:last-of-type) {
+          margin-right: 10px;
+        }
+        ${theme.fonts.body2.css} display: flex;
+        align-items: center;
+        svg {
+          width: 16px;
+          height: 16px;
+        }
+      `}
+    >
+      {props.children}
+    </ButtonRaw>
+  );
+};
+const WriteAReviewButton = (
+  <Link href={"/write-review"}>
+    <ThemeLink href={"/write-review"}>Write a Review</ThemeLink>
+  </Link>
+);
 const Reviews = () => {
   const theme = useTheme();
 
@@ -54,6 +85,7 @@ const Reviews = () => {
     "Most popular"
   ];
   const [select1, setSelect1] = useState(stringOptions[0]);
+  const segment = useScrollSegment({ 400: "not-top" });
 
   return (
     <div
@@ -61,15 +93,70 @@ const Reviews = () => {
         ${theme.fonts.body1.css}
       `}
     >
+      <Device mobile>
+        <div
+          css={css`
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            transition: transform 0.2s ease-out;
+            ${theme.fonts.body1.css}
+            ${segment === "not-top"
+              ? "transform: none;"
+              : "transform: translateY(-50px);"}
+          `}
+        >
+          <NavBarMobile title={""} right={WriteAReviewButton} />
+        </div>
+
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+          `}
+        >
+          <NavBarMobile
+            title={""}
+            transparent={true}
+            right={WriteAReviewButton}
+          />
+        </div>
+      </Device>
+
+      {/*?*/}
       <Container>
         <Grid>
           <GridItem params={{ xs: 24, sm: [12, 6] }}>
+            <Spacer />
+            <Device desktop>
+              <LayoutLeftCenterRight
+                left={
+                  <Link href={"/write-review"}>
+                    <Button kind={"minimal"}>
+                      <IconBack
+                        css={css`
+                          fill: currentColor;
+                        `}
+                      />{" "}
+                      Product Details
+                    </Button>
+                  </Link>
+                }
+                right={WriteAReviewButton}
+              />
+              <Divider />
+            </Device>
             <div
               css={css`
-                ${rslin(theme.spacings.s80, theme.spacings.s160).css(
+                ${rslin(theme.spacings.s120, theme.spacings.s160).css(
                   "margin-top"
                 )}
-                ${rslin(theme.spacings.s80, theme.spacings.s160).css(
+                ${rslin(theme.spacings.s100, theme.spacings.s160).css(
                   "margin-bottom"
                 )}
             h1 {
@@ -80,15 +167,15 @@ const Reviews = () => {
               `}
             >
               <Stars inline rating={data.reviews.rating} />
-              <h1>{data.reviews.items.length} Reviews</h1>
+              <h1>Transparent Bottle</h1>
             </div>
-            <Divider />
             <div
               css={css`
                 display: flex;
                 align-items: center;
               `}
             >
+              <div>{data.reviews.items.length} Reviews</div>
               <div
                 css={css`
                   flex-grow: 1;
@@ -106,7 +193,7 @@ const Reviews = () => {
                 initValue={stringOptions[0]}
               />
             </div>
-            <Spacer />
+            <Divider />
             {data.reviews.items.map((review, j) => {
               return (
                 <div
@@ -132,8 +219,20 @@ const Reviews = () => {
                     </div>
                   </div>
                   <div>{review.content}</div>
-                  <div>
-                    +{review.ups} -{review.downs}
+                  <div
+                    css={css`
+                      margin-top: ${theme.spacings.s80}px;
+                      display: flex;
+                    `}
+                  >
+                    <VoteButton>
+                      <IconArrowUp />
+                      {review.ups}
+                    </VoteButton>
+                    <VoteButton>
+                      <IconArrowDown />
+                      {review.downs}
+                    </VoteButton>
                   </div>
                 </div>
               );

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { R } from "storefront-ui/Config";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
@@ -10,7 +11,7 @@ import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "storefront-ui/SwipeableItemsContainer";
-import Image from "storefront-ui/Image";
+import { Image } from "../theme/Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -52,6 +53,7 @@ import { StatefulTextarea } from "../theme/Textarea";
 
 const WriteReview = () => {
   const theme = useTheme();
+  const segment = useScrollSegment({ 400: "not-top" });
 
   return (
     <div
@@ -59,26 +61,64 @@ const WriteReview = () => {
         ${theme.fonts.body1.css}
       `}
     >
-      <Container>
+      <Device mobile>
+        <div
+          css={css`
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            transition: transform 0.2s ease-out;
+            ${theme.fonts.body1.css}
+            ${segment === "not-top"
+              ? "transform: none;"
+              : "transform: translateY(-50px);"}
+          `}
+        >
+          <NavBarMobile title={""} />
+        </div>
+
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+          `}
+        >
+          <NavBarMobile title={""} transparent={true} />
+        </div>
+      </Device>
+      <Container
+        css={css`
+          ${rslin(theme.spacings.s80, theme.spacings.s160).css("padding-top")}
+        `}
+      >
         <Grid>
-          <GridItem params={{ xs: 24, md: [12, 6] }}>
+          <GridItem
+            params={{ xs: [16, 4], sm: 11, md: [9, 2] }}
+            css={css`
+              ${R.to("xs_plus").css("margin: 40px 0;")}
+            `}
+          >
+            <Image mode={"natural"} image={data.products[1].images[0]} />
+          </GridItem>
+          <GridItem params={{ xs: 24, sm: [12, 1], md: [9, 1] }}>
             <div
               css={css`
                 ${rslin(theme.spacings.s80, theme.spacings.s160).css(
-                  "margin-top"
-                )}
-                ${rslin(theme.spacings.s80, theme.spacings.s160).css(
                   "margin-bottom"
                 )}
-            h1 {
+                h1 {
                   ${theme.fonts.h4.css}
                   margin-top: 0.5em;
                 }
-                text-align: center;
               `}
             >
-              <h1>Write a Review</h1>
-              <p>Please share your experience.</p>
+              <p>Write a review for</p>
+              <h1>Transparent Bottle</h1>
             </div>
             <Divider />
 
@@ -117,7 +157,6 @@ const WriteReview = () => {
               </GridItem>
               <GridItem>
                 <Button
-                  fitContainer={true}
                   size={"large"}
                   onClick={() => {
                     routerPush("/product");
