@@ -87,7 +87,7 @@ const ColorFilterComponent = ({ filter, value, onChange, isMobile }) => {
 };
 
 const overrides = props => ({
-  Header: AccordionHeader,
+  Header: props => <AccordionHeader {...props} hasPaddingOnMobile />,
   filterComponents: {
     select: ({ filter, value, onChange }) => {
       // if (filter.id === "color") {
@@ -107,6 +107,7 @@ const overrides = props => ({
           value={value}
           onChange={onChange}
           multiple={filter.multiple}
+          hasPaddingOnMobile={true}
         />
       );
     },

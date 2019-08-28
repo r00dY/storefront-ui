@@ -16,7 +16,6 @@ import SwipeableItemsContainer, {
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
-import Dots from "storefront-ui/Dots";
 
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";

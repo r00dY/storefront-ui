@@ -18,9 +18,12 @@ import { StatefulSelect } from "../theme/Select";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
 import FilterResultPills from "../theme/FilterResultPills";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 import data from "../data";
 import useProducts from "../helpers/useProducts";
+
+import IconClose from "../svg/close.svg";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -300,12 +303,47 @@ const CollectionPage = props => {
             }}
             isOpen={filtersModalOpened}
             onRequestClose={() => setFiltersModalOpened(false)}
-            header={"Filters"}
+            header={() => (
+              <div
+                css={css`${theme.fonts.body1.css} border-bottom: 1px solid ${
+                  theme.colors.mono200.css
+                };`}
+              >
+                <LayoutLeftCenterRight
+                  left={
+                    <ButtonRaw
+                      css={css`
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+                        padding: 0 10px;
+                      `}
+                      onClick={() => setFiltersModalOpened(false)}
+                    >
+                      <IconClose />
+                    </ButtonRaw>
+                  }
+                  center={"Filters"}
+                  height={50}
+                  right={
+                    <Button
+                      kind={"minimal"}
+                      css={css`
+                        padding: 0 10px;
+                      `}
+                    >
+                      Clear all
+                    </Button>
+                  }
+                />
+              </div>
+            )}
             footer={() => (
               <div
                 css={css`
                   padding: ${theme.spacings.s40}px;
-                  border-top: 1px solid ${theme.colors.mono300.css};
+                  border-top: 1px solid ${theme.colors.mono200.css};
                 `}
               >
                 <Button
@@ -325,17 +363,15 @@ const CollectionPage = props => {
                 padding: 0;
               `}
             >
-              <Container>
-                <FiltersColumn
-                  data={data.filters}
-                  value={filtersValue}
-                  onChange={(key, val) => {
-                    setFiltersValue({ ...filtersValue, [key]: val });
-                    query();
-                  }}
-                  isMobile={true}
-                />
-              </Container>
+              <FiltersColumn
+                data={data.filters}
+                value={filtersValue}
+                onChange={(key, val) => {
+                  setFiltersValue({ ...filtersValue, [key]: val });
+                  query();
+                }}
+                isMobile={true}
+              />
             </div>
           </Modal>
         </Device>

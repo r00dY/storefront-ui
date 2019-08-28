@@ -1,6 +1,7 @@
 import { ItemListAccordion$ } from "storefront-ui/ItemListAccordion";
 import { ListItem } from "../ListItem";
 import { Button } from "../Button";
+import { R, L } from "storefront-ui/Config";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -24,6 +25,9 @@ const ItemListAccordion = props => {
             css={css`
               transition: all 150ms;
               color: ${theme.colors.mono500.css};
+              ${props.hasPaddingOnMobile
+                ? R.to("sm").css(`${L.margin.divide(2).css("padding-left")}`)
+                : ""}
               &:hover {
                 color: ${theme.colors.mono700.css};
               }
@@ -50,7 +54,7 @@ const ItemListAccordion = props => {
             )}
           </Button>
         ),
-        ListItem: ListItem
+        ListItem: props => <ListItem {...props} hasPaddingOnMobile />
       }}
     />
   );
