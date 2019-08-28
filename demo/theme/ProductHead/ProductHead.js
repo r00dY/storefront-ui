@@ -16,6 +16,7 @@ import SwipeableItemsContainer, {
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
+import Dots from "storefront-ui/Dots";
 
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
@@ -346,11 +347,12 @@ function ProductHead(props) {
             css={css`
               width: 100%;
               background-color: #f6f6f6;
+              padding-bottom: 10px;
             `}
           >
             {swiper.element}
+            <Dots swipeableItemsContainer={swiper} />
           </div>
-
           <div
             css={css`
               padding: 20px 0;
