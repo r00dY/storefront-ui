@@ -289,7 +289,7 @@ const CollectionPage = props => {
       <div>
         <Device mobile>
           <NavBarCollection
-            title={"Snacks"}
+            title={props.isCategory ? "Bath" : "Beauty"}
             onFilterClick={() => {
               setFiltersModalOpened(true);
             }}

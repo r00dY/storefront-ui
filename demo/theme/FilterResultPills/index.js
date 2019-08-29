@@ -17,7 +17,7 @@ const breakpoint = "sm";
 const lowerBreakpoint = "xs_plus";
 
 const Item = props => {
-  const { type, params } = props;
+  const { type, params, onChange } = props;
   const theme = useTheme();
 
   return (
@@ -85,7 +85,7 @@ ${theme.fonts.caption.css} margin: 0 ${theme.spacings.s40}px ${
 const FilterResultPills = props => {
   const theme = useTheme();
 
-  const { filters } = props;
+  const { filters, onChange } = props;
 
   return (
     <div

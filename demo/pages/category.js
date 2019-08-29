@@ -7,4 +7,6 @@ import CollectionPage from "./collection";
 
 const CategoryPage = props => <CollectionPage isCategory />;
 
+CategoryPage.tabbar = 1;
+
 export default CategoryPage;
