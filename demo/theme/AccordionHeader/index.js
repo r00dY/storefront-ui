@@ -5,6 +5,9 @@ import IconExpandLess from "./baseline-expand_less-24px.svg";
 
 import { R, L } from "storefront-ui/Config";
 
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
 const AccordionHeader = props => (
   <AccordionHeader$
     {...props}
@@ -20,9 +23,9 @@ const AccordionHeader = props => (
          ${
            props.hasPaddingOnMobile
              ? `${R.to("sm").css(
-                 `${L.margin.divide(2).css("padding-right")}${L.margin
-                   .divide(2)
-                   .css("padding-left")}`
+                 `${L.margin.css("padding-right")}${L.margin.css(
+                   "padding-left"
+                 )}`
                )}`
              : ""
          }
@@ -30,7 +33,20 @@ const AccordionHeader = props => (
          transition: all 150ms;
          }`
       },
-      Toggle: ({ $open }) => ($open ? <IconExpandLess /> : <IconExpandMore />)
+      Toggle: ({ $open }) =>
+        $open ? (
+          <IconExpandLess
+            css={css`
+              opacity: 0.3;
+            `}
+          />
+        ) : (
+          <IconExpandMore
+            css={css`
+              opacity: 0.3;
+            `}
+          />
+        )
     }}
   />
 );

@@ -25,9 +25,10 @@ const Item = props => {
       css={css`display: flex; align-items: center; background: ${
         theme.colors.mono200.css
       }; color: ${theme.colors.mono900.css};
-${theme.fonts.caption.css} margin: 0 ${theme.spacings.s40}px ${
+${theme.fonts.caption.css} margin: ${theme.spacings.s40}px ${
         theme.spacings.s40
-      }px 0; height: ${H}px; border-radius: ${H / 2}px;`}
+      }px ${theme.spacings.s40}px 0; height: ${H}px; border-radius: ${H /
+        2}px;`}
     >
       <div
         css={css`
@@ -90,37 +91,51 @@ const FilterResultPills = props => {
   return (
     <div
       css={css`
-        display: flex;
         ${R.to(lowerBreakpoint).css(
-          `-webkit-overflow-scrolling: touch; overflow-x: auto; ${L.margin.css(
-            "padding-left"
-          )} ${L.margin.multiply(-1).css("margin-left")} ${L.margin
+          ` ${L.margin.multiply(-1).css("margin-left")} ${L.margin
             .multiply(-1)
             .css("margin-right")}`
-        )} ${R.from(breakpoint).css(`flex-wrap: wrap;`)}
+        )} position: relative;
       `}
     >
-      {filters.map((filter, index) => {
-        return (
-          <Item
-            type={filter.type}
-            value={filter.value}
-            params={filter.params}
-          />
-        );
-      })}
-      <ButtonRaw
+      <div
         css={css`
-          ${R.to(lowerBreakpoint).css(
-            `${L.margin.css("padding-right")}`
-          )} ${theme.fonts.body2.css} white-space: nowrap;
-          display: flex;
-          align-items: center;
-          height: ${H}px;
+          ${R.to(lowerBreakpoint).css(` overflow-x: auto; width: 100vw;`)}
         `}
       >
-        Clear all
-      </ButtonRaw>
+        <div
+          css={css`
+            display: flex;
+            align-items: center;
+            ${R.to(lowerBreakpoint).css(
+              `${L.margin.css("padding-left")}  `
+            )} ${R.from(breakpoint).css(`flex-wrap: wrap;`)}
+          `}
+        >
+          {filters.map((filter, index) => {
+            return (
+              <Item
+                type={filter.type}
+                value={filter.value}
+                params={filter.params}
+                key={index}
+              />
+            );
+          })}
+          <ButtonRaw
+            css={css`
+              ${R.to(lowerBreakpoint).css(
+                `${L.margin.css("padding-right")}`
+              )} ${theme.fonts.body2.css} white-space: nowrap;
+              display: flex;
+              align-items: center;
+              height: ${H}px;
+            `}
+          >
+            Clear all
+          </ButtonRaw>
+        </div>
+      </div>
     </div>
   );
 };

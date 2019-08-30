@@ -18,6 +18,7 @@ export const ModalHeader = ({ onRequestClose, title }) => {
         height: 50px;
         padding: ${theme.spacings.s40}px;
         ${theme.fonts.body1.css}
+        white-space: nowrap;
       `}
     >
       <LayoutLeftCenterRight

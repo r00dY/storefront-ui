@@ -9,7 +9,6 @@ import { R, L } from "storefront-ui/Config";
 
 const ListItem = ({ selected, focused, item, hasPaddingOnMobile }) => {
   const theme = useTheme();
-  console.log(hasPaddingOnMobile);
   return (
     <div
       css={css`
@@ -21,9 +20,7 @@ const ListItem = ({ selected, focused, item, hasPaddingOnMobile }) => {
         transition: all 150ms;
         ${hasPaddingOnMobile
           ? `${R.to("sm").css(
-              `${L.margin.divide(2).css("padding-right")}${L.margin
-                .divide(2)
-                .css("padding-left")}`
+              `${L.margin.css("padding-right")}${L.margin.css("padding-left")}`
             )}`
           : ""}
         &:hover {

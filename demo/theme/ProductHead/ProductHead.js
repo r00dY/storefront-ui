@@ -60,7 +60,7 @@ function ProductHead(props) {
 
   const [isFav, setFav] = useState(false);
 
-  const { buttonProps, selectProps } = useAddToCartWithSize(props.product);
+  const { buttonProps, selectProps } = props;
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
@@ -201,7 +201,8 @@ function ProductHead(props) {
           flex-grow: 1;
           color: ${theme.colors.mono900.css};
           margin-right: 20px;
-          ${theme.fonts.h4.css}
+          ${theme.fonts.body1.css}
+          font-weight: 700;
         `}
       >
         {props.product.title}
@@ -266,24 +267,27 @@ function ProductHead(props) {
 
   let metaElem = (
     <div>
-      <Device desktop>
-        {titleElem}
-        <MetaRow>{VARIANTS}</MetaRow>
-      </Device>
+      {titleElem}
+      <MetaRow>{VARIANTS}</MetaRow>
 
-      <Device desktop>
-        <MetaRow>
-          <div
-            css={css`
+      <MetaRow>
+        <div
+          css={css`
                 ${theme.fonts.body2.css}
                 margin-bottom: ${theme.spacings.s60}px;
             `}
-          >
-            Pick your size
-          </div>
+        >
+          Pick your size
+        </div>
+        <Device desktop>
           <Select fitContainer={true} {...selectProps} />
-        </MetaRow>
+        </Device>
+        <Device mobile>
+          <Select fitContainer={true} compact={true} {...selectProps} />
+        </Device>
+      </MetaRow>
 
+      <Device desktop>
         <MetaRow>
           <div
             css={css`
@@ -348,6 +352,7 @@ function ProductHead(props) {
               width: 100%;
               background-color: #f6f6f6;
               padding-bottom: 10px;
+              margin-top: -100px;
             `}
           >
             {swiper.element}
@@ -364,21 +369,13 @@ function ProductHead(props) {
           />
         </div>
 
-        <div
+        <Container
           css={css`
-            margin-bottom: 40px;
+            margin-top: ${theme.spacings.s80}px;
           `}
         >
-          {VARIANTS}
-        </div>
-
-        <div
-          css={css`
-            padding: 0 10px;
-          `}
-        >
-          <MetaRow>{accordions}</MetaRow>
-        </div>
+          {metaElem}
+        </Container>
       </Device>
 
       <Device desktop>

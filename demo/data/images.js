@@ -52,6 +52,46 @@ const images = {
     ],
     alt: "landscape1.jpg"
   },
+  insta1: {
+    src: [
+      {
+        url: ROOT + "/insta1.jpg",
+        w: 1080,
+        h: 1080
+      }
+    ],
+    alt: "insta1.jpg"
+  },
+  insta2: {
+    src: [
+      {
+        url: ROOT + "/insta2.jpg",
+        w: 1080,
+        h: 1080
+      }
+    ],
+    alt: "insta2.jpg"
+  },
+  insta3: {
+    src: [
+      {
+        url: ROOT + "/insta3.jpg",
+        w: 1080,
+        h: 1080
+      }
+    ],
+    alt: "insta3.jpg"
+  },
+  insta4: {
+    src: [
+      {
+        url: ROOT + "/insta4.jpg",
+        w: 1080,
+        h: 1080
+      }
+    ],
+    alt: "insta4.jpg"
+  },
   categories: (() => {
     let photos = {};
 

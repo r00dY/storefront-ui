@@ -159,7 +159,12 @@ const CollectionPage = props => {
           ${rslin(theme.spacings.s100, theme.spacings.s120).css("padding-top")}
         `}
       >
-        <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
+        <GridItem
+          params={{ xs: 0, md: 6, lg: 5, xl: 4 }}
+          css={css`
+            ${L.gutter.multiply(3).css("padding-right")}
+          `}
+        >
           <FiltersColumn
             data={data.filters}
             value={filtersValue}
@@ -173,76 +178,71 @@ const CollectionPage = props => {
         <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
           <div
             css={css`
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 50px;
-                ${rslin(theme.spacings.s70, theme.spacings.s70).css(
-                  "margin-bottom"
-                )}
-                ${theme.fonts.body1.css}
-                ${R.to("sm").css("display: none;")}
-              `}
+              display: flex;
+              position: relative;
+              justify-content: space-between;
+              ${rslin(theme.spacings.s70, theme.spacings.s70).css(
+                "margin-bottom"
+              )}
+              ${theme.fonts.body1.css}
+            `}
           >
-            <div
-              css={css`
-                ${R.to("sm").css("text-align: center;")} flex-grow: 1;
-              `}
-            >
-              {data.products.length} items
+            <div>
+              <FilterResultPills
+                filters={[
+                  {
+                    type: "text",
+                    params: { label: "Certified Organic" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Sulfate Free" }
+                  },
+                  {
+                    type: "color",
+                    params: { label: "Orange", color: "#e45d46" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: `Price: $1.50 \u2014 $3.00 ` }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Mineral Oil Free" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Non GMO" }
+                  }
+                ]}
+              />
             </div>
             <Device desktop>
               <div
                 css={css`
-                  margin-right: 1em;
-                  white-space: nowrap;
+                  display: flex;
+                  align-items: center;
+                  height: 50px;
                 `}
               >
-                Sort by:
+                <div
+                  css={css`
+                    margin-right: 1em;
+                    white-space: nowrap;
+                  `}
+                >
+                  Sort by:
+                </div>
+                <StatefulSelect
+                  compact
+                  options={sortOptions}
+                  onChange={() => {
+                    query();
+                  }}
+                  initValue={sortOptions[0]}
+                />
               </div>
-              <StatefulSelect
-                compact
-                options={sortOptions}
-                onChange={() => {
-                  query();
-                }}
-                initValue={sortOptions[0]}
-              />
             </Device>
-          </div>
-          <div
-            css={css`
-              margin-bottom: ${theme.spacings.s80}px;
-            `}
-          >
-            <FilterResultPills
-              filters={[
-                {
-                  type: "text",
-                  params: { label: "Certified Organic" }
-                },
-                {
-                  type: "text",
-                  params: { label: "Sulfate Free" }
-                },
-                {
-                  type: "color",
-                  params: { label: "Orange", color: "#e45d46" }
-                },
-                {
-                  type: "text",
-                  params: { label: `Price: $1.50 \u2014 $3.00 ` }
-                },
-                {
-                  type: "text",
-                  params: { label: "Mineral Oil Free" }
-                },
-                {
-                  type: "text",
-                  params: { label: "Non GMO" }
-                }
-              ]}
-            />
           </div>
 
           <Grid gutterVertical={theme.spacings.s120}>
@@ -317,7 +317,8 @@ const CollectionPage = props => {
                         justify-content: center;
                         align-items: center;
                         height: 100%;
-                        padding: 0 10px;
+                        ${L.margin.css("padding-right")}
+                        ${L.margin.css("padding-left")}
                       `}
                       onClick={() => setFiltersModalOpened(false)}
                     >
@@ -330,7 +331,8 @@ const CollectionPage = props => {
                     <Button
                       kind={"minimal"}
                       css={css`
-                        padding: 0 10px;
+                        ${L.margin.css("padding-right")}
+                        ${L.margin.css("padding-left")}
                       `}
                     >
                       Clear all

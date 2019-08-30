@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { L, R } from "storefront-ui/Config";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
@@ -95,54 +96,30 @@ const Product = () => {
 
         <div
           css={css`
-              position: fixed;
-              bottom: 0;
-              left: 0;
-              width: 100%;
-              z-index: 1;
-              background white;
-              padding: 0 12px;
-              border-top: 1px solid ${theme.colors.mono200.css};
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1;
+            //background: rgba(255,255,255,0.9);
+            ${L.margin.css("padding-left")}
+            ${L.margin.css("padding-right")}
+              padding-bottom: 12px;
           `}
         >
-          <LayoutLeftCenterRight
-            left={
-              <>
-                <div
-                  css={css`
-                    ${theme.fonts.body1.css}
-                  `}
-                >
-                  {product.title}
-                </div>
-              </>
-            }
-            right={
-              <Price
-                price={product.price}
-                priceDiscount={product.priceDiscount}
-              />
-            }
-            height={50}
-          />
-
-          <div
-            css={css`
-              display: flex;
-              flex-direction: row;
-              > * {
-                width: 48%;
-              }
-              justify-content: space-between;
-              margin-bottom: 12px;
-            `}
-          >
-            <div>
-              <Select fitContainer={true} compact={true} {...selectProps} />
-            </div>
+          <div>
+            {/*<div>*/}
+            {/*<Select fitContainer={true} compact={true} {...selectProps} />*/}
+            {/*</div>*/}
 
             <div>
-              <Button {...buttonProps} fitContainer={true}>
+              <Button
+                {...buttonProps}
+                fitContainer={true}
+                css={css`
+                  box-shadow: 0px 30px 15px 20px rgba(255, 255, 255, 0.9);
+                `}
+              >
                 Add to cart
               </Button>
             </div>
@@ -152,7 +129,7 @@ const Product = () => {
         <div
           css={css`
             position: absolute;
-            top: 0;
+            top: 100px;
             left: 0;
             width: 100%;
             z-index: 1;
@@ -190,7 +167,11 @@ const Product = () => {
         </Container>
       </Device>
 
-      <ProductHead product={product} />
+      <ProductHead
+        product={product}
+        buttonProps={buttonProps}
+        selectProps={selectProps}
+      />
 
       <Spacer />
       <Spacer />
