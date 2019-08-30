@@ -40,7 +40,7 @@ import IconHeartFill from "../svg/heart_fill.svg";
 
 import LayoutRow from "storefront-ui/LayoutRow";
 import { ButtonRaw } from "../theme/ButtonRaw";
-import { RadioStars } from "../theme/RadioStars";
+import { InputStars } from "../theme/InputStars";
 import ThemeLink from "../theme/ThemeLink";
 import { Divider } from "../theme/Divider";
 import { Spacer } from "../theme/Spacer";
@@ -90,6 +90,18 @@ const WriteReview = () => {
         >
           <NavBarMobile title={""} transparent={true} />
         </div>
+        <div
+          css={css`
+            background: #f7f7f7;
+            display: flex;
+            justify-content: center;
+            & > div {
+              width: 40%;
+            }
+          `}
+        >
+          <Image mode={"natural"} image={data.products[1].images[0]} />
+        </div>
       </Device>
       <Container
         css={css`
@@ -98,9 +110,9 @@ const WriteReview = () => {
       >
         <Grid>
           <GridItem
-            params={{ xs: [16, 4], sm: 11, md: [9, 2] }}
+            params={{ xs: 0, sm: 11, md: [9, 2] }}
             css={css`
-              ${R.to("xs_plus").css("margin: 40px 0;")}
+              ${R.to("xs_plus").css("display: none;")}
             `}
           >
             <Image mode={"natural"} image={data.products[1].images[0]} />
@@ -131,7 +143,7 @@ const WriteReview = () => {
                 >
                   Overall rating
                 </div>
-                <RadioStars />
+                <InputStars />
               </GridItem>
               <GridItem params={{ xs: "1/1", md: "1/1" }}>
                 <FormControl label={"First name"}>

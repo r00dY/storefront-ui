@@ -7,6 +7,8 @@ import { css, jsx } from "@emotion/core";
 import { rs, rslin } from "responsive-helpers";
 import { R, F, C, L, Color } from "storefront-ui/Config";
 
+import routerPush from "../../helpers/routerPush";
+
 import { Image, ImageZoomable } from "../Image";
 import StickyColumn from "storefront-ui/StickyColumn";
 import Container from "storefront-ui/Container";
@@ -46,7 +48,7 @@ const InnerStyled = props => {
   return (
     <div
       css={css`
-        padding: 10px;
+        padding: 10px 0;
         ${theme.fonts.body2.css}
       `}
     >
@@ -122,29 +124,12 @@ function ProductHead(props) {
             >
               Reviews (15)
             </div>{" "}
-            <Stars rating={data.reviews.rating} />
+            <Stars rating={data.reviews.rating} smaller />
           </div>
         }
         openAtInit={false}
       >
         <InnerStyled>
-          <div
-            css={css`
-              display: flex;
-              ${theme.fonts.body1.css} margin: 2em 0;
-              justify-content: space-between;
-            `}
-          >
-            <div>
-              <Stars inline rating={data.reviews.rating} /> &nbsp;
-              {data.reviews.rating} Stars
-            </div>{" "}
-            <Link href={"/write-review"}>
-              <ThemeLink href={"/write-review"} kind={"inheritUnderline"}>
-                Write a Review
-              </ThemeLink>
-            </Link>
-          </div>
           <div>
             {[
               data.reviews.items[0],
@@ -180,11 +165,36 @@ function ProductHead(props) {
               );
             })}
           </div>
-          <Link href={"/reviews"}>
-            <ThemeLink href={"/reviews"} kind={"inheritUnderline"}>
-              More reviews
-            </ThemeLink>
-          </Link>
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+            `}
+          >
+            <Button
+              onClick={() => {
+                routerPush("/reviews");
+              }}
+            >
+              See All Reviews
+            </Button>
+          </div>
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+              margin-top: 1em;
+            `}
+          >
+            <Button
+              onClick={() => {
+                routerPush("/write-review");
+              }}
+              kind={"minimal"}
+            >
+              Write a Review
+            </Button>
+          </div>
         </InnerStyled>
       </Accordion>
     </>

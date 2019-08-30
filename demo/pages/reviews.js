@@ -21,27 +21,12 @@ import { css, jsx } from "@emotion/core";
 import NavBarMobile from "../theme/NavBarMobile";
 
 import { Button } from "../theme/Button";
-import ProductHead from "../theme/ProductHead/ProductHead";
-import { Accordion } from "../theme/Accordion";
-import EditorialHalfImage from "../theme/Editorial/EditorialHalfImage/EditorialHalfImage";
-import EditorialHeadline from "../theme/Editorial/EditorialHeadline/EditorialHeadline";
-import SizePicker from "../theme/SizePicker/SizePicker";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import Price from "../theme/Price";
 import Device from "storefront-ui/Device";
 import Link from "next/link";
 
 import data from "../data";
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
-import useAddToCart from "../helpers/useAddToCart";
-import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
 import { Select, StatefulSelect } from "../theme/Select";
 
-import IconHeart from "../svg/heart.svg";
-import IconHeartFill from "../svg/heart_fill.svg";
-
-import LayoutRow from "storefront-ui/LayoutRow";
 import { ButtonRaw } from "../theme/ButtonRaw";
 import { Stars } from "../theme/Stars";
 import ThemeLink from "../theme/ThemeLink";
@@ -49,6 +34,7 @@ import { Divider } from "../theme/Divider";
 import { Spacer } from "../theme/Spacer";
 
 import IconBack from "../svg/arrow_left.svg";
+import routerPush from "../helpers/routerPush";
 
 const VoteButton = props => {
   const theme = useTheme();
@@ -71,9 +57,15 @@ const VoteButton = props => {
   );
 };
 const WriteAReviewButton = (
-  <Link href={"/write-review"}>
-    <ThemeLink href={"/write-review"}>Write a Review</ThemeLink>
-  </Link>
+  <Button
+    size={"compact"}
+    onClick={() => routerPush("/write-review")}
+    css={css`
+      white-space: nowrap;
+    `}
+  >
+    Write a Review
+  </Button>
 );
 const Reviews = () => {
   const theme = useTheme();
@@ -128,7 +120,6 @@ const Reviews = () => {
         </div>
       </Device>
 
-      {/*?*/}
       <Container>
         <Grid>
           <GridItem params={{ xs: 24, sm: [12, 6] }}>
@@ -136,16 +127,24 @@ const Reviews = () => {
             <Device desktop>
               <LayoutLeftCenterRight
                 left={
-                  <Link href={"/write-review"}>
-                    <Button kind={"minimal"}>
+                  <Button
+                    size={"compact"}
+                    kind={"minimal"}
+                    onClick={() => {
+                      routerPush("/product");
+                    }}
+                    startEnhancer={() => (
                       <IconBack
                         css={css`
                           fill: currentColor;
+                          width: 20px;
+                          height: 20px;
                         `}
-                      />{" "}
-                      Product Details
-                    </Button>
-                  </Link>
+                      />
+                    )}
+                  >
+                    Product Details
+                  </Button>
                 }
                 right={WriteAReviewButton}
               />
@@ -153,10 +152,10 @@ const Reviews = () => {
             </Device>
             <div
               css={css`
-                ${rslin(theme.spacings.s120, theme.spacings.s160).css(
+                ${rslin(theme.spacings.s170, theme.spacings.s160).css(
                   "margin-top"
                 )}
-                ${rslin(theme.spacings.s100, theme.spacings.s160).css(
+                ${rslin(theme.spacings.s150, theme.spacings.s160).css(
                   "margin-bottom"
                 )}
             h1 {
@@ -167,7 +166,11 @@ const Reviews = () => {
               `}
             >
               <Stars inline rating={data.reviews.rating} />
-              <h1>Transparent Bottle</h1>
+              <h1>
+                <Link href={"/product"}>
+                  <a>Transparent Bottle</a>
+                </Link>
+              </h1>
             </div>
             <div
               css={css`
@@ -187,7 +190,6 @@ const Reviews = () => {
                 options={stringOptions}
                 onChange={val => {
                   setSelect1(val);
-                  // onChange();
                 }}
                 value={select1}
                 initValue={stringOptions[0]}
@@ -200,6 +202,7 @@ const Reviews = () => {
                   css={css`
                     margin-bottom: ${theme.spacings.s120}px;
                   `}
+                  key={j}
                 >
                   <div
                     css={css`
@@ -209,13 +212,20 @@ const Reviews = () => {
                       margin-bottom: 1em;
                     `}
                   >
-                    <Stars rating={review.rating} />
+                    <Stars rating={review.rating} smaller />
                     <div
                       css={css`
                         margin-left: 1em;
                       `}
                     >
-                      {review.name} &mdash; {review.timestamp}
+                      {review.name}{" "}
+                      <span
+                        css={css`
+                          white-space: nowrap;
+                        `}
+                      >
+                        &mdash; {review.timestamp}
+                      </span>
                     </div>
                   </div>
                   <div>{review.content}</div>

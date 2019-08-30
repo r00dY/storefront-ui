@@ -19,7 +19,7 @@ const overrides = (props, theme) => ({
         }
         height: ${props.compact ? "42px" : "60px"};
         color: black;
-
+        white-space: nowrap;
         ${theme.fonts.body2.css}
       `}
     >
@@ -48,6 +48,7 @@ const overrides = (props, theme) => ({
       css={css`
         color: ${value ? theme.colors.mono900.css : theme.colors.mono500.css};
         ${theme.fonts.body1.css}
+        white-space: nowrap;
       `}
     >
       {value ? value : props.placeholder || "Pick option..."}
