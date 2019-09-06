@@ -10,6 +10,13 @@ import { ThemeContext } from "../Theme";
 let instance;
 
 function showNotification(jsx, options) {
+  if (!instance) {
+    console.log(
+      "[showNotification] Notification won't appear beacuse NotificationsContainer is not initialized."
+    );
+    return;
+  }
+
   instance.show(jsx, options);
 }
 
