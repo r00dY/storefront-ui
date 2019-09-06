@@ -42,6 +42,29 @@ const tabs = [
   }
 ];
 
+const menuData = [
+  {
+    label: "Home",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[0]} index={0} />
+  },
+  {
+    label: "Beauty",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[1]} index={1} />
+  },
+  {
+    label: "Food",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[2]} index={2} />
+  },
+  {
+    label: "Health",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[3]} index={3} />
+  }
+];
+
 export default class MyApp extends App {
   static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
@@ -64,6 +87,8 @@ export default class MyApp extends App {
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
     const hideDesktopMenu = Component.hideDesktopMenu === true;
+    const desktopMenuTransparentAtTop =
+      Component.desktopMenuTransparentAtTop === true;
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
@@ -126,50 +151,7 @@ export default class MyApp extends App {
 
           {!hideDesktopMenu && (
             <>
-              <MenuDesktop
-                data={[
-                  {
-                    label: "Home",
-                    href: "/category",
-                    content: (
-                      <MenuDesktopContent
-                        category={data.categories[0]}
-                        index={0}
-                      />
-                    )
-                  },
-                  {
-                    label: "Beauty",
-                    href: "/category",
-                    content: (
-                      <MenuDesktopContent
-                        category={data.categories[1]}
-                        index={1}
-                      />
-                    )
-                  },
-                  {
-                    label: "Food",
-                    href: "/category",
-                    content: (
-                      <MenuDesktopContent
-                        category={data.categories[2]}
-                        index={2}
-                      />
-                    )
-                  },
-                  {
-                    label: "Health",
-                    href: "/category",
-                    content: (
-                      <MenuDesktopContent
-                        category={data.categories[3]}
-                        index={3}
-                      />
-                    )
-                  }
-                ]}
-              />
+              <MenuDesktop data={menuData} mode={"fixed"} />
 
               <div
                 css={css`
