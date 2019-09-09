@@ -15,6 +15,7 @@ export const productFragmentQuery = gql`
         node {
           id
           src
+          altText
         }
       }
     }
@@ -34,8 +35,13 @@ export const productFragmentQuery = gql`
           }
           image {
             src
+            altText
           }
           price
+          priceV2 {
+            currencyCode
+            amount
+          }
         }
       }
     }

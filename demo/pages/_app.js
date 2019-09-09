@@ -8,7 +8,7 @@ import Root from "storefront-ui/Root";
 
 import MainTabBar from "../theme/MainTabBar";
 import { ApolloProvider } from "react-apollo";
-import { ApolloProvider as ApolloHooksProvider } from "react-apollo-hooks";
+import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
 import withApolloClient from "../lib/with-apollo-client";
 
 /** @jsx jsx */

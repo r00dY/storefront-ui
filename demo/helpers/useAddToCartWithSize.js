@@ -22,7 +22,7 @@ export default function useAddToCartWithSize(product) {
   };
 
   const selectProps = {
-    options: product.options.find(x => x.name === "size").values,
+    options: product.options.find(x => x.name === "Size").values,
     value: size,
     onChange: val => {
       setSize(val);

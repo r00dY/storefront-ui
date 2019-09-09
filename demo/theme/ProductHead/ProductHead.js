@@ -280,7 +280,8 @@ function ProductHead(props) {
           >
             Pick your size
           </div>
-          <Select fitContainer={true} {...selectProps} />
+          <Select fitContainer={true} {...props.selectProps} />
+          {/*{...selectProps}/>*/}
         </MetaRow>
 
         <MetaRow>

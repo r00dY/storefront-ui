@@ -1,7 +1,7 @@
 import React from "react";
 import initApollo from "./init-apollo";
 import Head from "next/head";
-import { getDataFromTree } from "react-apollo";
+import { getMarkupFromTree } from "@apollo/react-ssr";
 
 export default App => {
   return class Apollo extends React.Component {
@@ -25,7 +25,7 @@ export default App => {
       if (!process.browser) {
         try {
           // Run all GraphQL queries
-          await getDataFromTree(
+          await getMarkupFromTree(
             <App
               {...appProps}
               Component={Component}
@@ -37,7 +37,7 @@ export default App => {
           // Prevent Apollo Client GraphQL errors from crashing SSR.
           // Handle them in components via the data.error prop:
           // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-          console.error("Error while running `getDataFromTree`", error);
+          console.error("Error while running `getMarkupFromTree`", error);
         }
 
         // getDataFromTree does not call componentWillUnmount
