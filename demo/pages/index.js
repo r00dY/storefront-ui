@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
@@ -14,12 +14,14 @@ import TwoBanners from "../theme/TwoBanners";
 import ProductSlider from "../theme/ProductSlider/ProductSlider";
 import SectionTitle from "../theme/SectionTitle";
 import CategoryCard from "../theme/CategoryCard";
+import ShopTheLookBanner from "../theme/ShopTheLookBanner";
 
 import data from "../data";
 import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import SocialSlider from "../theme/SocialSlider";
 
 // Categories displayed at the bottom
 const categories = [
@@ -39,6 +41,20 @@ const categories = [
 
 const Home = () => {
   const theme = useTheme();
+
+  const [modalOpenId, setModalOpenId] = useState(-1);
+
+  const setModalOpen = param => {
+    if (typeof param === "number") {
+      setModalOpenId(param);
+    }
+    if (param === "next") {
+      setModalOpenId(modalOpenId + 1);
+    }
+    if (param === "prev") {
+      setModalOpenId(modalOpenId - 1);
+    }
+  };
 
   return (
     <div>
@@ -135,6 +151,42 @@ const Home = () => {
             </Grid>
           </Container>
         </div>
+
+        <SocialSlider
+          boxes={[
+            <ShopTheLookBanner
+              image={data.images.insta1}
+              products={data.products.slice(0, 3)}
+              modalOpen={modalOpenId === 0}
+              setModalOpen={param => setModalOpen(param)}
+              id={0}
+              hasNotLeftArrow
+            />,
+            <ShopTheLookBanner
+              image={data.images.insta2}
+              products={data.products.slice(3, 4)}
+              modalOpen={modalOpenId === 1}
+              setModalOpen={param => setModalOpen(param)}
+              id={1}
+            />,
+            <ShopTheLookBanner
+              image={data.images.insta3}
+              products={data.products.slice(6, 8)}
+              modalOpen={modalOpenId === 2}
+              setModalOpen={param => setModalOpen(param)}
+              id={2}
+            />,
+            <ShopTheLookBanner
+              image={data.images.insta4}
+              products={data.products.slice(6, 8)}
+              modalOpen={modalOpenId === 3}
+              setModalOpen={param => setModalOpen(param)}
+              id={3}
+              hasNotRightArrow
+            />
+          ]}
+          title={"Browse our looks"}
+        />
       </div>
     </div>
   );

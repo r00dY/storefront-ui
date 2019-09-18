@@ -73,6 +73,7 @@ const overrides2 = props => ({
     style: ({ $theme }) => `
       margin-bottom: ${$theme.spacings.s30}px;
       ${$theme.fonts.body1.css}
+      line-height: 1.2;
       `
   },
   Badge: {

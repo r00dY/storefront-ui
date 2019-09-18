@@ -68,6 +68,7 @@ const Footer = props => {
                         css={css`
                           ${theme.fonts.caption.css}
                           line-height: 2.4;
+                          ${R.to("sm").css("line-height: 3.4;")}
                         `}
                       >
                         <Link href={link.href}>

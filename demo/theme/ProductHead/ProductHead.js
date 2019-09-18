@@ -7,6 +7,8 @@ import { css, jsx } from "@emotion/core";
 import { rs, rslin } from "responsive-helpers";
 import { R, F, C, L, Color } from "storefront-ui/Config";
 
+import routerPush from "../../helpers/routerPush";
+
 import { Image, ImageZoomable } from "../Image";
 import StickyColumn from "storefront-ui/StickyColumn";
 import Container from "storefront-ui/Container";
@@ -16,6 +18,7 @@ import SwipeableItemsContainer, {
 import { Grid, GridItem } from "storefront-ui/Grid";
 import { useTheme } from "storefront-ui/Theme";
 import Device from "storefront-ui/Device";
+import Dots from "storefront-ui/Dots";
 
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
@@ -45,7 +48,7 @@ const InnerStyled = props => {
   return (
     <div
       css={css`
-        padding: 10px;
+        padding: 10px 0;
         ${theme.fonts.body2.css}
       `}
     >
@@ -59,7 +62,7 @@ function ProductHead(props) {
 
   const [isFav, setFav] = useState(false);
 
-  const { buttonProps, selectProps } = useAddToCartWithSize(props.product);
+  const { buttonProps, selectProps } = props;
 
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
@@ -121,29 +124,12 @@ function ProductHead(props) {
             >
               Reviews (15)
             </div>{" "}
-            <Stars rating={data.reviews.rating} />
+            <Stars rating={data.reviews.rating} smaller />
           </div>
         }
         openAtInit={false}
       >
         <InnerStyled>
-          <div
-            css={css`
-              display: flex;
-              ${theme.fonts.body1.css} margin: 2em 0;
-              justify-content: space-between;
-            `}
-          >
-            <div>
-              <Stars inline rating={data.reviews.rating} /> &nbsp;
-              {data.reviews.rating} Stars
-            </div>{" "}
-            <Link href={"/write-review"}>
-              <ThemeLink href={"/write-review"} kind={"inheritUnderline"}>
-                Write a Review
-              </ThemeLink>
-            </Link>
-          </div>
           <div>
             {[
               data.reviews.items[0],
@@ -179,11 +165,36 @@ function ProductHead(props) {
               );
             })}
           </div>
-          <Link href={"/reviews"}>
-            <ThemeLink href={"/reviews"} kind={"inheritUnderline"}>
-              More reviews
-            </ThemeLink>
-          </Link>
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+            `}
+          >
+            <Button
+              onClick={() => {
+                routerPush("/reviews");
+              }}
+            >
+              See All Reviews
+            </Button>
+          </div>
+          <div
+            css={css`
+              display: flex;
+              justify-content: center;
+              margin-top: 1em;
+            `}
+          >
+            <Button
+              onClick={() => {
+                routerPush("/write-review");
+              }}
+              kind={"minimal"}
+            >
+              Write a Review
+            </Button>
+          </div>
         </InnerStyled>
       </Accordion>
     </>
@@ -200,7 +211,8 @@ function ProductHead(props) {
           flex-grow: 1;
           color: ${theme.colors.mono900.css};
           margin-right: 20px;
-          ${theme.fonts.h4.css}
+          ${theme.fonts.body1.css}
+          font-weight: 700;
         `}
       >
         {props.product.title}
@@ -265,24 +277,27 @@ function ProductHead(props) {
 
   let metaElem = (
     <div>
-      <Device desktop>
-        {titleElem}
-        <MetaRow>{VARIANTS}</MetaRow>
-      </Device>
+      {titleElem}
+      <MetaRow>{VARIANTS}</MetaRow>
 
-      <Device desktop>
-        <MetaRow>
-          <div
-            css={css`
+      <MetaRow>
+        <div
+          css={css`
                 ${theme.fonts.body2.css}
                 margin-bottom: ${theme.spacings.s60}px;
             `}
-          >
-            Pick your size
-          </div>
+        >
+          Pick your size
+        </div>
+        <Device desktop>
           <Select fitContainer={true} {...selectProps} />
-        </MetaRow>
+        </Device>
+        <Device mobile>
+          <Select fitContainer={true} compact={true} {...selectProps} />
+        </Device>
+      </MetaRow>
 
+      <Device desktop>
         <MetaRow>
           <div
             css={css`
@@ -346,11 +361,13 @@ function ProductHead(props) {
             css={css`
               width: 100%;
               background-color: #f6f6f6;
+              padding-bottom: 10px;
+              margin-top: -100px;
             `}
           >
             {swiper.element}
+            <Dots swipeableItemsContainer={swiper} />
           </div>
-
           <div
             css={css`
               padding: 20px 0;
@@ -362,21 +379,13 @@ function ProductHead(props) {
           />
         </div>
 
-        <div
+        <Container
           css={css`
-            margin-bottom: 40px;
+            margin-top: ${theme.spacings.s80}px;
           `}
         >
-          {VARIANTS}
-        </div>
-
-        <div
-          css={css`
-            padding: 0 10px;
-          `}
-        >
-          <MetaRow>{accordions}</MetaRow>
-        </div>
+          {metaElem}
+        </Container>
       </Device>
 
       <Device desktop>

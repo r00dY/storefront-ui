@@ -5,7 +5,9 @@ import { useTheme } from "storefront-ui/Theme";
 import IconCheckBlank from "../../svg/checkbox_blank.svg";
 import IconCheckChecked from "../../svg/checkbox.svg";
 
-const ListItem = ({ selected, focused, item }) => {
+import { R, L } from "storefront-ui/Config";
+
+const ListItem = ({ selected, focused, item, hasPaddingOnMobile }) => {
   const theme = useTheme();
   return (
     <div
@@ -16,6 +18,11 @@ const ListItem = ({ selected, focused, item }) => {
         background-color: ${focused ? theme.colors.mono100.css : "transparent"};
         ${theme.fonts.body2.css}
         transition: all 150ms;
+        ${hasPaddingOnMobile
+          ? `${R.to("sm").css(
+              `${L.margin.css("padding-right")}${L.margin.css("padding-left")}`
+            )}`
+          : ""}
         &:hover {
           color: ${theme.colors.mono600.css};
         }

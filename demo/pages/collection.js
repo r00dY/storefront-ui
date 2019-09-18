@@ -16,10 +16,14 @@ import { useTheme } from "storefront-ui/Theme";
 import { StatefulPagination } from "../theme/Pagination";
 import { StatefulSelect } from "../theme/Select";
 import CategoryCardCompact from "../theme/CategoryCardCompact";
+import FilterResultPills from "../theme/FilterResultPills";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ButtonRaw } from "../theme/ButtonRaw";
 
 import data from "../data";
 import useProducts from "../helpers/useProducts";
+
+import IconClose from "../svg/close.svg";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -155,7 +159,12 @@ const CollectionPage = props => {
           ${rslin(theme.spacings.s100, theme.spacings.s120).css("padding-top")}
         `}
       >
-        <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
+        <GridItem
+          params={{ xs: 0, md: 6, lg: 5, xl: 4 }}
+          css={css`
+            ${L.gutter.multiply(3).css("padding-right")}
+          `}
+        >
           <FiltersColumn
             data={data.filters}
             value={filtersValue}
@@ -169,43 +178,70 @@ const CollectionPage = props => {
         <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
           <div
             css={css`
-                display: flex;
-                justify-content: space-between;
-                align-items: center;
-                height: 50px;
-                ${rslin(theme.spacings.s70, theme.spacings.s70).css(
-                  "margin-bottom"
-                )}
-                ${theme.fonts.body1.css}
-                ${R.to("sm").css("display: none;")}
-              `}
+              display: flex;
+              position: relative;
+              justify-content: space-between;
+              ${rslin(theme.spacings.s70, theme.spacings.s70).css(
+                "margin-bottom"
+              )}
+              ${theme.fonts.body1.css}
+            `}
           >
-            <div
-              css={css`
-                flex-grow: 1;
-                ${R.to("sm").css("text-align: center;")}
-              `}
-            >
-              {data.products.length} items
+            <div>
+              <FilterResultPills
+                filters={[
+                  {
+                    type: "text",
+                    params: { label: "Certified Organic" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Sulfate Free" }
+                  },
+                  {
+                    type: "color",
+                    params: { label: "Orange", color: "#e45d46" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: `Price: $1.50 \u2014 $3.00 ` }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Mineral Oil Free" }
+                  },
+                  {
+                    type: "text",
+                    params: { label: "Non GMO" }
+                  }
+                ]}
+              />
             </div>
-
             <Device desktop>
               <div
                 css={css`
-                  margin-right: 1em;
-                  white-space: nowrap;
+                  display: flex;
+                  align-items: center;
+                  height: 50px;
                 `}
               >
-                Sort by:
+                <div
+                  css={css`
+                    margin-right: 1em;
+                    white-space: nowrap;
+                  `}
+                >
+                  Sort by:
+                </div>
+                <StatefulSelect
+                  compact
+                  options={sortOptions}
+                  onChange={() => {
+                    query();
+                  }}
+                  initValue={sortOptions[0]}
+                />
               </div>
-              <StatefulSelect
-                compact
-                options={sortOptions}
-                onChange={() => {
-                  query();
-                }}
-                initValue={sortOptions[0]}
-              />
             </Device>
           </div>
 
@@ -253,7 +289,7 @@ const CollectionPage = props => {
       <div>
         <Device mobile>
           <NavBarCollection
-            title={"Snacks"}
+            title={props.isCategory ? "Bath" : "Beauty"}
             onFilterClick={() => {
               setFiltersModalOpened(true);
             }}
@@ -267,32 +303,60 @@ const CollectionPage = props => {
             }}
             isOpen={filtersModalOpened}
             onRequestClose={() => setFiltersModalOpened(false)}
-            header={"Filters"}
+            header={() => (
+              <div
+                css={css`${theme.fonts.body1.css} border-bottom: 1px solid ${
+                  theme.colors.mono200.css
+                };`}
+              >
+                <LayoutLeftCenterRight
+                  left={
+                    <ButtonRaw
+                      css={css`
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        height: 100%;
+                        ${L.margin.css("padding-right")}
+                        ${L.margin.css("padding-left")}
+                      `}
+                      onClick={() => setFiltersModalOpened(false)}
+                    >
+                      <IconClose />
+                    </ButtonRaw>
+                  }
+                  center={"Filters"}
+                  height={50}
+                  right={
+                    <Button
+                      kind={"minimal"}
+                      css={css`
+                        ${L.margin.css("padding-right")}
+                        ${L.margin.css("padding-left")}
+                      `}
+                    >
+                      Clear all
+                    </Button>
+                  }
+                />
+              </div>
+            )}
             footer={() => (
               <div
                 css={css`
                   padding: ${theme.spacings.s40}px;
-                  border-top: 1px solid ${theme.colors.mono300.css};
+                  border-top: 1px solid ${theme.colors.mono200.css};
                 `}
               >
-                <Grid gutter={10}>
-                  <GridItem params={12}>
-                    <Button kind={"secondary"} fitContainer={true}>
-                      Clear all
-                    </Button>
-                  </GridItem>
-                  <GridItem params={12}>
-                    <Button
-                      fitContainer={true}
-                      onClick={() => {
-                        setFiltersModalOpened(false);
-                        query(scrollTop);
-                      }}
-                    >
-                      Apply (55)
-                    </Button>
-                  </GridItem>
-                </Grid>
+                <Button
+                  fitContainer={true}
+                  onClick={() => {
+                    setFiltersModalOpened(false);
+                    query(scrollTop);
+                  }}
+                >
+                  Apply (55)
+                </Button>
               </div>
             )}
           >

@@ -115,6 +115,7 @@ const Cart = () => {
             background: white;
             box-sizing: border-box;
             padding-bottom: 4px;
+            border-top: 1px solid ${theme.colors.mono200.css};
           `}
         >
           <Container>
