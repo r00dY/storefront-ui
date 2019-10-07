@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { StatefulTextarea as Textarea } from "../../../../demo/components/Textarea";
-import { StatefulTextarea$ } from "storefront-ui/Textarea";
+import { StatefulTextarea$ } from "@commerce-ui/core/Textarea";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

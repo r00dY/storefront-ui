@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { FiltersColumn } from "storefront-ui/Filters";
-import Button from "storefront-ui/Button";
+import { FiltersColumn } from "@commerce-ui/core/Filters";
+import Button from "@commerce-ui/core/Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

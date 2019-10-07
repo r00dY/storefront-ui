@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import { Button } from "storefront-ui/Button";
-import Popup from "storefront-ui/Popup";
-import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
-import { DropdownMenu, DropdownMenuItem } from "storefront-ui/DropdownMenu";
+import { Button } from "@commerce-ui/core/Button";
+import Popup from "@commerce-ui/core/Popup";
+import StorefrontUIContext from "@commerce-ui/core/StorefrontUIContext";
+import { DropdownMenu, DropdownMenuItem } from "@commerce-ui/core/DropdownMenu";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

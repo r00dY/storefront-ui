@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { ButtonGroup$ } from "storefront-ui/ButtonGroup";
-import { Button$ } from "storefront-ui/Button";
+import { ButtonGroup$ } from "@commerce-ui/core/ButtonGroup";
+import { Button$ } from "@commerce-ui/core/Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

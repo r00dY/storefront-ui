@@ -5,7 +5,7 @@ import { StatefulInput } from "../../../../demo/components/Input";
 import { StatefulTextarea } from "../../../../demo/components/Textarea";
 import { StatefulRadioGroup, Radio } from "../../../../demo/components/Radio";
 
-import { FormControl$ } from "storefront-ui/FormControl";
+import { FormControl$ } from "@commerce-ui/core/FormControl";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

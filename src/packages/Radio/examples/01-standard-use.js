@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { Radio, RadioGroup } from "../../../../demo/components/Radio";
 
-import { Radio$, RadioGroup$ } from "storefront-ui/Radio";
+import { Radio$, RadioGroup$ } from "@commerce-ui/core/Radio";
 
-import { ThemeProvider } from "storefront-ui/Theme";
+import { ThemeProvider } from "@commerce-ui/core/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

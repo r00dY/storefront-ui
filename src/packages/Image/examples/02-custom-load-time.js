@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
 import { Image } from "../../../../demo/components/Image";
-import Color from "storefront-ui/Color";
+import Color from "@commerce-ui/core/Color";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

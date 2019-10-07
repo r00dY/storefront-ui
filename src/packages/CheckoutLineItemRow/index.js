@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { rs, rslin } from "responsive-helpers";
-import { R } from "storefront-ui/Config";
+import { R } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
 import { ButtonRaw$ } from "../ButtonRaw";
 import { Button$ } from "../Button";

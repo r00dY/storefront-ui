@@ -2,7 +2,7 @@ import React, { useState } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 const SpacingBox = ({ spacing }) => {
   const theme = useTheme();

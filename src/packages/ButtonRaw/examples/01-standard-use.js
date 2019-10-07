@@ -1,5 +1,5 @@
 import React from "react";
-import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
+import { ButtonRaw$ } from "@commerce-ui/core/ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

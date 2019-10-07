@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Checkbox$ } from "storefront-ui/Checkbox";
+import { Checkbox$ } from "@commerce-ui/core/Checkbox";
 import { Checkbox } from "../../../../demo/components/Checkbox";
 
 /** @jsx jsx */

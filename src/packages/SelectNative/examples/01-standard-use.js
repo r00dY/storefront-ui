@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   SelectNative$,
   StatefulSelectNative$
-} from "storefront-ui/SelectNative";
+} from "@commerce-ui/core/SelectNative";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

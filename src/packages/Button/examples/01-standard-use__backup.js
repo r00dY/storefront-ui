@@ -1,6 +1,6 @@
 import React from "react";
-import Button from "storefront-ui/Button";
-import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
+import Button from "@commerce-ui/core/Button";
+import StorefrontUIContext from "@commerce-ui/core/StorefrontUIContext";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

@@ -1,6 +1,6 @@
 import React from "react";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
 
 import Rectangle from "../../../../docs-utils/Rectangle";
 

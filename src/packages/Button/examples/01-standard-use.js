@@ -1,5 +1,5 @@
 import React from "react";
-import { Button$ } from "storefront-ui/Button";
+import { Button$ } from "@commerce-ui/core/Button";
 // import { ThemeProvider } from "../../Theme";
 
 /** @jsx jsx */

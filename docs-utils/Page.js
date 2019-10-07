@@ -4,9 +4,7 @@ import Link from "next/link";
 import packageJson from "../package.json";
 import { menuWidth } from "./layoutVars";
 
-import { R } from "storefront-ui/Config";
-
-import Color from "../src/packages/Color";
+import { R } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

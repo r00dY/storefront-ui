@@ -1,9 +1,9 @@
 import React from "react";
 
-import { useImageMosaic } from "storefront-ui/ImageMosaic";
+import { useImageMosaic } from "@commerce-ui/core/ImageMosaic";
 import { ImageMosaic } from "../../../../demo/components/ImageMosaic";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Dots from "storefront-ui/Dots";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Dots from "@commerce-ui/core/Dots";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

@@ -2,8 +2,6 @@ import React from "react";
 import Page from "../docs-utils/Page";
 import { md } from "../docs-utils/docs";
 
-import { C, F } from "storefront-ui/Config";
-
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 

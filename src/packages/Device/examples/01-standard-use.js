@@ -1,6 +1,6 @@
 import React from "react";
 
-import Device from "storefront-ui/Device";
+import Device from "@commerce-ui/core/Device";
 
 export default () => {
   return (
