@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
 import { rslin } from "responsive-helpers";
-import { useTheme } from "storefront-ui/Theme";
-import useScrollDirection from "storefront-ui/useScrollDirection";
-import useScrollSegment from "storefront-ui/useScrollSegment";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
+import { useTheme } from "@commerce-ui/core/Theme";
+import useScrollDirection from "@commerce-ui/core/useScrollDirection";
+import useScrollSegment from "@commerce-ui/core/useScrollSegment";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import Image from "storefront-ui/Image";
+} from "@commerce-ui/core/SwipeableItemsContainer";
+import Image from "@commerce-ui/core/Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -26,7 +26,7 @@ import SizePicker from "../components/SizePicker/SizePicker";
 import ProductSlider from "../components/ProductSlider/ProductSlider";
 import { ProductCardTheme1 } from "../components/ProductCard";
 import Price from "../components/Price";
-import Device from "storefront-ui/Device";
+import Device from "@commerce-ui/core/Device";
 
 import data from "../data";
 import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
@@ -37,7 +37,7 @@ import { Select, StatefulSelect } from "../components/Select";
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import LayoutRow from "storefront-ui/LayoutRow";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
 import { ButtonRaw } from "../components/ButtonRaw";
 import { Stars } from "../components/Stars";
 import ThemeLink from "../components/ThemeLink";

@@ -1,1 +1,1 @@
-export { FormHeader$ as FormHeader } from "storefront-ui/FormHeader";
+export { FormHeader$ as FormHeader } from "@commerce-ui/core/FormHeader";

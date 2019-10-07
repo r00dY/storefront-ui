@@ -1,4 +1,4 @@
-import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
+import { AccordionHeader$ } from "@commerce-ui/core/AccordionHeader";
 
 import IconExpandMore from "../../svg/expand_more.svg";
 import IconExpandLess from "../../svg/expand_less.svg";

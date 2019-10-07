@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { AccordionHeader$ } from "@commerce-ui/core/AccordionHeader";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { rslin } from "responsive-helpers";
 
-import { Accordion$ } from "storefront-ui/Accordion";
+import { Accordion$ } from "@commerce-ui/core/Accordion";
 import { StatefulInput } from "../components/Input";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import data from "../data";
 import { Image } from "../components/Image";
 

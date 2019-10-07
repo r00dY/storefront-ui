@@ -1,9 +1,9 @@
 import React from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
-import { L } from "storefront-ui/Config";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { L } from "@commerce-ui/core/Config";
 
 import { rslin } from "responsive-helpers";
 

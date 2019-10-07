@@ -9,8 +9,6 @@ import { getOverrides } from "../../base/helpers/overrides";
 
 import { RootStyled, StepStyled, SeparatorStyled } from "./styled-components";
 
-import { Button$ } from "storefront-ui/Button";
-
 const ProgressSteps$ = props => {
   const {
     data,

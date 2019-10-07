@@ -5,17 +5,17 @@ import styled from "@emotion/styled";
 import { css, jsx } from "@emotion/core";
 
 import { rs, rslin } from "responsive-helpers";
-import { R, F, C, L, Color } from "storefront-ui/Config";
+import { R, F, C, L, Color } from "@commerce-ui/core/Config";
 
 import { Image, ImageZoomable } from "../Image";
-import StickyColumn from "storefront-ui/StickyColumn";
-import Container from "storefront-ui/Container";
+import StickyColumn from "@commerce-ui/core/StickyColumn";
+import Container from "@commerce-ui/core/Container";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
+} from "@commerce-ui/core/SwipeableItemsContainer";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import Device from "@commerce-ui/core/Device";
 
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
@@ -23,7 +23,7 @@ import IconHeartFill from "../../svg/heart_fill.svg";
 import { Button } from "../Button";
 import Price from "../Price";
 
-import { showNotification } from "storefront-ui/Notifications";
+import { showNotification } from "@commerce-ui/core/Notifications";
 
 import { Select } from "../Select";
 import useAddToCartWithSize from "../../helpers/useAddToCartWithSize";

@@ -11,8 +11,8 @@ import { StatefulInput } from "../Input";
 import { Button } from "../Button";
 import { Ledger } from "../Ledger";
 
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
+import { useTheme } from "@commerce-ui/core/Theme";
+import Device from "@commerce-ui/core/Device";
 //
 // let products = [
 //   data.products[0],

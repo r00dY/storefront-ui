@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { rslin } from "responsive-helpers";
-import { R, L } from "storefront-ui/Config";
-import Container from "storefront-ui/Container";
+import { R, L } from "@commerce-ui/core/Config";
+import Container from "@commerce-ui/core/Container";
 import SectionTitle from "../SectionTitle";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 function TwoBoxes(props) {
   const theme = useTheme();

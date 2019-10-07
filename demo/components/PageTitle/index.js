@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import { rslin } from "responsive-helpers";
 
 const PageTitle = props => {

@@ -1,5 +1,5 @@
-import { Divider$ } from "storefront-ui/Divider";
-import { useTheme } from "storefront-ui/Theme";
+import { Divider$ } from "@commerce-ui/core/Divider";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 export const Divider = props => {
   const theme = useTheme();

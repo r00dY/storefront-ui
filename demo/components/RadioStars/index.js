@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import React, { useState } from "react";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import { rslin } from "responsive-helpers";
 
-import { Radio$, RadioGroup$ } from "storefront-ui/Radio";
+import { Radio$, RadioGroup$ } from "@commerce-ui/core/Radio";
 
 import Star from "../Star";
 

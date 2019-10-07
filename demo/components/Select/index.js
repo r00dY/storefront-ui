@@ -1,10 +1,10 @@
-import { Select$, StatefulSelect$ } from "storefront-ui/Select";
+import { Select$, StatefulSelect$ } from "@commerce-ui/core/Select";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { Popover } from "../Popover";
 import { Modal } from "../Modal";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 const overrides = (props, theme) => ({
   Item: ({ option, selected }) => (

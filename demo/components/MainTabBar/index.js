@@ -1,10 +1,10 @@
-import { TabBar$ } from "storefront-ui/TabBar";
+import { TabBar$ } from "@commerce-ui/core/TabBar";
 
 import React, { useEffect } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import IconHome from "../../svg/home.svg";
 import IconMenu from "../../svg/menu.svg";

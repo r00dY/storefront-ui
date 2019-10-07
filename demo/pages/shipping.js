@@ -1,18 +1,10 @@
 import React from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
-import { L } from "storefront-ui/Config";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { L } from "@commerce-ui/core/Config";
 
 import { rslin } from "responsive-helpers";
-
-import { Input, StatefulInput } from "../components/Input";
-
-import routerPush from "../helpers/routerPush";
-
-import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

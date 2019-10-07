@@ -1,11 +1,11 @@
 import { rslin } from "responsive-helpers";
 import React, { useState } from "react";
-import Container from "storefront-ui/Container";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { useTheme } from "storefront-ui/Theme";
-import { AccordionRaw } from "storefront-ui/Accordion";
-import Device from "storefront-ui/Device";
-import { L } from "storefront-ui/Config";
+import Container from "@commerce-ui/core/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { AccordionRaw } from "@commerce-ui/core/Accordion";
+import Device from "@commerce-ui/core/Device";
+import { L } from "@commerce-ui/core/Config";
 import CheckoutSidebar from "../CheckoutSidebar";
 
 import Link from "next/link";

@@ -1,10 +1,10 @@
 import React from "react";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
-// import { Grid, GridItem } from "storefront-ui/Grid";
+// import { Grid, GridItem } from "@commerce-ui/core/Grid";
 // import { rslin } from "responsive-helpers";
-// import { R } from "storefront-ui/Config";
+// import { R } from "@commerce-ui/core/Config";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

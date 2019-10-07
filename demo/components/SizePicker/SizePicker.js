@@ -6,9 +6,9 @@ import styled from "@emotion/styled";
 import { css, jsx } from "@emotion/core";
 
 import { rslin } from "responsive-helpers";
-import { R, F, C, S } from "storefront-ui/Config";
+import { R, F, C, S } from "@commerce-ui/core/Config";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 function SizePicker(props) {
   const theme = useTheme();

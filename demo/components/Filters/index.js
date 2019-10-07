@@ -1,9 +1,9 @@
-import { FiltersColumn$ } from "storefront-ui/Filters";
+import { FiltersColumn$ } from "@commerce-ui/core/Filters";
 import { AccordionHeader } from "../AccordionHeader";
 import { ItemListAccordion } from "../ItemListAccordion";
 import { RangePicker } from "../RangePicker";
 import { ButtonRaw } from "../ButtonRaw";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import React from "react";
 

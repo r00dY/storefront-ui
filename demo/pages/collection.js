@@ -1,18 +1,18 @@
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import { rslin } from "responsive-helpers";
-import Container from "storefront-ui/Container";
+import Container from "@commerce-ui/core/Container";
 import { FiltersColumn } from "../components/Filters";
 import { Button } from "../components/Button";
-import { L, R } from "storefront-ui/Config";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import Device from "storefront-ui/Device";
+import { L, R } from "@commerce-ui/core/Config";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
+import Device from "@commerce-ui/core/Device";
 import { Modal } from "../components/Modal";
-import useScrollSegment from "storefront-ui/useScrollSegment";
+import useScrollSegment from "@commerce-ui/core/useScrollSegment";
 import { ProductCardTheme1 } from "../components/ProductCard";
 import NavBarMobile from "../components/NavBarMobile";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import { StatefulPagination } from "../components/Pagination";
 import { StatefulSelect } from "../components/Select";
 import CategoryCardCompact from "../components/CategoryCardCompact";

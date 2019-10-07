@@ -3,7 +3,7 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { Radio$ } from "storefront-ui/Radio";
+import { Radio$ } from "@commerce-ui/core/Radio";
 
 const RadioBorder = props => (
   <Radio$

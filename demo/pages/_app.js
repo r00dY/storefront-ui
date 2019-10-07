@@ -1,16 +1,15 @@
 import React from "react";
 import App, { Container } from "next/app";
 
-import { GridDebugger } from "storefront-ui/Grid";
+import { GridDebugger } from "@commerce-ui/core/Grid";
 
 import theme from "../components/config";
-import Root from "storefront-ui/Root";
+import Root from "@commerce-ui/core/Root";
 
 import MainTabBar from "../components/MainTabBar";
-import NavBarMobile from "../components/NavBarMobile";
 import routerPush from "../helpers/routerPush";
 
-import Device from "storefront-ui/Device";
+import Device from "@commerce-ui/core/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

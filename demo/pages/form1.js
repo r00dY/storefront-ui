@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { useTheme } from "storefront-ui/Theme";
-import { Radio$ } from "storefront-ui/Radio";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { Radio$ } from "@commerce-ui/core/Radio";
 import {
   SelectNative$,
   StatefulSelectNative$
-} from "storefront-ui/SelectNative";
-import Device from "storefront-ui/Device";
+} from "@commerce-ui/core/SelectNative";
+import Device from "@commerce-ui/core/Device";
 
 import { FormHeader } from "../components/FormHeader";
 import { FormControl } from "../components/FormControl";
@@ -17,7 +17,7 @@ import { ProgressSteps } from "../components/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
 
-import { R } from "storefront-ui/Config";
+import { R } from "@commerce-ui/core/Config";
 
 import routerPush from "../helpers/routerPush";
 

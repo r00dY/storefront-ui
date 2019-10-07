@@ -3,17 +3,17 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import Container from "storefront-ui/Container";
+import Container from "@commerce-ui/core/Container";
 import { ButtonRaw } from "../ButtonRaw";
 
 import IconArrowBack from "../../svg/arrow_back_ios.svg";
 import IconHeart from "../../svg/heart.svg";
 import IconSearch from "../../svg/search.svg";
 import IconCart from "../../svg/cart.svg";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import LayoutRow from "storefront-ui/LayoutRow";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
 
 import routerPush from "../../helpers/routerPush";
 import Router from "next/router";

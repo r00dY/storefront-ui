@@ -1,6 +1,6 @@
 import React from "react";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import { Image } from "../Image";
 
 /** @jsx jsx */

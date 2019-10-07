@@ -6,9 +6,10 @@ module.exports = {
     // Perform customizations to webpack config
     // Important: return the modified config
 
-    // config.resolve.alias["storefront-ui"] = path.resolve(__dirname, "../dist/");
-
-    config.resolve.alias["storefront-ui"] = `@r00dy/storefront-ui/`;
+    config.resolve.alias["@commerce-ui/core"] = path.resolve(
+      __dirname,
+      "../dist/"
+    );
 
     config.module.rules.push({
       test: /\.svg$/,

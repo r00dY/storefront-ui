@@ -1,4 +1,4 @@
 export {
   StatefulTextarea$ as StatefulTextarea,
   Textarea$ as Textarea
-} from "storefront-ui/Textarea";
+} from "@commerce-ui/core/Textarea";

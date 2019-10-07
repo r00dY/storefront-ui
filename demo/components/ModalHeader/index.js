@@ -3,9 +3,9 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
 import { ButtonRaw } from "../ButtonRaw";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import IconClose from "../../svg/x.svg";
 

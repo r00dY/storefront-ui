@@ -5,9 +5,9 @@ import PropTypes from "prop-types";
 import { css, jsx } from "@emotion/core";
 
 import { rslin } from "responsive-helpers";
-import Font from "storefront-ui/Font";
-import Container from "storefront-ui/Container";
-import { Grid, GridItem } from "storefront-ui/Grid";
+import Font from "@commerce-ui/core/Font";
+import Container from "@commerce-ui/core/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 function EditorialIntro(props) {
   return (

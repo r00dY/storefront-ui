@@ -1,5 +1,5 @@
 import React from "react";
-import { Modal$ } from "storefront-ui/Modal";
+import { Modal$ } from "@commerce-ui/core/Modal";
 import { ModalHeader } from "../ModalHeader";
 
 export const Modal = props => {

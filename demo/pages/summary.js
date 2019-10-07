@@ -1,35 +1,27 @@
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
-import { FormHeader } from "../components/FormHeader";
-import { StatefulRadioGroup, Radio } from "../components/Radio";
 import { Button } from "../components/Button";
-import IconArrowBack from "../svg/arrow_back.svg";
-import { R } from "storefront-ui/Config";
-import RadioBorder from "../components/RadioBorder";
-import OrderDetails from "../components/OrderDetails";
+import { R } from "@commerce-ui/core/Config";
 
 import {
   SelectNative$,
   StatefulSelectNative$
-} from "storefront-ui/SelectNative";
+} from "@commerce-ui/core/SelectNative";
 
 import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import Device from "storefront-ui/Device";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import React, { useState } from "react";
-import { ProgressSteps } from "../components/ProgressSteps";
-import CheckoutSidebar from "../components/CheckoutSidebar";
-import { Checkbox } from "../components/Checkbox";
 import { ButtonRaw } from "../components/ButtonRaw";
 import CheckoutPage from "../components/CheckoutPage";
 import routerPush from "../helpers/routerPush";
 
 import IconVisa from "../svg/visa-payment.svg";
 import IconMessenger from "../svg/messenger.svg";
+
 const Form3 = () => {
   const theme = useTheme();
   const spacer = rslin(theme.spacings.s100, theme.spacings.s140).css(

@@ -1,9 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { rslin } from "responsive-helpers";
-import { L, F, C, S, R } from "storefront-ui/Config";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
+import { L, F, C, S, R } from "@commerce-ui/core/Config";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
 import { Image } from "../../Image";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

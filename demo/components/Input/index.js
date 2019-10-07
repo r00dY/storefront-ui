@@ -1,5 +1,5 @@
-import { StatefulInput$, Input$ } from "storefront-ui/Input";
-import { useTheme } from "storefront-ui/Theme";
+import { StatefulInput$, Input$ } from "@commerce-ui/core/Input";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

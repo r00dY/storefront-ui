@@ -1,1 +1,1 @@
-export { FormControl$ as FormControl } from "storefront-ui/FormControl";
+export { FormControl$ as FormControl } from "@commerce-ui/core/FormControl";

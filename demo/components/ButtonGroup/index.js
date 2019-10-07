@@ -1,1 +1,1 @@
-export { ButtonGroup$ as ButtonGroup } from "storefront-ui/ButtonGroup";
+export { ButtonGroup$ as ButtonGroup } from "@commerce-ui/core/ButtonGroup";

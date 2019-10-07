@@ -1,4 +1,4 @@
-import { Accordion$ } from "storefront-ui/Accordion";
+import { Accordion$ } from "@commerce-ui/core/Accordion";
 import { AccordionHeader } from "../AccordionHeader";
 
 export const Accordion = props => (

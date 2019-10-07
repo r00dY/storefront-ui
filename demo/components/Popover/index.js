@@ -1,4 +1,4 @@
-import { Popover$, StatefulPopover$ } from "storefront-ui/Popover";
+import { Popover$, StatefulPopover$ } from "@commerce-ui/core/Popover";
 
 const overrides = {
   Body: {

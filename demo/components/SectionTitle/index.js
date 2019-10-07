@@ -4,9 +4,9 @@ import PropTypes from "prop-types";
 import { css, jsx } from "@emotion/core";
 
 import { rslin, rs, rm } from "responsive-helpers";
-import { L, R } from "storefront-ui/Config";
+import { L, R } from "@commerce-ui/core/Config";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 function SectionTitle(props) {
   const theme = useTheme();

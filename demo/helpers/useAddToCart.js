@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import { showNotification } from "storefront-ui/Notifications";
+import { showNotification } from "@commerce-ui/core/Notifications";
 import { CheckoutLineItemRowTheme1 } from "../components/CheckoutLineItemRow";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import { Button } from "../components/Button";
 

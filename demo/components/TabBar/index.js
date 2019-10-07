@@ -1,5 +1,5 @@
-import { TabBar$ } from "storefront-ui/TabBar";
-import { useTheme } from "storefront-ui/Theme";
+import { TabBar$ } from "@commerce-ui/core/TabBar";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

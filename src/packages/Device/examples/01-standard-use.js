@@ -1,7 +1,6 @@
 import React from "react";
 
 import Device from "storefront-ui/Device";
-import { R } from "storefront-ui/Config";
 
 export default () => {
   return (

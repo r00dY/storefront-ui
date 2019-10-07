@@ -5,7 +5,7 @@ import { Root } from "./styled-components";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import Money from "storefront-ui/utils/Money";
+import Money from "@commerce-ui/core/utils/Money";
 
 const Price = props => {
   const { price, priceDiscount, alignRight } = props;

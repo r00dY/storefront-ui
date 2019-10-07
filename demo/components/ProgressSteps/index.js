@@ -3,13 +3,13 @@ import React from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { ProgressSteps$ } from "storefront-ui/ProgressSteps";
+import { ProgressSteps$ } from "@commerce-ui/core/ProgressSteps";
 
 import { Button } from "../Button";
 import Link from "next/link";
 
 import IconArrow from "../../svg/arrow_forward_ios.svg";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import routerPush from "../../helpers/routerPush";
 
 const overrides = {

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { ImageMosaic$ } from "storefront-ui/ImageMosaic";
+import { ImageMosaic$ } from "@commerce-ui/core/ImageMosaic";
 import { ImageZoomable } from "../Image";
 
 export const ImageMosaic = React.forwardRef((props, ref) => (

@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 import { Input, StatefulInput } from "../components/Input";
-import Container from "storefront-ui/Container";
+import Container from "@commerce-ui/core/Container";
 import { useRouter } from "next/router";
 
 // import data from "../data";
@@ -15,7 +15,7 @@ import { useRouter } from "next/router";
 import NavBarMobileSearch from "../components/NavBarMobileSearch";
 import { SearchListItem } from "../components/SearchListItem";
 import { Button } from "../components/Button";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 const currentItems = [
   {
@@ -117,17 +117,6 @@ const Search = props => {
 
   const currentSearch = ({ phrase, items }) => (
     <div>
-      {/*<Container*/}
-      {/*css={css`*/}
-      {/*display: flex;*/}
-      {/*justify-content: space-between;*/}
-      {/*align-items: center;*/}
-      {/*height: 40px;*/}
-      {/*${theme.fonts.body1.css}*/}
-      {/*`}*/}
-      {/*>*/}
-      {/*Current phrase: {phrase}*/}
-      {/*</Container>*/}
       {items.map((item, index) => (
         <SearchListItem item={item} key={index} icon={"go"} />
       ))}

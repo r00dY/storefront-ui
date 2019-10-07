@@ -8,9 +8,9 @@ import { FormControl } from "../FormControl";
 import { StatefulInput } from "../Input";
 import { Button } from "../Button";
 import { Divider } from "../Divider";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 import IconFacebook from "./facebook_logo.svg";
 import ThemeLink from "../ThemeLink";

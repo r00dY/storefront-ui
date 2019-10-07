@@ -1,7 +1,7 @@
-import { createTheme } from "storefront-ui/Theme";
-import Layout from "storefront-ui/Layout";
-import Font from "storefront-ui/Font";
-import Color from "storefront-ui/Color";
+import { createTheme } from "@commerce-ui/core/Theme";
+import Layout from "@commerce-ui/core/Layout";
+import Font from "@commerce-ui/core/Font";
+import Color from "@commerce-ui/core/Color";
 
 import { rslin, rs } from "responsive-helpers";
 

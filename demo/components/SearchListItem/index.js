@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
-import { L } from "storefront-ui/Config";
+import { L } from "@commerce-ui/core/Config";
 
 const SearchListItem = ({ focused, item, icon }) => {
   const theme = useTheme();

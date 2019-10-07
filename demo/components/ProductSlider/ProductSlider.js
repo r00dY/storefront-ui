@@ -2,14 +2,14 @@ import React from "react";
 import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 import { rslin, rs } from "responsive-helpers";
-import { R, F, C, S, L } from "storefront-ui/Config";
+import { R, F, C, S, L } from "@commerce-ui/core/Config";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import Container from "storefront-ui/Container";
+} from "@commerce-ui/core/SwipeableItemsContainer";
+import Container from "@commerce-ui/core/Container";
 
 import IconArrowLeft from "../../svg/keyboard_arrow_left.svg";
 import IconArrowRight from "../../svg/keyboard_arrow_right.svg";

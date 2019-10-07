@@ -1,4 +1,4 @@
-import { Button$ } from "storefront-ui/Button";
+import { Button$ } from "@commerce-ui/core/Button";
 
 const overrides = {
   BaseButton: {

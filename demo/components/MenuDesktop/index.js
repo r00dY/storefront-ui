@@ -2,13 +2,13 @@ import React, { useState } from "react";
 
 import { Modal } from "../Modal";
 
-import { MenuDesktop$ } from "storefront-ui/MenuDesktop";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import LayoutRow from "storefront-ui/LayoutRow";
-import useScrollDirection from "storefront-ui/useScrollDirection";
-import useScrollSegment from "storefront-ui/useScrollSegment";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
+import { MenuDesktop$ } from "@commerce-ui/core/MenuDesktop";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
+import useScrollDirection from "@commerce-ui/core/useScrollDirection";
+import useScrollSegment from "@commerce-ui/core/useScrollSegment";
+import Container from "@commerce-ui/core/Container";
+import { useTheme } from "@commerce-ui/core/Theme";
 import Link from "next/link";
 
 import { Button } from "../Button";

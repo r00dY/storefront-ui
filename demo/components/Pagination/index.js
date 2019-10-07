@@ -5,14 +5,14 @@ import { css, jsx } from "@emotion/core";
 
 import { Button } from "../Button";
 import { SelectNative } from "../SelectNative";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 
-import LayoutRow from "storefront-ui/LayoutRow";
-import { Pagination$, StatefulPagination$ } from "storefront-ui/Pagination";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
+import { Pagination$, StatefulPagination$ } from "@commerce-ui/core/Pagination";
 
 import IconBack from "../../svg/keyboard_arrow_left.svg";
 import IconForward from "../../svg/keyboard_arrow_right.svg";
-import Device from "storefront-ui/Device";
+import Device from "@commerce-ui/core/Device";
 
 const overrides = {
   Root: ({

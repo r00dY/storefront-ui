@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../Button";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import Link from "next/link";
 
 /** @jsx jsx */

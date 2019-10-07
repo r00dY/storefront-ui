@@ -1,4 +1,4 @@
-import ProductCard$ from "storefront-ui/ProductCard";
+import ProductCard$ from "@commerce-ui/core/ProductCard";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -6,7 +6,7 @@ import { css, jsx } from "@emotion/core";
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
 
-import { ButtonRaw$ } from "storefront-ui/ButtonRaw";
+import { ButtonRaw$ } from "@commerce-ui/core/ButtonRaw";
 import Price from "../Price";
 import { rslin } from "responsive-helpers";
 
