@@ -1,5 +1,5 @@
 {
-  "name": "@r00dy/storefront-ui",
+  "name": "@commerce-ui/core",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope storefront-ui",
