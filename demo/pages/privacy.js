@@ -11,7 +11,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import TextSection from "../theme/TextSection";
+import TextSection from "../components/TextSection";
 
 const Shipping = () => {
   const theme = useTheme();

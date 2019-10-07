@@ -4,7 +4,7 @@ import SwipeableItemsContainer, {
 } from "storefront-ui/SwipeableItemsContainer";
 
 import { rslin } from "responsive-helpers";
-import { ButtonRaw } from "../../../../demo/theme/ButtonRaw";
+import { ButtonRaw } from "../../../../demo/components/ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

@@ -1,12 +1,12 @@
 import { Grid, GridItem } from "storefront-ui/Grid";
 
-import { FormHeader } from "../theme/FormHeader";
-import { StatefulRadioGroup, Radio } from "../theme/Radio";
-import { Button } from "../theme/Button";
+import { FormHeader } from "../components/FormHeader";
+import { StatefulRadioGroup, Radio } from "../components/Radio";
+import { Button } from "../components/Button";
 import IconArrowBack from "../svg/arrow_back.svg";
 
 import { Radio$ } from "storefront-ui/Radio";
-import RadioBorder from "../theme/RadioBorder";
+import RadioBorder from "../components/RadioBorder";
 import Device from "storefront-ui/Device";
 import { R } from "storefront-ui/Config";
 
@@ -22,8 +22,8 @@ import { css, jsx } from "@emotion/core";
 
 import { useTheme } from "storefront-ui/Theme";
 import React, { useState } from "react";
-import OrderDetails from "../theme/OrderDetails";
-import { ProgressSteps } from "../theme/ProgressSteps";
+import OrderDetails from "../components/OrderDetails";
+import { ProgressSteps } from "../components/ProgressSteps";
 import CheckoutPage from "../components/CheckoutPage";
 import routerPush from "../helpers/routerPush";
 

@@ -5,16 +5,16 @@ import { Grid, GridItem } from "storefront-ui/Grid";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { Input, StatefulInput } from "../theme/Input";
+import { Input, StatefulInput } from "../components/Input";
 import Container from "storefront-ui/Container";
 import { useRouter } from "next/router";
 
 // import data from "../data";
 // import { CheckoutLineItemRow } from "../theme/CheckoutLineItemRow";
 
-import NavBarMobileSearch from "../theme/NavBarMobileSearch";
-import { SearchListItem } from "../theme/SearchListItem";
-import { Button } from "../theme/Button";
+import NavBarMobileSearch from "../components/NavBarMobileSearch";
+import { SearchListItem } from "../components/SearchListItem";
+import { Button } from "../components/Button";
 import { useTheme } from "storefront-ui/Theme";
 
 const currentItems = [

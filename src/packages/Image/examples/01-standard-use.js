@@ -1,7 +1,7 @@
 // import {Image, Grid, GridItem} from "storefront-ui";
 import React from "react";
 
-import { Image } from "../../../../demo/theme/Image";
+import { Image } from "../../../../demo/components/Image";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */

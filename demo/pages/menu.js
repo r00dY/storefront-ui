@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 
-import Page from "../components/Page";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Container from "storefront-ui/Container";
 import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
@@ -11,13 +10,13 @@ import styled from "@emotion/styled";
 import { rslin } from "responsive-helpers";
 
 import { Accordion$ } from "storefront-ui/Accordion";
-import { StatefulInput } from "../theme/Input";
+import { StatefulInput } from "../components/Input";
 import { useTheme } from "storefront-ui/Theme";
 import data from "../data";
-import { Image } from "../theme/Image";
+import { Image } from "../components/Image";
 
 import routerPush from "../helpers/routerPush";
-import { ButtonRaw } from "../theme/ButtonRaw";
+import { ButtonRaw } from "../components/ButtonRaw";
 
 const Menu = () => {
   const theme = useTheme();

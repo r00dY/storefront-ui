@@ -6,18 +6,17 @@ import { useTheme } from "storefront-ui/Theme";
 import { AccordionRaw } from "storefront-ui/Accordion";
 import Device from "storefront-ui/Device";
 import { L } from "storefront-ui/Config";
-import Page from "../Page";
 import CheckoutSidebar from "../CheckoutSidebar";
 
 import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { ButtonRaw } from "../../theme/ButtonRaw";
+import { ButtonRaw } from "../ButtonRaw";
 
-import IconExpandMore from "./baseline-expand_more-24px.svg";
-import IconExpandLess from "./baseline-expand_less-24px.svg";
-import IconCart from "./outline-shopping_cart-24px.svg";
+import IconExpandMore from "../../svg/expand_more.svg";
+import IconExpandLess from "../../svg/expand_less.svg";
+import IconCart from "../../svg/cart.svg";
 
 const CheckoutPage = props => {
   const theme = useTheme();

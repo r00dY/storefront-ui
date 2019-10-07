@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import { Select$, StatefulSelect$ } from "storefront-ui/Select";
 
 import { Popover$ } from "storefront-ui/Popover";
-import { Popover } from "../../../../demo/theme/Popover";
+import { Popover } from "../../../../demo/components/Popover";
 
 import { Modal$ } from "storefront-ui/Modal";
-import { Modal } from "../../../../demo/theme/Modal";
+import { Modal } from "../../../../demo/components/Modal";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

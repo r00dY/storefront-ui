@@ -8,11 +8,11 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 
 import { useRouter } from "next/router";
-import NavBarMobile from "../theme/NavBarMobile";
+import NavBarMobile from "../components/NavBarMobile";
 import data from "../data";
-import PageTitle from "../theme/PageTitle";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import { Button } from "../theme/Button";
+import PageTitle from "../components/PageTitle";
+import { ProductCardTheme1 } from "../components/ProductCard";
+import { Button } from "../components/Button";
 import useAddToCart from "../helpers/useAddToCart";
 
 const ProductCartWithButton = ({ product }) => {

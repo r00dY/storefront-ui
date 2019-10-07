@@ -3,7 +3,7 @@ import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { Modal } from "../../../../demo/theme/Modal";
+import { Modal } from "../../../../demo/components/Modal";
 import StorefrontUIContext from "storefront-ui/StorefrontUIContext";
 
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";

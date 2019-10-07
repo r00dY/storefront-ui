@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 import { showNotification } from "storefront-ui/Notifications";
-import { CheckoutLineItemRowTheme1 } from "../theme/CheckoutLineItemRow";
+import { CheckoutLineItemRowTheme1 } from "../components/CheckoutLineItemRow";
 import { useTheme } from "storefront-ui/Theme";
 
-import { Button } from "../theme/Button";
+import { Button } from "../components/Button";
 
 import routerPush from "../helpers/routerPush";
 

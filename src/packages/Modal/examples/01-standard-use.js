@@ -3,14 +3,14 @@ import React, { useState, useEffect, useRef } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { Modal } from "../../../../demo/theme/Modal";
+import { Modal } from "../../../../demo/components/Modal";
 import Color from "storefront-ui/Color";
 import Ease from "storefront-ui/Ease";
 
 import LoremIpsum from "../../../../docs-utils/LoremIpsum";
 
-import { Button } from "../../../../demo/theme/Button";
-import { StatefulPopover } from "../../../../demo/theme/Popover";
+import { Button } from "../../../../demo/components/Button";
+import { StatefulPopover } from "../../../../demo/components/Popover";
 
 export default () => {
   const configs = [

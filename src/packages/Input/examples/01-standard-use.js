@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Input } from "../../../../demo/theme/Input";
-import { StatefulInput } from "../../../../demo/theme/Input";
+import { Input } from "../../../../demo/components/Input";
+import { StatefulInput } from "../../../../demo/components/Input";
 import { Input$ } from "storefront-ui/Input";
 import { StatefulInput$ } from "storefront-ui/Input";
 

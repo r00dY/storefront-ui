@@ -1,12 +1,12 @@
 import { Grid, GridItem } from "storefront-ui/Grid";
 
-import { FormHeader } from "../theme/FormHeader";
-import { StatefulRadioGroup, Radio } from "../theme/Radio";
-import { Button } from "../theme/Button";
+import { FormHeader } from "../components/FormHeader";
+import { StatefulRadioGroup, Radio } from "../components/Radio";
+import { Button } from "../components/Button";
 import IconArrowBack from "../svg/arrow_back.svg";
 import { R } from "storefront-ui/Config";
-import RadioBorder from "../theme/RadioBorder";
-import OrderDetails from "../theme/OrderDetails";
+import RadioBorder from "../components/RadioBorder";
+import OrderDetails from "../components/OrderDetails";
 
 import {
   SelectNative$,
@@ -21,9 +21,9 @@ import Device from "storefront-ui/Device";
 
 import { useTheme } from "storefront-ui/Theme";
 import React, { useState } from "react";
-import { ProgressSteps } from "../theme/ProgressSteps";
+import { ProgressSteps } from "../components/ProgressSteps";
 import CheckoutSidebar from "../components/CheckoutSidebar";
-import { Checkbox } from "../theme/Checkbox";
+import { Checkbox } from "../components/Checkbox";
 import CheckoutPage from "../components/CheckoutPage";
 import routerPush from "../helpers/routerPush";
 

@@ -8,12 +8,12 @@ import { L } from "storefront-ui/Config";
 
 import { rslin } from "responsive-helpers";
 
-import { StatefulInput } from "../theme/Input";
+import { StatefulInput } from "../components/Input";
 import Banner from "../components/Banner";
-import TwoBanners from "../theme/TwoBanners";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import SectionTitle from "../theme/SectionTitle";
-import CategoryCard from "../theme/CategoryCard";
+import TwoBanners from "../components/TwoBanners";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import SectionTitle from "../components/SectionTitle";
+import CategoryCard from "../components/CategoryCard";
 
 import data from "../data";
 import routerPush from "../helpers/routerPush";

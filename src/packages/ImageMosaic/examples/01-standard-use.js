@@ -1,7 +1,7 @@
 import React from "react";
 
 import { useImageMosaic } from "storefront-ui/ImageMosaic";
-import { ImageMosaic } from "../../../../demo/theme/ImageMosaic";
+import { ImageMosaic } from "../../../../demo/components/ImageMosaic";
 import { Grid, GridItem } from "storefront-ui/Grid";
 import Dots from "storefront-ui/Dots";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { StatefulTextarea as Textarea } from "../../../../demo/theme/Textarea";
+import { StatefulTextarea as Textarea } from "../../../../demo/components/Textarea";
 import { StatefulTextarea$ } from "storefront-ui/Textarea";
 
 /** @jsx jsx */

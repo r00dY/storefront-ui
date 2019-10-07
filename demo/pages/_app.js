@@ -3,20 +3,20 @@ import App, { Container } from "next/app";
 
 import { GridDebugger } from "storefront-ui/Grid";
 
-import theme from "../theme/config";
+import theme from "../components/config";
 import Root from "storefront-ui/Root";
 
-import MainTabBar from "../theme/MainTabBar";
-import NavBarMobile from "../theme/NavBarMobile";
+import MainTabBar from "../components/MainTabBar";
+import NavBarMobile from "../components/NavBarMobile";
 import routerPush from "../helpers/routerPush";
 
 import Device from "storefront-ui/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
+import MenuDesktop, { MenuDesktopContent } from "../components/MenuDesktop";
 
-import Footer from "../theme/Footer";
+import Footer from "../components/Footer";
 import data from "../data";
 
 const tabs = [

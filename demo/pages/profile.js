@@ -6,8 +6,8 @@ import { useTheme } from "storefront-ui/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import PageTitle from "../theme/PageTitle";
-import ProfileLogInContent from "../theme/ProfileLogInContent";
+import PageTitle from "../components/PageTitle";
+import ProfileLogInContent from "../components/ProfileLogInContent";
 
 const Profile = () => {
   const theme = useTheme();

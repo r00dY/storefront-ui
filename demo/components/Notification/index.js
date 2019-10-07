@@ -1,4 +1,4 @@
-import { Button } from "../../theme/Button";
+import { Button } from "../Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

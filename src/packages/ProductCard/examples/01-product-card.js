@@ -1,5 +1,5 @@
 import React from "react";
-import { ProductCard } from "../../../../demo/theme/ProductCard";
+import { ProductCard } from "../../../../demo/components/ProductCard";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */

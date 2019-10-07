@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { TabBar } from "../../../../demo/theme/TabBar";
-import { Button } from "../../../../demo/theme/Button";
+import { TabBar } from "../../../../demo/components/TabBar";
+import { Button } from "../../../../demo/components/Button";
 import { TabBar$ } from "storefront-ui/TabBar";
 
 /** @jsx jsx */

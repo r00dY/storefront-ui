@@ -2,7 +2,7 @@ import React from "react";
 import {
   ProductCard,
   ProductCardTheme1
-} from "../../../../demo/theme/ProductCard";
+} from "../../../../demo/components/ProductCard";
 import { Grid, GridItem } from "storefront-ui/Grid";
 
 /** @jsx jsx */

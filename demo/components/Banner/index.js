@@ -1,5 +1,5 @@
 import React from "react";
-import { BannerInner, Banner } from "../../theme/Banner";
+import { BannerInner, Banner } from "./Banner";
 
 const Banner_ = props => (
   <Banner

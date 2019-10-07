@@ -15,34 +15,34 @@ import Image from "storefront-ui/Image";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import NavBarMobile from "../theme/NavBarMobile";
+import NavBarMobile from "../components/NavBarMobile";
 
-import { Button } from "../theme/Button";
-import ProductHead from "../theme/ProductHead/ProductHead";
-import { Accordion } from "../theme/Accordion";
-import EditorialHalfImage from "../theme/Editorial/EditorialHalfImage/EditorialHalfImage";
-import EditorialHeadline from "../theme/Editorial/EditorialHeadline/EditorialHeadline";
-import SizePicker from "../theme/SizePicker/SizePicker";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import Price from "../theme/Price";
+import { Button } from "../components/Button";
+import ProductHead from "../components/ProductHead/ProductHead";
+import { Accordion } from "../components/Accordion";
+import EditorialHalfImage from "../components/Editorial/EditorialHalfImage/EditorialHalfImage";
+import EditorialHeadline from "../components/Editorial/EditorialHeadline/EditorialHeadline";
+import SizePicker from "../components/SizePicker/SizePicker";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import { ProductCardTheme1 } from "../components/ProductCard";
+import Price from "../components/Price";
 import Device from "storefront-ui/Device";
 
 import data from "../data";
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 import useAddToCart from "../helpers/useAddToCart";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
-import { Select, StatefulSelect } from "../theme/Select";
+import { Select, StatefulSelect } from "../components/Select";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
 import LayoutRow from "storefront-ui/LayoutRow";
-import { ButtonRaw } from "../theme/ButtonRaw";
-import { Stars } from "../theme/Stars";
-import ThemeLink from "../theme/ThemeLink";
-import { Divider } from "../theme/Divider";
-import { Spacer } from "../theme/Spacer";
+import { ButtonRaw } from "../components/ButtonRaw";
+import { Stars } from "../components/Stars";
+import ThemeLink from "../components/ThemeLink";
+import { Divider } from "../components/Divider";
+import { Spacer } from "../components/Spacer";
 
 const Reviews = () => {
   const theme = useTheme();

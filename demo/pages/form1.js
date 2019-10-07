@@ -9,11 +9,11 @@ import {
 } from "storefront-ui/SelectNative";
 import Device from "storefront-ui/Device";
 
-import { FormHeader } from "../theme/FormHeader";
-import { FormControl } from "../theme/FormControl";
-import { StatefulInput } from "../theme/Input";
-import { Button } from "../theme/Button";
-import { ProgressSteps } from "../theme/ProgressSteps";
+import { FormHeader } from "../components/FormHeader";
+import { FormControl } from "../components/FormControl";
+import { StatefulInput } from "../components/Input";
+import { Button } from "../components/Button";
+import { ProgressSteps } from "../components/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
 
@@ -26,7 +26,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import IconArrowBack from "../svg/arrow_back.svg";
-import ThemeLink from "../theme/ThemeLink";
+import ThemeLink from "../components/ThemeLink";
 
 const Form1 = () => {
   const theme = useTheme();

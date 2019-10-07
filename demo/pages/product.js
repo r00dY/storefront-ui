@@ -7,22 +7,22 @@ import { useTheme } from "storefront-ui/Theme";
 import useScrollSegment from "storefront-ui/useScrollSegment";
 import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
 import { useSwipeableItemsContainer } from "storefront-ui/SwipeableItemsContainer";
-import NavBarMobile from "../theme/NavBarMobile";
-import { Button } from "../theme/Button";
-import ProductHead from "../theme/ProductHead/ProductHead";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import Price from "../theme/Price";
-import { Spacer } from "../theme/Spacer";
+import NavBarMobile from "../components/NavBarMobile";
+import { Button } from "../components/Button";
+import ProductHead from "../components/ProductHead/ProductHead";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import Price from "../components/Price";
+import { Spacer } from "../components/Spacer";
 import Device from "storefront-ui/Device";
 
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
-import { Select } from "../theme/Select";
+import { Select } from "../components/Select";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import { ButtonRaw } from "../theme/ButtonRaw";
+import { ButtonRaw } from "../components/ButtonRaw";
 import data from "../data";
 
 /** @jsx jsx */

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ProgressSteps } from "../../../../demo/theme/ProgressSteps";
+import { ProgressSteps } from "../../../../demo/components/ProgressSteps";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

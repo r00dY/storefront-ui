@@ -8,7 +8,7 @@ import { L } from "storefront-ui/Config";
 
 import { rslin } from "responsive-helpers";
 
-import { Input, StatefulInput } from "../theme/Input";
+import { Input, StatefulInput } from "../components/Input";
 
 import routerPush from "../helpers/routerPush";
 
@@ -17,7 +17,7 @@ import Link from "next/link";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import TextSection from "../theme/TextSection";
+import TextSection from "../components/TextSection";
 
 const Shipping = () => {
   const theme = useTheme();
