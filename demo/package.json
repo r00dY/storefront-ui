@@ -7,7 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@commerce-ui/core": "^0.5.5",
+    "@commerce-ui/core": "^0.6.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
     "@svgr/webpack": "^4.2.0",
