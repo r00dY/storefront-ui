@@ -5,7 +5,7 @@ import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import { useTheme } from "@commerce-ui/core/Theme";
 import { AccordionRaw } from "@commerce-ui/core/Accordion";
 import Device from "@commerce-ui/core/Device";
-import { L } from "@commerce-ui/core/Config";
+import { L } from "../../theme.js";
 import CheckoutSidebar from "../CheckoutSidebar";
 
 import Link from "next/link";

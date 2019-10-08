@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { rslin } from "responsive-helpers";
-import { R, L } from "@commerce-ui/core/Config";
+import { R, L } from "../../theme.js";
 import Container from "@commerce-ui/core/Container";
 import SectionTitle from "../SectionTitle";
 import { useTheme } from "@commerce-ui/core/Theme";

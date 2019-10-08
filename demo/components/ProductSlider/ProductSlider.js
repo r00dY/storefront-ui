@@ -5,7 +5,7 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "@commerce-ui/core/Theme";
 
 import { rslin, rs } from "responsive-helpers";
-import { R, F, C, S, L } from "@commerce-ui/core/Config";
+import { R, F, C, S, L } from "../../theme.js";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "@commerce-ui/core/SwipeableItemsContainer";

@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { rslin, RangeMap } from "responsive-helpers";
-import { L, C, S, R } from "@commerce-ui/core/Config";
+import { L, C, S, R } from "../../theme.js";
 import Color from "@commerce-ui/core/Color";
 // import {Grid, GridItem} from 'storefront-ui/Grid'
 import { Image } from "../../Image";

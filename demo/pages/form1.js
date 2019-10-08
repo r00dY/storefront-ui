@@ -17,7 +17,7 @@ import { ProgressSteps } from "../components/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
 
-import { R } from "@commerce-ui/core/Config";
+import { R } from "../theme.js";
 
 import routerPush from "../helpers/routerPush";
 

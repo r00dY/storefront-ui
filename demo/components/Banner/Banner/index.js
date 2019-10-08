@@ -4,13 +4,11 @@ import PropTypes from "prop-types";
 import { css, jsx } from "@emotion/core";
 
 import { rslin, rs, rm } from "responsive-helpers";
-import { F, L, Color, S, R } from "@commerce-ui/core/Config";
+import { R } from "../../../theme.js";
 import { Image } from "../../Image";
-import Link from "next/link";
 import { useTheme } from "@commerce-ui/core/Theme";
 import { Button } from "../../Button";
 
-import Router from "next/router";
 import routerPush from "../../../helpers/routerPush";
 
 const BannerButton = props => {

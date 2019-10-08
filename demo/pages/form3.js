@@ -4,7 +4,7 @@ import { FormHeader } from "../components/FormHeader";
 import { StatefulRadioGroup, Radio } from "../components/Radio";
 import { Button } from "../components/Button";
 import IconArrowBack from "../svg/arrow_back.svg";
-import { R } from "@commerce-ui/core/Config";
+import { R } from "../theme.js";
 import RadioBorder from "../components/RadioBorder";
 import OrderDetails from "../components/OrderDetails";
 

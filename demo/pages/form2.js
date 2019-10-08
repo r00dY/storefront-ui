@@ -8,7 +8,7 @@ import IconArrowBack from "../svg/arrow_back.svg";
 import { Radio$ } from "@commerce-ui/core/Radio";
 import RadioBorder from "../components/RadioBorder";
 import Device from "@commerce-ui/core/Device";
-import { R } from "@commerce-ui/core/Config";
+import { R } from "../theme.js";
 
 import {
   SelectNative$,

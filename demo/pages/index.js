@@ -4,7 +4,7 @@ import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import Container from "@commerce-ui/core/Container";
 import { useTheme } from "@commerce-ui/core/Theme";
 import Device from "@commerce-ui/core/Device";
-import { L } from "@commerce-ui/core/Config";
+import { L } from "../theme.js";
 
 import { rslin } from "responsive-helpers";
 

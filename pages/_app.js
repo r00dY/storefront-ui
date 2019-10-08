@@ -2,7 +2,7 @@ import React from "react";
 import App, { Container } from "next/app";
 
 import Root from "@commerce-ui/core/Root";
-import theme from "../demo/components/config";
+import theme from "../demo/config";
 
 export default class MyApp extends App {
   render() {

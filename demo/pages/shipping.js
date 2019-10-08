@@ -2,7 +2,7 @@ import React from "react";
 
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import { useTheme } from "@commerce-ui/core/Theme";
-import { L } from "@commerce-ui/core/Config";
+import { L } from "../theme.js";
 
 import { rslin } from "responsive-helpers";
 

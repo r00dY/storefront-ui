@@ -3,7 +3,7 @@ import App, { Container } from "next/app";
 
 import { GridDebugger } from "@commerce-ui/core/Grid";
 
-import theme from "../components/config";
+import { theme } from "../theme";
 import Root from "@commerce-ui/core/Root";
 
 import MainTabBar from "../components/MainTabBar";

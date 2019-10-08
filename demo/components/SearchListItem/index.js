@@ -2,7 +2,7 @@
 import { css, jsx } from "@emotion/core";
 import { useTheme } from "@commerce-ui/core/Theme";
 
-import { L } from "@commerce-ui/core/Config";
+import { L } from "../../theme.js";
 
 const SearchListItem = ({ focused, item, icon }) => {
   const theme = useTheme();

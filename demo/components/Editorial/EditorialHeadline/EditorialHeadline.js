@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { rslin } from "responsive-helpers";
-import { F, C, S, R } from "@commerce-ui/core/Config";
+import { F, C, S, R } from "../../theme.js";
 import Font from "@commerce-ui/core/Font";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

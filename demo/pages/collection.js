@@ -5,7 +5,7 @@ import { rslin } from "responsive-helpers";
 import Container from "@commerce-ui/core/Container";
 import { FiltersColumn } from "../components/Filters";
 import { Button } from "../components/Button";
-import { L, R } from "@commerce-ui/core/Config";
+import { L, R } from "../theme.js";
 import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
 import Device from "@commerce-ui/core/Device";
 import { Modal } from "../components/Modal";

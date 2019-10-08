@@ -5,7 +5,7 @@ import { useTheme } from "@commerce-ui/core/Theme";
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import Container from "@commerce-ui/core/Container";
 import { rslin } from "responsive-helpers";
-import { R } from "@commerce-ui/core/Config";
+import { R } from "../../theme.js";
 
 import { ButtonRaw } from "../ButtonRaw";
 import Link from "next/link";

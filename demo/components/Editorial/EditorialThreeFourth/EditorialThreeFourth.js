@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { rslin } from "responsive-helpers";
-import { L, F, C, S, R } from "@commerce-ui/core/Config";
+import { L, F, C, S, R } from "../../theme.js";
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import Container from "@commerce-ui/core/Container";
 import { Image } from "../../Image";

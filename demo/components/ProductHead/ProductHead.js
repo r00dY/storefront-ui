@@ -5,7 +5,7 @@ import styled from "@emotion/styled";
 import { css, jsx } from "@emotion/core";
 
 import { rs, rslin } from "responsive-helpers";
-import { R, F, C, L, Color } from "@commerce-ui/core/Config";
+import { R, F, C, L, Color } from "../../theme.js";
 
 import { Image, ImageZoomable } from "../Image";
 import StickyColumn from "@commerce-ui/core/StickyColumn";

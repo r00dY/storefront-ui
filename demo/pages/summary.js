@@ -1,7 +1,7 @@
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 import { Button } from "../components/Button";
-import { R } from "@commerce-ui/core/Config";
+import { R } from "../theme.js";
 
 import {
   SelectNative$,

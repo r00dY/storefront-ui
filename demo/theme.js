@@ -3,7 +3,7 @@ import Layout from "@commerce-ui/core/Layout";
 import Font from "@commerce-ui/core/Font";
 import Color from "@commerce-ui/core/Color";
 
-import { rslin, rs } from "responsive-helpers";
+import { rslin, rs, R } from "responsive-helpers";
 
 const layout = new Layout({
   container: {
@@ -14,7 +14,7 @@ const layout = new Layout({
   colNumber: 24
 });
 
-const COLOR_PRIMARY = new Color("#1aa77d");
+const primaryColor = new Color("#1aa77d");
 
 const theme = createTheme({
   layout: layout,
@@ -93,8 +93,13 @@ const theme = createTheme({
     inputBoxShadowErrorFocused: "none"
   },
   colors: {
-    primary: COLOR_PRIMARY
+    primary: primaryColor
   }
 });
 
-export default theme;
+const C = theme.colors;
+const F = theme.fonts;
+const S = theme.spacings;
+const L = theme.layout;
+
+export { theme, C, F, S, L, R };
