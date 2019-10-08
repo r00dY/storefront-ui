@@ -1,16 +1,14 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import Container from "@commerce-ui/core/Container";
 import { rslin } from "responsive-helpers";
 import { useTheme } from "@commerce-ui/core/Theme";
-import useScrollDirection from "@commerce-ui/core/useScrollDirection";
-import useScrollSegment from "@commerce-ui/core/useScrollSegment";
-import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
 } from "@commerce-ui/core/SwipeableItemsContainer";
-import Image from "@commerce-ui/core/Image";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

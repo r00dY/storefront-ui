@@ -1,3 +1,5 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
 import { Grid, GridItem } from "@commerce-ui/core/Grid";

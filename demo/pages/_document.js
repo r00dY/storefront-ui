@@ -1,3 +1,5 @@
+import "../global-config";
+
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
 import Device from "@commerce-ui/core/Device";

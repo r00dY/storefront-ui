@@ -1,3 +1,5 @@
+import "../global-config";
+
 import React from "react";
 
 import { Grid, GridItem } from "@commerce-ui/core/Grid";

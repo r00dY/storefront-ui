@@ -1,3 +1,5 @@
+import "../global-config";
+
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 import { Button } from "../components/Button";

@@ -23,12 +23,12 @@ module.exports = {
       ]
     });
 
-    config.plugins.push(
-      new webpack.DefinePlugin({
-        __DEV__: true,
-        __BROWSER__: !isServer
-      })
-    );
+    // config.plugins.push(
+    //   new webpack.DefinePlugin({
+    //     __DEV__: true,
+    //     __BROWSER__: !isServer
+    //   })
+    // );
 
     return config;
   },

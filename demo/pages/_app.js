@@ -1,3 +1,5 @@
+import "../global-config";
+
 import React from "react";
 import App, { Container } from "next/app";
 
