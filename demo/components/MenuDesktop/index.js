@@ -68,6 +68,7 @@ export const MenuDesktopContent = props => {
                   css={css`
                     width: 33.33%;
                   `}
+                  key={j}
                 >
                   <div
                     css={css`
@@ -93,6 +94,7 @@ export const MenuDesktopContent = props => {
                           } line-height: 2; a:hover {color: ${
                             theme.colors.mono500.css
                           };`}
+                          key={k}
                         >
                           <Link href={"/category"}>
                             <ThemeLink href={"/category"} kind={"secondary"}>

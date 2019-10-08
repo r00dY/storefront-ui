@@ -80,11 +80,7 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
 
-    const content = (
-      <Container>
-        <Component {...pageProps} />
-      </Container>
-    );
+    const content = <Component {...pageProps} />;
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
     const hideDesktopMenu = Component.hideDesktopMenu === true;

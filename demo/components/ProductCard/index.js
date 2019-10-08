@@ -89,7 +89,7 @@ const overrides2 = props => ({
     style: `
     `
   },
-  ImageOverlay: ({ badgesElem, onSaveToFavourites }) => (
+  ImageOverlay: ({ badgesElem }) => (
     <div
       css={css`
         position: absolute;

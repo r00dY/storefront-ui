@@ -6,9 +6,7 @@ import { useTheme } from "@commerce-ui/core/Theme";
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 
-const ThemeLink = props => {
-  const theme = useTheme();
-  const Elem = styled.a`
+const Elem = styled.a`
     transition: color 150ms;
     text-decoration: none;
     
@@ -18,10 +16,10 @@ const ThemeLink = props => {
     &,
       &:active,
       &:visited {
-        color: ${theme.colors.primary.css};
+        color: ${props.theme.colors.primary.css};
       }
       &:hover {
-        color: ${theme.colors.primary600.css};
+        color: ${props.theme.colors.primary600.css};
       }
     `
         : ""}
@@ -31,10 +29,10 @@ const ThemeLink = props => {
     &,
       &:active,
       &:visited {
-        color: ${theme.colors.mono700.css};
+        color: ${props.theme.colors.mono700.css};
       }
       &:hover {
-        color: ${theme.colors.mono500.css};
+        color: ${props.theme.colors.mono500.css};
       }
     `
         : ""}
@@ -44,11 +42,11 @@ const ThemeLink = props => {
     &,
       &:active,
       &:visited {
-        color: ${theme.colors.mono500.css};
+        color: ${props.theme.colors.mono500.css};
         text-decoration: underline;
       }
       &:hover {
-        color: ${theme.colors.mono700.css};
+        color: ${props.theme.colors.mono700.css};
       }
     `
         : ""}
@@ -85,11 +83,14 @@ const ThemeLink = props => {
     `
         : ""}
   `;
+const ThemeLink = React.forwardRef((props, ref) => {
+  const theme = useTheme();
+
   return (
-    <Elem kind={props.kind} {...props}>
+    <Elem kind={props.kind} theme={theme} {...props} ref={ref}>
       {props.children}
     </Elem>
   );
-};
+});
 
 export default ThemeLink;

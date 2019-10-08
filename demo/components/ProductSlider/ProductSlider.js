@@ -127,7 +127,6 @@ ProductSlider.defaultProps = {
   hiddenScrollbar: false
 };
 ProductSlider.propTypes = {
-  boxes: PropTypes.array.isRequired,
   title: PropTypes.string.isRequired,
   hiddenScrollbar: PropTypes.bool
 };
