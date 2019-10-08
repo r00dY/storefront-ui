@@ -45,10 +45,10 @@ jobs:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
-
-      - run:
-          name: Publish docs to Now
-          command: npm run publish-docs
+      #
+      #      - run:
+      #          name: Publish docs to Now
+      #          command: npm run publish-docs
 
       - run:
           name: Authenticate npm
