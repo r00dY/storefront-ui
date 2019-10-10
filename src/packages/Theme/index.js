@@ -134,4 +134,10 @@ const createTheme = config => {
   return theme;
 };
 
-export { ThemeContext, ThemeProvider, useTheme, createTheme };
+export {
+  ThemeContext,
+  ThemeProvider,
+  useTheme,
+  createTheme,
+  generateThemeColors
+};
