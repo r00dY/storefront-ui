@@ -6,7 +6,7 @@
     "watch": "babel src/packages --out-dir dist --watch",
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
-    "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@commerce-ui && mkdir -p ./demo/node_modules/@commerce-ui/core && cp -R dist/* ./demo/node_modules/@commerce-ui/core",
+    "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@commerce-ui && mkdir -p ./demo/node_modules/@commerce-ui/core && cp -R dist/* ./demo/node_modules/@commerce-ui/core"
   },
   "dependencies": {
     "mobile-detect": "^1.4.3",
