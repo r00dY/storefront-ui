@@ -59,8 +59,6 @@ function ProductHead(props) {
 
   const [isFav, setFav] = useState(false);
 
-  const { buttonProps, selectProps } = useAddToCartWithSize(props.product);
-
   let swiper = useSwipeableItemsContainer(
     <SwipeableItemsContainer mode={"horizontal"}>
       {props.product.images.slice(1).map((image, index) => {
@@ -280,7 +278,7 @@ function ProductHead(props) {
           >
             Pick your size
           </div>
-          <Select fitContainer={true} {...props.selectProps} />
+          {props.variantPicker}
           {/*{...selectProps}/>*/}
         </MetaRow>
 
@@ -291,12 +289,13 @@ function ProductHead(props) {
             `}
           >
             <Button
+              isLoading={props.loading}
               size={"large"}
               fitContainer={true}
               css={css`
                 margin-bottom: 10px;
               `}
-              {...buttonProps}
+              {...props.buttonProps}
             >
               Add to Cart
             </Button>

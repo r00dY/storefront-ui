@@ -21,6 +21,12 @@ export default (product, variantId) => {
     ...variant.node,
     options: product.node.options,
     images,
-    price: variant.node.priceV2
+    price: variant.node.priceV2,
+    variants: product.node.variants.edges.filter(
+      variant =>
+        variant.node.selectedOptions.filter(
+          option => option.name === "Color"
+        )[0].value === variantColor
+    )
   };
 };

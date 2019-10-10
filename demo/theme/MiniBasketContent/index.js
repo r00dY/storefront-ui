@@ -6,10 +6,14 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "storefront-ui/Theme";
 
 import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
+import useDeleteFromCart from "../../graphql/hooks/useDeleteFromCart";
 
 const MiniBasketContent = props => {
   const {} = props;
   const theme = useTheme();
+  const [deleteItemFromCart, deletingInProgress] = useDeleteFromCart();
+
+  const lineItems = props.dataMapper(props.lineItems);
 
   return (
     <div
@@ -23,12 +27,13 @@ const MiniBasketContent = props => {
         }
       `}
     >
-      {props.lineItems.map((lineItem, index) => (
+      {lineItems.map((lineItem, index) => (
         <div>
           <CheckoutLineItemRowTheme1
             checkoutLineItem={lineItem}
             layout={"compact"}
             mode={"basket"}
+            onBinClick={() => alert(3)}
           />
         </div>
       ))}
@@ -36,6 +41,8 @@ const MiniBasketContent = props => {
   );
 };
 
-MiniBasketContent.defaultProps = {};
+MiniBasketContent.defaultProps = {
+  dataMapper: x => x
+};
 
 export default MiniBasketContent;

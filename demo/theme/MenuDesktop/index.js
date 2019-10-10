@@ -29,6 +29,8 @@ import data from "../../data";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import mapCheckoutItems from "../../helpers/mapCheckoutItems";
+import getCheckoutTotals from "../../helpers/getCheckoutTotals";
 
 export const MenuDesktopContent = props => {
   const { category } = props;
@@ -308,23 +310,7 @@ const MenuDesktop = props => {
                       padding: ${theme.spacings.s30}px;
                     `}
                   >
-                    <Ledger
-                      rows={[
-                        {
-                          label: "Subtotal",
-                          value: "€399"
-                        },
-                        {
-                          label: "Tax",
-                          value: "€0"
-                        },
-                        {
-                          label: "Total",
-                          isTotal: true,
-                          value: "€399"
-                        }
-                      ]}
-                    />
+                    <Ledger rows={getCheckoutTotals(props.checkout)} />
                   </div>
                   <div
                     css={css`
@@ -363,7 +349,10 @@ const MenuDesktop = props => {
                 </div>
               )}
             >
-              <MiniBasketContent lineItems={data.checkout.lineItems} />
+              <MiniBasketContent
+                lineItems={props.checkout.lineItems}
+                dataMapper={mapCheckoutItems}
+              />
             </Modal>
 
             <Modal

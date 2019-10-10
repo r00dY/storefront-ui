@@ -20,6 +20,15 @@ export const CheckoutFragment = gql`
     webUrl
     totalTax
     subtotalPrice
+    currencyCode
+    totalPriceV2 {
+      amount
+      currencyCode
+    }
+    totalTaxV2 {
+      amount
+      currencyCode
+    }
     totalPrice
     lineItems(first: 250) {
       edges {
@@ -28,11 +37,19 @@ export const CheckoutFragment = gql`
           title
           variant {
             id
+            selectedOptions {
+              name
+              value
+            }
             title
             image {
               src
             }
             price
+            priceV2 {
+              amount
+              currencyCode
+            }
           }
           quantity
         }

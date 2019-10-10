@@ -46,6 +46,8 @@ const tabs = [
 ];
 
 class MyApp extends App {
+  state = {};
+
   static async getInitialProps({ Component, ctx }, apollo) {
     let pageProps = {};
 
@@ -53,14 +55,14 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    const checkoutId = await MyApp.createCheckout(apollo, ctx);
+    const checkout = await MyApp.createCheckout(apollo, ctx);
 
-    return { pageProps, noRoot: ctx.query.noRoot !== undefined, checkoutId };
+    return { pageProps, noRoot: ctx.query.noRoot !== undefined, checkout };
   }
 
   static async createCheckout(client, ctx) {
     if (client.cache.data.data.Checkout) {
-      return client.cache.data.data.Checkout.id;
+      return client.cache.data.data.Checkout;
     }
 
     if (!client.cache.data.data.Checkout && parseCookies(ctx).checkoutId) {
@@ -68,12 +70,26 @@ class MyApp extends App {
         client,
         parseCookies(ctx).checkoutId
       );
-      return data.node.id;
+      return data.node;
     }
 
     const { data } = await createEmptyCheckout(client);
     setCookie(ctx, "checkoutId", data.checkoutCreate.checkout.id);
-    return data.checkoutCreate.checkout.id;
+    return data.checkoutCreate.checkout;
+  }
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      checkout: { ...props.checkout }
+    };
+
+    this.handleCheckoutChange = this.handleCheckoutChange.bind(this);
+  }
+
+  handleCheckoutChange(checkout) {
+    this.setState({ checkout });
   }
 
   render() {
@@ -81,7 +97,11 @@ class MyApp extends App {
 
     const content = (
       <Container>
-        <Component {...pageProps} />
+        <Component
+          {...pageProps}
+          checkoutId={this.state.checkout.id}
+          setCheckout={this.handleCheckoutChange}
+        />
       </Container>
     );
 
@@ -150,6 +170,7 @@ class MyApp extends App {
               {!hideDesktopMenu && (
                 <>
                   <MenuDesktop
+                    checkout={this.state.checkout}
                     data={[
                       {
                         label: "Home",

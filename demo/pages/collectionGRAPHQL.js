@@ -24,8 +24,20 @@ import useProducts from "../helpers/useProducts";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import { useQuery } from "@apollo/react-hooks";
-import getCollection from "../graphql/getCollection";
+import getCollection from "../graphql/queries/getCollection";
 import mapProductsToMultipleVariants from "../helpers/mapProductsToMultipleVariants";
+import {
+  InstantSearch,
+  SearchBox,
+  Hits,
+  Menu,
+  Configure
+} from "react-instantsearch-dom";
+import CustomHits from "../algolia/AlgoliaProductsHits";
+import AlgoliaRefinementList from "../algolia/AlgoliaRefinementList";
+import AlgoliaCategoryList from "../algolia/AlgoliaCategoryList";
+import useGetCollections from "../graphql/hooks/useGetCollections";
+import useGetProducts from "../graphql/hooks/useGetProducts";
 
 // navigation bar for collection page (on mobile)
 const NavBarCollection = ({ title, onFilterClick }) => {
@@ -87,85 +99,15 @@ const CollectionPage = props => {
 
   const { products, isLoading, query } = useProducts();
 
-  const {
-    data: collectionGraphqlData,
-    loading: isLoadingCollection
-  } = useQuery(getCollection(selectedFilters));
-
-  useEffect(
-    () => {
-      if (Object.keys(collectionGraphqlData).length === 0) {
-        return;
-      }
-
-      setFilters([
-        {
-          id: "sort",
-          name: "Sort",
-          type: "select",
-          multiple: false,
-          items: [
-            {
-              id: "price-asc",
-              name: "Price (high to low)"
-            },
-            {
-              id: "price-desc",
-              name: "Price (low to high)"
-            },
-            {
-              id: "newest",
-              name: "Newest"
-            },
-            {
-              id: "most-popular",
-              name: "Most popular"
-            }
-          ],
-          forceExpand: true
-        },
-        {
-          id: "productType",
-          name: "Product type",
-          type: "select",
-          items: collectionGraphqlData.productTypes.edges
-            .filter(edge => edge.node)
-            .map(edge => ({
-              id: edge.node,
-              name: edge.node
-            }))
-        },
-        {
-          id: "productTags",
-          name: "Tags",
-          type: "select",
-          items: collectionGraphqlData.productTags.edges.map(edge => ({
-            id: edge.node,
-            name: edge.node
-          }))
-        },
-        {
-          id: "price",
-          name: "Price",
-          type: "range",
-          min: 0,
-          max: 1999,
-          unit: "zł"
-        }
-      ]);
-    },
-    [collectionGraphqlData]
+  const [collections, collectionsLoading] = useGetCollections();
+  const [mappedProducts, isLoadingCollection] = useGetProducts(
+    "test-collection-1",
+    50
   );
 
   if (isLoadingCollection) {
     return "Loading...";
   }
-
-  const {
-    collectionByHandle: { products: graphqlProducts }
-  } = collectionGraphqlData;
-
-  const mappedProducts = mapProductsToMultipleVariants(graphqlProducts);
 
   const updateFilters = (filter, value) => {
     setFilters(prevFilters => {
@@ -249,18 +191,11 @@ const CollectionPage = props => {
           />
         </GridItem>
 
-        {!props.isCategory &&
-          categories.map((category, index) => {
-            return (
-              <GridItem key={index} params={{ xs: 12, sm: 8, lg: 4 }}>
-                <CategoryCardCompact
-                  image={category.image}
-                  text={category.title}
-                  href={category.href}
-                />
-              </GridItem>
-            );
-          })}
+        <AlgoliaCategoryList
+          attribute="named_tags.collection"
+          categoryData={collections}
+          defaultRefinement={["Test collection"]}
+        />
       </Grid>
       <Grid
         css={css`
@@ -268,13 +203,16 @@ const CollectionPage = props => {
         `}
       >
         <GridItem params={{ xs: 0, md: 6, lg: 5, xl: 4 }}>
+          <AlgoliaRefinementList attribute="options.color" />
+          <AlgoliaRefinementList attribute="product_type" />
+          <AlgoliaRefinementList attribute="tags" />
+          <AlgoliaRefinementList attribute="price_range" />
           <FiltersColumn
             value={filtersValue}
             data={filters}
             onChange={updateFilters}
           />
         </GridItem>
-
         <GridItem params={{ xs: 24, md: 18, lg: 19, xl: [20] }}>
           <div
             css={css`
@@ -319,18 +257,19 @@ const CollectionPage = props => {
           </div>
 
           <Grid gutterVertical={theme.spacings.s120}>
-            {mappedProducts.map((product, index) => (
-              <GridItem
-                params={{ xs: 12, md: 8, lg: 8, xl: 6 }}
-                key={product.id}
-                css={css`
-                  opacity: ${isLoading ? 0.3 : 1};
-                  transition: opacity 0.15s;
-                `}
-              >
-                <ProductCardTheme1 product={product} />
-              </GridItem>
-            ))}
+            <CustomHits isLoading={isLoading} />
+            {/*{mappedProducts.map((product, index) => (*/}
+            {/*<GridItem*/}
+            {/*params={{ xs: 12, md: 8, lg: 8, xl: 6 }}*/}
+            {/*key={product.id}*/}
+            {/*css={css`*/}
+            {/*opacity: ${isLoading ? 0.3 : 1};*/}
+            {/*transition: opacity 0.15s;*/}
+            {/*`}*/}
+            {/*>*/}
+            {/*<ProductCardTheme1 product={product} />*/}
+            {/*</GridItem>*/}
+            {/*))}*/}
             <Device desktop>
               <div
                 css={css`
@@ -357,74 +296,80 @@ const CollectionPage = props => {
   );
 
   return (
-    <div>
+    <InstantSearch
+      appId="61S35Z15ZT"
+      apiKey="1d9d3da52e0d382ba1e17112eda64106"
+      indexName="shopify_products"
+    >
       <div>
-        <Device mobile>
-          <NavBarCollection
-            title={"Snacks"}
-            onFilterClick={() => {
-              setFiltersModalOpened(true);
-            }}
-          />
-          {content}
+        <div>
+          <Device mobile>
+            <NavBarCollection
+              title={"Snacks"}
+              onFilterClick={() => {
+                setFiltersModalOpened(true);
+              }}
+            />
+            {content}
 
-          <Modal
-            config={{
-              mode: "bottom",
-              height: "90%"
-            }}
-            isOpen={filtersModalOpened}
-            onRequestClose={() => setFiltersModalOpened(false)}
-            header={"Filters"}
-            footer={() => (
+            <Modal
+              config={{
+                mode: "bottom",
+                height: "90%"
+              }}
+              isOpen={filtersModalOpened}
+              onRequestClose={() => setFiltersModalOpened(false)}
+              header={"Filters"}
+              footer={() => (
+                <div
+                  css={css`
+                    padding: ${theme.spacings.s40}px;
+                    border-top: 1px solid ${theme.colors.mono300.css};
+                  `}
+                >
+                  <Grid gutter={10}>
+                    <GridItem params={12}>
+                      <Button kind={"secondary"} fitContainer={true}>
+                        Clear all
+                      </Button>
+                    </GridItem>
+                    <GridItem params={12}>
+                      <Button
+                        fitContainer={true}
+                        onClick={() => {
+                          setFiltersModalOpened(false);
+                          query(scrollTop);
+                        }}
+                      >
+                        Apply (55)
+                      </Button>
+                    </GridItem>
+                  </Grid>
+                </div>
+              )}
+            >
               <div
                 css={css`
-                  padding: ${theme.spacings.s40}px;
-                  border-top: 1px solid ${theme.colors.mono300.css};
+                  padding: 0;
                 `}
               >
-                <Grid gutter={10}>
-                  <GridItem params={12}>
-                    <Button kind={"secondary"} fitContainer={true}>
-                      Clear all
-                    </Button>
-                  </GridItem>
-                  <GridItem params={12}>
-                    <Button
-                      fitContainer={true}
-                      onClick={() => {
-                        setFiltersModalOpened(false);
-                        query(scrollTop);
-                      }}
-                    >
-                      Apply (55)
-                    </Button>
-                  </GridItem>
-                </Grid>
+                <FiltersColumn
+                  data={data.filters}
+                  value={filtersValue}
+                  onChange={(key, val) => {
+                    setFiltersValue({ ...filtersValue, [key]: val });
+                    query();
+                  }}
+                  isMobile={true}
+                />
               </div>
-            )}
-          >
-            <div
-              css={css`
-                padding: 0;
-              `}
-            >
-              <FiltersColumn
-                data={data.filters}
-                value={filtersValue}
-                onChange={(key, val) => {
-                  setFiltersValue({ ...filtersValue, [key]: val });
-                  query();
-                }}
-                isMobile={true}
-              />
-            </div>
-          </Modal>
-        </Device>
+            </Modal>
+          </Device>
 
-        <Device desktop>{content}</Device>
+          <Device desktop>{content}</Device>
+        </div>
       </div>
-    </div>
+    </InstantSearch>
   );
 };
 

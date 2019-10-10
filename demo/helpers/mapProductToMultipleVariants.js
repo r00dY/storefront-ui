@@ -4,7 +4,7 @@ export default product =>
       const currentColor = current.node.selectedOptions.filter(
         option => option.name === "Color"
       )[0].value;
-      console.log("product", product);
+
       if (!accumulated[currentColor]) {
         const image = product.node.images.edges.filter(image => {
           return image.node.altText === `${currentColor}-1`;

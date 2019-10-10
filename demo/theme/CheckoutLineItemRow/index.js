@@ -80,10 +80,10 @@ const overridesTheme1 = {
       ${rslin(80, 80).css("width")}
     `
   },
-  Remove: ({ mode }) => (
+  Remove: ({ mode, onBinClick }) => (
     <>
       {(mode === "basket" || mode === "wishlist") && (
-        <ButtonRaw$>
+        <ButtonRaw$ onClick={onBinClick}>
           <IconClear
             css={css`
               width: 18px;
