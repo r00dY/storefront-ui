@@ -42,35 +42,56 @@ export const BaseButton = styled(
     $isSelected,
     $disabled,
     $fitContainer
-  }: StylePropsT) => ({
-    position: "relative",
-    font: $size === SIZE.compact ? $theme.fonts.body2 : $theme.fonts.body1,
-    display: "inline-flex",
-    alignItems: "center",
-    justifyContent: "center",
-    border: "none",
-    ...getBorderRadii({ $shape, $theme }),
-    textDecoration: "none",
-    outline: "none",
-    WebkitAppearance: "none",
-    transitionProperty: "background",
-    transitionDuration: $theme.animation.timing100,
-    transitionTimingFunction: $theme.animation.easeOutCurve,
-    // ":disabled": {
-    //   backgroundColor: $theme.colors.buttonDisabledFill,
-    //   color: $theme.colors.buttonDisabledText
-    // },
-    cursor: $disabled ? "auto" : "pointer",
-    // Padding For Shape and Size
-    ...getStyleForShape({ $theme, $shape, $size }),
-    // Kind style override
-    ...getStyleForKind({ $theme, $kind, $isLoading, $isSelected, $disabled }),
-    marginLeft: 0,
-    marginTop: 0,
-    marginRight: 0,
-    marginBottom: 0,
-    width: $fitContainer ? "100%" : "auto"
-  })
+  }: StylePropsT) => {
+    return {
+      position: "relative",
+      font: $size === SIZE.compact ? $theme.fonts.body2 : $theme.fonts.body1,
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      border: "none",
+      ...getBorderRadii({ $shape, $theme }),
+      textDecoration: "none",
+      outline: "none",
+      WebkitAppearance: "none",
+      // transitionProperty: "background, opacity",
+      // transitionDuration: $theme.animation.timing100,
+      // transitionTimingFunction: $theme.animation.easeOutCurve,
+      // ":disabled": {
+      //   backgroundColor: $theme.colors.buttonDisabledFill,
+      //   color: $theme.colors.buttonDisabledText
+      // },
+      cursor: $isLoading || $disabled ? "auto" : "pointer",
+
+      ":focus-visible": {
+        /** TODO: focus-visible not fully supported by browers, Safari might suffer from lack of accessibility because of that **/
+        outlineWidth: "2px",
+        outlineColor: "Highlight",
+        outlineStyle: "solid"
+      },
+      "@media (hover)": {
+        ":hover": {
+          opacity: $isLoading || $disabled ? 1 : "0.85"
+        }
+      },
+      ":active": {
+        opacity: $isLoading || $disabled ? 1 : "0.75"
+      },
+      transition: "opacity .15s",
+
+      // Padding For Shape and Size
+      ...getStyleForShape({ $theme, $shape, $size }),
+      // Kind style override
+      ...getStyleForKind({ $theme, $kind, $isLoading, $isSelected, $disabled }),
+      marginLeft: 0,
+      marginTop: 0,
+      marginRight: 0,
+      marginBottom: 0,
+      width: $fitContainer ? "100%" : "auto",
+      userSelect: "none" /* longer press on button shouldn't select text */,
+      WebkitTapHighlightColor: "transparent"
+    };
+  }
 );
 
 export const EndEnhancer = styled("div", ({ $theme }: StylePropsT) => ({
@@ -208,40 +229,44 @@ export function getStyleForKind({
         color: $theme.colors.buttonPrimaryText,
         backgroundColor: $isSelected
           ? $theme.colors.buttonPrimaryHover
-          : $theme.colors.buttonPrimaryFill,
-        ":hover": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonPrimaryFill
-            : $theme.colors.buttonPrimaryHover
-        },
-        ":focus": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonPrimaryActive
-            : $theme.colors.buttonPrimaryHover
-        },
-        ":active": {
-          backgroundColor: $theme.colors.buttonPrimaryActive
-        }
+          : $theme.colors.buttonPrimaryFill
+        // "@media (hover)": {
+        //   ":hover": {
+        //     backgroundColor: $isLoading
+        //         ? $theme.colors.buttonPrimaryFill
+        //         : $theme.colors.buttonPrimaryHover
+        //   }
+        // },
+        // ":focus": {
+        //   backgroundColor: $isLoading
+        //     ? $theme.colors.buttonPrimaryActive
+        //     : $theme.colors.buttonPrimaryHover
+        // },
+        // ":active": {
+        //   backgroundColor: $theme.colors.buttonPrimaryActive
+        // }
       };
     case KIND.secondary:
       return {
         color: $theme.colors.buttonSecondaryText,
         backgroundColor: $isSelected
           ? $theme.colors.buttonSecondaryHover
-          : $theme.colors.buttonSecondaryFill,
-        ":hover": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonSecondaryActive
-            : $theme.colors.buttonSecondaryHover
-        },
-        ":focus": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonSecondaryActive
-            : $theme.colors.buttonSecondaryHover
-        },
-        ":active": {
-          backgroundColor: $theme.colors.buttonSecondaryActive
-        }
+          : $theme.colors.buttonSecondaryFill
+        // "@media (hover)": {
+        //   ":hover": {
+        //     backgroundColor: $isLoading
+        //       ? $theme.colors.buttonSecondaryActive
+        //       : $theme.colors.buttonSecondaryHover
+        //   },
+        // },
+        // ":focus": {
+        //   backgroundColor: $isLoading
+        //     ? $theme.colors.buttonSecondaryActive
+        //     : $theme.colors.buttonSecondaryHover
+        // },
+        // ":active": {
+        //   backgroundColor: $theme.colors.buttonSecondaryActive
+        // }
       };
     case KIND.tertiary:
       if ($isSelected) {
@@ -252,20 +277,22 @@ export function getStyleForKind({
       } else {
         return {
           color: $theme.colors.buttonTertiaryText,
-          backgroundColor: $theme.colors.buttonTertiaryFill,
-          ":hover": {
-            backgroundColor: $isLoading
-              ? $theme.colors.buttonTertiaryActive
-              : $theme.colors.buttonTertiaryHover
-          },
-          ":focus": {
-            backgroundColor: $isLoading
-              ? $theme.colors.buttonTertiaryActive
-              : $theme.colors.buttonTertiaryHover
-          },
-          ":active": {
-            backgroundColor: $theme.colors.buttonTertiaryActive
-          }
+          backgroundColor: $theme.colors.buttonTertiaryFill
+          // "@media (hover)": {
+          //   ":hover": {
+          //     backgroundColor: $isLoading
+          //       ? $theme.colors.buttonTertiaryActive
+          //       : $theme.colors.buttonTertiaryHover
+          //   },
+          // },
+          // ":focus": {
+          //   backgroundColor: $isLoading
+          //     ? $theme.colors.buttonTertiaryActive
+          //     : $theme.colors.buttonTertiaryHover
+          // },
+          // ":active": {
+          //   backgroundColor: $theme.colors.buttonTertiaryActive
+          // }
         };
       }
     case KIND.minimal:
@@ -273,20 +300,22 @@ export function getStyleForKind({
         color: $theme.colors.buttonMinimalText,
         backgroundColor: $isSelected
           ? $theme.colors.buttonMinimalHover
-          : $theme.colors.buttonMinimalFill,
-        ":hover": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonMinimalActive
-            : $theme.colors.buttonMinimalHover
-        },
-        ":focus": {
-          backgroundColor: $isLoading
-            ? $theme.colors.buttonMinimalActive
-            : $theme.colors.buttonMinimalHover
-        },
-        ":active": {
-          backgroundColor: $theme.colors.buttonMinimalActive
-        }
+          : $theme.colors.buttonMinimalFill
+        // "@media (hover)": {
+        //   ":hover": {
+        //     backgroundColor: $isLoading
+        //       ? $theme.colors.buttonMinimalActive
+        //       : $theme.colors.buttonMinimalHover
+        //   },
+        // },
+        // ":focus": {
+        //   backgroundColor: $isLoading
+        //     ? $theme.colors.buttonMinimalActive
+        //     : $theme.colors.buttonMinimalHover
+        // },
+        // ":active": {
+        //   backgroundColor: $theme.colors.buttonMinimalActive
+        // }
       };
     default:
       return {};

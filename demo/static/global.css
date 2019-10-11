@@ -5,6 +5,6 @@ a:visited {
   color: #1aa77d;
 }
 
-* {
-  -webkit-tap-highlight-color: transparent !important;
-}
+/** {*/
+/*-webkit-tap-highlight-color: transparent !important;*/
+/*}*/
