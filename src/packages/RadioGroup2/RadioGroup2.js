@@ -2,15 +2,103 @@ import React, { useState } from "react";
 
 import { getOverrides } from "../base/helpers/overrides";
 
+import {
+  ContainerStyled,
+  ItemContainerStyled,
+  ItemStyled,
+  LabelStyled
+} from "./styled-components";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
 function RadioGroup2(props) {
   const { legend, name, items, disabled, onChange, value, overrides } = props;
 
-  const { RadioMark } = overrides;
+  const {
+    RadioMark,
+    Container: ContainerOverride,
+    ItemContainer: ItemContainerOverride,
+    Item: ItemOverride,
+    Label: LabelOverride
+  } = overrides;
 
-  const [isFocused, setFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
+
+  const sharedProps = {
+    focused,
+    disabled
+  };
+
+  const [Container, containerProps] = getOverrides(
+    ContainerOverride,
+    ContainerStyled
+  );
+  const [ItemContainer, itemContainerProps] = getOverrides(
+    ItemContainerOverride,
+    ItemContainerStyled
+  );
+  const [Item, itemProps] = getOverrides(ItemOverride, ItemStyled);
+  const [Label, labelProps] = getOverrides(LabelOverride, LabelStyled);
+
+  const radioItems = items.map((item, i) => {
+    const checked = value === item.value;
+
+    // RadioMark
+    let radioMark;
+    if (RadioMark) {
+      radioMark = <RadioMark {...sharedProps} checked={checked} />;
+    }
+
+    const itemSharedProps = {
+      ...sharedProps,
+      checked,
+      item,
+      index: i,
+      lastIndex: items.length - 1
+    };
+
+    const label = (
+      <Label {...itemSharedProps} {...labelProps}>
+        {item.label}
+      </Label>
+    );
+
+    return (
+      <ItemContainer
+        key={item.value}
+        {...itemContainerProps}
+        {...itemSharedProps}
+      >
+        <input
+          css={css`
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            position: absolute;
+          `}
+          type={"radio"}
+          name={name}
+          value={item.value}
+          checked={checked}
+          onChange={e => {
+            onChange(e.target.value, e);
+          }}
+          onBlur={() => setFocused(false)}
+          onFocus={() => setFocused(true)}
+        />
+
+        <Item
+          {...itemSharedProps}
+          {...itemProps}
+          label={label}
+          radioMark={radioMark}
+        />
+      </ItemContainer>
+    );
+  });
 
   return (
     <div>
@@ -23,68 +111,7 @@ function RadioGroup2(props) {
       >
         <legend hidden>{legend}</legend>
 
-        <div
-          css={css`
-            display: flex;
-            flex-direction: row;
-          `}
-        >
-          {items.map(item => {
-            const checked = value === item.value;
-
-            // RadioMark
-            let radioMark;
-            if (RadioMark) {
-              radioMark = <RadioMark checked={checked} isFocused={isFocused} />;
-            }
-
-            return (
-              <label
-                key={item.value}
-                css={css`
-                  margin-right: 8px;
-                  cursor: pointer;
-                `}
-              >
-                <input
-                  css={css`
-                    opacity: 0;
-                    width: 0;
-                    overflow: hidden;
-                    margin: 0;
-                    padding: 0;
-                    position: absolute;
-                  `}
-                  type={"radio"}
-                  name={name}
-                  value={item.value}
-                  checked={checked}
-                  onChange={e => {
-                    onChange(e.target.value, e);
-                  }}
-                  onBlur={() => setFocused(false)}
-                  onFocus={() => setFocused(true)}
-                />
-                <div
-                  css={css`
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                  `}
-                >
-                  {radioMark}
-                  <span
-                    css={css`
-                      margin-left: 4px;
-                    `}
-                  >
-                    {item.label}
-                  </span>
-                </div>
-              </label>
-            );
-          })}
-        </div>
+        <Container {...containerProps} {...sharedProps} items={radioItems} />
       </fieldset>
     </div>
   );

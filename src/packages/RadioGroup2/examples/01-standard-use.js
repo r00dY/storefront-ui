@@ -12,6 +12,7 @@ export default () => {
   const [value, setValue] = useState(null);
   const [value2, setValue2] = useState("option2");
   const [value3, setValue3] = useState("option3");
+  const [value4, setValue4] = useState("option4");
 
   return (
     <div>
@@ -84,9 +85,100 @@ export default () => {
         }}
       />
 
-      <RadioMark$ disabled={true} />
-      <RadioMark$ checked={true} />
-      <RadioMark$ checked={false} />
+      <p>Standard stateless, with checkmark, overrides</p>
+      <RadioGroup2$
+        legend={"Pick an option"}
+        name="radio group 4"
+        onChange={x => setValue4(x)}
+        value={value4}
+        items={[
+          {
+            label: "Option 1",
+            value: "option1",
+            description: "Lorem ipsum dolor sit amet"
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+            description: "Lorem ipsum dolor sit amet"
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+            description: "Lorem ipsum dolor sit amet"
+          },
+          {
+            label: "Option 4",
+            value: "option4",
+            description: "Lorem ipsum dolor sit amet"
+          },
+          {
+            label: "Option 5",
+            value: "option5",
+            description: "Lorem ipsum dolor sit amet"
+          },
+          {
+            label: "Option 6",
+            value: "option6",
+            description: "Lorem ipsum dolor sit amet"
+          }
+        ]}
+        overrides={{
+          RadioMark: RadioMark$,
+          Label: {
+            style: ({ checked }) => `
+                        color: ${checked ? "blue" : "red"};
+                        margin-right: 8px;
+                    `
+          },
+          Container: {
+            style: `
+                        display: grid;
+                        grid-template-columns: repeat(3, 1fr);
+                        gap: 10px 10px;
+                    `
+          },
+          ItemContainer: {
+            style: `
+                        margin: 0;
+                    `
+          },
+          Item: {
+            style: ({ focused, $theme }) => `
+                        padding: 12px;
+                        display: flex;
+                        flex-direction: column;
+                        border: 1px solid ${$theme.colors.mono300.css};
+                        justify-content: space-between;
+
+                        &:hover {
+                            background-color: yellow;
+                        }
+
+                        ${focused ? "color: blue;" : ""}
+                    `,
+            children: ({ label, radioMark, item, $theme }) => (
+              <>
+                {label}
+                <div
+                  css={css`
+                            ${$theme.fonts.body2}
+                            color: ${$theme.colors.mono500.css};
+                            margin: ${$theme.spacings.s30}px 0;
+                        `}
+                >
+                  {item.description}
+                </div>
+                {radioMark}
+              </>
+            )
+          }
+        }}
+      />
+
+      {/*<RadioMark$ disabled={true} />*/}
+      {/*<RadioMark$ checked={true} />*/}
+      {/*<RadioMark$ checked={false} />*/}
     </div>
   );
 };

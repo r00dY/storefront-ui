@@ -121,6 +121,6 @@ export const RadioMarkOuter = styled("div", props => {
     verticalAlign: "middle",
     width: sizing.scale700,
     flexShrink: 0
-    // outline: props.isFocused && props.checked ? "1px solid red" : "none"
+    // outline: props.focused && props.checked ? "1px solid red" : "none" TODO: Outline for focus!
   };
 });
