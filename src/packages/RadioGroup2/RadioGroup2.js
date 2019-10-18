@@ -168,7 +168,7 @@ function RadioGroup2(props) {
       contentContainer = item.content && (
         <ContentContainer
           {...contentContainerProps}
-          {...itemContainerProps}
+          {...itemSharedProps}
           hidden={!checked}
         >
           {item.content}

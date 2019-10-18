@@ -269,6 +269,61 @@ export default () => {
         __isPanel={true}
       />
 
+      <p>Panel with content - overrides</p>
+      <StatefulRadioGroup2$
+        label={"Pick an option"}
+        name="radio group 8"
+        items={[
+          {
+            label: "Option 1",
+            value: "option1",
+            enhancer: "FREE",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+            enhancer: "19.99$",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+            enhancer: "24.99$"
+          }
+        ]}
+        overrides={{
+          Container: {
+            style: `
+                        border: none;
+                    `
+          },
+          ItemContainer: {
+            style: ({ index, checked }) => `
+                        background-color: rgba(0,0,255,0.3);
+                        color: white;
+                        opacity: 1;
+                        &:hover {
+                            background-color: rgba(0,0,255,0.3);
+                            opacity: 0.9;
+                        }
+                        border: none;
+                        margin-top: ${index > 0 ? "16px" : 0};
+
+                        outline: ${checked ? "3px solid blue;" : ""};
+                    `
+          },
+          Content: {
+            style: `
+                        margin-top: 2px;
+                    `
+          }
+        }}
+        __isPanel={true}
+      />
+
       {/*<RadioMark$ disabled={true} />*/}
       {/*<RadioMark$ checked={true} />*/}
       {/*<RadioMark$ checked={false} />*/}
