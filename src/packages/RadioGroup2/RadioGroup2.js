@@ -12,8 +12,17 @@ import {
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
+/**
+ * TODO: ariaLabel, ariaLabelledBy
+ *
+ * Things to consider
+ * 1. Shopfiy (checkout) and apple picker use <fieldset> and <legend> for this component. However, what if it's a part of fieldset itself?
+ * 2. role=radiogroup is used by Uber. But not sure how it behaves when another radio shows up "below".
+ *
+ */
+
 function RadioGroup2(props) {
-  const { legend, name, items, disabled, onChange, value, overrides } = props;
+  const { label, name, items, disabled, onChange, value, overrides } = props;
 
   const {
     RadioMark,
@@ -109,9 +118,9 @@ function RadioGroup2(props) {
           margin: 0;
         `}
       >
-        <legend hidden>{legend}</legend>
-
+        <legend>{label}</legend>
         <Container {...containerProps} {...sharedProps} items={radioItems} />
+        {/*aria-labelledby={label} role="radiogroup"*/}
       </fieldset>
     </div>
   );

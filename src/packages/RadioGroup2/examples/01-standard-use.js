@@ -19,7 +19,7 @@ export default () => {
     <div>
       <p>Standard stateless</p>
       <RadioGroup2$
-        legend={"Pick an option"}
+        label={"Pick an option"}
         name="radio group"
         onChange={x => setValue(x)}
         value={value}
@@ -41,7 +41,7 @@ export default () => {
 
       <p>Standard stateless, preselected option</p>
       <RadioGroup2$
-        legend={"Pick an option"}
+        label={"Pick an option"}
         name="radio group 2"
         onChange={x => setValue2(x)}
         value={value2}
@@ -65,7 +65,7 @@ export default () => {
         Standard stateful with <code>initialValue</code>, with checkmark
       </p>
       <StatefulRadioGroup2$
-        legend={"Pick an option"}
+        label={"Pick an option"}
         name="radio group 3"
         onChange={val => console.log("changed", val)}
         initialValue={"option2"}
@@ -90,7 +90,7 @@ export default () => {
 
       <p>Standard stateful, with checkmark, overrides</p>
       <StatefulRadioGroup2$
-        legend={"Pick an option"}
+        label={"Pick an option"}
         name="radio group 4"
         items={[
           {
