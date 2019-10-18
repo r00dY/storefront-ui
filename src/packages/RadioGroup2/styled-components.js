@@ -73,6 +73,10 @@ export const panelItemContainerStyled = ({ $theme, index, lastIndex }) => `
   cursor: pointer;
   border-top: ${index > 0 ? `1px solid ${$theme.colors.mono300};` : "none"};
   padding: ${$theme.spacings.s60}px;
+  transition: background-color .1s;
+  &:hover {
+    background-color: ${$theme.colors.mono200.css};
+  }
 `;
 
 export const PanelItemContainerStyled = styled(
