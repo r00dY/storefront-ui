@@ -177,10 +177,38 @@ export default () => {
         }}
       />
 
-      <p>Panel</p>
+      <p>Panel short</p>
       <StatefulRadioGroup2$
         label={"Pick an option"}
         name="radio group 5"
+        initialValue={"option1"}
+        items={[
+          {
+            label: "Option 1",
+            value: "option1",
+            enhancer: "FREE"
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+            enhancer: "19.99$"
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+            enhancer: "24.99$"
+          }
+        ]}
+        overrides={{
+          RadioMark: RadioMark$
+        }}
+        __isPanel={true}
+      />
+
+      <p>Panel with descriptions and longer titles</p>
+      <StatefulRadioGroup2$
+        label={"Pick an option"}
+        name="radio group 6"
         onChange={val => console.log("changed", val)}
         initialValue={"option2"}
         items={[
@@ -209,6 +237,38 @@ export default () => {
         }}
         __isPanel={true}
       />
+
+      <p>Panel with content</p>
+      <StatefulRadioGroup2$
+        label={"Pick an option"}
+        name="radio group 7"
+        items={[
+          {
+            label: "Option 1",
+            value: "option1",
+            enhancer: "FREE",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+            enhancer: "19.99$",
+            content:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+          },
+          {
+            label: "Option 3",
+            value: "option3",
+            enhancer: "24.99$"
+          }
+        ]}
+        overrides={{
+          RadioMark: RadioMark$
+        }}
+        __isPanel={true}
+      />
+
       {/*<RadioMark$ disabled={true} />*/}
       {/*<RadioMark$ checked={true} />*/}
       {/*<RadioMark$ checked={false} />*/}

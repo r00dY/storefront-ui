@@ -40,6 +40,7 @@ function RadioGroup2(props) {
     LabelContainer: LabelContainerOverride,
     EnhancerContainer: EnhancerContainerOverride,
     RadioMarkContainer: RadioMarkContainerOverride,
+    ContentContainer: ContentContainerOverride,
 
     Description: DescriptionOverride
   } = overrides;
@@ -85,6 +86,7 @@ function RadioGroup2(props) {
     };
 
     let itemElem;
+    let contentContainer;
 
     const label = (
       <Label {...itemSharedProps} {...labelProps}>
@@ -122,6 +124,11 @@ function RadioGroup2(props) {
         components.DescriptionStyled
       );
 
+      const [ContentContainer, contentContainerProps] = getOverrides(
+        ContentContainerOverride,
+        components.ContentContainerStyled
+      );
+
       const description = item.description && (
         <Description {...descriptionProps} {...itemSharedProps}>
           {item.description}
@@ -157,36 +164,50 @@ function RadioGroup2(props) {
           enhancerContainer={enhancerContainer}
         />
       );
+
+      contentContainer = item.content && (
+        <ContentContainer
+          {...contentContainerProps}
+          {...itemContainerProps}
+          hidden={!checked}
+        >
+          {item.content}
+        </ContentContainer>
+      );
     }
 
     return (
-      <ItemContainer
-        key={item.value}
-        {...itemContainerProps}
-        {...itemSharedProps}
-      >
-        <input
-          css={css`
-            opacity: 0;
-            width: 0;
-            overflow: hidden;
-            margin: 0;
-            padding: 0;
-            position: absolute;
-          `}
-          type={"radio"}
-          name={name}
-          value={item.value}
-          checked={checked}
-          onChange={e => {
-            onChange(e.target.value, e);
-          }}
-          onBlur={() => setFocused(false)}
-          onFocus={() => setFocused(true)}
-        />
+      <>
+        <ItemContainer
+          key={item.value}
+          {...itemContainerProps}
+          {...itemSharedProps}
+        >
+          <input
+            css={css`
+              opacity: 0;
+              width: 0;
+              overflow: hidden;
+              margin: 0;
+              padding: 0;
+              position: absolute;
+            `}
+            type={"radio"}
+            name={name}
+            value={item.value}
+            checked={checked}
+            onChange={e => {
+              onChange(e.target.value, e);
+            }}
+            onBlur={() => setFocused(false)}
+            onFocus={() => setFocused(true)}
+          />
 
-        {itemElem}
-      </ItemContainer>
+          {itemElem}
+        </ItemContainer>
+
+        {contentContainer}
+      </>
     );
   });
 

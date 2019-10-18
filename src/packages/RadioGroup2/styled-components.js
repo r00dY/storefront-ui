@@ -159,6 +159,14 @@ const panelDescriptionStyles = ({ $theme }) => `
 
 const PanelDescriptionStyled = styled("div", panelDescriptionStyles);
 
+const panelContentContainerStyles = ({ $theme }) => `  
+  border-top: 1px solid ${$theme.colors.mono300};
+  padding: ${$theme.spacings.s60}px;
+  ${$theme.fonts.body1.css}
+`;
+
+const PanelContentContainerStyled = styled("div", panelContentContainerStyles);
+
 export const RadioPanel = {
   ContainerStyled: PanelContainerStyled,
   ItemContainerStyled: PanelItemContainerStyled,
@@ -168,12 +176,6 @@ export const RadioPanel = {
   DescriptionStyled: PanelDescriptionStyled,
   LabelContainerStyled: PanelLabelContainerStyled,
   RadioMarkContainerStyled: PanelRadioMarkContainerStyled,
-  EnhancerContainerStyled: PanelEnhancerContainerStyled
+  EnhancerContainerStyled: PanelEnhancerContainerStyled,
+  ContentContainerStyled: PanelContentContainerStyled
 };
-
-//
-// export const labelStyled = ({ $theme }) => `
-//     margin-left: ${$theme.spacings.s10}px;
-// `;
-//
-// export const LabelStyled = styled("div", labelStyled);
