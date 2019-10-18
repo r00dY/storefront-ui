@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-import { RadioGroup2$ } from "@commerce-ui/core/RadioGroup2";
+import {
+  RadioGroup2$,
+  StatefulRadioGroup2$
+} from "@commerce-ui/core/RadioGroup2";
 import RadioMark$ from "@commerce-ui/core/RadioGroup2/RadioMark";
 
 import { ThemeProvider } from "@commerce-ui/core/Theme";
@@ -11,8 +14,6 @@ import { css, jsx } from "@emotion/core";
 export default () => {
   const [value, setValue] = useState(null);
   const [value2, setValue2] = useState("option2");
-  const [value3, setValue3] = useState("option3");
-  const [value4, setValue4] = useState("option4");
 
   return (
     <div>
@@ -60,12 +61,11 @@ export default () => {
         ]}
       />
 
-      <p>Standard stateless, with checkmark</p>
-      <RadioGroup2$
+      <p>Standard stateful, with checkmark</p>
+      <StatefulRadioGroup2$
         legend={"Pick an option"}
         name="radio group 3"
-        onChange={x => setValue3(x)}
-        value={value3}
+        onChange={val => console.log("changed", val)}
         items={[
           {
             label: "Option 1",
@@ -85,12 +85,10 @@ export default () => {
         }}
       />
 
-      <p>Standard stateless, with checkmark, overrides</p>
-      <RadioGroup2$
+      <p>Standard stateful, with checkmark, overrides</p>
+      <StatefulRadioGroup2$
         legend={"Pick an option"}
         name="radio group 4"
-        onChange={x => setValue4(x)}
-        value={value4}
         items={[
           {
             label: "Option 1",
