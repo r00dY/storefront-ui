@@ -1,4 +1,10 @@
-import RadioGroup2$ from "./RadioGroup2";
-import StatefulRadioGroup2$ from "./StatefulRadioGroup2";
+import { RadioGroup, RadioGroupPanels } from "./RadioGroup";
+import {
+  StatefulRadioGroup,
+  StatefulRadioGroupPanels
+} from "./StatefulRadioGroup";
 
-export { RadioGroup2$, StatefulRadioGroup2$ };
+export const RadioGroup$ = RadioGroup;
+export const RadioGroupPanels$ = RadioGroupPanels;
+export const StatefulRadioGroup$ = StatefulRadioGroup;
+export const StatefulRadioGroupPanels$ = StatefulRadioGroupPanels;

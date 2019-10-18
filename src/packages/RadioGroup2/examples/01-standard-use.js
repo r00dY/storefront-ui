@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 
 import {
-  RadioGroup2$,
-  StatefulRadioGroup2$
+  RadioGroup$,
+  StatefulRadioGroup$,
+  StatefulRadioGroupPanels$
 } from "@commerce-ui/core/RadioGroup2";
 import RadioMark$ from "@commerce-ui/core/RadioGroup2/RadioMark";
 
@@ -18,7 +19,7 @@ export default () => {
   return (
     <div>
       <p>Standard stateless</p>
-      <RadioGroup2$
+      <RadioGroup$
         label={"Pick an option"}
         name="radio group"
         onChange={x => setValue(x)}
@@ -40,7 +41,7 @@ export default () => {
       />
 
       <p>Standard stateless, preselected option</p>
-      <RadioGroup2$
+      <RadioGroup$
         label={"Pick an option"}
         name="radio group 2"
         onChange={x => setValue2(x)}
@@ -64,7 +65,7 @@ export default () => {
       <p>
         Standard stateful with <code>initialValue</code>, with checkmark
       </p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroup$
         label={"Pick an option"}
         name="radio group 3"
         onChange={val => console.log("changed", val)}
@@ -89,7 +90,7 @@ export default () => {
       />
 
       <p>Standard stateful, with checkmark, overrides</p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroup$
         label={"Pick an option"}
         name="radio group 4"
         items={[
@@ -178,7 +179,7 @@ export default () => {
       />
 
       <p>Panel short</p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroupPanels$
         label={"Pick an option"}
         name="radio group 5"
         initialValue={"option1"}
@@ -202,11 +203,10 @@ export default () => {
         overrides={{
           RadioMark: RadioMark$
         }}
-        __isPanel={true}
       />
 
       <p>Panel with descriptions and longer titles</p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroupPanels$
         label={"Pick an option"}
         name="radio group 6"
         onChange={val => console.log("changed", val)}
@@ -235,11 +235,10 @@ export default () => {
         overrides={{
           RadioMark: RadioMark$
         }}
-        __isPanel={true}
       />
 
       <p>Panel with content</p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroupPanels$
         label={"Pick an option"}
         name="radio group 7"
         items={[
@@ -266,11 +265,10 @@ export default () => {
         overrides={{
           RadioMark: RadioMark$
         }}
-        __isPanel={true}
       />
 
       <p>Panel with content - overrides</p>
-      <StatefulRadioGroup2$
+      <StatefulRadioGroupPanels$
         label={"Pick an option"}
         name="radio group 8"
         items={[
@@ -321,7 +319,6 @@ export default () => {
                     `
           }
         }}
-        __isPanel={true}
       />
 
       {/*<RadioMark$ disabled={true} />*/}
