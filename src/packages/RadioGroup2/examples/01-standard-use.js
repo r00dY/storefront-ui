@@ -61,11 +61,14 @@ export default () => {
         ]}
       />
 
-      <p>Standard stateful, with checkmark</p>
+      <p>
+        Standard stateful with <code>initialValue</code>, with checkmark
+      </p>
       <StatefulRadioGroup2$
         legend={"Pick an option"}
         name="radio group 3"
         onChange={val => console.log("changed", val)}
+        initialValue={"option2"}
         items={[
           {
             label: "Option 1",
