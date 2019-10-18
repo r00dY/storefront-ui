@@ -61,6 +61,26 @@ export default () => {
           Third
         </Radio$>
       </RadioGroup$>
+
+      <div>
+        <label>
+          <input name={"test-radio"} type={"radio"} value={"1"} />
+          Opcja 1
+        </label>
+        <label>
+          <input name={"test-radio"} type={"radio"} value={"2"} />
+          Opcja 2
+        </label>
+        <br />
+        <label>
+          <input name={"test-radio"} type={"radio"} value={"3"} />
+          Opcja 3
+        </label>
+        <label>
+          <input name={"test-radio"} type={"radio"} value={"4"} />
+          Opcja 4
+        </label>
+      </div>
     </div>
   );
 };
