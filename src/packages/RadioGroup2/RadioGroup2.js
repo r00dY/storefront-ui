@@ -2,12 +2,7 @@ import React, { useState } from "react";
 
 import { getOverrides } from "../base/helpers/overrides";
 
-import {
-  ContainerStyled,
-  ItemContainerStyled,
-  ItemStyled,
-  LabelStyled
-} from "./styled-components";
+import { RadioStandard, RadioPanel } from "./styled-components";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -22,14 +17,29 @@ import { css, jsx } from "@emotion/core";
  */
 
 function RadioGroup2(props) {
-  const { label, name, items, disabled, onChange, value, overrides } = props;
+  const {
+    label,
+    name,
+    items,
+    disabled,
+    onChange,
+    value,
+    isPanel,
+    overrides
+  } = props;
 
   const {
     RadioMark,
     Container: ContainerOverride,
     ItemContainer: ItemContainerOverride,
     Item: ItemOverride,
-    Label: LabelOverride
+    Label: LabelOverride,
+
+    LabelContainer: LabelContainerOverride,
+    EnhancerContainer: EnhancerContainerOverride,
+    RadioMarkContainer: RadioMarkContainerOverride,
+
+    Description: DescriptionOverride
   } = overrides;
 
   const [focused, setFocused] = useState(false);
@@ -39,16 +49,21 @@ function RadioGroup2(props) {
     disabled
   };
 
+  const components = isPanel ? RadioPanel : RadioStandard;
+
   const [Container, containerProps] = getOverrides(
     ContainerOverride,
-    ContainerStyled
+    components.ContainerStyled
   );
   const [ItemContainer, itemContainerProps] = getOverrides(
     ItemContainerOverride,
-    ItemContainerStyled
+    components.ItemContainerStyled
   );
-  const [Item, itemProps] = getOverrides(ItemOverride, ItemStyled);
-  const [Label, labelProps] = getOverrides(LabelOverride, LabelStyled);
+  const [Item, itemProps] = getOverrides(ItemOverride, components.ItemStyled);
+  const [Label, labelProps] = getOverrides(
+    LabelOverride,
+    components.LabelStyled
+  );
 
   const radioItems = items.map((item, i) => {
     const checked = value === item.value;
@@ -67,11 +82,80 @@ function RadioGroup2(props) {
       lastIndex: items.length - 1
     };
 
+    let itemElem;
+
     const label = (
       <Label {...itemSharedProps} {...labelProps}>
         {item.label}
       </Label>
     );
+
+    // standard radio
+    if (!isPanel) {
+      itemElem = (
+        <Item
+          {...itemSharedProps}
+          {...itemProps}
+          label={label}
+          radioMark={radioMark}
+        />
+      );
+    }
+    // panel radio
+    else {
+      const [LabelContainer, labelContainerProps] = getOverrides(
+        LabelContainerOverride,
+        components.LabelContainerStyled
+      );
+      const [EnhancerContainer, enhancerContainerProps] = getOverrides(
+        EnhancerContainerOverride,
+        components.EnhancerContainerStyled
+      );
+      const [RadioMarkContainer, radioMarkContainerProps] = getOverrides(
+        RadioMarkContainerOverride,
+        components.RadioMarkContainerStyled
+      );
+      const [Description, descriptionProps] = getOverrides(
+        DescriptionOverride,
+        components.DescriptionStyled
+      );
+
+      const description = item.description && (
+        <Description {...descriptionProps} {...itemSharedProps}>
+          {item.description}
+        </Description>
+      );
+      const labelContainer = (
+        <LabelContainer
+          {...labelContainerProps}
+          {...itemSharedProps}
+          label={label}
+          description={description}
+        />
+      );
+      const radioMarkContainer = (
+        <RadioMarkContainer {...radioMarkContainerProps} {...itemSharedProps}>
+          {radioMark}
+        </RadioMarkContainer>
+      );
+      const enhancerContainer = (
+        <EnhancerContainer {...enhancerContainerProps} {...itemSharedProps}>
+          {item.enhancer}
+        </EnhancerContainer>
+      );
+
+      itemElem = (
+        <Item
+          {...itemSharedProps}
+          {...itemProps}
+          label={label}
+          radioMark={radioMark}
+          labelContainer={labelContainer}
+          radioMarkContainer={radioMarkContainer}
+          enhancerContainer={enhancerContainer}
+        />
+      );
+    }
 
     return (
       <ItemContainer
@@ -99,12 +183,7 @@ function RadioGroup2(props) {
           onFocus={() => setFocused(true)}
         />
 
-        <Item
-          {...itemSharedProps}
-          {...itemProps}
-          label={label}
-          radioMark={radioMark}
-        />
+        {itemElem}
       </ItemContainer>
     );
   });
@@ -127,7 +206,8 @@ function RadioGroup2(props) {
 }
 
 RadioGroup2.defaultProps = {
-  overrides: {}
+  overrides: {},
+  isPanel: false
 };
 
 // class StatelessRadioGroup extends React.Component<PropsT, StatelessStateT> {

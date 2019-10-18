@@ -177,6 +177,38 @@ export default () => {
         }}
       />
 
+      <p>Panel</p>
+      <StatefulRadioGroup2$
+        label={"Pick an option"}
+        name="radio group 5"
+        onChange={val => console.log("changed", val)}
+        initialValue={"option2"}
+        items={[
+          {
+            label: "Option 1",
+            value: "option1",
+            enhancer: "FREE",
+            description: "This option is for the purpose of doing something."
+          },
+          {
+            label: "Option 2",
+            value: "option2",
+            enhancer: "19.99$",
+            description: "This option is for the purpose of doing something."
+          },
+          {
+            label:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
+            value: "option3",
+            enhancer: "24.99$",
+            description: "This option is for the purpose of doing something."
+          }
+        ]}
+        overrides={{
+          RadioMark: RadioMark$
+        }}
+        isPanel={true}
+      />
       {/*<RadioMark$ disabled={true} />*/}
       {/*<RadioMark$ checked={true} />*/}
       {/*<RadioMark$ checked={false} />*/}
