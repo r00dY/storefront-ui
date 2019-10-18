@@ -207,7 +207,7 @@ export default () => {
         overrides={{
           RadioMark: RadioMark$
         }}
-        isPanel={true}
+        __isPanel={true}
       />
       {/*<RadioMark$ disabled={true} />*/}
       {/*<RadioMark$ checked={true} />*/}

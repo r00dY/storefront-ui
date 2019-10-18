@@ -14,6 +14,8 @@ import { css, jsx } from "@emotion/core";
  * 1. Shopfiy (checkout) and apple picker use <fieldset> and <legend> for this component. However, what if it's a part of fieldset itself?
  * 2. role=radiogroup is used by Uber. But not sure how it behaves when another radio shows up "below".
  *
+ *
+ * __isPanel -> temporary way to give Radio 2 ways of styling.
  */
 
 function RadioGroup2(props) {
@@ -24,7 +26,7 @@ function RadioGroup2(props) {
     disabled,
     onChange,
     value,
-    isPanel,
+    __isPanel,
     overrides
   } = props;
 
@@ -49,7 +51,7 @@ function RadioGroup2(props) {
     disabled
   };
 
-  const components = isPanel ? RadioPanel : RadioStandard;
+  const components = __isPanel ? RadioPanel : RadioStandard;
 
   const [Container, containerProps] = getOverrides(
     ContainerOverride,
@@ -91,7 +93,7 @@ function RadioGroup2(props) {
     );
 
     // standard radio
-    if (!isPanel) {
+    if (!__isPanel) {
       itemElem = (
         <Item
           {...itemSharedProps}
@@ -207,7 +209,7 @@ function RadioGroup2(props) {
 
 RadioGroup2.defaultProps = {
   overrides: {},
-  isPanel: false
+  __isPanel: false
 };
 
 // class StatelessRadioGroup extends React.Component<PropsT, StatelessStateT> {
