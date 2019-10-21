@@ -21,6 +21,7 @@ import { useTheme } from "storefront-ui/Theme";
 import useScrollSegment from "storefront-ui/useScrollSegment";
 import useAddToCartAndShowNotificatiion from "../../graphql/hooks/useAddToCartAndShowNotification";
 import data from "../../data";
+import useCheckout from "../../graphql/hooks/useCheckout";
 
 const sliderProducts1 = [
   data.products[1],
@@ -40,12 +41,9 @@ const sliderProducts2 = [
   data.products[1]
 ];
 
-const content = ({ product, setCheckout, checkoutId }) => {
+const content = ({ product }) => {
   const [variantPicker, currentVariant] = useGetVariantPicker(product);
-  const [addToCart, loading] = useAddToCartAndShowNotificatiion(
-    checkoutId,
-    setCheckout
-  );
+  const [addToCart, loading] = useAddToCartAndShowNotificatiion(currentVariant);
 
   const theme = useTheme();
   const segment = useScrollSegment({ 400: "not-top" });
@@ -194,7 +192,7 @@ const content = ({ product, setCheckout, checkoutId }) => {
         variantPicker={variantPicker}
         buttonProps={{
           onClick: () => {
-            addToCart([{ variantId: currentVariant.id, quantity: 1 }]);
+            addToCart(1);
           }
         }}
       />

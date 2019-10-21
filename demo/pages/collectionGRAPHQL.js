@@ -37,7 +37,7 @@ import CustomHits from "../algolia/AlgoliaProductsHits";
 import AlgoliaRefinementList from "../algolia/AlgoliaRefinementList";
 import AlgoliaCategoryList from "../algolia/AlgoliaCategoryList";
 import useGetCollections from "../graphql/hooks/useGetCollections";
-import useGetProducts from "../graphql/hooks/useGetProducts";
+import useProducts from "../graphql/hooks/useProducts";
 
 // navigation bar for collection page (on mobile)
 const NavBarCollection = ({ title, onFilterClick }) => {
@@ -100,7 +100,7 @@ const CollectionPage = props => {
   const { products, isLoading, query } = useProducts();
 
   const [collections, collectionsLoading] = useGetCollections();
-  const [mappedProducts, isLoadingCollection] = useGetProducts(
+  const [mappedProducts, isLoadingCollection] = useProducts(
     "test-collection-1",
     50
   );

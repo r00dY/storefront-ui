@@ -7,13 +7,15 @@ import { useTheme } from "storefront-ui/Theme";
 
 import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
 import useDeleteFromCart from "../../graphql/hooks/useDeleteFromCart";
+import useCheckout from "../../graphql/hooks/useCheckout";
 
 const MiniBasketContent = props => {
   const {} = props;
   const theme = useTheme();
   const [deleteItemFromCart, deletingInProgress] = useDeleteFromCart();
+  const [checkout] = useCheckout();
 
-  const lineItems = props.dataMapper(props.lineItems);
+  const lineItems = props.dataMapper(checkout.lineItems);
 
   return (
     <div

@@ -3,14 +3,14 @@ import { addVariantToCartMutation } from "../mutations";
 import { showNotification } from "storefront-ui/Notifications";
 import React from "react";
 
-const useAddToCart = () => {
+const useAddToCart = (checkoutId, productVariant) => {
   const [addVariantToCart, { loading }] = useMutation(addVariantToCartMutation);
 
-  const addToCart = async (checkoutId, lineItems) => {
+  const addToCart = async quantity => {
     return await addVariantToCart({
       variables: {
         checkoutId,
-        lineItems
+        lineItems: [{ variantId: productVariant.id, quantity }]
       }
     });
   };

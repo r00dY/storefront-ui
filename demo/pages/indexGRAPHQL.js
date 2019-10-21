@@ -20,7 +20,7 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import useGetProducts from "../graphql/hooks/useGetProducts";
+import useProducts from "../graphql/hooks/useProducts";
 import useGetCollections from "../graphql/hooks/useGetCollections";
 
 // Categories displayed at the bottom
@@ -41,7 +41,7 @@ const categories = [
 
 const Home = () => {
   const theme = useTheme();
-  const [mappedProducts, isLoadingCollection] = useGetProducts("frontpage", 50);
+  const [mappedProducts, isLoadingCollection] = useProducts("frontpage", 50);
   const [collections, collectionsLoading] = useGetCollections();
 
   return (

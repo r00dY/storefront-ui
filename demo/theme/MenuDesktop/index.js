@@ -31,6 +31,8 @@ import data from "../../data";
 import { css, jsx } from "@emotion/core";
 import mapCheckoutItems from "../../helpers/mapCheckoutItems";
 import getCheckoutTotals from "../../helpers/getCheckoutTotals";
+import useCheckout from "../../graphql/hooks/useCheckout";
+import { CheckoutContext } from "../../lib/CheckoutContext";
 
 export const MenuDesktopContent = props => {
   const { category } = props;
@@ -136,6 +138,7 @@ export const MenuDesktopContent = props => {
 const MenuDesktop = props => {
   const [opened, setOpened] = useState(false);
   const [profileOpened, setProfileOpened] = useState(false);
+  const [checkout] = useCheckout(CheckoutContext);
 
   const theme = useTheme();
   const segment = useScrollSegment({ 1: "not-top", 1000: "hideable" });
@@ -310,7 +313,7 @@ const MenuDesktop = props => {
                       padding: ${theme.spacings.s30}px;
                     `}
                   >
-                    <Ledger rows={getCheckoutTotals(props.checkout)} />
+                    <Ledger rows={getCheckoutTotals(checkout)} />
                   </div>
                   <div
                     css={css`
@@ -350,7 +353,7 @@ const MenuDesktop = props => {
               )}
             >
               <MiniBasketContent
-                lineItems={props.checkout.lineItems}
+                lineItems={checkout.lineItems}
                 dataMapper={mapCheckoutItems}
               />
             </Modal>

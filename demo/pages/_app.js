@@ -21,6 +21,7 @@ import data from "../data";
 import { parseCookies, setCookie } from "../helpers/cookie";
 import fetchCheckout from "../actions/fetchCheckout";
 import createEmptyCheckout from "../actions/createEmptyCheckout";
+import { InjectCheckoutContext } from "../lib/CheckoutContext";
 
 const tabs = [
   {
@@ -80,16 +81,6 @@ class MyApp extends App {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      checkout: { ...props.checkout }
-    };
-
-    this.handleCheckoutChange = this.handleCheckoutChange.bind(this);
-  }
-
-  handleCheckoutChange(checkout) {
-    this.setState({ checkout });
   }
 
   render() {
@@ -97,11 +88,7 @@ class MyApp extends App {
 
     const content = (
       <Container>
-        <Component
-          {...pageProps}
-          checkoutId={this.state.checkout.id}
-          setCheckout={this.handleCheckoutChange}
-        />
+        <Component {...pageProps} checkoutId={this.props.checkout.id} />
       </Container>
     );
 
@@ -110,126 +97,127 @@ class MyApp extends App {
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
-      <ApolloProvider client={apolloClient}>
-        <ApolloHooksProvider client={apolloClient}>
-          <Root theme={theme}>
-            <GridDebugger />
-            <Device mobile>
-              {showTabbar && (
-                <div>
-                  <div
-                    css={css`
-                      margin-bottom: 50px;
-                    `}
-                  >
+      <InjectCheckoutContext checkout={this.props.checkout}>
+        <ApolloProvider client={apolloClient}>
+          <ApolloHooksProvider client={apolloClient}>
+            <Root theme={theme}>
+              <GridDebugger />
+              <Device mobile>
+                {showTabbar && (
+                  <div>
+                    <div
+                      css={css`
+                        margin-bottom: 50px;
+                      `}
+                    >
+                      {content}
+                      {showFooterOnMobile && <Footer />}
+                    </div>
+                    <div
+                      css={css`
+                        position: fixed;
+                        bottom: 0;
+                        left: 0;
+                        width: 100%;
+                      `}
+                    >
+                      <MainTabBar
+                        data={tabs}
+                        active={Component.tabbar}
+                        onChange={index => {
+                          if (index === 0) {
+                            routerPush("/");
+                          } else if (index === 1) {
+                            routerPush("/menu");
+                          } else if (index === 2) {
+                            routerPush("/wishlist");
+                          } else if (index === 3) {
+                            routerPush("/cart");
+                          } else if (index === 4) {
+                            routerPush("/profile");
+                          }
+                        }}
+                        scrollable={false}
+                        align={"fit"}
+                      />
+                    </div>
+                  </div>
+                )}
+
+                {!showTabbar && (
+                  <>
                     {content}
                     {showFooterOnMobile && <Footer />}
-                  </div>
-                  <div
-                    css={css`
-                      position: fixed;
-                      bottom: 0;
-                      left: 0;
-                      width: 100%;
-                    `}
-                  >
-                    <MainTabBar
-                      data={tabs}
-                      active={Component.tabbar}
-                      onChange={index => {
-                        if (index === 0) {
-                          routerPush("/");
-                        } else if (index === 1) {
-                          routerPush("/menu");
-                        } else if (index === 2) {
-                          routerPush("/wishlist");
-                        } else if (index === 3) {
-                          routerPush("/cart");
-                        } else if (index === 4) {
-                          routerPush("/profile");
+                  </>
+                )}
+              </Device>
+
+              <Device desktop>
+                {hideDesktopMenu && this.props.checkout && content}
+
+                {!hideDesktopMenu && this.props.checkout && (
+                  <>
+                    <MenuDesktop
+                      data={[
+                        {
+                          label: "Home",
+                          href: "/category",
+                          content: (
+                            <MenuDesktopContent
+                              category={data.categories[0]}
+                              index={0}
+                            />
+                          )
+                        },
+                        {
+                          label: "Beauty",
+                          href: "/category",
+                          content: (
+                            <MenuDesktopContent
+                              category={data.categories[1]}
+                              index={1}
+                            />
+                          )
+                        },
+                        {
+                          label: "Food",
+                          href: "/category",
+                          content: (
+                            <MenuDesktopContent
+                              category={data.categories[2]}
+                              index={2}
+                            />
+                          )
+                        },
+                        {
+                          label: "Health",
+                          href: "/category",
+                          content: (
+                            <MenuDesktopContent
+                              category={data.categories[3]}
+                              index={3}
+                            />
+                          )
                         }
-                      }}
-                      scrollable={false}
-                      align={"fit"}
+                      ]}
                     />
-                  </div>
-                </div>
-              )}
 
-              {!showTabbar && (
-                <>
-                  {content}
-                  {showFooterOnMobile && <Footer />}
-                </>
-              )}
-            </Device>
+                    <div
+                      css={css`
+                        padding-top: 70px;
+                      `}
+                    >
+                      {content}
 
-            <Device desktop>
-              {hideDesktopMenu && content}
-
-              {!hideDesktopMenu && (
-                <>
-                  <MenuDesktop
-                    checkout={this.state.checkout}
-                    data={[
-                      {
-                        label: "Home",
-                        href: "/category",
-                        content: (
-                          <MenuDesktopContent
-                            category={data.categories[0]}
-                            index={0}
-                          />
-                        )
-                      },
-                      {
-                        label: "Beauty",
-                        href: "/category",
-                        content: (
-                          <MenuDesktopContent
-                            category={data.categories[1]}
-                            index={1}
-                          />
-                        )
-                      },
-                      {
-                        label: "Food",
-                        href: "/category",
-                        content: (
-                          <MenuDesktopContent
-                            category={data.categories[2]}
-                            index={2}
-                          />
-                        )
-                      },
-                      {
-                        label: "Health",
-                        href: "/category",
-                        content: (
-                          <MenuDesktopContent
-                            category={data.categories[3]}
-                            index={3}
-                          />
-                        )
-                      }
-                    ]}
-                  />
-
-                  <div
-                    css={css`
-                      padding-top: 70px;
-                    `}
-                  >
-                    {content}
-
-                    <Footer />
-                  </div>
-                </>
-              )}
-            </Device>
-          </Root>
-        </ApolloHooksProvider>
-      </ApolloProvider>
+                      <Footer />
+                    </div>
+                  </>
+                )}
+              </Device>
+            </Root>
+          </ApolloHooksProvider>
+        </ApolloProvider>
+      </InjectCheckoutContext>
     );
   }
 }

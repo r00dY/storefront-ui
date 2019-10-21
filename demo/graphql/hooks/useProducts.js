@@ -4,7 +4,7 @@ import mapProductsToMultipleVariants from "../../helpers/mapProductsToMultipleVa
 
 // może obiekt OPTIONS, z kluczami:
 // collectionName, productsAmount, mapper,
-const useGetProducts = (collectionName, productsAmount) => {
+const useProducts = (collectionName, productsAmount) => {
   const { data, loading } = useQuery(getCollection, {
     variables: { collectionName, productsAmount }
   });
@@ -24,4 +24,4 @@ const useGetProducts = (collectionName, productsAmount) => {
   return [mappedProducts, loading];
 };
 
-export default useGetProducts;
+export default useProducts;

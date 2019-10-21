@@ -22,20 +22,12 @@ const ProductComponent = props => {
 
   return loading ? (
     cache ? (
-      <ProductPageContent
-        setCheckout={props.setCheckout}
-        checkoutId={props.checkoutId}
-        product={cache}
-      />
+      <ProductPageContent product={cache} />
     ) : (
       "Loading..."
     )
   ) : (
-    <ProductPageContent
-      setCheckout={props.setCheckout}
-      checkoutId={props.checkoutId}
-      product={product}
-    />
+    <ProductPageContent product={product} />
   );
 };
 
