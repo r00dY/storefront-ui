@@ -138,6 +138,7 @@ const panelEnhancerContainerStyles = ({ $theme }) => `
     flex: 0 0 auto;
     align-self: flex-start;
     margin-left: ${$theme.spacings.s50}px;
+    ${$theme.fonts.body1.css}
 `;
 
 const PanelEnhancerContainerStyled = styled(

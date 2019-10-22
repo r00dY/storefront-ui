@@ -220,7 +220,7 @@ function RadioGroup__Generic(props) {
           margin: 0;
         `}
       >
-        <legend>{label}</legend>
+        <legend hidden>{label}</legend>
         <Container {...containerProps} {...sharedProps} items={radioItems} />
         {/*aria-labelledby={label} role="radiogroup"*/}
       </fieldset>
