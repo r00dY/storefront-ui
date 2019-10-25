@@ -11,6 +11,8 @@ import { catLandscape } from "../../../../data/images";
 export default () => {
   const [loaded, setLoaded] = useState(false);
 
+  console.log(loaded);
+
   return (
     <div>
       <p>
