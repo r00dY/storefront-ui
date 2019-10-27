@@ -41,7 +41,10 @@ const categories = [
 
 const Home = () => {
   const theme = useTheme();
-  const [mappedProducts, isLoadingCollection] = useProducts("frontpage", 50);
+  const [mappedProducts, isLoadingCollection] = useProducts([
+    { name: "collectionName", value: "frontpage" },
+    { name: "productsAmount", value: 50 }
+  ]);
   const [collections, collectionsLoading] = useGetCollections();
 
   return (

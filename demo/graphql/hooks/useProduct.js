@@ -18,7 +18,7 @@ const useProduct = id => {
   }
 
   if (data) {
-    product = data;
+    product = data.node;
   }
 
   return { product, loading, error };

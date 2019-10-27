@@ -19,7 +19,7 @@ import CategoryCardCompact from "../theme/CategoryCardCompact";
 import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
 
 import data from "../data";
-import useProducts from "../helpers/useProducts";
+// import useProducts from "../helpers/useProducts";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -97,13 +97,15 @@ const CollectionPage = props => {
 
   const [filtersModalOpened, setFiltersModalOpened] = useState(false);
 
-  const { products, isLoading, query } = useProducts();
+  // const { products, isLoading, query } = useProducts();
+
+  const isLoading = false;
 
   const [collections, collectionsLoading] = useGetCollections();
-  const [mappedProducts, isLoadingCollection] = useProducts(
-    "test-collection-1",
-    50
-  );
+  const [mappedProducts, isLoadingCollection] = useProducts([
+    { name: "collectionName", value: "test-collection-1" },
+    { name: "productsAmount", value: 50 }
+  ]);
 
   if (isLoadingCollection) {
     return "Loading...";

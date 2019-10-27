@@ -2,9 +2,14 @@ import { useQuery } from "@apollo/react-hooks";
 import getCollection from "../queries/getCollection";
 import mapProductsToMultipleVariants from "../../helpers/mapProductsToMultipleVariants";
 
-// może obiekt OPTIONS, z kluczami:
-// collectionName, productsAmount, mapper,
-const useProducts = (collectionName, productsAmount) => {
+const useProducts = filters => {
+  const collectionName = filters.find(
+    filter => filter.name === "collectionName"
+  ).value;
+  const productsAmount = filters.find(
+    filter => filter.name === "productsAmount"
+  ).value;
+
   const { data, loading } = useQuery(getCollection, {
     variables: { collectionName, productsAmount }
   });

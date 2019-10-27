@@ -1,34 +1,20 @@
 import React from "react";
-import useGetProduct from "../graphql/hooks/useGetProduct";
 import { useTheme } from "storefront-ui/Theme";
 import { showNotification } from "storefront-ui/Notifications";
 import { rslin } from "responsive-helpers";
 import ProductPageContent from "../components/ProductPageContent";
+import useProductVariant from "../graphql/hooks/useProductVariant";
+import useProduct from "../graphql/hooks/useProduct";
 
 const ProductComponent = props => {
-  const productId = "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzQwODEzNjEzNTQ4MTY=";
-  const variantId =
-    "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0VmFyaWFudC8zMDAyMzk4MzIwMjM2OA==";
-  const { product, loading, cache, error } = useGetProduct(
-    productId,
-    variantId
+  const { product, error, loading } = useProduct(
+    "Z2lkOi8vc2hvcGlmeS9Qcm9kdWN0LzQwODEzNjEzNTQ4MTY="
   );
+  const variant = useProductVariant(product, { size: "XS", color: "Pine" });
 
   if (error) return `Error! ${error.message}`;
 
-  /*
-    /:productId
-   */
-
-  return loading ? (
-    cache ? (
-      <ProductPageContent product={cache} />
-    ) : (
-      "Loading..."
-    )
-  ) : (
-    <ProductPageContent product={product} />
-  );
+  return loading ? "Loading..." : <ProductPageContent product={variant} />;
 };
 
 export default ProductComponent;

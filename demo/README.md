@@ -1,8 +1,8 @@
-const { products, loading, error } = useProducts(… params …)
+const { products, loading, error } = useProducts([ { name: FILTER_NAME, value: FILTER_VALUE } ])
 
 const { product, loading, error } = useProduct(id);
 
-const { productVariant } = useProductVariant(product, { ‘size’: size, color: ‘green’ });
+const { productVariant } = useProductVariant(product, { size: 'XL', color: ‘green’ });
 
 Jeśli chodzi o addToCart
 To nie jest to "globalny adder", ale zawsze trzeba go wyciągnąć dla konkretnego product variantu. Dlatego, że można wyobrazic sobie latwo sytuacje dodawania kilku produkt-variantów na raz
