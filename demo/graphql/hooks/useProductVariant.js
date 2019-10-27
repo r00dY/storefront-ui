@@ -3,7 +3,9 @@ const useProductVariant = (product, attributes) => {
     return product;
   }
 
-  const attributesNames = Object.keys(attributes);
+  const attributesNames = Object.keys(attributes).map(attr =>
+    attr.toLowerCase()
+  );
 
   const variant = product.variants.edges.find(variant => {
     return variant.node.selectedOptions.every(option => {
