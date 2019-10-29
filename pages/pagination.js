@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Pagination
@@ -10,11 +10,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/usePagination/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/usePagination/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/usePagination/examples/01-standard-use.js")
+      require("../packages/core/src/packages/usePagination/examples/01-standard-use.js")
         .default
     }
   />
@@ -25,11 +25,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Pagination/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Pagination/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Pagination/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Pagination/examples/01-standard-use.js").default
     }
   />
 )}

@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Filters
@@ -15,7 +15,7 @@ There are different ways of building filtering in \`storefront-ui\`. You could s
 
 All filter components in \`storefront-ui\` require unified filter format which is as follows:
 
-${<CodeBlock code={require("!!raw-loader!../data/filters.js").default} />}
+${<CodeBlock code={require("!!raw-loader!../packages/core/data/filters.js").default} />}
 
 ## \`FilterColumn\`
 
@@ -24,11 +24,11 @@ Let's start with simple filter column, so common in all kinds of e-commerce site
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Filters/examples/01-filters-column.js")
+      require("!!raw-loader!../packages/core/src/packages/Filters/examples/01-filters-column.js")
         .default
     }
     component={
-      require("../src/packages/Filters/examples/01-filters-column.js").default
+      require("../packages/core/src/packages/Filters/examples/01-filters-column.js").default
     }
   />
 )}
@@ -38,11 +38,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/RangePicker/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/RangePicker/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/RangePicker/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/RangePicker/examples/01-standard-use.js").default
     }
   />
 )}

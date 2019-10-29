@@ -1,7 +1,7 @@
 import React from "react";
 
 import MenuDesktop from "../demo/components/MenuDesktop";
-import LoremIpsum from "../docs-utils/LoremIpsum";
+import LoremIpsum from "../packages/core/docs-utils/LoremIpsum";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

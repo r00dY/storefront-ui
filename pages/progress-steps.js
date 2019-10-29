@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # ProgressSteps
@@ -14,11 +14,11 @@ Most commonly used within the checkout flow at the top of page, and other flows 
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ProgressSteps/examples/01-progress-steps.js")
+      require("!!raw-loader!../packages/core/src/packages/ProgressSteps/examples/01-progress-steps.js")
         .default
     }
     component={
-      require("../src/packages/ProgressSteps/examples/01-progress-steps.js")
+      require("../packages/core/src/packages/ProgressSteps/examples/01-progress-steps.js")
         .default
     }
   />

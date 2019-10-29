@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Notifications
@@ -8,11 +8,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Notifications/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Notifications/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Notifications/examples/01-standard-use.js")
+      require("../packages/core/src/packages/Notifications/examples/01-standard-use.js")
         .default
     }
   />

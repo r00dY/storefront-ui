@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Divider
@@ -14,11 +14,11 @@ Simple usage
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Divider/examples/01-divider.js")
+      require("!!raw-loader!../packages/core/src/packages/Divider/examples/01-divider.js")
         .default
     }
     component={
-      require("../src/packages/Divider/examples/01-divider.js").default
+      require("../packages/core/src/packages/Divider/examples/01-divider.js").default
     }
   />
 )}
@@ -28,11 +28,11 @@ With label
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Divider/examples/02-divider-with-label.js")
+      require("!!raw-loader!../packages/core/src/packages/Divider/examples/02-divider-with-label.js")
         .default
     }
     component={
-      require("../src/packages/Divider/examples/02-divider-with-label.js")
+      require("../packages/core/src/packages/Divider/examples/02-divider-with-label.js")
         .default
     }
   />

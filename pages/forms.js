@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Forms, Inputs and Controls
@@ -14,11 +14,11 @@ Standard input field.
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Input/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Input/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Input/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Input/examples/01-standard-use.js").default
     }
   />
 )}
@@ -28,11 +28,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Textarea/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Textarea/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Textarea/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Textarea/examples/01-standard-use.js").default
     }
   />
 )}
@@ -42,11 +42,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Checkbox/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Checkbox/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Checkbox/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Checkbox/examples/01-standard-use.js").default
     }
   />
 )}
@@ -56,11 +56,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Radio/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Radio/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Radio/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Radio/examples/01-standard-use.js").default
     }
   />
 )}
@@ -70,11 +70,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/FormControl/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/FormControl/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/FormControl/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/FormControl/examples/01-standard-use.js").default
     }
   />
 )}
@@ -84,11 +84,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/FormHeader/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/FormHeader/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/FormHeader/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/FormHeader/examples/01-standard-use.js").default
     }
   />
 )}
@@ -98,11 +98,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/SelectNative/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/SelectNative/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/SelectNative/examples/01-standard-use.js")
+      require("../packages/core/src/packages/SelectNative/examples/01-standard-use.js")
         .default
     }
   />

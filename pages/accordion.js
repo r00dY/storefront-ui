@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Accordion
@@ -10,11 +10,11 @@ Most basic accordion (\`AccordionRaw\`) as raw as it possibly could be. No state
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Accordion/examples/01-accordion-raw.js")
+      require("!!raw-loader!../packages/core/src/packages/Accordion/examples/01-accordion-raw.js")
         .default
     }
     component={
-      require("../src/packages/Accordion/examples/01-accordion-raw.js").default
+      require("../packages/core/src/packages/Accordion/examples/01-accordion-raw.js").default
     }
   />
 )}
@@ -26,11 +26,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Accordion/examples/02-accordion.js")
+      require("!!raw-loader!../packages/core/src/packages/Accordion/examples/02-accordion.js")
         .default
     }
     component={
-      require("../src/packages/Accordion/examples/02-accordion.js").default
+      require("../packages/core/src/packages/Accordion/examples/02-accordion.js").default
     }
   />
 )}
@@ -43,11 +43,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/AccordionHeader/examples/03-accordion-header.js")
+      require("!!raw-loader!../packages/core/src/packages/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
     component={
-      require("../src/packages/AccordionHeader/examples/03-accordion-header.js")
+      require("../packages/core/src/packages/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
   />
@@ -60,11 +60,11 @@ Frequently we need to show item list with couple of items hidden and possible to
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ItemListAccordion/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/ItemListAccordion/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ItemListAccordion/examples/01-standard-use.js")
+      require("../packages/core/src/packages/ItemListAccordion/examples/01-standard-use.js")
         .default
     }
   />

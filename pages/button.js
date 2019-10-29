@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../docs-utils/Page";
-import { md, Example, CodeBlock } from "../docs-utils/docs";
+import Page from "../packages/core/docs-utils/Page";
+import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
 
 const content = md`
 # Button
@@ -8,11 +8,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Button/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/Button/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Button/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/Button/examples/01-standard-use.js").default
     }
   />
 )}
@@ -26,11 +26,11 @@ Important thing is to know how \\\`Button\\\` is sized. If it's a standard butto
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ButtonGroup/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/ButtonGroup/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ButtonGroup/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/ButtonGroup/examples/01-standard-use.js").default
     }
   />
 )}
@@ -40,11 +40,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ButtonRaw/examples/01-standard-use.js")
+      require("!!raw-loader!../packages/core/src/packages/ButtonRaw/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ButtonRaw/examples/01-standard-use.js").default
+      require("../packages/core/src/packages/ButtonRaw/examples/01-standard-use.js").default
     }
   />
 )}
