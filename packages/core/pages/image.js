@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../packages/core/docs-utils/Page";
-import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
+import Page from "../docs-utils/Page";
+import { md, Example, CodeBlock } from "../docs-utils/docs";
 
 const content = md`
 # Image
@@ -19,18 +19,18 @@ It does many tasks under the hood so that you don't have to worry about them:
 
 Examples import example images from a helper \`images.js\` file:
 
-${<CodeBlock code={require("!!raw-loader!../packages/core/data/images.js").default} />}
+${<CodeBlock code={require("!!raw-loader!../data/images.js").default} />}
 
 ### Standard use
 
 ${(
   <Example
     code={
-      require("!!raw-loader!../packages/core/src/packages/Image/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages/Image/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../packages/core/src/packages/Image/examples/01-standard-use.js").default
+      require("../src/packages/Image/examples/01-standard-use.js").default
     }
   />
 )}
@@ -40,11 +40,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../packages/core/src/packages/Image/examples/02-custom-load-time.js")
+      require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")
         .default
     }
     component={
-      require("../packages/core/src/packages/Image/examples/02-custom-load-time.js").default
+      require("../src/packages/Image/examples/02-custom-load-time.js").default
     }
   />
 )}
@@ -54,11 +54,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../packages/core/src/packages/Image/examples/03-image-zoomable.js")
+      require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")
         .default
     }
     component={
-      require("../packages/core/src/packages/Image/examples/03-image-zoomable.js").default
+      require("../src/packages/Image/examples/03-image-zoomable.js").default
     }
   />
 )}
@@ -70,9 +70,9 @@ It's very easy to add videos instead of images. Actually you must use \`Image\` 
 ${(
   <Example
     code={
-      require("!!raw-loader!../packages/core/src/packages/Image/examples/04-video.js").default
+      require("!!raw-loader!../src/packages/Image/examples/04-video.js").default
     }
-    component={require("../packages/core/src/packages/Image/examples/04-video.js").default}
+    component={require("../src/packages/Image/examples/04-video.js").default}
   />
 )}
 

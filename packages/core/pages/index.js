@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../packages/core/docs-utils/Page";
-import { md } from "../packages/core/docs-utils/docs";
+import Page from "../docs-utils/Page";
+import { md } from "../docs-utils/docs";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

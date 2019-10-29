@@ -1,6 +1,6 @@
 import React from "react";
-import Page from "../packages/core/docs-utils/Page";
-import { md, Example, CodeBlock } from "../packages/core/docs-utils/docs";
+import Page from "../docs-utils/Page";
+import { md, Example, CodeBlock } from "../docs-utils/docs";
 
 // const content = md`
 // # Product gallery

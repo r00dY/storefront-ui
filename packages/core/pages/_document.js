@@ -1,8 +1,8 @@
 import Document, { Html, Head, Main, NextScript } from "next/document";
 import { Provider as StyletronProvider } from "styletron-react";
-import { styletron } from "../packages/core/styletron";
+import { styletron } from "../styletron";
 
-import Device from "@commerce-ui/core/Device";
+import Device from "packages/core/dist/Device";
 
 class MyDocument extends Document {
   static async getInitialProps(props) {
@@ -24,9 +24,21 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="stylesheet" type="text/css" href="/packages/core/static/normalize.css" />
-          <link rel="stylesheet" type="text/css" href="/packages/core/static/global.css" />
-          <link rel="stylesheet" type="text/css" href="/packages/core/static/prism.css" />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/packages/core/static/normalize.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/packages/core/static/global.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/packages/core/static/prism.css"
+          />
 
           {this.props.stylesheets.map((sheet, i) => (
             <style

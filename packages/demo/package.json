@@ -30,6 +30,8 @@
     "graphql-tag": "^2.10.1",
     "isomorphic-unfetch": "^3.0.0"
   },
-  "devDependencies": {},
+  "devDependencies": {
+    "@babel/runtime-corejs2": "^7.6.3"
+  },
   "version": "0.6.7"
 }
