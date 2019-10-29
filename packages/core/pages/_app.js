@@ -1,8 +1,8 @@
 import React from "react";
 import App, { Container } from "next/app";
 
-import Root from "packages/core/dist/Root";
-import { theme } from "../demo/theme";
+import Root from "../src/packages/Root";
+import { theme } from "../theme";
 
 export default class MyApp extends App {
   static async getInitialProps(appContext) {
