@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import { Select$, StatefulSelect$ } from "storefront-ui/Select";
+import { Select$, StatefulSelect$ } from "@commerce-ui/core/Select";
 
-import { Popover$ } from "storefront-ui/Popover";
-import { Popover } from "../../../../demo/theme/Popover";
+import { Popover$ } from "@commerce-ui/core/Popover";
+import { Popover } from "../../../../demo/components/Popover";
 
-import { Modal$ } from "storefront-ui/Modal";
-import { Modal } from "../../../../demo/theme/Modal";
+import { Modal$ } from "@commerce-ui/core/Modal";
+import { Modal } from "../../../../demo/components/Modal";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

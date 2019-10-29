@@ -1,22 +1,24 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import { rslin } from "responsive-helpers";
-import Container from "storefront-ui/Container";
-import { FiltersColumn } from "../theme/Filters";
-import { Button } from "../theme/Button";
-import { L, R } from "storefront-ui/Config";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import Device from "storefront-ui/Device";
-import { Modal } from "../theme/Modal";
-import useScrollSegment from "storefront-ui/useScrollSegment";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import NavBarMobile from "../theme/NavBarMobile";
-import { useTheme } from "storefront-ui/Theme";
-import { StatefulPagination } from "../theme/Pagination";
-import { StatefulSelect } from "../theme/Select";
-import CategoryCardCompact from "../theme/CategoryCardCompact";
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import Container from "@commerce-ui/core/Container";
+import { FiltersColumn } from "../components/Filters";
+import { Button } from "../components/Button";
+import { L, R } from "../theme.js";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
+import Device from "@commerce-ui/core/Device";
+import { Modal } from "../components/Modal";
+import useScrollSegment from "@commerce-ui/core/useScrollSegment";
+import { ProductCardTheme1 } from "../components/ProductCard";
+import NavBarMobile from "../components/NavBarMobile";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { StatefulPagination } from "../components/Pagination";
+import { StatefulSelect } from "../components/Select";
+import CategoryCardCompact from "../components/CategoryCardCompact";
+import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 
 import data from "../data";
 import useProducts from "../helpers/useProducts";

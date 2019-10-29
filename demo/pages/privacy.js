@@ -1,17 +1,19 @@
+import "../global-config";
+
 import React from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
-import { L } from "storefront-ui/Config";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { useTheme } from "@commerce-ui/core/Theme";
+import Device from "@commerce-ui/core/Device";
+import { L } from "../theme.js";
 
 import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import TextSection from "../theme/TextSection";
+import TextSection from "../components/TextSection";
 
 const Shipping = () => {
   const theme = useTheme();

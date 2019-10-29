@@ -1,9 +1,7 @@
 import PropTypes from "prop-types";
 import React from "react";
-import { rslin } from "responsive-helpers";
-import { R } from "storefront-ui/Config";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { rs } from "responsive-helpers";
+import { rs, rslin } from "responsive-helpers";
+import { R } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
 import { ButtonRaw$ } from "../ButtonRaw";
 import { Button$ } from "../Button";
@@ -41,13 +39,9 @@ const CheckoutLineItemRow$ = props => {
     }
   } = props;
 
-  // const product = props.dataMapper(props.product);
-
   const checkoutLineItem = props.dataMapper(props.checkoutLineItem);
 
   const { productVariant, price, priceDiscount, quantity } = checkoutLineItem;
-
-  // const { title, description, variant, href, images } = productVariant;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -150,6 +144,7 @@ const CheckoutLineItemRow$ = props => {
       );
     }
   );
+
   const [Variant, variantProps] = getOverrides(VariantOverride, VariantStyled);
   const [Title, titleProps] = getOverrides(TitleOverride, TitleStyled);
   const [Description, descriptionProps] = getOverrides(

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { RangePicker } from "../../../../demo/theme/RangePicker";
+import { RangePicker } from "../../../../demo/components/RangePicker";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

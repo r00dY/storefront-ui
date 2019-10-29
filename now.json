@@ -1,7 +1,7 @@
 {
   "version": 2,
-  "name": "storefront-ui",
-  "alias": "storefront-ui.ratio.team",
+  "name": "docs",
+  "alias": "docs.commerce-ui.com",
   "builds": [
     {
       "src": "next.config.js",

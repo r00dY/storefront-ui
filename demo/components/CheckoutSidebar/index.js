@@ -2,17 +2,17 @@ import React, { useState } from "react";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { FormHeader } from "../../theme/FormHeader";
+import { FormHeader } from "../FormHeader";
 import data from "../../data";
-import { CheckoutLineItemRowTheme1 } from "../../theme/CheckoutLineItemRow";
-import { Divider } from "../../theme/Divider";
-import { FormControl } from "../../theme/FormControl";
-import { StatefulInput } from "../../theme/Input";
-import { Button } from "../../theme/Button";
-import { Ledger } from "../../theme/Ledger";
+import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
+import { Divider } from "../Divider";
+import { FormControl } from "../FormControl";
+import { StatefulInput } from "../Input";
+import { Button } from "../Button";
+import { Ledger } from "../Ledger";
 
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
+import { useTheme } from "@commerce-ui/core/Theme";
+import Device from "@commerce-ui/core/Device";
 //
 // let products = [
 //   data.products[0],

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 
-import { Image } from "../../../../demo/theme/Image";
-import Color from "storefront-ui/Color";
+import { Image } from "../../../../demo/components/Image";
+import Color from "@commerce-ui/core/Color";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -10,6 +10,8 @@ import { catLandscape } from "../../../../data/images";
 
 export default () => {
   const [loaded, setLoaded] = useState(false);
+
+  console.log(loaded);
 
   return (
     <div>

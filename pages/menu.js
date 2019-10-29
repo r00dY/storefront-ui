@@ -1,6 +1,6 @@
 import React from "react";
 
-import MenuDesktop from "../demo/theme/MenuDesktop";
+import MenuDesktop from "../demo/components/MenuDesktop";
 import LoremIpsum from "../docs-utils/LoremIpsum";
 
 /** @jsx jsx */

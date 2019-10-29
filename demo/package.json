@@ -8,16 +8,20 @@
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.0",
+    "@commerce-ui/core": "^0.6.0",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
-    "@r00dy/storefront-ui": "^0.5.1",
     "@svgr/webpack": "^4.2.0",
     "algoliasearch": "^3.34.0",
     "imgix-core-js": "^2.1.0",
-    "next": "^8.0.3",
+    "next": "^9.0.3",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
-    "react-instantsearch-dom": "^5.7.0"
+    "react-instantsearch-dom": "^5.7.0",
+    "responsive-helpers": "^0.2.1"
   },
-  "version": "0.0.1"
+  "version": "0.0.1",
+  "devDependencies": {
+    "@apollo/react-ssr": "^3.1.3"
+  }
 }

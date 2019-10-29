@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
+import { AccordionHeader$ } from "@commerce-ui/core/AccordionHeader";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

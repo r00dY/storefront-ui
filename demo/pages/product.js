@@ -1,28 +1,30 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
 import { rslin } from "responsive-helpers";
-import { useTheme } from "storefront-ui/Theme";
-import useScrollSegment from "storefront-ui/useScrollSegment";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
-import { useSwipeableItemsContainer } from "storefront-ui/SwipeableItemsContainer";
-import NavBarMobile from "../theme/NavBarMobile";
-import { Button } from "../theme/Button";
-import ProductHead from "../theme/ProductHead/ProductHead";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import Price from "../theme/Price";
-import { Spacer } from "../theme/Spacer";
-import Device from "storefront-ui/Device";
+import { useTheme } from "@commerce-ui/core/Theme";
+import useScrollSegment from "@commerce-ui/core/useScrollSegment";
+import LayoutLeftCenterRight from "@commerce-ui/core/LayoutLeftCenterRight";
+import { useSwipeableItemsContainer } from "@commerce-ui/core/SwipeableItemsContainer";
+import NavBarMobile from "../components/NavBarMobile";
+import { Button } from "../components/Button";
+import ProductHead from "../components/ProductHead/ProductHead";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import Price from "../components/Price";
+import { Spacer } from "../components/Spacer";
+import Device from "@commerce-ui/core/Device";
 
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
-import { Select } from "../theme/Select";
+import { Select } from "../components/Select";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import { ButtonRaw } from "../theme/ButtonRaw";
+import { ButtonRaw } from "../components/ButtonRaw";
 import data from "../data";
 
 /** @jsx jsx */

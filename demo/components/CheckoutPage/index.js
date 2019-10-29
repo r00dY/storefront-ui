@@ -1,23 +1,22 @@
 import { rslin } from "responsive-helpers";
 import React, { useState } from "react";
-import Container from "storefront-ui/Container";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { useTheme } from "storefront-ui/Theme";
-import { AccordionRaw } from "storefront-ui/Accordion";
-import Device from "storefront-ui/Device";
-import { L } from "storefront-ui/Config";
-import Page from "../Page";
+import Container from "@commerce-ui/core/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { AccordionRaw } from "@commerce-ui/core/Accordion";
+import Device from "@commerce-ui/core/Device";
+import { L } from "../../theme.js";
 import CheckoutSidebar from "../CheckoutSidebar";
 
 import Link from "next/link";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { ButtonRaw } from "../../theme/ButtonRaw";
+import { ButtonRaw } from "../ButtonRaw";
 
-import IconExpandMore from "./baseline-expand_more-24px.svg";
-import IconExpandLess from "./baseline-expand_less-24px.svg";
-import IconCart from "./outline-shopping_cart-24px.svg";
+import IconExpandMore from "../../svg/expand_more.svg";
+import IconExpandLess from "../../svg/expand_less.svg";
+import IconCart from "../../svg/cart.svg";
 
 const CheckoutPage = props => {
   const theme = useTheme();

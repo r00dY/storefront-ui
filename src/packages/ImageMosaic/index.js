@@ -135,7 +135,7 @@ class ImageMosaic$ extends React.Component {
     });
 
     let component = (
-      <Grid colNumber={12} gutter={gutter[0]}>
+      <Grid colNumber={12} gutter={gutter[0]} gutterVertical={gutter[1]}>
         {items.map((item, index) => (
           <GridItem params={params} key={index}>
             {item}

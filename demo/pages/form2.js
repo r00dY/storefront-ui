@@ -1,29 +1,31 @@
-import { Grid, GridItem } from "storefront-ui/Grid";
+import "../global-config";
 
-import { FormHeader } from "../theme/FormHeader";
-import { StatefulRadioGroup, Radio } from "../theme/Radio";
-import { Button } from "../theme/Button";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+
+import { FormHeader } from "../components/FormHeader";
+import { StatefulRadioGroup, Radio } from "../components/Radio";
+import { Button } from "../components/Button";
 import IconArrowBack from "../svg/arrow_back.svg";
 
-import { Radio$ } from "storefront-ui/Radio";
-import RadioBorder from "../theme/RadioBorder";
-import Device from "storefront-ui/Device";
-import { R } from "storefront-ui/Config";
+import { Radio$ } from "@commerce-ui/core/Radio";
+import RadioBorder from "../components/RadioBorder";
+import Device from "@commerce-ui/core/Device";
+import { R } from "../theme.js";
 
 import {
   SelectNative$,
   StatefulSelectNative$
-} from "storefront-ui/SelectNative";
+} from "@commerce-ui/core/SelectNative";
 
 import { rslin } from "responsive-helpers";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import React, { useState } from "react";
-import OrderDetails from "../theme/OrderDetails";
-import { ProgressSteps } from "../theme/ProgressSteps";
+import OrderDetails from "../components/OrderDetails";
+import { ProgressSteps } from "../components/ProgressSteps";
 import CheckoutPage from "../components/CheckoutPage";
 import routerPush from "../helpers/routerPush";
 

@@ -1,23 +1,24 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import Page from "../components/Page";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { AccordionHeader$ } from "storefront-ui/AccordionHeader";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { AccordionHeader$ } from "@commerce-ui/core/AccordionHeader";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import styled from "@emotion/styled";
 import { rslin } from "responsive-helpers";
 
-import { Accordion$ } from "storefront-ui/Accordion";
-import { StatefulInput } from "../theme/Input";
-import { useTheme } from "storefront-ui/Theme";
+import { Accordion$ } from "@commerce-ui/core/Accordion";
+import { StatefulInput } from "../components/Input";
+import { useTheme } from "@commerce-ui/core/Theme";
 import data from "../data";
-import { Image } from "../theme/Image";
+import { Image } from "../components/Image";
 
 import routerPush from "../helpers/routerPush";
-import { ButtonRaw } from "../theme/ButtonRaw";
+import { ButtonRaw } from "../components/ButtonRaw";
 
 const Menu = () => {
   const theme = useTheme();

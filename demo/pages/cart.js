@@ -1,23 +1,24 @@
+import "../global-config";
+
 import React from "react";
 
-import Page from "../components/Page";
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import Device from "storefront-ui/Device";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import Device from "@commerce-ui/core/Device";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import { useTheme } from "storefront-ui/Theme";
+import { useTheme } from "@commerce-ui/core/Theme";
 import { useRouter } from "next/router";
-import NavBarMobile from "../theme/NavBarMobile";
+import NavBarMobile from "../components/NavBarMobile";
 
 import data from "../data";
-import { CheckoutLineItemRowTheme1 } from "../theme/CheckoutLineItemRow";
+import { CheckoutLineItemRowTheme1 } from "../components/CheckoutLineItemRow";
 import NavBarMobileSearch from "./search";
-import { Button } from "../theme/Button";
-import { Ledger } from "../theme/Ledger";
-import { Spacer } from "../theme/Spacer";
-import PageTitle from "../theme/PageTitle";
+import { Button } from "../components/Button";
+import { Ledger } from "../components/Ledger";
+import { Spacer } from "../components/Spacer";
+import PageTitle from "../components/PageTitle";
 import routerPush from "../helpers/routerPush";
 
 const cartGridContainerParams = {

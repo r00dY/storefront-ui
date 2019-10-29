@@ -3,12 +3,12 @@ import React, { useState } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import usePagination from "storefront-ui/usePagination";
+import usePagination from "@commerce-ui/core/usePagination";
 
-import { Button } from "../../../../demo/theme/Button";
-import { SelectNative } from "../../../../demo/theme/SelectNative";
+import { Button } from "../../../../demo/components/Button";
+import { SelectNative } from "../../../../demo/components/SelectNative";
 
-import LayoutRow from "storefront-ui/LayoutRow";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
 
 export default () => {
   const [page, setPage] = useState(1);

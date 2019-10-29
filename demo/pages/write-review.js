@@ -1,54 +1,52 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
 import { rslin } from "responsive-helpers";
-import { useTheme } from "storefront-ui/Theme";
-import useScrollDirection from "storefront-ui/useScrollDirection";
-import useScrollSegment from "storefront-ui/useScrollSegment";
-import LayoutLeftCenterRight from "storefront-ui/LayoutLeftCenterRight";
+import { useTheme } from "@commerce-ui/core/Theme";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import Image from "storefront-ui/Image";
+} from "@commerce-ui/core/SwipeableItemsContainer";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import NavBarMobile from "../theme/NavBarMobile";
+import NavBarMobile from "../components/NavBarMobile";
 
-import { Button } from "../theme/Button";
-import ProductHead from "../theme/ProductHead/ProductHead";
-import { Accordion } from "../theme/Accordion";
-import EditorialHalfImage from "../theme/Editorial/EditorialHalfImage/EditorialHalfImage";
-import EditorialHeadline from "../theme/Editorial/EditorialHeadline/EditorialHeadline";
-import SizePicker from "../theme/SizePicker/SizePicker";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import { ProductCardTheme1 } from "../theme/ProductCard";
-import Price from "../theme/Price";
-import Device from "storefront-ui/Device";
+import { Button } from "../components/Button";
+import ProductHead from "../components/ProductHead/ProductHead";
+import { Accordion } from "../components/Accordion";
+import EditorialHalfImage from "../components/Editorial/EditorialHalfImage/EditorialHalfImage";
+import EditorialHeadline from "../components/Editorial/EditorialHeadline/EditorialHeadline";
+import SizePicker from "../components/SizePicker/SizePicker";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import { ProductCardTheme1 } from "../components/ProductCard";
+import Price from "../components/Price";
+import Device from "@commerce-ui/core/Device";
 
 import data from "../data";
-import { ProgressStepsAsBreadcrumbs } from "../theme/ProgressSteps";
+import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 import useAddToCart from "../helpers/useAddToCart";
 import useAddToCartWithSize from "../helpers/useAddToCartWithSize";
-import { Select, StatefulSelect } from "../theme/Select";
+import { Select, StatefulSelect } from "../components/Select";
 
 import IconHeart from "../svg/heart.svg";
 import IconHeartFill from "../svg/heart_fill.svg";
 
-import LayoutRow from "storefront-ui/LayoutRow";
-import { ButtonRaw } from "../theme/ButtonRaw";
-import { RadioStars } from "../theme/RadioStars";
-import ThemeLink from "../theme/ThemeLink";
-import { Divider } from "../theme/Divider";
-import { Spacer } from "../theme/Spacer";
+import LayoutRow from "@commerce-ui/core/LayoutRow";
+import { ButtonRaw } from "../components/ButtonRaw";
+import { RadioStars } from "../components/RadioStars";
+import ThemeLink from "../components/ThemeLink";
+import { Divider } from "../components/Divider";
+import { Spacer } from "../components/Spacer";
 
-import { StatefulInput } from "../theme/Input";
-import { FormControl } from "../theme/FormControl";
+import { StatefulInput } from "../components/Input";
+import { FormControl } from "../components/FormControl";
 import routerPush from "../helpers/routerPush";
-import { Radio } from "../theme/Radio";
-import { StatefulTextarea } from "../theme/Textarea";
+import { Radio } from "../components/Radio";
+import { StatefulTextarea } from "../components/Textarea";
 
 const WriteReview = () => {
   const theme = useTheme();

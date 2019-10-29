@@ -1,7 +1,7 @@
 import React from "react";
 
-import MediaQuery from "storefront-ui/MediaQuery";
-import { R } from "storefront-ui/Config";
+import MediaQuery from "@commerce-ui/core/MediaQuery";
+import { R } from "responsive-helpers";
 
 export default () => {
   return (

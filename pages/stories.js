@@ -2,7 +2,7 @@ import React from "react";
 import Page from "../docs-utils/Page";
 import { md, Example, CodeBlock } from "../docs-utils/docs";
 
-import ButtonStory from "../demo/theme/Button/story";
+import ButtonStory from "../demo/components/Button/story";
 
 const content = (
   <div>

@@ -51,8 +51,11 @@ export default class Button extends React.Component<ButtonPropsT> {
       endEnhancer,
       children,
       forwardedRef,
+      href,
+      forceLink = false,
       ...restProps
     } = this.props;
+
     // Get overrides
     const [BaseButton, baseButtonProps] = getOverrides(
       overrides.BaseButton,
@@ -79,7 +82,10 @@ export default class Button extends React.Component<ButtonPropsT> {
         {...baseButtonProps}
         // Applies last to override passed in onClick
         onClick={this.internalOnClick}
-        href={"#"}
+        onTouchStart={() => {}} /* this is necessary for iOS :active flag to start working (https://stackoverflow.com/questions/3885018/active-pseudo-class-doesnt-work-in-mobile-safari ) */
+        as={href || forceLink ? "a" : "button"}
+        href={href}
+        $ref={forwardedRef}
       >
         {isLoading ? (
           <React.Fragment>

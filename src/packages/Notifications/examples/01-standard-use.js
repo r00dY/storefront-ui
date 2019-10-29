@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { showNotification } from "storefront-ui/Notifications";
-import { Button } from "../../../../demo/theme/Button";
+import { showNotification } from "@commerce-ui/core/Notifications";
+import { Button } from "../../../../demo/components/Button";
 
 const Notification = props => (
   <div

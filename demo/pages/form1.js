@@ -1,23 +1,25 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import { useTheme } from "storefront-ui/Theme";
-import { Radio$ } from "storefront-ui/Radio";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import { useTheme } from "@commerce-ui/core/Theme";
+import { Radio$ } from "@commerce-ui/core/Radio";
 import {
   SelectNative$,
   StatefulSelectNative$
-} from "storefront-ui/SelectNative";
-import Device from "storefront-ui/Device";
+} from "@commerce-ui/core/SelectNative";
+import Device from "@commerce-ui/core/Device";
 
-import { FormHeader } from "../theme/FormHeader";
-import { FormControl } from "../theme/FormControl";
-import { StatefulInput } from "../theme/Input";
-import { Button } from "../theme/Button";
-import { ProgressSteps } from "../theme/ProgressSteps";
+import { FormHeader } from "../components/FormHeader";
+import { FormControl } from "../components/FormControl";
+import { StatefulInput } from "../components/Input";
+import { Button } from "../components/Button";
+import { ProgressSteps } from "../components/ProgressSteps";
 
 import CheckoutPage from "../components/CheckoutPage";
 
-import { R } from "storefront-ui/Config";
+import { R } from "../theme.js";
 
 import routerPush from "../helpers/routerPush";
 
@@ -26,7 +28,7 @@ import { rslin } from "responsive-helpers";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 import IconArrowBack from "../svg/arrow_back.svg";
-import ThemeLink from "../theme/ThemeLink";
+import ThemeLink from "../components/ThemeLink";
 
 const Form1 = () => {
   const theme = useTheme();

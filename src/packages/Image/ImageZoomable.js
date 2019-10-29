@@ -1,6 +1,7 @@
 import React from "react";
-import Image from "./Image";
 import PropTypes from "prop-types";
+
+import Image from "./Image";
 
 import { AbstractZoomer } from "simpleswiper";
 
@@ -131,6 +132,8 @@ class ImageZoomable extends React.Component {
   }
 
   render() {
+    const { Image } = this.props.overrides;
+
     let transform = `scale(${this.state.scale}) translate(${
       this.state.transformX
     }px, ${this.state.transformY}px)`;
@@ -197,11 +200,13 @@ class ImageZoomable extends React.Component {
 
 ImageZoomable.defaultProps = {
   ...Image.defaultProps,
+  overrides: {},
   zoom: 2
 };
 
 ImageZoomable.propTypes = {
   ...Image.propTypes,
+  overrides: {},
   zoom: PropTypes.number.isRequired
 };
 

@@ -1,10 +1,10 @@
 import React from "react";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
+} from "@commerce-ui/core/SwipeableItemsContainer";
 
 import { rslin } from "responsive-helpers";
-import { ButtonRaw } from "../../../../demo/theme/ButtonRaw";
+import { ButtonRaw } from "../../../../demo/components/ButtonRaw";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

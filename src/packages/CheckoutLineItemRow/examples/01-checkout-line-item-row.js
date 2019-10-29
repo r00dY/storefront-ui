@@ -1,6 +1,6 @@
 import React from "react";
-import { CheckoutLineItemRow } from "../../../../demo/theme/CheckoutLineItemRow";
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { CheckoutLineItemRow } from "../../../../demo/components/CheckoutLineItemRow";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

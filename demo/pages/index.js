@@ -1,19 +1,21 @@
+import "../global-config";
+
 import React from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
-import Device from "storefront-ui/Device";
-import { L } from "storefront-ui/Config";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { useTheme } from "@commerce-ui/core/Theme";
+import Device from "@commerce-ui/core/Device";
+import { L } from "../theme.js";
 
 import { rslin } from "responsive-helpers";
 
-import { StatefulInput } from "../theme/Input";
+import { StatefulInput } from "../components/Input";
 import Banner from "../components/Banner";
-import TwoBanners from "../theme/TwoBanners";
-import ProductSlider from "../theme/ProductSlider/ProductSlider";
-import SectionTitle from "../theme/SectionTitle";
-import CategoryCard from "../theme/CategoryCard";
+import TwoBanners from "../components/TwoBanners";
+import ProductSlider from "../components/ProductSlider/ProductSlider";
+import SectionTitle from "../components/SectionTitle";
+import CategoryCard from "../components/CategoryCard";
 
 import data from "../data";
 import routerPush from "../helpers/routerPush";

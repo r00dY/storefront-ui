@@ -1,11 +1,11 @@
 import React from "react";
 import SwipeableItemsContainer, {
   useSwipeableItemsContainer
-} from "storefront-ui/SwipeableItemsContainer";
-import Dots from "storefront-ui/Dots";
-import MediaQuery from "storefront-ui/MediaQuery";
-import Color from "storefront-ui/Color";
-import { R } from "storefront-ui/Config";
+} from "@commerce-ui/core/SwipeableItemsContainer";
+import Dots from "@commerce-ui/core/Dots";
+import MediaQuery from "@commerce-ui/core/MediaQuery";
+import Color from "@commerce-ui/core/Color";
+import { R } from "responsive-helpers";
 
 import { rslin } from "responsive-helpers";
 

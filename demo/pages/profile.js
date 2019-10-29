@@ -1,13 +1,15 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
-import Container from "storefront-ui/Container";
-import { useTheme } from "storefront-ui/Theme";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
+import Container from "@commerce-ui/core/Container";
+import { useTheme } from "@commerce-ui/core/Theme";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import PageTitle from "../theme/PageTitle";
-import ProfileLogInContent from "../theme/ProfileLogInContent";
+import PageTitle from "../components/PageTitle";
+import ProfileLogInContent from "../components/ProfileLogInContent";
 
 const Profile = () => {
   const theme = useTheme();

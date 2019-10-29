@@ -1,6 +1,5 @@
 import React from "react";
-import SwipeableItemsContainer from "storefront-ui/SwipeableItemsContainer";
-import { L } from "storefront-ui/Config";
+import SwipeableItemsContainer from "@commerce-ui/core/SwipeableItemsContainer";
 
 import { rslin } from "responsive-helpers";
 
@@ -8,6 +7,10 @@ import { rslin } from "responsive-helpers";
 import { css, jsx } from "@emotion/core";
 
 import Rectangle from "../../../../docs-utils/Rectangle";
+
+import { createTheme } from "@commerce-ui/core/Theme";
+
+const theme = createTheme();
 
 export default () => (
   <div>
@@ -63,7 +66,7 @@ export default () => (
     </p>
     <SwipeableItemsContainer
       mode={"horizontal"}
-      gutter={L.gutter}
+      gutter={theme.layout.gutter}
       itemsVisible={3}
     >
       <Rectangle color={"coral"}>1</Rectangle>
@@ -79,7 +82,7 @@ export default () => (
     </p>
     <SwipeableItemsContainer
       mode={"horizontal"}
-      gutter={L.gutter}
+      gutter={theme.layout.gutter}
       itemsVisible={3}
     >
       <Rectangle color={"coral"}>
@@ -97,7 +100,7 @@ export default () => (
     </p>
     <SwipeableItemsContainer
       mode={"horizontal"}
-      gutter={L.gutter}
+      gutter={theme.layout.gutter}
       itemsVisible={{ xs: 1, md: 2, lg: 3, xl: 4 }}
     >
       <Rectangle color={"coral"}>1</Rectangle>
@@ -113,7 +116,7 @@ export default () => (
     </p>
     <SwipeableItemsContainer
       mode={"horizontal"}
-      gutter={L.gutter}
+      gutter={theme.layout.gutter}
       offsetBefore={rslin(25, 50)}
       offsetAfter={50}
     >

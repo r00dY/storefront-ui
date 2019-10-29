@@ -1,5 +1,5 @@
 import React from "react";
-import { Ledger } from "../../../../demo/theme/Ledger";
+import { Ledger } from "../../../../demo/components/Ledger";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

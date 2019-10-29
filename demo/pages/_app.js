@@ -1,27 +1,29 @@
 import React from "react";
-import App, { Container } from "next/app";
+import App from "next/app";
 
-import { GridDebugger } from "storefront-ui/Grid";
+import { GridDebugger } from "@commerce-ui/core/Grid";
 
-import theme from "../theme/config";
-import Root from "storefront-ui/Root";
+import { theme } from "../theme";
+import Root from "@commerce-ui/core/Root";
 
-import MainTabBar from "../theme/MainTabBar";
+import MainTabBar from "../components/MainTabBar";
 import { ApolloProvider } from "react-apollo";
 import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
 import withApolloClient from "../lib/with-apollo-client";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import MenuDesktop, { MenuDesktopContent } from "../theme/MenuDesktop";
+import MenuDesktop, { MenuDesktopContent } from "../components/MenuDesktop";
 
-import Device from "storefront-ui/Device";
-import Footer from "../theme/Footer";
+import Device from "@commerce-ui/core/Device";
+import Footer from "../components/Footer";
 import data from "../data";
 import { parseCookies, setCookie } from "../helpers/cookie";
 import fetchCheckout from "../actions/fetchCheckout";
 import createEmptyCheckout from "../actions/createEmptyCheckout";
 import { InjectCheckoutContext } from "../lib/CheckoutContext";
+
+import routerPush from "../helpers/routerPush";
 
 const tabs = [
   {
@@ -43,6 +45,29 @@ const tabs = [
   {
     label: "Profile",
     icon: "profile"
+  }
+];
+
+const menuData = [
+  {
+    label: "Home",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[0]} index={0} />
+  },
+  {
+    label: "Beauty",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[1]} index={1} />
+  },
+  {
+    label: "Food",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[2]} index={2} />
+  },
+  {
+    label: "Health",
+    href: "/category",
+    content: <MenuDesktopContent category={data.categories[3]} index={3} />
   }
 ];
 
@@ -86,14 +111,12 @@ class MyApp extends App {
   render() {
     const { Component, pageProps, apolloClient } = this.props;
 
-    const content = (
-      <Container>
-        <Component {...pageProps} checkoutId={this.props.checkout.id} />
-      </Container>
-    );
+    const content = <Component {...pageProps} />;
 
     const showTabbar = Component.tabbar !== undefined && !this.props.noRoot;
     const hideDesktopMenu = Component.hideDesktopMenu === true;
+    const desktopMenuTransparentAtTop =
+      Component.desktopMenuTransparentAtTop === true;
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
@@ -102,6 +125,7 @@ class MyApp extends App {
           <ApolloHooksProvider client={apolloClient}>
             <Root theme={theme}>
               <GridDebugger />
+
               <Device mobile>
                 {showTabbar && (
                   <div>
@@ -113,6 +137,7 @@ class MyApp extends App {
                       {content}
                       {showFooterOnMobile && <Footer />}
                     </div>
+
                     <div
                       css={css`
                         position: fixed;
@@ -153,54 +178,11 @@ class MyApp extends App {
               </Device>
 
               <Device desktop>
-                {hideDesktopMenu && this.props.checkout && content}
+                {hideDesktopMenu && content}
 
-                {!hideDesktopMenu && this.props.checkout && (
+                {!hideDesktopMenu && (
                   <>
-                    <MenuDesktop
-                      data={[
-                        {
-                          label: "Home",
-                          href: "/category",
-                          content: (
-                            <MenuDesktopContent
-                              category={data.categories[0]}
-                              index={0}
-                            />
-                          )
-                        },
-                        {
-                          label: "Beauty",
-                          href: "/category",
-                          content: (
-                            <MenuDesktopContent
-                              category={data.categories[1]}
-                              index={1}
-                            />
-                          )
-                        },
-                        {
-                          label: "Food",
-                          href: "/category",
-                          content: (
-                            <MenuDesktopContent
-                              category={data.categories[2]}
-                              index={2}
-                            />
-                          )
-                        },
-                        {
-                          label: "Health",
-                          href: "/category",
-                          content: (
-                            <MenuDesktopContent
-                              category={data.categories[3]}
-                              index={3}
-                            />
-                          )
-                        }
-                      ]}
-                    />
+                    <MenuDesktop data={menuData} mode={"fixed"} />
 
                     <div
                       css={css`

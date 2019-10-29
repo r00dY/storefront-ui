@@ -2,8 +2,8 @@ import React from "react";
 import {
   ProductCard,
   ProductCardTheme1
-} from "../../../../demo/theme/ProductCard";
-import { Grid, GridItem } from "storefront-ui/Grid";
+} from "../../../../demo/components/ProductCard";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";

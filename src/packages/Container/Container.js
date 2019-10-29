@@ -1,7 +1,6 @@
 import { rs } from "responsive-helpers";
 import PropTypes from "prop-types";
 import React from "react";
-import Layout from "../Layout";
 import { useTheme } from "../Theme";
 
 /** @jsx jsx */

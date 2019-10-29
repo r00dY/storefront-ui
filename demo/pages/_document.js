@@ -1,6 +1,8 @@
+import "../global-config";
+
 import Document, { Html, Head, Main, NextScript } from "next/document";
 
-import Device from "storefront-ui/Device";
+import Device from "@commerce-ui/core/Device";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {

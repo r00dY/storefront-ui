@@ -6,6 +6,7 @@ import { css, jsx } from "@emotion/core";
 export default props => (
   <div
     css={css`
+      box-sizing: border-box;
       position: relative;
       background-color: ${props.color};
       width: 100%;

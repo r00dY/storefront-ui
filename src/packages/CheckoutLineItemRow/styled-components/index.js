@@ -1,7 +1,7 @@
 import { styled } from "../../base/styles";
 import React from "react";
 import { rslin } from "responsive-helpers";
-import { R } from "storefront-ui/Config";
+import { R } from "responsive-helpers";
 
 export const rootStyles = ({ $theme }) =>
   `position: relative; display: flex; flex-wrap: nowrap; background: white;`;

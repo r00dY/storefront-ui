@@ -1,6 +1,8 @@
+import "../global-config";
+
 import React, { useState } from "react";
 
-import { Grid, GridItem } from "storefront-ui/Grid";
+import { Grid, GridItem } from "@commerce-ui/core/Grid";
 import { rslin } from "responsive-helpers";
 
 import CollectionPage from "./collection";
