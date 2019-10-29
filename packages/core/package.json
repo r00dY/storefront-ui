@@ -11,14 +11,13 @@
   },
   "dependencies": {
     "mobile-detect": "^1.4.3",
-    "next": "^9.0.8",
     "popper.js": "^1.14.3",
     "react-input-mask": "^2.0.4",
     "react-modal": "^3.8.1",
     "react-responsive": "^6.1.1",
     "react-visibility-sensor": "^5.0.2",
     "responsive-helpers": "^0.2.1",
-    "simpleswiper": "^0.10.5",
+    "simpleswiper": "^0.10.6",
     "use-debounce": "^2.1.0"
   },
   "peerDependencies": {
@@ -29,25 +28,10 @@
     "react-dom": "^16.8.6"
   },
   "devDependencies": {
-    "@babel/cli": "^7.2.0",
-    "@babel/core": "^7.1.6",
-    "@babel/node": "^7.2.2",
-    "@babel/preset-env": "^7.1.6",
     "@babel/preset-flow": "^7.0.0",
-    "@babel/preset-react": "^7.0.0",
-    "@emotion/core": "^10.0.7",
-    "@emotion/styled": "^10.0.7",
-    "@svgr/webpack": "^4.2.0",
-    "babel-loader": "^8.0.4",
-    "babel-preset-flow": "^6.23.0",
-    "imgix-core-js": "^2.1.0",
-    "markdown-to-jsx": "^6.9.3",
     "prismjs": "^1.16.0",
-    "raw-loader": "^2.0.0",
-    "react": "^16.8.6",
-    "react-dom": "^16.8.6",
     "react-markdown": "^4.0.6",
-    "webpack": "^4.26.1"
+    "next": "^9.0.3"
   },
   "husky": {
     "hooks": {

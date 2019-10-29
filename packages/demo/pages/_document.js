@@ -6,7 +6,9 @@ import Device from "@commerce-ui/core/Device";
 
 class MyDocument extends Document {
   static async getInitialProps(ctx) {
-    Device.setUserAgent(ctx.req.headers["user-agent"]);
+    if (ctx.req) {
+      Device.setUserAgent(ctx.req.headers["user-agent"]);
+    }
 
     const initialProps = await Document.getInitialProps(ctx);
     return { ...initialProps };
@@ -16,8 +18,16 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link rel="stylesheet" type="text/css" href="/packages/core/static/normalize.css" />
-          <link rel="stylesheet" type="text/css" href="/packages/core/static/global.css" />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/packages/core/static/normalize.css"
+          />
+          <link
+            rel="stylesheet"
+            type="text/css"
+            href="/packages/core/static/global.css"
+          />
         </Head>
         <body>
           <Main />
