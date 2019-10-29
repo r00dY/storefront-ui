@@ -1,5 +1,5 @@
 {
-  "name": "@commerce-ui/core",
+  "name": "commerce-ui",
   "description": "React PWA (single page application) e-commerce UI framework",
   "devDependencies": {
     "husky": "^1.2.0",
