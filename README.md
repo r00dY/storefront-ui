@@ -17,3 +17,7 @@ So:
 2. Run `npm run build`. Voila.
 
 Now you can go to `packages/demo` and run it via `npm run dev`.
+
+## **Important!**
+
+`react` and `react-dom` must be in parent `package.json` `devDependencies`. If they are in packages then hooks error shows up (two instances of React-DOM)
