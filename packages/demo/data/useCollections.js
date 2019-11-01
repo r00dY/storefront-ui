@@ -25,7 +25,7 @@ export default function useCollections(args = {}) {
   // TODO: first, last, after, before, reverse, sortKey
 
   return {
-    products: filteredCollections,
+    collections: filteredCollections,
     isFetching: false,
     error: null
   };

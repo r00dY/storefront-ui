@@ -25,22 +25,6 @@ import { css, jsx } from "@emotion/core";
 import useProducts from "data/useProducts";
 import useCollections from "data/useCollections";
 
-// Categories displayed at the bottom
-const categories = [
-  "Bars",
-  "Candy",
-  "Chips & Pretzels",
-  "Cookies",
-  "Crackers & Crisps",
-  "Fruit & Vegetable Snacks",
-  "Jerky",
-  "Popcorn & Puffs"
-].map((category, index) => ({
-  title: category,
-  image: data.images["landscape" + ((index % 4) + 2)],
-  href: "/collection"
-}));
-
 const Home = () => {
   const theme = useTheme();
 
@@ -135,12 +119,12 @@ const Home = () => {
           <Container>
             <SectionTitle>Top Categories</SectionTitle>
             <Grid gutterVertical={L.gutter}>
-              {categories.map((category, index) => (
+              {collections.map((collection, index) => (
                 <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
                   <CategoryCard
-                    image={category.image}
-                    text={category.title}
-                    href={category.href}
+                    image={collection.image}
+                    text={collection.title}
+                    href={"/collection"}
                   />
                 </GridItem>
               ))}
