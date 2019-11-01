@@ -28,7 +28,8 @@ const products = [
         label: "Sustainability",
         type: "feature"
       }
-    ]
+    ],
+    collections: ["homepage-slider"]
   },
   {
     id: 2,
@@ -43,7 +44,8 @@ const products = [
     },
     description: "Jersey Dresses",
     images: [productImages[1], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 3,
@@ -60,7 +62,8 @@ const products = [
       }
     ],
     images: [productImages[2], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 4,
@@ -77,7 +80,8 @@ const products = [
       }
     ],
     images: [productImages[3], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 5,
@@ -94,7 +98,8 @@ const products = [
       }
     ],
     images: [productImages[4], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 6,
@@ -111,7 +116,8 @@ const products = [
       }
     ],
     images: [productImages[5], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 7,
@@ -132,7 +138,8 @@ const products = [
       }
     ],
     images: [productImages[6], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 8,
@@ -149,7 +156,8 @@ const products = [
       }
     ],
     images: [productImages[7], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 9,
@@ -175,7 +183,8 @@ const products = [
       productImages[5],
       productImages[7]
     ],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
 
   {
@@ -191,7 +200,8 @@ const products = [
     },
     description: "Jersey Dresses",
     images: [productImages[9], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 11,
@@ -208,7 +218,8 @@ const products = [
       }
     ],
     images: [productImages[10], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 12,
@@ -229,7 +240,8 @@ const products = [
       }
     ],
     images: [productImages[11], productImages[2]],
-    href: "/product"
+    href: "/product",
+    collections: ["homepage-slider"]
   },
   {
     id: 13,

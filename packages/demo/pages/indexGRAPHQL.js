@@ -45,6 +45,7 @@ const Home = () => {
     { name: "collectionName", value: "frontpage" },
     { name: "productsAmount", value: 50 }
   ]);
+
   const [collections, collectionsLoading] = useGetCollections();
 
   return (

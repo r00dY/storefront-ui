@@ -22,6 +22,8 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import useProducts from "data/useProducts";
+import useCollections from "data/useCollections";
 
 // Categories displayed at the bottom
 const categories = [
@@ -41,6 +43,17 @@ const categories = [
 
 const Home = () => {
   const theme = useTheme();
+
+  const { products } = useProducts({
+    query: [
+      {
+        key: "collection",
+        value: "homepage-slider"
+      }
+    ]
+  });
+
+  const { collections } = useCollections();
 
   return (
     <div>
@@ -98,10 +111,7 @@ const Home = () => {
           />
         </Container>
 
-        <ProductSlider
-          products={data.products.slice(0, 12)}
-          title={"Top Picks"}
-        />
+        <ProductSlider products={products} title={"Top Picks"} />
 
         <TwoBanners
           title={"Trending Now"}
