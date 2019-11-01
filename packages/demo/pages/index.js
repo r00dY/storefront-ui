@@ -22,20 +22,21 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import useProducts from "data/useProducts";
+
+import { getProducts, useProducts } from "data/useProducts";
 import useCollections from "data/useCollections";
 
-const Home = () => {
+const Home = ({ productsSliderQueryBundle }) => {
   const theme = useTheme();
 
-  const { products } = useProducts({
-    query: [
-      {
-        key: "collection",
-        value: "homepage-slider"
-      }
-    ]
-  });
+  const { isFetching, products } = useProducts(productsSliderQueryBundle);
+
+  console.log(
+    "useProducts render. isFetching",
+    isFetching,
+    "products",
+    products
+  );
 
   const { collections } = useCollections();
 
@@ -95,7 +96,11 @@ const Home = () => {
           />
         </Container>
 
-        <ProductSlider products={products} title={"Top Picks"} />
+        {!isFetching ? (
+          <ProductSlider products={products} title={"Top Picks"} />
+        ) : (
+          "Loading"
+        )}
 
         <TwoBanners
           title={"Trending Now"}
@@ -134,6 +139,22 @@ const Home = () => {
       </div>
     </div>
   );
+};
+
+Home.getInitialProps = async ({ req }) => {
+  const productsSliderQueryBundle = await getProducts(
+    {
+      query: [
+        {
+          key: "collection",
+          value: "homepage-slider"
+        }
+      ]
+    },
+    true
+  );
+
+  return { productsSliderQueryBundle };
 };
 
 Home.tabbar = 0;

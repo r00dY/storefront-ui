@@ -18,16 +18,8 @@ class MyDocument extends Document {
     return (
       <Html>
         <Head>
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="/packages/core/static/normalize.css"
-          />
-          <link
-            rel="stylesheet"
-            type="text/css"
-            href="/packages/core/static/global.css"
-          />
+          <link rel="stylesheet" type="text/css" href="/static/normalize.css" />
+          <link rel="stylesheet" type="text/css" href="/static/global.css" />
         </Head>
         <body>
           <Main />
