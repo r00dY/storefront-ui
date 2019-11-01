@@ -6,16 +6,16 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "@commerce-ui/core/Theme";
 
 import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
-import useDeleteFromCart from "../../graphql/hooks/useDeleteFromCart";
-import useCheckout from "../../graphql/hooks/useCheckout";
+// import useDeleteFromCart from "data/useDeleteFromCart";
+import useCheckout from "data/useCheckout";
 
 const MiniBasketContent = props => {
   const {} = props;
   const theme = useTheme();
-  const [deleteItemFromCart, deletingInProgress] = useDeleteFromCart();
-  const [checkout] = useCheckout();
+  // const [deleteItemFromCart, deletingInProgress] = useDeleteFromCart();
+  const { checkout } = useCheckout();
 
-  const lineItems = props.dataMapper(checkout.lineItems);
+  const lineItems = checkout.lineItems;
 
   return (
     <div
@@ -43,8 +43,6 @@ const MiniBasketContent = props => {
   );
 };
 
-MiniBasketContent.defaultProps = {
-  dataMapper: x => x
-};
+MiniBasketContent.defaultProps = {};
 
 export default MiniBasketContent;

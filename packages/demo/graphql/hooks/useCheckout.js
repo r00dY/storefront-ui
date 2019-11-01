@@ -2,9 +2,11 @@ import { useContext } from "react";
 import { CheckoutContext } from "../../lib/CheckoutContext";
 
 const useCheckout = () => {
-  const { checkout, setCheckout } = useContext(CheckoutContext);
+  const { checkout } = useContext(CheckoutContext);
 
-  return [checkout, setCheckout];
+  return {
+    checkout
+  };
 };
 
 export default useCheckout;

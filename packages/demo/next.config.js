@@ -30,6 +30,10 @@ module.exports = {
     //   })
     // );
 
+    // Pick data layer
+
+    config.resolve.alias["data"] = path.resolve(__dirname, "./data/");
+
     return config;
   },
   webpackDevMiddleware: config => {

@@ -13,15 +13,15 @@ import { Button } from "../../theme/Button";
 import { rslin } from "responsive-helpers";
 import { ProgressStepsAsBreadcrumbs } from "../../theme/ProgressSteps";
 import { Spacer } from "../../theme/Spacer";
-import useGetVariantPicker from "../../graphql/hooks/useGetVariantPicker";
+import useGetVariantPicker from "data/useGetVariantPicker";
 import { ButtonRaw } from "../../theme/ButtonRaw";
 import IconHeart from "../../svg/heart.svg";
 import IconHeartFill from "../../svg/heart_fill.svg";
 import { useTheme } from "storefront-ui/Theme";
 import useScrollSegment from "storefront-ui/useScrollSegment";
-import useAddToCartAndShowNotificatiion from "../../graphql/hooks/useAddToCartAndShowNotification";
+import useAddToCartAndShowNotificatiion from "data/useAddToCartAndShowNotification";
 import data from "../../data";
-import useCheckout from "../../graphql/hooks/useCheckout";
+import useCheckout from "data/useCheckout";
 
 const sliderProducts1 = [
   data.products[1],
