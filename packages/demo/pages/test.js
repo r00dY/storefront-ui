@@ -1,7 +1,9 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import ApolloClient, { gql } from "apollo-boost";
 
 export default () => {
+  const [value, setValue] = useState(null);
+
   useEffect(() => {
     const client = new ApolloClient({
       uri: "/api/graphql"
@@ -15,9 +17,12 @@ export default () => {
           }
         `
       })
-      .then(result => console.log(result))
+      .then(result => {
+        console.log(result);
+        setValue(result.data.sayHello);
+      })
       .catch(error => console.log(error));
   }, []);
 
-  return <div>Hello world!</div>;
+  return <div>Value from backend: {value}</div>;
 };

@@ -1,15 +1,23 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 
+import schema from "raw-loader!../../graphql/sdl.gql";
+
+console.log(schema);
+
+// const typeDefs = gql`
+//   type Query {
+//     sayHello: String
+//   }
+// `;
+
 const typeDefs = gql`
-  type Query {
-    sayHello: String
-  }
+  ${schema}
 `;
 
 const resolvers = {
-  Query: {
+  QueryRoot: {
     sayHello(parent, args, context) {
-      return "Hello World!";
+      return "Ty bulwo!";
     }
   }
 };
