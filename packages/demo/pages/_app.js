@@ -120,86 +120,91 @@ class MyApp extends App {
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
-      <InjectCheckoutContext checkout={this.props.checkout}>
-        <ApolloProvider client={apolloClient}>
-          <ApolloHooksProvider client={apolloClient}>
-            <Root theme={theme}>
-              <GridDebugger />
+      <>
+        {/*<InjectCheckoutContext checkout={this.props.checkout}>*/}
+        {/*<ApolloProvider client={apolloClient}>*/}
+        {/*<ApolloHooksProvider client={apolloClient}>*/}
 
-              <Device mobile>
-                {showTabbar && (
-                  <div>
-                    <div
-                      css={css`
-                        margin-bottom: 50px;
-                      `}
-                    >
-                      {content}
-                      {showFooterOnMobile && <Footer />}
-                    </div>
+        <Root theme={theme}>
+          <GridDebugger />
 
-                    <div
-                      css={css`
-                        position: fixed;
-                        bottom: 0;
-                        left: 0;
-                        width: 100%;
-                      `}
-                    >
-                      <MainTabBar
-                        data={tabs}
-                        active={Component.tabbar}
-                        onChange={index => {
-                          if (index === 0) {
-                            routerPush("/");
-                          } else if (index === 1) {
-                            routerPush("/menu");
-                          } else if (index === 2) {
-                            routerPush("/wishlist");
-                          } else if (index === 3) {
-                            routerPush("/cart");
-                          } else if (index === 4) {
-                            routerPush("/profile");
-                          }
-                        }}
-                        scrollable={false}
-                        align={"fit"}
-                      />
-                    </div>
-                  </div>
-                )}
+          {content}
 
-                {!showTabbar && (
-                  <>
-                    {content}
-                    {showFooterOnMobile && <Footer />}
-                  </>
-                )}
-              </Device>
+          {/*<Device mobile>*/}
+          {/*{showTabbar && (*/}
+          {/*<div>*/}
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*margin-bottom: 50px;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*{content}*/}
+          {/*{showFooterOnMobile && <Footer />}*/}
+          {/*</div>*/}
 
-              <Device desktop>
-                {hideDesktopMenu && content}
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*position: fixed;*/}
+          {/*bottom: 0;*/}
+          {/*left: 0;*/}
+          {/*width: 100%;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*<MainTabBar*/}
+          {/*data={tabs}*/}
+          {/*active={Component.tabbar}*/}
+          {/*onChange={index => {*/}
+          {/*if (index === 0) {*/}
+          {/*routerPush("/");*/}
+          {/*} else if (index === 1) {*/}
+          {/*routerPush("/menu");*/}
+          {/*} else if (index === 2) {*/}
+          {/*routerPush("/wishlist");*/}
+          {/*} else if (index === 3) {*/}
+          {/*routerPush("/cart");*/}
+          {/*} else if (index === 4) {*/}
+          {/*routerPush("/profile");*/}
+          {/*}*/}
+          {/*}}*/}
+          {/*scrollable={false}*/}
+          {/*align={"fit"}*/}
+          {/*/>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*)}*/}
 
-                {!hideDesktopMenu && (
-                  <>
-                    <MenuDesktop data={menuData} mode={"fixed"} />
+          {/*{!showTabbar && (*/}
+          {/*<>*/}
+          {/*{content}*/}
+          {/*{showFooterOnMobile && <Footer />}*/}
+          {/*</>*/}
+          {/*)}*/}
+          {/*</Device>*/}
 
-                    <div
-                      css={css`
-                        padding-top: 70px;
-                      `}
-                    >
-                      {content}
+          {/*<Device desktop>*/}
+          {/*{hideDesktopMenu && content}*/}
 
-                      <Footer />
-                    </div>
-                  </>
-                )}
-              </Device>
-            </Root>
-          </ApolloHooksProvider>
-        </ApolloProvider>
-      </InjectCheckoutContext>
+          {/*{!hideDesktopMenu && (*/}
+          {/*<>*/}
+          {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
+
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*padding-top: 70px;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*{content}*/}
+
+          {/*<Footer />*/}
+          {/*</div>*/}
+          {/*</>*/}
+          {/*)}*/}
+          {/*</Device>*/}
+        </Root>
+        {/*</ApolloHooksProvider>*/}
+        {/*</ApolloProvider>*/}
+        {/*</InjectCheckoutContext>*/}
+      </>
     );
   }
 }
