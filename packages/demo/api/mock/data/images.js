@@ -423,82 +423,67 @@ const images = {
 /**
  * Apply imgix
  */
-import ImgixClient from "imgix-core-js";
-
-const IMGIX_DOMAIN_RATIO = "ratio-dev.imgix.net";
-const IMGIX_SECRET_RATIO = "T9S4mPu4pDgCetNw";
-
-const RESOLUTIONS = [210, 420, 768, 1024, 1400, 1600, 1920];
-
-const imgix = new ImgixClient({
-  domain: IMGIX_DOMAIN_RATIO,
-  secureURLToken: IMGIX_SECRET_RATIO
-});
-
-function transformToImgix(image) {
-  let src = [];
-
-  RESOLUTIONS.forEach(res => {
-    let w = res;
-
-    let imgixUrl = imgix.buildURL(image.src[0].url, {
-      w: w,
-      auto: "compress,format"
-    });
-
-    src.push({
-      url: imgixUrl,
-      w: w,
-      h: (w / image.src[0].w) * image.src[0].h
-    });
-  });
-
-  return {
-    alt: image.alt,
-    src: src
-  };
-}
-
+// import ImgixClient from "imgix-core-js";
+//
+// const IMGIX_DOMAIN_RATIO = "ratio-dev.imgix.net";
+// const IMGIX_SECRET_RATIO = "T9S4mPu4pDgCetNw";
+//
+// const RESOLUTIONS = [210, 420, 768, 1024, 1400, 1600, 1920];
+//
+// const imgix = new ImgixClient({
+//   domain: IMGIX_DOMAIN_RATIO,
+//   secureURLToken: IMGIX_SECRET_RATIO
+// });
+//
+// function transformToImgix(image) {
+//   let src = [];
+//
+//   RESOLUTIONS.forEach(res => {
+//     let w = res;
+//
+//     let imgixUrl = imgix.buildURL(image.src[0].url, {
+//       w: w,
+//       auto: "compress,format"
+//     });
+//
+//     src.push({
+//       url: imgixUrl,
+//       w: w,
+//       h: (w / image.src[0].w) * image.src[0].h
+//     });
+//   });
+//
+//   return {
+//     alt: image.alt,
+//     src: src
+//   };
+// }
+//
 let i = 0;
 
 function transformToImage(image) {
   i++;
 
-  return {
+  let newImage = {
     id: i,
     altText: image.alt,
-    originalSrc: image.src[0].url,
-    variants: [
-      {
-        name: "natural",
-        src: args => {
-          // TODO: maxHeight not taken into account
-          let maxWidth = args.maxWidth || 420; // default max width is mobile
-
-          return imgix.buildURL(image.src[0].url, {
-            w: maxWidth,
-            auto: "compress,format"
-          });
-        },
-        aspectRatio: image.src[0].w / image.src[0].h
-      },
-      {
-        name: "square",
-        src: args => {
-          // TODO: maxHeight not taken into account
-          let maxWidth = args.maxWidth || 420; // default max width is mobile
-
-          return imgix.buildURL(image.src[0].url, {
-            w: maxWidth,
-            h: maxWidth,
-            auto: "compress,format",
-            fit: "crop"
-          });
-        },
-        aspectRatio: 1
-      }
-    ]
+    originalSrc: image.src[0].url
   };
+
+  newImage.variants = [
+    {
+      name: "natural",
+      aspectRatio: image.src[0].w / image.src[0].h,
+      image: newImage
+    },
+    {
+      name: "square",
+      aspectRatio: 1,
+      image: newImage
+    }
+  ];
+
+  return newImage;
 }
 
 function traverseImages(input) {

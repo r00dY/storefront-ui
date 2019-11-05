@@ -5060,6 +5060,7 @@ Represents image variant.
 """
 type ImageVariant {
   name: String
+  image: Image!
   src(maxWidth: Int, maxHeight: Int): URL!
   aspectRatio: Float!
 }

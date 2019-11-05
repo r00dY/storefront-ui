@@ -1,7 +1,14 @@
 import collections from "./data/collections";
 import stringToHandle from "./utils/stringToHandle";
+import ImgixClient from "imgix-core-js";
 
-// TODO: ImageVariant resolver should be here, not in images.js
+const IMGIX_DOMAIN_RATIO = "ratio-dev.imgix.net";
+const IMGIX_SECRET_RATIO = "T9S4mPu4pDgCetNw";
+
+const imgix = new ImgixClient({
+  domain: IMGIX_DOMAIN_RATIO,
+  secureURLToken: IMGIX_SECRET_RATIO
+});
 
 // TODO: this is mock so far
 const getPaginationResolver = function(items) {
@@ -20,6 +27,20 @@ const getPaginationResolver = function(items) {
 };
 
 const resolvers = {
+  ImageVariant: {
+    src(parent, args) {
+      // TODO: maxHeight not taken into account
+      let maxWidth = args.maxWidth || 420; // default max width is mobile
+
+      return imgix.buildURL(parent.image.originalSrc, {
+        w: maxWidth,
+        h: maxWidth / parent.aspectRatio,
+        auto: "compress,format",
+        fit: "crop"
+      });
+    }
+  },
+
   Product: {
     handle(parent) {
       return stringToHandle(parent.title);
