@@ -60,6 +60,10 @@ const resolvers = {
 
     createdAt() {
       return new Date();
+    },
+
+    variants(parent) {
+      return getPaginationResolver(parent.variants);
     }
   },
 

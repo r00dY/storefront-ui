@@ -3219,7 +3219,7 @@ input CreditCardPaymentInput {
   """
   The amount of the payment.
   """
-  amount: Money!
+  amount: MoneyInput!
 
   """
   A unique client generated key used to avoid duplicate charges. When a
@@ -5445,11 +5445,11 @@ enum MetafieldValueType {
   """
   JSON_STRING
 }
-
-"""
-A monetary value string. Example value: `"100.57"`.
-"""
-scalar Money
+#
+#"""
+#A monetary value string. Example value: `"100.57"`.
+#"""
+#scalar Money
 
 """
 Specifies the fields for a monetary value with currency.
@@ -5489,6 +5489,19 @@ Other formatting libraries include:
 For a more general solution, the [Unicode CLDR number formatting database] is available with many implementations
 (such as [TwitterCldr](https://github.com/twitter/twitter-cldr-rb)).
 """
+type Money {
+  """
+  Decimal money amount.
+  """
+  amount: Decimal!
+
+  """
+  Currency of the money.
+  """
+  currencyCode: CurrencyCode!
+}
+
+# TODO: to remove later
 type MoneyV2 {
   """
   Decimal money amount.
@@ -7134,28 +7147,28 @@ enum ProductSortKeys {
 """
 A product variant represents a different version of a product, such as differing sizes or differing colors.
 """
-type ProductVariant implements Node & HasMetafields {
-  """
-  Indicates if the product variant is in stock.
-  """
-  available: Boolean @deprecated(reason: "Use `availableForSale` instead")
+type ProductVariant implements Node {
+  #  """
+  #  Indicates if the product variant is in stock.
+  #  """
+  #  available: Boolean @deprecated(reason: "Use `availableForSale` instead")
 
   """
   Indicates if the product variant is available for sale.
   """
   availableForSale: Boolean!
 
-  """
-  The compare at price of the variant. This can be used to mark a variant as on
-  sale, when `compareAtPrice` is higher than `price`.
-  """
-  compareAtPrice: Money @deprecated(reason: "Use `compareAtPriceV2` instead")
+  #  """
+  #  The compare at price of the variant. This can be used to mark a variant as on
+  #  sale, when `compareAtPrice` is higher than `price`.
+  #  """
+  #  compareAtPrice: Money @deprecated(reason: "Use `compareAtPriceV2` instead")
 
   """
   The compare at price of the variant. This can be used to mark a variant as on
   sale, when `compareAtPriceV2` is higher than `priceV2`.
   """
-  compareAtPriceV2: MoneyV2
+  compareAtPrice: Money
 
   """
   Globally unique identifier.
@@ -7165,135 +7178,136 @@ type ProductVariant implements Node & HasMetafields {
   """
   Image associated with the product variant. This field falls back to the product image if no image is available.
   """
-  image(
-    """
-    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
-    """
-    maxWidth: Int
+  image: Image
+  #  image(
+  #    """
+  #    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
+  #    """
+  #    maxWidth: Int
+  #
+  #    """
+  #    Image height in pixels between 1 and 2048. This argument is deprecated: Use
+  #    `maxHeight` on `Image.transformedSrc` instead.
+  #    """
+  #    maxHeight: Int
+  #
+  #    """
+  #    Crops the image according to the specified region. This argument is
+  #    deprecated: Use `crop` on `Image.transformedSrc` instead.
+  #    """
+  #    crop: CropRegion
+  #
+  #    """
+  #    Image size multiplier for high-resolution retina displays. Must be between 1
+  #    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
+  #    """
+  #    scale: Int = 1
+  #  ): Image
+  #
+  #  """
+  #  The metafield associated with the resource.
+  #  """
+  #  metafield(
+  #    """
+  #    Container for a set of metafields (maximum of 20 characters).
+  #    """
+  #    namespace: String!
+  #
+  #    """
+  #    Identifier for the metafield (maximum of 30 characters).
+  #    """
+  #    key: String!
+  #  ): Metafield
+  #
+  #  """
+  #  A paginated list of metafields associated with the resource.
+  #  """
+  #  metafields(
+  #    """
+  #    Container for a set of metafields (maximum of 20 characters).
+  #    """
+  #    namespace: String
+  #
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #  ): MetafieldConnection!
 
-    """
-    Image height in pixels between 1 and 2048. This argument is deprecated: Use
-    `maxHeight` on `Image.transformedSrc` instead.
-    """
-    maxHeight: Int
-
-    """
-    Crops the image according to the specified region. This argument is
-    deprecated: Use `crop` on `Image.transformedSrc` instead.
-    """
-    crop: CropRegion
-
-    """
-    Image size multiplier for high-resolution retina displays. Must be between 1
-    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
-    """
-    scale: Int = 1
-  ): Image
-
-  """
-  The metafield associated with the resource.
-  """
-  metafield(
-    """
-    Container for a set of metafields (maximum of 20 characters).
-    """
-    namespace: String!
-
-    """
-    Identifier for the metafield (maximum of 30 characters).
-    """
-    key: String!
-  ): Metafield
-
-  """
-  A paginated list of metafields associated with the resource.
-  """
-  metafields(
-    """
-    Container for a set of metafields (maximum of 20 characters).
-    """
-    namespace: String
-
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-  ): MetafieldConnection!
-
-  """
-  List of prices and compare-at prices in the presentment currencies for this shop.
-  """
-  presentmentPrices(
-    """
-    The presentment currencies prices should return in.
-    """
-    presentmentCurrencies: [CurrencyCode!]
-
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-  ): ProductVariantPricePairConnection!
+  #  """
+  #  List of prices and compare-at prices in the presentment currencies for this shop.
+  #  """
+  #  presentmentPrices(
+  #    """
+  #    The presentment currencies prices should return in.
+  #    """
+  #    presentmentCurrencies: [CurrencyCode!]
+  #
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #  ): ProductVariantPricePairConnection!
+  #
+  #  """
+  #  The product variant’s price.
+  #  """
+  #  price: Money! @deprecated(reason: "Use `priceV2` instead")
 
   """
   The product variant’s price.
   """
-  price: Money! @deprecated(reason: "Use `priceV2` instead")
-
-  """
-  The product variant’s price.
-  """
-  priceV2: MoneyV2!
+  price: Money!
 
   """
   The product object that the product variant belongs to.
   """
   product: Product!
 
-  """
-  Whether a customer needs to provide a shipping address when placing an order for the product variant.
-  """
-  requiresShipping: Boolean!
+  #  """
+  #  Whether a customer needs to provide a shipping address when placing an order for the product variant.
+  #  """
+  #  requiresShipping: Boolean!
 
   """
   List of product options applied to the variant.
@@ -7310,15 +7324,15 @@ type ProductVariant implements Node & HasMetafields {
   """
   title: String!
 
-  """
-  The weight of the product variant in the unit system specified with `weight_unit`.
-  """
-  weight: Float
-
-  """
-  Unit of measurement for weight.
-  """
-  weightUnit: WeightUnit!
+  #  """
+  #  The weight of the product variant in the unit system specified with `weight_unit`.
+  #  """
+  #  weight: Float
+  #
+  #  """
+  #  Unit of measurement for weight.
+  #  """
+  #  weightUnit: WeightUnit!
 }
 
 type ProductVariantConnection {
@@ -8217,7 +8231,7 @@ input TokenizedPaymentInput {
   """
   The amount of the payment.
   """
-  amount: Money!
+  amount: MoneyInput!
 
   """
   A unique client generated key used to avoid duplicate charges. When a

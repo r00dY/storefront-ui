@@ -1,5 +1,6 @@
 import images from "./images";
 import randomInt from "../utils/randomInt";
+import useProductVariant from "../../../graphql/hooks/useProductVariant";
 
 let productImages = images.products;
 
@@ -604,7 +605,8 @@ const products = [
 ];
 
 /**
- * Assign random options to products
+ * Assign options and product variants to product
+ * TODO: make it better pls
  */
 
 products.forEach(product => {
@@ -613,10 +615,39 @@ products.forEach(product => {
     values: []
   };
 
-  const numOfSizes = randomInt(2, 10);
+  product.variants = [];
+
+  const numOfSizes = (product.id % 9) + 1;
 
   for (let i = 1; i <= numOfSizes; i++) {
-    option.values.push(i * 100 + "ml");
+    const optionValue = i * 100 + "ml";
+    const id = product.id * 100 + i;
+
+    option.values.push(optionValue);
+
+    const price = {
+      amount: `${(i + 1) * 100}.00`,
+      currencyCode: "USD"
+    };
+
+    const variant = {
+      id: id,
+      availableForSale: true,
+      compareAtPrice: price,
+      price: price,
+      image: null,
+      product: product,
+      selectedOptions: [
+        {
+          name: "size",
+          value: optionValue
+        }
+      ],
+      sku: `sku${id}`,
+      title: product.title
+    };
+
+    product.variants.push(variant);
   }
 
   product.options = [option];
