@@ -1773,10 +1773,10 @@ type Collection implements Node {
     truncateAt: Int
   ): String!
 
-  """
-  The description of the collection, complete with HTML formatting.
-  """
-  descriptionHtml: HTML!
+  #  """
+  #  The description of the collection, complete with HTML formatting.
+  #  """
+  #  descriptionHtml: HTML!
 
   """
   A human-friendly unique string for the collection automatically generated from its title.
@@ -1792,30 +1792,31 @@ type Collection implements Node {
   """
   Image associated with the collection.
   """
-  image(
-    """
-    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
-    """
-    maxWidth: Int
-
-    """
-    Image height in pixels between 1 and 2048. This argument is deprecated: Use
-    `maxHeight` on `Image.transformedSrc` instead.
-    """
-    maxHeight: Int
-
-    """
-    Crops the image according to the specified region. This argument is
-    deprecated: Use `crop` on `Image.transformedSrc` instead.
-    """
-    crop: CropRegion
-
-    """
-    Image size multiplier for high-resolution retina displays. Must be between 1
-    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
-    """
-    scale: Int = 1
-  ): Image
+  image: Image
+  #  image(
+  #    """
+  #    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
+  #    """
+  #    maxWidth: Int
+  #
+  #    """
+  #    Image height in pixels between 1 and 2048. This argument is deprecated: Use
+  #    `maxHeight` on `Image.transformedSrc` instead.
+  #    """
+  #    maxHeight: Int
+  #
+  #    """
+  #    Crops the image according to the specified region. This argument is
+  #    deprecated: Use `crop` on `Image.transformedSrc` instead.
+  #    """
+  #    crop: CropRegion
+  #
+  #    """
+  #    Image size multiplier for high-resolution retina displays. Must be between 1
+  #    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
+  #    """
+  #    scale: Int = 1
+  #  ): Image
 
   """
   List of products in the collection.

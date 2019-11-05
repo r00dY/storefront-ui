@@ -14,7 +14,8 @@ function create(initialState) {
     connectToDevTools: process.browser,
     ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     link: new HttpLink({
-      uri: "https://biggest-ecommerce.myshopify.com/api/graphql", // Server URL (must be absolute)
+      // uri: "https://biggest-ecommerce.myshopify.com/api/graphql", // Server URL (must be absolute)
+      uri: "/api/graphql", // Server URL (must be absolute)
       headers: {
         "X-Shopify-Storefront-Access-Token": "7a415603317462ae8c7e4f98be2c5b5e"
       }

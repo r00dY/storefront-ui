@@ -22,6 +22,10 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
+import useProducts from "../graphql/hooks/useProducts";
+
+import { useQuery } from "@apollo/react-hooks";
+import gql from "graphql-tag";
 
 // Categories displayed at the bottom
 const categories = [
@@ -39,8 +43,31 @@ const categories = [
   href: "/collection"
 }));
 
+const GQL_HOMEPAGE_SLIDER_PRODUCTS = gql`
+  query {
+    collectionByHandle(handle: "homepage_slider") {
+      edges {
+        node {
+          handle
+          title
+          description
+        }
+      }
+    }
+  }
+`;
+
 const Home = () => {
   const theme = useTheme();
+
+  let { loading, error, data: data2 } = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
+
+  console.log(loading, error, data2);
+
+  const [mappedProducts, isLoadingCollection] = useProducts([
+    { name: "collectionName", value: "frontpage" },
+    { name: "productsAmount", value: 50 }
+  ]);
 
   return (
     <div>

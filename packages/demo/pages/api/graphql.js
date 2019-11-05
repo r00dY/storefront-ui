@@ -53,6 +53,15 @@ const resolvers = {
       };
     },
 
+    collectionByHandle(parent, args, context) {
+      return {
+        id: "1234",
+        handle: "dupa",
+        title: "Lorem ipsum",
+        description: "Not very long description of collection"
+      };
+    },
+
     testByHandle(parent, args, context) {
       console.log(parent, args, context);
       return "Test!!!";

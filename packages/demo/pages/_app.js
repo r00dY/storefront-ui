@@ -81,28 +81,31 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    const checkout = await MyApp.createCheckout(apollo, ctx);
+    // const checkout = await MyApp.createCheckout(apollo, ctx);
 
-    return { pageProps, noRoot: ctx.query.noRoot !== undefined, checkout };
+    return {
+      pageProps,
+      noRoot: ctx.query.noRoot !== undefined /*, checkout */
+    };
   }
 
-  static async createCheckout(client, ctx) {
-    if (client.cache.data.data.Checkout) {
-      return client.cache.data.data.Checkout;
-    }
-
-    if (!client.cache.data.data.Checkout && parseCookies(ctx).checkoutId) {
-      const { data } = await fetchCheckout(
-        client,
-        parseCookies(ctx).checkoutId
-      );
-      return data.node;
-    }
-
-    const { data } = await createEmptyCheckout(client);
-    setCookie(ctx, "checkoutId", data.checkoutCreate.checkout.id);
-    return data.checkoutCreate.checkout;
-  }
+  // static async createCheckout(client, ctx) {
+  //   if (client.cache.data.data.Checkout) {
+  //     return client.cache.data.data.Checkout;
+  //   }
+  //
+  //   if (!client.cache.data.data.Checkout && parseCookies(ctx).checkoutId) {
+  //     const { data } = await fetchCheckout(
+  //       client,
+  //       parseCookies(ctx).checkoutId
+  //     );
+  //     return data.node;
+  //   }
+  //
+  //   const { data } = await createEmptyCheckout(client);
+  //   setCookie(ctx, "checkoutId", data.checkoutCreate.checkout.id);
+  //   return data.checkoutCreate.checkout;
+  // }
 
   constructor(props) {
     super(props);
@@ -122,87 +125,86 @@ class MyApp extends App {
     return (
       <>
         {/*<InjectCheckoutContext checkout={this.props.checkout}>*/}
-        {/*<ApolloProvider client={apolloClient}>*/}
-        {/*<ApolloHooksProvider client={apolloClient}>*/}
+        <ApolloProvider client={apolloClient}>
+          <ApolloHooksProvider client={apolloClient}>
+            <Root theme={theme}>
+              <GridDebugger />
 
-        <Root theme={theme}>
-          <GridDebugger />
+              {content}
 
-          {content}
+              {/*<Device mobile>*/}
+              {/*{showTabbar && (*/}
+              {/*<div>*/}
+              {/*<div*/}
+              {/*css={css`*/}
+              {/*margin-bottom: 50px;*/}
+              {/*`}*/}
+              {/*>*/}
+              {/*{content}*/}
+              {/*{showFooterOnMobile && <Footer />}*/}
+              {/*</div>*/}
 
-          {/*<Device mobile>*/}
-          {/*{showTabbar && (*/}
-          {/*<div>*/}
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*margin-bottom: 50px;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*{content}*/}
-          {/*{showFooterOnMobile && <Footer />}*/}
-          {/*</div>*/}
+              {/*<div*/}
+              {/*css={css`*/}
+              {/*position: fixed;*/}
+              {/*bottom: 0;*/}
+              {/*left: 0;*/}
+              {/*width: 100%;*/}
+              {/*`}*/}
+              {/*>*/}
+              {/*<MainTabBar*/}
+              {/*data={tabs}*/}
+              {/*active={Component.tabbar}*/}
+              {/*onChange={index => {*/}
+              {/*if (index === 0) {*/}
+              {/*routerPush("/");*/}
+              {/*} else if (index === 1) {*/}
+              {/*routerPush("/menu");*/}
+              {/*} else if (index === 2) {*/}
+              {/*routerPush("/wishlist");*/}
+              {/*} else if (index === 3) {*/}
+              {/*routerPush("/cart");*/}
+              {/*} else if (index === 4) {*/}
+              {/*routerPush("/profile");*/}
+              {/*}*/}
+              {/*}}*/}
+              {/*scrollable={false}*/}
+              {/*align={"fit"}*/}
+              {/*/>*/}
+              {/*</div>*/}
+              {/*</div>*/}
+              {/*)}*/}
 
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*position: fixed;*/}
-          {/*bottom: 0;*/}
-          {/*left: 0;*/}
-          {/*width: 100%;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*<MainTabBar*/}
-          {/*data={tabs}*/}
-          {/*active={Component.tabbar}*/}
-          {/*onChange={index => {*/}
-          {/*if (index === 0) {*/}
-          {/*routerPush("/");*/}
-          {/*} else if (index === 1) {*/}
-          {/*routerPush("/menu");*/}
-          {/*} else if (index === 2) {*/}
-          {/*routerPush("/wishlist");*/}
-          {/*} else if (index === 3) {*/}
-          {/*routerPush("/cart");*/}
-          {/*} else if (index === 4) {*/}
-          {/*routerPush("/profile");*/}
-          {/*}*/}
-          {/*}}*/}
-          {/*scrollable={false}*/}
-          {/*align={"fit"}*/}
-          {/*/>*/}
-          {/*</div>*/}
-          {/*</div>*/}
-          {/*)}*/}
+              {/*{!showTabbar && (*/}
+              {/*<>*/}
+              {/*{content}*/}
+              {/*{showFooterOnMobile && <Footer />}*/}
+              {/*</>*/}
+              {/*)}*/}
+              {/*</Device>*/}
 
-          {/*{!showTabbar && (*/}
-          {/*<>*/}
-          {/*{content}*/}
-          {/*{showFooterOnMobile && <Footer />}*/}
-          {/*</>*/}
-          {/*)}*/}
-          {/*</Device>*/}
+              {/*<Device desktop>*/}
+              {/*{hideDesktopMenu && content}*/}
 
-          {/*<Device desktop>*/}
-          {/*{hideDesktopMenu && content}*/}
+              {/*{!hideDesktopMenu && (*/}
+              {/*<>*/}
+              {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
 
-          {/*{!hideDesktopMenu && (*/}
-          {/*<>*/}
-          {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
+              {/*<div*/}
+              {/*css={css`*/}
+              {/*padding-top: 70px;*/}
+              {/*`}*/}
+              {/*>*/}
+              {/*{content}*/}
 
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*padding-top: 70px;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*{content}*/}
-
-          {/*<Footer />*/}
-          {/*</div>*/}
-          {/*</>*/}
-          {/*)}*/}
-          {/*</Device>*/}
-        </Root>
-        {/*</ApolloHooksProvider>*/}
-        {/*</ApolloProvider>*/}
+              {/*<Footer />*/}
+              {/*</div>*/}
+              {/*</>*/}
+              {/*)}*/}
+              {/*</Device>*/}
+            </Root>
+          </ApolloHooksProvider>
+        </ApolloProvider>
         {/*</InjectCheckoutContext>*/}
       </>
     );
