@@ -13,25 +13,25 @@ directive @accessRestricted(
   reason: String = null
 ) on FIELD_DEFINITION
 
-"""
-A version of the API.
-"""
-type ApiVersion {
-  """
-  The human-readable name of the version.
-  """
-  displayName: String!
-
-  """
-  The unique identifier of an ApiVersion. All supported API versions have a date-based (YYYY-MM) or `unstable` handle.
-  """
-  handle: String!
-
-  """
-  Whether the version is supported by Shopify.
-  """
-  supported: Boolean!
-}
+#"""
+#A version of the API.
+#"""
+#type ApiVersion {
+#  """
+#  The human-readable name of the version.
+#  """
+#  displayName: String!
+#
+#  """
+#  The unique identifier of an ApiVersion. All supported API versions have a date-based (YYYY-MM) or `unstable` handle.
+#  """
+#  handle: String!
+#
+#  """
+#  Whether the version is supported by Shopify.
+#  """
+#  supported: Boolean!
+#}
 
 """
 Details about the gift card used on the checkout.
@@ -40,17 +40,7 @@ type AppliedGiftCard implements Node {
   """
   The amount that was taken from the Gift Card by applying it.
   """
-  amountUsed: Money! @deprecated(reason: "Use `amountUsedV2` instead")
-
-  """
-  The amount that was taken from the Gift Card by applying it.
-  """
   amountUsedV2: MoneyV2!
-
-  """
-  The amount left on the Gift Card.
-  """
-  balance: Money! @deprecated(reason: "Use `balanceV2` instead")
 
   """
   The amount left on the Gift Card.
@@ -72,239 +62,239 @@ type AppliedGiftCard implements Node {
   """
   presentmentAmountUsed: MoneyV2!
 }
-
-type Article implements Node {
-  """
-  The article's author.
-  """
-  author: ArticleAuthor! @deprecated(reason: "Use `authorV2` instead")
-
-  """
-  The article's author.
-  """
-  authorV2: ArticleAuthor
-
-  """
-  The blog that the article belongs to.
-  """
-  blog: Blog!
-
-  """
-  List of comments posted on the article.
-  """
-  comments(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-  ): CommentConnection!
-
-  """
-  Stripped content of the article, single line with HTML tags removed.
-  """
-  content(
-    """
-    Truncates string after the given length.
-    """
-    truncateAt: Int
-  ): String!
-
-  """
-  The content of the article, complete with HTML formatting.
-  """
-  contentHtml: HTML!
-
-  """
-  Stripped excerpt of the article, single line with HTML tags removed.
-  """
-  excerpt(
-    """
-    Truncates string after the given length.
-    """
-    truncateAt: Int
-  ): String
-
-  """
-  The excerpt of the article, complete with HTML formatting.
-  """
-  excerptHtml: HTML
-
-  """
-  A human-friendly unique string for the Article automatically generated from its title.
-  """
-  handle: String!
-
-  """
-  Globally unique identifier.
-  """
-  id: ID!
-
-  """
-  The image associated with the article.
-  """
-  image(
-    """
-    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
-    """
-    maxWidth: Int
-
-    """
-    Image height in pixels between 1 and 2048. This argument is deprecated: Use
-    `maxHeight` on `Image.transformedSrc` instead.
-    """
-    maxHeight: Int
-
-    """
-    Crops the image according to the specified region. This argument is
-    deprecated: Use `crop` on `Image.transformedSrc` instead.
-    """
-    crop: CropRegion
-
-    """
-    Image size multiplier for high-resolution retina displays. Must be between 1
-    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
-    """
-    scale: Int = 1
-  ): Image
-
-  """
-  The date and time when the article was published.
-  """
-  publishedAt: DateTime!
-
-  """
-  The article’s SEO information.
-  """
-  seo: SEO
-
-  """
-  A categorization that a article can be tagged with.
-  """
-  tags: [String!]!
-
-  """
-  The article’s name.
-  """
-  title: String!
-
-  """
-  The url pointing to the article accessible from the web.
-  """
-  url: URL!
-}
-
-type ArticleAuthor {
-  """
-  The author's bio.
-  """
-  bio: String
-
-  """
-  The author’s email.
-  """
-  email: String!
-
-  """
-  The author's first name.
-  """
-  firstName: String!
-
-  """
-  The author's last name.
-  """
-  lastName: String!
-
-  """
-  The author's full name.
-  """
-  name: String!
-}
-
-type ArticleConnection {
-  """
-  A list of edges.
-  """
-  edges: [ArticleEdge!]!
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: PageInfo!
-}
-
-type ArticleEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of ArticleEdge.
-  """
-  node: Article!
-}
-
-"""
-The set of valid sort keys for the articles query.
-"""
-enum ArticleSortKeys {
-  """
-  Sort by the `title` value.
-  """
-  TITLE
-
-  """
-  Sort by the `blog_title` value.
-  """
-  BLOG_TITLE
-
-  """
-  Sort by the `author` value.
-  """
-  AUTHOR
-
-  """
-  Sort by the `updated_at` value.
-  """
-  UPDATED_AT
-
-  """
-  Sort by the `published_at` value.
-  """
-  PUBLISHED_AT
-
-  """
-  Sort by the `id` value.
-  """
-  ID
-
-  """
-  During a search (i.e. when the `query` parameter has been specified on the connection) this sorts the
-  results by relevance to the search term(s). When no search query is specified, this sort key is not
-  deterministic and should not be used.
-  """
-  RELEVANCE
-}
+#
+#type Article implements Node {
+#  """
+#  The article's author.
+#  """
+#  author: ArticleAuthor! @deprecated(reason: "Use `authorV2` instead")
+#
+#  """
+#  The article's author.
+#  """
+#  authorV2: ArticleAuthor
+#
+#  """
+#  The blog that the article belongs to.
+#  """
+#  blog: Blog!
+#
+#  """
+#  List of comments posted on the article.
+#  """
+#  comments(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#  ): CommentConnection!
+#
+#  """
+#  Stripped content of the article, single line with HTML tags removed.
+#  """
+#  content(
+#    """
+#    Truncates string after the given length.
+#    """
+#    truncateAt: Int
+#  ): String!
+#
+#  """
+#  The content of the article, complete with HTML formatting.
+#  """
+#  contentHtml: HTML!
+#
+#  """
+#  Stripped excerpt of the article, single line with HTML tags removed.
+#  """
+#  excerpt(
+#    """
+#    Truncates string after the given length.
+#    """
+#    truncateAt: Int
+#  ): String
+#
+#  """
+#  The excerpt of the article, complete with HTML formatting.
+#  """
+#  excerptHtml: HTML
+#
+#  """
+#  A human-friendly unique string for the Article automatically generated from its title.
+#  """
+#  handle: String!
+#
+#  """
+#  Globally unique identifier.
+#  """
+#  id: ID!
+#
+#  """
+#  The image associated with the article.
+#  """
+#  image(
+#    """
+#    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
+#    """
+#    maxWidth: Int
+#
+#    """
+#    Image height in pixels between 1 and 2048. This argument is deprecated: Use
+#    `maxHeight` on `Image.transformedSrc` instead.
+#    """
+#    maxHeight: Int
+#
+#    """
+#    Crops the image according to the specified region. This argument is
+#    deprecated: Use `crop` on `Image.transformedSrc` instead.
+#    """
+#    crop: CropRegion
+#
+#    """
+#    Image size multiplier for high-resolution retina displays. Must be between 1
+#    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
+#    """
+#    scale: Int = 1
+#  ): Image
+#
+#  """
+#  The date and time when the article was published.
+#  """
+#  publishedAt: DateTime!
+#
+#  """
+#  The article’s SEO information.
+#  """
+#  seo: SEO
+#
+#  """
+#  A categorization that a article can be tagged with.
+#  """
+#  tags: [String!]!
+#
+#  """
+#  The article’s name.
+#  """
+#  title: String!
+#
+#  """
+#  The url pointing to the article accessible from the web.
+#  """
+#  url: URL!
+#}
+#
+#type ArticleAuthor {
+#  """
+#  The author's bio.
+#  """
+#  bio: String
+#
+#  """
+#  The author’s email.
+#  """
+#  email: String!
+#
+#  """
+#  The author's first name.
+#  """
+#  firstName: String!
+#
+#  """
+#  The author's last name.
+#  """
+#  lastName: String!
+#
+#  """
+#  The author's full name.
+#  """
+#  name: String!
+#}
+#
+#type ArticleConnection {
+#  """
+#  A list of edges.
+#  """
+#  edges: [ArticleEdge!]!
+#
+#  """
+#  Information to aid in pagination.
+#  """
+#  pageInfo: PageInfo!
+#}
+#
+#type ArticleEdge {
+#  """
+#  A cursor for use in pagination.
+#  """
+#  cursor: String!
+#
+#  """
+#  The item at the end of ArticleEdge.
+#  """
+#  node: Article!
+#}
+#
+#"""
+#The set of valid sort keys for the articles query.
+#"""
+#enum ArticleSortKeys {
+#  """
+#  Sort by the `title` value.
+#  """
+#  TITLE
+#
+#  """
+#  Sort by the `blog_title` value.
+#  """
+#  BLOG_TITLE
+#
+#  """
+#  Sort by the `author` value.
+#  """
+#  AUTHOR
+#
+#  """
+#  Sort by the `updated_at` value.
+#  """
+#  UPDATED_AT
+#
+#  """
+#  Sort by the `published_at` value.
+#  """
+#  PUBLISHED_AT
+#
+#  """
+#  Sort by the `id` value.
+#  """
+#  ID
+#
+#  """
+#  During a search (i.e. when the `query` parameter has been specified on the connection) this sorts the
+#  results by relevance to the search term(s). When no search query is specified, this sort key is not
+#  deterministic and should not be used.
+#  """
+#  RELEVANCE
+#}
 
 """
 Represents a generic custom attribute.
@@ -336,35 +326,35 @@ input AttributeInput {
   value: String!
 }
 
-"""
-Automatic discount applications capture the intentions of a discount that was automatically applied.
-"""
-type AutomaticDiscountApplication implements DiscountApplication {
-  """
-  The method by which the discount's value is allocated to its entitled items.
-  """
-  allocationMethod: DiscountApplicationAllocationMethod!
-
-  """
-  Which lines of targetType that the discount is allocated over.
-  """
-  targetSelection: DiscountApplicationTargetSelection!
-
-  """
-  The type of line that the discount is applicable towards.
-  """
-  targetType: DiscountApplicationTargetType!
-
-  """
-  The title of the application.
-  """
-  title: String!
-
-  """
-  The value of the discount application.
-  """
-  value: PricingValue!
-}
+#"""
+#Automatic discount applications capture the intentions of a discount that was automatically applied.
+#"""
+#type AutomaticDiscountApplication implements DiscountApplication {
+#  """
+#  The method by which the discount's value is allocated to its entitled items.
+#  """
+#  allocationMethod: DiscountApplicationAllocationMethod!
+#
+#  """
+#  Which lines of targetType that the discount is allocated over.
+#  """
+#  targetSelection: DiscountApplicationTargetSelection!
+#
+#  """
+#  The type of line that the discount is applicable towards.
+#  """
+#  targetType: DiscountApplicationTargetType!
+#
+#  """
+#  The title of the application.
+#  """
+#  title: String!
+#
+#  """
+#  The value of the discount application.
+#  """
+#  value: PricingValue!
+#}
 
 """
 A collection of available shipping rates for a checkout.
@@ -383,140 +373,140 @@ type AvailableShippingRates {
   shippingRates: [ShippingRate!]
 }
 
-type Blog implements Node {
-  """
-  Find an article by its handle.
-  """
-  articleByHandle(
-    """
-    The handle of the article.
-    """
-    handle: String!
-  ): Article
-
-  """
-  List of the blog's articles.
-  """
-  articles(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: ArticleSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `author`
-     - `blog_title`
-     - `created_at`
-     - `tag`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): ArticleConnection!
-
-  """
-  The authors who have contributed to the blog.
-  """
-  authors: [ArticleAuthor!]!
-
-  """
-  A human-friendly unique string for the Blog automatically generated from its title.
-  """
-  handle: String!
-
-  """
-  Globally unique identifier.
-  """
-  id: ID!
-
-  """
-  The blogs’s title.
-  """
-  title: String!
-
-  """
-  The url pointing to the blog accessible from the web.
-  """
-  url: URL!
-}
-
-type BlogConnection {
-  """
-  A list of edges.
-  """
-  edges: [BlogEdge!]!
-
-  """
-  Information to aid in pagination.
-  """
-  pageInfo: PageInfo!
-}
-
-type BlogEdge {
-  """
-  A cursor for use in pagination.
-  """
-  cursor: String!
-
-  """
-  The item at the end of BlogEdge.
-  """
-  node: Blog!
-}
-
-"""
-The set of valid sort keys for the blogs query.
-"""
-enum BlogSortKeys {
-  """
-  Sort by the `handle` value.
-  """
-  HANDLE
-
-  """
-  Sort by the `title` value.
-  """
-  TITLE
-
-  """
-  Sort by the `id` value.
-  """
-  ID
-
-  """
-  During a search (i.e. when the `query` parameter has been specified on the connection) this sorts the
-  results by relevance to the search term(s). When no search query is specified, this sort key is not
-  deterministic and should not be used.
-  """
-  RELEVANCE
-}
+#type Blog implements Node {
+#  """
+#  Find an article by its handle.
+#  """
+#  articleByHandle(
+#    """
+#    The handle of the article.
+#    """
+#    handle: String!
+#  ): Article
+#
+#  """
+#  List of the blog's articles.
+#  """
+#  articles(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#
+#    """
+#    Sort the underlying list by the given key.
+#    """
+#    sortKey: ArticleSortKeys = ID
+#
+#    """
+#    Supported filter parameters:
+#     - `author`
+#     - `blog_title`
+#     - `created_at`
+#     - `tag`
+#     - `updated_at`
+#
+#    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+#    """
+#    query: String
+#  ): ArticleConnection!
+#
+#  """
+#  The authors who have contributed to the blog.
+#  """
+#  authors: [ArticleAuthor!]!
+#
+#  """
+#  A human-friendly unique string for the Blog automatically generated from its title.
+#  """
+#  handle: String!
+#
+#  """
+#  Globally unique identifier.
+#  """
+#  id: ID!
+#
+#  """
+#  The blogs’s title.
+#  """
+#  title: String!
+#
+#  """
+#  The url pointing to the blog accessible from the web.
+#  """
+#  url: URL!
+#}
+#
+#type BlogConnection {
+#  """
+#  A list of edges.
+#  """
+#  edges: [BlogEdge!]!
+#
+#  """
+#  Information to aid in pagination.
+#  """
+#  pageInfo: PageInfo!
+#}
+#
+#type BlogEdge {
+#  """
+#  A cursor for use in pagination.
+#  """
+#  cursor: String!
+#
+#  """
+#  The item at the end of BlogEdge.
+#  """
+#  node: Blog!
+#}
+#
+#"""
+#The set of valid sort keys for the blogs query.
+#"""
+#enum BlogSortKeys {
+#  """
+#  Sort by the `handle` value.
+#  """
+#  HANDLE
+#
+#  """
+#  Sort by the `title` value.
+#  """
+#  TITLE
+#
+#  """
+#  Sort by the `id` value.
+#  """
+#  ID
+#
+#  """
+#  During a search (i.e. when the `query` parameter has been specified on the connection) this sorts the
+#  results by relevance to the search term(s). When no search query is specified, this sort key is not
+#  deterministic and should not be used.
+#  """
+#  RELEVANCE
+#}
 
 """
 Card brand, such as Visa or Mastercard, which can be used for payments.
@@ -571,10 +561,10 @@ type Checkout implements Node {
   """
   completedAt: DateTime
 
-  """
-  The date and time when the checkout was created.
-  """
-  createdAt: DateTime!
+  #  """
+  #  The date and time when the checkout was created.
+  #  """
+  #  createdAt: DateTime!
 
   """
   The currency code for the Checkout.
@@ -6609,7 +6599,7 @@ For example, a digital download (such as a movie, music or ebook file) also
 qualifies as a product, as do services (such as equipment rental, work for hire,
 customization of another product or an extended warranty).
 """
-type Product implements Node & HasMetafields {
+type Product implements Node {
   """
   Whether the product is available on the Online Store channel and in stock.
   """
@@ -6660,10 +6650,10 @@ type Product implements Node & HasMetafields {
     truncateAt: Int
   ): String!
 
-  """
-  The description of the product, complete with HTML formatting.
-  """
-  descriptionHtml: HTML!
+  #  """
+  #  The description of the product, complete with HTML formatting.
+  #  """
+  #  descriptionHtml: HTML!
 
   """
   A human-friendly unique string for the Product automatically generated from its title.
@@ -6680,28 +6670,28 @@ type Product implements Node & HasMetafields {
   List of images associated with the product.
   """
   images(
-    """
-    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
-    """
-    maxWidth: Int
-
-    """
-    Image height in pixels between 1 and 2048. This argument is deprecated: Use
-    `maxHeight` on `Image.transformedSrc` instead.
-    """
-    maxHeight: Int
-
-    """
-    Crops the image according to the specified region. This argument is
-    deprecated: Use `crop` on `Image.transformedSrc` instead.
-    """
-    crop: CropRegion
-
-    """
-    Image size multiplier for high-resolution retina displays. Must be between 1
-    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
-    """
-    scale: Int = 1
+    #    """
+    #    Image width in pixels between 1 and 2048. This argument is deprecated: Use `maxWidth` on `Image.transformedSrc` instead.
+    #    """
+    #    maxWidth: Int
+    #
+    #    """
+    #    Image height in pixels between 1 and 2048. This argument is deprecated: Use
+    #    `maxHeight` on `Image.transformedSrc` instead.
+    #    """
+    #    maxHeight: Int
+    #
+    #    """
+    #    Crops the image according to the specified region. This argument is
+    #    deprecated: Use `crop` on `Image.transformedSrc` instead.
+    #    """
+    #    crop: CropRegion
+    #
+    #    """
+    #    Image size multiplier for high-resolution retina displays. Must be between 1
+    #    and 3. This argument is deprecated: Use `scale` on `Image.transformedSrc` instead.
+    #    """
+    #    scale: Int = 1
 
     """
     Returns up to the first `n` elements from the list.
@@ -6734,61 +6724,61 @@ type Product implements Node & HasMetafields {
     sortKey: ProductImageSortKeys = POSITION
   ): ImageConnection!
 
-  """
-  The metafield associated with the resource.
-  """
-  metafield(
-    """
-    Container for a set of metafields (maximum of 20 characters).
-    """
-    namespace: String!
-
-    """
-    Identifier for the metafield (maximum of 30 characters).
-    """
-    key: String!
-  ): Metafield
-
-  """
-  A paginated list of metafields associated with the resource.
-  """
-  metafields(
-    """
-    Container for a set of metafields (maximum of 20 characters).
-    """
-    namespace: String
-
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-  ): MetafieldConnection!
-
-  """
-  The online store URL for the product.
-  A value of `null` indicates that the product is not published to the Online Store sales channel.
-  """
-  onlineStoreUrl: URL
+  #  """
+  #  The metafield associated with the resource.
+  #  """
+  #  metafield(
+  #    """
+  #    Container for a set of metafields (maximum of 20 characters).
+  #    """
+  #    namespace: String!
+  #
+  #    """
+  #    Identifier for the metafield (maximum of 30 characters).
+  #    """
+  #    key: String!
+  #  ): Metafield
+  #
+  #  """
+  #  A paginated list of metafields associated with the resource.
+  #  """
+  #  metafields(
+  #    """
+  #    Container for a set of metafields (maximum of 20 characters).
+  #    """
+  #    namespace: String
+  #
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #  ): MetafieldConnection!
+  #
+  #  """
+  #  The online store URL for the product.
+  #  A value of `null` indicates that the product is not published to the Online Store sales channel.
+  #  """
+  #  onlineStoreUrl: URL
 
   """
   List of custom product options (maximum of 3 per product).
@@ -6800,55 +6790,55 @@ type Product implements Node & HasMetafields {
     first: Int
   ): [ProductOption!]!
 
-  """
-  List of price ranges in the presentment currencies for this shop.
-  """
-  presentmentPriceRanges(
-    """
-    Specifies the presentment currencies to return a price range in.
-    """
-    presentmentCurrencies: [CurrencyCode!]
+  #  """
+  #  List of price ranges in the presentment currencies for this shop.
+  #  """
+  #  presentmentPriceRanges(
+  #    """
+  #    Specifies the presentment currencies to return a price range in.
+  #    """
+  #    presentmentCurrencies: [CurrencyCode!]
+  #
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #  ): ProductPriceRangeConnection!
+  #
+  #  """
+  #  The price range.
+  #  """
+  #  priceRange: ProductPriceRange!
 
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
+  #  """
+  #  A categorization that a product can be tagged with, commonly used for filtering and searching.
+  #  """
+  #  productType: String!
 
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-  ): ProductPriceRangeConnection!
-
-  """
-  The price range.
-  """
-  priceRange: ProductPriceRange!
-
-  """
-  A categorization that a product can be tagged with, commonly used for filtering and searching.
-  """
-  productType: String!
-
-  """
-  The date and time when the product was published to the channel.
-  """
-  publishedAt: DateTime!
+  #  """
+  #  The date and time when the product was published to the channel.
+  #  """
+  #  publishedAt: DateTime!
 
   """
   A categorization that a product can be tagged with, commonly used for filtering and searching.
@@ -6861,19 +6851,19 @@ type Product implements Node & HasMetafields {
   """
   title: String!
 
-  """
-  The date and time when the product was last modified.
-  """
-  updatedAt: DateTime!
+  #  """
+  #  The date and time when the product was last modified.
+  #  """
+  #  updatedAt: DateTime!
 
-  """
-  Find a product’s variant based on its selected options.
-  This is useful for converting a user’s selection of product options into a single matching variant.
-  If there is not a variant for the selected options, `null` will be returned.
-  """
-  variantBySelectedOptions(
-    selectedOptions: [SelectedOptionInput!]!
-  ): ProductVariant
+  #  """
+  #  Find a product’s variant based on its selected options.
+  #  This is useful for converting a user’s selection of product options into a single matching variant.
+  #  If there is not a variant for the selected options, `null` will be returned.
+  #  """
+  #  variantBySelectedOptions(
+  #    selectedOptions: [SelectedOptionInput!]!
+  #  ): ProductVariant
 
   """
   List of the product’s variants.
@@ -6910,10 +6900,10 @@ type Product implements Node & HasMetafields {
     sortKey: ProductVariantSortKeys = POSITION
   ): ProductVariantConnection!
 
-  """
-  The product’s vendor name.
-  """
-  vendor: String!
+  #  """
+  #  The product’s vendor name.
+  #  """
+  #  vendor: String!
 }
 
 """
@@ -7417,108 +7407,110 @@ enum ProductVariantSortKeys {
 The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start.
 """
 type QueryRoot {
-  """
-  List of the shop's articles.
-  """
-  articles(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
+  sayHello: String!
 
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: ArticleSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `author`
-     - `blog_title`
-     - `created_at`
-     - `tag`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): ArticleConnection!
-
-  """
-  Find a blog by its handle.
-  """
-  blogByHandle(
-    """
-    The handle of the blog.
-    """
-    handle: String!
-  ): Blog
-
-  """
-  List of the shop's blogs.
-  """
-  blogs(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: BlogSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `created_at`
-     - `handle`
-     - `title`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): BlogConnection!
+  #  """
+  #  List of the shop's articles.
+  #  """
+  #  articles(
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #
+  #    """
+  #    Sort the underlying list by the given key.
+  #    """
+  #    sortKey: ArticleSortKeys = ID
+  #
+  #    """
+  #    Supported filter parameters:
+  #     - `author`
+  #     - `blog_title`
+  #     - `created_at`
+  #     - `tag`
+  #     - `updated_at`
+  #
+  #    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+  #    """
+  #    query: String
+  #  ): ArticleConnection!
+  #
+  #  """
+  #  Find a blog by its handle.
+  #  """
+  #  blogByHandle(
+  #    """
+  #    The handle of the blog.
+  #    """
+  #    handle: String!
+  #  ): Blog
+  #
+  #  """
+  #  List of the shop's blogs.
+  #  """
+  #  blogs(
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #
+  #    """
+  #    Sort the underlying list by the given key.
+  #    """
+  #    sortKey: BlogSortKeys = ID
+  #
+  #    """
+  #    Supported filter parameters:
+  #     - `created_at`
+  #     - `handle`
+  #     - `title`
+  #     - `updated_at`
+  #
+  #    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+  #    """
+  #    query: String
+  #  ): BlogConnection!
 
   """
   Find a collection by its handle.
@@ -7574,80 +7566,81 @@ type QueryRoot {
     """
     query: String
   ): CollectionConnection!
-  customer(
-    """
-    The customer access token
-    """
-    customerAccessToken: String!
-  ): Customer
-  node(
-    """
-    The ID of the Node to return.
-    """
-    id: ID!
-  ): Node
-  nodes(
-    """
-    The IDs of the Nodes to return.
-    """
-    ids: [ID!]!
-  ): [Node]!
 
-  """
-  Find a page by its handle.
-  """
-  pageByHandle(
-    """
-    The handle of the page.
-    """
-    handle: String!
-  ): Page
+  #  customer(
+  #    """
+  #    The customer access token
+  #    """
+  #    customerAccessToken: String!
+  #  ): Customer
+  #  node(
+  #    """
+  #    The ID of the Node to return.
+  #    """
+  #    id: ID!
+  #  ): Node
+  #  nodes(
+  #    """
+  #    The IDs of the Nodes to return.
+  #    """
+  #    ids: [ID!]!
+  #  ): [Node]!
+  #
+  #  """
+  #  Find a page by its handle.
+  #  """
+  #  pageByHandle(
+  #    """
+  #    The handle of the page.
+  #    """
+  #    handle: String!
+  #  ): Page
 
-  """
-  List of the shop's pages.
-  """
-  pages(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: PageSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `created_at`
-     - `handle`
-     - `title`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): PageConnection!
+  #  """
+  #  List of the shop's pages.
+  #  """
+  #  pages(
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int
+  #
+  #    """
+  #    Returns the elements that come after the specified cursor.
+  #    """
+  #    after: String
+  #
+  #    """
+  #    Returns up to the last `n` elements from the list.
+  #    """
+  #    last: Int
+  #
+  #    """
+  #    Returns the elements that come before the specified cursor.
+  #    """
+  #    before: String
+  #
+  #    """
+  #    Reverse the order of the underlying list.
+  #    """
+  #    reverse: Boolean = false
+  #
+  #    """
+  #    Sort the underlying list by the given key.
+  #    """
+  #    sortKey: PageSortKeys = ID
+  #
+  #    """
+  #    Supported filter parameters:
+  #     - `created_at`
+  #     - `handle`
+  #     - `title`
+  #     - `updated_at`
+  #
+  #    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+  #    """
+  #    query: String
+  #  ): PageConnection!
 
   """
   Find a product by its handle.
@@ -7659,38 +7652,44 @@ type QueryRoot {
     handle: String!
   ): Product
 
-  """
-  Find recommended products related to a given `product_id`.
-  To learn more about how recommendations are generated, see
-  [*Showing product recommendations on product pages*](https://help.shopify.com/themes/development/recommended-products).
-  """
-  productRecommendations(
+  testByHandle(
     """
-    The id of the product.
+    The handle of the product.
     """
-    productId: ID!
-  ): [Product!]
+    handle: String!
+  ): String!
+  #  """
+  #  Find recommended products related to a given `product_id`.
+  #  To learn more about how recommendations are generated, see
+  #  [*Showing product recommendations on product pages*](https://help.shopify.com/themes/development/recommended-products).
+  #  """
+  #  productRecommendations(
+  #    """
+  #    The id of the product.
+  #    """
+  #    productId: ID!
+  #  ): [Product!]
 
-  """
-  Tags added to products.
-  Additional access scope required: unauthenticated_read_product_tags.
-  """
-  productTags(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int!
-  ): StringConnection!
-
-  """
-  List of product types for the shop's products that are published to your app.
-  """
-  productTypes(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int!
-  ): StringConnection!
+  #  """
+  #  Tags added to products.
+  #  Additional access scope required: unauthenticated_read_product_tags.
+  #  """
+  #  productTags(
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int!
+  #  ): StringConnection!
+  #
+  #  """
+  #  List of product types for the shop's products that are published to your app.
+  #  """
+  #  productTypes(
+  #    """
+  #    Returns up to the first `n` elements from the list.
+  #    """
+  #    first: Int!
+  #  ): StringConnection!
 
   """
   List of the shop’s products.
@@ -7742,11 +7741,11 @@ type QueryRoot {
     query: String
   ): ProductConnection!
 
-  """
-  The list of public Storefront API versions, including supported, release candidate and unstable versions.
-  """
-  publicApiVersions: [ApiVersion!]!
-  shop: Shop!
+  #  """
+  #  The list of public Storefront API versions, including supported, release candidate and unstable versions.
+  #  """
+  #  publicApiVersions: [ApiVersion!]!
+  #  shop: Shop!
 }
 
 """
@@ -7855,331 +7854,331 @@ type ShippingRate {
   """
   title: String!
 }
-
-"""
-Shop represents a collection of the general settings and information about the shop.
-"""
-type Shop {
-  """
-  List of the shop' articles.
-  """
-  articles(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: ArticleSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `author`
-     - `blog_title`
-     - `created_at`
-     - `tag`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): ArticleConnection! @deprecated(reason: "Use `QueryRoot.articles` instead.")
-
-  """
-  List of the shop' blogs.
-  """
-  blogs(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: BlogSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `created_at`
-     - `handle`
-     - `title`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): BlogConnection! @deprecated(reason: "Use `QueryRoot.blogs` instead.")
-
-  """
-  Find a collection by its handle.
-  """
-  collectionByHandle(
-    """
-    The handle of the collection.
-    """
-    handle: String!
-  ): Collection
-    @deprecated(reason: "Use `QueryRoot.collectionByHandle` instead.")
-
-  """
-  List of the shop’s collections.
-  """
-  collections(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: CollectionSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `collection_type`
-     - `title`
-     - `updated_at`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): CollectionConnection!
-    @deprecated(reason: "Use `QueryRoot.collections` instead.")
-
-  """
-  The three-letter code for the currency that the shop accepts.
-  """
-  currencyCode: CurrencyCode!
-    @deprecated(reason: "Use `paymentSettings` instead")
-
-  """
-  A description of the shop.
-  """
-  description: String
-
-  """
-  A string representing the way currency is formatted when the currency isn’t specified.
-  """
-  moneyFormat: String!
-
-  """
-  The shop’s name.
-  """
-  name: String!
-
-  """
-  Settings related to payments.
-  """
-  paymentSettings: PaymentSettings!
-
-  """
-  The shop’s primary domain.
-  """
-  primaryDomain: Domain!
-
-  """
-  The shop’s privacy policy.
-  """
-  privacyPolicy: ShopPolicy
-
-  """
-  Find a product by its handle.
-  """
-  productByHandle(
-    """
-    The handle of the product.
-    """
-    handle: String!
-  ): Product @deprecated(reason: "Use `QueryRoot.productByHandle` instead.")
-
-  """
-  Tags added to products.
-  Additional access scope required: unauthenticated_read_product_tags.
-  """
-  productTags(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int!
-  ): StringConnection!
-    @deprecated(reason: "Use `QueryRoot.productTags` instead.")
-
-  """
-  List of the shop’s product types.
-  """
-  productTypes(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int!
-  ): StringConnection!
-    @deprecated(reason: "Use `QueryRoot.productTypes` instead.")
-
-  """
-  List of the shop’s products.
-  """
-  products(
-    """
-    Returns up to the first `n` elements from the list.
-    """
-    first: Int
-
-    """
-    Returns the elements that come after the specified cursor.
-    """
-    after: String
-
-    """
-    Returns up to the last `n` elements from the list.
-    """
-    last: Int
-
-    """
-    Returns the elements that come before the specified cursor.
-    """
-    before: String
-
-    """
-    Reverse the order of the underlying list.
-    """
-    reverse: Boolean = false
-
-    """
-    Sort the underlying list by the given key.
-    """
-    sortKey: ProductSortKeys = ID
-
-    """
-    Supported filter parameters:
-     - `available_for_sale`
-     - `created_at`
-     - `product_type`
-     - `tag`
-     - `title`
-     - `updated_at`
-     - `variants.price`
-     - `vendor`
-
-    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
-    """
-    query: String
-  ): ProductConnection! @deprecated(reason: "Use `QueryRoot.products` instead.")
-
-  """
-  The shop’s refund policy.
-  """
-  refundPolicy: ShopPolicy
-
-  """
-  Countries that the shop ships to.
-  """
-  shipsToCountries: [CountryCode!]!
-
-  """
-  The shop’s Shopify Payments account id.
-  """
-  shopifyPaymentsAccountId: String
-    @deprecated(reason: "Use `paymentSettings` instead")
-
-  """
-  The shop’s terms of service.
-  """
-  termsOfService: ShopPolicy
-}
-
-"""
-Policy that a merchant has configured for their store, such as their refund or privacy policy.
-"""
-type ShopPolicy implements Node {
-  """
-  Policy text, maximum size of 64kb.
-  """
-  body: String!
-
-  """
-  Policy’s handle.
-  """
-  handle: String!
-
-  """
-  Globally unique identifier.
-  """
-  id: ID!
-
-  """
-  Policy’s title.
-  """
-  title: String!
-
-  """
-  Public URL to the policy.
-  """
-  url: URL!
-}
+#
+#"""
+#Shop represents a collection of the general settings and information about the shop.
+#"""
+#type Shop {
+#  """
+#  List of the shop' articles.
+#  """
+#  articles(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#
+#    """
+#    Sort the underlying list by the given key.
+#    """
+#    sortKey: ArticleSortKeys = ID
+#
+#    """
+#    Supported filter parameters:
+#     - `author`
+#     - `blog_title`
+#     - `created_at`
+#     - `tag`
+#     - `updated_at`
+#
+#    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+#    """
+#    query: String
+#  ): ArticleConnection! @deprecated(reason: "Use `QueryRoot.articles` instead.")
+#
+#  """
+#  List of the shop' blogs.
+#  """
+#  blogs(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#
+#    """
+#    Sort the underlying list by the given key.
+#    """
+#    sortKey: BlogSortKeys = ID
+#
+#    """
+#    Supported filter parameters:
+#     - `created_at`
+#     - `handle`
+#     - `title`
+#     - `updated_at`
+#
+#    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+#    """
+#    query: String
+#  ): BlogConnection! @deprecated(reason: "Use `QueryRoot.blogs` instead.")
+#
+#  """
+#  Find a collection by its handle.
+#  """
+#  collectionByHandle(
+#    """
+#    The handle of the collection.
+#    """
+#    handle: String!
+#  ): Collection
+#    @deprecated(reason: "Use `QueryRoot.collectionByHandle` instead.")
+#
+#  """
+#  List of the shop’s collections.
+#  """
+#  collections(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#
+#    """
+#    Sort the underlying list by the given key.
+#    """
+#    sortKey: CollectionSortKeys = ID
+#
+#    """
+#    Supported filter parameters:
+#     - `collection_type`
+#     - `title`
+#     - `updated_at`
+#
+#    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+#    """
+#    query: String
+#  ): CollectionConnection!
+#    @deprecated(reason: "Use `QueryRoot.collections` instead.")
+#
+#  """
+#  The three-letter code for the currency that the shop accepts.
+#  """
+#  currencyCode: CurrencyCode!
+#    @deprecated(reason: "Use `paymentSettings` instead")
+#
+#  """
+#  A description of the shop.
+#  """
+#  description: String
+#
+#  """
+#  A string representing the way currency is formatted when the currency isn’t specified.
+#  """
+#  moneyFormat: String!
+#
+#  """
+#  The shop’s name.
+#  """
+#  name: String!
+#
+#  """
+#  Settings related to payments.
+#  """
+#  paymentSettings: PaymentSettings!
+#
+#  """
+#  The shop’s primary domain.
+#  """
+#  primaryDomain: Domain!
+#
+#  """
+#  The shop’s privacy policy.
+#  """
+#  privacyPolicy: ShopPolicy
+#
+#  """
+#  Find a product by its handle.
+#  """
+#  productByHandle(
+#    """
+#    The handle of the product.
+#    """
+#    handle: String!
+#  ): Product @deprecated(reason: "Use `QueryRoot.productByHandle` instead.")
+#
+#  """
+#  Tags added to products.
+#  Additional access scope required: unauthenticated_read_product_tags.
+#  """
+#  productTags(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int!
+#  ): StringConnection!
+#    @deprecated(reason: "Use `QueryRoot.productTags` instead.")
+#
+#  """
+#  List of the shop’s product types.
+#  """
+#  productTypes(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int!
+#  ): StringConnection!
+#    @deprecated(reason: "Use `QueryRoot.productTypes` instead.")
+#
+#  """
+#  List of the shop’s products.
+#  """
+#  products(
+#    """
+#    Returns up to the first `n` elements from the list.
+#    """
+#    first: Int
+#
+#    """
+#    Returns the elements that come after the specified cursor.
+#    """
+#    after: String
+#
+#    """
+#    Returns up to the last `n` elements from the list.
+#    """
+#    last: Int
+#
+#    """
+#    Returns the elements that come before the specified cursor.
+#    """
+#    before: String
+#
+#    """
+#    Reverse the order of the underlying list.
+#    """
+#    reverse: Boolean = false
+#
+#    """
+#    Sort the underlying list by the given key.
+#    """
+#    sortKey: ProductSortKeys = ID
+#
+#    """
+#    Supported filter parameters:
+#     - `available_for_sale`
+#     - `created_at`
+#     - `product_type`
+#     - `tag`
+#     - `title`
+#     - `updated_at`
+#     - `variants.price`
+#     - `vendor`
+#
+#    See the detailed [search syntax](https://help.shopify.com/api/getting-started/search-syntax).
+#    """
+#    query: String
+#  ): ProductConnection! @deprecated(reason: "Use `QueryRoot.products` instead.")
+#
+#  """
+#  The shop’s refund policy.
+#  """
+#  refundPolicy: ShopPolicy
+#
+#  """
+#  Countries that the shop ships to.
+#  """
+#  shipsToCountries: [CountryCode!]!
+#
+#  """
+#  The shop’s Shopify Payments account id.
+#  """
+#  shopifyPaymentsAccountId: String
+#    @deprecated(reason: "Use `paymentSettings` instead")
+#
+#  """
+#  The shop’s terms of service.
+#  """
+#  termsOfService: ShopPolicy
+#}
+#
+#"""
+#Policy that a merchant has configured for their store, such as their refund or privacy policy.
+#"""
+#type ShopPolicy implements Node {
+#  """
+#  Policy text, maximum size of 64kb.
+#  """
+#  body: String!
+#
+#  """
+#  Policy’s handle.
+#  """
+#  handle: String!
+#
+#  """
+#  Globally unique identifier.
+#  """
+#  id: ID!
+#
+#  """
+#  Policy’s title.
+#  """
+#  title: String!
+#
+#  """
+#  Public URL to the policy.
+#  """
+#  url: URL!
+#}
 
 type StringConnection {
   """

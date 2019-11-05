@@ -22,6 +22,19 @@ export default () => {
         setValue(result.data.sayHello);
       })
       .catch(error => console.log(error));
+
+    client
+      .query({
+        query: gql`
+          {
+            productByHandle(handle: "test")
+          }
+        `
+      })
+      .then(result => {
+        console.log("product", result);
+      })
+      .catch(error => console.log(error));
   }, []);
 
   return <div>Value from backend: {value}</div>;
