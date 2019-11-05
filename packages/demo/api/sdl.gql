@@ -561,28 +561,28 @@ type Checkout implements Node {
   """
   completedAt: DateTime
 
-  #  """
-  #  The date and time when the checkout was created.
-  #  """
-  #  createdAt: DateTime!
+  """
+  The date and time when the checkout was created.
+  """
+  createdAt: DateTime!
 
   """
   The currency code for the Checkout.
   """
   currencyCode: CurrencyCode!
 
-  """
-  A list of extra information that is added to the checkout.
-  """
-  customAttributes: [Attribute!]!
+  #  """
+  #  A list of extra information that is added to the checkout.
+  #  """
+  #  customAttributes: [Attribute!]!
 
-  """
-  The customer associated with the checkout.
-  """
-  customer: Customer
-    @deprecated(
-      reason: "This field will always return null. If you have an authentication token for the customer, you can use the `customer` field on the query root to retrieve it."
-    )
+  #  """
+  #  The customer associated with the checkout.
+  #  """
+  #  customer: Customer
+  #    @deprecated(
+  #      reason: "This field will always return null. If you have an authentication token for the customer, you can use the `customer` field on the query root to retrieve it."
+  #    )
 
   """
   Discounts that have been applied on the checkout.
@@ -657,7 +657,8 @@ type Checkout implements Node {
   """
   The sum of all the prices of all the items in the checkout. Taxes, shipping and discounts excluded.
   """
-  lineItemsSubtotalPrice: MoneyV2!
+  lineItemsSubtotalPrice: Money!
+
   note: String
 
   """
@@ -670,17 +671,17 @@ type Checkout implements Node {
   """
   orderStatusUrl: URL
 
-  """
-  The amount left to be paid. This is equal to the cost of the line items, taxes
-  and shipping minus discounts and gift cards.
-  """
-  paymentDue: Money! @deprecated(reason: "Use `paymentDueV2` instead")
+  #  """
+  #  The amount left to be paid. This is equal to the cost of the line items, taxes
+  #  and shipping minus discounts and gift cards.
+  #  """
+  #  paymentDue: Money! @deprecated(reason: "Use `paymentDueV2` instead")
 
   """
   The amount left to be paid. This is equal to the cost of the line items, taxes
   and shipping minus discounts and gift cards.
   """
-  paymentDueV2: MoneyV2!
+  paymentDue: Money!
 
   """
   Whether or not the Checkout is ready and can be completed. Checkouts may have
@@ -710,15 +711,15 @@ type Checkout implements Node {
   """
   shippingLine: ShippingRate
 
-  """
-  Price of the checkout before shipping and taxes.
-  """
-  subtotalPrice: Money! @deprecated(reason: "Use `subtotalPriceV2` instead")
+  #  """
+  #  Price of the checkout before shipping and taxes.
+  #  """
+  #  subtotalPrice: Money! @deprecated(reason: "Use `subtotalPriceV2` instead")
 
   """
   Price of the checkout before shipping and taxes.
   """
-  subtotalPriceV2: MoneyV2!
+  subtotalPrice: Money!
 
   """
   Specifies if the Checkout is tax exempt.
@@ -730,25 +731,25 @@ type Checkout implements Node {
   """
   taxesIncluded: Boolean!
 
-  """
-  The sum of all the prices of all the items in the checkout, taxes and discounts included.
-  """
-  totalPrice: Money! @deprecated(reason: "Use `totalPriceV2` instead")
+  #  """
+  #  The sum of all the prices of all the items in the checkout, taxes and discounts included.
+  #  """
+  #  totalPrice: Money! @deprecated(reason: "Use `totalPriceV2` instead")
 
   """
   The sum of all the prices of all the items in the checkout, taxes and discounts included.
   """
-  totalPriceV2: MoneyV2!
+  totalPrice: Money!
+
+  #  """
+  #  The sum of all the taxes applied to the line items and shipping lines in the checkout.
+  #  """
+  #  totalTax: Money! @deprecated(reason: "Use `totalTaxV2` instead")
 
   """
   The sum of all the taxes applied to the line items and shipping lines in the checkout.
   """
-  totalTax: Money! @deprecated(reason: "Use `totalTaxV2` instead")
-
-  """
-  The sum of all the taxes applied to the line items and shipping lines in the checkout.
-  """
-  totalTaxV2: MoneyV2!
+  totalTax: Money!
 
   """
   The date and time when the checkout was last updated.
@@ -1503,10 +1504,10 @@ type CheckoutGiftCardsAppendPayload {
 A single line item in the checkout, grouped by variant and attributes.
 """
 type CheckoutLineItem implements Node {
-  """
-  Extra information in the form of an array of Key-Value pairs about the line item.
-  """
-  customAttributes: [Attribute!]!
+  #  """
+  #  Extra information in the form of an array of Key-Value pairs about the line item.
+  #  """
+  #  customAttributes: [Attribute!]!
 
   """
   The discounts that have been allocated onto the checkout line item by discount applications.
@@ -7592,24 +7593,26 @@ type QueryRoot {
     query: String
   ): CollectionConnection!
 
-  #  customer(
-  #    """
-  #    The customer access token
-  #    """
-  #    customerAccessToken: String!
-  #  ): Customer
-  #  node(
-  #    """
-  #    The ID of the Node to return.
-  #    """
-  #    id: ID!
-  #  ): Node
-  #  nodes(
-  #    """
-  #    The IDs of the Nodes to return.
-  #    """
-  #    ids: [ID!]!
-  #  ): [Node]!
+  checkout: Checkout
+
+  #    customer(
+  #      """
+  #      The customer access token
+  #      """
+  #      customerAccessToken: String!
+  #    ): Customer
+  #    node(
+  #      """
+  #      The ID of the Node to return.
+  #      """
+  #      id: ID!
+  #    ): Node
+  #    nodes(
+  #      """
+  #      The IDs of the Nodes to return.
+  #      """
+  #      ids: [ID!]!
+  #    ): [Node]!
   #
   #  """
   #  Find a page by its handle.

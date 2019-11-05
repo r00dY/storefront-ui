@@ -1,4 +1,5 @@
 import collections from "./data/collections";
+import checkoutData from "./data/checkout";
 import stringToHandle from "./utils/stringToHandle";
 import ImgixClient from "imgix-core-js";
 
@@ -98,6 +99,13 @@ const resolvers = {
           }
         }
       };
+    },
+
+    checkout() {
+      const checkout = { ...checkoutData };
+      checkout.lineItems = getPaginationResolver(checkoutData.lineItems);
+
+      return checkout;
     },
 
     collectionByHandle(parent, args, context) {

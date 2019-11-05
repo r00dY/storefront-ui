@@ -1,61 +1,39 @@
 import products from "./products";
-import randomInt from "../utils/randomInt";
-
-const checkoutLineItems = [
-  products[0],
-  products[1],
-  products[2],
-  products[3],
-  products[4]
-].map(product => {
-  // select random option
-  const sizeValues = product.options.find(x => x.name === "size").values;
-  const selectedValue = sizeValues[randomInt(0, sizeValues.length - 1)];
-
-  const productVariant = {
-    product: product,
-    selectedOptions: [
-      {
-        name: "size",
-        value: selectedValue
-      }
-    ],
-    price: {
-      amount: 99,
-      currencyCode: "USD"
-    },
-    priceDiscount: {
-      amount: 79,
-      currencyCode: "USD"
-    }
-  };
-
-  return {
-    productVariant: productVariant,
-    quantity: randomInt(1, 5),
-    price: {
-      amount: 299,
-      currencyCode: "USD"
-    },
-    priceDiscount: {
-      amount: 199,
-      currencyCode: "USD"
-    }
-  };
-});
 
 const checkout = {
-  lineItems: checkoutLineItems,
+  lineItems: [
+    {
+      id: 1,
+      quantity: 1,
+      title: products[0].variants[0].title,
+      variant: products[0].variants[0]
+    },
+    {
+      id: 2,
+      quantity: 1,
+      title: products[1].variants[1].title,
+      variant: products[1].variants[1]
+    },
+    {
+      id: 3,
+      quantity: 2,
+      title: products[2].variants[2].title,
+      variant: products[2].variants[2]
+    }
+  ],
+  appliedGiftCards: [],
+  availableShippingRates: [],
+  completedAt: null,
+  createdAt: Date.now(),
+  currencyCode: "USD",
+
   subtotalPrice: {
-    amount: 12900,
+    amount: "129.00",
     currencyCode: "USD"
   },
-  totalTax: {
-    amount: 3000,
-    currencyCode: "USD"
-  },
+  shippingLine: null,
   totalPrice: {
-    amount: 15900,
+    amount: "129.00",
     currencyCode: "USD"
   }
 };
