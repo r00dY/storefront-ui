@@ -1,6 +1,47 @@
 import collections from "./data/collections";
+import stringToHandle from "./utils/stringToHandle";
+
+// TODO: ImageVariant resolver should be here, not in images.js
+
+// TODO: this is mock so far
+const getPaginationResolver = function(items) {
+  items = items || [];
+
+  return {
+    edges: items.map(item => ({
+      cursor: "imacursor",
+      node: item
+    })),
+    pageInfo: {
+      hasNextPage: false,
+      hasPreviousPage: false
+    }
+  };
+};
 
 const resolvers = {
+  Product: {
+    handle(parent) {
+      return stringToHandle(parent.title);
+    },
+
+    availableForSale() {
+      return true;
+    },
+
+    images(parent) {
+      return getPaginationResolver(parent.images);
+    },
+
+    tags(parent) {
+      return parent.tags || [];
+    },
+
+    createdAt() {
+      return new Date();
+    }
+  },
+
   QueryRoot: {
     productByHandle(parent, args, context) {
       return {
@@ -36,6 +77,10 @@ const resolvers = {
 
     collectionByHandle(parent, args, context) {
       const collection = collections.find(x => x.handle === args.handle);
+      const products = collection.products;
+
+      // TODO: implement pagination!
+      collection.products = getPaginationResolver(products);
 
       return collection;
     }

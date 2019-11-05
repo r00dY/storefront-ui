@@ -1,6 +1,8 @@
 import images from "./images";
 import products from "./products";
 
+import stringToHandle from "../utils/stringToHandle";
+
 const collections = [
   "Bars",
   "Candy",
@@ -12,7 +14,7 @@ const collections = [
   "Popcorn & Puffs"
 ].map((title, index) => ({
   id: index,
-  handle: title.toLowerCase().replace(/ /g, "-"),
+  handle: stringToHandle(title),
   title: title,
   image: images["landscape" + ((index % 4) + 2)],
   products: []
