@@ -1771,7 +1771,7 @@ type Collection implements Node {
     Truncates string after the given length.
     """
     truncateAt: Int
-  ): String!
+  ): String
 
   #  """
   #  The description of the collection, complete with HTML formatting.
@@ -5056,6 +5056,15 @@ A string containing HTML code. Example value: `"<p>Grey cotton knit sweater.</p>
 scalar HTML
 
 """
+Represents image variant.
+"""
+type ImageVariant {
+  name: String
+  src(maxWidth: Int, maxHeight: Int): URL!
+  aspectRatio: Float!
+}
+
+"""
 Represents an image resource.
 """
 type Image {
@@ -5076,46 +5085,48 @@ type Image {
   """
   originalSrc: URL!
 
-  """
-  The location of the image as a URL.
-  """
-  src: URL!
-    @deprecated(
-      reason: "Previously an image had a single `src` field. This could either return the original image\nlocation or a URL that contained transformations such as sizing or scale.\n\nThese transformations were specified by arguments on the parent field.\n\nNow an image has two distinct URL fields: `originalSrc` and `transformedSrc`.\n\n* `originalSrc` - the original unmodified image URL\n* `transformedSrc` - the image URL with the specified transformations included\n\nTo migrate to the new fields, image transformations should be moved from the parent field to `transformedSrc`.\n\nBefore:\n```graphql\n{\n  shop {\n    productImages(maxWidth: 200, scale: 2) {\n      edges {\n        node {\n          src\n        }\n      }\n    }\n  }\n}\n```\n\nAfter:\n```graphql\n{\n  shop {\n    productImages {\n      edges {\n        node {\n          transformedSrc(maxWidth: 200, scale: 2)\n        }\n      }\n    }\n  }\n}\n```\n"
-    )
+  variants: [ImageVariant!]!
 
-  """
-  The location of the transformed image as a URL.
+  #  """
+  #  The location of the image as a URL.
+  #  """
+  #  src: URL!
+  #    @deprecated(
+  #      reason: "Previously an image had a single `src` field. This could either return the original image\nlocation or a URL that contained transformations such as sizing or scale.\n\nThese transformations were specified by arguments on the parent field.\n\nNow an image has two distinct URL fields: `originalSrc` and `transformedSrc`.\n\n* `originalSrc` - the original unmodified image URL\n* `transformedSrc` - the image URL with the specified transformations included\n\nTo migrate to the new fields, image transformations should be moved from the parent field to `transformedSrc`.\n\nBefore:\n```graphql\n{\n  shop {\n    productImages(maxWidth: 200, scale: 2) {\n      edges {\n        node {\n          src\n        }\n      }\n    }\n  }\n}\n```\n\nAfter:\n```graphql\n{\n  shop {\n    productImages {\n      edges {\n        node {\n          transformedSrc(maxWidth: 200, scale: 2)\n        }\n      }\n    }\n  }\n}\n```\n"
+  #    )
 
-  All transformation arguments are considered "best-effort". If they can be applied to an image, they will be.
-  Otherwise any transformations which an image type does not support will be ignored.
-  """
-  transformedSrc(
-    """
-    Image width in pixels between 1 and 5760.
-    """
-    maxWidth: Int
-
-    """
-    Image height in pixels between 1 and 5760.
-    """
-    maxHeight: Int
-
-    """
-    Crops the image according to the specified region.
-    """
-    crop: CropRegion
-
-    """
-    Image size multiplier for high-resolution retina displays. Must be between 1 and 3.
-    """
-    scale: Int = 1
-
-    """
-    Best effort conversion of image into content type (SVG -> PNG, Anything -> JGP, Anything -> WEBP are supported).
-    """
-    preferredContentType: ImageContentType
-  ): URL!
+  #  """
+  #  The location of the transformed image as a URL.
+  #
+  #  All transformation arguments are considered "best-effort". If they can be applied to an image, they will be.
+  #  Otherwise any transformations which an image type does not support will be ignored.
+  #  """
+  #  transformedSrc(
+  #    """
+  #    Image width in pixels between 1 and 5760.
+  #    """
+  #    maxWidth: Int
+  #
+  #    """
+  #    Image height in pixels between 1 and 5760.
+  #    """
+  #    maxHeight: Int
+  #
+  #    """
+  #    Crops the image according to the specified region.
+  #    """
+  #    crop: CropRegion
+  #
+  #    """
+  #    Image size multiplier for high-resolution retina displays. Must be between 1 and 3.
+  #    """
+  #    scale: Int = 1
+  #
+  #    """
+  #    Best effort conversion of image into content type (SVG -> PNG, Anything -> JGP, Anything -> WEBP are supported).
+  #    """
+  #    preferredContentType: ImageContentType
+  #  ): URL!
 }
 
 type ImageConnection {
@@ -7408,8 +7419,6 @@ enum ProductVariantSortKeys {
 The schema’s entry-point for queries. This acts as the public, top-level API from which all queries must start.
 """
 type QueryRoot {
-  sayHello: String!
-
   #  """
   #  List of the shop's articles.
   #  """
@@ -7653,12 +7662,6 @@ type QueryRoot {
     handle: String!
   ): Product
 
-  testByHandle(
-    """
-    The handle of the product.
-    """
-    handle: String!
-  ): String!
   #  """
   #  Find recommended products related to a given `product_id`.
   #  To learn more about how recommendations are generated, see
