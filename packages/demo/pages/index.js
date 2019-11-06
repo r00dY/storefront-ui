@@ -45,12 +45,59 @@ const categories = [
 
 const GQL_HOMEPAGE_SLIDER_PRODUCTS = gql`
   query {
-    collectionByHandle(handle: "homepage_slider") {
-      edges {
-        node {
-          handle
-          title
-          description
+    collectionByHandle(handle: "homepage-slider") {
+      handle
+      title
+      description
+      image {
+        id
+        originalSrc
+        altText
+        variants {
+          name
+          aspectRatio
+          src
+        }
+      }
+      products {
+        edges {
+          node {
+            id
+            title
+            handle
+            availableForSale
+            createdAt
+            tags
+            variants {
+              edges {
+                node {
+                  id
+                  sku
+                  price {
+                    amount
+                    currencyCode
+                  }
+                  title
+                }
+              }
+            }
+            options {
+              name
+              values
+            }
+            images {
+              edges {
+                node {
+                  originalSrc
+                  variants {
+                    name
+                    aspectRatio
+                    src
+                  }
+                }
+              }
+            }
+          }
         }
       }
     }
@@ -60,9 +107,9 @@ const GQL_HOMEPAGE_SLIDER_PRODUCTS = gql`
 const Home = () => {
   const theme = useTheme();
 
-  let { loading, error, data: data2 } = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
+  let sliderCollection = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
 
-  console.log(loading, error, data2);
+  console.log(sliderCollection.loading, sliderCollection.data);
 
   const [mappedProducts, isLoadingCollection] = useProducts([
     { name: "collectionName", value: "frontpage" },

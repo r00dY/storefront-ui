@@ -1,5 +1,5 @@
 import React from "react";
-import initApollo from "./init-apollo";
+import initApollo, { createApolloClient } from "./init-apollo";
 import Head from "next/head";
 import { getMarkupFromTree } from "@apollo/react-ssr";
 
@@ -8,7 +8,7 @@ export default App => {
     static async getInitialProps(ctx) {
       const { Component, router } = ctx;
 
-      const apollo = initApollo();
+      const apollo = createApolloClient();
 
       let appProps = {};
       if (App.getInitialProps) {
@@ -25,7 +25,7 @@ export default App => {
       if (!process.browser) {
         try {
           // Run all GraphQL queries
-          await getMarkupFromTree(
+          let test = await getMarkupFromTree(
             <App
               {...appProps}
               Component={Component}
@@ -40,6 +40,7 @@ export default App => {
           console.error("Error while running `getMarkupFromTree`", error);
         }
 
+        console.log("TEST", apollo.extract());
         // getDataFromTree does not call componentWillUnmount
         // head side effect therefore need to be cleared manually
         Head.rewind();
@@ -47,6 +48,8 @@ export default App => {
 
       // Extract query data from the Apollo store
       const apolloState = apollo.cache.extract();
+
+      console.log("getinitialprops _app apolloState", apolloState);
 
       return {
         ...appProps,
@@ -57,7 +60,10 @@ export default App => {
 
     constructor(props) {
       super(props);
-      this.apolloClient = initApollo(props.apolloState);
+
+      console.log("init state apollo", props.apolloState);
+
+      this.apolloClient = createApolloClient(props.apolloState);
     }
 
     render() {

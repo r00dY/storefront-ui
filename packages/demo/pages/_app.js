@@ -7,9 +7,9 @@ import { theme } from "../theme";
 import Root from "@commerce-ui/core/Root";
 
 import MainTabBar from "../components/MainTabBar";
-import { ApolloProvider } from "react-apollo";
-import { ApolloProvider as ApolloHooksProvider } from "@apollo/react-hooks";
-import withApolloClient from "../lib/with-apollo-client";
+// import { ApolloProvider } from "react-apollo";
+import { ApolloProvider } from "@apollo/react-hooks";
+// import withApolloClient from "../lib/with-apollo-client";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -24,6 +24,10 @@ import createEmptyCheckout from "../actions/createEmptyCheckout";
 import { InjectCheckoutContext } from "../lib/CheckoutContext";
 
 import routerPush from "../helpers/routerPush";
+
+import initApollo, { createApolloClient } from "../lib/init-apollo";
+import { getDataFromTree } from "@apollo/react-ssr";
+import Head from "next/head";
 
 const tabs = [
   {
@@ -74,17 +78,41 @@ const menuData = [
 class MyApp extends App {
   state = {};
 
-  static async getInitialProps({ Component, ctx }, apollo) {
+  static async getInitialProps({ Component, ctx }) {
     let pageProps = {};
 
     if (Component.getInitialProps) {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    // const checkout = await MyApp.createCheckout(apollo, ctx);
+    // Initial state of Apollo
+    const apolloClient = createApolloClient();
+
+    if (!process.browser) {
+      try {
+        // Run all GraphQL queries
+        await getDataFromTree(
+          <ApolloProvider client={apolloClient}>
+            <Root theme={theme}>
+              <Component {...pageProps} />
+            </Root>
+          </ApolloProvider>
+        );
+      } catch (error) {
+        // Prevent Apollo Client GraphQL errors from crashing SSR.
+        // Handle them in components via the data.error prop:
+        // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
+        console.error("Error while running `getMarkupFromTree`", error);
+      }
+
+      // getDataFromTree does not call componentWillUnmount
+      // head side effect therefore need to be cleared manually
+      Head.rewind();
+    }
 
     return {
       pageProps,
+      apolloInitialState: apolloClient.extract(),
       noRoot: ctx.query.noRoot !== undefined /*, checkout */
     };
   }
@@ -109,10 +137,13 @@ class MyApp extends App {
 
   constructor(props) {
     super(props);
+
+    this.apolloClient = createApolloClient(props.apolloInitialState);
   }
 
   render() {
-    const { Component, pageProps, apolloClient } = this.props;
+    const { Component, pageProps } = this.props;
+    const apolloClient = this.apolloClient;
 
     const content = <Component {...pageProps} />;
 
@@ -123,92 +154,88 @@ class MyApp extends App {
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
-      <>
-        {/*<InjectCheckoutContext checkout={this.props.checkout}>*/}
-        <ApolloProvider client={apolloClient}>
-          <ApolloHooksProvider client={apolloClient}>
-            <Root theme={theme}>
-              <GridDebugger />
+      <ApolloProvider client={apolloClient}>
+        {/*<ApolloHooksProvider client={apolloClient}>*/}
+        <Root theme={theme}>
+          <GridDebugger />
 
-              {content}
+          {content}
 
-              {/*<Device mobile>*/}
-              {/*{showTabbar && (*/}
-              {/*<div>*/}
-              {/*<div*/}
-              {/*css={css`*/}
-              {/*margin-bottom: 50px;*/}
-              {/*`}*/}
-              {/*>*/}
-              {/*{content}*/}
-              {/*{showFooterOnMobile && <Footer />}*/}
-              {/*</div>*/}
+          {/*<Device mobile>*/}
+          {/*{showTabbar && (*/}
+          {/*<div>*/}
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*margin-bottom: 50px;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*{content}*/}
+          {/*{showFooterOnMobile && <Footer />}*/}
+          {/*</div>*/}
 
-              {/*<div*/}
-              {/*css={css`*/}
-              {/*position: fixed;*/}
-              {/*bottom: 0;*/}
-              {/*left: 0;*/}
-              {/*width: 100%;*/}
-              {/*`}*/}
-              {/*>*/}
-              {/*<MainTabBar*/}
-              {/*data={tabs}*/}
-              {/*active={Component.tabbar}*/}
-              {/*onChange={index => {*/}
-              {/*if (index === 0) {*/}
-              {/*routerPush("/");*/}
-              {/*} else if (index === 1) {*/}
-              {/*routerPush("/menu");*/}
-              {/*} else if (index === 2) {*/}
-              {/*routerPush("/wishlist");*/}
-              {/*} else if (index === 3) {*/}
-              {/*routerPush("/cart");*/}
-              {/*} else if (index === 4) {*/}
-              {/*routerPush("/profile");*/}
-              {/*}*/}
-              {/*}}*/}
-              {/*scrollable={false}*/}
-              {/*align={"fit"}*/}
-              {/*/>*/}
-              {/*</div>*/}
-              {/*</div>*/}
-              {/*)}*/}
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*position: fixed;*/}
+          {/*bottom: 0;*/}
+          {/*left: 0;*/}
+          {/*width: 100%;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*<MainTabBar*/}
+          {/*data={tabs}*/}
+          {/*active={Component.tabbar}*/}
+          {/*onChange={index => {*/}
+          {/*if (index === 0) {*/}
+          {/*routerPush("/");*/}
+          {/*} else if (index === 1) {*/}
+          {/*routerPush("/menu");*/}
+          {/*} else if (index === 2) {*/}
+          {/*routerPush("/wishlist");*/}
+          {/*} else if (index === 3) {*/}
+          {/*routerPush("/cart");*/}
+          {/*} else if (index === 4) {*/}
+          {/*routerPush("/profile");*/}
+          {/*}*/}
+          {/*}}*/}
+          {/*scrollable={false}*/}
+          {/*align={"fit"}*/}
+          {/*/>*/}
+          {/*</div>*/}
+          {/*</div>*/}
+          {/*)}*/}
 
-              {/*{!showTabbar && (*/}
-              {/*<>*/}
-              {/*{content}*/}
-              {/*{showFooterOnMobile && <Footer />}*/}
-              {/*</>*/}
-              {/*)}*/}
-              {/*</Device>*/}
+          {/*{!showTabbar && (*/}
+          {/*<>*/}
+          {/*{content}*/}
+          {/*{showFooterOnMobile && <Footer />}*/}
+          {/*</>*/}
+          {/*)}*/}
+          {/*</Device>*/}
 
-              {/*<Device desktop>*/}
-              {/*{hideDesktopMenu && content}*/}
+          {/*<Device desktop>*/}
+          {/*{hideDesktopMenu && content}*/}
 
-              {/*{!hideDesktopMenu && (*/}
-              {/*<>*/}
-              {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
+          {/*{!hideDesktopMenu && (*/}
+          {/*<>*/}
+          {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
 
-              {/*<div*/}
-              {/*css={css`*/}
-              {/*padding-top: 70px;*/}
-              {/*`}*/}
-              {/*>*/}
-              {/*{content}*/}
+          {/*<div*/}
+          {/*css={css`*/}
+          {/*padding-top: 70px;*/}
+          {/*`}*/}
+          {/*>*/}
+          {/*{content}*/}
 
-              {/*<Footer />*/}
-              {/*</div>*/}
-              {/*</>*/}
-              {/*)}*/}
-              {/*</Device>*/}
-            </Root>
-          </ApolloHooksProvider>
-        </ApolloProvider>
-        {/*</InjectCheckoutContext>*/}
-      </>
+          {/*<Footer />*/}
+          {/*</div>*/}
+          {/*</>*/}
+          {/*)}*/}
+          {/*</Device>*/}
+        </Root>
+        {/*</ApolloHooksProvider>*/}
+      </ApolloProvider>
     );
   }
 }
 
-export default withApolloClient(MyApp);
+export default MyApp;

@@ -13,7 +13,7 @@ const imgix = new ImgixClient({
 
 // TODO: this is mock so far
 const getPaginationResolver = function(items) {
-  items = items || [];
+  items = [...items] || [];
 
   return {
     edges: items.map(item => ({
@@ -108,8 +108,8 @@ const resolvers = {
       return checkout;
     },
 
-    collectionByHandle(parent, args, context) {
-      const collection = collections.find(x => x.handle === args.handle);
+    collectionByHandle(parent, args) {
+      const collection = { ...collections.find(x => x.handle === args.handle) };
       const products = collection.products;
 
       // TODO: implement pagination!

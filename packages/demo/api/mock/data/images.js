@@ -489,16 +489,20 @@ function transformToImage(image) {
 function traverseImages(input) {
   let keys = Object.keys(input);
 
+  let ret = {};
+
   keys.forEach(key => {
     if (input[key].src) {
       // is image
-      input[key] = transformToImage(input[key]);
+      ret[key] = transformToImage(input[key]);
     } else {
-      traverseImages(input[key]);
+      ret[key] = traverseImages(input[key]);
     }
   });
+
+  return ret;
 }
 
-traverseImages(images);
+const imagesTransformed = traverseImages(images);
 
-export default images;
+export default imagesTransformed;
