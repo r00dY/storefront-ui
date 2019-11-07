@@ -17,7 +17,8 @@ const collections = [
   handle: stringToHandle(title),
   title: title,
   image: images["landscape" + ((index % 4) + 2)],
-  products: []
+  products: [],
+  tags: ["featured-in-homepage"]
 }));
 
 collections.push({
@@ -25,7 +26,8 @@ collections.push({
   handle: "homepage-slider",
   title: "Homepage slider",
   image: null,
-  products: Array.from(Array(12).keys()).map(i => products[i])
+  products: Array.from(Array(12).keys()).map(i => products[i]),
+  tags: []
 });
 
 export default collections;

@@ -1765,6 +1765,11 @@ organize them or make their shops easier to browse.
 """
 type Collection implements Node {
   """
+  A categorization that a product can be tagged with, commonly used for filtering and searching.
+  Additional access scope required for private apps: unauthenticated_read_product_tags.
+  """
+  tags: [String!]! #Custom
+  """
   Stripped description of the collection, single line with HTML tags removed.
   """
   description(

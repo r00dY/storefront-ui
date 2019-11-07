@@ -97,7 +97,7 @@ export function createApolloHook(queryName, queryFunction) {
     return {
       ...useQueryResult,
       data: useQueryResult.data
-        ? flattenEdges(useQueryResult.data[queryName])
+        ? flattenEdges(useQueryResult.data)[queryName]
         : undefined
     };
   };

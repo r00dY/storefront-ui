@@ -22,10 +22,15 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-// import useProducts from "../graphql/hooks/useProducts";
 
-import { useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
+import {
+  useCollectionByHandle,
+  getCollectionByHandle
+} from "../data-sources/mock/collectionByHandle";
+import {
+  useCollections,
+  getCollections
+} from "../data-sources/mock/collections";
 
 // Categories displayed at the bottom
 const categories = [
@@ -43,81 +48,16 @@ const categories = [
   href: "/collection"
 }));
 
-const GQL_HOMEPAGE_SLIDER_PRODUCTS = gql`
-  query {
-    collectionByHandle(handle: "homepage-slider") {
-      handle
-      title
-      description
-      image {
-        id
-        originalSrc
-        altText
-        variants {
-          name
-          aspectRatio
-          src
-        }
-      }
-      products {
-        edges {
-          node {
-            id
-            title
-            handle
-            availableForSale
-            createdAt
-            tags
-            variants {
-              edges {
-                node {
-                  id
-                  sku
-                  price {
-                    amount
-                    currencyCode
-                  }
-                  title
-                }
-              }
-            }
-            options {
-              name
-              values
-            }
-            images {
-              edges {
-                node {
-                  originalSrc
-                  variants {
-                    name
-                    aspectRatio
-                    src
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-`;
-
-const Home = () => {
+const Home = ({
+  homepageSliderCollectionDataWithQuery,
+  collectionsDataWithQuery
+}) => {
   const theme = useTheme();
 
-  console.log("Home: before useQuery...");
-
-  const sliderCollection = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
-  const sliderProducts = sliderCollection.data.collectionByHandle.products.edges.map(
-    x => x.node
+  const { data: homepageSliderCollection } = useCollectionByHandle(
+    homepageSliderCollectionDataWithQuery
   );
-
-  console.log(
-    "Home: after useQuery, sliderCollection.data has content?",
-    !!sliderCollection.data
-  );
+  const { data: collections } = useCollections(collectionsDataWithQuery);
 
   return (
     <div>
@@ -217,6 +157,17 @@ const Home = () => {
       </div>
     </div>
   );
+};
+
+Home.getInitialProps = async ({ req }) => {
+  let homepageSliderCollectionDataWithQuery = await getCollectionByHandle({
+    handle: "homepage-slider",
+    _fields: { products: {} }
+  });
+
+  let collectionsDataWithQuery = await getCollections();
+
+  return { homepageSliderCollectionDataWithQuery, collectionsDataWithQuery };
 };
 
 Home.tabbar = 0;

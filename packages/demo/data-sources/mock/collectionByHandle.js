@@ -2,63 +2,7 @@ import React from "react";
 import gql from "graphql-tag";
 import { createApolloGetter, createApolloHook } from "../helpers";
 
-const gqlProductVariantFields = params => {
-  return `
-      id
-      sku
-      price {
-        amount
-        currencyCode
-      }
-      title
-      selectedOptions {
-        name
-        value
-      }
-    `;
-};
-
-const gqlProductFields = params => {
-  let variantsFieldQuery = "";
-
-  if (params._fields && params._fields.variants) {
-    variantsFieldQuery = `
-            variants {
-              edges {
-                node {
-                    ${gqlProductVariantFields(params._fields.variants)}
-                }
-              }
-            } 
-        `;
-  }
-
-  return `
-        id
-        title
-        handle
-        availableForSale
-        createdAt
-        tags
-        options {
-          name
-          values
-        }
-        images {
-          edges {
-            node {
-              originalSrc
-              variants {
-                name
-                aspectRatio
-                src
-              }
-            }
-          }
-        }
-        ${variantsFieldQuery}
-    `;
-};
+import gqlProductFields from "./_productFields";
 
 const gqlCollectionByHandle = params => {
   let productsFieldQuery = "";

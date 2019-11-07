@@ -108,6 +108,17 @@ const resolvers = {
       return checkout;
     },
 
+    collections(parent, args) {
+      return getPaginationResolver(
+        collections.map(c => {
+          const collection = { ...c };
+          const products = c.products;
+          collection.products = getPaginationResolver(products);
+          return collection;
+        })
+      );
+    },
+
     collectionByHandle(parent, args) {
       const collection = { ...collections.find(x => x.handle === args.handle) };
       const products = collection.products;
