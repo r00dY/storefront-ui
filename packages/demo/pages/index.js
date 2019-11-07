@@ -22,7 +22,7 @@ import routerPush from "../helpers/routerPush";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import useProducts from "../graphql/hooks/useProducts";
+// import useProducts from "../graphql/hooks/useProducts";
 
 import { useQuery } from "@apollo/react-hooks";
 import gql from "graphql-tag";
@@ -107,14 +107,17 @@ const GQL_HOMEPAGE_SLIDER_PRODUCTS = gql`
 const Home = () => {
   const theme = useTheme();
 
-  let sliderCollection = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
+  console.log("Home: before useQuery...");
 
-  console.log(sliderCollection.loading, sliderCollection.data);
+  const sliderCollection = useQuery(GQL_HOMEPAGE_SLIDER_PRODUCTS);
+  const sliderProducts = sliderCollection.data.collectionByHandle.products.edges.map(
+    x => x.node
+  );
 
-  const [mappedProducts, isLoadingCollection] = useProducts([
-    { name: "collectionName", value: "frontpage" },
-    { name: "productsAmount", value: 50 }
-  ]);
+  console.log(
+    "Home: after useQuery, sliderCollection.data has content?",
+    !!sliderCollection.data
+  );
 
   return (
     <div>
@@ -172,10 +175,10 @@ const Home = () => {
           />
         </Container>
 
-        <ProductSlider
-          products={data.products.slice(0, 12)}
-          title={"Top Picks"}
-        />
+        {/*<ProductSlider*/}
+        {/*products={sliderProducts}*/}
+        {/*title={"Top Picks"}*/}
+        {/*/>*/}
 
         <TwoBanners
           title={"Trending Now"}

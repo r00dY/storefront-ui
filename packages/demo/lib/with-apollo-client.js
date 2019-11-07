@@ -25,7 +25,7 @@ export default App => {
       if (!process.browser) {
         try {
           // Run all GraphQL queries
-          let test = await getMarkupFromTree(
+          await getMarkupFromTree(
             <App
               {...appProps}
               Component={Component}

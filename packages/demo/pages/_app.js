@@ -85,60 +85,16 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
-    // Initial state of Apollo
-    const apolloClient = createApolloClient();
-
-    if (!process.browser) {
-      try {
-        // Run all GraphQL queries
-        await getDataFromTree(
-          <ApolloProvider client={apolloClient}>
-            <Root theme={theme}>
-              <Component {...pageProps} />
-            </Root>
-          </ApolloProvider>
-        );
-      } catch (error) {
-        // Prevent Apollo Client GraphQL errors from crashing SSR.
-        // Handle them in components via the data.error prop:
-        // https://www.apollographql.com/docs/react/api/react-apollo.html#graphql-query-data-error
-        console.error("Error while running `getMarkupFromTree`", error);
-      }
-
-      // getDataFromTree does not call componentWillUnmount
-      // head side effect therefore need to be cleared manually
-      Head.rewind();
-    }
-
     return {
       pageProps,
-      apolloInitialState: apolloClient.extract(),
       noRoot: ctx.query.noRoot !== undefined /*, checkout */
     };
   }
 
-  // static async createCheckout(client, ctx) {
-  //   if (client.cache.data.data.Checkout) {
-  //     return client.cache.data.data.Checkout;
-  //   }
-  //
-  //   if (!client.cache.data.data.Checkout && parseCookies(ctx).checkoutId) {
-  //     const { data } = await fetchCheckout(
-  //       client,
-  //       parseCookies(ctx).checkoutId
-  //     );
-  //     return data.node;
-  //   }
-  //
-  //   const { data } = await createEmptyCheckout(client);
-  //   setCookie(ctx, "checkoutId", data.checkoutCreate.checkout.id);
-  //   return data.checkoutCreate.checkout;
-  // }
-
   constructor(props) {
     super(props);
 
-    this.apolloClient = createApolloClient(props.apolloInitialState);
+    this.apolloClient = createApolloClient(/* props.apolloInitialState */);
   }
 
   render() {

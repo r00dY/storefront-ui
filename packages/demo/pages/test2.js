@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 import {
   getCollectionByHandle,
   useCollectionByHandle
 } from "../data-sources/mock/collectionByHandle";
-import Link from "next/link";
 
 const TestPage = ({ collectionQueryWithData }) => {
   const { data, loading, error } = useCollectionByHandle(
@@ -15,33 +15,29 @@ const TestPage = ({ collectionQueryWithData }) => {
 
   return (
     <div>
+      <h1>Test 2</h1>
+      <p>
+        <code>skipInBrowser=false</code>
+      </p>
       <div>
-        <h1>Test</h1>
-        <p>
-          <code>skipInBrowser=true</code>
-        </p>
-
         {loading ? (
           "Loading..."
         ) : (
           <span>Test page collection title: {data.title}</span>
         )}
       </div>
-      <Link href={"/test2"}>
-        <a>Link to /test2</a>
+      <Link href={"/test"}>
+        <a>Link to /test</a>
       </Link>{" "}
-      (<code>skipInBrowser=false</code>)
+      (<code>skipInBrowser=true</code>)
     </div>
   );
 };
 
 TestPage.getInitialProps = async ({ req }) => {
   let collectionQueryWithData = await getCollectionByHandle(
-    {
-      handle: "homepage-slider",
-      _fields: { products: { _fields: { variants: {} } } }
-    },
-    { skipInBrowser: true }
+    { handle: "bars", _fields: { products: { _fields: { variants: {} } } } },
+    { skipInBrowser: false }
   );
   return { collectionQueryWithData };
 };
