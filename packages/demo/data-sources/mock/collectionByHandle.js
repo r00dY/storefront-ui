@@ -1,8 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React from "react";
 import gql from "graphql-tag";
-import { createApolloClient } from "../../lib/init-apollo";
-import { createGetter, flattenEdges } from "../helpers";
-import { useQuery, useApolloClient } from "@apollo/react-hooks";
+import { createApolloGetter, createApolloHook } from "../helpers";
 
 const gqlProductVariantFields = params => {
   return `
@@ -62,7 +60,7 @@ const gqlProductFields = params => {
     `;
 };
 
-const gqlQuery = params => {
+const gqlCollectionByHandle = params => {
   let productsFieldQuery = "";
 
   if (params._fields && params._fields.products) {
@@ -100,47 +98,11 @@ const gqlQuery = params => {
     `;
 };
 
-export async function fetchCollectionByHandle(params = {}) {
-  const client = createApolloClient();
-
-  try {
-    const result = await client.query({
-      query: gqlQuery(params)
-    });
-
-    return result.data;
-  } catch (e) {
-    console.error("[fetchCollectionByHandle]", e);
-  }
-}
-
-export const getCollectionByHandle = createGetter(
-  fetchCollectionByHandle,
-  "collectionByHandle"
+export const getCollectionByHandle = createApolloGetter(
+  "collectionByHandle",
+  gqlCollectionByHandle
 );
-
-export function useCollectionByHandle(arg = {}, options = {}) {
-  const isFirstRenderRef = useRef(true);
-  const client = useApolloClient();
-
-  // If this is the first call, just write content fetched during SSR to cache and return result.
-  if (isFirstRenderRef.current) {
-    isFirstRenderRef.current = false;
-
-    if (!!arg._queryWithResult && !arg.isEmpty) {
-      client.writeQuery({ query: gqlQuery(arg.params), data: arg.data });
-    }
-  }
-
-  const useQueryResult = useQuery(
-    gqlQuery(arg._queryWithResult ? arg.params : arg),
-    options
-  );
-
-  return {
-    ...useQueryResult,
-    data: useQueryResult.data
-      ? flattenEdges(useQueryResult.data.collectionByHandle)
-      : undefined
-  };
-}
+export const useCollectionByHandle = createApolloHook(
+  "collectionByHandle",
+  gqlCollectionByHandle
+);
