@@ -27,18 +27,21 @@ const getPaginationResolver = function(items) {
   };
 };
 
+const RESOLUTIONS = [210, 420, 768, 1024, 1366, 1600, 1920];
+
 const resolvers = {
   ImageVariant: {
-    src(parent, args) {
+    srcset(parent, args) {
       // TODO: maxHeight not taken into account
-      let maxWidth = args.maxWidth || 420; // default max width is mobile
-
-      return imgix.buildURL(parent.image.originalSrc, {
-        w: maxWidth,
-        h: maxWidth / parent.aspectRatio,
-        auto: "compress,format",
-        fit: "crop"
-      });
+      return RESOLUTIONS.map(width => ({
+        src: imgix.buildURL(parent.image.originalSrc, {
+          w: width,
+          h: width / parent.aspectRatio,
+          auto: "compress,format",
+          fit: "crop"
+        }),
+        width: width
+      }));
     }
   },
 

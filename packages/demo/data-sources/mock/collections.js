@@ -3,6 +3,7 @@ import gql from "graphql-tag";
 import { createApolloGetter, createApolloHook } from "../helpers";
 
 import gqlProductFields from "./_productFields";
+import gqlImageFields from "./_imageFields";
 
 const gqlCollections = params => {
   let productsFieldQuery = "";
@@ -30,14 +31,7 @@ const gqlCollections = params => {
               description
               tags
               image {
-                id
-                originalSrc
-                altText
-                variants {
-                  name
-                  aspectRatio
-                  src
-                }
+                ${gqlImageFields()}
               }
               ${productsFieldQuery}
             }

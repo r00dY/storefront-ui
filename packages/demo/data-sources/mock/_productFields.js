@@ -1,4 +1,5 @@
 import gqlProductVariantFields from "./_productVariantFields";
+import gqlImageFields from "./_imageFields";
 
 const gqlProductFields = params => {
   let variantsFieldQuery = "";
@@ -29,12 +30,7 @@ const gqlProductFields = params => {
         images {
           edges {
             node {
-              originalSrc
-              variants {
-                name
-                aspectRatio
-                src
-              }
+              ${gqlImageFields()}
             }
           }
         }

@@ -5064,10 +5064,17 @@ scalar HTML
 """
 Represents image variant.
 """
+type ImageVariantSrc {
+  width: Int!
+  src: URL!
+}
+
+"""
+Represents image variant.
+"""
 type ImageVariant {
   name: String
-  image: Image!
-  src(maxWidth: Int, maxHeight: Int): URL!
+  srcset: [ImageVariantSrc!]!
   aspectRatio: Float!
 }
 
