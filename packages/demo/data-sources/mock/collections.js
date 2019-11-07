@@ -28,6 +28,7 @@ const gqlCollections = params => {
               handle
               title
               description
+              tags
               image {
                 id
                 originalSrc
