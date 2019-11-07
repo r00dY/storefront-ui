@@ -7,8 +7,8 @@ import { Image } from "../Image";
 import { css, jsx } from "@emotion/core";
 import routerPush from "../../helpers/routerPush";
 
-const CategoryCard = props => {
-  const { image, text, href } = props;
+const CollectionCard = props => {
+  const { collection } = props;
   const theme = useTheme();
 
   return (
@@ -19,9 +19,9 @@ const CategoryCard = props => {
         border-radius: 12px;
         overflow: hidden;
       `}
-      onClick={() => routerPush(href)}
+      onClick={() => routerPush("/collection")}
     >
-      <Image image={image} />
+      <Image image={collection.image} />
       <div
         css={css`
           position: absolute;
@@ -36,14 +36,12 @@ const CategoryCard = props => {
           align-items: center;
         `}
       >
-        <strong>{text}</strong>
+        <strong>{collection.title}</strong>
       </div>
     </div>
   );
 };
 
-CategoryCard.defaultProps = {
-  href: "#"
-};
+CollectionCard.defaultProps = {};
 
-export default CategoryCard;
+export default CollectionCard;

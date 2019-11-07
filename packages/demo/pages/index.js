@@ -15,7 +15,7 @@ import Banner from "../components/Banner";
 import TwoBanners from "../components/TwoBanners";
 import ProductSlider from "../components/ProductSlider/ProductSlider";
 import SectionTitle from "../components/SectionTitle";
-import CategoryCard from "../components/CategoryCard";
+import CollectionCard from "../components/CollectionCard";
 
 import data from "../data";
 import routerPush from "../helpers/routerPush";
@@ -58,6 +58,10 @@ const Home = ({
     homepageSliderCollectionDataWithQuery
   );
   const { data: collections } = useCollections(collectionsDataWithQuery);
+
+  const featuredCollections = collections.filter(c =>
+    c.tags.includes("featured-in-homepage")
+  );
 
   return (
     <div>
@@ -142,13 +146,9 @@ const Home = ({
           <Container>
             <SectionTitle>Top Categories</SectionTitle>
             <Grid gutterVertical={L.gutter}>
-              {categories.map((category, index) => (
+              {featuredCollections.map((collection, index) => (
                 <GridItem key={index} params={{ xs: 24, sm: 12, lg: 6 }}>
-                  <CategoryCard
-                    image={category.image}
-                    text={category.title}
-                    href={category.href}
-                  />
+                  <CollectionCard collection={collection} />
                 </GridItem>
               ))}
             </Grid>

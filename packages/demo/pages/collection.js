@@ -17,7 +17,7 @@ import NavBarMobile from "../components/NavBarMobile";
 import { useTheme } from "@commerce-ui/core/Theme";
 import { StatefulPagination } from "../components/Pagination";
 import { StatefulSelect } from "../components/Select";
-import CategoryCardCompact from "../components/CategoryCardCompact";
+import CategoryCardCompact from "../components/CollectionCardCompact";
 import { ProgressStepsAsBreadcrumbs } from "../components/ProgressSteps";
 
 import data from "../data";
