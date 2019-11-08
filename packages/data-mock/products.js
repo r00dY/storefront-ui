@@ -305,8 +305,7 @@ products.forEach((product, pIndex) => {
       availableForSale: true,
       compareAtPrice: compareAtPrice,
       price: price,
-      image: null,
-      product: product,
+      image: product.images[0],
       selectedOptions: [
         {
           name: "size",
@@ -314,7 +313,8 @@ products.forEach((product, pIndex) => {
         }
       ],
       sku: `sku${id}`,
-      title: product.title
+      title: product.title,
+      product: product
     };
 
     product.variants.push(variant);

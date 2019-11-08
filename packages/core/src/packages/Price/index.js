@@ -5,6 +5,13 @@ import { Root } from "./styled-components";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
+const SYMBOL_MAP = {
+  PLN: "zł",
+  EUR: "€",
+  USD: "$",
+  GBP: "£"
+};
+
 const Price = props => {
   const { productVariant, alignRight } = props;
 
@@ -17,8 +24,8 @@ const Price = props => {
             ${!alignRight && "margin-right: 0.25em;"}
           `}
         >
-          {productVariant.compareAtPrice.amount}{" "}
-          {productVariant.compareAtPrice.currencyCode}
+          {SYMBOL_MAP[productVariant.compareAtPrice.currencyCode]}
+          {productVariant.compareAtPrice.amount}
         </div>
       )}
       <div
@@ -28,7 +35,8 @@ const Price = props => {
           ${alignRight && "order: -1;"}
         `}
       >
-        {productVariant.price.amount} {productVariant.price.currencyCode}
+        {SYMBOL_MAP[productVariant.price.currencyCode]}
+        {productVariant.price.amount}
       </div>
     </Root>
   );

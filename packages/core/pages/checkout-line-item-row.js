@@ -23,7 +23,6 @@ ${(
   />
 )}
 
-
 \`CheckoutLineItemRow\` comes in two modes: \`"full"\` and \`"compact"\`.
 
 In \`"full"\` mode it unwraps on given \`breakpoint\`. This mode suits to basket page, and product summary, where products are displayed widely.
@@ -42,7 +41,8 @@ ${(
     }
   />
 )}
-\`"compact"\` mode suits best as responsive basket page or mini-basket on desktop:
+
+\\\`"compact"\\\` mode suits best as responsive basket page or mini-basket on desktop:
 ${(
   <Example
     code={

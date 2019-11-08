@@ -7,6 +7,8 @@ import { ButtonRaw$ } from "../ButtonRaw";
 import { Button$ } from "../Button";
 import Link from "next/link";
 
+import DefaultPrice from "../Price";
+
 import {
   RootStyled,
   ImageContainerStyled,
@@ -20,7 +22,7 @@ import {
 import { css, jsx } from "@emotion/core";
 
 const CheckoutLineItemRow$ = props => {
-  const {
+  let {
     gutter,
     layout,
     breakpoint,
@@ -39,9 +41,11 @@ const CheckoutLineItemRow$ = props => {
     }
   } = props;
 
+  Price = Price || DefaultPrice;
+
   const checkoutLineItem = props.dataMapper(props.checkoutLineItem);
 
-  const { productVariant, price, priceDiscount, quantity } = checkoutLineItem;
+  const { variant, quantity } = checkoutLineItem;
 
   const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
   const [ImageContainer, imageContainerProps] = getOverrides(
@@ -165,25 +169,23 @@ const CheckoutLineItemRow$ = props => {
 
   const titleElem = (
     <Title {...titleProps} layout={layout}>
-      <Link href={productVariant.product.href}>
-        <a>{productVariant.product.title}</a>
+      <Link href={"/product"}>
+        <a>{variant.title}</a>
       </Link>
     </Title>
   );
   const descriptionElem = (
     <Description {...descriptionProps}>
-      {productVariant.product.description}
+      {variant.product.description}
     </Description>
   );
   const variantElem = (
-    <Variant
-      {...variantProps}
-      variant={productVariant.selectedOptions[0].value}
-    >
-      Size: {productVariant.selectedOptions[0].value}
+    <Variant {...variantProps} variant={variant.selectedOptions[0].value}>
+      Size: {variant.selectedOptions[0].value}
     </Variant>
   );
-  const priceElem = <Price price={price} priceDiscount={priceDiscount} />;
+
+  const priceElem = <Price productVariant={variant} />;
   const removeElem = <Remove {...removeProps} mode={mode} />;
 
   const quantityElem = (
@@ -194,6 +196,7 @@ const CheckoutLineItemRow$ = props => {
       {mode === "wishlist" && <Button$>Add to basket</Button$>}
     </Quantity>
   );
+
   const contentElem = (
     <Content
       {...contentProps}
@@ -210,11 +213,11 @@ const CheckoutLineItemRow$ = props => {
   );
 
   const imageElem = (
-    <Link href={productVariant.product.href}>
+    <Link href={"/product"}>
       <a tabIndex={"-1"}>
         <ImageContainer {...imageContainerProps} layout={layout}>
           <Image
-            image={productVariant.product.images[0]}
+            image={variant.image}
             css={css`
               width: 100%;
             `}

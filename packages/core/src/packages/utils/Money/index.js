@@ -7,7 +7,9 @@ const SYMBOL_MAP = {
 
 const Money = {
   getCurrencySymbol: money => {
-    return SYMBOL_MAP[money.currencyCode];
+    return SYMBOL_MAP[money.currencyCode]
+      ? SYMBOL_MAP[money.currencyCode]
+      : money.currencyCode;
   },
   getAmountString: money => {
     return (money.amount / 100).toFixed(2);
