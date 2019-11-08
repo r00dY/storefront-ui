@@ -19,7 +19,7 @@ const boxImages = (() => {
 
     photos.push({
       alt: name,
-      url: `boxes/${name}.jpg`,
+      path: `boxes/${name}.jpg`,
       w: 3613,
       h: 1400
     });
@@ -28,7 +28,7 @@ const boxImages = (() => {
 
     photos.push({
       alt: name,
-      url: `boxes/${name}.jpg`,
+      path: `boxes/${name}.jpg`,
       w: 1792,
       h: 1400
     });
@@ -37,7 +37,7 @@ const boxImages = (() => {
 
     photos.push({
       alt: name,
-      url: `boxes/${name}.jpg`,
+      path: `boxes/${name}.jpg`,
       w: 748,
       h: 1000
     });
@@ -79,7 +79,7 @@ const images = [
   },
   ...["baby", "bath", "body", "face", "hair", "oral"].map(name => ({
     alt: name,
-    url: `categories/${name}.jpg`,
+    path: `categories/${name}.jpg`,
     w: 2667,
     h: 1000
   })),

@@ -41,6 +41,8 @@ export function flattenEdges(data) {
   Object.entries(data).forEach(([key, value]) => {
     if (value instanceof Object && value.edges) {
       ret[key] = value.edges.map(x => flattenEdges(x.node));
+    } else if (value instanceof Object && !Array.isArray(value)) {
+      ret[key] = flattenEdges(value);
     } else {
       ret[key] = value;
     }

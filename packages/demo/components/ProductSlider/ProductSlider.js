@@ -15,7 +15,7 @@ import IconArrowLeft from "../../svg/keyboard_arrow_left.svg";
 import IconArrowRight from "../../svg/keyboard_arrow_right.svg";
 import { ButtonRaw } from "../ButtonRaw";
 import SectionTitle from "../SectionTitle";
-import { ProductCardTheme1 } from "../ProductCard";
+import { ProductCardTheme1, ProductCard } from "../ProductCard";
 
 function ProductSlider(props) {
   const theme = useTheme();

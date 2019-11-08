@@ -51,17 +51,11 @@ const FavouriteButton = ({ product }) => {
 };
 
 const overrides = props => ({
-  Image: Image,
-  Price: ({ product }) => (
-    <Price price={product.price} priceDiscount={product.priceDiscount} />
-  )
+  Image: Image
 });
 
 const overrides2 = props => ({
   Image: Image,
-  Price: ({ product }) => (
-    <Price price={product.price} priceDiscount={product.priceDiscount} />
-  ),
 
   Description: {
     style: ({ $theme }) => `
@@ -110,7 +104,7 @@ const overrides2 = props => ({
           justify-content: flex-end;
         `}
       >
-        <FavouriteButton product={props.product} />
+        {/*<FavouriteButton product={props.product} />*/}
       </div>
       <div
         css={css`
@@ -139,7 +133,7 @@ const overrides2 = props => ({
 });
 
 const ProductCard = props => (
-  <ProductCard$ {...props} overrides={overrides(props)} />
+  <ProductCard$ {...props} overrides={{ Image: Image }} />
 );
 const ProductCardTheme1 = props => {
   return <ProductCard$ {...props} overrides={overrides2(props)} />;

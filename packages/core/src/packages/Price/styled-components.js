@@ -1,4 +1,4 @@
-import { styled } from "@commerce-ui/core/base/styles";
+import { styled } from "../base/styles";
 
 export const rootStyles = ({ $theme, alignRight }) => `
     display: flex; flex-wrap: no-wrap; white-space: nowrap; justify-content: flex-start; align-items: center;

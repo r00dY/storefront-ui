@@ -20,6 +20,8 @@ import CollectionCard from "../components/CollectionCard";
 import data from "../data";
 import routerPush from "../helpers/routerPush";
 
+import images from "@commerce-ui/data-mock/images";
+
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
@@ -111,31 +113,31 @@ const Home = ({
       >
         <Container>
           <Banner
-            image={data.images.boxes.full_box_01}
-            imageMobile={data.images.boxes.mobile_box_01}
+            image={images["boxes/full_box_01.jpg"]}
+            imageMobile={images["boxes/mobile_box_01.jpg"]}
             href={"/collection"}
             label={"Truly Transparent"}
             title={"Transparent Bottle"}
           />
         </Container>
 
-        {/*<ProductSlider*/}
-        {/*products={sliderProducts}*/}
-        {/*title={"Top Picks"}*/}
-        {/*/>*/}
+        <ProductSlider
+          products={homepageSliderCollection.products}
+          title={"Top Picks"}
+        />
 
         <TwoBanners
           title={"Trending Now"}
           banners={[
             <Banner
-              image={data.images.boxes.half_box_10}
-              imageMobile={data.images.boxes.mobile_box_10}
+              image={images["boxes/half_box_10.jpg"]}
+              imageMobile={images["boxes/mobile_box_10.jpg"]}
               label={"The Tonal Trend"}
               href={"/collection"}
             />,
             <Banner
-              image={data.images.boxes.half_box_04}
-              imageMobile={data.images.boxes.mobile_box_04}
+              image={images["boxes/half_box_04.jpg"]}
+              imageMobile={images["boxes/mobile_box_04.jpg"]}
               label={"Summer Must-Haves: Air Max Dia"}
               href={"/collection"}
             />
@@ -162,7 +164,7 @@ const Home = ({
 Home.getInitialProps = async ({ req }) => {
   let homepageSliderCollectionDataWithQuery = await getCollectionByHandle({
     handle: "homepage-slider",
-    _fields: { products: {} }
+    _fields: { products: { _fields: { variants: {} } } }
   });
 
   let collectionsDataWithQuery = await getCollections();

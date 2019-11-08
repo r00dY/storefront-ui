@@ -15,7 +15,7 @@ const collections = [
   id: index,
   handle: stringToHandle(title),
   title: title,
-  image: images["landscape" + ((index % 4) + 2)],
+  image: images[`landscape${(index % 4) + 2}.jpg`],
   products: [],
   tags: ["featured-in-homepage"]
 }));
