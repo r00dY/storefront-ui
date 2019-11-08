@@ -1,17 +1,15 @@
 import React, { useState } from "react";
 
-import { Image } from "../../../../../../demo/components/Image";
+import { Image$ } from "@commerce-ui/core/Image";
+import images from "@commerce-ui/data-mock/images";
+
 import Color from "@commerce-ui/core/Color";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catLandscape } from "../../../../data/images";
-
 export default () => {
   const [loaded, setLoaded] = useState(false);
-
-  console.log(loaded);
 
   return (
     <div>
@@ -19,11 +17,11 @@ export default () => {
         Hit the button to load image:{" "}
         <button onClick={() => setLoaded(true)}>Load</button>
       </p>
-      <Image
+      <Image$
         css={css`
           max-width: 800px;
         `}
-        image={catLandscape}
+        image={images["landscape1.jpg"]}
         autoload={false}
         backgroundColor={new Color("lightgrey")}
         load={loaded}

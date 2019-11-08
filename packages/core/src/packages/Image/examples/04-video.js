@@ -1,17 +1,28 @@
 import React from "react";
-import { Image } from "../../../../../../demo/components/Image";
+import { Image$ } from "@commerce-ui/core/Image";
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { hulaHop } from "../../../../data/videos";
+const hulaHop = {
+  type: "video",
+  src: [
+    {
+      url: "/static/videos/hugo_cos.mp4",
+      w: 1280,
+      h: 720,
+      type: "video/mp4"
+    }
+  ],
+  alt: "Hula hop ALEŻ KRĘCI"
+};
 
 export default () => (
   <div>
     <p>natural mode (default)</p>
 
-    <Image
+    <Image$
       css={css`
         max-width: 800px;
       `}
@@ -19,7 +30,7 @@ export default () => (
     />
 
     <p>cover mode</p>
-    <Image
+    <Image$
       css={css`
         max-width: 800px;
         height: 800px; // remember to set height in CSS, will be 0 otherwise!
@@ -29,7 +40,7 @@ export default () => (
     />
 
     <p>contain mode</p>
-    <Image
+    <Image$
       css={css`
         max-width: 800px;
         height: 800px; // remember to set height in CSS, will be 0 otherwise!
@@ -40,7 +51,7 @@ export default () => (
     />
 
     <p>contain mode with backgroundPosition (same as in CSS)</p>
-    <Image
+    <Image$
       css={css`
         max-width: 800px;
         height: 800px; // remember to set height in CSS, will be 0 otherwise!

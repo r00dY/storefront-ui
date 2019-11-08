@@ -33,15 +33,26 @@ function Image$(props) {
     ...props,
     load: loaded,
     backgroundColor: props.backgroundColor.css,
-    [isImage ? "images" : "videos"]: image.src,
-    alt: image.alt,
+    alt: image.altText,
     loadWhenInViewport: props.loadWhenInViewport
   };
+
+  if (isImage) {
+    const variant = image.variants.find(v => v.name === props.variant);
+    newProps.images = variant.srcset.map(x => ({
+      url: x.src,
+      w: x.width,
+      h: x.width / variant.aspectRatio
+    }));
+  } else {
+    newProps.videos = image.src;
+  }
 
   return <LazyAsset {...newProps} />;
 }
 
 Image$.defaultProps = {
+  variant: "natural",
   mode: "natural",
   loadWhenInViewport: false,
   load: true,

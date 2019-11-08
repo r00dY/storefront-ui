@@ -206,7 +206,6 @@ ImageZoomable.defaultProps = {
 
 ImageZoomable.propTypes = {
   ...Image.propTypes,
-  overrides: {},
   zoom: PropTypes.number.isRequired
 };
 
