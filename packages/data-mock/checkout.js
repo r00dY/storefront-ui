@@ -1,4 +1,4 @@
-import products from "./products";
+const products = require("./products");
 
 const checkout = {
   lineItems: [
@@ -38,4 +38,4 @@ const checkout = {
   }
 };
 
-export default checkout;
+module.exports = checkout;

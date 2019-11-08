@@ -1,7 +1,6 @@
-import images from "./images";
-import products from "./products";
-
-import stringToHandle from "../utils/stringToHandle";
+const images = require("./images");
+const products = require("./products");
+const stringToHandle = require("./utils/stringToHandle");
 
 const collections = [
   "Bars",
@@ -30,4 +29,4 @@ collections.push({
   tags: []
 });
 
-export default collections;
+module.exports = collections;

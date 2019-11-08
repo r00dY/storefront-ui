@@ -1,0 +1,9 @@
+{
+  "name": "@commerce-ui/data-mock",
+  "description": "Mock data for Commerce UI purposes",
+  "scripts": {},
+  "dependencies": {
+    "imgix-core-js": "^2.2.0"
+  },
+  "version": "0.6.7"
+}
