@@ -263,7 +263,7 @@ const products = [
  * TODO: make it better pls
  */
 
-products.forEach(product => {
+products.forEach((product, pIndex) => {
   product.handle = stringToHandle(`${product.title}${product.id}`);
   product.availableForSale = true;
   product.createdAt = new Date();
@@ -292,7 +292,7 @@ products.forEach(product => {
     let compareAtPrice = undefined;
 
     // For every 4th we have discount!
-    if (i % 4 === 0) {
+    if (pIndex % 4 === 0) {
       compareAtPrice = {
         ...price
       };

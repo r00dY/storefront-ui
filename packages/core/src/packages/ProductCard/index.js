@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
 import React from "react";
+import DefaultPrice from "../Price";
 
 import {
   RootStyled,
@@ -18,8 +19,8 @@ import { rs } from "responsive-helpers";
 import { getOverrides } from "../base/helpers/overrides";
 import Link from "next/link";
 
-const ProductCard$ = props => {
-  const {
+function ProductCard$(props) {
+  let {
     dataMapper,
     onSaveToFavourites,
     overrides: {
@@ -34,6 +35,8 @@ const ProductCard$ = props => {
       Price: Price
     }
   } = props;
+
+  Price = Price || DefaultPrice;
 
   const product = dataMapper(props.product); // map product
 
@@ -59,7 +62,7 @@ const ProductCard$ = props => {
   const titleElem = (
     <>
       <Title {...titleProps} product={product}>
-        <Link href={product.href}>
+        <Link href={product.href || "/product"}>
           <a>{product.title}</a>
         </Link>
       </Title>
@@ -71,7 +74,7 @@ const ProductCard$ = props => {
       {product.description}
     </Description>
   );
-  const priceElem = <Price product={product} />;
+  const priceElem = <Price productVariant={product.variants[0]} />;
 
   const badgesElem = (
     <>
@@ -100,7 +103,7 @@ const ProductCard$ = props => {
       product={product}
       onSaveToFavourites={onSaveToFavourites}
     >
-      <Link href={product.href}>
+      <Link href={product.href || "/product"}>
         <a tabIndex={"-1"}>
           <Image image={product.images[0]} />
         </a>
@@ -122,7 +125,7 @@ const ProductCard$ = props => {
       {...rootProps}
     />
   );
-};
+}
 
 ProductCard$.defaultProps = {
   overrides: {},

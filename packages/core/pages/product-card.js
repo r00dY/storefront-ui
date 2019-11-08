@@ -23,20 +23,20 @@ ${(
 )}
 
 
-Now we go with some overrides:
-
-${(
-  <Example
-    code={
-      require("!!raw-loader!../src/packages/ProductCard/examples/02-product-card-themed.js")
-        .default
-    }
-    component={
-      require("../src/packages/ProductCard/examples/02-product-card-themed.js")
-        .default
-    }
-  />
-)}
 `;
 
+// Now we go with some overrides:
+//
+//     ${(
+//       <Example
+//         code={
+//           require("!!raw-loader!../src/packages/ProductCard/examples/02-product-card-themed.js")
+//             .default
+//         }
+//     component={
+//         require("../src/packages/ProductCard/examples/02-product-card-themed.js")
+// .default
+// }
+// />
+// )}
 export default () => <Page>{content}</Page>;

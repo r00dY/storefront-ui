@@ -1,10 +1,12 @@
 import React from "react";
-import { ProductCard } from "../../../../../../demo/components/ProductCard";
+import ProductCard$ from "@commerce-ui/core/ProductCard";
 import { Grid, GridItem } from "@commerce-ui/core/Grid";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
-import products from "../../../../data/products";
+import products from "@commerce-ui/data-mock/products";
+
+import { Image$ } from "@commerce-ui/core/Image";
 
 export default () => {
   return (
@@ -16,10 +18,11 @@ export default () => {
       <Grid gutter={20} gutterVertical={20}>
         {products.map((product, index) => (
           <GridItem params={{ xs: 12, md: 12, lg: 12 }} key={index}>
-            <ProductCard
+            <ProductCard$
               product={product}
-              onClick={() => console.log("click")}
-              onSaveToFavourites={() => console.log("fav click")}
+              overrides={{
+                Image: Image$
+              }}
             />
           </GridItem>
         ))}
