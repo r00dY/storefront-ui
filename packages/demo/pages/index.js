@@ -17,7 +17,6 @@ import ProductSlider from "../components/ProductSlider/ProductSlider";
 import SectionTitle from "../components/SectionTitle";
 import CollectionCard from "../components/CollectionCard";
 
-import data from "../data";
 import routerPush from "../helpers/routerPush";
 
 import images from "@commerce-ui/data-mock/images";
@@ -33,22 +32,6 @@ import {
   useCollections,
   getCollections
 } from "../data-sources/mock/collections";
-
-// Categories displayed at the bottom
-const categories = [
-  "Bars",
-  "Candy",
-  "Chips & Pretzels",
-  "Cookies",
-  "Crackers & Crisps",
-  "Fruit & Vegetable Snacks",
-  "Jerky",
-  "Popcorn & Puffs"
-].map((category, index) => ({
-  title: category,
-  image: data.images["landscape" + ((index % 4) + 2)],
-  href: "/collection"
-}));
 
 const Home = ({
   homepageSliderCollectionDataWithQuery,
