@@ -7,69 +7,91 @@ import { Grid, GridItem } from "@commerce-ui/core/Grid";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catLandscape } from "../../../../data/images";
+import { catImage } from "../../../../data/images";
 
+console.log(catImage);
 export default () => (
   <div>
-    <p>
-      <code>loadWhenInViewport=false</code>
-    </p>
-
-    <Image
+    <div
       css={css`
         max-width: 800px;
       `}
-      image={catLandscape}
-    />
+    >
+      <p>
+        Standard, variant <code>natural</code>
+      </p>
 
-    <p>natural mode (default)</p>
+      <Image image={catImage} />
 
-    <Image
-      css={css`
-        max-width: 800px;
-      `}
-      image={catLandscape}
-      load={false}
-      loadWhenInViewport={true}
-    />
+      <p>Alternative variant</p>
 
-    <p>cover mode</p>
-    <Image
-      css={css`
-        max-width: 800px;
-        height: 800px; // remember to set height in CSS, will be 0 otherwise!
-      `}
-      image={catLandscape}
-      mode={"cover"}
-      load={false}
-      loadWhenInViewport={true}
-    />
+      <Image image={catImage} variant={"portrait"} />
 
-    <p>contain mode</p>
-    <Image
-      css={css`
-        max-width: 800px;
-        height: 800px; // remember to set height in CSS, will be 0 otherwise!
-        border: 1px solid lightgrey; // added border to show contain mode
-      `}
-      image={catLandscape}
-      mode={"contain"}
-      load={false}
-      loadWhenInViewport={true}
-    />
+      <p>Responsive variant</p>
 
-    <p>contain mode with backgroundPosition (same as in CSS)</p>
-    <Image
-      css={css`
-        max-width: 800px;
-        height: 800px; // remember to set height in CSS, will be 0 otherwise!
-        border: 1px solid lightgrey; // added border to show contain mode
-      `}
-      image={catLandscape}
-      mode={"contain"}
-      backgroundPosition={"left top"}
-      load={false}
-      loadWhenInViewport={true}
-    />
+      <Image
+        image={catImage}
+        _responsiveProps={{
+          xs: {
+            variant: "portrait"
+          },
+          lg: {
+            variant: "natural"
+          }
+        }}
+      />
+
+      {/*<p>*/}
+      {/*<code>loadWhenInViewport=false</code>*/}
+      {/*</p>*/}
+
+      {/*<Image*/}
+      {/*image={catImage}*/}
+      {/*/>*/}
+
+      {/*<p>natural mode (default)</p>*/}
+
+      {/*<Image*/}
+      {/*image={catImage}*/}
+      {/*load={false}*/}
+      {/*loadWhenInViewport={true}*/}
+      {/*/>*/}
+
+      {/*<p>cover mode</p>*/}
+      {/*<Image*/}
+      {/*css={css`*/}
+      {/*height: 800px; // remember to set height in CSS, will be 0 otherwise!*/}
+      {/*`}*/}
+      {/*image={catImage}*/}
+      {/*mode={"cover"}*/}
+      {/*load={false}*/}
+      {/*loadWhenInViewport={true}*/}
+      {/*/>*/}
+
+      {/*<p>contain mode</p>*/}
+      {/*<Image*/}
+      {/*css={css`*/}
+      {/*height: 800px; // remember to set height in CSS, will be 0 otherwise!*/}
+      {/*border: 1px solid lightgrey; // added border to show contain mode*/}
+      {/*`}*/}
+      {/*image={catImage}*/}
+      {/*mode={"contain"}*/}
+      {/*load={false}*/}
+      {/*loadWhenInViewport={true}*/}
+      {/*/>*/}
+
+      {/*<p>contain mode with backgroundPosition (same as in CSS)</p>*/}
+      {/*<Image*/}
+      {/*css={css`*/}
+      {/*height: 800px; // remember to set height in CSS, will be 0 otherwise!*/}
+      {/*border: 1px solid lightgrey; // added border to show contain mode*/}
+      {/*`}*/}
+      {/*image={catImage}*/}
+      {/*mode={"contain"}*/}
+      {/*backgroundPosition={"left top"}*/}
+      {/*load={false}*/}
+      {/*loadWhenInViewport={true}*/}
+      {/*/>*/}
+    </div>
   </div>
 );

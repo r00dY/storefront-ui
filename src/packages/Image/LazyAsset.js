@@ -2,6 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import VisibilitySensor from "react-visibility-sensor";
 
+import { RangeMap } from "responsive-helpers";
+
+/** @jsx jsx */
+import { css, jsx } from "@emotion/core";
+
 /**
  * What does Image do?
  * 1. Supports lazy loading out of the box (not crucial in ecommerce in a lot of cases)
@@ -118,6 +123,14 @@ class LazyAsset extends React.Component {
     return result;
   }
 
+  _getSrcset__(variant) {
+    let result = "";
+    this.findVariant(variant).srcset.forEach(img => {
+      result += `${img.url} ${img.w}w, `;
+    });
+    return result;
+  }
+
   handleImageLoaded() {
     this.setState({
       status: 3
@@ -163,84 +176,135 @@ class LazyAsset extends React.Component {
     }
   }
 
+  findVariant(variant) {
+    console.log("HEJ");
+    return this.props.image.variants.find(v => v.name === variant);
+  }
+
   render() {
-    // different modes for different resolutions!
-    let styleTag = null;
-    let imgTag = null;
-    let wrapperStyles = {};
-    let imgStyles = {};
+    // let variant = this.props.variant;
+    // let mode = this.props.mode;
+    // let isPicture = false;
+    //
+    // if (typeof variant === "object" || typeof mode === "object") {
+    //     isPicture = true;
+    //
+    //     variant = new RangeMap(this.props.variant);
+    //     mode = new RangeMap(this.props.mode);
+    //
+    //     let rangeMap = variant.crosssect(mode).forEach((value, range) => {
+    //         console.log(range, value.val1, value.val2);
+    //     });
+    // }
+    //
 
-    // Extra styles like placeholder or backgroundColor
+    let isPicture = !!this.props._responsiveProps;
 
-    // In case media parameter is given
-    if (this.props.media) {
-      let media = this._extractMediaFromInputParameters();
+    let rangeMap = new RangeMap(
+      this.props._responsiveProps || {
+        variant: this.props.variant,
+        mode: this.props.mode,
+        backgroundPosition: this.props.backgroundPosition
+      }
+    );
 
-      let responsiveStyle = "";
-      media.forEach(entry => {
-        responsiveStyle += `@media ${entry.media} {
-                ${`.w-${this.randomId} {`}
-                    ${
-                      entry.mode === "natural"
-                        ? `padding-bottom: ${(entry.images[0].h /
-                            entry.images[0].w) *
-                            100}%;`
-                        : "padding-bottom: initial;"
-                    }
-                    ${
-                      entry.mode === "natural"
-                        ? "height: auto;"
-                        : "height: 100%;"
-                    }
-                    
-                    ${
-                      entry.mode !== "contain" && this.props.backgroundColor
-                        ? `background-color: ${this.props.backgroundColor}`
-                        : "background-color: transparent;"
-                    }
-                    ${
-                      entry.mode !== "contain" && this.props.placeholder
-                        ? `background-image: ${this.props.placeholder}`
-                        : `background-image: none`
-                    }
+    // Defaults for _responsive
+    rangeMap.forEach((val, range) => {
+      val.variant = val.variant || "natural";
+      val.mode = val.mode || "natural";
+      val.backgroundPosition = val.backgroundPosition || "center";
+    });
 
-                }
-                ${`.i-${this.randomId}`} {
-                    ${
-                      entry.mode === "contain"
-                        ? "object-fit: contain;"
-                        : "object-fit: cover"
-                    }
-                    ${
-                      entry.backgroundPosition
-                        ? `object-position: ${entry.backgroundPosition}`
-                        : ""
+    const wrapperStyles__ = `
+                position: relative;
+                width: 100%;
+                backgroundSize: cover;
+                backgroundRepeat: no-repeat;
+            
+                ${rangeMap.css(
+                  ({ variant, mode }) => `
+                    background-color: ${
+                      mode !== "contain" && this.props.backgroundColor
+                        ? this.props.backgroundColor
+                        : "transparent"
                     };
-                }
-            }
-            `;
-      });
+                    background-image: ${
+                      mode !== "contain" && this.props.placeholder
+                        ? this.props.placeholder
+                        : "none"
+                    };
+                    padding-bottom: ${
+                      mode === "natural"
+                        ? `${(1 / this.findVariant(variant).aspectRatio) *
+                            100}%`
+                        : "0"
+                    };
+                    height: ${mode === "natural" ? "auto" : "100%"};
+                `
+                )}
+          `;
 
-      styleTag = (
-        <style dangerouslySetInnerHTML={{ __html: responsiveStyle }} />
+    console.log(wrapperStyles__);
+
+    const imageStyles__ = `
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;,
+                objectPosition: 50% 50%;
+        
+                backgroundPosition: center center; /* IE fallback */
+                backgroundSize: cover;
+                
+                ${rangeMap.css(
+                  ({ variant, mode, backgroundPosition }) => `
+                    object-fit: ${mode === "contain" ? "contain" : "cover"};
+                    object-position: ${backgroundPosition};
+                `
+                )}`;
+
+    console.log(this.props.image);
+
+    let imgTag__;
+
+    if (isPicture) {
+      let sources = [];
+      rangeMap.forEach((val, range) =>
+        sources.push(
+          <source
+            srcSet={
+              this.state.status >= 2
+                ? this._getSrcset__(this.props.variant)
+                : ""
+            }
+            sizes={this.props.sizes}
+            media={range.mediaQuery}
+          />
+        )
       );
 
-      imgTag = (
+      imgTag__ = (
         <picture>
-          {[...media].reverse().map(entry => (
+          {sources}
+          {rangeMap.forEach((val, range) => (
             <source
               srcSet={
-                this.state.status >= 2 ? this._getSrcset(entry.images) : ""
+                this.state.status >= 2
+                  ? this._getSrcset__(this.props.variant)
+                  : ""
               }
               sizes={this.props.sizes}
-              media={entry.media}
+              media={range.mediaQuery}
             />
           ))}
+
           <img
             alt={this.props.alt}
             src={this.props.fallbackSrc}
-            className={`i-${this.randomId}`}
-            style={styles.img}
+            css={css`
+              ${imageStyles__}
+            `}
             ref={this.image}
             onLoad={this.handleImageLoaded}
             draggable={this.props.draggable}
@@ -248,99 +312,230 @@ class LazyAsset extends React.Component {
         </picture>
       );
     } else {
-      if (this.props.backgroundColor && this.props.mode !== "contain") {
-        wrapperStyles.backgroundColor = this.props.backgroundColor;
-      }
-
-      if (this.props.placeholder && this.props.mode !== "contain") {
-        wrapperStyles.backgroundImage = `url(${this.props.placeholder})`;
-      }
-
-      let aspectRatio;
-
-      if (this.props.images) {
-        aspectRatio = this.props.images[0].h / this.props.images[0].w;
-      } else if (this.props.videos) {
-        aspectRatio = this.props.videos[0].h / this.props.videos[0].w;
-      }
-
-      if (this.props.mode === "natural") {
-        wrapperStyles.paddingBottom = `${aspectRatio * 100}%`;
-        wrapperStyles.height = "auto";
-        imgStyles.objectFit = "cover";
-      } else if (this.props.mode === "cover") {
-        wrapperStyles.height = "100%";
-        imgStyles.objectFit = "cover";
-      } else if (this.props.mode === "contain") {
-        wrapperStyles.height = "100%";
-        imgStyles.objectFit = "contain";
-      }
-
-      imgStyles.objectPosition = this.props.backgroundPosition;
-
-      if (this.props.images) {
-        imgTag = (
-          <img
-            ref={this.image}
-            style={{ ...styles.img, ...imgStyles }}
-            sizes={this.props.sizes}
-            alt={this.props.alt}
-            srcSet={
-              this.state.status >= 2 ? this._getSrcset(this.props.images) : ""
-            }
-            onLoad={this.handleImageLoaded}
-            className={`i-${this.randomId}`}
-            draggable={this.props.draggable}
-          />
-        );
-      } else if (this.props.videos) {
-        imgTag = (
-          <video
-            ref={this.image}
-            style={{ ...styles.img, ...imgStyles }}
-            autoPlay
-            muted
-            loop
-            playsInline
-            onCanPlay={this.handleImageLoaded}
-            className={`i-${this.randomId}`}
-            draggable={this.props.draggable}
-            title={this.props.alt}
-          >
-            {this.state.status >= 2 &&
-              this.props.videos.map(video => (
-                <source key={video.url} type={video.type} src={video.url} />
-              ))}
-          </video>
-        );
-      }
+      console.log(this._getSrcset__(this.props.variant));
+      imgTag__ = (
+        <img
+          ref={this.image}
+          css={css`
+            ${imageStyles__}
+          `}
+          sizes={this.props.sizes}
+          alt={this.props.alt}
+          srcSet={
+            this.state.status >= 2 ? this._getSrcset__(this.props.variant) : ""
+          }
+          onLoad={this.handleImageLoaded}
+          draggable={this.props.draggable}
+        />
+      );
     }
+
+    // TODO: to be continued!!!
+
+    // different modes for different resolutions!
+    // let styleTag = null;
+    // let imgTag = null;
+    // let wrapperStyles = {};
+    // let imgStyles = {};
+    //
+    // // Extra styles like placeholder or backgroundColor
+    //
+    // // In case media parameter is given
+    // if (this.props.media) {
+    //     let media = this._extractMediaFromInputParameters();
+    //
+    //     let responsiveStyle = "";
+    //     media.forEach(entry => {
+    //         responsiveStyle += `@media ${entry.media} {
+    //         ${`.w-${this.randomId} {`}
+    //             ${
+    //             entry.mode === "natural"
+    //                 ? `padding-bottom: ${(entry.images[0].h /
+    //                 entry.images[0].w) *
+    //                 100}%;`
+    //                 : "padding-bottom: initial;"
+    //             }
+    //             ${
+    //             entry.mode === "natural"
+    //                 ? "height: auto;"
+    //                 : "height: 100%;"
+    //             }
+    //
+    //             ${
+    //             entry.mode !== "contain" && this.props.backgroundColor
+    //                 ? `background-color: ${this.props.backgroundColor}`
+    //                 : "background-color: transparent;"
+    //             }
+    //             ${
+    //             entry.mode !== "contain" && this.props.placeholder
+    //                 ? `background-image: ${this.props.placeholder}`
+    //                 : `background-image: none`
+    //             }
+    //
+    //         }
+    //         ${`.i-${this.randomId}`} {
+    //             ${
+    //             entry.mode === "contain"
+    //                 ? "object-fit: contain;"
+    //                 : "object-fit: cover"
+    //             }
+    //             ${
+    //             entry.backgroundPosition
+    //                 ? `object-position: ${entry.backgroundPosition}`
+    //                 : ""
+    //             };
+    //         }
+    //     }
+    //     `;
+    //     });
+    //
+    //     styleTag = (
+    //         <style dangerouslySetInnerHTML={{__html: responsiveStyle}}/>
+    //     );
+    //
+    //     imgTag = (
+    //         <picture>
+    //             {[...media].reverse().map(entry => (
+    //                 <source
+    //                     srcSet={
+    //                         this.state.status >= 2 ? this._getSrcset(entry.images) : ""
+    //                     }
+    //                     sizes={this.props.sizes}
+    //                     media={entry.media}
+    //                 />
+    //             ))}
+    //             <img
+    //                 alt={this.props.alt}
+    //                 src={this.props.fallbackSrc}
+    //                 className={`i-${this.randomId}`}
+    //                 style={styles.img}
+    //                 ref={this.image}
+    //                 onLoad={this.handleImageLoaded}
+    //                 draggable={this.props.draggable}
+    //             />
+    //         </picture>
+    //     );
+    // } else {
+    //     if (this.props.backgroundColor && this.props.mode !== "contain") {
+    //         wrapperStyles.backgroundColor = this.props.backgroundColor;
+    //     }
+    //
+    //     if (this.props.placeholder && this.props.mode !== "contain") {
+    //         wrapperStyles.backgroundImage = `url(${this.props.placeholder})`;
+    //     }
+    //
+    //     let aspectRatio;
+    //
+    //     if (this.props.images) {
+    //         aspectRatio = this.props.images[0].h / this.props.images[0].w;
+    //     } else if (this.props.videos) {
+    //         aspectRatio = this.props.videos[0].h / this.props.videos[0].w;
+    //     }
+    //
+    //     if (this.props.mode === "natural") {
+    //         wrapperStyles.paddingBottom = `${aspectRatio * 100}%`;
+    //         wrapperStyles.height = "auto";
+    //         imgStyles.objectFit = "cover";
+    //     } else if (this.props.mode === "cover") {
+    //         wrapperStyles.height = "100%";
+    //         imgStyles.objectFit = "cover";
+    //     } else if (this.props.mode === "contain") {
+    //         wrapperStyles.height = "100%";
+    //         imgStyles.objectFit = "contain";
+    //     }
+    //
+    //     imgStyles.objectPosition = this.props.backgroundPosition;
+    //
+    //     if (this.props.images) {
+    //         imgTag = (
+    //             <img
+    //                 ref={this.image}
+    //                 style={{...styles.img, ...imgStyles}}
+    //                 sizes={this.props.sizes}
+    //                 alt={this.props.alt}
+    //                 srcSet={
+    //                     this.state.status >= 2 ? this._getSrcset(this.props.images) : ""
+    //                 }
+    //                 onLoad={this.handleImageLoaded}
+    //                 className={`i-${this.randomId}`}
+    //                 draggable={this.props.draggable}
+    //             />
+    //         );
+    //     } else if (this.props.videos) {
+    //         imgTag = (
+    //             <video
+    //                 ref={this.image}
+    //                 style={{...styles.img, ...imgStyles}}
+    //                 autoPlay
+    //                 muted
+    //                 loop
+    //                 playsInline
+    //                 onCanPlay={this.handleImageLoaded}
+    //                 className={`i-${this.randomId}`}
+    //                 draggable={this.props.draggable}
+    //                 title={this.props.alt}
+    //             >
+    //                 {this.state.status >= 2 &&
+    //                 this.props.videos.map(video => (
+    //                     <source key={video.url} type={video.type} src={video.url}/>
+    //                 ))}
+    //             </video>
+    //         );
+    //     }
+    // }
+
+    // const content = (
+    //     <div
+    //         ref={this.wrapper}
+    //         className={`LazyAsset__Wrapper w-${this.randomId}`}
+    //         style={{...styles.LazyAsset__Wrapper, ...wrapperStyles}}
+    //     >
+    //         <div
+    //             className={"LazyAsset__WrapperOverflow"}
+    //             style={{
+    //                 ...styles.LazyAsset__WrapperOverflow,
+    //                 transition: `opacity ${this.props.animationTime}s`,
+    //                 opacity: this.state.status === 3 ? 1 : 0
+    //             }}
+    //         >
+    //             {imgTag}
+    //         </div>
+    //         {styleTag}
+    //         {this.props.children}
+    //     </div>
+    // );
 
     const content = (
       <div
         ref={this.wrapper}
-        className={`LazyAsset__Wrapper w-${this.randomId}`}
-        style={{ ...styles.LazyAsset__Wrapper, ...wrapperStyles }}
+        css={css`
+          ${wrapperStyles__}
+        `}
       >
         <div
-          className={"LazyAsset__WrapperOverflow"}
-          style={{
-            ...styles.LazyAsset__WrapperOverflow,
-            transition: `opacity ${this.props.animationTime}s`,
-            opacity: this.state.status === 3 ? 1 : 0
-          }}
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            transition: opacity ${this.props.animationTime}s;
+            opacity: ${this.state.status === 3 ? 1 : 0};
+          `}
         >
-          {imgTag}
+          {imgTag__}
         </div>
-        {styleTag}
         {this.props.children}
       </div>
     );
 
     return (
       <div
-        className={`LazyAsset ${this.props.className}`}
-        style={{ ...styles.LazyAsset, ...this.props.style }}
+        css={css`
+          position: relative;
+        `}
+        style={this.props.style}
       >
         {this.props.loadWhenInViewport && (
           <VisibilitySensor
@@ -386,14 +581,15 @@ LazyAsset.defaultProps = {
   style: {},
   animationTime: 1,
   loadWhenInViewport: false,
-  sizes: "100vw",
+  sizes: "1px",
   images: null,
   videos: null,
   load: false,
   backgroundColor: "lightgrey",
   backgroundPosition: "center",
   offset: { top: 0, bottom: 0 },
-  draggable: false
+  draggable: false,
+  _responsiveProps: null
 };
 
 export default LazyAsset;

@@ -1,5 +1,7 @@
 const catLandscape = {
-  src: [
+  name: "natural",
+  aspectRatio: 1.786,
+  srcset: [
     {
       url: "/static/cat/cat_420.png",
       w: 420,
@@ -30,12 +32,13 @@ const catLandscape = {
       w: 1920,
       h: 1075
     }
-  ],
-  alt: "Sweety kitty"
+  ]
 };
 
 const catPortrait = {
-  src: [
+  name: "portrait",
+  aspectRatio: 0.95611578,
+  srcset: [
     {
       url: "/static/cat/cat_p420.png",
       w: 420,
@@ -51,8 +54,14 @@ const catPortrait = {
       w: 1024,
       h: 1071
     }
-  ],
-  alt: "Sweety kitty"
+  ]
+};
+
+const catImage = {
+  id: 1234,
+  altText: "Sweet kitty",
+  originalSrc: "/static/cat/cat_1920.png",
+  variants: [catLandscape, catPortrait]
 };
 
 const productPhoto1 = {
@@ -181,6 +190,7 @@ const productPhotos5 = [
 export {
   catLandscape,
   catPortrait,
+  catImage,
   productPhotos,
   productPhotos2,
   productPhotos3,

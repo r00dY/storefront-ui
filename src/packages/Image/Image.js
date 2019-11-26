@@ -24,7 +24,7 @@ function Image$(props) {
 
   let newProps;
 
-  const image = props.dataMapper(props.image);
+  const image = props.image;
 
   const isImage =
     typeof image.type === "undefined" || props.image.type !== "video";
@@ -33,7 +33,7 @@ function Image$(props) {
     ...props,
     load: loaded,
     backgroundColor: props.backgroundColor.css,
-    [isImage ? "images" : "videos"]: image.src,
+    [isImage ? "image" : "videos"]: props.image,
     alt: image.alt,
     loadWhenInViewport: props.loadWhenInViewport
   };
@@ -42,13 +42,13 @@ function Image$(props) {
 }
 
 Image$.defaultProps = {
+  variant: "natural",
   mode: "natural",
   loadWhenInViewport: false,
   load: true,
   backgroundColor: new Color("#f5f5f5"),
   autoload: true,
-  sizes: "420px",
-  dataMapper: x => x
+  sizes: "420px"
 };
 
 export default Image$;
