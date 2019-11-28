@@ -18,18 +18,19 @@ export const CheckoutFragment = gql`
   fragment CheckoutFragment on Checkout {
     id
     webUrl
-    totalTax
-    subtotalPrice
+    subtotalPrice {
+      amount
+      currencyCode
+    }
     currencyCode
-    totalPriceV2 {
+    totalTax {
       amount
       currencyCode
     }
-    totalTaxV2 {
+    totalPrice {
       amount
       currencyCode
     }
-    totalPrice
     lineItems(first: 250) {
       edges {
         node {
@@ -43,10 +44,11 @@ export const CheckoutFragment = gql`
             }
             title
             image {
-              src
+              id
+              altText
+              originalSrc
             }
-            price
-            priceV2 {
+            price {
               amount
               currencyCode
             }
@@ -151,6 +153,24 @@ export const checkoutLineItemsRemove = gql`
       checkoutId: $checkoutId
       lineItemIds: $lineItemIds
     ) {
+      userErrors {
+        message
+        field
+      }
+      checkout {
+        ...CheckoutFragment
+      }
+    }
+  }
+  ${CheckoutFragment}
+`;
+
+export const checkoutLineItemsReplace = gql`
+  mutation checkoutLineItemsReplace(
+    $checkoutId: ID!
+    $lineItems: [CheckoutLineItemInput!]!
+  ) {
+    checkoutLineItemsReplace(checkoutId: $checkoutId, lineItems: $lineItems) {
       userErrors {
         message
         field

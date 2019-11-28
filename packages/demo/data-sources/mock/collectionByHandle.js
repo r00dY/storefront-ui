@@ -10,7 +10,7 @@ const gqlCollectionByHandle = params => {
 
   if (params._fields && params._fields.products) {
     productsFieldQuery = `
-            products {
+            products(first: ${params.productsAmount}) {
                 edges {
                   node {
                     ${gqlProductFields(params._fields.products)}

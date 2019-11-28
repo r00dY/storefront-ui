@@ -5,6 +5,7 @@ import {
   useCollectionByHandle
 } from "../data-sources/mock/collectionByHandle";
 import Link from "next/link";
+import useAddToCartAndShowNotificatiion from "../graphql/hooks/useAddToCartAndShowNotification";
 
 const TestPage = ({ collectionQueryWithData }) => {
   const { data, loading, error } = useCollectionByHandle(
@@ -38,8 +39,14 @@ const TestPage = ({ collectionQueryWithData }) => {
 TestPage.getInitialProps = async ({ req }) => {
   let collectionQueryWithData = await getCollectionByHandle(
     {
-      handle: "homepage-slider",
-      _fields: { products: { _fields: { variants: {} } } }
+      handle: "frontpage",
+      productsAmount: 100,
+      _fields: {
+        products: {
+          _pagination: {},
+          _fields: { variants: { _pagination: {} } }
+        }
+      }
     },
     { skipInBrowser: true }
   );

@@ -1,16 +1,16 @@
 import { useQuery } from "@apollo/react-hooks";
-import { getProductQuery, productFragmentQuery } from "../queries";
+import { getProductByHandleQuery, productFragmentQuery } from "../queries";
 
-const useProduct = id => {
+const useProduct = handle => {
   let product = null;
 
-  const { loading, error, data, client } = useQuery(getProductQuery, {
-    variables: { id }
+  const { loading, error, data, client } = useQuery(getProductByHandleQuery, {
+    variables: { handle }
   });
 
   const cachedElement = client.readFragment({
     fragment: productFragmentQuery,
-    id: `Product:${id}`
+    id: `Product:${handle}`
   });
 
   if (cachedElement && !data) {
@@ -18,7 +18,7 @@ const useProduct = id => {
   }
 
   if (data) {
-    product = data.node;
+    product = data.productByHandle;
   }
 
   return { product, loading, error };

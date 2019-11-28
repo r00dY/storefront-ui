@@ -6,7 +6,7 @@ const gqlProductFields = params => {
 
   if (params._fields && params._fields.variants) {
     variantsFieldQuery = `
-            variants {
+            variants(first: 200) {
               edges {
                 node {
                     ${gqlProductVariantFields(params._fields.variants)}

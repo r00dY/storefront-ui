@@ -5,6 +5,7 @@ export const productFragmentQuery = gql`
   fragment product on Product {
     id
     title
+    handle
     options {
       id
       name
@@ -14,7 +15,7 @@ export const productFragmentQuery = gql`
       edges {
         node {
           id
-          src
+          originalSrc
           altText
         }
       }
@@ -34,11 +35,10 @@ export const productFragmentQuery = gql`
             value
           }
           image {
-            src
+            originalSrc
             altText
           }
-          price
-          priceV2 {
+          price {
             currencyCode
             amount
           }
@@ -129,6 +129,15 @@ export const getProductsQuery = (filters = []) => {
 export const getProductQuery = gql`
   query Product($id: ID!) {
     node(id: $id) {
+      ...product
+    }
+  }
+  ${productFragmentQuery}
+`;
+
+export const getProductByHandleQuery = handle => gql`
+  query productByHandle {
+    productByHandle(handle: "${handle}") {
       ...product
     }
   }

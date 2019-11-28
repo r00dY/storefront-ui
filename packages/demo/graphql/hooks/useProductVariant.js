@@ -7,8 +7,8 @@ const useProductVariant = (product, attributes) => {
     attr.toLowerCase()
   );
 
-  const variant = product.variants.edges.find(variant => {
-    return variant.node.selectedOptions.every(option => {
+  const variant = product.variants.find(variant => {
+    return variant.selectedOptions.every(option => {
       const optionName = option.name.toLowerCase();
       if (attributesNames.includes(optionName)) {
         return option.value === attributes[optionName];
@@ -25,26 +25,25 @@ const useProductVariant = (product, attributes) => {
     );
   }
 
-  const variantColor = variant.node.selectedOptions.filter(
+  const variantColor = variant.selectedOptions.filter(
     option => option.name === "Color"
   )[0].value;
 
-  const images = product.images.edges
+  const images = product.images
     .filter(image => {
-      return image.node.altText.indexOf(variantColor) >= 0;
+      return image.altText.indexOf(variantColor) >= 0;
     })
-    .map(image => ({ src: [{ w: 300, h: 400, url: image.node.src }] }));
+    .map(image => ({ src: [{ w: 300, h: 400, url: image.src }] }));
 
   return {
-    ...variant.node,
+    ...variant,
     options: product.options,
     images,
-    price: variant.node.priceV2,
-    variants: product.variants.edges.filter(
+    price: variant.priceV2,
+    variants: product.variants.filter(
       variant =>
-        variant.node.selectedOptions.filter(
-          option => option.name === "Color"
-        )[0].value === variantColor
+        variant.selectedOptions.filter(option => option.name === "Color")[0]
+          .value === variantColor
     )
   };
 };

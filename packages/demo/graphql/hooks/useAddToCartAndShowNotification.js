@@ -1,16 +1,12 @@
 import useAddToCart from "./useAddToCart";
 import React from "react";
-import { showNotification } from "storefront-ui/Notifications";
+import { showNotification } from "@commerce-ui/core/Notifications";
 import Notification from "../../components/Notification";
 import useCheckout from "./useCheckout";
-import { CheckoutContext } from "../../lib/CheckoutContext";
 
 const useAddToCartAndShowNotification = productVariant => {
-  const [checkout, setCheckout] = useCheckout(CheckoutContext);
-  const [addToCartFunction, loading] = useAddToCart(
-    checkout.id,
-    productVariant
-  );
+  const [checkout, setCheckout] = useCheckout();
+  const [addToCartFunction, loading] = useAddToCart(productVariant);
 
   const addToCart = quantity => {
     addToCartFunction(quantity)

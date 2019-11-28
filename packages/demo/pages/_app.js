@@ -110,86 +110,93 @@ class MyApp extends App {
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
-      <ApolloProvider client={apolloClient}>
-        {/*<ApolloHooksProvider client={apolloClient}>*/}
-        <Root theme={theme}>
-          <GridDebugger />
+      // pass checkoutId from cookie
+      <InjectCheckoutContext
+        checkoutId={
+          "Z2lkOi8vc2hvcGlmeS9DaGVja291dC82M2U2NDk1M2RlNjZjZjkyZmU2NmYzN2Q1ZDdmZjNhNT9rZXk9ZjViYThiYzZlYWQ2Y2Q2YjdmODc0N2Y3ZTNkMjliZjM="
+        }
+      >
+        <ApolloProvider client={apolloClient}>
+          {/*<ApolloHooksProvider client={apolloClient}>*/}
+          <Root theme={theme}>
+            <GridDebugger />
 
-          {content}
+            {content}
 
-          {/*<Device mobile>*/}
-          {/*{showTabbar && (*/}
-          {/*<div>*/}
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*margin-bottom: 50px;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*{content}*/}
-          {/*{showFooterOnMobile && <Footer />}*/}
-          {/*</div>*/}
+            {/*<Device mobile>*/}
+            {/*{showTabbar && (*/}
+            {/*<div>*/}
+            {/*<div*/}
+            {/*css={css`*/}
+            {/*margin-bottom: 50px;*/}
+            {/*`}*/}
+            {/*>*/}
+            {/*{content}*/}
+            {/*{showFooterOnMobile && <Footer />}*/}
+            {/*</div>*/}
 
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*position: fixed;*/}
-          {/*bottom: 0;*/}
-          {/*left: 0;*/}
-          {/*width: 100%;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*<MainTabBar*/}
-          {/*data={tabs}*/}
-          {/*active={Component.tabbar}*/}
-          {/*onChange={index => {*/}
-          {/*if (index === 0) {*/}
-          {/*routerPush("/");*/}
-          {/*} else if (index === 1) {*/}
-          {/*routerPush("/menu");*/}
-          {/*} else if (index === 2) {*/}
-          {/*routerPush("/wishlist");*/}
-          {/*} else if (index === 3) {*/}
-          {/*routerPush("/cart");*/}
-          {/*} else if (index === 4) {*/}
-          {/*routerPush("/profile");*/}
-          {/*}*/}
-          {/*}}*/}
-          {/*scrollable={false}*/}
-          {/*align={"fit"}*/}
-          {/*/>*/}
-          {/*</div>*/}
-          {/*</div>*/}
-          {/*)}*/}
+            {/*<div*/}
+            {/*css={css`*/}
+            {/*position: fixed;*/}
+            {/*bottom: 0;*/}
+            {/*left: 0;*/}
+            {/*width: 100%;*/}
+            {/*`}*/}
+            {/*>*/}
+            {/*<MainTabBar*/}
+            {/*data={tabs}*/}
+            {/*active={Component.tabbar}*/}
+            {/*onChange={index => {*/}
+            {/*if (index === 0) {*/}
+            {/*routerPush("/");*/}
+            {/*} else if (index === 1) {*/}
+            {/*routerPush("/menu");*/}
+            {/*} else if (index === 2) {*/}
+            {/*routerPush("/wishlist");*/}
+            {/*} else if (index === 3) {*/}
+            {/*routerPush("/cart");*/}
+            {/*} else if (index === 4) {*/}
+            {/*routerPush("/profile");*/}
+            {/*}*/}
+            {/*}}*/}
+            {/*scrollable={false}*/}
+            {/*align={"fit"}*/}
+            {/*/>*/}
+            {/*</div>*/}
+            {/*</div>*/}
+            {/*)}*/}
 
-          {/*{!showTabbar && (*/}
-          {/*<>*/}
-          {/*{content}*/}
-          {/*{showFooterOnMobile && <Footer />}*/}
-          {/*</>*/}
-          {/*)}*/}
-          {/*</Device>*/}
+            {/*{!showTabbar && (*/}
+            {/*<>*/}
+            {/*{content}*/}
+            {/*{showFooterOnMobile && <Footer />}*/}
+            {/*</>*/}
+            {/*)}*/}
+            {/*</Device>*/}
 
-          {/*<Device desktop>*/}
-          {/*{hideDesktopMenu && content}*/}
+            {/*<Device desktop>*/}
+            {/*{hideDesktopMenu && content}*/}
 
-          {/*{!hideDesktopMenu && (*/}
-          {/*<>*/}
-          {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
+            {/*{!hideDesktopMenu && (*/}
+            {/*<>*/}
+            {/*<MenuDesktop data={menuData} mode={"fixed"} />*/}
 
-          {/*<div*/}
-          {/*css={css`*/}
-          {/*padding-top: 70px;*/}
-          {/*`}*/}
-          {/*>*/}
-          {/*{content}*/}
+            {/*<div*/}
+            {/*css={css`*/}
+            {/*padding-top: 70px;*/}
+            {/*`}*/}
+            {/*>*/}
+            {/*{content}*/}
 
-          {/*<Footer />*/}
-          {/*</div>*/}
-          {/*</>*/}
-          {/*)}*/}
-          {/*</Device>*/}
-        </Root>
-        {/*</ApolloHooksProvider>*/}
-      </ApolloProvider>
+            {/*<Footer />*/}
+            {/*</div>*/}
+            {/*</>*/}
+            {/*)}*/}
+            {/*</Device>*/}
+          </Root>
+          {/*</ApolloHooksProvider>*/}
+        </ApolloProvider>
+      </InjectCheckoutContext>
     );
   }
 }

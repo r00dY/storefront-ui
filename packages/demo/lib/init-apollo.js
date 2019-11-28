@@ -15,7 +15,7 @@ export function createApolloClient(initialState) {
     // ssrMode: !process.browser, // Disables forceFetch on the server (so queries are only run once)
     link: new HttpLink({
       // uri: "https://biggest-ecommerce.myshopify.com/api/graphql", // Server URL (must be absolute)
-      uri: "http://localhost:3334/api/graphql", // Server URL (must be absolute)
+      uri: "http://localhost:4000", // Server URL (must be absolute)
       headers: {
         "X-Shopify-Storefront-Access-Token": "7a415603317462ae8c7e4f98be2c5b5e"
       }

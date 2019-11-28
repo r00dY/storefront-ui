@@ -4,6 +4,14 @@ const { product, loading, error } = useProduct(id);
 
 const { productVariant } = useProductVariant(product, { size: 'XL', color: ‘green’ });
 
+const { loading, error, update(quantity), add(quantity), remove(quantity) } = useCheckoutLineItemsModification(product_variant)
+const { loading, error, update(new_line_items), removeAll } = useCheckoutLineItemsModification() //
+
+jabłka = 5,
+add(1) = 6, update(1) = 1, remove(1) = 4
+
+/// STARA ROZKMINA
+
 Jeśli chodzi o addToCart
 To nie jest to "globalny adder", ale zawsze trzeba go wyciągnąć dla konkretnego product variantu. Dlatego, że można wyobrazic sobie latwo sytuacje dodawania kilku produkt-variantów na raz
 I wtedy chcemy mieć odrębny loading, error dla każdego dodawania
