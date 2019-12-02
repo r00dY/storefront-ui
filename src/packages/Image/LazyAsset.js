@@ -177,7 +177,6 @@ class LazyAsset extends React.Component {
   }
 
   findVariant(variant) {
-    console.log("HEJ");
     return this.props.image.variants.find(v => v.name === variant);
   }
 
@@ -218,8 +217,8 @@ class LazyAsset extends React.Component {
     const wrapperStyles__ = `
                 position: relative;
                 width: 100%;
-                backgroundSize: cover;
-                backgroundRepeat: no-repeat;
+                background-size: cover;
+                background-repeat: no-repeat;
             
                 ${rangeMap.css(
                   ({ variant, mode }) => `
@@ -251,18 +250,19 @@ class LazyAsset extends React.Component {
                 top: 0;
                 left: 0;
                 width: 100%;
-                height: 100%;,
-                objectPosition: 50% 50%;
+                height: 100%;
         
-                backgroundPosition: center center; /* IE fallback */
-                backgroundSize: cover;
+                background-position: center center; /* IE fallback */
+                background-size: cover;
                 
                 ${rangeMap.css(
                   ({ variant, mode, backgroundPosition }) => `
                     object-fit: ${mode === "contain" ? "contain" : "cover"};
                     object-position: ${backgroundPosition};
                 `
-                )}`;
+                )}
+                
+                `;
 
     console.log(this.props.image);
 
@@ -536,6 +536,7 @@ class LazyAsset extends React.Component {
           position: relative;
         `}
         style={this.props.style}
+        className={this.props.className}
       >
         {this.props.loadWhenInViewport && (
           <VisibilitySensor

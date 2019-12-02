@@ -6,28 +6,19 @@ import Color from "@commerce-ui/core/Color";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catLandscape } from "../../../../data/images";
+import { catImage } from "../../../../data/images";
 
 export default () => {
-  const [loaded, setLoaded] = useState(false);
-
-  console.log(loaded);
-
   return (
     <div>
-      <p>
-        Hit the button to load image:{" "}
-        <button onClick={() => setLoaded(true)}>Load</button>
-      </p>
-      <Image
-        css={css`
-          max-width: 800px;
-        `}
-        image={catLandscape}
-        autoload={false}
-        backgroundColor={new Color("lightgrey")}
-        load={loaded}
-      />
+      <p>loading=lazy</p>
+      <Image image={catImage} />
+
+      <p>loading=eager</p>
+      <Image image={catImage} loading={"eager"} />
+
+      <p>loading=lazy + black background</p>
+      <Image image={catImage} backgroundColor={"black"} />
     </div>
   );
 };

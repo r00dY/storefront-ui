@@ -9,7 +9,11 @@ import { css, jsx } from "@emotion/core";
 
 import { catImage } from "../../../../data/images";
 
-console.log(catImage);
+const imgBorderStyles = `
+            height: 800px; // remember to set height in CSS, will be 0 otherwise!
+            border: 1px solid lightgrey; // added border to show contain mode
+            `;
+
 export default () => (
   <div>
     <div
@@ -17,17 +21,58 @@ export default () => (
         max-width: 800px;
       `}
     >
+      <h2>Variants and modes</h2>
+
       <p>
         Standard, variant <code>natural</code>
       </p>
 
       <Image image={catImage} />
 
-      <p>Alternative variant</p>
+      <p>
+        Alternative variant <code>portrait</code>
+      </p>
 
       <Image image={catImage} variant={"portrait"} />
 
-      <p>Responsive variant</p>
+      <p>
+        CSS sized <code>Image</code> (<code>cover</code> by default)
+      </p>
+      <Image
+        css={css`
+          ${imgBorderStyles}
+        `}
+        image={catImage}
+      />
+      <br />
+
+      <Image
+        css={css`
+          ${imgBorderStyles} height: 100px;
+        `}
+        image={catImage}
+      />
+
+      <p>contain mode</p>
+      <Image
+        css={css`
+          ${imgBorderStyles}
+        `}
+        image={catImage}
+        objectFit={"contain"}
+      />
+
+      <p>contain mode with objectPosition (same as in CSS)</p>
+      <Image
+        css={css`
+          ${imgBorderStyles}
+        `}
+        image={catImage}
+        objectFit={"contain"}
+        objectPosition={"left top"}
+      />
+
+      <p>Responsive variant (portrait for xs, natural for lg)</p>
 
       <Image
         image={catImage}
@@ -35,11 +80,45 @@ export default () => (
           xs: {
             variant: "portrait"
           },
-          lg: {
+          md: {
             variant: "natural"
           }
         }}
       />
+
+      <p>Responsive variant, mode and objectPosition</p>
+
+      <Image
+        css={css`
+          ${imgBorderStyles}
+        `}
+        image={catImage}
+        _responsiveProps={{
+          xs: {
+            objectFit: "contain",
+            objectPosition: "top"
+          },
+          md: {
+            objectFit: "cover",
+            objectPosition: "right"
+          }
+        }}
+      />
+
+      <p>Add some div on image</p>
+
+      <Image image={catImage}>
+        <div
+          css={css`
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 0, 0, 0.5);
+          `}
+        />
+      </Image>
 
       {/*<p>*/}
       {/*<code>loadWhenInViewport=false</code>*/}
@@ -80,7 +159,7 @@ export default () => (
       {/*loadWhenInViewport={true}*/}
       {/*/>*/}
 
-      {/*<p>contain mode with backgroundPosition (same as in CSS)</p>*/}
+      {/*<p>contain mode with objectPosition (same as in CSS)</p>*/}
       {/*<Image*/}
       {/*css={css`*/}
       {/*height: 800px; // remember to set height in CSS, will be 0 otherwise!*/}
@@ -88,7 +167,7 @@ export default () => (
       {/*`}*/}
       {/*image={catImage}*/}
       {/*mode={"contain"}*/}
-      {/*backgroundPosition={"left top"}*/}
+      {/*objectPosition={"left top"}*/}
       {/*load={false}*/}
       {/*loadWhenInViewport={true}*/}
       {/*/>*/}

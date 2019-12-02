@@ -29,7 +29,7 @@ class ImageZoomable extends React.Component {
       height: this.containerRef.current.clientHeight
     };
 
-    if (this.props.mode === "natural" || this.props.mode === "cover") {
+    if (this.props.objectFit === "cover") {
       this._itemSize = {
         width: this._containerSize.width,
         height: this._containerSize.height

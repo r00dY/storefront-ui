@@ -21,7 +21,7 @@ Examples import example images from a helper \`images.js\` file:
 
 ${<CodeBlock code={require("!!raw-loader!../data/images.js").default} />}
 
-### Standard use
+### Standard use, variants and modes
 
 ${(
   <Example
@@ -36,37 +36,38 @@ ${(
 )}
 
 
-`;
+### Loading behaviour
 
-//
-// ### Custom loading behaviour
-//
-// ${(
-//   <Example
-//     code={
-//       require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")
-//         .default
-//     }
-// component={
-//     require("../src/packages/Image/examples/02-custom-load-time.js").default
-// }
-// />
-// )}
-//
-// ### \`ImageZoomable\`
-//
-// ${(
-//     <Example
-//         code={
-//             require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")
-//                 .default
-//         }
-//         component={
-//             require("../src/packages/Image/examples/03-image-zoomable.js").default
-//         }
-//     />
-// )}
-//
+By default, all images are loaded instant.
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")
+        .default
+    }
+    component={
+      require("../src/packages/Image/examples/02-custom-load-time.js").default
+    }
+  />
+)}
+
+### \`ImageZoomable\`
+
+${(
+  <Example
+    code={
+      require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")
+        .default
+    }
+    component={
+      require("../src/packages/Image/examples/03-image-zoomable.js").default
+    }
+  />
+)}
+
+
+`;
 // ### Videos
 //
 // It's very easy to add videos instead of images. Actually you must use \`Image\` component too. It's not video player. It's just a "moving content", like in Harry Potter. API is exactly the same, just use \`video\` prop instead of image.

@@ -4,7 +4,7 @@ import { ImageZoomable } from "../../../../demo/components/Image";
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
 
-import { catPortrait } from "../../../../data/images";
+import { catImage } from "../../../../data/images";
 
 export default () => (
   <div>
@@ -13,14 +13,14 @@ export default () => (
       css={css`
         max-width: 800px;
       `}
-      image={catPortrait}
+      image={catImage}
     />
     <p>zoom 4</p>
     <ImageZoomable
       css={css`
         max-width: 800px;
       `}
-      image={catPortrait}
+      image={catImage}
       zoom={4}
     />
   </div>
