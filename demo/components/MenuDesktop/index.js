@@ -391,7 +391,7 @@ const MenuDesktop = props => {
           </div>
         )
       }}
-      renderMenuContent={true}
+      renderMenuContent={false}
       mode={"fixed"}
       debounce={50}
       {...props}

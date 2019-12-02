@@ -2,6 +2,7 @@ import React from "react";
 
 import MenuDesktop from "../demo/components/MenuDesktop";
 import LoremIpsum from "../docs-utils/LoremIpsum";
+import Container from "@commerce-ui/core/Container";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -36,6 +37,8 @@ export default () => (
           content: <MenuContent>Nara</MenuContent>
         }
       ]}
+      renderMenuContent={false}
+      debounce={200}
     />
 
     <LoremIpsum />

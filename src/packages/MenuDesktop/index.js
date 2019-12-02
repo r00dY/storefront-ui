@@ -109,6 +109,11 @@ const MenuDesktop$ = props => {
             width: 100%;
             display: ${activeMenu ? "block" : "none"};
           `}
+          onMouseEnter={() => setActiveMenu(activeMenu)}
+          onMouseLeave={() => {
+            // setMenuHover(false);
+            setActiveMenu(false);
+          }}
         >
           {activeMenu &&
             (typeof activeMenu.content === "function"
