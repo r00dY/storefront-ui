@@ -9,12 +9,14 @@ export default () => {
     <Ledger
       rows={[
         {
-          label: "subtotal",
+          label: "Subtotal",
           value: "€12.99"
         },
         {
           label: "Tax",
-          value: "€0.00"
+          value: "€0.00",
+          note:
+            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         },
         {
           label: "Grand Total",

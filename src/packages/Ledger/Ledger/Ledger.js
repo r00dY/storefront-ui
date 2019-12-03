@@ -5,7 +5,8 @@ import {
   RootStyled,
   RowStyled,
   LabelStyled,
-  ValueStyled
+  ValueStyled,
+  NoteStyled
 } from "./styled-components";
 
 /** @jsx jsx */
@@ -20,7 +21,8 @@ const Ledger$ = props => {
       Root: RootOverride,
       Row: RowOverride,
       Label: LabelOverride,
-      Value: ValueOverride
+      Value: ValueOverride,
+      Note: NoteOverride
     }
   } = props;
 
@@ -28,6 +30,7 @@ const Ledger$ = props => {
   const [Row, rowProps] = getOverrides(RowOverride, RowStyled);
   const [Label, labelProps] = getOverrides(LabelOverride, LabelStyled);
   const [Value, valueProps] = getOverrides(ValueOverride, ValueStyled);
+  const [Note, noteProps] = getOverrides(NoteOverride, NoteStyled);
 
   return (
     <Root {...rootProps}>
@@ -39,9 +42,17 @@ const Ledger$ = props => {
           label={row.label}
           isTotal={row.isTotal}
         >
-          <Label {...labelProps} isTotal={row.isTotal}>
-            {row.label}
-          </Label>
+          <div>
+            <Label {...labelProps} isTotal={row.isTotal}>
+              {row.label}
+            </Label>
+
+            {row.note && (
+              <Note {...noteProps} isTotal={row.isTotal}>
+                {row.note}
+              </Note>
+            )}
+          </div>
           <Value {...valueProps} isTotal={row.isTotal}>
             {row.value}
           </Value>

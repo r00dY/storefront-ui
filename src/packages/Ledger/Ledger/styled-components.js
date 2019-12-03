@@ -5,7 +5,7 @@ export const rootStyles = ({ $theme }) => `position: relative;`;
 export const RootStyled = styled("div", rootStyles);
 
 export const rowStyles = ({ $theme, isTotal }) =>
-  `position: relative; display: flex; flex-wrap: nowrap;
+  `position: relative; display: flex; flex-wrap: nowrap; justify-content: space-between;
     padding: ${$theme.spacings.s10}px 0;
     `;
 export const RowStyled = styled("div", rowStyles);
@@ -21,3 +21,12 @@ export const valueStyles = ({ $theme, isTotal }) =>
     ${isTotal && $theme.fonts.h6.css}
     `;
 export const ValueStyled = styled("div", valueStyles);
+
+export const noteStyles = ({ $theme, isTotal }) => `
+${$theme.fonts.body2.css}
+color: ${$theme.colors.mono500.css};    
+margin: ${$theme.spacings.s10}px 0;
+
+
+    `;
+export const NoteStyled = styled("div", noteStyles);
