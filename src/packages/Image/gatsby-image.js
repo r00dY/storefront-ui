@@ -154,17 +154,17 @@ function groupByMedia(imageVariants) {
   return [...withMedia, ...without];
 }
 
-function generateTracedSVGSources(imageVariants) {
-  return imageVariants.map(({ src, media, tracedSVG }) => (
-    <source key={src} media={media} srcSet={tracedSVG} />
-  ));
-}
-
-function generateBase64Sources(imageVariants) {
-  return imageVariants.map(({ src, media, base64 }) => (
-    <source key={src} media={media} srcSet={base64} />
-  ));
-}
+// function generateTracedSVGSources(imageVariants) {
+//   return imageVariants.map(({ src, media, tracedSVG }) => (
+//     <source key={src} media={media} srcSet={tracedSVG} />
+//   ));
+// }
+//
+// function generateBase64Sources(imageVariants) {
+//   return imageVariants.map(({ src, media, base64 }) => (
+//     <source key={src} media={media} srcSet={base64} />
+//   ));
+// }
 
 function generateNoscriptSource({ srcSet, srcSetWebp, media, sizes }, isWebp) {
   const src = isWebp ? srcSetWebp : srcSet;
@@ -464,25 +464,25 @@ class Image extends React.Component {
             />
           )}
 
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Placeholder
-              src={image.base64}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateBase64Sources}
-            />
-          )}
+          {/*/!* Show the blurry base64 image. *!/*/}
+          {/*{image.base64 && (*/}
+          {/*<Placeholder*/}
+          {/*src={image.base64}*/}
+          {/*spreadProps={placeholderImageProps}*/}
+          {/*imageVariants={imageVariants}*/}
+          {/*generateSources={generateBase64Sources}*/}
+          {/*/>*/}
+          {/*)}*/}
 
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Placeholder
-              src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateTracedSVGSources}
-            />
-          )}
+          {/*/!* Show the traced SVG image. *!/*/}
+          {/*{image.tracedSVG && (*/}
+          {/*<Placeholder*/}
+          {/*src={image.tracedSVG}*/}
+          {/*spreadProps={placeholderImageProps}*/}
+          {/*imageVariants={imageVariants}*/}
+          {/*generateSources={generateTracedSVGSources}*/}
+          {/*/>*/}
+          {/*)}*/}
 
           {/* Once the image is visible (or the browser doesn't support IntersectionObserver), start downloading the image */}
           {this.state.isVisible && (
@@ -527,107 +527,107 @@ class Image extends React.Component {
       );
     }
 
-    if (fixed) {
-      const imageVariants = fixed;
-      const image = imageVariants[0];
-
-      const divStyle = {
-        position: `relative`,
-        overflow: `hidden`,
-        display: `inline-block`,
-        width: image.width,
-        height: image.height,
-        ...style
-      };
-
-      if (style.display === `inherit`) {
-        delete divStyle.display;
-      }
-
-      return (
-        <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={divStyle}
-          ref={this.handleRef}
-          key={`fixed-${JSON.stringify(image.srcSet)}`}
-        >
-          {/* Show a solid background color. */}
-          {bgColor && (
-            <Tag
-              title={title}
-              style={{
-                backgroundColor: bgColor,
-                width: image.width,
-                opacity: !this.state.imgLoaded ? 1 : 0,
-                height: image.height,
-                ...(shouldFadeIn && delayHideStyle)
-              }}
-            />
-          )}
-
-          {/* Show the blurry base64 image. */}
-          {image.base64 && (
-            <Placeholder
-              src={image.base64}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateBase64Sources}
-            />
-          )}
-
-          {/* Show the traced SVG image. */}
-          {image.tracedSVG && (
-            <Placeholder
-              src={image.tracedSVG}
-              spreadProps={placeholderImageProps}
-              imageVariants={imageVariants}
-              generateSources={generateTracedSVGSources}
-            />
-          )}
-
-          {/* Once the image is visible, start downloading the image */}
-          {this.state.isVisible && (
-            <picture>
-              {generateImageSources(imageVariants)}
-              <Img
-                alt={alt}
-                title={title}
-                width={image.width}
-                height={image.height}
-                sizes={image.sizes}
-                src={image.src}
-                crossOrigin={this.props.crossOrigin}
-                srcSet={image.srcSet}
-                css={css`
-                  ${imageStyle} ${this.props._emotionStyles.img}
-                `}
-                ref={this.imageRef}
-                onLoad={this.handleImageLoaded}
-                onError={this.props.onError}
-                itemProp={itemProp}
-                loading={loading}
-                draggable={draggable}
-              />
-            </picture>
-          )}
-
-          {/* Show the original image during server-side rendering if JavaScript is disabled */}
-          {this.addNoScript && (
-            <noscript
-              dangerouslySetInnerHTML={{
-                __html: noscriptImg({
-                  alt,
-                  title,
-                  loading,
-                  ...image,
-                  imageVariants
-                })
-              }}
-            />
-          )}
-        </Tag>
-      );
-    }
+    // if (fixed) {
+    //   const imageVariants = fixed;
+    //   const image = imageVariants[0];
+    //
+    //   const divStyle = {
+    //     position: `relative`,
+    //     overflow: `hidden`,
+    //     display: `inline-block`,
+    //     width: image.width,
+    //     height: image.height,
+    //     ...style
+    //   };
+    //
+    //   if (style.display === `inherit`) {
+    //     delete divStyle.display;
+    //   }
+    //
+    //   return (
+    //     <Tag
+    //       className={`${className ? className : ``} gatsby-image-wrapper`}
+    //       style={divStyle}
+    //       ref={this.handleRef}
+    //       key={`fixed-${JSON.stringify(image.srcSet)}`}
+    //     >
+    //       {/* Show a solid background color. */}
+    //       {bgColor && (
+    //         <Tag
+    //           title={title}
+    //           style={{
+    //             backgroundColor: bgColor,
+    //             width: image.width,
+    //             opacity: !this.state.imgLoaded ? 1 : 0,
+    //             height: image.height,
+    //             ...(shouldFadeIn && delayHideStyle)
+    //           }}
+    //         />
+    //       )}
+    //
+    //       {/* Show the blurry base64 image. */}
+    //       {image.base64 && (
+    //         <Placeholder
+    //           src={image.base64}
+    //           spreadProps={placeholderImageProps}
+    //           imageVariants={imageVariants}
+    //           generateSources={generateBase64Sources}
+    //         />
+    //       )}
+    //
+    //       {/* Show the traced SVG image. */}
+    //       {image.tracedSVG && (
+    //         <Placeholder
+    //           src={image.tracedSVG}
+    //           spreadProps={placeholderImageProps}
+    //           imageVariants={imageVariants}
+    //           generateSources={generateTracedSVGSources}
+    //         />
+    //       )}
+    //
+    //       {/* Once the image is visible, start downloading the image */}
+    //       {this.state.isVisible && (
+    //         <picture>
+    //           {generateImageSources(imageVariants)}
+    //           <Img
+    //             alt={alt}
+    //             title={title}
+    //             width={image.width}
+    //             height={image.height}
+    //             sizes={image.sizes}
+    //             src={image.src}
+    //             crossOrigin={this.props.crossOrigin}
+    //             srcSet={image.srcSet}
+    //             css={css`
+    //               ${imageStyle} ${this.props._emotionStyles.img}
+    //             `}
+    //             ref={this.imageRef}
+    //             onLoad={this.handleImageLoaded}
+    //             onError={this.props.onError}
+    //             itemProp={itemProp}
+    //             loading={loading}
+    //             draggable={draggable}
+    //           />
+    //         </picture>
+    //       )}
+    //
+    //       {/* Show the original image during server-side rendering if JavaScript is disabled */}
+    //       {this.addNoScript && (
+    //         <noscript
+    //           dangerouslySetInnerHTML={{
+    //             __html: noscriptImg({
+    //               alt,
+    //               title,
+    //               loading,
+    //               ...image,
+    //               imageVariants
+    //             })
+    //           }}
+    //         />
+    //       )}
+    //     </Tag>
+    //   );
+    // }
 
     return null;
   }

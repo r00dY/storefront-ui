@@ -54,6 +54,11 @@ export default props => {
             </Link>
           </li>
           <li>
+            <Link href="/video">
+              <a>Video</a>
+            </Link>
+          </li>
+          <li>
             <Link href="/responsive">
               <a>Responsiveness</a>
             </Link>

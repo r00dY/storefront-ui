@@ -1,14 +1,13 @@
 const hulaHop = {
-  type: "video",
   src: [
     {
       url: "/static/videos/hugo_cos.mp4",
-      w: 1280,
-      h: 720,
       type: "video/mp4"
     }
   ],
-  alt: "Hula hop ALEŻ KRĘCI"
+  w: 1280,
+  h: 720,
+  title: "Hula hop ALEŻ KRĘCI"
 };
 
 export { hulaHop };
