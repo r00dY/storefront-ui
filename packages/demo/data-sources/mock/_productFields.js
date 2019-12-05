@@ -1,12 +1,15 @@
 import gqlProductVariantFields from "./_productVariantFields";
 import gqlImageFields from "./_imageFields";
+import parametersPaginationHelper from "../../helpers/parametersPaginationHelper";
 
 const gqlProductFields = params => {
   let variantsFieldQuery = "";
 
   if (params._fields && params._fields.variants) {
     variantsFieldQuery = `
-            variants(first: 200) {
+            variants(${parametersPaginationHelper(
+              params._fields.variants._pagination
+            )}) {
               edges {
                 node {
                     ${gqlProductVariantFields(params._fields.variants)}
@@ -30,6 +33,7 @@ const gqlProductFields = params => {
         images {
           edges {
             node {
+              altText
               ${gqlImageFields()}
             }
           }

@@ -31,7 +31,7 @@ import data from "../../data";
 import { css, jsx } from "@emotion/core";
 import mapCheckoutItems from "../../helpers/mapCheckoutItems";
 import getCheckoutTotals from "../../helpers/getCheckoutTotals";
-import useCheckout from "../../graphql/hooks/useCheckout";
+import { useCheckout } from "../../graphql/hooks/useCheckout";
 import { CheckoutContext } from "../../lib/CheckoutContext";
 
 export const MenuDesktopContent = props => {
@@ -140,7 +140,7 @@ export const MenuDesktopContent = props => {
 const MenuDesktop = props => {
   const [opened, setOpened] = useState(false);
   const [profileOpened, setProfileOpened] = useState(false);
-  const [checkout] = useCheckout(CheckoutContext);
+  const { checkout } = useCheckout();
 
   const theme = useTheme();
   const segment = useScrollSegment({ 1: "not-top", 1000: "hideable" });

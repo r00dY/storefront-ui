@@ -1,13 +1,23 @@
-import useCheckout from "./useCheckout";
 import { useMutation } from "@apollo/react-hooks";
-import { checkoutLineItemsReplace } from "../mutations";
+import { useContext } from "react";
+import { checkoutLineItemsReplace, createCheckoutMutation } from "../mutations";
+import { CheckoutContext } from "../../lib/CheckoutContext";
 
 export default productVariant => {
   const [mutationFunction, { loading, error }] = useMutation(
     checkoutLineItemsReplace
   );
+  const [createCheckoutFunction] = useMutation(createCheckoutMutation);
+  const { checkout, setCheckout } = useContext(CheckoutContext);
 
-  const { checkout, setCheckout, createCheckout } = useCheckout();
+  const createCheckout = async lineItems => {
+    const data = await createCheckoutFunction({
+      variables: { input: { lineItems } }
+    });
+    setCheckout(data.data.checkoutCreate.checkout);
+
+    return data.data.checkoutCreate.checkout;
+  };
 
   const getVariantToUpdateAndOtherVariants = () => {
     const variantToUpdate = checkout.lineItems.edges.find(
@@ -22,7 +32,7 @@ export default productVariant => {
 
   const changeQuantity = async (quantity, add) => {
     if (!checkout) {
-      createCheckout([{ variantId: productVariant.id, quantity }]);
+      await createCheckout([{ variantId: productVariant.id, quantity }]);
       return;
     }
 

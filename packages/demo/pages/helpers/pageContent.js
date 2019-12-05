@@ -4,7 +4,7 @@ import useCheckoutLineItemsModification from "../../graphql/hooks/useCheckoutLin
 export default ({ variant }) => {
   const { update, removeAll, add } = useCheckoutLineItemsModification(variant);
 
-  const { checkout } = useCheckout();
+  // const { checkout } = useCheckout();
 
   return (
     <div>

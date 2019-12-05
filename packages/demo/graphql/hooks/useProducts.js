@@ -1,32 +1,49 @@
-import { useQuery } from "@apollo/react-hooks";
-import getCollection from "../queries/getCollection";
-import mapProductsToMultipleVariants from "../../helpers/mapProductsToMultipleVariants";
+import React from "react";
+import {
+  createApolloGetter,
+  createApolloHook
+} from "../../data-sources/helpers";
+import gql from "graphql-tag";
+import gqlProductFields from "../../data-sources/mock/_productFields";
+import gqlImageFields from "../../data-sources/mock/_imageFields";
+import parametersPaginationHelper from "../../helpers/parametersPaginationHelper";
 
-const useProducts = filters => {
-  const collectionName = filters.find(
-    filter => filter.name === "collectionName"
-  ).value;
-  const productsAmount = filters.find(
-    filter => filter.name === "productsAmount"
-  ).value;
+const gqlProducts = params => {
+  let productFields =
+    params._fields && params._fields.products
+      ? gqlProductFields(params._fields.products)
+      : `id
+        title
+        handle
+        availableForSale
+        createdAt
+        tags
+        options {
+          name
+          values
+        }
+        images {
+          edges {
+            node {
+              ${gqlImageFields()}
+            }
+          }
+        }
+      `;
 
-  const { data, loading } = useQuery(getCollection, {
-    variables: { collectionName, productsAmount }
-  });
-
-  if (!data) {
-    return [data, loading];
+  return gql`
+query {
+  products(${parametersPaginationHelper(params._pagination)}) {
+        edges {
+          cursor
+          node {
+            ${productFields}          
+          }
+        }
   }
-
-  const { collectionByHandle } = data;
-
-  const mappedProducts = mapProductsToMultipleVariants(
-    collectionByHandle && collectionByHandle.products
-      ? collectionByHandle.products
-      : []
-  );
-
-  return [mappedProducts, loading];
+}
+`;
 };
 
-export default useProducts;
+export const getProducts = createApolloGetter("products", gqlProducts);
+export const useProducts = createApolloHook("products", gqlProducts);
