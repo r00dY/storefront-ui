@@ -6,13 +6,11 @@ import { css, jsx } from "@emotion/core";
 import { useTheme } from "@commerce-ui/core/Theme";
 
 import { CheckoutLineItemRowTheme1 } from "../CheckoutLineItemRow";
-import useDeleteFromCart from "../../graphql/hooks/useDeleteFromCart";
-import useCheckout from "../../graphql/hooks/useCheckout";
+import { useCheckout } from "../../graphql/hooks/useCheckout";
 
 const MiniBasketContent = props => {
   const {} = props;
   const theme = useTheme();
-  const [deleteItemFromCart, deletingInProgress] = useDeleteFromCart();
   const [checkout] = useCheckout();
 
   const lineItems = props.dataMapper(checkout.lineItems);

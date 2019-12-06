@@ -19,8 +19,6 @@ import Device from "@commerce-ui/core/Device";
 import Footer from "../components/Footer";
 import data from "../data";
 import { parseCookies, setCookie } from "../helpers/cookie";
-import fetchCheckout from "../actions/fetchCheckout";
-import createEmptyCheckout from "../actions/createEmptyCheckout";
 import { InjectCheckoutContext } from "../lib/CheckoutContext";
 
 import routerPush from "../helpers/routerPush";
@@ -28,6 +26,7 @@ import routerPush from "../helpers/routerPush";
 import initApollo, { createApolloClient } from "../lib/init-apollo";
 import { getDataFromTree } from "@apollo/react-ssr";
 import Head from "next/head";
+import { getCheckout } from "../graphql/hooks/useCheckout";
 
 const tabs = [
   {
@@ -85,9 +84,20 @@ class MyApp extends App {
       pageProps = await Component.getInitialProps(ctx);
     }
 
+    const checkoutQueryWithData = await getCheckout({
+      id:
+        "Z2lkOi8vc2hvcGlmeS9DaGVja291dC8yNDdmYThlMzZhYzlhNDA0Y2YwNWMyNmU0NDdkNGQ4ND9rZXk9ZjFjMzAyZDIyODhmMDMyMWQwMTAwZjQ0NDBhODk2N2U=",
+      _fields: {
+        lineItems: {
+          _pagination: { first: 100 }
+        }
+      }
+    });
+
     return {
       pageProps,
-      noRoot: ctx.query.noRoot !== undefined /*, checkout */
+      noRoot: ctx.query.noRoot !== undefined,
+      checkout: checkoutQueryWithData.data.checkout
     };
   }
 
@@ -98,7 +108,7 @@ class MyApp extends App {
   }
 
   render() {
-    const { Component, pageProps } = this.props;
+    const { Component, pageProps, checkout } = this.props;
     const apolloClient = this.apolloClient;
 
     const content = <Component {...pageProps} />;
@@ -110,12 +120,7 @@ class MyApp extends App {
     const showFooterOnMobile = Component.showFooterOnMobile === true;
 
     return (
-      // pass checkoutId from cookie
-      <InjectCheckoutContext
-        checkoutId={
-          "Z2lkOi8vc2hvcGlmeS9DaGVja291dC82M2U2NDk1M2RlNjZjZjkyZmU2NmYzN2Q1ZDdmZjNhNT9rZXk9ZjViYThiYzZlYWQ2Y2Q2YjdmODc0N2Y3ZTNkMjliZjM="
-        }
-      >
+      <InjectCheckoutContext checkout={checkout}>
         <ApolloProvider client={apolloClient}>
           {/*<ApolloHooksProvider client={apolloClient}>*/}
           <Root theme={theme}>

@@ -1,9 +1,13 @@
 import React from "react";
 import gql from "graphql-tag";
-import { createApolloGetter, createApolloHook } from "../helpers";
+import {
+  createApolloGetter,
+  createApolloHook
+} from "../../data-sources/helpers";
 
-import gqlProductFields from "./_productFields";
-import gqlImageFields from "./_imageFields";
+import gqlProductFields from "../../data-sources/mock/_productFields";
+import gqlImageFields from "../../data-sources/mock/_imageFields";
+import parametersPaginationHelper from "../../helpers/parametersPaginationHelper";
 
 const gqlCollections = params => {
   let productsFieldQuery = "";
@@ -22,7 +26,7 @@ const gqlCollections = params => {
 
   return gql`
       query {
-        collections(first: ${params.amount}) {
+        collections(${parametersPaginationHelper(params._pagination)}) {
           edges {
             node {
               id
