@@ -3,6 +3,7 @@ import { Input } from "../../../../demo/components/Input";
 import { StatefulInput } from "../../../../demo/components/Input";
 import { Input$ } from "@commerce-ui/core/Input";
 import { StatefulInput$ } from "@commerce-ui/core/Input";
+import { Button } from "../../../../demo/components/Button";
 
 /** @jsx jsx */
 import { css, jsx } from "@emotion/core";
@@ -133,6 +134,11 @@ export default () => {
           }
         }}
       />
+      <p>Form validations</p>
+      <form method={"post"} action={"/"}>
+        <StatefulInput type={"email"} required={true} />
+        <Button type={"submit"}>Submit</Button>
+      </form>
     </div>
   );
 };

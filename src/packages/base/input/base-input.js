@@ -145,6 +145,7 @@ class BaseInput<T: EventTarget> extends React.Component<
       "aria-describedby": this.props["aria-describedby"],
       "aria-invalid": !!error,
       "aria-required": required,
+      required: required,
       autoComplete,
       disabled,
       id,
