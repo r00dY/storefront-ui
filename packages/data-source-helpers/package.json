@@ -1,0 +1,16 @@
+{
+  "name": "@commerce-ui/data-source-helpers",
+  "description": "commerce-ui helpers to quickly build new data sources",
+  "scripts": {
+    "test": "node -r esm ./spec/run.js"
+  },
+  "dependencies": {
+    "esm": "^3.2.25",
+    "graphql": "^14.5.8",
+    "graphql-tag": "^2.10.1"
+  },
+  "version": "0.6.7",
+  "devDependencies": {
+    "jasmine": "^3.5.0"
+  }
+}

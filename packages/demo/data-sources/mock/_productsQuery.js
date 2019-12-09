@@ -19,6 +19,20 @@ const gqlProductFields = params => {
         `;
   }
 
+  let productsFieldQuery = "";
+
+  if (params._fields && params._fields.products) {
+    productsFieldQuery = `
+            products(first: ${params.productsAmount}) {
+                edges {
+                  node {
+                    ${gqlProductFields(params._fields.products)}
+                  }
+                }
+              }
+        `;
+  }
+
   return `
         id
         title
