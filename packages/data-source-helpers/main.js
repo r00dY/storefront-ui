@@ -1,4 +1,4 @@
-export class QueryWithResult {
+class QueryWithResult {
   constructor(queryName, params, data, error) {
     this.queryName = queryName;
     this.params = params;
@@ -13,7 +13,7 @@ export class QueryWithResult {
   }
 }
 
-export function createGetter(queryName, fetchFunction) {
+function createGetter(queryName, fetchFunction) {
   const fun = async (params = {}, options = {}) => {
     options.skipInBrowser = options.skipInBrowser || false;
 
@@ -31,7 +31,7 @@ export function createGetter(queryName, fetchFunction) {
   return fun;
 }
 
-export function flattenEdges(data) {
+function flattenEdges(data) {
   let ret = {};
 
   Object.entries(data).forEach(([key, value]) => {
@@ -46,3 +46,10 @@ export function flattenEdges(data) {
 
   return ret;
 }
+
+module.exports = {
+  QueryWithResult,
+  createGetter,
+  flattenEdges
+};
+7;

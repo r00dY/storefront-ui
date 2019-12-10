@@ -1,12 +1,24 @@
 {
   "name": "@commerce-ui/data-source-mock",
   "description": "Data source with mock data for Commerce UI purposes",
-  "scripts": {},
+  "scripts": {
+    "test": "jest"
+  },
   "dependencies": {
     "@commerce-ui/data-mock": "^0.6.7",
     "@commerce-ui/data-source-helpers": "^0.6.7",
     "apollo-server": "^2.9.13",
+    "cross-fetch": "^3.0.4",
     "graphql": "^14.5.8"
   },
-  "version": "0.6.7"
+  "version": "0.6.7",
+  "devDependencies": {
+    "@babel/core": "^7.7.5",
+    "@babel/preset-env": "^7.7.6",
+    "@babel/preset-react": "^7.7.4",
+    "apollo-boost": "^0.4.4",
+    "babel-jest": "^24.9.0",
+    "jest": "^24.9.0",
+    "regenerator-runtime": "^0.13.3"
+  }
 }

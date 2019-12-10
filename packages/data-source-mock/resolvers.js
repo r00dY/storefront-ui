@@ -80,7 +80,15 @@ const resolvers = {
     },
 
     collectionByHandle(parent, args) {
-      const collection = { ...collections.find(x => x.handle === args.handle) };
+      const collectionByHandle = collections.find(
+        x => x.handle === args.handle
+      );
+
+      if (!collectionByHandle) {
+        return;
+      }
+
+      const collection = { ...collectionByHandle };
       const products = collection.products;
 
       // TODO: implement pagination!

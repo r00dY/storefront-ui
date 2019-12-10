@@ -34,7 +34,16 @@ const gqlCollectionsQuery = (params, name = "collections") => {
   `;
 };
 
+const gqlCollectionByHandleQuery = (params, name = "collection") => {
+  params = params || {};
+  return gqlCollectionQuery(
+    params,
+    `collectionByHandle(handle: "${params.handle}")`
+  );
+};
+
 module.exports = {
   gqlCollectionsQuery,
-  gqlCollectionQuery
+  gqlCollectionQuery,
+  gqlCollectionByHandleQuery
 };

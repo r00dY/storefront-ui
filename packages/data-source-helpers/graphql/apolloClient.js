@@ -1,16 +1,26 @@
-import { useApolloClient, useQuery } from "@apollo/react-hooks";
-import gql from "graphql-tag";
-import { createGetter, flattenEdges } from "../main";
-import React, { useRef } from "react";
+const { useApolloClient, useQuery } = require("@apollo/react-hooks");
+const gql = require("graphql-tag");
+const { createGetter, flattenEdges } = require("../main");
+const { useRef } = require("react");
 
-export function createApolloGetter(queryName, queryFunction) {
+function createQuery(query) {
+  return gql`
+    query {
+      ${query}
+    }
+  `;
+}
+
+function createApolloGetter(queryName, queryFunction) {
   const fetchFunction = async params => {
     const client = global.APOLLO_CLIENT;
 
     try {
       const result = await client.query({
-        query: queryFunction(params)
+        query: createQuery(queryFunction(params))
       });
+
+      result.data = flattenEdges(result.data)[queryName];
 
       return result.data;
     } catch (e) {
@@ -21,7 +31,7 @@ export function createApolloGetter(queryName, queryFunction) {
   return createGetter(queryName, fetchFunction);
 }
 
-export function createApolloHook(queryName, queryFunction) {
+function createApolloHook(queryName, queryFunction) {
   return (arg = {}, options = {}) => {
     // Let's validate if QueryWithResult given to the hook is compatible with getter (queryName must agree)
     if (arg._queryWithResult) {
@@ -39,12 +49,15 @@ export function createApolloHook(queryName, queryFunction) {
 
       if (!!arg._queryWithResult && !arg.isEmpty) {
         // TODO: what if error in getInitialProps? We must take it into account
-        client.writeQuery({ query: queryFunction(arg.params), data: arg.data });
+        client.writeQuery({
+          query: createQuery(queryFunction(arg.params)),
+          data: arg.data
+        });
       }
     }
 
     const useQueryResult = useQuery(
-      queryFunction(arg._queryWithResult ? arg.params : arg),
+      createQuery(queryFunction(arg._queryWithResult ? arg.params : arg)),
       options
     );
 
@@ -56,3 +69,8 @@ export function createApolloHook(queryName, queryFunction) {
     };
   };
 }
+
+module.exports = {
+  createApolloHook,
+  createApolloGetter
+};
