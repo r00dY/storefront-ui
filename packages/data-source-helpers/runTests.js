@@ -33,7 +33,7 @@ function runTests(dataSource, config) {
   });
 
   describe("collections", () => {
-    test("[getCollections] works good without params", async () => {
+    test("works good without params", async () => {
       let dataWithQuery = await getCollections();
       let data = dataWithQuery.data;
 
@@ -48,7 +48,7 @@ function runTests(dataSource, config) {
       expect(data[0].products).toBeUndefined();
     });
 
-    test("[getCollections] works good with products", async () => {
+    test("works good with products", async () => {
       let dataWithQuery = await getCollections({
         _fields: { products: {} }
       });

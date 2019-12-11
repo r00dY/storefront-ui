@@ -44,7 +44,7 @@ const resolvers = {
       return products.find(x => x.handle === args.handle);
     },
 
-    products(parent, args) {
+    products: async (parent, args) => {
       return getPaginationResolver(products);
     },
 

@@ -11,12 +11,10 @@ function createQuery(query) {
   `;
 }
 
-function createApolloGetter(queryName, queryFunction) {
+function createApolloGetter(queryName, queryFunction, apolloClient) {
   const fetchFunction = async params => {
-    const client = global.APOLLO_CLIENT;
-
     try {
-      const result = await client.query({
+      const result = await apolloClient.query({
         query: createQuery(queryFunction(params))
       });
 

@@ -6,11 +6,12 @@ import {
 } from "../../data-source-helpers/graphql/apolloClient";
 import { gqlCollectionByHandleQuery } from "../../data-source-helpers/graphql/collectionQuery";
 
-export const getCollectionByHandle = createApolloGetter(
-  "collectionByHandle",
-  gqlCollectionByHandleQuery
-);
-export const useCollectionByHandle = createApolloHook(
-  "collectionByHandle",
-  gqlCollectionByHandleQuery
-);
+export const getCollectionByHandle = apolloClient =>
+  createApolloGetter(
+    "collectionByHandle",
+    gqlCollectionByHandleQuery,
+    apolloClient
+  );
+
+export const useCollectionByHandle = () =>
+  createApolloHook("collectionByHandle", gqlCollectionByHandleQuery);

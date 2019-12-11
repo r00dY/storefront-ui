@@ -6,10 +6,8 @@ import {
 } from "../../data-source-helpers/graphql/apolloClient";
 import { gqlProductByHandle } from "../../data-source-helpers/graphql/productQuery";
 
-export const getProductByHandle = createApolloGetter(
-  "productByHandle",
-  gqlProductByHandle
-);
+export const getProductByHandle = apolloClient =>
+  createApolloGetter("productByHandle", gqlProductByHandle, apolloClient);
 export const useProductByHandle = createApolloHook(
   "productByHandle",
   gqlProductByHandle
