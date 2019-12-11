@@ -5,10 +5,10 @@ import { getCollections } from "../collections";
 // TODO: pagination
 
 test("[getCollections] works good without params", async () => {
-  let collectionsDataWithQuery = await getCollections();
-  let data = collectionsDataWithQuery.data;
+  let dataWithQuery = await getCollections();
+  let data = dataWithQuery.data;
 
-  expect(collectionsDataWithQuery.error).toBe(undefined);
+  expect(dataWithQuery.error).toBe(undefined);
 
   expect(Array.isArray(data) && data.length > 5).toBe(true);
 
@@ -19,12 +19,12 @@ test("[getCollections] works good without params", async () => {
 });
 
 test("[getCollections] works good with products", async () => {
-  let collectionsDataWithQuery = await getCollections({
+  let dataWithQuery = await getCollections({
     _fields: { products: {} }
   });
-  let data = collectionsDataWithQuery.data;
+  let data = dataWithQuery.data;
 
-  expect(collectionsDataWithQuery.error).toBe(undefined);
+  expect(dataWithQuery.error).toBe(undefined);
 
   expect(Array.isArray(data) && data.length > 5).toBe(true);
 
