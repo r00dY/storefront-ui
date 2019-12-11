@@ -3,10 +3,10 @@ import fetch from "cross-fetch";
 import "regenerator-runtime/runtime";
 import runTests from "@commerce-ui/data-source-helpers/runTests";
 
-import { getCollectionByHandle } from "../collectionByHandle";
-import { getCollections } from "../collections";
-import { getProducts } from "../products";
-import { getProductByHandle } from "../productByHandle";
+import { getCollectionByHandle } from "../api/collectionByHandle";
+import { getCollections } from "../api/collections";
+import { getProducts } from "../api/products";
+import { getProductByHandle } from "../api/productByHandle";
 
 global.fetch = fetch;
 global.APOLLO_CLIENT = new ApolloClient({

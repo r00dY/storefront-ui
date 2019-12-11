@@ -3,8 +3,8 @@ import React from "react";
 import {
   createApolloGetter,
   createApolloHook
-} from "@commerce-ui/data-source-helpers/graphql/apolloClient";
-import { gqlProductByHandle } from "@commerce-ui/data-source-helpers/graphql/productQuery";
+} from "../../data-source-helpers/graphql/apolloClient";
+import { gqlProductByHandle } from "../../data-source-helpers/graphql/productQuery";
 
 export const getProductByHandle = createApolloGetter(
   "productByHandle",
