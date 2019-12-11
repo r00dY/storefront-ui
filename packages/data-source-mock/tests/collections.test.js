@@ -10,7 +10,8 @@ test("[getCollections] works good without params", async () => {
 
   expect(dataWithQuery.error).toBe(undefined);
 
-  expect(Array.isArray(data) && data.length > 5).toBe(true);
+  expect(Array.isArray(data)).toBe(true);
+  expect(data.length).toBeGreaterThan(5);
 
   // TODO: run basic tests for single collection objects
   expect(typeof data[0].handle === "string").toBe(true);
@@ -26,7 +27,8 @@ test("[getCollections] works good with products", async () => {
 
   expect(dataWithQuery.error).toBe(undefined);
 
-  expect(Array.isArray(data) && data.length > 5).toBe(true);
+  expect(Array.isArray(data)).toBe(true);
+  expect(data.length).toBeGreaterThan(5);
 
   // TODO: run basic tests for single collection objects
   expect(typeof data[0].handle === "string").toBe(true);
