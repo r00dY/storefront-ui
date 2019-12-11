@@ -270,6 +270,7 @@ products.forEach((product, pIndex) => {
   product.shit = "Dupa";
 
   let option = {
+    id: "size",
     name: "size",
     values: []
   };
@@ -308,6 +309,7 @@ products.forEach((product, pIndex) => {
       image: product.images[0],
       selectedOptions: [
         {
+          id: id,
           name: "size",
           value: optionValue
         }

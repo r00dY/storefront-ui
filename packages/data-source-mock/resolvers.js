@@ -29,21 +29,23 @@ const resolvers = {
     }
   },
 
+  Collection: {
+    // images(parent) {
+    //   return getPaginationResolver(parent.images);
+    // },
+
+    products(parent) {
+      return getPaginationResolver(parent.products);
+    }
+  },
+
   QueryRoot: {
     productByHandle(parent, args, context) {
-      const productByHandle = products.find(x => x.handle === args.handle);
+      return products.find(x => x.handle === args.handle);
+    },
 
-      if (!productByHandle) {
-        return;
-      }
-
-      const product = { ...productByHandle };
-      const variants = product.variants;
-
-      // TODO: implement pagination!
-      product.variants = getPaginationResolver(variants);
-
-      return product;
+    products(parent, args) {
+      return getPaginationResolver(products);
     },
 
     checkout() {
@@ -54,32 +56,11 @@ const resolvers = {
     },
 
     collections(parent, args) {
-      return getPaginationResolver(
-        collections.map(c => {
-          const collection = { ...c };
-          const products = c.products;
-          collection.products = getPaginationResolver(products);
-          return collection;
-        })
-      );
+      return getPaginationResolver(collections);
     },
 
     collectionByHandle(parent, args) {
-      const collectionByHandle = collections.find(
-        x => x.handle === args.handle
-      );
-
-      if (!collectionByHandle) {
-        return;
-      }
-
-      const collection = { ...collectionByHandle };
-      const products = collection.products;
-
-      // TODO: implement pagination!
-      collection.products = getPaginationResolver(products);
-
-      return collection;
+      return collections.find(x => x.handle === args.handle);
     }
   }
 };
