@@ -42,7 +42,14 @@ const gqlProductsQuery = (params, name = "products") => {
   `;
 };
 
+const gqlProductByHandle = params => {
+  params = params || {};
+
+  return gqlProductQuery(params, `productByHandle(handle: "${params.handle}")`);
+};
+
 module.exports = {
   gqlProductsQuery,
-  gqlProductQuery
+  gqlProductQuery,
+  gqlProductByHandle
 };

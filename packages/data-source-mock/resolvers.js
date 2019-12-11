@@ -1,5 +1,6 @@
 const collections = require("@commerce-ui/data-mock/collections");
 const checkoutData = require("@commerce-ui/data-mock/checkout");
+const products = require("@commerce-ui/data-mock/products");
 
 // TODO: this is mock so far
 const getPaginationResolver = function(items) {
@@ -30,35 +31,19 @@ const resolvers = {
 
   QueryRoot: {
     productByHandle(parent, args, context) {
-      return {
-        id: "1233567",
-        handle: "Super produkt",
-        availableForSale: true,
-        description: "Super product i to jest jego opis.",
-        collections: {
-          edges: [],
-          pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false
-          }
-        },
-        images: {
-          edges: [],
-          pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false
-          }
-        },
-        options: [],
-        tags: [],
-        variants: {
-          edges: [],
-          pageInfo: {
-            hasNextPage: false,
-            hasPreviousPage: false
-          }
-        }
-      };
+      const productByHandle = products.find(x => x.handle === args.handle);
+
+      if (!productByHandle) {
+        return;
+      }
+
+      const product = { ...productByHandle };
+      const variants = product.variants;
+
+      // TODO: implement pagination!
+      product.variants = getPaginationResolver(variants);
+
+      return product;
     },
 
     checkout() {

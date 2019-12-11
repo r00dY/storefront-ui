@@ -16,6 +16,8 @@ function createApolloGetter(queryName, queryFunction) {
     const client = global.APOLLO_CLIENT;
 
     try {
+      console.log(queryFunction(params));
+
       const result = await client.query({
         query: createQuery(queryFunction(params))
       });
@@ -24,7 +26,7 @@ function createApolloGetter(queryName, queryFunction) {
 
       return result.data;
     } catch (e) {
-      console.error("[fetchCollectionByHandle]", e);
+      console.error(`[${queryName}]`, e);
     }
   };
 
