@@ -52,4 +52,3 @@ module.exports = {
   createGetter,
   flattenEdges
 };
-7;
