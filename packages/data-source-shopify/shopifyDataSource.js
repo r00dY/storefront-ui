@@ -6,14 +6,16 @@ class ShopifyDataSource {
   constructor(config) {
     const { uri, accessToken } = config;
 
+    const link = new HttpLink({
+      uri: uri, // Server URL (must be absolute),
+      headers: {
+        "X-Shopify-Storefront-Access-Token": accessToken
+      }
+    });
+
     this.client = new ApolloClient({
       connectToDevTools: process.browser,
-      link: new HttpLink({
-        uri: uri, // Server URL (must be absolute),
-        headers: {
-          "X-Shopify-Storefront-Access-Token": accessToken
-        }
-      }),
+      link,
       cache: new InMemoryCache(),
       clientState: { defaults: {}, resolvers: {} }
     });

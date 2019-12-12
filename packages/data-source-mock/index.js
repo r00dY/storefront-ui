@@ -9,6 +9,8 @@ import { getProductByHandle } from "./api/productByHandle";
 
 global.fetch = fetch;
 
+import { flattenEdges } from "@commerce-ui/data-source-helpers/main";
+
 function createDataSource(config) {
   const { uri } = config;
 
@@ -25,7 +27,20 @@ function createDataSource(config) {
     getCollectionByHandle: getCollectionByHandle(apolloClient),
     getCollections: getCollections(apolloClient),
     getProductByHandle: getProductByHandle(apolloClient),
-    getProducts: getProducts(apolloClient)
+    getProducts: getProducts(apolloClient),
+    getData: async data => {
+      try {
+        const result = await apolloClient.query({
+          query: data
+        });
+
+        // result.data = flattenEdges(result.data)[queryName];
+
+        return result.data;
+      } catch (e) {
+        console.error(e);
+      }
+    }
   };
 }
 

@@ -2,6 +2,8 @@ const collections = require("@commerce-ui/data-mock/collections");
 const checkoutData = require("@commerce-ui/data-mock/checkout");
 const products = require("@commerce-ui/data-mock/products");
 
+const { gql } = require("apollo-boost");
+
 // TODO: this is mock so far
 const getPaginationResolver = function(items) {
   items = [...items] || [];
@@ -108,9 +110,23 @@ const resolvers = {
       return data.collections;
     },
 
-    collectionByHandle: async (parent, args, { dataSources }) => {
-      const data = await dataSources.shopify.getCollectionByHandle(args.handle);
-      return data.collectionByHandle;
+    collectionByHandle: async (parent, args, context, info) => {
+      console.log(info);
+
+      return info.mergeInfo.delegateToSchema({
+        schema: context.dataSources.shopify2.shopifySchema,
+        operation: "query",
+        fieldName: "collectionByHandle",
+        // args: {
+        //   userId: parent.id,
+        // },
+        context,
+        info
+      });
+
+      // return null;
+      // const data = await dataSources.shopify.getCollectionByHandle(args.handle);
+      // return data.collectionByHandle;
     }
   }
 };
