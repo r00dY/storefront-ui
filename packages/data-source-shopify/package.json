@@ -1,5 +1,5 @@
 {
-  "name": "@commerce-ui/data-source-mock",
+  "name": "@commerce-ui/data-source-shopify",
   "description": "Data source with mock data for Commerce UI purposes",
   "scripts": {
     "test": "jest"

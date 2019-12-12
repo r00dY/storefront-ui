@@ -18,16 +18,65 @@ const getPaginationResolver = function(items) {
   };
 };
 
-const resolvers = {
-  Product: {
-    images(parent) {
-      return getPaginationResolver(parent.images);
-    },
+function getChildField(field, fieldName) {
+  return field.selectionSet.selections.find(x => x.name.value === fieldName);
+}
 
-    variants(parent) {
-      return getPaginationResolver(parent.variants);
-    }
-  },
+function getNodeFromEdges(field) {
+  const edges = getChildField(field, "edges");
+  if (!edges) {
+    return;
+  }
+
+  const node = getChildField(edges, "node");
+  if (!node) {
+    return;
+  }
+
+  return node;
+}
+
+function getNodeFromPaginatedField(field, fieldName) {
+  const connection = getChildField(field, fieldName);
+  if (!connection) {
+    return;
+  }
+
+  return getNodeFromEdges(connection);
+}
+
+function getProductParams(field) {
+  const _fields = {};
+
+  const productNode = getNodeFromPaginatedField(field, "variants");
+  if (productNode) {
+    _fields["variants"] = {};
+  }
+
+  return { _fields };
+}
+
+function getCollectionParams(field) {
+  const _fields = {};
+
+  const productNode = getNodeFromPaginatedField(field, "products");
+  if (productNode) {
+    _fields["products"] = getProductParams(productNode);
+  }
+
+  return { _fields };
+}
+
+const resolvers = {
+  // Product: {
+  //     images(parent) {
+  //         return getPaginationResolver(parent.images);
+  //     },
+  //
+  //     variants(parent) {
+  //         return getPaginationResolver(parent.variants);
+  //     }
+  // },
 
   Collection: {
     // images(parent) {
@@ -35,32 +84,33 @@ const resolvers = {
     // },
 
     products(parent) {
-      return getPaginationResolver(parent.products);
+      return parent.products;
+      // return getPaginationResolver(parent.products);
     }
   },
 
   QueryRoot: {
-    productByHandle(parent, args, context) {
-      return products.find(x => x.handle === args.handle);
+    // productByHandle(parent, args, context) {
+    //     return products.find(x => x.handle === args.handle);
+    // },
+    //
+    // products: async (parent, args) => {
+    //     return getPaginationResolver(products);
+    // },
+
+    collections: async (parent, args, context, info) => {
+      const { dataSources } = context;
+
+      const collectionNode = getNodeFromEdges(info.fieldNodes[0]);
+      const params = getCollectionParams(collectionNode);
+
+      const data = await dataSources.shopify.getCollections(params);
+      return data.collections;
     },
 
-    products: async (parent, args) => {
-      return getPaginationResolver(products);
-    },
-
-    checkout() {
-      const checkout = { ...checkoutData };
-      checkout.lineItems = getPaginationResolver(checkoutData.lineItems);
-
-      return checkout;
-    },
-
-    collections(parent, args) {
-      return getPaginationResolver(collections);
-    },
-
-    collectionByHandle(parent, args) {
-      return collections.find(x => x.handle === args.handle);
+    collectionByHandle: async (parent, args, { dataSources }) => {
+      const data = await dataSources.shopify.getCollectionByHandle(args.handle);
+      return data.collectionByHandle;
     }
   }
 };
