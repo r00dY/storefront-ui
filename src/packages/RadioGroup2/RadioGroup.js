@@ -177,7 +177,7 @@ function RadioGroup__Generic(props) {
     }
 
     return (
-      <>
+      <React.Fragment key={item.value}>
         <ItemContainer
           key={item.value}
           {...itemContainerProps}
@@ -207,7 +207,7 @@ function RadioGroup__Generic(props) {
         </ItemContainer>
 
         {contentContainer}
-      </>
+      </React.Fragment>
     );
   });
 
