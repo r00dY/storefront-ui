@@ -1,9 +1,7 @@
 {
   "name": "@commerce-ui/data-source-helpers",
   "description": "commerce-ui helpers to quickly build new data sources",
-  "scripts": {
-    "test": "node -r esm ./spec/run.js"
-  },
+  "scripts": {},
   "dependencies": {
     "@apollo/react-hooks": "^3.1.3",
     "apollo-boost": "^0.4.4",
