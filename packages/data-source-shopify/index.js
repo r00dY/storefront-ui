@@ -2,31 +2,30 @@ import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost";
 import fetch from "cross-fetch";
 import "regenerator-runtime/runtime";
 
-import { getCollectionByHandle } from "./api/collectionByHandle";
-import { getCollections } from "./api/collections";
-import { getProducts } from "./api/products";
-import { getProductByHandle } from "./api/productByHandle";
+import { createApolloGetter } from "@commerce-ui/data-source-helpers/graphql/apolloClient";
 
 global.fetch = fetch;
 
-function createDataSource(config) {
-  const { uri } = config;
+class ShopifyDataSource {
+  constructor(config) {
+    const { uri, accessToken } = config;
 
-  const apolloClient = new ApolloClient({
-    connectToDevTools: process.browser,
-    link: new HttpLink({
-      uri: uri // Server URL (must be absolute)
-    }),
-    cache: new InMemoryCache(),
-    clientState: { defaults: {}, resolvers: {} }
-  });
+    this.config = config;
 
-  return {
-    getCollectionByHandle: getCollectionByHandle(apolloClient),
-    getCollections: getCollections(apolloClient),
-    getProductByHandle: getProductByHandle(apolloClient),
-    getProducts: getProducts(apolloClient)
-  };
+    this.apolloClient = new ApolloClient({
+      connectToDevTools: process.browser,
+      link: new HttpLink({
+        uri: uri, // Server URL (must be absolute)
+        headers: {
+          "X-Shopify-Storefront-Access-Token": accessToken
+        }
+      }),
+      cache: new InMemoryCache(),
+      clientState: { defaults: {}, resolvers: {} }
+    });
+
+    this.getData = createApolloGetter(this.apolloClient);
+  }
 }
 
-export { createDataSource };
+export default ShopifyDataSource;

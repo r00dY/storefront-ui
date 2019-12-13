@@ -34,38 +34,40 @@ async function run(config) {
     link
   });
 
-  const newSchema = transformSchema(executableSchema, [
-    // new TransformRootFields((operation, fieldName) => {
-    //     console.log(operation, fieldName);
-    //     return null;
-    // }),
-    new FilterRootFields((operation, rootField) => {
-      if (operation === "Mutation") return true;
+  const newSchema = executableSchema;
 
-      if (operation === "Query") {
-        return [
-          "collections",
-          "collectionByHandle",
-          "products",
-          "productByHandle",
-          "node"
-        ].includes(rootField);
-      }
-    }),
-    new FilterTypes(type => {
-      if (type == "Money") {
-        console.log("money!");
-        return false;
-      } // we remove old legacy Money
-      return true;
-    }),
-    new RenameTypes(name => {
-      if (name === "MoneyV2") {
-        return "Money";
-      }
-    })
-    // new ExtractField('priceV2', 'priceV3')
-  ]);
+  // const newSchema = transformSchema(executableSchema, [
+  //   // new TransformRootFields((operation, fieldName) => {
+  //   //     console.log(operation, fieldName);
+  //   //     return null;
+  //   // }),
+  //   new FilterRootFields((operation, rootField) => {
+  //     if (operation === "Mutation") return true;
+  //
+  //     if (operation === "Query") {
+  //       return [
+  //         "collections",
+  //         "collectionByHandle",
+  //         "products",
+  //         "productByHandle",
+  //         "node"
+  //       ].includes(rootField);
+  //     }
+  //   }),
+  //   new FilterTypes(type => {
+  //     if (type == "Money") {
+  //       console.log("money!");
+  //       return false;
+  //     } // we remove old legacy Money
+  //     return true;
+  //   }),
+  //   new RenameTypes(name => {
+  //     if (name === "MoneyV2") {
+  //       return "Money";
+  //     }
+  //   })
+  //   // new ExtractField('priceV2', 'priceV3')
+  // ]);
 
   const server = new ApolloServer({
     schema: newSchema

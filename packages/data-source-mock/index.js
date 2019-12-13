@@ -1,4 +1,4 @@
-import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost";
+import { ApolloClient, InMemoryCache, HttpLink, gql } from "apollo-boost";
 import fetch from "cross-fetch";
 import "regenerator-runtime/runtime";
 
@@ -9,7 +9,11 @@ import { getProductByHandle } from "./api/productByHandle";
 
 global.fetch = fetch;
 
-import { flattenEdges } from "@commerce-ui/data-source-helpers/main";
+import {
+  flattenEdges,
+  createGetter
+} from "@commerce-ui/data-source-helpers/main";
+// import basicFragments from "@commerce-ui/data-source-helpers/basicFragments";
 
 function createDataSource(config) {
   const { uri } = config;
@@ -28,19 +32,20 @@ function createDataSource(config) {
     getCollections: getCollections(apolloClient),
     getProductByHandle: getProductByHandle(apolloClient),
     getProducts: getProducts(apolloClient),
-    getData: async data => {
+    getData: createGetter(async query => {
       try {
         const result = await apolloClient.query({
-          query: data
+          query: gql`
+            ${query}
+          `
         });
-
-        // result.data = flattenEdges(result.data)[queryName];
 
         return result.data;
       } catch (e) {
+        console.log("============ DUPA ========");
         console.error(e);
       }
-    }
+    })
   };
 }
 

@@ -1,6 +1,5 @@
 class QueryWithResult {
-  constructor(queryName, params, data, error) {
-    this.queryName = queryName;
+  constructor(params, data, error) {
     this.params = params;
     this.data = data;
     this.error = error;
@@ -13,19 +12,19 @@ class QueryWithResult {
   }
 }
 
-function createGetter(queryName, fetchFunction) {
-  const fun = async (params = {}, options = {}) => {
+function createGetter(fetchFunction) {
+  const fun = async (query, options = {}) => {
     options.skipInBrowser = options.skipInBrowser || false;
 
     if (!process.browser || (process.browser && !options.skipInBrowser)) {
       try {
-        const data = await fetchFunction(params);
-        return new QueryWithResult(queryName, params, data, undefined);
+        const data = await fetchFunction(query);
+        return new QueryWithResult(query, data, undefined);
       } catch (e) {
-        return new QueryWithResult(queryName, params, undefined, e);
+        return new QueryWithResult(query, undefined, e);
       }
     }
-    return new QueryWithResult(queryName, params, undefined, undefined);
+    return new QueryWithResult(query, undefined, undefined);
   };
 
   return fun;

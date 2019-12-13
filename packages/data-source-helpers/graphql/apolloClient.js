@@ -2,6 +2,7 @@ const { useApolloClient, useQuery } = require("@apollo/react-hooks");
 const gql = require("graphql-tag");
 const { createGetter, flattenEdges } = require("../main");
 const { useRef } = require("react");
+// const basicFragments = require("../basicFragments");
 
 function createQuery(query) {
   return gql`
@@ -11,22 +12,21 @@ function createQuery(query) {
   `;
 }
 
-function createApolloGetter(queryName, queryFunction, apolloClient) {
-  const fetchFunction = async params => {
+function createApolloGetter(apolloClient) {
+  const fetchFunction = async query => {
     try {
       const result = await apolloClient.query({
-        query: createQuery(queryFunction(params))
+        query: query
       });
-
-      result.data = flattenEdges(result.data)[queryName];
 
       return result.data;
     } catch (e) {
-      console.error(`[${queryName}]`, e);
+      console.log("==== APOLLO QUERY ERROR ====");
+      console.error(e);
     }
   };
 
-  return createGetter(queryName, fetchFunction);
+  return createGetter(fetchFunction);
 }
 
 function createApolloHook(queryName, queryFunction) {
