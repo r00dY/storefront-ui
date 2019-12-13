@@ -1,6 +1,3 @@
-import { ApolloClient, InMemoryCache, HttpLink } from "apollo-boost";
-import fetch from "cross-fetch";
-import "regenerator-runtime/runtime";
 import runTests from "@commerce-ui/data-source-helpers/runTests";
 
 import ShopifyDataSource from "../index";

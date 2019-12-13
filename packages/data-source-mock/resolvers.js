@@ -48,12 +48,12 @@ const resolvers = {
       return getPaginationResolver(products);
     },
 
-    checkout() {
-      const checkout = { ...checkoutData };
-      checkout.lineItems = getPaginationResolver(checkoutData.lineItems);
-
-      return checkout;
-    },
+    // checkout() {
+    //   const checkout = { ...checkoutData };
+    //   checkout.lineItems = getPaginationResolver(checkoutData.lineItems);
+    //
+    //   return checkout;
+    // },
 
     collections(parent, args) {
       return getPaginationResolver(collections);
