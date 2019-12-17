@@ -17,7 +17,7 @@
     "react-modal": "^3.8.1",
     "react-responsive": "^6.1.1",
     "react-visibility-sensor": "^5.0.2",
-    "responsive-helpers": "^0.2.1",
+    "responsive-helpers": "^0.2.4",
     "simpleswiper": "^0.10.6",
     "styled-system": "^5.1.4",
     "use-debounce": "^2.1.0"
