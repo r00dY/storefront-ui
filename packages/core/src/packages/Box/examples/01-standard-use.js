@@ -34,7 +34,8 @@ export default () => {
           bg: "mono500",
           font: "body",
           ":hover": {
-            font: "heading"
+            font: "heading",
+            pb: 0
           }
         }}
       >
@@ -42,6 +43,33 @@ export default () => {
         <br />
         Test
       </Box>
+
+      <p>Same as above but div</p>
+
+      <section
+        css={{
+          color: "primary",
+          pt: rslin(1, 5),
+          pb: rs({
+            xs: 0,
+            lg: rslin(1, 5)
+          }),
+          m: rs({
+            xs: 1,
+            lg: 5
+          }),
+          bg: "mono500",
+          font: "body",
+          ":hover": {
+            font: "heading",
+            pb: 0
+          }
+        }}
+      >
+        Test
+        <br />
+        Test
+      </section>
 
       <p>Box as section with styles test</p>
       <Box
