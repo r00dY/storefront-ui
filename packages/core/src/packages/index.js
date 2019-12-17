@@ -1,7 +1,5 @@
-/** @jsx jsx */
-
 import React from "react";
-import { jsx } from "@emotion/core";
+import { jsx as emotionJsx } from "@emotion/core";
 import styledSystemCss from "@styled-system/css";
 import { useTheme } from "emotion-theming";
 
@@ -36,6 +34,7 @@ function css(styles) {
   const theme = useTheme();
 
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
+  styles = styles.filter(x => !!x);
 
   return x =>
     styles.map(stylesSet => {
@@ -43,7 +42,18 @@ function css(styles) {
     });
 }
 
-export { css };
+function jsx(type, props, ...children) {
+  let newProps = { ...props };
+  let createElement = React.createElement;
+
+  if (typeof type === "string" && props.css) {
+    newProps.css = css(props.css);
+    createElement = emotionJsx;
+  }
+
+  return createElement(type, newProps, ...children);
+}
+export { css, jsx };
 
 /**
  What do we want?

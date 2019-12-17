@@ -1,15 +1,14 @@
 /** @jsx jsx */
-import { jsx } from "@emotion/core";
 import React from "react";
 import { Box } from "@commerce-ui/core/Box";
-import css from "@styled-system/css";
+import { jsx } from "@commerce-ui/core";
 
 export default () => {
   return (
     <div>
       <p>Box with styles test</p>
       <Box
-        sx={{
+        css={{
           color: "primary",
           p: 20,
           bg: "mono500"
@@ -21,7 +20,7 @@ export default () => {
       <p>Box as section with styles test</p>
       <Box
         as={"section"}
-        sx={{
+        css={{
           color: "primary",
           p: 4,
           bg: "mono500",
@@ -39,7 +38,7 @@ export default () => {
       <p>Box as section with styles test</p>
       <Box
         as={"p"}
-        sx={{
+        css={{
           color: "primary",
           p: 20,
           bg: "mono500",
@@ -53,9 +52,6 @@ export default () => {
             }
           },
           font: "body"
-
-          // font: "heading3",
-          // padding: rslin(10, 20)
         }}
       >
         Test
@@ -71,10 +67,12 @@ export default () => {
       </div>
 
       <div
-        css={css({
+        css={{
           color: "red",
-          bg: "primary"
-        })}
+          bg: "primary",
+          font: "body",
+          p: 4
+        }}
       >
         Wrapped
       </div>

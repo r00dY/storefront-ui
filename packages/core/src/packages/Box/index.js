@@ -1,29 +1,25 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx } from "@emotion/core";
-
-import { css } from "../index";
+import { jsx } from "../index";
 
 const boxStyles = {
   boxSizing: "border-box",
   minWidth: "0px"
 };
 
-function Box_(props) {
-  const { sx, as, ...restProps } = props;
+function Box(props) {
+  const { css, as, ...restProps } = props;
 
   return jsx(as, {
-    css: css([boxStyles, sx]),
+    css: [boxStyles, css],
     ...restProps
   });
 }
 
-Box_.defaultProps = {
+Box.defaultProps = {
   as: "div"
 };
-
-const Box = Box_;
 
 export { Box };
 
@@ -39,7 +35,7 @@ export { Box };
     }
  }}
 
-rslin(10, 20)
+ rslin(10, 20)
  {
     _: 0,
     md: rslin(10, 20)
@@ -69,7 +65,7 @@ rslin(10, 20)
  - na razie natywne!!! z sx. Potem możemy rozszerzać. Możemy zostawić Box i Text na razie (w sumie to samo tylko inny default "as" na "p", lol)
  - czyli co, wgrywamy theme-ui?
 
-ZALETY NIENATYWNYCH
+ ZALETY NIENATYWNYCH
  - możemy mieć kontrolę nad propsami i wtedy np. wiedzieć, że żaden komponent w środku jakiegoś komponentu nie zrobi position: fixed czy coś. Można to realnie zablokować :O ZAJEBIŚCIE.
  - zacznijmy od Box i Text.
 
