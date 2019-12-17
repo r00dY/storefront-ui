@@ -89,15 +89,11 @@ function traverseAndOverride(styles, theme) {
 
   Object.entries(styles).forEach(([cssProp, val]) => {
     if (val.__isRs || val.__isRslin) {
-      console.log("--");
-      console.log("before traverse", val);
       let newVal = traverseRsAndOverrideSpacing(val, theme.space);
-
-      console.log("after traverse", newVal);
 
       let responsiveSize;
       if (val.__isRs) {
-        // TODO: rslin nested in RS!!!
+        // Nested rslins in rs
         let newConfig = { ...newVal.config };
         for (const key in newConfig) {
           if (newConfig[key].__isRslin) {
