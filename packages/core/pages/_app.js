@@ -2,7 +2,8 @@ import React from "react";
 import App, { Container } from "next/app";
 
 import Root from "../src/packages/Root";
-import { theme } from "../theme";
+import { ThemeProvider } from "emotion-theming";
+import { theme2, theme } from "../theme";
 
 export default class MyApp extends App {
   static async getInitialProps(appContext) {
@@ -15,9 +16,11 @@ export default class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props;
     return (
-      <Root theme={theme}>
-        <Component {...pageProps} />
-      </Root>
+      <ThemeProvider theme={theme2}>
+        <Root theme={theme}>
+          <Component {...pageProps} />
+        </Root>
+      </ThemeProvider>
     );
   }
 }

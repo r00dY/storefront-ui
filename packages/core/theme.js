@@ -103,3 +103,30 @@ const S = theme.spacings;
 const L = theme.layout;
 
 export { theme, C, F, S, L, R };
+
+// theme.js
+const theme2 = {
+  colors: {
+    black: "#000e1a",
+    white: "#fff",
+    primary: "blue",
+    mono500: "lightgrey",
+    blue: "#007ce0",
+    navy: "#004175"
+  },
+  typography: {
+    body: {
+      fontSize: 20,
+      fontFamily: "sans-serif",
+      letterSpacing: ".1em",
+      lineHeight: 1.5
+    },
+    heading: {
+      fontSize: 28,
+      fontFamily: "serif"
+    }
+  },
+  space: [0, 4, 8, 16, 32, 64]
+};
+
+export { theme2 };
