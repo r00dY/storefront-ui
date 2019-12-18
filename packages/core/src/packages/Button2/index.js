@@ -1,8 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx } from "@emotion/core";
-import css from "@styled-system/css";
+import { jsx } from "../index";
 
 const buttonResetStyles = {
   border: "none",
@@ -22,11 +21,9 @@ const buttonResetStyles = {
 };
 
 function ButtonRaw_(props) {
-  const { sx, ...restProps } = props;
+  const { css, ...restProps } = props;
 
-  console.log(sx);
-
-  return <button css={css({ ...buttonResetStyles, ...sx })} {...restProps} />;
+  return <button css={[buttonResetStyles, css]} {...restProps} />;
 }
 
 const ButtonRaw = React.forwardRef(ButtonRaw_);

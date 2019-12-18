@@ -10,7 +10,7 @@ export default () => {
 
       <p>Standard button, color overriden</p>
       <ButtonRaw
-        sx={{
+        css={{
           color: "red"
         }}
       >
@@ -19,7 +19,7 @@ export default () => {
 
       <p>Standard button, disabled</p>
       <ButtonRaw
-        sx={{
+        css={{
           color: "red"
         }}
         disabled={true}
@@ -29,7 +29,7 @@ export default () => {
 
       <p>Standard button, onClick</p>
       <ButtonRaw
-        sx={{
+        css={{
           color: "red"
         }}
         onClick={e => {
@@ -41,7 +41,7 @@ export default () => {
 
       <p>Standard button, color overriden with value from a theme</p>
       <ButtonRaw
-        sx={{
+        css={{
           color: "primary",
           background: "mono500",
           p: 10
