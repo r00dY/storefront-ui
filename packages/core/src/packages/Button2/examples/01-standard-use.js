@@ -11,17 +11,19 @@ import {
 import { Box } from "@commerce-ui/core/Box";
 import { jsx } from "@commerce-ui/core";
 
-const ButtonStyled = ({ color = "yellow", ...props }) => (
+const ButtonStyled = ({ color = "yellow", overrides, ...props }) => (
   <Button
-    background={({ isHovered }) => ({
-      css: { backgroundColor: color, opacity: isHovered ? 0.5 : 1 }
-    })}
-    content={({ children }) => ({
-      css: {
-        p: 2
-      },
-      children: <span>{children} ty chuju</span>
-    })}
+    overrides={{
+      background: ({ isHovered }) => ({
+        css: { backgroundColor: color, opacity: isHovered ? 0.5 : 1 }
+      }),
+      content: ({ children }) => ({
+        css: {
+          p: 2
+        },
+        children: <span>{children} ty chuju</span>
+      })
+    }}
     {...props}
   />
 );
@@ -91,9 +93,11 @@ export default () => {
 
       <p>Styled button background</p>
       <Button
-        background={{
-          css: { backgroundColor: "yellow" },
-          children: <div>Kurwa mać</div>
+        overrides={{
+          background: {
+            css: { backgroundColor: "yellow" },
+            children: <div>Kurwa mać</div>
+          }
         }}
       >
         Dupa dupa dupa
@@ -101,12 +105,17 @@ export default () => {
 
       <p>Styled button background</p>
       <Button
-        background={({ isHovered }) => ({
-          css: { backgroundColor: "yellow", opacity: isHovered ? 0.5 : 1 }
-        })}
-        content={{
-          css: {
-            p: 2
+        overrides={{
+          background: ({ isHovered }) => ({
+            css: {
+              backgroundColor: "yellow",
+              opacity: isHovered ? 0.5 : 1
+            }
+          }),
+          content: {
+            css: {
+              p: 2
+            }
           }
         }}
       >
@@ -115,15 +124,20 @@ export default () => {
 
       <p>Styled button custom children</p>
       <Button
-        background={({ isHovered }) => ({
-          css: { backgroundColor: "yellow", opacity: isHovered ? 0.5 : 1 }
-        })}
-        content={({ children }) => ({
-          css: {
-            p: 2
-          },
-          children: <span>{children} ty chuju</span>
-        })}
+        overrides={{
+          background: ({ isHovered }) => ({
+            css: {
+              backgroundColor: "yellow",
+              opacity: isHovered ? 0.5 : 1
+            }
+          }),
+          content: ({ children }) => ({
+            css: {
+              p: 2
+            },
+            children: <span>{children} ty chuju</span>
+          })
+        }}
       >
         Dupa dupa dupa
       </Button>
@@ -133,25 +147,34 @@ export default () => {
 
       <p>Three buttons overrides</p>
       <ThreeButtons
-        button1={({ buttonProps }) => (
-          <Button
-            background={({ isHovered }) => ({
-              css: { backgroundColor: "yellow", opacity: isHovered ? 0.5 : 1 }
-            })}
-            content={({ children }) => ({
-              css: {
-                p: 2
-              },
-              children: <span>{children} ty chuju</span>
-            })}
-            {...buttonProps}
-          />
-        )}
+        overrides={{
+          button1: ({ buttonProps }) => (
+            <Button
+              overrides={{
+                background: ({ isHovered }) => ({
+                  css: {
+                    backgroundColor: "yellow",
+                    opacity: isHovered ? 0.5 : 1
+                  }
+                }),
+                content: ({ children }) => ({
+                  css: {
+                    p: 2
+                  },
+                  children: <span>{children} ty chuju</span>
+                })
+              }}
+              {...buttonProps}
+            />
+          )
+        }}
       />
 
       <p>Three buttons with ButtonStyled</p>
       <ThreeButtons
-        button1={({ buttonProps }) => <ButtonStyled {...buttonProps} />}
+        overrides={{
+          button1: ({ buttonProps }) => <ButtonStyled {...buttonProps} />
+        }}
       />
 
       {/* above syntax is bad because it's not "overrideable", we can't add extra prop contextually without changing everything */}
@@ -161,36 +184,40 @@ export default () => {
 
       <p>Three buttons overrides</p>
       <ThreeButtons2
-        button1={({ label }) => ({
-          props: {
-            background: ({ isHovered }) => ({
-              css: { backgroundColor: "yellow", opacity: isHovered ? 0.5 : 1 }
-            }),
-            content: {
-              css: {
-                p: 2
-              },
-              children: <span>--- {label} ---</span>
+        overrides={{
+          button1: ({ label }) => ({
+            overrides: {
+              background: ({ isHovered }) => ({
+                css: { backgroundColor: "yellow", opacity: isHovered ? 0.5 : 1 }
+              }),
+              content: {
+                css: {
+                  p: 2
+                },
+                children: <span>--- {label} ---</span>
+              }
             }
-          }
-        })}
+          })
+        }}
       />
 
       <p>Three buttons overrides</p>
       <ThreeButtons2
-        button1={({ label }) => ({
-          type: ButtonStyled,
-          props: {
-            color: "red"
-          },
-          children: <span>--- {label} ---</span>
-        })}
+        overrides={{
+          button1: ({ label }) => ({
+            type: ButtonStyled,
+            props: {
+              color: "red"
+            },
+            children: <span>--- {label} ---</span>
+          })
+        }}
       />
 
-      <p>ButtonSuper</p>
-      <ButtonSuper startEnhancer={"[A]"} endEnhancer={"[B]"}>
-        Dupa
-      </ButtonSuper>
+      {/*<p>ButtonSuper</p>*/}
+      {/*<ButtonSuper startEnhancer={"[A]"} endEnhancer={"[B]"}>*/}
+      {/*Dupa*/}
+      {/*</ButtonSuper>*/}
     </div>
   );
 };

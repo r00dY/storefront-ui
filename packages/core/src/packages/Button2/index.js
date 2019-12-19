@@ -60,7 +60,7 @@ let defaults = {
   })
 };
 
-function getElem(override, defaults, state, forcedProps = {}) {
+function getElem(override = {}, defaults, state, forcedProps = {}) {
   override = typeof override === "function" ? override(state) : override;
   defaults = typeof defaults === "function" ? defaults(state) : defaults;
   forcedProps =
@@ -71,6 +71,7 @@ function getElem(override, defaults, state, forcedProps = {}) {
     ...override.props,
     ...forcedProps,
     css: [defaults.css, override.css],
+    overrides: override.overrides,
     children: override.children || defaults.children,
     type: undefined
   });
@@ -81,8 +82,7 @@ function Button_(props) {
     disabled,
     css,
     innerRef,
-    background,
-    content,
+    overrides: { background, content },
     children,
     fitWidth,
     fitHeight,
@@ -109,6 +109,9 @@ function Button_(props) {
   // opacity: isHovered ? 0.2 : 0,
   // transition: "opacity .2s"
 
+  const backgroundElem = getElem(background, defaults.background, state);
+  const foregroundElem = getElem(content, defaults.content, state);
+
   // TODO: css props should be limited to layout ones.
   return (
     <ButtonRaw
@@ -120,41 +123,15 @@ function Button_(props) {
       }}
       ref={hoverRef}
     >
-      {getElem(background, defaults.background, state)}
-      {getElem(content, defaults.content, state)}
-
-      {/*<div css={{*/}
-      {/*position: "absolute",*/}
-      {/*top: 0,*/}
-      {/*left: 0,*/}
-      {/*right: 0,*/}
-      {/*bottom: 0*/}
-      {/*// top: -3,*/}
-      {/*// left: -3,*/}
-      {/*// right: -3,*/}
-      {/*// bottom: -3,*/}
-      {/*// background: "lightgrey",*/}
-      {/*// opacity: isHovered ? 0.2 : 0,*/}
-      {/*// transition: "opacity .2s"*/}
-      {/*}}>*/}
-
-      {/*</div>*/}
-
-      {/*<div css={{*/}
-      {/*position: "relative",*/}
-      {/*pointerEvents: "none"*/}
-      {/*// padding: 3*/}
-      {/*}}>*/}
-      {/*{children}*/}
-      {/*</div>*/}
+      {backgroundElem}
+      {foregroundElem}
     </ButtonRaw>
   );
 }
 
 Button_.defaultProps = {
   disabled: false,
-  background: {},
-  content: {}
+  overrides: {}
 };
 
 const Button = React.forwardRef((props, ref) => (
@@ -174,10 +151,14 @@ const ButtonSuper = ({ startEnhancer, endEnhancer, isLoading, ...props }) => (
 export { ButtonSuper };
 
 /**
-    Three buttons which onClick change label on the button on the right!!!
+ Three buttons which onClick change label on the button on the right!!!
  */
 
-function ThreeButtons({ button1, button2, button3 }) {
+function ThreeButtons(props) {
+  let {
+    overrides: { button1, button2, button3 }
+  } = props;
+
   const [label1, setLabel1] = useState("dupa");
   const [label2, setLabel2] = useState("dupa2");
   const [label3, setLabel3] = useState("dupa3");
@@ -203,6 +184,10 @@ function ThreeButtons({ button1, button2, button3 }) {
     children: label3
   };
 
+  button1 = button1 || (({ buttonProps }) => <Button {...buttonProps} />);
+  button2 = button2 || (({ buttonProps }) => <Button {...buttonProps} />);
+  button3 = button3 || (({ buttonProps }) => <Button {...buttonProps} />);
+
   return (
     <div
       css={{
@@ -218,9 +203,7 @@ function ThreeButtons({ button1, button2, button3 }) {
 }
 
 ThreeButtons.defaultProps = {
-  button1: ({ buttonProps }) => <Button {...buttonProps} />,
-  button2: ({ buttonProps }) => <Button {...buttonProps} />,
-  button3: ({ buttonProps }) => <Button {...buttonProps} />
+  overrides: {}
 };
 
 export { ThreeButtons };
@@ -241,7 +224,11 @@ defaults = {
   })
 };
 
-function ThreeButtons2({ button1, button2, button3 }) {
+function ThreeButtons2(props) {
+  let {
+    overrides: { button1, button2, button3 }
+  } = props;
+
   const [label1, setLabel1] = useState("dupa");
   const [label2, setLabel2] = useState("dupa2");
   const [label3, setLabel3] = useState("dupa3");
@@ -307,9 +294,7 @@ function ThreeButtons2({ button1, button2, button3 }) {
 }
 
 ThreeButtons2.defaultProps = {
-  button1: {},
-  button2: {},
-  button3: {}
+  overrides: {}
 };
 
 export { ThreeButtons2 };
