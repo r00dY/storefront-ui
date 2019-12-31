@@ -226,6 +226,7 @@ class BaseInput<T: EventTarget> extends React.Component<
     const [Input, inputProps] = getOverrides(InputOverride, StyledInput);
     const [Before, beforeProps] = getOverrides(BeforeOverride, NullComponent);
     const [After, afterProps] = getOverrides(AfterOverride, NullComponent);
+
     // const [ClearButtonContainer, clearButtonContainerProps] = getOverrides(ClearButtonContainerOverride, ClearButtonContainerStyled);
 
     return (

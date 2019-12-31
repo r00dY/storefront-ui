@@ -214,10 +214,44 @@ export default () => {
         }}
       />
 
-      {/*<p>ButtonSuper</p>*/}
-      {/*<ButtonSuper startEnhancer={"[A]"} endEnhancer={"[B]"}>*/}
-      {/*Dupa*/}
-      {/*</ButtonSuper>*/}
+      <p>ButtonSuper</p>
+      <ButtonSuper startEnhancer={"[A]"} endEnhancer={"[B]"}>
+        Dupa
+      </ButtonSuper>
+
+      <br />
+
+      <p>
+        ButtonSuper with overrides (overrides inheritance + state inheritance
+        for new subcomponents :))
+      </p>
+      <ButtonSuper
+        startEnhancer={"[A]"}
+        endEnhancer={"[B]"}
+        overrides={{
+          startEnhancer: ({ isHovered }) => ({
+            css: {
+              bg: "red",
+              pr: 2,
+              fontWeight: isHovered ? 800 : 400,
+              color: isHovered ? "yellow" : "black"
+            }
+          }),
+          content: ({ isHovered }) => ({
+            css: {
+              bg: isHovered ? "blue" : "transparent",
+              p: 4
+            }
+          }),
+          background: {
+            css: {
+              bg: "magenta"
+            }
+          }
+        }}
+      >
+        Dupa
+      </ButtonSuper>
     </div>
   );
 };
