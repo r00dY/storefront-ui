@@ -2,6 +2,10 @@
 import { jsx } from "@commerce-ui/core";
 import Button from ".";
 
+const Square20 = () => (
+  <div css={{ width: "20px", height: "20px", bg: "currentColor" }} />
+);
+
 export const standard = () => (
   <div>
     <p>Natural size</p>
@@ -36,9 +40,40 @@ export const standard = () => (
       </Button>
     </div>
 
+    <p>Start enhancer</p>
+    <div>
+      <Button startEnhancer={<Square20 />}>Button with enhancer</Button>
+    </div>
+
+    <p>End enhancer</p>
+    <div>
+      <Button endEnhancer={<Square20 />}>Button with enhancer</Button>
+    </div>
+
+    <p>Both enhancers</p>
+    <div>
+      <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />}>
+        Button with enhancers
+      </Button>
+    </div>
+
     <p>Disabled</p>
     <div>
-      <Button disabled>Disabled button</Button>
+      <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />} disabled>
+        Button disabled
+      </Button>
+    </div>
+
+    <p>isLoading</p>
+    <div>
+      <Button isLoading>Button with loader</Button>
+    </div>
+
+    <p>isLoading disabled</p>
+    <div>
+      <Button isLoading disabled>
+        Button with loader
+      </Button>
     </div>
   </div>
 );

@@ -16,19 +16,42 @@ let defaults = {
       height: "100%"
     }
   },
-  content: ({ children }) => ({
+  foreground: ({ children, isLoading, startEnhancer, endEnhancer }) => ({
     type: "div",
     css: {
       boxSizing: "border-box",
       position: "relative",
       pointerEvents: "none",
-      height: "100%"
-      // display: "flex",
-      // justifyContent: "center",
-      // alignItems: "center"
+      height: "100%",
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+      visibility: isLoading ? "hidden" : "visible"
     },
-    children: children
-  })
+    children: (
+      <>
+        {startEnhancer}
+        {children}
+        {endEnhancer}
+      </>
+    )
+  }),
+  loader: {
+    type: "div",
+    css: {
+      boxSizing: "border-box",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    },
+    children: "loading..."
+  }
 };
 
 function Button_(props) {
@@ -43,6 +66,9 @@ function Button_(props) {
     fitWidth,
     fitHeight,
     forwardedRef,
+    startEnhancer,
+    endEnhancer,
+    isLoading,
     css,
     ...restProps
   } = props;
@@ -55,20 +81,42 @@ function Button_(props) {
   const state = {
     disabled,
     children,
-    isHovered
+    isHovered,
+    isLoading
   };
 
   overrides = typeof overrides === "function" ? overrides(state) : overrides;
+  startEnhancer =
+    typeof startEnhancer === "function" ? startEnhancer(state) : startEnhancer;
+  endEnhancer =
+    typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
+
+  const startEnhancerSpec = getElementSpec(
+    overrides.startEnhancer,
+    { children: startEnhancer },
+    state
+  );
+
+  const endEnhancerSpec = getElementSpec(
+    overrides.endEnhancer,
+    { children: endEnhancer },
+    state
+  );
+
+  const startEnhancerElem = startEnhancer && createElement(startEnhancerSpec);
+  const endEnhancerElem = endEnhancer && createElement(endEnhancerSpec);
+
+  const loaderSpec = getElementSpec(overrides.loader, defaults.loader, state);
 
   const backgroundSpec = getElementSpec(
     overrides.background,
     defaults.background,
     state
   );
-  const contentSpec = getElementSpec(
-    overrides.content,
-    defaults.content,
-    state
+  const foregroundSpec = getElementSpec(
+    overrides.foreground,
+    defaults.foreground,
+    { ...state, startEnhancer: startEnhancerElem, endEnhancer: endEnhancerElem }
   );
 
   // TODO: css props should be limited to layout ones.
@@ -84,7 +132,8 @@ function Button_(props) {
       disabled={disabled}
     >
       {createElement(backgroundSpec)}
-      {createElement(contentSpec)}
+      {createElement(foregroundSpec)}
+      {isLoading && createElement(loaderSpec)}
     </ButtonRaw$>
   );
 }

@@ -27,10 +27,14 @@ const theme = {
   },
   typography: {
     body: {
-      fontSize: 20,
+      fontSize: 16,
       fontFamily: "sans-serif",
-      letterSpacing: ".1em",
-      lineHeight: 1.5
+      lineHeight: 1.2
+    },
+    body2: {
+      fontSize: 14,
+      fontFamily: "sans-serif",
+      lineHeight: 1.2
     },
     heading: {
       fontSize: 28,

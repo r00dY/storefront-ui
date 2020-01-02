@@ -1,20 +1,20 @@
 import Button$ from "@commerce-ui/core/Button2";
+import Spinner from "../Spinner";
 
 const Button = props => (
   <Button$
     {...props}
     overrides={{
-      content: ({ disabled }) => ({
+      foreground: ({ disabled }) => ({
         css: {
-          p: 3,
+          pl: 4,
+          pr: 4,
+          pt: 2,
+          pb: 2,
           overflow: "hidden",
-          // whiteSpace: "nowrap",
-          // textOverflow: "ellipsis",
-          // maxWidth: "400px",
           color: disabled ? "mono500" : "black",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
+          font: "body2",
+          minHeight: "50px"
         }
       }),
       background: ({ isHovered, disabled }) => ({
@@ -23,7 +23,20 @@ const Button = props => (
           opacity: isHovered ? 0.75 : 1,
           transition: "opacity .1s"
         }
-      })
+      }),
+      startEnhancer: {
+        css: {
+          mr: 2
+        }
+      },
+      endEnhancer: {
+        css: {
+          ml: 2
+        }
+      },
+      loader: {
+        children: <Spinner />
+      }
     }}
   />
 );
