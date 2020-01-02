@@ -50,7 +50,7 @@ let defaults = {
       justifyContent: "center",
       alignItems: "center"
     },
-    children: "loading..."
+    children: "..."
   }
 };
 
@@ -126,7 +126,8 @@ function Button_(props) {
       css={{
         position: "relative",
         width: fitWidth ? "100%" : "auto",
-        height: fitHeight ? "100%" : "auto"
+        height: fitHeight ? "100%" : "auto",
+        display: fitWidth ? "block" : "inline-block"
       }}
       ref={buttonRef}
       disabled={disabled}
