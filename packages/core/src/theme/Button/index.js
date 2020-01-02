@@ -22,7 +22,8 @@ const Button = props => (
         css: {
           bg: disabled ? "mono300" : "mono200",
           opacity: isHovered ? 0.75 : 1,
-          transition: "opacity .1s"
+          transition: "opacity .1s",
+          borderRadius: 6
         }
       }),
       startEnhancer: {

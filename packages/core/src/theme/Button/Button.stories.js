@@ -109,6 +109,20 @@ export const standard = () => (
       </Button>
     </TwoButtons>
 
+    <p>Both enhancers long label</p>
+    <TwoButtons
+      wrapper={button => (
+        <div css={{ position: "relative", width: "250px" }}>{button}</div>
+      )}
+    >
+      <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />}>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
+        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
+        commodo consequat.
+      </Button>
+    </TwoButtons>
+
     <p>Disabled</p>
     <TwoButtons>
       <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />} disabled>
