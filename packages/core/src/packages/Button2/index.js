@@ -295,101 +295,7 @@ const ButtonSuper = props => {
     ...restProps
   } = props;
 
-  // const newState = {
-  //     ...
-  // }
-  //
-  // const button = useButtonState(restProps);
-  //
-  // console.log('button state', button.state);
-  //
-  // // TODO: create enhancer which can be function of old state and new state
-  //
-  // // TODO: create Button instance with overrides
-  //
-  // const state = {
-  //     ...button.state,
-  //     isLoading,
-  //     disabled: button.state.disabled || isLoading
-  // };
-  //
-  // console.log(state)
-  //
-
-  //
-  //
-  //
-  // const startEnhancerElem = startEnhancer && getElem2(startEnhancerOverride, ({endEnhancer}) => ({
-  //     children: endEnhancer
-  // })); // div without any defaults
-  //
-  // const content = getElem2(contentOverride, ({ children, startEnhancer, endEnhancer }) => ({
-  //     css: {
-  //         display: "flex",
-  //         flexDirection: "row"
-  //     },
-  //     children: <>
-  //         {startEnhancer}
-  //         {children}
-  //         {endEnhancer}
-  //     </>
-  // }));
-  //
-  // const newState = {
-  //     isLoading
-  // };
-  //
-  // const overrides = (oldState) => {
-  //     const state = {
-  //         ...oldState,
-  //         ...newState
-  //     };
-  //
-  //     return {
-  //         content: content(state),
-  //         startEnhancer: startEnhancerElem(state),
-  //     }
-  // };
-
-  //
-  // const startEnhancerElem = startEnhancer && getElem2(startEnhancerOverride, ({children}) => ({
-  //     children: children
-  // })); // div without any defaults
-  //
-  // const endEnhancerElem = endEnhancer && getElem2(endEnhancerOverride, ({children}) => ({
-  //     children: children
-  // })); // div without any defaults
-  //
-  //
-  // const overrides = {
-  //     content: ({children}) => ({
-  //         css: {
-  //             display: "flex",
-  //             flexDirection: "row"
-  //         },
-  //         children: <>
-  //             {startEnhancer}
-  //             {children}
-  //             {endEnhancer}
-  //         </>
-  //     })
-  // };
-  //
-  //
-  // const state = {
-  //     isLoading,
-  //     startEnhancer: startEnhancerElem,
-  //     endEnhancer: endEnhancerElem
-  // };
-  //
-  //
-  // const Button = useButton(props, overrides);
-  //
-  //
-  // // state.startEnhancer = {
-  // //     children: startEnhancer && startEnhancerElem
-  // // };
-  //
+  // TODO: make background inheritance not explicit!!! So that we can make Naked Button, inherit it and give it styles, and then AGAIN inherit it and easily override styles "in place" (WITHOUT STATE)
 
   const overrides = buttonState => {
     const state = {
@@ -397,13 +303,19 @@ const ButtonSuper = props => {
     };
 
     const startEnhancerElem =
-      startEnhancer &&
-      getElem(startEnhancerOverride, { children: startEnhancer }, state); // returns function
+      typeof startEnhancer === "function"
+        ? startEnhancer(state)
+        : startEnhancer;
     const endEnhancerElem =
-      endEnhancer &&
-      getElem(endEnhancerOverride, { children: endEnhancer }, state); // returns function
+      typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
 
-    // const contentOverride = getElem(contentOverride, )
+    const startEnhancerContainer =
+      startEnhancer &&
+      getElem(startEnhancerOverride, { children: startEnhancerElem }, state); // This must be here! It's a new override.
+
+    const endEnhancerContainer =
+      endEnhancer &&
+      getElem(endEnhancerOverride, { children: endEnhancerElem }, state); // This must be here too. It's a new override too.
 
     const content = getOverride(
       contentOverride,
@@ -422,25 +334,14 @@ const ButtonSuper = props => {
       }),
       {
         ...state,
-        startEnhancer: startEnhancerElem,
-        endEnhancer: endEnhancerElem
+        startEnhancer: startEnhancerContainer,
+        endEnhancer: endEnhancerContainer
       }
-    );
+    ); // It's a new override (we added 2 new "state variables" - enhancers).
 
     return {
       content,
       background: backgroundOverride
-      // content: ({ children }) => ({
-      //     css: {
-      //         display: "flex",
-      //         flexDirection: "row"
-      //     },
-      //     children: <>
-      //         {startEnhancerElem}
-      //         {children}
-      //         {endEnhancerElem}
-      //     </>
-      // })
     };
   };
 

@@ -227,7 +227,7 @@ export default () => {
       </p>
       <ButtonSuper
         startEnhancer={"[A]"}
-        endEnhancer={"[B]"}
+        endEnhancer={({ isHovered }) => (isHovered ? "[C]" : "[B]")}
         overrides={{
           startEnhancer: ({ isHovered }) => ({
             css: {
