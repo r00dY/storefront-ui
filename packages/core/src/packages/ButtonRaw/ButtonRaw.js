@@ -18,4 +18,4 @@ ButtonRaw$.defaultProps = {
   overrides: {}
 };
 
-export { ButtonRaw$ };
+export default ButtonRaw$;

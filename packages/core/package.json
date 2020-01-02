@@ -7,7 +7,8 @@
     "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
     "dev": "next --port 3333",
     "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@commerce-ui && mkdir -p ./demo/node_modules/@commerce-ui/core && cp -R dist/* ./demo/node_modules/@commerce-ui/core",
-    "now-build": "npm run build && next build"
+    "now-build": "npm run build && next build",
+    "storybook": "start-storybook"
   },
   "dependencies": {
     "emotion-theming": "^10.0.19",
@@ -36,6 +37,7 @@
     "@commerce-ui/data-mock": "^0.6.7",
     "@emotion/core": "^10.0.7",
     "@emotion/styled": "^10.0.7",
+    "@storybook/react": "^5.2.8",
     "@svgr/webpack": "^4.2.0",
     "imgix-core-js": "^2.1.0",
     "next": "^9.0.3",

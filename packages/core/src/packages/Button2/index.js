@@ -1,9 +1,12 @@
 /** @jsx jsx */
 
 import React, { useRef, useState } from "react";
-import { jsx } from "../index";
+import { jsx } from "..";
 import useHover from "../useHover";
 
+/**
+ * Button Raw
+ */
 const buttonResetStyles = {
   border: "none",
   margin: 0,
@@ -36,7 +39,7 @@ const ButtonRaw = React.forwardRef((props, ref) => (
 export { ButtonRaw };
 
 /**
- * Button!
+ * Button
  */
 
 let defaults = {
@@ -78,25 +81,6 @@ function mergeCss(a, b) {
   return ret;
 }
 
-function getElem(override = {}, defaults, state, forcedProps = {}) {
-  override = typeof override === "function" ? override(state) : override;
-  defaults = typeof defaults === "function" ? defaults(state) : defaults;
-  forcedProps =
-    typeof forcedProps === "function" ? forcedProps(state) : forcedProps;
-
-  const type = override.type || defaults.type || "div";
-
-  return jsx(type, {
-    ...defaults.props,
-    ...override.props,
-    ...forcedProps,
-    css: mergeCss(defaults.css, override.css),
-    overrides: override.overrides,
-    children: override.children || defaults.children,
-    type: undefined
-  });
-}
-
 function getOverride(override = {}, defaults, state, forcedProps = {}) {
   override = typeof override === "function" ? override(state) : override;
   defaults = typeof defaults === "function" ? defaults(state) : defaults;
@@ -116,76 +100,13 @@ function getOverride(override = {}, defaults, state, forcedProps = {}) {
   };
 }
 
-// function useButtonState(props) {
-//     const {
-//         disabled,
-//         children,
-//         label,
-//         ...restProps
-//     } = props;
-//
-//     const [hoverRef, isHovered] = useHover();
-//
-//     const state = {
-//         disabled,
-//         children,
-//         isHovered,
-//     };
-//
-//     const buttonProps = {
-//         ref: hoverRef,
-//         disabled,
-//         onClick: (...args) => { console.log('siemaaa'); if (props.onClick) { props.onClick(...args) } },
-//     };
-//
-//     return { state, buttonProps };
-//
-//     // TODO: isHovered is going crazy, unless we set pointerEvents: none to background and button.
-//     // console.log(isHovered);
-//
-//     // top: -3,
-//     // left: -3,
-//     // right: -3,
-//     // bottom: -3,
-//     // background: "lightgrey",
-//     // opacity: isHovered ? 0.2 : 0,
-//     // transition: "opacity .2s"
-// }
-
-// function ButtonStateless(props) {
-//     const {
-//         overrides: {background, content},
-//         fitWidth,
-//         fitHeight,
-//         __state: { state, buttonProps },
-//         ...restProps
-//     } = props;
-//
-//     const backgroundElem = getElem(background, defaults.background, state);
-//     const contentElem = getElem(content, defaults.content, state);
-//
-//     return <ButtonRaw
-//         {...restProps}
-//         css={{
-//             position: "relative",
-//             width: fitWidth ? "100%" : "auto",
-//             height: fitHeight ? "100%" : "auto"
-//         }}
-//         {...buttonProps}
-//     >
-//         {backgroundElem}
-//         {contentElem}
-//     </ButtonRaw>
-// }
-//
-// function Button_(props) {
-//     const state = useButtonState(props);
-//     return <ButtonStateless {...props} __state={state} />;
-// }
-
-// Types:
-// ButtonState
-//
+function getElem(...args) {
+  const override = getOverride(...args);
+  return jsx(override.type || "div", {
+    ...override,
+    type: undefined
+  });
+}
 
 function Button_(props) {
   // const button = useButton(props); // semantics
@@ -198,10 +119,14 @@ function Button_(props) {
     overrides, //: {background, content},
     fitWidth,
     fitHeight,
+    forwardedRef,
     ...restProps
   } = props;
 
-  const [hoverRef, isHovered] = useHover();
+  let buttonRef = useRef(null);
+  buttonRef = forwardedRef || buttonRef;
+
+  const isHovered = useHover(buttonRef);
 
   const state = {
     disabled,
@@ -239,7 +164,7 @@ function Button_(props) {
         width: fitWidth ? "100%" : "auto",
         height: fitHeight ? "100%" : "auto"
       }}
-      ref={hoverRef}
+      ref={buttonRef}
       disabled={disabled}
     >
       {backgroundElem}
@@ -254,7 +179,7 @@ Button_.defaultProps = {
 };
 
 const Button = React.forwardRef((props, ref) => (
-  <Button_ innerRef={ref} {...props} />
+  <Button_ forwardedRef={ref} {...props} />
 ));
 
 export { Button };
@@ -262,24 +187,6 @@ export { Button };
 /**
  * Button with loader and enhancers
  */
-
-function getElem2() {}
-
-function mergeStates() {}
-
-// function useButton() {
-// };
-//
-// function createElem2() {
-// };
-
-const Dupa = {
-  useDupa: () => {
-    console.log("hook");
-    const [a, setA] = useState(10);
-    return a;
-  }
-};
 
 const ButtonSuper = props => {
   const {
