@@ -1,80 +1,132 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
+import Box from "@commerce-ui/core/Box";
+
 import Button from ".";
 
 const Square20 = () => (
   <div css={{ width: "20px", height: "20px", bg: "currentColor" }} />
 );
 
+const TwoButtons = ({ children, wrapper = x => x }) => {
+  const button = React.cloneElement(children, {
+    onClick: () => {
+      console.log("button clicked!");
+    }
+  });
+  const link = React.cloneElement(children, {
+    href: "https://wikipedia.org",
+    target: "_blank"
+  });
+
+  return (
+    <Box
+      css={{
+        display: "flex",
+        flexDirection: "row"
+      }}
+    >
+      <div
+        css={{
+          width: "50%",
+          mr: 2
+        }}
+      >
+        {wrapper(button)}
+      </div>
+
+      <div>{wrapper(link)}</div>
+    </Box>
+  );
+};
+
 export const standard = () => (
   <div>
     <p>Natural size</p>
+    <Box>cześc</Box>
     <div>
-      <Button>Standard button</Button>
+      <TwoButtons>
+        <Button>Standard button</Button>
+      </TwoButtons>
     </div>
 
     <p>Natural size, very long text</p>
-    <div css={{ width: "300px" }}>
+    <TwoButtons
+      wrapper={button => <div css={{ width: "300px" }}>{button}</div>}
+    >
       <Button>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat.
       </Button>
-    </div>
+    </TwoButtons>
 
     <p>fitWidth and fitHeight (parent controls button size)</p>
-    <div css={{ position: "relative", width: "200px", height: "100px" }}>
+
+    <TwoButtons
+      wrapper={button => (
+        <div css={{ position: "relative", width: "200px", height: "100px" }}>
+          {button}
+        </div>
+      )}
+    >
       <Button fitWidth fitHeight>
         Standard button
       </Button>
-    </div>
+    </TwoButtons>
 
     <p>fitWidth and fitHeight (text not fitting the size)</p>
-    <div css={{ position: "relative", width: "200px", height: "100px" }}>
+    <TwoButtons
+      wrapper={button => (
+        <div css={{ position: "relative", width: "200px", height: "100px" }}>
+          {button}
+        </div>
+      )}
+    >
       <Button fitWidth fitHeight>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
         commodo consequat.
       </Button>
-    </div>
+    </TwoButtons>
 
     <p>Start enhancer</p>
-    <div>
+    <TwoButtons>
       <Button startEnhancer={<Square20 />}>Button with enhancer</Button>
-    </div>
+    </TwoButtons>
 
     <p>End enhancer</p>
-    <div>
+    <TwoButtons>
       <Button endEnhancer={<Square20 />}>Button with enhancer</Button>
-    </div>
+    </TwoButtons>
 
     <p>Both enhancers</p>
-    <div>
+    <TwoButtons>
       <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />}>
         Button with enhancers
       </Button>
-    </div>
+    </TwoButtons>
 
     <p>Disabled</p>
-    <div>
+    <TwoButtons>
       <Button startEnhancer={<Square20 />} endEnhancer={<Square20 />} disabled>
         Button disabled
       </Button>
-    </div>
+    </TwoButtons>
 
     <p>isLoading</p>
-    <div>
+    <TwoButtons>
       <Button isLoading>Button with loader</Button>
-    </div>
+    </TwoButtons>
 
     <p>isLoading disabled</p>
-    <div>
+    <TwoButtons>
       <Button isLoading disabled>
         Button with loader
       </Button>
-    </div>
+    </TwoButtons>
   </div>
 );
 

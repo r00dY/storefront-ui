@@ -21,7 +21,7 @@ Box.defaultProps = {
   as: "div"
 };
 
-export { Box };
+export default Box;
 
 /**
  What do we want?

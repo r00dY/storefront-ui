@@ -20,7 +20,8 @@ const buttonResetStyles = {
   appearance: "none",
   ":not(:disabled)": {
     cursor: "pointer"
-  }
+  },
+  textAlign: "left"
 };
 
 function ButtonRaw_(props) {

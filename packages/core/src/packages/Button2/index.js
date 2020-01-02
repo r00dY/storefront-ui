@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { jsx, createElement, getElementSpec } from "..";
 import useHover from "../useHover";
 import ButtonRaw$ from "../ButtonRaw2";
+import LinkRaw$ from "../LinkRaw";
 
 let defaults = {
   background: {
@@ -69,6 +70,7 @@ function Button_(props) {
     startEnhancer,
     endEnhancer,
     isLoading,
+    href,
     css,
     ...restProps
   } = props;
@@ -119,23 +121,34 @@ function Button_(props) {
     { ...state, startEnhancer: startEnhancerElem, endEnhancer: endEnhancerElem }
   );
 
+  const Component = href
+    ? overrides.LinkRaw$ || LinkRaw$
+    : overrides.ButtonRaw$ || ButtonRaw$;
+
+  const componentProps = {
+    ...restProps,
+    css: {
+      position: "relative",
+      width: fitWidth ? "100%" : "auto",
+      height: fitHeight ? "100%" : "auto",
+      display: fitWidth ? "block" : "inline-block"
+    },
+    ref: buttonRef
+  };
+
+  if (!href) {
+    componentProps.disabled = disabled;
+  } else {
+    componentProps.href = href;
+  }
+
   // TODO: css props should be limited to layout ones.
   return (
-    <ButtonRaw$
-      {...restProps}
-      css={{
-        position: "relative",
-        width: fitWidth ? "100%" : "auto",
-        height: fitHeight ? "100%" : "auto",
-        display: fitWidth ? "block" : "inline-block"
-      }}
-      ref={buttonRef}
-      disabled={disabled}
-    >
+    <Component {...componentProps}>
       {createElement(backgroundSpec)}
       {createElement(foregroundSpec)}
       {isLoading && createElement(loaderSpec)}
-    </ButtonRaw$>
+    </Component>
   );
 }
 

@@ -14,7 +14,8 @@ const Button = props => (
           overflow: "hidden",
           color: disabled ? "mono500" : "black",
           font: "body2",
-          minHeight: "50px"
+          minHeight: "50px",
+          textAlign: "center"
         }
       }),
       background: ({ isHovered, disabled }) => ({
