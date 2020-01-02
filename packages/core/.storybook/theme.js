@@ -10,9 +10,20 @@ const theme = {
     black: "#000e1a",
     white: "#fff",
     primary: "blue",
-    mono500: "lightgrey",
     blue: "#007ce0",
-    navy: "#004175"
+    navy: "#004175",
+
+    mono50: "#fafafa",
+    mono100: "#f5f5f5",
+    mono200: "#eeeeee",
+    mono300: "#e0e0e0",
+    mono400: "#bdbdbd",
+    mono500: "#9e9e9e",
+    mono600: "#757575",
+    mono700: "#616161",
+    mono800: "#424242",
+    mono900: "#212121",
+    mono1000: "#000000"
   },
   typography: {
     body: {

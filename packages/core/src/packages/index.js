@@ -171,7 +171,52 @@ function jsx(type, props, ...children) {
   return createElement(type, newProps, ...children);
 }
 
-export { css, jsx, rs, rslin };
+function mergeCss(a, b) {
+  let ret = [];
+
+  if (Array.isArray(a)) {
+    ret = [...a];
+  } else {
+    ret = [a];
+  }
+
+  if (Array.isArray(b)) {
+    ret = [...ret, ...b];
+  } else {
+    ret = [...ret, b];
+  }
+
+  return ret;
+}
+
+function getElementSpec(childSpec = {}, parentSpec, state, forcedProps = {}) {
+  childSpec = typeof childSpec === "function" ? childSpec(state) : childSpec;
+  parentSpec =
+    typeof parentSpec === "function" ? parentSpec(state) : parentSpec;
+  forcedProps =
+    typeof forcedProps === "function" ? forcedProps(state) : forcedProps;
+
+  const type = childSpec.type || parentSpec.type;
+
+  return {
+    ...parentSpec.props,
+    ...childSpec.props,
+    ...forcedProps,
+    css: mergeCss(parentSpec.css, childSpec.css),
+    overrides: childSpec.overrides,
+    children: childSpec.children || parentSpec.children,
+    type: type
+  };
+}
+
+function createElement(spec) {
+  return jsx(spec.type || "div", {
+    ...spec,
+    type: undefined
+  });
+}
+
+export { css, jsx, rs, rslin, mergeCss, getElementSpec, createElement };
 
 /**
  What do we want?
