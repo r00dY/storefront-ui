@@ -147,10 +147,11 @@ function traverseAndOverride(styles, theme) {
  * - responsive helpers to take theme breakpoints into account
  * - extension that allows to add
  */
+
 function css(styles) {
   const theme = useTheme();
 
-  styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
+  styles = Array.isArray(styles) ? styles.flat([9]) : [styles]; // we can have multiple styles
   styles = styles.filter(x => !!x);
 
   return x =>

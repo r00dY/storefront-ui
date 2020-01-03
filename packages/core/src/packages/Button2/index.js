@@ -24,6 +24,7 @@ let defaults = {
       position: "relative",
       pointerEvents: "none",
       height: "100%",
+      minHeight: "inherit",
       display: "flex",
       flexDirection: "row",
       justifyContent: "center",
@@ -125,14 +126,29 @@ function Button_(props) {
     ? overrides.LinkRaw$ || LinkRaw$
     : overrides.ButtonRaw$ || ButtonRaw$;
 
+  let sizingCss = {
+    display: "block", // by default we should layout as display: block, makes reasoning about layout easier
+    verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
+  };
+
+  if (fitWidth) {
+    sizingCss["minWidth"] = "0 !important";
+    sizingCss["width"] = "100%";
+  }
+  if (fitHeight) {
+    sizingCss["minHeight"] = "0 !important";
+    sizingCss["height"] = "100%";
+  }
+
   const componentProps = {
     ...restProps,
-    css: {
-      position: "relative",
-      width: fitWidth ? "100%" : "auto",
-      height: fitHeight ? "100%" : "auto",
-      display: fitWidth ? "block" : "inline-block"
-    },
+    css: [
+      {
+        position: "relative"
+      },
+      css,
+      sizingCss
+    ],
     ref: buttonRef
   };
 

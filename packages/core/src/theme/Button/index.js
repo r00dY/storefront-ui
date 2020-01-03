@@ -4,17 +4,23 @@ import Spinner from "../Spinner";
 const Button = props => (
   <Button$
     {...props}
+    css={[
+      {
+        // minWidth: "500px",
+        height: "50px"
+      },
+      props.css
+    ]}
     overrides={{
       foreground: ({ disabled }) => ({
         css: {
-          pl: 4,
-          pr: 4,
+          pl: 3,
+          pr: 3,
           pt: 2,
           pb: 2,
           overflow: "hidden",
           color: disabled ? "mono500" : "black",
           font: "body2",
-          minHeight: "50px",
           textAlign: "center"
         }
       }),

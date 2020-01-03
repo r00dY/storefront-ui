@@ -43,7 +43,6 @@ const TwoButtons = ({ children, wrapper = x => x }) => {
 export const standard = () => (
   <div>
     <p>Natural size</p>
-    <Box>cześc</Box>
     <div>
       <TwoButtons>
         <Button>Standard button</Button>
@@ -71,9 +70,7 @@ export const standard = () => (
         </div>
       )}
     >
-      <Button fitWidth fitHeight>
-        Standard button
-      </Button>
+      <Button css={{ width: "100%", height: "100%" }}>Standard button</Button>
     </TwoButtons>
 
     <p>fitWidth and fitHeight (text not fitting the size)</p>
@@ -84,7 +81,7 @@ export const standard = () => (
         </div>
       )}
     >
-      <Button fitWidth fitHeight>
+      <Button css={{ width: "100%", height: "100%" }}>
         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
         tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
         veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
