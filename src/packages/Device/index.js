@@ -1,12 +1,19 @@
 import MobileDetect from "mobile-detect";
 
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 
 import MediaQuery from "../MediaQuery";
 import { Range } from "responsive-helpers";
 
-let md;
+const DeviceContext = React.createContext({
+  device: null
+});
+
+function useDevice() {
+  const { device } = useContext(DeviceContext);
+  return device;
+}
 
 const Device = ({ mobile, desktop, children }) => {
   if (mobile === false && desktop === false) {
@@ -17,8 +24,16 @@ const Device = ({ mobile, desktop, children }) => {
     throw new Error("[Device] You can't set both desktop and mobile");
   }
 
+  const device = useDevice();
+
+  if (!device) {
+    throw new Error(
+      "[Device] configuration error! window is undefined (your code is probably running in node.js - tests or SSR) and DeviceProvider is not defined."
+    );
+  }
+
   let canShow =
-    (mobile && Device.isMobile()) || (desktop && Device.isDesktop());
+    (mobile && device === "mobile") || (desktop && device === "desktop");
 
   let range;
 
@@ -35,27 +50,16 @@ const Device = ({ mobile, desktop, children }) => {
   );
 };
 
-Device.setUserAgent = userAgent => {
-  md = new MobileDetect(userAgent);
-};
+function DeviceProvider({ userAgent, children }) {
+  const md = new MobileDetect(userAgent);
+  const mobile = md.phone() !== null;
 
-Device.isMobile = () => {
-  if (typeof window !== "undefined") {
-    return window.innerWidth < 768;
-  }
-
-  if (!md) {
-    throw new Error(
-      "Device: either window must be defined (browser) or user agent must be set in order to use this component."
-    );
-  }
-
-  return md.phone() !== null;
-};
-
-Device.isDesktop = () => {
-  return !Device.isMobile();
-};
+  return (
+    <DeviceContext.Provider value={{ device: mobile ? "mobile" : "desktop" }}>
+      {children}
+    </DeviceContext.Provider>
+  );
+}
 
 Device.defaultProps = {
   mobile: false,
@@ -69,3 +73,4 @@ Device.propTypes = {
 };
 
 export default Device;
+export { DeviceProvider, useDevice };

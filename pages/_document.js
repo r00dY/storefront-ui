@@ -6,10 +6,10 @@ import Device from "@commerce-ui/core/Device";
 
 class MyDocument extends Document {
   static async getInitialProps(props) {
-    if (props.req) {
-      // in case of browser environment, do not call this
-      Device.setUserAgent(props.req.headers["user-agent"]);
-    }
+    // if (props.req) {
+    //   // in case of browser environment, do not call this
+    //   Device.setUserAgent(props.req.headers["user-agent"]);
+    // }
 
     const page = props.renderPage(App => props => (
       <StyletronProvider value={styletron}>
