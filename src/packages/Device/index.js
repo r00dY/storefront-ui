@@ -50,12 +50,26 @@ const Device = ({ mobile, desktop, children }) => {
   );
 };
 
-function DeviceProvider({ userAgent, children }) {
-  const md = new MobileDetect(userAgent);
-  const mobile = md.phone() !== null;
+function DeviceProvider({ userAgent, mobile, desktop, children }) {
+  let isMobile;
+
+  if (userAgent) {
+    const md = new MobileDetect(userAgent);
+    isMobile = md.phone() !== null;
+  } else {
+    if (mobile) {
+      isMobile = true;
+    } else if (desktop) {
+      isMobile = false;
+    } else {
+      throw new Error(
+        "[DeviceProvider] You must either pass userAgent or mobile or desktop property"
+      );
+    }
+  }
 
   return (
-    <DeviceContext.Provider value={{ device: mobile ? "mobile" : "desktop" }}>
+    <DeviceContext.Provider value={{ device: isMobile ? "mobile" : "desktop" }}>
       {children}
     </DeviceContext.Provider>
   );

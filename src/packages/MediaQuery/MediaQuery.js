@@ -41,7 +41,7 @@ const MediaQuery = props => {
       typeof window === "undefined" ||
       typeof window.matchMedia === "undefined"
     ) {
-      return true;
+      return;
     }
 
     const onResize = () => {
