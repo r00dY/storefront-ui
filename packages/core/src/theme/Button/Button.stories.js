@@ -49,6 +49,20 @@ export const standard = () => (
       </TwoButtons>
     </div>
 
+    <Button
+      css={{
+        width: "100%",
+        maxWidth: "auto",
+
+        size: "large",
+        "@media (min-width: 1024px)": {
+          size: "very-large"
+        }
+      }}
+    >
+      Yo
+    </Button>
+
     <p>Natural size, very long text</p>
     <TwoButtons
       wrapper={button => <div css={{ width: "300px" }}>{button}</div>}
