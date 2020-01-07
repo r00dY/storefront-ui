@@ -5,7 +5,7 @@ import ButtonRaw from ".";
 export const unstyled = () => <ButtonRaw>Unstyled raw button</ButtonRaw>;
 export const withCSS = () => (
   <ButtonRaw
-    css={{
+    sx={{
       p: 4,
       bg: "lightgrey",
       color: "navy"
@@ -17,7 +17,7 @@ export const withCSS = () => (
 
 export const disabled = () => (
   <ButtonRaw
-    css={{
+    sx={{
       p: 4,
       bg: "lightgrey",
       color: "navy"

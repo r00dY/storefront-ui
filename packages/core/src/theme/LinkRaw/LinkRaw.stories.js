@@ -11,7 +11,7 @@ export const withCSS = () => (
   <div>
     <h1>With CSS</h1>
     <LinkRaw
-      css={{
+      sx={{
         display: "block",
         p: 4,
         bg: "lightgrey",

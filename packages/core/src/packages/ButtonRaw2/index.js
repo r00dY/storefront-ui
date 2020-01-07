@@ -25,11 +25,9 @@ const buttonResetStyles = {
 };
 
 function ButtonRaw_(props) {
-  const { css, innerRef, ...restProps } = props;
+  const { sx, innerRef, ...restProps } = props;
 
-  return (
-    <button css={[buttonResetStyles, css]} {...restProps} ref={innerRef} />
-  );
+  return <button sx={[buttonResetStyles, sx]} {...restProps} ref={innerRef} />;
 }
 
 const ButtonRaw$ = React.forwardRef((props, ref) => (

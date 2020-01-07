@@ -8,7 +8,7 @@ import LinkRaw$ from "../LinkRaw";
 let defaults = {
   background: {
     type: "div",
-    css: {
+    sx: {
       boxSizing: "border-box",
       position: "absolute",
       top: 0,
@@ -19,7 +19,7 @@ let defaults = {
   },
   foreground: ({ children, isLoading, startEnhancer, endEnhancer }) => ({
     type: "div",
-    css: {
+    sx: {
       boxSizing: "border-box",
       position: "relative",
       pointerEvents: "none",
@@ -41,7 +41,7 @@ let defaults = {
   }),
   loader: {
     type: "div",
-    css: {
+    sx: {
       boxSizing: "border-box",
       position: "absolute",
       top: 0,
@@ -56,21 +56,16 @@ let defaults = {
   }
 };
 
-function ButtonSimple(props) {
+function ButtonSimple_(props) {
   // look
   let {
     disabled,
     children,
     label,
-    overrides, //: {background, content},
-    fitWidth,
-    fitHeight,
     forwardedRef,
-    startEnhancer,
-    endEnhancer,
     isLoading,
     href,
-    css,
+    sx,
     ...restProps
   } = props;
 
@@ -86,65 +81,29 @@ function ButtonSimple(props) {
     isLoading
   };
 
-  overrides = typeof overrides === "function" ? overrides(state) : overrides;
-  startEnhancer =
-    typeof startEnhancer === "function" ? startEnhancer(state) : startEnhancer;
-  endEnhancer =
-    typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
+  sx = typeof sx === "function" ? sx(state) : sx;
 
-  const startEnhancerSpec = getElementSpec(
-    overrides.startEnhancer,
-    { children: startEnhancer },
-    state
-  );
+  const { loader, foreground, background, linkRaw, buttonRaw, ...restSx } = sx;
 
-  const endEnhancerSpec = getElementSpec(
-    overrides.endEnhancer,
-    { children: endEnhancer },
-    state
-  );
+  const loaderSpec = getElementSpec(loader, defaults.loader, state);
 
-  const startEnhancerElem = startEnhancer && createElement(startEnhancerSpec);
-  const endEnhancerElem = endEnhancer && createElement(endEnhancerSpec);
+  const backgroundSpec = getElementSpec(background, defaults.background, state);
+  const foregroundSpec = getElementSpec(foreground, defaults.foreground, state);
 
-  const loaderSpec = getElementSpec(overrides.loader, defaults.loader, state);
-
-  const backgroundSpec = getElementSpec(
-    overrides.background,
-    defaults.background,
-    state
-  );
-  const foregroundSpec = getElementSpec(
-    overrides.foreground,
-    defaults.foreground,
-    { ...state, startEnhancer: startEnhancerElem, endEnhancer: endEnhancerElem }
-  );
-
-  const Component = href
-    ? overrides.LinkRaw$ || LinkRaw$
-    : overrides.ButtonRaw$ || ButtonRaw$;
+  const Component = href ? linkRaw || LinkRaw$ : buttonRaw || ButtonRaw$;
 
   let sizingCss = {
     display: "block", // by default we should layout as display: block, makes reasoning about layout easier
     verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
   };
 
-  if (fitWidth) {
-    sizingCss["minWidth"] = "0 !important";
-    sizingCss["width"] = "100%";
-  }
-  if (fitHeight) {
-    sizingCss["minHeight"] = "0 !important";
-    sizingCss["height"] = "100%";
-  }
-
   const componentProps = {
     ...restProps,
-    css: [
+    sx: [
       {
         position: "relative"
       },
-      css,
+      restSx,
       sizingCss
     ],
     ref: buttonRef
@@ -166,128 +125,139 @@ function ButtonSimple(props) {
   );
 }
 
-function Button_(props) {
-  // const button = useButton(props); // semantics
-
-  // look
-  let {
-    disabled,
-    children,
-    label,
-    overrides, //: {background, content},
-    fitWidth,
-    fitHeight,
-    forwardedRef,
-    startEnhancer,
-    endEnhancer,
-    isLoading,
-    href,
-    css,
-    ...restProps
-  } = props;
-
-  let buttonRef = useRef(null);
-  buttonRef = forwardedRef || buttonRef;
-
-  const isHovered = useHover(buttonRef);
-
-  const state = {
-    disabled,
-    children,
-    isHovered,
-    isLoading
-  };
-
-  overrides = typeof overrides === "function" ? overrides(state) : overrides;
-  startEnhancer =
-    typeof startEnhancer === "function" ? startEnhancer(state) : startEnhancer;
-  endEnhancer =
-    typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
-
-  const startEnhancerSpec = getElementSpec(
-    overrides.startEnhancer,
-    { children: startEnhancer },
-    state
-  );
-
-  const endEnhancerSpec = getElementSpec(
-    overrides.endEnhancer,
-    { children: endEnhancer },
-    state
-  );
-
-  const startEnhancerElem = startEnhancer && createElement(startEnhancerSpec);
-  const endEnhancerElem = endEnhancer && createElement(endEnhancerSpec);
-
-  const loaderSpec = getElementSpec(overrides.loader, defaults.loader, state);
-
-  const backgroundSpec = getElementSpec(
-    overrides.background,
-    defaults.background,
-    state
-  );
-  const foregroundSpec = getElementSpec(
-    overrides.foreground,
-    defaults.foreground,
-    { ...state, startEnhancer: startEnhancerElem, endEnhancer: endEnhancerElem }
-  );
-
-  const Component = href
-    ? overrides.LinkRaw$ || LinkRaw$
-    : overrides.ButtonRaw$ || ButtonRaw$;
-
-  let sizingCss = {
-    display: "block", // by default we should layout as display: block, makes reasoning about layout easier
-    verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
-  };
-
-  if (fitWidth) {
-    sizingCss["minWidth"] = "0 !important";
-    sizingCss["width"] = "100%";
-  }
-  if (fitHeight) {
-    sizingCss["minHeight"] = "0 !important";
-    sizingCss["height"] = "100%";
-  }
-
-  const componentProps = {
-    ...restProps,
-    css: [
-      {
-        position: "relative"
-      },
-      css,
-      sizingCss
-    ],
-    ref: buttonRef
-  };
-
-  if (!href) {
-    componentProps.disabled = disabled;
-  } else {
-    componentProps.href = href;
-  }
-
-  // TODO: css props should be limited to layout ones.
-  return (
-    <Component {...componentProps}>
-      {createElement(backgroundSpec)}
-      {createElement(foregroundSpec)}
-      {isLoading && createElement(loaderSpec)}
-    </Component>
-  );
-}
-
-Button_.defaultProps = {
+ButtonSimple_.defaultProps = {
   disabled: false,
-  overrides: {}
+  sx: {}
 };
 
-const Button$ = React.forwardRef((props, ref) => (
-  <Button_ forwardedRef={ref} {...props} />
+const ButtonSimple$ = React.forwardRef((props, ref) => (
+  <ButtonSimple_ forwardedRef={ref} {...props} />
 ));
 
-export default Button$;
+export { ButtonSimple$ };
+
+// function Button_(props) {
+//     // const button = useButton(props); // semantics
+//
+//     // look
+//     let {
+//         disabled,
+//         children,
+//         label,
+//         overrides, //: {background, content},
+//         fitWidth,
+//         fitHeight,
+//         forwardedRef,
+//         startEnhancer,
+//         endEnhancer,
+//         isLoading,
+//         href,
+//         css,
+//         ...restProps
+//     } = props;
+//
+//     let buttonRef = useRef(null);
+//     buttonRef = forwardedRef || buttonRef;
+//
+//     const isHovered = useHover(buttonRef);
+//
+//     const state = {
+//         disabled,
+//         children,
+//         isHovered,
+//         isLoading
+//     };
+//
+//     overrides = typeof overrides === "function" ? overrides(state) : overrides;
+//     startEnhancer =
+//         typeof startEnhancer === "function" ? startEnhancer(state) : startEnhancer;
+//     endEnhancer =
+//         typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
+//
+//     const startEnhancerSpec = getElementSpec(
+//         overrides.startEnhancer,
+//         {children: startEnhancer},
+//         state
+//     );
+//
+//     const endEnhancerSpec = getElementSpec(
+//         overrides.endEnhancer,
+//         {children: endEnhancer},
+//         state
+//     );
+//
+//     const startEnhancerElem = startEnhancer && createElement(startEnhancerSpec);
+//     const endEnhancerElem = endEnhancer && createElement(endEnhancerSpec);
+//
+//     const loaderSpec = getElementSpec(overrides.loader, defaults.loader, state);
+//
+//     const backgroundSpec = getElementSpec(
+//         overrides.background,
+//         defaults.background,
+//         state
+//     );
+//     const foregroundSpec = getElementSpec(
+//         overrides.foreground,
+//         defaults.foreground,
+//         {...state, startEnhancer: startEnhancerElem, endEnhancer: endEnhancerElem}
+//     );
+//
+//     const Component = href
+//         ? overrides.LinkRaw$ || LinkRaw$
+//         : overrides.ButtonRaw$ || ButtonRaw$;
+//
+//     let sizingCss = {
+//         display: "block", // by default we should layout as display: block, makes reasoning about layout easier
+//         verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
+//     };
+//
+//     if (fitWidth) {
+//         sizingCss["minWidth"] = "0 !important";
+//         sizingCss["width"] = "100%";
+//     }
+//     if (fitHeight) {
+//         sizingCss["minHeight"] = "0 !important";
+//         sizingCss["height"] = "100%";
+//     }
+//
+//     const componentProps = {
+//         ...restProps,
+//         css: [
+//             {
+//                 position: "relative"
+//             },
+//             css,
+//             sizingCss
+//         ],
+//         ref: buttonRef
+//     };
+//
+//     if (!href) {
+//         componentProps.disabled = disabled;
+//     } else {
+//         componentProps.href = href;
+//     }
+//
+//     // TODO: css props should be limited to layout ones.
+//     return (
+//         <Component {...componentProps}>
+//             {createElement(backgroundSpec)}
+//             {createElement(foregroundSpec)}
+//             {isLoading && createElement(loaderSpec)}
+//         </Component>
+//     );
+// }
+//
+// Button_.defaultProps = {
+//     disabled: false,
+//     overrides: {}
+// };
+//
+// const Button$ = React.forwardRef((props, ref) => (
+//     <Button_ forwardedRef={ref} {...props} />
+// ));
+//
+// export default Button$;
 
 // TODO: isHovered is going crazy, unless we set pointerEvents: none to background and button.
 // console.log(isHovered);

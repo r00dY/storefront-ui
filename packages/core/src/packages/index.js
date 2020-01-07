@@ -164,15 +164,16 @@ function jsx(type, props, ...children) {
   let newProps = { ...props };
   let createElement = React.createElement;
 
-  if (typeof type === "string" && props.css) {
-    newProps.css = css(props.css);
+  if (typeof type === "string" && props.sx) {
+    newProps.css = css(props.sx);
+    newProps.sx = undefined;
     createElement = emotionJsx;
   }
 
   return createElement(type, newProps, ...children);
 }
 
-function mergeCss(a, b) {
+function mergeSx(a, b) {
   let ret = [];
 
   if (Array.isArray(a)) {
@@ -203,7 +204,7 @@ function getElementSpec(childSpec = {}, parentSpec, state, forcedProps = {}) {
     ...parentSpec.props,
     ...childSpec.props,
     ...forcedProps,
-    css: mergeCss(parentSpec.css, childSpec.css),
+    sx: mergeSx(parentSpec.sx, childSpec.sx),
     overrides: childSpec.overrides,
     children: childSpec.children || parentSpec.children,
     type: type
@@ -217,7 +218,7 @@ function createElement(spec) {
   });
 }
 
-export { css, jsx, rs, rslin, mergeCss, getElementSpec, createElement };
+export { jsx, rs, rslin, mergeSx, getElementSpec, createElement };
 
 /**
  What do we want?

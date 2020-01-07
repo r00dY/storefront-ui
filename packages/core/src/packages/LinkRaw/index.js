@@ -13,9 +13,9 @@ const resetStyles = {
 };
 
 function LinkRaw_(props) {
-  const { css, innerRef, ...restProps } = props;
+  const { sx, innerRef, ...restProps } = props;
 
-  return <a css={[resetStyles, css]} {...restProps} ref={innerRef} />;
+  return <a sx={[resetStyles, sx]} {...restProps} ref={innerRef} />;
 }
 
 const LinkRaw$ = React.forwardRef((props, ref) => (
