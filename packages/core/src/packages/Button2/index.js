@@ -27,6 +27,10 @@ let defaults = {
     visibility: isLoading ? "hidden" : "visible",
     overflow: "hidden",
 
+    // lineHeight: "1 !important",
+    // whiteSpace: "nowrap",
+    // textOverflow: "ellipsis", display: block must be on to make this work!!!
+
     __children: children
 
     // __children: (
