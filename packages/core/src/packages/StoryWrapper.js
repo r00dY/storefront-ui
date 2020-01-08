@@ -8,9 +8,19 @@ function StoryWrapper({ stories }) {
   }
   return (
     <>
-      {stories.map(story => (
-        <div>
-          <p sx={{}}>{story.name}</p>
+      {stories.map((story, i) => (
+        <div key={i}>
+          <p
+            sx={{
+              fontSize: "12px",
+              padding: "4px",
+              bg: "coral",
+              display: "inline-block",
+              fontFamily: "sans-serif"
+            }}
+          >
+            {story.name}
+          </p>
           <div>{story.component}</div>
         </div>
       ))}

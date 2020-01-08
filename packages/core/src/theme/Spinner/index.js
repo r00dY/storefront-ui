@@ -44,7 +44,7 @@
 import { jsx } from "@commerce-ui/core";
 import React from "react";
 
-const SpinnerBaseStyles = {
+const SpinnerBaseStyles = light => ({
   borderRadius: "50%",
   width: "10em",
   height: "10em",
@@ -54,7 +54,7 @@ const SpinnerBaseStyles = {
   borderTop: "2em solid rgba(255, 255, 255, 0.2)",
   borderRight: "2em solid rgba(255, 255, 255, 0.2)",
   borderBottom: "2em solid rgba(255, 255, 255, 0.2)",
-  borderLeft: "2em solid #ffffff",
+  borderLeft: "2em solid rgb(255,255,255)",
   transform: "translateZ(0)",
   ":after": {
     borderRadius: "50%",
@@ -72,8 +72,10 @@ const SpinnerBaseStyles = {
   //         transform: "rotate(0deg)"
   //     }
   // }
-};
+});
 
-const Spinner = ({ sx }) => <div sx={[SpinnerBaseStyles, sx]}>Spin...</div>;
+const Spinner = ({ sx, light = true }) => (
+  <div sx={[SpinnerBaseStyles(light), sx]}>Spin...</div>
+);
 
 export default Spinner;
