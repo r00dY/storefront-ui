@@ -85,11 +85,13 @@ function Button_(props) {
   const [css, customSx] = splitSx(sx);
 
   const loaderSpec = getElementSpec(customSx.$loader, defaults.loader, state);
+
   const backgroundSpec = getElementSpec(
     customSx.$background,
     defaults.background,
     state
   );
+
   const foregroundSpec = getElementSpec(
     customSx.$foreground,
     defaults.foreground,
@@ -145,6 +147,84 @@ const Button$ = React.forwardRef((props, ref) => (
 ));
 
 export { Button$ };
+
+const defaultForeground = ({ children, startEnhancer, endEnhancer }) => ({
+  __children: (
+    <>
+      {startEnhancer}
+      {children} {endEnhancer}
+    </>
+  )
+});
+
+function ButtonText_(props) {
+  let { startEnhancer, endEnhancer, sx, ...restProps } = props;
+
+  sx = typeof sx === "function" ? sx(state) : sx;
+  const [css, customSx] = splitSx(sx);
+
+  return (
+    <Button$
+      {...restProps}
+      sx={state => {
+        const {
+          $startEnhancerContainer,
+          $endEnhancerContainer,
+          $foreground,
+          ...restSx
+        } = customSx;
+
+        startEnhancer =
+          typeof startEnhancer === "function"
+            ? startEnhancer(state)
+            : startEnhancer;
+        const startEnhancerContainer =
+          startEnhancer &&
+          createElement(
+            getElementSpec(
+              $startEnhancerContainer,
+              { __children: startEnhancer },
+              state
+            )
+          );
+
+        endEnhancer =
+          typeof endEnhancer === "function" ? endEnhancer(state) : endEnhancer;
+        const endEnhancerContainer =
+          endEnhancer &&
+          createElement(
+            getElementSpec(
+              $endEnhancerContainer,
+              { __children: endEnhancer },
+              state
+            )
+          );
+
+        const newState = {
+          ...state,
+          startEnhancer: startEnhancerContainer,
+          endEnhancer: endEnhancerContainer
+        };
+
+        const foregroundSpec = getElementSpec(
+          $foreground,
+          defaultForeground,
+          newState
+        );
+
+        return {
+          ...css,
+          $foreground: foregroundSpec,
+          ...restSx
+        };
+      }}
+    />
+  );
+}
+
+const ButtonText$ = ButtonText_;
+
+export { ButtonText$ };
 
 // function Button_(props) {
 //     // const button = useButton(props); // semantics

@@ -7,6 +7,12 @@ import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 import Button from "./Button";
 import ButtonMinimal from "./ButtonMinimal";
 
+const Square = () => (
+  <div
+    sx={{ width: "16px", height: "16px", position: "relative", bg: "black" }}
+  />
+);
+
 export const standard = () => (
   <div>
     <h2>Standard text</h2>
@@ -21,6 +27,32 @@ export const standard = () => (
     <StoryWrapper
       stories={buttonStories(
         <Button>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </Button>,
+        { disabled: true, loading: true }
+      )}
+    />
+
+    <h2>Standard text with enhancers</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
+          Standard button
+        </Button>,
+        {
+          disabled: true,
+          loading: true
+        }
+      )}
+    />
+
+    <h2>Long text with enhancers</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
           Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
           eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
           minim veniam, quis nostrud exercitation ullamco laboris nisi ut

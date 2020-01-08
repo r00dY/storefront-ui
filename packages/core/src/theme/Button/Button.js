@@ -1,4 +1,4 @@
-import { Button$ } from "@commerce-ui/core/Button2";
+import { ButtonText$ } from "@commerce-ui/core/Button2";
 import Spinner from "../Spinner";
 import { splitSx } from "@commerce-ui/core";
 
@@ -36,11 +36,10 @@ const Button = props => {
   const $size = customSx.$size || "standard";
 
   return (
-    <Button$
+    <ButtonText$
       {...props}
       sx={{
         ...styles[$size].$css,
-
         ...css,
 
         // minWidth: "500px",
@@ -57,6 +56,12 @@ const Button = props => {
         }),
         $loader: {
           __children: <Spinner />
+        },
+        $startEnhancerContainer: {
+          mr: 2
+        },
+        $endEnhancerContainer: {
+          ml: 2
         }
       }}
     />
