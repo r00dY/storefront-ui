@@ -44,6 +44,8 @@ export const standard = () => (
   <div>
     <p>Natural size</p>
     <div>
+      {/*<Button sx={{width: "300px"}}>Standard button</Button>*/}
+
       <TwoButtons>
         <Button>Standard button</Button>
       </TwoButtons>

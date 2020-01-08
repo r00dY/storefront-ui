@@ -1,58 +1,53 @@
 /** @jsx jsx */
 import React, { useRef, useState } from "react";
-import { jsx, createElement, getElementSpec } from "..";
+import { jsx, createElement, getElementSpec, splitSx } from "..";
 import useHover from "../useHover";
 import ButtonRaw$ from "../ButtonRaw2";
 import LinkRaw$ from "../LinkRaw";
 
 let defaults = {
   background: {
-    type: "div",
-    sx: {
-      boxSizing: "border-box",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%"
-    }
+    boxSizing: "border-box",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%"
   },
-  foreground: ({ children, isLoading, startEnhancer, endEnhancer }) => ({
-    type: "div",
-    sx: {
-      boxSizing: "border-box",
-      position: "relative",
-      pointerEvents: "none",
-      height: "100%",
-      minHeight: "inherit",
-      display: "flex",
-      flexDirection: "row",
-      justifyContent: "center",
-      alignItems: "center",
-      visibility: isLoading ? "hidden" : "visible"
-    },
-    children: (
-      <>
-        {startEnhancer}
-        {children}
-        {endEnhancer}
-      </>
-    )
+  foreground: ({ children, isLoading }) => ({
+    boxSizing: "border-box",
+    position: "relative",
+    pointerEvents: "none",
+    height: "100%",
+    minHeight: "inherit",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    visibility: isLoading ? "hidden" : "visible",
+    overflow: "hidden",
+
+    __children: children
+
+    // __children: (
+    //     <>
+    //         {startEnhancer}
+    //         {children}
+    //         {endEnhancer}
+    //     </>
+    // )
   }),
   loader: {
-    type: "div",
-    sx: {
-      boxSizing: "border-box",
-      position: "absolute",
-      top: 0,
-      left: 0,
-      width: "100%",
-      height: "100%",
-      display: "flex",
-      justifyContent: "center",
-      alignItems: "center"
-    },
-    children: "..."
+    boxSizing: "border-box",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    __children: "..."
   }
 };
 
@@ -83,14 +78,25 @@ function ButtonSimple_(props) {
 
   sx = typeof sx === "function" ? sx(state) : sx;
 
-  const { loader, foreground, background, linkRaw, buttonRaw, ...restSx } = sx;
+  const [css, customSx] = splitSx(sx);
 
-  const loaderSpec = getElementSpec(loader, defaults.loader, state);
+  const loaderSpec = getElementSpec(customSx.$loader, defaults.loader, state);
+  const backgroundSpec = getElementSpec(
+    customSx.$background,
+    defaults.background,
+    state
+  );
+  const foregroundSpec = getElementSpec(
+    customSx.$foreground,
+    defaults.foreground,
+    state
+  );
 
-  const backgroundSpec = getElementSpec(background, defaults.background, state);
-  const foregroundSpec = getElementSpec(foreground, defaults.foreground, state);
+  console.log(foregroundSpec);
 
-  const Component = href ? linkRaw || LinkRaw$ : buttonRaw || ButtonRaw$;
+  const Component = href
+    ? customSx.$linkRaw || LinkRaw$
+    : customSx.$buttonRaw || ButtonRaw$;
 
   let sizingCss = {
     display: "block", // by default we should layout as display: block, makes reasoning about layout easier
@@ -103,7 +109,7 @@ function ButtonSimple_(props) {
       {
         position: "relative"
       },
-      restSx,
+      css,
       sizingCss
     ],
     ref: buttonRef

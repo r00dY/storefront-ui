@@ -47,6 +47,7 @@ function traverseRsAndOverrideSpacing(obj, space) {
 
   return newObject;
 }
+
 //
 // function mergeStyleObjects(...args) {
 //     let ret = {};
@@ -151,7 +152,8 @@ function traverseAndOverride(styles, theme) {
 function css(styles) {
   const theme = useTheme();
 
-  styles = Array.isArray(styles) ? styles.flat([9]) : [styles]; // we can have multiple styles
+  styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
+  styles = styles.flat([9]);
   styles = styles.filter(x => !!x);
 
   return x =>
@@ -165,15 +167,16 @@ function jsx(type, props, ...children) {
   let createElement = React.createElement;
 
   if (typeof type === "string" && props.sx) {
+    // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
     newProps.css = css(props.sx);
-    newProps.sx = undefined;
+    delete newProps.sx;
     createElement = emotionJsx;
   }
 
   return createElement(type, newProps, ...children);
 }
 
-function mergeSx(a, b) {
+function mergeCss(a, b) {
   let ret = [];
 
   if (Array.isArray(a)) {
@@ -198,27 +201,69 @@ function getElementSpec(childSpec = {}, parentSpec, state, forcedProps = {}) {
   forcedProps =
     typeof forcedProps === "function" ? forcedProps(state) : forcedProps;
 
-  const type = childSpec.type || parentSpec.type;
+  const parentSx = { ...parentSpec };
+  delete parentSx.__children;
+  delete parentSx.__type;
+  delete parentSx.__props;
+
+  const childSx = { ...childSpec };
+  delete childSx.__children;
+  delete childSx.__type;
+  delete childSx.__props;
+
+  const [parentCss, parentCustomSx] = splitSx(parentSx);
+  const [childCss, childCustomSx] = splitSx(childSx);
 
   return {
-    ...parentSpec.props,
-    ...childSpec.props,
-    ...forcedProps,
-    sx: mergeSx(parentSpec.sx, childSpec.sx),
-    overrides: childSpec.overrides,
-    children: childSpec.children || parentSpec.children,
-    type: type
+    ...parentCustomSx,
+    ...childCustomSx,
+    $css: [parentSx.$css, parentCss, childSx.$css, childCss],
+    __props: {
+      ...parentSpec.__props,
+      ...childSpec.__props,
+      ...forcedProps
+    },
+    __children: childSpec.__children || parentSpec.__children,
+    __type: childSpec.__type || parentSpec.__type
   };
 }
 
 function createElement(spec) {
-  return jsx(spec.type || "div", {
-    ...spec,
-    type: undefined
-  });
+  const { __type, __children, __props, ...sx } = spec;
+
+  const [css, { $css }] = splitSx(sx);
+
+  return jsx(
+    __type || "div",
+    {
+      sx: [css, $css],
+      ...__props
+    },
+    __children
+  );
 }
 
-export { jsx, rs, rslin, mergeSx, getElementSpec, createElement };
+function splitSx(sx) {
+  let css = {};
+  let customSx = {};
+
+  for (const prop in sx) {
+    if (prop.startsWith("$")) {
+      customSx[prop] = sx[prop];
+    } else {
+      css[prop] = sx[prop];
+    }
+  }
+
+  if (customSx.$css) {
+    css = [customSx.$css, css];
+    delete customSx.$css;
+  }
+
+  return [css, customSx];
+}
+
+export { jsx, rs, rslin, getElementSpec, createElement, splitSx };
 
 /**
  What do we want?

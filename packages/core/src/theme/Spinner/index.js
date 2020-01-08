@@ -74,6 +74,6 @@ const SpinnerBaseStyles = {
   // }
 };
 
-const Spinner = ({ css }) => <div css={[SpinnerBaseStyles, css]}>Spin...</div>;
+const Spinner = ({ sx }) => <div sx={[SpinnerBaseStyles, sx]}>Spin...</div>;
 
 export default Spinner;
