@@ -13,6 +13,9 @@ const Square = () => (
   />
 );
 
+const LABEL_LONG =
+  "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
 export const standard = () => (
   <div>
     <h2>Standard text</h2>
@@ -25,15 +28,10 @@ export const standard = () => (
 
     <h2>Long text</h2>
     <StoryWrapper
-      stories={buttonStories(
-        <Button>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </Button>,
-        { disabled: true, loading: true }
-      )}
+      stories={buttonStories(<Button>{LABEL_LONG}</Button>, {
+        disabled: true,
+        loading: true
+      })}
     />
 
     <h2>Standard text with enhancers</h2>
@@ -53,10 +51,7 @@ export const standard = () => (
     <StoryWrapper
       stories={buttonStories(
         <Button startEnhancer={<Square />} endEnhancer={<Square />}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
+          {LABEL_LONG}
         </Button>,
         { disabled: true, loading: true }
       )}
@@ -80,12 +75,7 @@ export const standardLarge = () => (
     <h2>Long text</h2>
     <StoryWrapper
       stories={buttonStories(
-        <Button sx={{ $size: "large" }}>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </Button>,
+        <Button sx={{ $size: "large" }}>{LABEL_LONG}</Button>,
         { disabled: true, loading: true }
       )}
     />
@@ -103,15 +93,9 @@ export const minimal = () => (
 
     <h2>Long text</h2>
     <StoryWrapper
-      stories={buttonStories(
-        <ButtonMinimal>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </ButtonMinimal>,
-        { disabled: true }
-      )}
+      stories={buttonStories(<ButtonMinimal>{LABEL_LONG}</ButtonMinimal>, {
+        disabled: true
+      })}
     />
   </div>
 );
