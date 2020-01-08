@@ -24,13 +24,13 @@ const Device = ({ mobile, desktop, children }) => {
     throw new Error("[Device] You can't set both desktop and mobile");
   }
 
-  const device = useDevice();
+  const device = useDevice(); // if device === null => SSR disabled.
 
-  if (!device) {
-    throw new Error(
-      "[Device] configuration error! window is undefined (your code is probably running in node.js - tests or SSR) and DeviceProvider is not defined."
-    );
-  }
+  // if (!device) {
+  //   throw new Error(
+  //     "[Device] configuration error! window is undefined (your code is probably running in node.js - tests or SSR) and DeviceProvider is not defined."
+  //   );
+  // }
 
   let canShow =
     (mobile && device === "mobile") || (desktop && device === "desktop");
