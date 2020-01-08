@@ -2,6 +2,9 @@
 import { jsx } from "@commerce-ui/core";
 import Box from "@commerce-ui/core/Box";
 
+import { buttonStories } from "@commerce-ui/core/Button2/stories";
+import StoryWrapper from "@commerce-ui/core/StoryWrapper";
+
 import Button from ".";
 
 const Square20 = () => (
@@ -42,52 +45,73 @@ const TwoButtons = ({ children, wrapper = x => x }) => {
 
 export const standard = () => (
   <div>
-    <p>Natural size</p>
-    <div>
-      {/*<Button sx={{width: "300px"}}>Standard button</Button>*/}
+    <h2>Standard text</h2>
+    <StoryWrapper
+      stories={buttonStories(<Button>Standard button</Button>, {
+        disabled: true,
+        loading: true
+      })}
+    />
 
-      <TwoButtons>
-        <Button>Standard button</Button>
-      </TwoButtons>
-    </div>
-
-    <p>Natural size, very long text</p>
-    <TwoButtons wrapper={button => <div sx={{ width: "300px" }}>{button}</div>}>
-      <Button>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </Button>
-    </TwoButtons>
-
-    <p>fitWidth and fitHeight (parent controls button size)</p>
-
-    <TwoButtons
-      wrapper={button => (
-        <div sx={{ position: "relative", width: "200px", height: "100px" }}>
-          {button}
-        </div>
+    <h2>Long text</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </Button>,
+        { disabled: true, loading: true }
       )}
-    >
-      <Button sx={{ width: "100%", height: "100%" }}>Standard button</Button>
-    </TwoButtons>
+    />
 
-    <p>fitWidth and fitHeight (text not fitting the size)</p>
-    <TwoButtons
-      wrapper={button => (
-        <div sx={{ position: "relative", width: "200px", height: "100px" }}>
-          {button}
-        </div>
-      )}
-    >
-      <Button sx={{ width: "100%", height: "100%" }}>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat.
-      </Button>
-    </TwoButtons>
+    {/*<p>Natural size</p>*/}
+    {/*<div>*/}
+    {/*/!*<Button sx={{width: "300px"}}>Standard button</Button>*!/*/}
+
+    {/*<TwoButtons>*/}
+    {/*<Button>Standard button</Button>*/}
+    {/*</TwoButtons>*/}
+    {/*</div>*/}
+
+    {/*<p>Natural size, very long text</p>*/}
+    {/*<TwoButtons wrapper={button => <div sx={{ width: "300px" }}>{button}</div>}>*/}
+    {/*<Button>*/}
+    {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod*/}
+    {/*tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim*/}
+    {/*veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea*/}
+    {/*commodo consequat.*/}
+    {/*</Button>*/}
+    {/*</TwoButtons>*/}
+
+    {/*<p>fitWidth and fitHeight (parent controls button size)</p>*/}
+
+    {/*<TwoButtons*/}
+    {/*wrapper={button => (*/}
+    {/*<div sx={{ position: "relative", width: "200px", height: "100px" }}>*/}
+    {/*{button}*/}
+    {/*</div>*/}
+    {/*)}*/}
+    {/*>*/}
+    {/*<Button sx={{ width: "100%", height: "100%" }}>Standard button</Button>*/}
+    {/*</TwoButtons>*/}
+
+    {/*<p>fitWidth and fitHeight (text not fitting the size)</p>*/}
+    {/*<TwoButtons*/}
+    {/*wrapper={button => (*/}
+    {/*<div sx={{ position: "relative", width: "200px", height: "100px" }}>*/}
+    {/*{button}*/}
+    {/*</div>*/}
+    {/*)}*/}
+    {/*>*/}
+    {/*<Button sx={{ width: "100%", height: "100%" }}>*/}
+    {/*Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod*/}
+    {/*tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim*/}
+    {/*veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea*/}
+    {/*commodo consequat.*/}
+    {/*</Button>*/}
+    {/*</TwoButtons>*/}
 
     {/*<p>Start enhancer</p>*/}
     {/*<TwoButtons>*/}
@@ -119,30 +143,6 @@ export const standard = () => (
     {/*commodo consequat.*/}
     {/*</Button>*/}
     {/*</TwoButtons>*/}
-
-    {/*<p>Disabled</p>*/}
-    {/*<TwoButtons>*/}
-    {/*<Button startEnhancer={<Square20 />} endEnhancer={<Square20 />} disabled>*/}
-    {/*Button disabled*/}
-    {/*</Button>*/}
-    {/*</TwoButtons>*/}
-
-    <p>disabled</p>
-    <TwoButtons>
-      <Button disabled>Button disabled</Button>
-    </TwoButtons>
-
-    <p>isLoading</p>
-    <TwoButtons>
-      <Button isLoading>Button with loader</Button>
-    </TwoButtons>
-
-    <p>isLoading disabled</p>
-    <TwoButtons>
-      <Button isLoading disabled>
-        Button with loader
-      </Button>
-    </TwoButtons>
   </div>
 );
 

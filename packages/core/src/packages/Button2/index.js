@@ -47,7 +47,7 @@ let defaults = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    __children: "..."
+    __children: "Loading..."
   }
 };
 
@@ -92,25 +92,25 @@ function ButtonSimple_(props) {
     state
   );
 
-  console.log(foregroundSpec);
-
   const Component = href
     ? customSx.$linkRaw || LinkRaw$
     : customSx.$buttonRaw || ButtonRaw$;
 
-  let sizingCss = {
-    display: "block", // by default we should layout as display: block, makes reasoning about layout easier
-    verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
-  };
+  // let sizingCss = {
+  //   display: "block", // by default we should layout as display: block, makes reasoning about layout easier
+  //   verticalAlign: "top" // this is important only for display: inline-block. Otherwise text inside button will make container much higher! Who the fuck knows why.
+  // };
 
   const componentProps = {
     ...restProps,
     sx: [
       {
-        position: "relative"
+        position: "relative",
+        display: "inline-block",
+        verticalAlign: "top"
       },
-      css,
-      sizingCss
+      css
+      // sizingCss
     ],
     ref: buttonRef
   };
