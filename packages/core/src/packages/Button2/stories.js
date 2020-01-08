@@ -41,7 +41,7 @@ function buttonStories(button, options = {}) {
       name: "Size set by parent as big (width=320px, height=150px)",
       component: React.cloneElement(button, {
         sx: {
-          ...button.sx,
+          ...button.props.sx,
           width: "320px",
           height: "150px"
         }

@@ -32,6 +32,34 @@ export const standard = () => (
   </div>
 );
 
+export const standardLarge = () => (
+  <div>
+    <h2>Standard text</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button sx={{ $size: "large" }}>Standard button</Button>,
+        {
+          disabled: true,
+          loading: true
+        }
+      )}
+    />
+
+    <h2>Long text</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button sx={{ $size: "large" }}>
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat.
+        </Button>,
+        { disabled: true, loading: true }
+      )}
+    />
+  </div>
+);
+
 export const minimal = () => (
   <div>
     <h2>Standard text</h2>

@@ -1,8 +1,8 @@
-import { ButtonSimple$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button2";
 import Spinner from "../Spinner";
 
 const Button = props => (
-  <ButtonSimple$
+  <Button$
     {...props}
     sx={{
       ...props.sx,

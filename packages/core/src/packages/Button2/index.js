@@ -51,7 +51,7 @@ let defaults = {
   }
 };
 
-function ButtonSimple_(props) {
+function Button_(props) {
   // look
   let {
     disabled,
@@ -131,16 +131,16 @@ function ButtonSimple_(props) {
   );
 }
 
-ButtonSimple_.defaultProps = {
+Button_.defaultProps = {
   disabled: false,
   sx: {}
 };
 
-const ButtonSimple$ = React.forwardRef((props, ref) => (
-  <ButtonSimple_ forwardedRef={ref} {...props} />
+const Button$ = React.forwardRef((props, ref) => (
+  <Button_ forwardedRef={ref} {...props} />
 ));
 
-export { ButtonSimple$ };
+export { Button$ };
 
 // function Button_(props) {
 //     // const button = useButton(props); // semantics
