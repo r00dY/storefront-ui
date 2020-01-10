@@ -25,6 +25,11 @@ const Input = props => {
           $gutter: "8px",
           pl: "16px",
           font: "body2"
+        },
+        $rightEnhancersContainer: {
+          $gutter: "8px",
+          pr: "16px",
+          font: "body2"
         }
       }}
     />

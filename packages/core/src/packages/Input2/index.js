@@ -42,6 +42,13 @@ const defaults = {
     flexGrow: 0,
     flexShrink: 0,
     __children: leftEnhancer
+  }),
+  $rightEnhancersContainer: ({ rightEnhancer }) => ({
+    __type: HorizontalStack,
+    height: "100%",
+    flexGrow: 0,
+    flexShrink: 0,
+    __children: rightEnhancer
   })
 };
 
@@ -86,6 +93,16 @@ function Input$(props) {
   const leftEnhancerContainer =
     leftEnhancer && createElement(leftEnhancersContainerSpec);
 
+  rightEnhancer =
+    typeof rightEnhancer === "function" ? rightEnhancer(state) : rightEnhancer;
+  const rightEnhancersContainerSpec = getElementSpec(
+    customSx.$rightEnhancersContainer,
+    defaults.$rightEnhancersContainer,
+    { ...state, rightEnhancer }
+  );
+  const rightEnhancerContainer =
+    rightEnhancer && createElement(rightEnhancersContainerSpec);
+
   return (
     <Box sx={[defaults.rootCss(state), rootCss, css]}>
       {leftEnhancerContainer}
@@ -105,6 +122,7 @@ function Input$(props) {
         disabled,
         ...inputProps
       })}
+      {rightEnhancerContainer}
     </Box>
   );
 }
