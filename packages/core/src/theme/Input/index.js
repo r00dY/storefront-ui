@@ -9,7 +9,16 @@ const Input = props => {
     <Input$
       {...props}
       sx={{
-        ...css
+        ...css,
+        $root: ({ focused }) => ({
+          height: "60px",
+          border: focused ? "1px solid black" : "none",
+          borderRadius: "10px",
+          backgroundColor: "yellow"
+        }),
+        $input: {
+          padding: "10px"
+        }
       }}
     />
   );

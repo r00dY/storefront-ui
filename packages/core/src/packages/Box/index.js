@@ -9,10 +9,10 @@ const boxStyles = {
 };
 
 function Box(props) {
-  const { css, as, ...restProps } = props;
+  const { sx, as, ...restProps } = props;
 
   return jsx(as, {
-    css: [boxStyles, css],
+    sx: [boxStyles, sx],
     ...restProps
   });
 }
