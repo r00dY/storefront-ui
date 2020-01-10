@@ -24,7 +24,8 @@ const defaults = {
   rootCss: ({ focused }) => ({
     position: "relative",
     display: "inline-block",
-    verticalAlign: "top"
+    verticalAlign: "top",
+    overflow: "hidden"
   }),
   $input: ({}) => ({
     __type: "input",
@@ -34,12 +35,22 @@ const defaults = {
 };
 
 function Input$(props) {
-  let { sx, onFocus, onBlur, autoFocus, ...inputProps } = props;
+  let {
+    sx,
+    onFocus,
+    onBlur,
+    autoFocus,
+    invalid,
+    disabled,
+    ...inputProps
+  } = props;
 
   const [focused, setFocused] = useState(false);
 
   const state = {
-    focused
+    focused,
+    invalid,
+    disabled
   };
 
   sx = typeof sx === "function" ? sx(state) : sx;
@@ -67,6 +78,7 @@ function Input$(props) {
             onBlur(e);
           }
         },
+        disabled,
         ...inputProps
       })}
     </Box>

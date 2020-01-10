@@ -10,11 +10,12 @@ const Input = props => {
       {...props}
       sx={{
         ...css,
-        $root: ({ focused }) => ({
+        $root: ({ focused, disabled, invalid }) => ({
           height: "60px",
-          border: focused ? "1px solid black" : "none",
+          border: focused ? "2px solid" : "1px solid",
+          borderColor: invalid ? "red" : focused ? "black" : "transparent",
           borderRadius: "10px",
-          backgroundColor: "yellow"
+          bg: disabled ? "lightgrey" : "#f7f7f7"
         }),
         $input: {
           padding: "10px"
