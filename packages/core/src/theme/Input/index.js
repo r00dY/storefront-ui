@@ -18,7 +18,7 @@ const Input = props => {
           bg: disabled ? "lightgrey" : "#f7f7f7"
         }),
         $input: {
-          padding: "10px",
+          p: "10px",
           font: "body2"
         },
         $leftEnhancersContainer: {

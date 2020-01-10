@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useLayoutEffect, useRef } from "react";
 import Box from "../Box";
 import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
@@ -58,6 +58,7 @@ function Input$(props) {
     onFocus,
     onBlur,
     autoFocus,
+    inputRef,
     invalid,
     disabled,
     leftEnhancer,
@@ -103,25 +104,28 @@ function Input$(props) {
   const rightEnhancerContainer =
     rightEnhancer && createElement(rightEnhancersContainerSpec);
 
+  const input = createElement(inputSpec, {
+    onFocus: e => {
+      setFocused(true);
+      if (onFocus) {
+        onFocus(e);
+      }
+    },
+    onBlur: e => {
+      setFocused(false);
+      if (onBlur) {
+        onBlur(e);
+      }
+    },
+    disabled,
+    ...inputProps,
+    ref: inputRef
+  });
+
   return (
     <Box sx={[defaults.rootCss(state), rootCss, css]}>
       {leftEnhancerContainer}
-      {createElement(inputSpec, {
-        onFocus: e => {
-          setFocused(true);
-          if (onFocus) {
-            onFocus(e);
-          }
-        },
-        onBlur: e => {
-          setFocused(false);
-          if (onBlur) {
-            onBlur(e);
-          }
-        },
-        disabled,
-        ...inputProps
-      })}
+      {input}
       {rightEnhancerContainer}
     </Box>
   );

@@ -152,13 +152,9 @@ function traverseAndOverride(styles, theme) {
 function css(styles) {
   const theme = useTheme();
 
-  console.log("styles before", styles);
-
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
   styles = styles.flat([9]);
   styles = styles.filter(x => !!x);
-
-  console.log("styles after", styles);
 
   return x =>
     styles.map(stylesSet => {
@@ -172,9 +168,6 @@ function jsx(type, props, ...children) {
 
   if (typeof type === "string" && props.sx) {
     // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
-
-    console.log("type", type);
-    // console.log(type, props.sx);
     newProps.css = css(props.sx);
     delete newProps.sx;
     createElement = emotionJsx;

@@ -1,105 +1,140 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
+import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 import Input from ".";
 import Button from "../Button/Button";
+import React, { useRef } from "react";
 
-export const unstyled = () => (
-  <>
-    <form action={"/action"} method={"post"}>
-      <h2>General</h2>
+export const unstyled = () => {
+  const inputRef = useRef(null);
 
-      <p>Type = text</p>
-      <Input type={"text"} placeholder={"Placeholder..."} />
+  return (
+    <>
+      <form action={"/action"} method={"post"}>
+        <h2>General</h2>
 
-      <p>Type = password</p>
-      <Input type={"password"} placeholder={"Placeholder..."} />
+        <p>Type = text</p>
+        <Input type={"text"} placeholder={"Placeholder..."} />
 
-      <p>Type = number</p>
-      <Input type={"number"} placeholder={"Placeholder..."} />
+        <p>Type = password</p>
+        <Input type={"password"} placeholder={"Placeholder..."} />
 
-      <p>Type = email</p>
-      <Input
-        type={"email"}
-        name={"email"}
-        placeholder={"Placeholder..."}
-        required
-      />
+        <p>Type = number</p>
+        <Input type={"number"} placeholder={"Placeholder..."} />
 
-      <p>Type = search</p>
-      <Input type={"search"} placeholder={"Placeholder..."} />
+        <p>Type = email</p>
+        <Input
+          type={"email"}
+          name={"email"}
+          placeholder={"Placeholder..."}
+          required
+        />
 
-      <p>Disabled</p>
-      <Input type={"text"} disabled={true} placeholder={"Placeholder..."} />
+        <p>Type = search</p>
+        <Input type={"search"} placeholder={"Placeholder..."} />
 
-      <p>Error</p>
-      <Input type={"text"} invalid={true} placeholder={"Placeholder..."} />
+        <p>Disabled</p>
+        <Input type={"text"} disabled={true} placeholder={"Placeholder..."} />
 
-      <p>Placeholder</p>
-      <Input type={"text"} placeholder={"Placeholder..."} />
+        <p>Error</p>
+        <Input type={"text"} invalid={true} placeholder={"Placeholder..."} />
 
-      <h2>Enhancers</h2>
-      <p>Left enhancer</p>
-      <Input type={"text"} placeholder={"Placeholder..."} leftEnhancer={"$"} />
+        <p>Placeholder</p>
+        <Input type={"text"} placeholder={"Placeholder..."} />
 
-      <p>Left enhancer double</p>
-      <Input
-        type={"text"}
-        placeholder={"Placeholder..."}
-        leftEnhancer={[<div>$</div>, <div>€</div>]}
-      />
+        <p>ref</p>
 
-      <p>Right enhancer</p>
-      <Input type={"text"} placeholder={"Placeholder..."} rightEnhancer={"$"} />
+        <HorizontalStack sx={{ $gutter: "8px" }}>
+          <Input
+            type={"text"}
+            placeholder={"Placeholder..."}
+            inputRef={inputRef}
+          />
 
-      <p>Right enhancer double</p>
-      <Input
-        type={"text"}
-        placeholder={"Placeholder..."}
-        rightEnhancer={[<div>$</div>, <div>€</div>]}
-      />
+          <Button
+            onClick={() => {
+              inputRef.current.focus();
+            }}
+            type={"button"}
+          >
+            Focus
+          </Button>
+        </HorizontalStack>
 
-      <p>Both enhancers</p>
-      <Input
-        type={"text"}
-        placeholder={"Placeholder..."}
-        rightEnhancer={"$"}
-        leftEnhancer={"$"}
-      />
+        <h2>Enhancers</h2>
+        <p>Left enhancer</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          leftEnhancer={"$"}
+        />
 
-      <p>Both enhancers double (change of color on focus)</p>
-      <Input
-        type={"text"}
-        placeholder={"Placeholder..."}
-        rightEnhancer={({ focused }) => [
-          <div sx={{ color: focused ? "red" : "inherit" }}>$</div>,
-          <div>€</div>
-        ]}
-        leftEnhancer={[<div>$</div>, <div>€</div>]}
-      />
+        <p>Left enhancer double</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          leftEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
+        />
 
-      <p>Number with enhancers</p>
-      <Input
-        type={"number"}
-        placeholder={"Placeholder..."}
-        rightEnhancer={"$"}
-        leftEnhancer={"$"}
-      />
+        <p>Right enhancer</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={"$"}
+        />
 
-      <p>Search with enhancers</p>
-      <Input
-        type={"search"}
-        placeholder={"Placeholder..."}
-        rightEnhancer={"$"}
-        leftEnhancer={"$"}
-      />
+        <p>Right enhancer double</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
+        />
 
-      <br />
-      <br />
+        <p>Both enhancers</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={"$"}
+          leftEnhancer={"$"}
+        />
 
-      <Button type={"submit"}>submit</Button>
-    </form>
-  </>
-);
+        <p>Both enhancers double (change of color on focus)</p>
+        <Input
+          type={"text"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={({ focused }) => [
+            <div sx={{ color: focused ? "red" : "inherit" }} key={1}>
+              $
+            </div>,
+            <div key={2}>€</div>
+          ]}
+          leftEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
+        />
+
+        <p>Number with enhancers</p>
+        <Input
+          type={"number"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={"$"}
+          leftEnhancer={"$"}
+        />
+
+        <p>Search with enhancers</p>
+        <Input
+          type={"search"}
+          placeholder={"Placeholder..."}
+          rightEnhancer={"$"}
+          leftEnhancer={"$"}
+        />
+
+        <br />
+        <br />
+
+        <Button type={"submit"}>submit</Button>
+      </form>
+    </>
+  );
+};
 
 export default {
   title: "Input"
