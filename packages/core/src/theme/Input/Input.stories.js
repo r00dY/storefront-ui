@@ -12,6 +12,9 @@ export const unstyled = () => (
       <p>Type = password</p>
       <Input type={"password"} placeholder={"Placeholder..."} />
 
+      <p>Type = number</p>
+      <Input type={"number"} placeholder={"Placeholder..."} />
+
       <p>Type = email</p>
       <Input
         type={"email"}
@@ -32,7 +35,19 @@ export const unstyled = () => (
       <p>Placeholder</p>
       <Input type={"text"} placeholder={"Placeholder..."} />
 
+      <p>Left enhancer</p>
+      <Input type={"text"} placeholder={"Placeholder..."} leftEnhancer={"$"} />
+
+      <p>Left enhancer double</p>
+      <Input
+        type={"text"}
+        placeholder={"Placeholder..."}
+        leftEnhancer={[<div>$</div>, <div>€</div>]}
+      />
+
       <br />
+      <br />
+
       <Button type={"submit"}>submit</Button>
     </form>
   </>

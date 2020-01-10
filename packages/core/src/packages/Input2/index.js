@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useLayoutEffect } from "react";
 import Box from "../Box";
+import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
 
 const inputResetStyles = {
@@ -23,14 +24,24 @@ const inputResetStyles = {
 const defaults = {
   rootCss: ({ focused }) => ({
     position: "relative",
-    display: "inline-block",
+    display: "flex",
     verticalAlign: "top",
-    overflow: "hidden"
+    overflow: "hidden",
+    flexDirection: "row"
   }),
   $input: ({}) => ({
     __type: "input",
     height: "100%",
+    flexGrow: 1,
+    flexShrink: 1,
     ...inputResetStyles
+  }),
+  $leftEnhancersContainer: ({ leftEnhancer }) => ({
+    __type: HorizontalStack,
+    height: "100%",
+    flexGrow: 0,
+    flexShrink: 0,
+    __children: leftEnhancer
   })
 };
 
@@ -42,6 +53,8 @@ function Input$(props) {
     autoFocus,
     invalid,
     disabled,
+    leftEnhancer,
+    rightEnhancer,
     ...inputProps
   } = props;
 
@@ -63,8 +76,19 @@ function Input$(props) {
 
   const inputSpec = getElementSpec(customSx.$input, defaults.$input, state);
 
+  leftEnhancer =
+    typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
+  const leftEnhancersContainerSpec = getElementSpec(
+    customSx.$leftEnhancersContainer,
+    defaults.$leftEnhancersContainer,
+    { ...state, leftEnhancer }
+  );
+  const leftEnhancerContainer =
+    leftEnhancer && createElement(leftEnhancersContainerSpec);
+
   return (
     <Box sx={[defaults.rootCss(state), rootCss, css]}>
+      {leftEnhancerContainer}
       {createElement(inputSpec, {
         onFocus: e => {
           setFocused(true);

@@ -12,13 +12,18 @@ const Input = props => {
         ...css,
         $root: ({ focused, disabled, invalid }) => ({
           height: "60px",
-          border: focused ? "2px solid" : "1px solid",
+          border: "1px solid",
           borderColor: invalid ? "red" : focused ? "black" : "transparent",
           borderRadius: "10px",
           bg: disabled ? "lightgrey" : "#f7f7f7"
         }),
         $input: {
           padding: "10px",
+          font: "body2"
+        },
+        $leftEnhancersContainer: {
+          $gutter: "8px",
+          pl: "16px",
           font: "body2"
         }
       }}

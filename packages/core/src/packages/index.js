@@ -152,9 +152,13 @@ function traverseAndOverride(styles, theme) {
 function css(styles) {
   const theme = useTheme();
 
+  console.log("styles before", styles);
+
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
   styles = styles.flat([9]);
   styles = styles.filter(x => !!x);
+
+  console.log("styles after", styles);
 
   return x =>
     styles.map(stylesSet => {
@@ -168,6 +172,9 @@ function jsx(type, props, ...children) {
 
   if (typeof type === "string" && props.sx) {
     // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
+
+    console.log("type", type);
+    // console.log(type, props.sx);
     newProps.css = css(props.sx);
     delete newProps.sx;
     createElement = emotionJsx;
@@ -231,12 +238,25 @@ function getElementSpec(childSpec = {}, parentSpec, state, forcedProps = {}) {
 function createElement(spec, props = {}) {
   const { __type, __children, __props, ...sx } = spec;
 
-  const [css, { $css }] = splitSx(sx);
+  if (!__type || typeof __type === "string") {
+    // If primitive element, then we should extract $css and sx should be an array.
+    const [css, { $css }] = splitSx(sx);
+
+    return jsx(
+      __type || "div",
+      {
+        sx: [css, $css],
+        ...__props,
+        ...props
+      },
+      __children
+    );
+  }
 
   return jsx(
-    __type || "div",
+    __type,
     {
-      sx: [css, $css],
+      sx: sx,
       ...__props,
       ...props
     },
