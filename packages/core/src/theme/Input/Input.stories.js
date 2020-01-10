@@ -77,6 +77,22 @@ export const unstyled = () => (
         leftEnhancer={[<div>$</div>, <div>€</div>]}
       />
 
+      <p>Number with enhancers</p>
+      <Input
+        type={"number"}
+        placeholder={"Placeholder..."}
+        rightEnhancer={"$"}
+        leftEnhancer={"$"}
+      />
+
+      <p>Search with enhancers</p>
+      <Input
+        type={"search"}
+        placeholder={"Placeholder..."}
+        rightEnhancer={"$"}
+        leftEnhancer={"$"}
+      />
+
       <br />
       <br />
 
