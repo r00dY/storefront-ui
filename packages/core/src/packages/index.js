@@ -167,6 +167,7 @@ function jsx(type, props, ...children) {
   let createElement = React.createElement;
 
   if (typeof type === "string" && props.sx) {
+    console.log(type, props);
     // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
     newProps.css = css(props.sx);
     delete newProps.sx;

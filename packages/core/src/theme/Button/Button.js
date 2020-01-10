@@ -1,6 +1,6 @@
 import { ButtonText$ } from "@commerce-ui/core/Button2";
 import Spinner from "../Spinner";
-import { splitSx } from "@commerce-ui/core";
+import { jsx, splitSx } from "@commerce-ui/core";
 
 const styles = {
   standard: {
