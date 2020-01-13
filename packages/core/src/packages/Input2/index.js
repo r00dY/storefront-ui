@@ -32,9 +32,22 @@ const defaults = {
   $input: ({}) => ({
     __type: "input",
     height: "100%",
+    width: "100%",
+    ...inputResetStyles
+  }),
+  $inputContainer: ({ input, label }) => ({
+    __type: "label",
+    position: "relative",
+    boxSizing: "border-box",
+    height: "100%",
     flexGrow: 1,
     flexShrink: 1,
-    ...inputResetStyles
+    __children: (
+      <>
+        {label}
+        {input}
+      </>
+    )
   }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStack,
@@ -49,6 +62,14 @@ const defaults = {
     flexGrow: 0,
     flexShrink: 0,
     __children: rightEnhancer
+  }),
+  $label: ({ placeholder, empty }) => ({
+    __type: "span",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    opacity: empty ? 0 : 1,
+    __children: placeholder
   })
 };
 
@@ -61,17 +82,23 @@ function Input$(props) {
     inputRef,
     invalid,
     disabled,
+    placeholder,
     leftEnhancer,
     rightEnhancer,
+    label,
     ...inputProps
   } = props;
 
   const [focused, setFocused] = useState(false);
+  const [empty, setEmpty] = useState(true);
 
   const state = {
     focused,
     invalid,
-    disabled
+    disabled,
+    empty,
+    placeholder,
+    label
   };
 
   sx = typeof sx === "function" ? sx(state) : sx;
@@ -81,8 +108,6 @@ function Input$(props) {
     typeof customSx.$root === "function"
       ? customSx.$root(state)
       : customSx.$root;
-
-  const inputSpec = getElementSpec(customSx.$input, defaults.$input, state);
 
   leftEnhancer =
     typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
@@ -104,6 +129,7 @@ function Input$(props) {
   const rightEnhancerContainer =
     rightEnhancer && createElement(rightEnhancersContainerSpec);
 
+  const inputSpec = getElementSpec(customSx.$input, defaults.$input, state);
   const input = createElement(inputSpec, {
     onFocus: e => {
       setFocused(true);
@@ -117,15 +143,35 @@ function Input$(props) {
         onBlur(e);
       }
     },
+    onChange: e => {
+      if (!e.target.value || e.target.value === "") {
+        setEmpty(true);
+      } else {
+        setEmpty(false);
+      }
+    },
     disabled,
+    placeholder,
     ...inputProps,
     ref: inputRef
   });
 
+  const labelElem = createElement(
+    getElementSpec(customSx.$label, defaults.$label, state)
+  );
+
+  const inputContainer = createElement(
+    getElementSpec(customSx.$inputContainer, defaults.$inputContainer, {
+      ...state,
+      input,
+      label: labelElem
+    })
+  );
+
   return (
     <Box sx={[defaults.rootCss(state), rootCss, css]}>
       {leftEnhancerContainer}
-      {input}
+      {inputContainer}
       {rightEnhancerContainer}
     </Box>
   );

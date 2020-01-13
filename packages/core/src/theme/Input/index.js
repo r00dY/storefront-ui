@@ -17,10 +17,12 @@ const Input = props => {
           borderRadius: "10px",
           bg: disabled ? "lightgrey" : "#f7f7f7"
         }),
-        $input: {
-          p: "10px",
-          font: "body2"
-        },
+        $input: ({ empty }) => ({
+          pr: "10px",
+          pl: "10px",
+          font: "body2",
+          pt: empty ? 0 : "14px"
+        }),
         $leftEnhancersContainer: {
           $gutter: "8px",
           pl: "16px",
@@ -30,6 +32,12 @@ const Input = props => {
           $gutter: "8px",
           pr: "16px",
           font: "body2"
+        },
+        $label: {
+          top: "8px",
+          left: "10px",
+          font: "body2",
+          fontSize: "13px"
         }
       }}
     />

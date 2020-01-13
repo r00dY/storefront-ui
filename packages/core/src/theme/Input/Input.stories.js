@@ -61,6 +61,16 @@ export const unstyled = () => {
           </Button>
         </HorizontalStack>
 
+        <p>Size</p>
+        <Input
+          sx={{
+            width: "320px",
+            height: "150px"
+          }}
+          type={"text"}
+          placeholder={"Placeholder..."}
+        />
+
         <h2>Enhancers</h2>
         <p>Left enhancer</p>
         <Input
