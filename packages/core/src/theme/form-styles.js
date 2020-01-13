@@ -1,9 +1,9 @@
 const formStyles = {
   $root: ({ focused, disabled, invalid }) => ({
     height: "48px",
-    border: "1px solid",
-    borderColor: invalid ? "red" : focused ? "mono500" : "transparent",
-    borderRadius: "10px",
+    border: "2px solid",
+    borderColor: invalid ? "red" : focused ? "mono800" : "transparent",
+    borderRadius: "8px",
     bg: disabled ? "lightgrey" : "#f7f7f7"
   }),
   $input: ({ empty }) => ({
