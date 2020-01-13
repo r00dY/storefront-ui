@@ -1,8 +1,8 @@
 const formStyles = {
   $root: ({ focused, disabled, invalid }) => ({
-    height: "60px",
+    height: "48px",
     border: "1px solid",
-    borderColor: invalid ? "red" : focused ? "black" : "transparent",
+    borderColor: invalid ? "red" : focused ? "mono500" : "transparent",
     borderRadius: "10px",
     bg: disabled ? "lightgrey" : "#f7f7f7"
   }),
@@ -10,7 +10,7 @@ const formStyles = {
     pr: "10px",
     pl: "10px",
     font: "body2",
-    pt: empty ? 0 : "18px",
+    pt: empty ? 0 : "16px",
     transition: "padding .2s ease-out"
   }),
   $leftEnhancersContainer: {
