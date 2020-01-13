@@ -35,20 +35,6 @@ const defaults = {
     width: "100%",
     ...inputResetStyles
   }),
-  $inputContainer: ({ input, label }) => ({
-    __type: "label",
-    position: "relative",
-    boxSizing: "border-box",
-    height: "100%",
-    flexGrow: 1,
-    flexShrink: 1,
-    __children: (
-      <>
-        {label}
-        {input}
-      </>
-    )
-  }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStack,
     height: "100%",
@@ -62,6 +48,20 @@ const defaults = {
     flexGrow: 0,
     flexShrink: 0,
     __children: rightEnhancer
+  }),
+  $inputContainer: ({ input, label }) => ({
+    __type: "label",
+    position: "relative",
+    boxSizing: "border-box",
+    height: "100%",
+    flexGrow: 1,
+    flexShrink: 1,
+    __children: (
+      <>
+        {label}
+        {input}
+      </>
+    )
   }),
   $label: ({ placeholder, empty }) => ({
     __type: "span",
@@ -156,22 +156,27 @@ function Input$(props) {
     ref: inputRef
   });
 
-  const labelElem = createElement(
-    getElementSpec(customSx.$label, defaults.$label, state)
-  );
+  let labelElem;
+  let inputContainer;
 
-  const inputContainer = createElement(
-    getElementSpec(customSx.$inputContainer, defaults.$inputContainer, {
-      ...state,
-      input,
-      label: labelElem
-    })
-  );
+  if (sx.$labelInside) {
+    labelElem = createElement(
+      getElementSpec(customSx.$label, defaults.$label, state)
+    );
+
+    inputContainer = createElement(
+      getElementSpec(customSx.$inputContainer, defaults.$inputContainer, {
+        ...state,
+        input,
+        label: labelElem
+      })
+    );
+  }
 
   return (
     <Box sx={[defaults.rootCss(state), rootCss, css]}>
       {leftEnhancerContainer}
-      {inputContainer}
+      {sx.$labelInside ? inputContainer : input}
       {rightEnhancerContainer}
     </Box>
   );

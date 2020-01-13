@@ -21,7 +21,8 @@ const Input = props => {
           pr: "10px",
           pl: "10px",
           font: "body2",
-          pt: empty ? 0 : "14px"
+          pt: empty ? 0 : "16px",
+          transition: "padding .2s ease-out"
         }),
         $leftEnhancersContainer: {
           $gutter: "8px",
@@ -33,12 +34,17 @@ const Input = props => {
           pr: "16px",
           font: "body2"
         },
-        $label: {
-          top: "8px",
+        $label: ({ empty }) => ({
+          top: "50%",
+          transform: empty ? "translateY(-12px)" : "translateY(-18px)",
+          opacity: empty ? 0 : 1,
+          transition: "all .2s ease-out",
           left: "10px",
           font: "body2",
-          fontSize: "13px"
-        }
+          fontSize: "13px",
+          color: "mono700"
+        }),
+        $labelInside: true
       }}
     />
   );

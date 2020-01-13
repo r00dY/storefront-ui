@@ -14,7 +14,7 @@ export const unstyled = () => {
         <h2>General</h2>
 
         <p>Type = text</p>
-        <Input type={"text"} placeholder={"Placeholder..."} />
+        <Input type={"text"} placeholder={"First name"} />
 
         <p>Type = password</p>
         <Input type={"password"} placeholder={"Placeholder..."} />
@@ -23,12 +23,7 @@ export const unstyled = () => {
         <Input type={"number"} placeholder={"Placeholder..."} />
 
         <p>Type = email</p>
-        <Input
-          type={"email"}
-          name={"email"}
-          placeholder={"Placeholder..."}
-          required
-        />
+        <Input type={"email"} name={"email"} placeholder={"E-mail"} required />
 
         <p>Type = search</p>
         <Input type={"search"} placeholder={"Placeholder..."} />
