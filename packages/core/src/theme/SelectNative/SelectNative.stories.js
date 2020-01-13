@@ -5,6 +5,33 @@ import SelectNative from ".";
 import Button from "../Button/Button";
 import React, { useRef } from "react";
 
+const stringOptions = [
+  "New York",
+  "Washington",
+  "London",
+  "Warsaw",
+  "City with a very long name"
+];
+
+const options = [
+  {
+    value: "new-york",
+    label: "New York"
+  },
+  {
+    value: "washington",
+    label: "Washington"
+  },
+  {
+    value: "london",
+    label: "London"
+  },
+  {
+    value: "warsaw",
+    label: "Warsaw"
+  }
+];
+
 export const unstyled = () => {
   const inputRef = useRef(null);
 
@@ -14,49 +41,34 @@ export const unstyled = () => {
         <h2>General</h2>
 
         <p>Type = text</p>
-        <SelectNative type={"text"} placeholder={"First name"} />
-
-        <p>Type = password</p>
-        <SelectNative type={"password"} placeholder={"Placeholder..."} />
-
-        <p>Type = number</p>
-        <SelectNative type={"number"} placeholder={"Placeholder..."} />
-
-        <p>Type = email</p>
-        <SelectNative
-          type={"email"}
-          name={"email"}
-          placeholder={"E-mail"}
-          required
-        />
-
-        <p>Type = search</p>
-        <SelectNative type={"search"} placeholder={"Placeholder..."} />
+        <SelectNative placeholder={"City"} options={stringOptions} />
 
         <p>Disabled</p>
         <SelectNative
           type={"text"}
           disabled={true}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
         />
 
         <p>Error</p>
         <SelectNative
           type={"text"}
           invalid={true}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
         />
 
-        <p>Placeholder</p>
-        <SelectNative type={"text"} placeholder={"Placeholder..."} />
+        <p>No placeholder</p>
+        <SelectNative label={"City"} type={"text"} options={stringOptions} />
 
         <p>ref</p>
 
         <HorizontalStack sx={{ $gutter: "8px" }}>
           <SelectNative
-            type={"text"}
-            placeholder={"Placeholder..."}
             inputRef={inputRef}
+            placeholder={"City"}
+            options={stringOptions}
           />
 
           <Button
@@ -75,51 +87,51 @@ export const unstyled = () => {
             width: "320px",
             height: "150px"
           }}
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
         />
 
         <h2>Enhancers</h2>
         <p>Left enhancer</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           leftEnhancer={"$"}
         />
 
         <p>Left enhancer double</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           leftEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
         />
 
         <p>Right enhancer</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           rightEnhancer={"$"}
         />
 
         <p>Right enhancer double</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           rightEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
         />
 
         <p>Both enhancers</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           rightEnhancer={"$"}
           leftEnhancer={"$"}
         />
 
         <p>Both enhancers double (change of color on focus)</p>
         <SelectNative
-          type={"text"}
-          placeholder={"Placeholder..."}
+          placeholder={"City"}
+          options={stringOptions}
           rightEnhancer={({ focused }) => [
             <div sx={{ color: focused ? "red" : "inherit" }} key={1}>
               $
@@ -127,22 +139,6 @@ export const unstyled = () => {
             <div key={2}>€</div>
           ]}
           leftEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
-        />
-
-        <p>Number with enhancers</p>
-        <SelectNative
-          type={"number"}
-          placeholder={"Placeholder..."}
-          rightEnhancer={"$"}
-          leftEnhancer={"$"}
-        />
-
-        <p>Search with enhancers</p>
-        <SelectNative
-          type={"search"}
-          placeholder={"Placeholder..."}
-          rightEnhancer={"$"}
-          leftEnhancer={"$"}
         />
 
         <br />

@@ -30,7 +30,7 @@ const defaults = {
     overflow: "hidden",
     flexDirection: "row"
   }),
-  $input: ({}) => ({
+  $input: {
     __type: "select",
     height: "100%",
     width: "100%",
@@ -40,7 +40,7 @@ const defaults = {
       <option>Two</option>,
       <option>Three</option>
     ]
-  }),
+  },
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStack,
     height: "100%",
@@ -70,14 +70,14 @@ const defaults = {
       </>
     )
   }),
-  $label: ({ placeholder, empty }) => ({
+  $label: ({ label, empty }) => ({
     __type: "span",
     position: "absolute",
     pointerEvents: "none",
     top: 0,
     left: 0,
     opacity: empty ? 0 : 1,
-    __children: placeholder
+    __children: label
   }),
   $arrowContainer: ({ arrow }) => ({
     position: "absolute",
@@ -107,8 +107,12 @@ function SelectNative$(props) {
     leftEnhancer,
     rightEnhancer,
     label,
+    value,
+    options,
     ...inputProps
   } = props;
+
+  label = label || placeholder;
 
   const [focused, setFocused] = useState(false);
   const [empty, setEmpty] = useState(true);
@@ -150,7 +154,34 @@ function SelectNative$(props) {
   const rightEnhancerContainer =
     rightEnhancer && createElement(rightEnhancersContainerSpec);
 
-  const inputSpec = getElementSpec(customSx.$input, defaults.$input, state);
+  let optionElems = [];
+
+  if (placeholder) {
+    optionElems.push(
+      <option disabled value={""} selected>
+        {placeholder}
+      </option>
+    );
+  }
+
+  options.map(option => {
+    let value, label;
+    if (typeof option === "object") {
+      value = option.value;
+      label = option.label;
+    } else {
+      value = option;
+      label = option;
+    }
+    optionElems.push(<option value={value}>{label}</option>);
+  });
+
+  const inputSpec = getElementSpec(
+    customSx.$input,
+    { ...defaults.$input, __children: optionElems },
+    state
+  );
+
   const input = createElement(inputSpec, {
     onFocus: e => {
       setFocused(true);
@@ -173,6 +204,7 @@ function SelectNative$(props) {
     },
     disabled,
     placeholder,
+    value,
     ...inputProps,
     ref: inputRef
   });
