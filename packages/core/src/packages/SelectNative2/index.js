@@ -11,29 +11,35 @@ const inputResetStyles = {
   border: 0,
   bg: "transparent",
   boxSizing: "border-box",
-  ":focus": {
-    outline: 0,
-    boxShadow: "none"
-  },
-  ":invalid": {
-    boxShadow: "none",
-    outline: "none"
-  }
+  appearance: "none"
+  // ":focus": {
+  //   outline: 0,
+  //   boxShadow: "none"
+  // },
+  // ":invalid": {
+  //   boxShadow: "none",
+  //   outline: "none"
+  // }
 };
 
 const defaults = {
   rootCss: ({ focused }) => ({
     position: "relative",
-    display: "flex",
+    display: "inline-flex",
     verticalAlign: "top",
     overflow: "hidden",
     flexDirection: "row"
   }),
   $input: ({}) => ({
-    __type: "input",
+    __type: "select",
     height: "100%",
     width: "100%",
-    ...inputResetStyles
+    ...inputResetStyles,
+    __children: [
+      <option>One but longer a bit</option>,
+      <option>Two</option>,
+      <option>Three</option>
+    ]
   }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStack,
@@ -49,7 +55,8 @@ const defaults = {
     flexShrink: 0,
     __children: rightEnhancer
   }),
-  $inputContainer: ({ input, label }) => ({
+  $inputContainer: ({ input, label, arrowContainer }) => ({
+    __type: "label",
     position: "relative",
     boxSizing: "border-box",
     height: "100%",
@@ -59,6 +66,7 @@ const defaults = {
       <>
         {label}
         {input}
+        {arrowContainer}
       </>
     )
   }),
@@ -70,10 +78,23 @@ const defaults = {
     left: 0,
     opacity: empty ? 0 : 1,
     __children: placeholder
-  })
+  }),
+  $arrowContainer: ({ arrow }) => ({
+    position: "absolute",
+    top: 0,
+    right: 0,
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    __children: arrow
+  }),
+  $arrow: {
+    __children: <>⌄</>
+  }
 };
 
-function Input$(props) {
+function SelectNative$(props) {
   let {
     sx,
     onFocus,
@@ -156,10 +177,22 @@ function Input$(props) {
     ref: inputRef
   });
 
+  const arrow = createElement(
+    getElementSpec(customSx.$arrow, defaults.$arrow, state)
+  );
+  const arrowContainer = createElement(
+    getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
+      ...state,
+      arrow
+    })
+  );
+
   let inputContainer;
   let inputContainerState = {
     ...state,
-    input
+    input,
+    arrowContainer,
+    arrow
   };
 
   if (sx.$labelInside) {
@@ -188,4 +221,4 @@ function Input$(props) {
   );
 }
 
-export default Input$;
+export default SelectNative$;
