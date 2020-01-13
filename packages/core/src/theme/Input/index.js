@@ -21,7 +21,7 @@ const Input = props => {
           pr: "10px",
           pl: "10px",
           font: "body2",
-          pt: empty ? 0 : "16px",
+          pt: empty ? 0 : "18px",
           transition: "padding .2s ease-out"
         }),
         $leftEnhancersContainer: {
