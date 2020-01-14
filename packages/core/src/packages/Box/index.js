@@ -8,14 +8,19 @@ const boxStyles = {
   minWidth: "0px"
 };
 
-function Box(props) {
-  const { sx, as, ...restProps } = props;
+function Box_(props) {
+  const { sx, as, forwardedRef, ...restProps } = props;
 
   return jsx(as, {
     sx: [boxStyles, sx],
+    ref: forwardedRef,
     ...restProps
   });
 }
+
+const Box = React.forwardRef((props, ref) => (
+  <Box_ {...props} forwardedRef={ref} />
+));
 
 Box.defaultProps = {
   as: "div"

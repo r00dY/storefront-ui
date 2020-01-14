@@ -1,22 +1,13 @@
 import { Popover$, StatefulPopover$ } from "@commerce-ui/core/Popover";
 
-const overrides = {
-  Body: {
-    style: ({ $anchorWidth }) => `
-      width: 320px;
-      max-height: 500px;
-      border-radius: 4px;
-      overflow: hidden;
-    `
-  },
-  Root: {
-    // style: `border-radius: 4px;`
-  }
+const rootSx = {
+  border: "1px solid black",
+  backgroundColor: "yellow"
 };
 
-export const Popover = props => <Popover$ {...props} overrides={overrides} />;
+export const Popover = props => <Popover$ {...props} sx={{ $root: rootSx }} />;
 export const StatefulPopover = props => (
-  <StatefulPopover$ {...props} overrides={overrides} />
+  <StatefulPopover$ {...props} sx={{ $root: rootSx }} />
 );
 
 Popover.PLACEMENT = Popover$.PLACEMENT;

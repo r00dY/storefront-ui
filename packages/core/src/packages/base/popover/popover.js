@@ -36,6 +36,41 @@ import type {
 } from "./types.js";
 import type { PopperDataObjectT, NormalizedOffsetsT } from "../layer/types.js";
 
+/** @jsx jsx */
+import { jsx, createElement, getElementSpec } from "../../index";
+
+import Box from "../../Box";
+import { SharedStylePropsT } from "./types";
+import {
+  getEndPosition,
+  getPopoverMarginStyles,
+  getStartPosition
+} from "./utils";
+
+// UPDATED: new Default CSS (based on BodyStyled)
+const popoverRootDefault = ({
+  content,
+  isOpen,
+  isAnimating,
+  popoverOffset,
+  showArrow,
+  placement
+}) => ({
+  boxSizing: "border-box",
+  minWidth: 0,
+  position: "absolute",
+  top: 0,
+  left: 0,
+  transition: isAnimating ? "all .1s ease-out" : "none",
+  opacity: isAnimating && isOpen ? 1 : 0,
+  transform:
+    isAnimating && isOpen
+      ? getEndPosition(popoverOffset)
+      : getStartPosition(popoverOffset, placement, showArrow),
+  ...getPopoverMarginStyles(showArrow, placement),
+  __children: <div>Dupa</div>
+});
+
 class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {
   static defaultProps: $Shape<PopoverPropsT> = defaultProps;
 
@@ -351,13 +386,13 @@ class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {
     const { isOpen, showArrow } = this.props;
     const { isAnimating, arrowOffset, popoverOffset, placement } = this.state;
     return {
-      $showArrow: !!showArrow,
-      $arrowOffset: arrowOffset,
-      $popoverOffset: popoverOffset,
-      $placement: placement,
-      $isAnimating: isAnimating,
-      $isOpen: isOpen,
-      $anchorWidth: this.anchorRef.current.clientWidth
+      showArrow: !!showArrow,
+      arrowOffset: arrowOffset,
+      popoverOffset: popoverOffset,
+      placement: placement,
+      isAnimating: isAnimating,
+      isOpen: isOpen,
+      anchorWidth: this.anchorRef.current.clientWidth
     };
   }
 
@@ -409,27 +444,39 @@ class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {
 
     const { showArrow, content } = this.props;
 
-    const sharedProps = this.getSharedProps();
+    const state = this.getSharedProps();
     const bodyProps = this.getPopoverBodyProps();
 
-    const styles = getBodyStyles(sharedProps);
-
-    console.log(sharedProps);
-
-    return (
-      <div
-        key="popover-body"
-        ref={this.popperRef}
-        {...bodyProps}
-        style={{
-          ...styles,
-          border: "1px solid black",
-          backgroundColor: "yellow"
-        }}
-      >
-        {typeof content === "function" ? content() : content}
-      </div>
+    const popoverRootSpec = getElementSpec(
+      this.props.sx ? this.props.sx.$root : undefined,
+      popoverRootDefault,
+      {
+        ...state,
+        content: typeof content === "function" ? content(state) : content
+      }
     );
+
+    const popoverRoot = createElement(popoverRootSpec, {
+      ref: this.popperRef,
+      ...bodyProps
+    });
+
+    return popoverRoot;
+
+    // return (
+    //     <Box
+    //         key="popover-body"
+    //         ref={this.popperRef}
+    //         {...bodyProps}
+    //         sx={{
+    //             ...styles,
+    //             border: "1px solid black",
+    //             backgroundColor: "yellow"
+    //         }}
+    //     >
+    //         {typeof content === "function" ? content() : content}
+    //     </Box>
+    // );
 
     // OLD CODE:
 

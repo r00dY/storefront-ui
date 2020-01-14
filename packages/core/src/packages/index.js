@@ -1,7 +1,6 @@
 import React from "react";
 import { jsx as emotionJsx } from "@emotion/core";
 import styledSystemCss from "@styled-system/css";
-import { useTheme } from "emotion-theming";
 import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
 
 function rs(config) {
@@ -150,15 +149,13 @@ function traverseAndOverride(styles, theme) {
  */
 
 function css(styles) {
-  const theme = useTheme();
-
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
   styles = styles.flat([9]);
   styles = styles.filter(x => !!x);
 
-  return x =>
+  return theme =>
     styles.map(stylesSet => {
-      return styledSystemCss(traverseAndOverride(stylesSet, theme))(x);
+      return styledSystemCss(traverseAndOverride(stylesSet, theme))(theme);
     });
 }
 
@@ -168,7 +165,7 @@ function jsx(type, props, ...children) {
 
   if (typeof type === "string" && props.sx) {
     // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
-    newProps.css = css(props.sx);
+    newProps.css = css(props.sx); //theme => { return css(props.sx, theme) }
     delete newProps.sx;
     createElement = emotionJsx;
   }
