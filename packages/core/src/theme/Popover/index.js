@@ -2,12 +2,21 @@ import { Popover$, StatefulPopover$ } from "@commerce-ui/core/Popover";
 
 const rootSx = {
   border: "1px solid black",
-  backgroundColor: "yellow"
+  backgroundColor: "yellow",
+  p: 3
 };
 
-export const Popover = props => <Popover$ {...props} sx={{ $root: rootSx }} />;
+const defaultPlacement = "bottomLeft";
+
+export const Popover = props => (
+  <Popover$ placement={defaultPlacement} {...props} sx={{ $root: rootSx }} />
+);
 export const StatefulPopover = props => (
-  <StatefulPopover$ {...props} sx={{ $root: rootSx }} />
+  <StatefulPopover$
+    placement={defaultPlacement}
+    {...props}
+    sx={{ $root: rootSx }}
+  />
 );
 
 Popover.PLACEMENT = Popover$.PLACEMENT;
