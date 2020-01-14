@@ -61,15 +61,15 @@ function Button_(props) {
     disabled,
     children,
     label,
-    forwardedRef,
+    buttonRef,
     isLoading,
     href,
     sx,
     ...restProps
   } = props;
 
-  let buttonRef = useRef(null);
-  buttonRef = forwardedRef || buttonRef;
+  let buttonRefInternal = useRef(null);
+  buttonRef = buttonRef || buttonRefInternal;
 
   const isHovered = useHover(buttonRef);
 
@@ -143,7 +143,7 @@ Button_.defaultProps = {
 };
 
 const Button$ = React.forwardRef((props, ref) => (
-  <Button_ forwardedRef={ref} {...props} />
+  <Button_ buttonRef={ref} {...props} />
 ));
 
 export { Button$ };
@@ -222,7 +222,9 @@ function ButtonText_(props) {
   );
 }
 
-const ButtonText$ = ButtonText_;
+const ButtonText$ = React.forwardRef((props, ref) => (
+  <ButtonText_ buttonRef={ref} {...props} />
+));
 
 export { ButtonText$ };
 

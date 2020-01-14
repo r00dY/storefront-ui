@@ -158,7 +158,7 @@ function SelectNative$(props) {
 
   if (placeholder) {
     optionElems.push(
-      <option disabled value={""} selected>
+      <option disabled value={""} key={"__default__"}>
         {placeholder}
       </option>
     );
@@ -173,7 +173,11 @@ function SelectNative$(props) {
       value = option;
       label = option;
     }
-    optionElems.push(<option value={value}>{label}</option>);
+    optionElems.push(
+      <option value={value} key={value}>
+        {label}
+      </option>
+    );
   });
 
   const inputSpec = getElementSpec(
@@ -206,6 +210,7 @@ function SelectNative$(props) {
     placeholder,
     value,
     ...inputProps,
+    defaultValue: "",
     ref: inputRef
   });
 

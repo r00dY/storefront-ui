@@ -22,7 +22,8 @@ import { Layer, TetherBehavior } from "../layer/index.js";
 import {
   Arrow as StyledArrow,
   Body as StyledBody,
-  Inner as StyledInner
+  Inner as StyledInner,
+  getBodyStyles
 } from "./styled-components.js";
 import { fromPopperPlacement } from "./utils.js";
 import defaultProps from "./default-props.js";
@@ -380,63 +381,99 @@ class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {
       return null;
     }
 
-    const isValidElement = React.isValidElement(anchor);
-    const isDomElement =
-      typeof anchor === "object" && typeof anchor.type === "string";
+    // UPDATED CODE:
+    // works only with Button2 for now
 
-    // Use $ref for complex components, ref for html elements
-    const refKey = isValidElement && !isDomElement ? "$ref" : "ref";
+    const anchorProps = this.getAnchorProps("buttonRef");
+    return React.cloneElement(anchor, anchorProps);
 
-    const anchorProps = this.getAnchorProps(refKey);
+    // OLD CODE:
 
-    if (typeof anchor === "object" && isValidElement) {
-      return React.cloneElement(anchor, anchorProps);
-    }
-    return <span {...anchorProps}>{anchor}</span>;
+    // const isValidElement = React.isValidElement(anchor);
+    // const isDomElement =
+    //   typeof anchor === "object" && typeof anchor.type === "string";
+    //
+    // // Use $ref for complex components, ref for html elements
+    // const refKey = isValidElement && !isDomElement ? "$ref" : "ref";
+    //
+    // const anchorProps = this.getAnchorProps(refKey);
+    //
+    // if (typeof anchor === "object" && isValidElement) {
+    //   return React.cloneElement(anchor, anchorProps);
+    // }
+    // return <span {...anchorProps}>{anchor}</span>;
   }
 
   renderPopover() {
-    const { showArrow, overrides = {}, content } = this.props;
+    // UPDATED CODE:
 
-    const {
-      Arrow: ArrowOverride,
-      Body: BodyOverride,
-      Inner: InnerOverride
-    } = overrides;
-
-    const Arrow = getOverride(ArrowOverride) || StyledArrow;
-    const Body = getOverride(BodyOverride) || StyledBody;
-    const Inner = getOverride(InnerOverride) || StyledInner;
+    const { showArrow, content } = this.props;
 
     const sharedProps = this.getSharedProps();
     const bodyProps = this.getPopoverBodyProps();
 
+    const styles = getBodyStyles(sharedProps);
+
+    console.log(sharedProps);
+
     return (
-      <Body
+      <div
         key="popover-body"
-        $ref={this.popperRef}
-        data-baseweb={this.props["data-baseweb"] || "popover"}
+        ref={this.popperRef}
         {...bodyProps}
-        {...sharedProps}
-        {...getOverrideProps(BodyOverride)}
+        style={{
+          ...styles,
+          border: "1px solid black",
+          backgroundColor: "yellow"
+        }}
       >
-        {showArrow ? (
-          <Arrow
-            key="popover-arrow"
-            $ref={this.arrowRef}
-            {...sharedProps}
-            {...getOverrideProps(ArrowOverride)}
-          />
-        ) : null}
-        <Inner
-          key="popover-inner"
-          {...sharedProps}
-          {...getOverrideProps(InnerOverride)}
-        >
-          {typeof content === "function" ? content() : content}
-        </Inner>
-      </Body>
+        {typeof content === "function" ? content() : content}
+      </div>
     );
+
+    // OLD CODE:
+
+    // const { showArrow, overrides = {}, content } = this.props;
+    //
+    // const {
+    //   Arrow: ArrowOverride,
+    //   Body: BodyOverride,
+    //   Inner: InnerOverride
+    // } = overrides;
+    //
+    // const Arrow = getOverride(ArrowOverride) || StyledArrow;
+    // const Body = getOverride(BodyOverride) || StyledBody;
+    // const Inner = getOverride(InnerOverride) || StyledInner;
+    //
+    // const sharedProps = this.getSharedProps();
+    // const bodyProps = this.getPopoverBodyProps();
+    //
+    // return (
+    //   <Body
+    //     key="popover-body"
+    //     $ref={this.popperRef}
+    //     data-baseweb={this.props["data-baseweb"] || "popover"}
+    //     {...bodyProps}
+    //     {...sharedProps}
+    //     {...getOverrideProps(BodyOverride)}
+    //   >
+    //     {showArrow ? (
+    //       <Arrow
+    //         key="popover-arrow"
+    //         $ref={this.arrowRef}
+    //         {...sharedProps}
+    //         {...getOverrideProps(ArrowOverride)}
+    //       />
+    //     ) : null}
+    //     <Inner
+    //       key="popover-inner"
+    //       {...sharedProps}
+    //       {...getOverrideProps(InnerOverride)}
+    //     >
+    //       {typeof content === "function" ? content() : content}
+    //     </Inner>
+    //   </Body>
+    // );
   }
 
   render() {

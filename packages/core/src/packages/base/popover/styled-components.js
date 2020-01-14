@@ -29,25 +29,26 @@ export function getBodyStyles(props: SharedStylePropsT) {
     $anchorWidth
   } = props;
 
-  const borderRadius = $theme.borders.useRoundedCorners
-    ? $theme.borders.radius300
-    : "0px";
+  // const borderRadius = $theme.borders.useRoundedCorners
+  //   ? $theme.borders.radius300
+  //   : "0px";
 
   return {
     position: "absolute",
     top: 0,
     left: 0,
-    backgroundColor: $theme.colors.background,
-    borderTopRightRadius: borderRadius,
-    borderBottomRightRadius: borderRadius,
-    borderTopLeftRadius: borderRadius,
-    borderBottomLeftRadius: borderRadius,
-    boxShadow: $theme.lighting.shadow600,
+    // backgroundColor: $theme.colors.background,
+    // borderTopRightRadius: borderRadius,
+    // borderBottomRightRadius: borderRadius,
+    // borderTopLeftRadius: borderRadius,
+    // borderBottomLeftRadius: borderRadius,
+    // boxShadow: $theme.lighting.shadow600,
     transitionProperty: "opacity,transform",
     transitionDuration: $isAnimating ? "0.1s" : "0s",
-    transitionTimingFunction: $isOpen
-      ? $theme.animation.easeOutCurve
-      : $theme.animation.easeInCurve,
+    transitionTimingAnimation: "ease-out",
+    //   ? $theme.animation.easeOutCurve
+    //   : $theme.animation.easeInCurve,
+    // transitionTimingFunction: $isOpen
     opacity: $isAnimating && $isOpen ? 1 : 0,
     transform:
       $isAnimating && $isOpen
