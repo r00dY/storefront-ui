@@ -29,7 +29,7 @@ export const unstyled = () => {
       <Paragraph />
 
       <StatefulPopover content={<div>Dupa</div>} accessibilityType={"tooltip"}>
-        <Button>Open</Button>
+        <Button>Open popover</Button>
       </StatefulPopover>
 
       <Paragraph />

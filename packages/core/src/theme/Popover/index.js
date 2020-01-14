@@ -1,10 +1,11 @@
 import { Popover$, StatefulPopover$ } from "@commerce-ui/core/Popover";
 
-const rootSx = {
+const rootSx = ({ anchorWidth }) => ({
   border: "1px solid black",
   backgroundColor: "yellow",
-  p: 3
-};
+  p: 3,
+  minWidth: `${anchorWidth}px`
+});
 
 const defaultPlacement = "bottomLeft";
 
