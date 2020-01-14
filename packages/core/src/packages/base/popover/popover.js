@@ -68,7 +68,7 @@ const popoverRootDefault = ({
       ? getEndPosition(popoverOffset)
       : getStartPosition(popoverOffset, placement, showArrow),
   ...getPopoverMarginStyles(showArrow, placement),
-  __children: <div>Dupa</div>
+  __children: content
 });
 
 class Popover extends React.Component<PopoverPropsT, PopoverPrivateStateT> {

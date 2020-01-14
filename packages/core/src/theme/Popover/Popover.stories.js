@@ -28,7 +28,34 @@ export const unstyled = () => {
 
       <Paragraph />
 
-      <StatefulPopover content={<div>Dupa</div>} accessibilityType={"tooltip"}>
+      <StatefulPopover
+        content={<div>Popover content</div>}
+        accessibilityType={"tooltip"}
+      >
+        <Button>Open popover</Button>
+      </StatefulPopover>
+
+      <br />
+      <br />
+
+      <p>Close callback</p>
+      <StatefulPopover
+        content={({ close }) => (
+          <div>
+            Popover content
+            <br />
+            <br />
+            <Button
+              onClick={() => {
+                close();
+              }}
+            >
+              Close
+            </Button>
+          </div>
+        )}
+        accessibilityType={"tooltip"}
+      >
         <Button>Open popover</Button>
       </StatefulPopover>
 
