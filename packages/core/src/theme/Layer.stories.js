@@ -117,6 +117,21 @@ export const unstyled = () => (
       <div sx={{ bg: "red", p: 2 }}>Dupa</div>
     </LayerWithButton>
 
+    <br />
+    <LayerWithButton
+      config={{
+        lg: {
+          mode: "popover"
+        },
+        xs: {
+          mode: "right",
+          width: "50%"
+        }
+      }}
+    >
+      <div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>
+    </LayerWithButton>
+
     <Paragraph />
     <Paragraph />
     <Paragraph />
