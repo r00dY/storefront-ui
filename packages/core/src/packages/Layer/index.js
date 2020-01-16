@@ -29,7 +29,6 @@ const globalDefaults = {
 
 const defaults = {
   centered: {
-    mode: "centered",
     width: rs({
       0: "90%",
       720: "50%"
@@ -37,7 +36,6 @@ const defaults = {
     height: "auto"
   },
   "slide-from-left": {
-    mode: "slide-from-left",
     width: rs({
       0: "90%",
       720: "35%"
@@ -45,7 +43,6 @@ const defaults = {
     height: "100%"
   },
   "slide-from-right": {
-    mode: "slide-from-right",
     width: rs({
       0: "90%",
       720: "35%"
@@ -53,7 +50,6 @@ const defaults = {
     height: "100%"
   },
   "slide-from-top": {
-    mode: "slide-from-top",
     width: "100%",
     height: rs({
       0: "90%",
@@ -61,7 +57,6 @@ const defaults = {
     })
   },
   "slide-from-bottom": {
-    mode: "slide-from-bottom",
     width: "100%",
     height: rs({
       0: "90%",
@@ -78,7 +73,7 @@ const centered = ({
   backgroundColor,
   shouldShow
 }) => ({
-  mode: "overlay",
+  anchored: false,
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
@@ -104,7 +99,7 @@ const slide = ({
   fromStart,
   shouldShow
 }) => ({
-  mode: "overlay",
+  anchored: false,
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
@@ -198,7 +193,7 @@ function Layer$(props) {
     // ANCHORED
     if (config.anchored) {
       rawConfigs[range.from] = {
-        mode: "popover"
+        anchored: true
       };
 
       return;
@@ -263,7 +258,7 @@ function Layer$(props) {
   useEffect(
     () => {
       if (isOpen) {
-        if (styles.current.mode === "overlay") {
+        if (!styles.current.anchored) {
           show();
         }
       } else {
@@ -274,7 +269,7 @@ function Layer$(props) {
   );
 
   useOnClickOutside([popperRef.current, arrowRef.current], () => {
-    if (styles.current.mode !== "overlay") {
+    if (styles.current.anchored) {
       if (onRequestClose) {
         onRequestClose();
       }
@@ -289,7 +284,7 @@ function Layer$(props) {
     return null;
   }
 
-  if (styles.current.mode === "overlay") {
+  if (!styles.current.anchored) {
     if (!isOpen && !isVisible) {
       return null;
     }
