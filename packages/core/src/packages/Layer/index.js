@@ -268,6 +268,14 @@ function Layer$(props) {
     [isOpen]
   );
 
+  useOnClickOutside([popperRef.current, arrowRef.current], () => {
+    if (styles.current.mode !== "overlay") {
+      if (onRequestClose) {
+        onRequestClose();
+      }
+    }
+  });
+
   useEffect(() => {
     setMounted(true);
   });
@@ -423,6 +431,36 @@ function Layer$(props) {
       </TetherBehavior>
     </Layer>
   );
+}
+
+function useOnClickOutside(nodes, callback) {
+  useEffect(() => {
+    const onDocumentClick = evt => {
+      const target = evt.target;
+
+      for (const i in nodes) {
+        const node = nodes[i];
+
+        if (!node) {
+          continue;
+        }
+
+        if (node === target || node.contains(target)) {
+          return;
+        }
+      }
+
+      if (callback) {
+        callback(evt);
+      }
+    };
+
+    document.addEventListener("mousedown", onDocumentClick);
+
+    return () => {
+      document.removeEventListener("mousedown", onDocumentClick);
+    };
+  });
 }
 
 export default Layer$;
