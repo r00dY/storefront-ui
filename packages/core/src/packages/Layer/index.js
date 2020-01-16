@@ -28,40 +28,40 @@ const globalDefaults = {
 };
 
 const defaults = {
-  center: {
-    mode: "center",
+  centered: {
+    mode: "centered",
     width: rs({
       0: "90%",
       720: "50%"
     }),
     height: "auto"
   },
-  left: {
-    mode: "left",
+  "slide-from-left": {
+    mode: "slide-from-left",
     width: rs({
       0: "90%",
       720: "35%"
     }),
     height: "100%"
   },
-  right: {
-    mode: "right",
+  "slide-from-right": {
+    mode: "slide-from-right",
     width: rs({
       0: "90%",
       720: "35%"
     }),
     height: "100%"
   },
-  top: {
-    mode: "top",
+  "slide-from-top": {
+    mode: "slide-from-top",
     width: "100%",
     height: rs({
       0: "90%",
       720: "35%"
     })
   },
-  bottom: {
-    mode: "bottom",
+  "slide-from-bottom": {
+    mode: "slide-from-bottom",
     width: "100%",
     height: rs({
       0: "90%",
@@ -158,7 +158,7 @@ function Layer$(props) {
 
   const { onRequestClose, config, isOpen, anchorRef } = props;
 
-  let configs = rm(config || defaults.center);
+  let configs = rm(config || defaults.centered);
 
   let rawConfigs = {};
 
@@ -195,7 +195,18 @@ function Layer$(props) {
   const shouldShow = isVisible && isOpen;
 
   configs.forEach((config, range) => {
-    config.mode = config.mode || "center";
+    // ANCHORED
+    if (config.anchored) {
+      rawConfigs[range.from] = {
+        mode: "popover"
+      };
+
+      return;
+    }
+
+    // OVERLAY
+
+    config.mode = config.mode || "centered";
     config = Object.assign({}, defaults[config.mode], globalDefaults, config);
 
     if (config.animationTime > closeTimeout) {
@@ -203,13 +214,13 @@ function Layer$(props) {
     }
 
     switch (config.mode) {
-      case "center":
+      case "centered":
         rawConfigs[range.from] = centered({
           ...config,
           shouldShow
         });
         break;
-      case "left":
+      case "slide-from-left":
         rawConfigs[range.from] = slide({
           ...config,
           height: "100%",
@@ -218,7 +229,7 @@ function Layer$(props) {
           shouldShow
         });
         break;
-      case "right":
+      case "slide-from-right":
         rawConfigs[range.from] = slide({
           ...config,
           height: "100%",
@@ -227,7 +238,7 @@ function Layer$(props) {
           shouldShow
         });
         break;
-      case "top":
+      case "slide-from-top":
         rawConfigs[range.from] = slide({
           ...config,
           width: "100%",
@@ -236,7 +247,7 @@ function Layer$(props) {
           shouldShow
         });
         break;
-      case "bottom":
+      case "slide-from-bottom":
         rawConfigs[range.from] = slide({
           ...config,
           width: "100%",
@@ -244,12 +255,6 @@ function Layer$(props) {
           fromStart: false,
           shouldShow
         });
-
-      case "popover":
-        rawConfigs[range.from] = {
-          mode: "popover"
-        };
-        break;
     }
   });
 

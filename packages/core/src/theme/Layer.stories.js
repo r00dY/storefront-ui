@@ -70,7 +70,7 @@ export const unstyled = () => (
 
     <LayerWithButton
       config={{
-        mode: "right",
+        mode: "slide-from-right",
         width: rs({
           xs: "90vw",
           md: "50vw",
@@ -88,19 +88,13 @@ export const unstyled = () => (
     <br />
     <br />
     <LayerWithButton
-      sx={{
-        $position: {
-          type: "overlay",
-          placement: "top"
-        }
-      }}
       config={{
         xs: {
-          mode: "top",
+          mode: "slide-from-top",
           height: "90%"
         },
         md: {
-          mode: "right",
+          mode: "slide-from-right",
           width: "50%"
         }
       }}
@@ -111,7 +105,7 @@ export const unstyled = () => (
     <br />
     <LayerWithButton
       config={{
-        mode: "popover"
+        anchored: true
       }}
     >
       <div sx={{ bg: "red", p: 2 }}>Dupa</div>
@@ -121,10 +115,10 @@ export const unstyled = () => (
     <LayerWithButton
       config={{
         lg: {
-          mode: "popover"
+          anchored: true
         },
         xs: {
-          mode: "right",
+          mode: "slide-from-right",
           width: "50%"
         }
       }}
