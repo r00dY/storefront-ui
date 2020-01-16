@@ -1,10 +1,19 @@
 /** @jsx jsx */
 
 import React, { useState, useEffect, useRef } from "react";
-import { Layer } from "../base/layer/index.js";
+import { Layer, TetherBehavior } from "../base/layer/index.js";
 import { jsx, rs } from "@commerce-ui/core";
 import Ease from "../Ease";
 import { rm } from "responsive-helpers";
+import {
+  fromPopperPlacement,
+  getEndPosition,
+  getPopoverMarginStyles,
+  getStartPosition
+} from "../base/popover/utils";
+import { ANIMATE_IN_TIME, PLACEMENT } from "../base/popover";
+import { createElement, getElementSpec } from "../index";
+import { SharedStylePropsArgT } from "../base/popover/types";
 
 const mountNode = () => {
   if (typeof document !== "undefined") {
@@ -69,6 +78,7 @@ const centered = ({
   backgroundColor,
   shouldShow
 }) => ({
+  mode: "overlay",
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
@@ -94,6 +104,7 @@ const slide = ({
   fromStart,
   shouldShow
 }) => ({
+  mode: "overlay",
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
@@ -117,11 +128,35 @@ const slide = ({
   }
 });
 
+const popoverRootDefault = ({
+  content,
+  isOpen,
+  isVisible,
+  popoverOffset,
+  showArrow,
+  placement
+}) => ({
+  boxSizing: "border-box",
+  minWidth: 0,
+  position: "absolute",
+  top: 0,
+  left: 0,
+  transition: isVisible ? "all .1s ease-out" : "none",
+  opacity: isVisible && isOpen ? 1 : 0,
+  transform:
+    isVisible && isOpen
+      ? getEndPosition(popoverOffset)
+      : getStartPosition(popoverOffset, placement, showArrow),
+  ...getPopoverMarginStyles(showArrow, placement),
+  __children: content
+});
+
 function Layer$(props) {
   const [isMounted, setMounted] = useState(false);
   const [isVisible, setVisible] = useState(false);
+  const [isLayerMounted, setLayerMounted] = useState(false);
 
-  const { onRequestClose, config, isOpen } = props;
+  const { onRequestClose, config, isOpen, anchorRef } = props;
 
   let configs = rm(config || defaults.center);
 
@@ -132,26 +167,30 @@ function Layer$(props) {
   const animateStartTimer = useRef(null);
   const animateOutTimer = useRef(null);
 
+  // Popover
+  const popperRef = useRef(null);
+  const arrowRef = useRef(null);
+  const [arrowOffset, setArrowOffset] = useState({ left: 0, top: 0 });
+  const [popoverPlacement, setPopoverPlacement] = useState("bottomLeft");
+  const [popoverOffset, setPopoverOffset] = useState({ left: 0, top: 0 });
+
   const clearTimers = () => {
     clearTimeout(animateOutTimer.current);
     cancelAnimationFrame(animateStartTimer.current);
   };
 
-  useEffect(
-    () => {
-      if (isOpen) {
-        clearTimers();
-        animateStartTimer.current = requestAnimationFrame(() => {
-          setVisible(true);
-        });
-      } else {
-        animateOutTimer.current = setTimeout(() => {
-          setVisible(false);
-        }, 500);
-      }
-    },
-    [isOpen]
-  );
+  const show = () => {
+    clearTimers();
+    animateStartTimer.current = requestAnimationFrame(() => {
+      setVisible(true);
+    });
+  };
+
+  const hide = () => {
+    animateOutTimer.current = setTimeout(() => {
+      setVisible(false);
+    }, 500);
+  };
 
   const shouldShow = isVisible && isOpen;
 
@@ -205,19 +244,29 @@ function Layer$(props) {
           fromStart: false,
           shouldShow
         });
+
+      case "popover":
+        rawConfigs[range.from] = {
+          mode: "popover"
+        };
         break;
     }
   });
 
   let styles = rm(rawConfigs);
 
-  const backgroundStyles = styles.cssObject(styles => ({
-    ...styles.background
-  }));
-  const contentWrapperStyles = styles.cssObject(styles => ({
-    ...styles.contentWrapper
-  }));
-  const contentStyles = styles.cssObject(styles => ({ ...styles.content }));
+  useEffect(
+    () => {
+      if (isOpen) {
+        if (styles.current.mode === "overlay") {
+          show();
+        }
+      } else {
+        hide();
+      }
+    },
+    [isOpen]
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -227,59 +276,153 @@ function Layer$(props) {
     return null;
   }
 
-  if (!isOpen && !isVisible) {
-    return null;
-  }
+  if (styles.current.mode === "overlay") {
+    if (!isOpen && !isVisible) {
+      return null;
+    }
 
-  return (
-    <Layer mountNode={mountNode()}>
-      <div
-        sx={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center"
-        }}
-      >
+    const backgroundStyles = styles.cssObject(styles => ({
+      ...styles.background
+    }));
+    const contentWrapperStyles = styles.cssObject(styles => ({
+      ...styles.contentWrapper
+    }));
+    const contentStyles = styles.cssObject(styles => ({ ...styles.content }));
+
+    return (
+      <Layer mountNode={mountNode()}>
         <div
           sx={{
-            position: "absolute",
+            position: "fixed",
             top: 0,
             left: 0,
             width: "100%",
             height: "100%",
-            bg: "rgba(0,0,0,0.5)",
-            zIndex: "-1",
-            ...backgroundStyles
-          }}
-          onClick={onRequestClose}
-        />
-
-        <div
-          sx={{
-            ...contentWrapperStyles
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center"
           }}
         >
           <div
             sx={{
-              position: "relative",
+              position: "absolute",
+              top: 0,
+              left: 0,
               width: "100%",
               height: "100%",
-              ...contentStyles
+              bg: "rgba(0,0,0,0.5)",
+              zIndex: "-1",
+              ...backgroundStyles
+            }}
+            onClick={onRequestClose}
+          />
+
+          <div
+            sx={{
+              ...contentWrapperStyles
             }}
           >
-            {props.children}
+            <div
+              sx={{
+                position: "relative",
+                width: "100%",
+                height: "100%",
+                ...contentStyles
+              }}
+            >
+              {props.children}
+            </div>
           </div>
         </div>
-      </div>
+      </Layer>
+    );
+  }
+
+  if (!isOpen) {
+    return null;
+  }
+
+  const onPopperUpdate = (normalizedOffsets, data) => {
+    const placement = fromPopperPlacement(data.placement) || PLACEMENT.top;
+    // this.setState({
+    //     arrowOffset: normalizedOffsets.arrow,
+    //     popoverOffset: normalizedOffsets.popper,
+    //     placement
+    // });
+
+    setPopoverOffset(normalizedOffsets.popper);
+    setPopoverPlacement(placement);
+    setArrowOffset(normalizedOffsets.arrowOffset);
+
+    // Now that element has been positioned, we can animate it in
+    // this.animateInTimer = setTimeout(this.animateIn, ANIMATE_IN_TIME);
+
+    show();
+
+    return data;
+  };
+
+  const getSharedProps = () => {
+    return {
+      showArrow: false,
+      arrowOffset: arrowOffset,
+      popoverOffset: popoverOffset,
+      placement: popoverPlacement,
+      isVisible: isVisible,
+      isOpen: isOpen,
+      anchorWidth: anchorRef.current.clientWidth
+    };
+  };
+
+  const renderPopover = () => {
+    // UPDATED CODE:
+
+    const state = getSharedProps();
+
+    // const bodyProps = this.getPopoverBodyProps();
+
+    const popoverRootSpec = getElementSpec(
+      props.sx ? props.sx.$root : undefined,
+      popoverRootDefault,
+      {
+        ...state,
+        content: props.children //typeof content === "function" ? content(state) : content
+      }
+    );
+
+    const popoverRoot = createElement(popoverRootSpec, {
+      ref: popperRef
+      // ...bodyProps
+    });
+
+    return popoverRoot;
+  };
+
+  // onMount and onUnmount are necessary to create rerender. Rerender makes popperRef to become not-null and TetherBehaviour depends on that
+  return (
+    <Layer
+      mountNode={mountNode()}
+      onMount={() => setLayerMounted(true)}
+      onUnmount={() => setLayerMounted(false)}
+    >
+      <TetherBehavior
+        anchorRef={anchorRef.current}
+        arrowRef={arrowRef.current}
+        popperRef={popperRef.current}
+        // Remove the `ignoreBoundary` prop in the next major version
+        // and have it replaced with the TetherBehavior props overrides
+        popperOptions={{
+          modifiers: {
+            preventOverflow: { enabled: !props.ignoreBoundary }
+          }
+        }}
+        onPopperUpdate={onPopperUpdate}
+        placement={"bottomLeft"}
+      >
+        {renderPopover()}
+      </TetherBehavior>
     </Layer>
   );
-
-  return null;
 }
 
 export default Layer$;

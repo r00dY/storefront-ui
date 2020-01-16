@@ -29,6 +29,7 @@ class Tether extends React.Component<TetherPropsT, TetherStateT> {
   };
 
   componentDidMount() {
+    // console.log('TetherBehaviour: componentDidMount')
     this.setState({ isMounted: true });
   }
 
@@ -37,12 +38,18 @@ class Tether extends React.Component<TetherPropsT, TetherStateT> {
     // the popover. Popper.js only schedules updates on resize and scroll events. In the case of
     // the Select component, when options were filtered in the dropdown menu it creates a gap
     // between it and the input element.
+    // console.log('TetherBehaviour: componentDidUpdate')
+    //
+    // console.log('has just mount?', this.state.isMounted !== prevState.isMounted, 'popper ref', this.props.popperRef);
+
     if (this.props.popperRef) {
       const { height } = this.props.popperRef.getBoundingClientRect();
+
       if (this.popperHeight !== height) {
         this.popperHeight = height;
         this.popper && this.popper.scheduleUpdate();
       }
+
       if (this.state.isMounted !== prevState.isMounted) {
         if (!this.props.anchorRef) {
           if (__DEV__) {
@@ -115,6 +122,7 @@ class Tether extends React.Component<TetherPropsT, TetherStateT> {
   }
 
   render() {
+    // console.log('TetherBehaviour: render', this.props.children);
     return this.props.children || null;
   }
 }

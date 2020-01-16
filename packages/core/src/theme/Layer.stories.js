@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
 import Layer from "@commerce-ui/core/Layer";
 
@@ -24,19 +24,31 @@ const Paragraph = () => (
 
 const LayerWithButton = ({ children, ...restProps }) => {
   const [isOpen, setOpen] = useState(false);
+  const buttonRef = useRef(null);
 
   return (
     <div>
       <Button
+        buttonRef={buttonRef}
         onClick={() => {
           setOpen(true);
         }}
       >
         open
       </Button>
+
+      <Button
+        onClick={() => {
+          setOpen(false);
+        }}
+      >
+        close
+      </Button>
+
       <Layer
         isOpen={isOpen}
         onRequestClose={() => setOpen(false)}
+        anchorRef={buttonRef}
         {...restProps}
       >
         {children}
@@ -47,6 +59,8 @@ const LayerWithButton = ({ children, ...restProps }) => {
 
 export const unstyled = () => (
   <div>
+    <Paragraph />
+
     <LayerWithButton>
       <div sx={{ bg: "red", p: 2 }}>Dupa</div>
     </LayerWithButton>
@@ -74,6 +88,12 @@ export const unstyled = () => (
     <br />
     <br />
     <LayerWithButton
+      sx={{
+        $position: {
+          type: "overlay",
+          placement: "top"
+        }
+      }}
       config={{
         xs: {
           mode: "top",
@@ -87,6 +107,30 @@ export const unstyled = () => (
     >
       <div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>
     </LayerWithButton>
+
+    <br />
+    <LayerWithButton
+      config={{
+        mode: "popover"
+      }}
+    >
+      <div sx={{ bg: "red", p: 2 }}>Dupa</div>
+    </LayerWithButton>
+
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
+    <Paragraph />
   </div>
 );
 
