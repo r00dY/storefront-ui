@@ -1,6 +1,6 @@
 /** @jsx jsx */
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Layer } from "../base/layer/index.js";
 import { jsx, rs } from "@commerce-ui/core";
 import Ease from "../Ease";
@@ -67,12 +67,12 @@ const centered = ({
   animationTime,
   animationEase,
   backgroundColor,
-  isOpen
+  shouldShow
 }) => ({
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
-    opacity: isOpen ? 1 : 0
+    opacity: shouldShow ? 1 : 0
   },
   contentWrapper: {
     width,
@@ -80,7 +80,7 @@ const centered = ({
   },
   content: {
     transition: `all ${animationTime}s ${animationEase.css}`,
-    opacity: isOpen ? 1 : 0
+    opacity: shouldShow ? 1 : 0
   }
 });
 
@@ -92,12 +92,12 @@ const slide = ({
   backgroundColor,
   axis,
   fromStart,
-  isOpen
+  shouldShow
 }) => ({
   background: {
     backgroundColor,
     transition: `opacity ${animationTime}s ${animationEase.css}`,
-    opacity: isOpen ? 1 : 0
+    opacity: shouldShow ? 1 : 0
   },
   contentWrapper: {
     position: "absolute",
@@ -110,23 +110,50 @@ const slide = ({
   },
   content: {
     transition: `all ${animationTime}s ${animationEase.css}`,
-    transform: isOpen
+    transform: shouldShow
       ? "none"
       : `translate${axis}(${fromStart ? "-" : ""}100%)`,
-    opacity: isOpen ? 1 : 0
+    opacity: shouldShow ? 1 : 0
   }
 });
 
 function Layer$(props) {
   const [isMounted, setMounted] = useState(false);
+  const [isVisible, setVisible] = useState(false);
 
-  const { onRequestClose, config } = props;
+  const { onRequestClose, config, isOpen } = props;
 
   let configs = rm(config || defaults.center);
 
   let rawConfigs = {};
 
   let closeTimeout = 0;
+
+  const animateStartTimer = useRef(null);
+  const animateOutTimer = useRef(null);
+
+  const clearTimers = () => {
+    clearTimeout(animateOutTimer.current);
+    cancelAnimationFrame(animateStartTimer.current);
+  };
+
+  useEffect(
+    () => {
+      if (isOpen) {
+        clearTimers();
+        animateStartTimer.current = requestAnimationFrame(() => {
+          setVisible(true);
+        });
+      } else {
+        animateOutTimer.current = setTimeout(() => {
+          setVisible(false);
+        }, 500);
+      }
+    },
+    [isOpen]
+  );
+
+  const shouldShow = isVisible && isOpen;
 
   configs.forEach((config, range) => {
     config.mode = config.mode || "center";
@@ -140,7 +167,7 @@ function Layer$(props) {
       case "center":
         rawConfigs[range.from] = centered({
           ...config,
-          isOpen: true
+          shouldShow
         });
         break;
       case "left":
@@ -149,7 +176,7 @@ function Layer$(props) {
           height: "100%",
           axis: "X",
           fromStart: true,
-          isOpen: true
+          shouldShow
         });
         break;
       case "right":
@@ -158,7 +185,7 @@ function Layer$(props) {
           height: "100%",
           axis: "X",
           fromStart: false,
-          isOpen: true
+          shouldShow
         });
         break;
       case "top":
@@ -167,7 +194,7 @@ function Layer$(props) {
           width: "100%",
           axis: "Y",
           fromStart: true,
-          isOpen: true
+          shouldShow
         });
         break;
       case "bottom":
@@ -176,15 +203,13 @@ function Layer$(props) {
           width: "100%",
           axis: "Y",
           fromStart: false,
-          isOpen: true
+          shouldShow
         });
         break;
     }
   });
 
   let styles = rm(rawConfigs);
-
-  // console.log(styles);
 
   const backgroundStyles = styles.cssObject(styles => ({
     ...styles.background
@@ -194,76 +219,65 @@ function Layer$(props) {
   }));
   const contentStyles = styles.cssObject(styles => ({ ...styles.content }));
 
-  // console.log(backgroundStyles);
-  // console.log(contentWrapperStyles);
-  // console.log(contentStyles);
-
   useEffect(() => {
     setMounted(true);
   });
 
-  if (isMounted && props.isOpen) {
-    //     ${styles.css(
-    //     //       style => `
-    //     //         background-color: ${style.backgroundColor.css};
-    //     //     transition: all ${style.animation.time}s ${
-    //     //           style.animation.ease.css
-    //     //         };
-    //     //
-    //     //     ${style.animation.background.before}
-    //     // .Modal--opened:not(.Modal--before-close) & {
-    //     //         ${style.animation.background.after}
-    //     //     }
-    //     // `
-    //     //       )}
-    return (
-      <Layer mountNode={mountNode()}>
+  if (!isMounted) {
+    return null;
+  }
+
+  if (!isOpen && !isVisible) {
+    return null;
+  }
+
+  return (
+    <Layer mountNode={mountNode()}>
+      <div
+        sx={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
         <div
           sx={{
-            position: "fixed",
+            position: "absolute",
             top: 0,
             left: 0,
             width: "100%",
             height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center"
+            bg: "rgba(0,0,0,0.5)",
+            zIndex: "-1",
+            ...backgroundStyles
+          }}
+          onClick={onRequestClose}
+        />
+
+        <div
+          sx={{
+            ...contentWrapperStyles
           }}
         >
           <div
             sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
+              position: "relative",
               width: "100%",
               height: "100%",
-              bg: "rgba(0,0,0,0.5)",
-              zIndex: "-1",
-              ...backgroundStyles
-            }}
-            onClick={onRequestClose}
-          />
-
-          <div
-            sx={{
-              ...contentWrapperStyles
+              ...contentStyles
             }}
           >
-            <div
-              sx={{
-                position: "relative",
-                width: "100%",
-                height: "100%",
-                ...contentStyles
-              }}
-            >
-              {props.children}
-            </div>
+            {props.children}
           </div>
         </div>
-      </Layer>
-    );
-  }
+      </div>
+    </Layer>
+  );
 
   return null;
 }

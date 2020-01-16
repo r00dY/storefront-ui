@@ -34,7 +34,11 @@ const LayerWithButton = ({ children, ...restProps }) => {
       >
         open
       </Button>
-      <Layer isOpen={isOpen} {...restProps}>
+      <Layer
+        isOpen={isOpen}
+        onRequestClose={() => setOpen(false)}
+        {...restProps}
+      >
         {children}
       </Layer>
     </div>
@@ -60,7 +64,11 @@ export const unstyled = () => (
         })
       }}
     >
-      <div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>
+      <div sx={{ bg: "red", p: 2, height: "100%" }}>
+        Dupa <br />
+        <br />
+        <Button>Some button</Button>
+      </div>
     </LayerWithButton>
 
     <br />

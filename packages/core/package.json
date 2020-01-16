@@ -14,6 +14,7 @@
     "emotion-theming": "^10.0.19",
     "mobile-detect": "^1.4.3",
     "popper.js": "^1.14.3",
+    "react-focus-lock": "^2.2.1",
     "react-input-mask": "^2.0.4",
     "react-modal": "^3.8.1",
     "react-responsive": "^6.1.1",
