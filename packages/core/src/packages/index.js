@@ -21,6 +21,11 @@ function rslin(from, to, isInf) {
 
 // Traverses through rs and rslin objects (from above) and changes values according to values from "space"
 function traverseRsAndOverrideSpacing(obj, space) {
+  // If string like "10px" or "90%"
+  if (typeof obj === "string") {
+    return obj;
+  }
+
   // If number
   if (typeof obj === "number") {
     if (space && space[obj]) {
@@ -95,6 +100,7 @@ function traverseAndOverride(styles, theme) {
       if (val.__isRs) {
         // Nested rslins in rs
         let newConfig = { ...newVal.config };
+
         for (const key in newConfig) {
           if (newConfig[key].__isRslin) {
             newConfig[key] = rslin_(
