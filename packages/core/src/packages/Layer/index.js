@@ -124,7 +124,7 @@ const slide = ({
 });
 
 const popoverRootDefault = ({
-  content,
+  children,
   isOpen,
   isVisible,
   popoverOffset,
@@ -143,7 +143,7 @@ const popoverRootDefault = ({
       ? getEndPosition(popoverOffset)
       : getStartPosition(popoverOffset, placement, showArrow),
   ...getPopoverMarginStyles(showArrow, placement),
-  __children: content
+  __children: children
 });
 
 function Layer$(props) {
@@ -338,7 +338,9 @@ function Layer$(props) {
                 ...contentStyles
               }}
             >
-              {props.children}
+              {typeof props.children === "function"
+                ? props.children({ anchored: !!styles.current.anchored })
+                : props.children}
             </div>
           </div>
         </div>
@@ -385,7 +387,15 @@ function Layer$(props) {
   const renderPopover = () => {
     // UPDATED CODE:
 
-    const state = getSharedProps();
+    const state = {
+      ...getSharedProps(),
+      anchored: !!styles.current.anchored
+    };
+
+    const children =
+      typeof props.children === "function"
+        ? props.children(state)
+        : props.children;
 
     // const bodyProps = this.getPopoverBodyProps();
 
@@ -394,7 +404,7 @@ function Layer$(props) {
       popoverRootDefault,
       {
         ...state,
-        content: props.children //typeof content === "function" ? content(state) : content
+        children
       }
     );
 

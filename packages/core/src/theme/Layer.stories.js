@@ -51,7 +51,9 @@ const LayerWithButton = ({ children, ...restProps }) => {
         anchorRef={buttonRef}
         {...restProps}
       >
-        {children}
+        {({ anchored }) => (
+          <div sx={{ border: "1px solid black" }}>{children}</div>
+        )}
       </Layer>
     </div>
   );
