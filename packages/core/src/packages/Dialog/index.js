@@ -33,7 +33,9 @@ function Dialog$(props) {
     <Layer {...props} onRequestClose={onRequestClose}>
       {params => (
         <FocusLock returnFocus>
-          {typeof children === "function" ? children(params) : children}
+          <div role={"dialog"}>
+            {typeof children === "function" ? children(params) : children}
+          </div>
         </FocusLock>
       )}
     </Layer>
