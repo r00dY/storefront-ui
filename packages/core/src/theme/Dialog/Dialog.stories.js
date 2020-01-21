@@ -68,7 +68,6 @@ export const unstyled = () => (
         xs: {
           mode: "slide-from-bottom",
           height: "auto"
-          // height: "90%"
         },
         md: {
           anchored: true

@@ -3,23 +3,7 @@ import React, { useState, useLayoutEffect, useRef } from "react";
 import Box from "../Box";
 import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-
-const inputResetStyles = {
-  outline: 0,
-  margin: 0,
-  padding: 0,
-  border: 0,
-  bg: "transparent",
-  boxSizing: "border-box",
-  ":focus": {
-    outline: 0,
-    boxShadow: "none"
-  },
-  ":invalid": {
-    boxShadow: "none",
-    outline: "none"
-  }
-};
+import InputRaw$ from "../InputRaw";
 
 const defaults = {
   rootCss: ({ focused }) => ({
@@ -30,10 +14,9 @@ const defaults = {
     flexDirection: "row"
   }),
   $input: ({}) => ({
-    __type: "input",
+    __type: InputRaw$,
     height: "100%",
-    width: "100%",
-    ...inputResetStyles
+    width: "100%"
   }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStack,
@@ -78,6 +61,7 @@ function Input$(props) {
     sx,
     onFocus,
     onBlur,
+    onChange,
     autoFocus,
     inputRef,
     invalid,
@@ -148,6 +132,9 @@ function Input$(props) {
         setEmpty(true);
       } else {
         setEmpty(false);
+      }
+      if (onChange) {
+        onChange(e);
       }
     },
     disabled,

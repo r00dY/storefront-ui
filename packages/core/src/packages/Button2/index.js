@@ -109,15 +109,25 @@ function Button_(props) {
 
   const componentProps = {
     ...restProps,
-    sx: [
-      {
-        position: "relative",
-        display: "inline-block",
-        verticalAlign: "top"
-      },
-      css
-      // sizingCss
-    ],
+    sx: {
+      $css: [
+        {
+          position: "relative",
+          display: "inline-block",
+          verticalAlign: "top"
+        },
+        css
+      ]
+    },
+    // sx: [
+    //   {
+    //     position: "relative",
+    //     display: "inline-block",
+    //     verticalAlign: "top"
+    //   },
+    //   cssx
+    //   // sizingCss
+    // ],
     ref: buttonRef
   };
 
@@ -213,7 +223,7 @@ function ButtonText_(props) {
         );
 
         return {
-          ...css,
+          $css: css,
           $foreground: foregroundSpec,
           ...restSx
         };

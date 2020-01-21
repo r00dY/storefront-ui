@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx } from "..";
+import { jsx, splitSx } from "..";
 
 /**
  * Button Raw
@@ -27,7 +27,8 @@ const buttonResetStyles = {
 function ButtonRaw_(props) {
   const { sx, innerRef, ...restProps } = props;
 
-  return <button sx={[buttonResetStyles, sx]} {...restProps} ref={innerRef} />;
+  const [css, customSx] = splitSx(sx);
+  return <button sx={[buttonResetStyles, css]} {...restProps} ref={innerRef} />;
 }
 
 const ButtonRaw$ = React.forwardRef((props, ref) => (

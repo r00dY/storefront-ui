@@ -156,8 +156,13 @@ function traverseAndOverride(styles, theme) {
 
 function css(styles) {
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
+
+  // console.log('before css flattened styles', styles);
+
   styles = styles.flat([9]);
   styles = styles.filter(x => !!x);
+
+  // console.log('after css flattened styles', styles);
 
   return theme =>
     styles.map(stylesSet => {
@@ -216,6 +221,11 @@ function getElementSpec(childSpec = {}, parentSpec, state, forcedProps = {}) {
 
   const [parentCss, parentCustomSx] = splitSx(parentSx);
   const [childCss, childCustomSx] = splitSx(childSx);
+  //
+  // console.log('parent css', parentCss);
+  // console.log('child css', childCss);
+  //
+  // console.log('---- ', [parentSx.$css, parentCss, childSx.$css, childCss]);
 
   return {
     ...parentCustomSx,
