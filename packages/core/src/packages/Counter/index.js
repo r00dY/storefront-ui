@@ -16,7 +16,7 @@ const defaults = {
   },
   $root: ({ focused }) => ({
     position: "relative",
-    display: "flex",
+    display: "inline-flex",
     verticalAlign: "top",
     overflow: "hidden",
     flexDirection: "row"
@@ -26,6 +26,56 @@ const defaults = {
     textAlign: "center"
   })
 };
+
+function useCounter(props = {}) {
+  let { step = 1, initialValue, max = 999 } = props;
+
+  const [amount, setAmount] = useState(initialValue || step);
+  const [inputValue, setInputValue] = useState(initialValue || step);
+
+  const setValue = number => {
+    let newVal = number;
+    if (isNaN(newVal)) {
+      newVal = 0;
+    }
+
+    newVal = Math.max(newVal, step);
+    newVal = Math.min(newVal, max);
+
+    // Check if multiple of step
+    const rest = newVal % step;
+    if (rest != 0) {
+      newVal = newVal - rest;
+    }
+
+    setAmount(newVal);
+    setInputValue(newVal);
+  };
+
+  const buttonIncrementProps = {
+    onClick: () => {
+      setValue(amount + step);
+    }
+  };
+
+  const buttonDecrementProps = {
+    onClick: () => {
+      setValue(amount - step);
+    }
+  };
+
+  const inputProps = {
+    value: inputValue,
+    onChange: e => {
+      setInputValue(e.target.value);
+    },
+    onBlur: () => {
+      setValue(parseInt(inputValue));
+    }
+  };
+
+  return { buttonIncrementProps, buttonDecrementProps, inputProps };
+}
 
 function Counter$(props) {
   let { sx = {} } = props;
@@ -74,12 +124,15 @@ function Counter$(props) {
   );
 
   return (
-    <div sx={[defaults.$root(state), rootCss, css]}>
-      {buttonDecrease}
-      {input}
-      {buttonIncrease}
+    <div sx={css}>
+      <div sx={[defaults.$root(state), rootCss]}>
+        {buttonDecrease}
+        {input}
+        {buttonIncrease}
+      </div>
     </div>
   );
 }
 
 export default Counter$;
+export { useCounter };

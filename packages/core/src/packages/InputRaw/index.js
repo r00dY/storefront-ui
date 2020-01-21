@@ -20,7 +20,12 @@ const inputResetStyles = {
   ":invalid": {
     boxShadow: "none",
     outline: "none"
-  }
+  },
+
+  "::-webkit-outer-spin-button, ::-webkit-inner-spin-button": {
+    WebkitAppearance: "none"
+  },
+  MozAppearance: "textfield"
 };
 
 function InputRaw_(props) {

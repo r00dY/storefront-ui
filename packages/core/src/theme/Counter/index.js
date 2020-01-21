@@ -2,6 +2,7 @@
 import Counter$ from "@commerce-ui/core/Counter";
 import { jsx, splitSx } from "@commerce-ui/core";
 import { Button$ } from "@commerce-ui/core/Button2";
+import ButtonMinimal from "../Button/ButtonMinimal";
 
 const Counter = props => {
   const [css, customSx] = splitSx(props.sx);
@@ -12,7 +13,8 @@ const Counter = props => {
       sx={{
         ...css,
         $root: ({ focused }) => ({
-          border: focused ? "1px solid black" : "1px solid lightgrey"
+          border: "1px solid black",
+          borderColor: focused ? "black" : "mono300"
         }),
         $buttonIncrease: {
           __type: Button$,
