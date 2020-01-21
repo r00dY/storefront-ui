@@ -3,8 +3,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
 import Counter from "./index";
 import ButtonMinimal from "../Button/ButtonMinimal";
+import Button from "../Button/Button";
 import { Button$ } from "@commerce-ui/core/Button2";
 import InputRaw$ from "@commerce-ui/core/InputRaw";
+import Input from "../Input";
 
 import { useCounter } from "@commerce-ui/core/Counter";
 
@@ -19,9 +21,13 @@ export const hook = () => {
 
   return (
     <div>
-      <ButtonMinimal {...counter.buttonDecrementProps}>-</ButtonMinimal>
-      <InputRaw$ {...counter.inputProps} />
-      <ButtonMinimal {...counter.buttonIncrementProps}>+</ButtonMinimal>
+      <Button {...counter.buttonDecrementProps}>-</Button>
+      <Input placeholder={"Amount"} {...counter.inputProps} />
+      <Button {...counter.buttonIncrementProps}>+</Button>
+
+      <br />
+
+      <Button onClick={() => counter.setValue(0)}>reset</Button>
     </div>
   );
 };

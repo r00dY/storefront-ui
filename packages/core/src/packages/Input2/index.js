@@ -74,7 +74,11 @@ function Input$(props) {
   } = props;
 
   const [focused, setFocused] = useState(false);
-  const [empty, setEmpty] = useState(true);
+  let [empty, setEmpty] = useState(true);
+
+  if (props.value) {
+    empty = props.value === "";
+  }
 
   const state = {
     focused,

@@ -74,7 +74,11 @@ function useCounter(props = {}) {
     }
   };
 
-  return { buttonIncrementProps, buttonDecrementProps, inputProps };
+  const selectProps = {
+    options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  };
+
+  return { buttonIncrementProps, buttonDecrementProps, inputProps, setValue };
 }
 
 function Counter$(props) {

@@ -45,7 +45,6 @@ export const unstyled = () => {
 
         <p>Disabled</p>
         <SelectNative
-          type={"text"}
           disabled={true}
           placeholder={"City"}
           options={stringOptions}
@@ -53,7 +52,6 @@ export const unstyled = () => {
 
         <p>Error</p>
         <SelectNative
-          type={"text"}
           invalid={true}
           placeholder={"City"}
           options={stringOptions}
