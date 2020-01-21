@@ -23,6 +23,8 @@ export const unstyled = () => (
 export const hook = () => {
   const counter = useCounter({ step: 6 });
 
+  const counter2 = useCounter();
+
   return (
     <div>
       <Box
@@ -55,6 +57,37 @@ export const hook = () => {
       <br />
 
       <Button onClick={() => counter.setValue(0)}>reset</Button>
+
+      <br />
+      <br />
+      <br />
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row"
+        }}
+      >
+        <Button {...counter2.buttonDecrementProps}>-</Button>
+        {counter2.exceedsSelectRange && (
+          <InputRaw$
+            {...counter2.inputProps}
+            sx={{ width: "50px", textAlign: "center" }}
+          />
+        )}
+        {!counter2.exceedsSelectRange && (
+          <SelectNative$
+            {...counter2.selectProps}
+            sx={{
+              width: "50px",
+              textAlignLast: "center",
+              $arrowContainer: { __children: <div /> },
+              $input: { textAlign: "center" }
+            }}
+          />
+        )}
+        <Button {...counter2.buttonIncrementProps}>+</Button>
+      </Box>
     </div>
   );
 };

@@ -28,7 +28,7 @@ const defaults = {
 };
 
 function useCounter(props = {}) {
-  let { step = 1, initialValue, max = 999, selectOptionsAmount = 20 } = props;
+  let { step = 1, initialValue, max = 999, selectOptionsAmount = 19 } = props;
 
   const [amount, setAmount] = useState(initialValue || step);
   const [inputValue, setInputValue] = useState(initialValue || step);
@@ -97,7 +97,7 @@ function useCounter(props = {}) {
   }
 
   const maxSelectAmount = selectOptionsAmount * step;
-  const moreOption = `${maxSelectAmount}+`;
+  const moreOption = `${maxSelectAmount + 1}+`;
   selectOptions.push(moreOption);
 
   const exceedsSelectRange =
