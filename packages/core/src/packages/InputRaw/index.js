@@ -29,14 +29,10 @@ const inputResetStyles = {
 };
 
 function InputRaw_(props) {
-  const { sx, innerRef, ...restProps } = props;
+  const { sx, inputRef, ...restProps } = props;
 
   const [css, customSx] = splitSx(sx);
-  return <input sx={[inputResetStyles, css]} {...restProps} ref={innerRef} />;
+  return <input sx={[inputResetStyles, css]} {...restProps} ref={inputRef} />;
 }
 
-const InputRaw$ = React.forwardRef((props, ref) => (
-  <InputRaw_ {...props} innerRef={ref} />
-));
-
-export default InputRaw$;
+export default InputRaw_;

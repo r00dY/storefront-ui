@@ -10,6 +10,8 @@ import Input from "../Input";
 
 import { useCounter } from "@commerce-ui/core/Counter";
 
+import Box from "@commerce-ui/core/Box";
+
 import SelectNative$ from "@commerce-ui/core/SelectNative2";
 
 export const unstyled = () => (
@@ -23,10 +25,32 @@ export const hook = () => {
 
   return (
     <div>
-      <Button {...counter.buttonDecrementProps}>-</Button>
-      <Input placeholder={"Amount"} {...counter.inputProps} />
-      <Button {...counter.buttonIncrementProps}>+</Button>
-      <SelectNative$ {...counter.selectProps} />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row"
+        }}
+      >
+        <Button {...counter.buttonDecrementProps}>-</Button>
+        {counter.exceedsSelectRange && (
+          <InputRaw$
+            {...counter.inputProps}
+            sx={{ width: "50px", textAlign: "center" }}
+          />
+        )}
+        {!counter.exceedsSelectRange && (
+          <SelectNative$
+            {...counter.selectProps}
+            sx={{
+              width: "50px",
+              textAlignLast: "center",
+              $arrowContainer: { __children: <div /> },
+              $input: { textAlign: "center" }
+            }}
+          />
+        )}
+        <Button {...counter.buttonIncrementProps}>+</Button>
+      </Box>
 
       <br />
 

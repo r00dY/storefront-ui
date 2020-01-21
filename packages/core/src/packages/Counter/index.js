@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "../index";
 
 import ButtonRaw2 from "../ButtonRaw2";
@@ -32,6 +32,10 @@ function useCounter(props = {}) {
 
   const [amount, setAmount] = useState(initialValue || step);
   const [inputValue, setInputValue] = useState(initialValue || step);
+  const [
+    inputFocusedAfterSelectingMore,
+    setInputFocusedAfterSelectingMore
+  ] = useState(false);
 
   const inputRef = useRef(null);
 
@@ -73,9 +77,18 @@ function useCounter(props = {}) {
     },
     onBlur: () => {
       setValue(parseInt(inputValue));
+      setInputFocusedAfterSelectingMore(false);
     },
     inputRef: inputRef
   };
+
+  useLayoutEffect(() => {
+    if (inputFocusedAfterSelectingMore) {
+      if (inputRef.current) {
+        inputRef.current.focus();
+      }
+    }
+  });
 
   // select
   const selectOptions = [];
@@ -87,13 +100,17 @@ function useCounter(props = {}) {
   const moreOption = `${maxSelectAmount}+`;
   selectOptions.push(moreOption);
 
+  const exceedsSelectRange =
+    amount > maxSelectAmount || inputFocusedAfterSelectingMore;
+
   const selectProps = {
     options: selectOptions,
-    value: amount > maxSelectAmount ? moreOption : amount,
+    value: exceedsSelectRange ? moreOption : amount,
     onChange: val => {
       if (val === moreOption) {
-        inputRef.current.focus();
-        console.log("...");
+        setInputValue("");
+        setInputFocusedAfterSelectingMore(true);
+        // inputRef.current.focus();
       } else {
         setValue(val);
       }
@@ -102,6 +119,8 @@ function useCounter(props = {}) {
   };
 
   return {
+    inputFocusedAfterSelectingMore,
+    exceedsSelectRange,
     buttonIncrementProps,
     buttonDecrementProps,
     inputProps,
