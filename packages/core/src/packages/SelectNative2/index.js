@@ -87,6 +87,7 @@ const defaults = {
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
+    pointerEvents: "none",
     __children: arrow
   }),
   $arrow: {
@@ -99,6 +100,7 @@ function SelectNative$(props) {
     sx,
     onFocus,
     onBlur,
+    onChange,
     autoFocus,
     inputRef,
     invalid,
@@ -205,6 +207,9 @@ function SelectNative$(props) {
       } else {
         setEmpty(false);
       }
+      if (onChange) {
+        onChange(e.target.value, e);
+      }
     },
     disabled,
     placeholder,
@@ -232,7 +237,7 @@ function SelectNative$(props) {
     arrow
   };
 
-  if (sx.$labelInside) {
+  if (customSx.$labelInside) {
     inputContainerState.label = createElement(
       getElementSpec(customSx.$label, defaults.$label, state)
     );
@@ -243,7 +248,7 @@ function SelectNative$(props) {
       customSx.$inputContainer,
       {
         ...defaults.$inputContainer(inputContainerState),
-        __type: sx.$labelInside ? "label" : "div"
+        __type: customSx.$labelInside ? "label" : "div"
       },
       inputContainerState
     )

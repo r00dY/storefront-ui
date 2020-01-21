@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "../index";
 
 import ButtonRaw2 from "../ButtonRaw2";
@@ -28,10 +28,12 @@ const defaults = {
 };
 
 function useCounter(props = {}) {
-  let { step = 1, initialValue, max = 999 } = props;
+  let { step = 1, initialValue, max = 999, selectOptionsAmount = 20 } = props;
 
   const [amount, setAmount] = useState(initialValue || step);
   const [inputValue, setInputValue] = useState(initialValue || step);
+
+  const inputRef = useRef(null);
 
   const setValue = number => {
     let newVal = number;
@@ -71,14 +73,41 @@ function useCounter(props = {}) {
     },
     onBlur: () => {
       setValue(parseInt(inputValue));
+    },
+    inputRef: inputRef
+  };
+
+  // select
+  const selectOptions = [];
+  for (let i = 1; i <= selectOptionsAmount; i++) {
+    selectOptions.push(i * step);
+  }
+
+  const maxSelectAmount = selectOptionsAmount * step;
+  const moreOption = `${maxSelectAmount}+`;
+  selectOptions.push(moreOption);
+
+  const selectProps = {
+    options: selectOptions,
+    value: amount > maxSelectAmount ? moreOption : amount,
+    onChange: val => {
+      if (val === moreOption) {
+        inputRef.current.focus();
+        console.log("...");
+      } else {
+        setValue(val);
+      }
+      // console.log('on change!', val);
     }
   };
 
-  const selectProps = {
-    options: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  return {
+    buttonIncrementProps,
+    buttonDecrementProps,
+    inputProps,
+    selectProps,
+    setValue
   };
-
-  return { buttonIncrementProps, buttonDecrementProps, inputProps, setValue };
 }
 
 function Counter$(props) {

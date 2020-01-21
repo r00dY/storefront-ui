@@ -10,6 +10,8 @@ import Input from "../Input";
 
 import { useCounter } from "@commerce-ui/core/Counter";
 
+import SelectNative$ from "@commerce-ui/core/SelectNative2";
+
 export const unstyled = () => (
   <div>
     <Counter />
@@ -24,6 +26,7 @@ export const hook = () => {
       <Button {...counter.buttonDecrementProps}>-</Button>
       <Input placeholder={"Amount"} {...counter.inputProps} />
       <Button {...counter.buttonIncrementProps}>+</Button>
+      <SelectNative$ {...counter.selectProps} />
 
       <br />
 
