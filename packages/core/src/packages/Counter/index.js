@@ -97,7 +97,7 @@ function useCounter(props = {}) {
   }
 
   const maxSelectAmount = selectOptionsAmount * step;
-  const moreOption = `${maxSelectAmount + 1}+`;
+  const moreOption = `${maxSelectAmount + step}+`;
   selectOptions.push(moreOption);
 
   const exceedsSelectRange =
