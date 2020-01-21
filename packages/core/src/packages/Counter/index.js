@@ -125,6 +125,7 @@ function useCounter(props = {}) {
     buttonDecrementProps,
     inputProps,
     selectProps,
+    amount,
     setValue
   };
 }
