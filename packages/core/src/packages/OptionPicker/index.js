@@ -30,7 +30,7 @@ function useOptionPicker(props = {}) {
           href: "#",
           selected: true,
           disabled: false,
-          label: value.name
+          label: `${option.name} ${value.name}`
         }
       }))
     });
