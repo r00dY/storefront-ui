@@ -3,13 +3,20 @@
 import React from "react";
 import { jsx, splitSx } from "..";
 
-/**
- * Button Raw
- */
-const resetStyles = {
-  color: "inherit",
-  textDecoration: "none",
-  boxSizing: "border-box"
+const resetStyles = ({ resetFocus = false }) => {
+  const ret = {
+    color: "inherit",
+    textDecoration: "none",
+    boxSizing: "border-box"
+  };
+
+  if (resetFocus) {
+    ret[":focus"] = {
+      outline: "none"
+    };
+  }
+
+  return ret;
 };
 
 function LinkRaw_(props) {
@@ -17,7 +24,13 @@ function LinkRaw_(props) {
 
   const [css, customSx] = splitSx(sx);
 
-  return <a sx={[resetStyles, css]} {...restProps} ref={innerRef} />;
+  return (
+    <a
+      sx={[resetStyles({ resetFocus: customSx.$resetFocus }), css]}
+      {...restProps}
+      ref={innerRef}
+    />
+  );
 }
 
 const LinkRaw$ = React.forwardRef((props, ref) => (

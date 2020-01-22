@@ -13,6 +13,11 @@ export const standard = () => (
 
     <h2>Blue color</h2>
     <StoryWrapper stories={selectableStories(<Color color={"blue"} />)} />
+
+    <br />
+    <br />
+    <Color as={"link"} href={"#"} color={"red"} />
+    <Color as={"link"} href={"#"} color={"red"} selected={true} />
   </div>
 );
 
