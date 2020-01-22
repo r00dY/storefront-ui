@@ -21,8 +21,18 @@ function useOptionPicker(props = {}) {
         id
       },
       labelProps: {
-        for: id
-      }
+        htmlFor: id
+      },
+      values: option.values.map(value => ({
+        ...value,
+        selectableLinkProps: {
+          as: "link",
+          href: "#",
+          selected: true,
+          disabled: false,
+          label: value.name
+        }
+      }))
     });
   });
 

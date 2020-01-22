@@ -15,42 +15,33 @@ import SelectNative$ from "@commerce-ui/core/SelectNative2";
 
 import SelectNative from "../SelectNative";
 
+import Color from "../Selectables/Color";
+
 // export const unstyled = () => (
 //     <div>
 //         <Counter />
 //     </div>
 // );
+
 const ringOptions = [
   {
     name: "Color",
     values: [
       {
         name: "Silver",
-        color: {
-          type: "solid",
-          value: "#aaaaaa"
-        }
+        color: "lightgrey"
       },
       {
         name: "Black",
-        color: {
-          type: "gradient",
-          value: ["rgba(255,255,255,1)", "rgba(200,200,200,1)"]
-        }
+        color: "black"
       },
       {
         name: "Stealth",
-        color: {
-          type: "solid",
-          value: "red"
-        }
+        color: "red"
       },
       {
         name: "Diamond",
-        color: {
-          type: "solid",
-          value: "yellow"
-        }
+        color: "yellow"
       }
     ]
   },
@@ -58,18 +49,10 @@ const ringOptions = [
     name: "Style",
     values: [
       {
-        name: "Heritage",
-        color: {
-          type: "solid",
-          value: "purple"
-        }
+        name: "Heritage"
       },
       {
-        name: "Balance",
-        color: {
-          type: "solid",
-          value: "blue"
-        }
+        name: "Balance"
       }
     ]
   },
@@ -106,14 +89,30 @@ export const hook = () => {
 
   return (
     <div>
-      {options.map(option => (
-        <div>
-          <label {...option.labelProps} sx={{ display: "block" }}>
-            {option.name}
-          </label>
-          <SelectNative {...option.selectProps} />
-        </div>
-      ))}
+      {options.map(option => {
+        if (option.name === "Color") {
+          return (
+            <div key={option.name}>
+              {option.values.map(value => (
+                <Color
+                  key={value.name}
+                  {...value.selectableLinkProps}
+                  color={value.color}
+                />
+              ))}
+            </div>
+          );
+        }
+
+        return (
+          <div key={option.name}>
+            <label {...option.labelProps} sx={{ display: "block" }}>
+              {option.name}
+            </label>
+            <SelectNative {...option.selectProps} />
+          </div>
+        );
+      })}
     </div>
   );
 };
