@@ -30,9 +30,16 @@ function Selectable$(props) {
 
   const content = children(state);
 
+  if (!label) {
+    console.error(
+      "Warning: Selectable doesn't have 'label' parameter provided, this breaks accessibility."
+    );
+  }
+
   if (as === "link") {
     return (
       <LinkRaw$
+        title={label}
         sx={{
           $resetFocus: true,
           display: "block",

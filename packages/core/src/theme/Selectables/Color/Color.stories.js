@@ -9,15 +9,19 @@ import Color from "./index";
 export const standard = () => (
   <div>
     <h2>Red color</h2>
-    <StoryWrapper stories={selectableStories(<Color color={"red"} />)} />
+    <StoryWrapper
+      stories={selectableStories(<Color color={"red"} label={"red"} />)}
+    />
 
     <h2>Blue color</h2>
-    <StoryWrapper stories={selectableStories(<Color color={"blue"} />)} />
+    <StoryWrapper
+      stories={selectableStories(<Color color={"blue"} label={"red"} />)}
+    />
 
     <br />
     <br />
-    <Color as={"link"} href={"#"} color={"red"} />
-    <Color as={"link"} href={"#"} color={"red"} selected={true} />
+    <Color as={"link"} href={"#"} color={"red"} label={"red"} />
+    <Color as={"link"} href={"#"} color={"red"} label={"red"} selected={true} />
   </div>
 );
 
