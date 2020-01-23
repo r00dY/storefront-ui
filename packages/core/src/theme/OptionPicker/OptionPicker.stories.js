@@ -20,72 +20,15 @@ import SelectNative from "../SelectNative";
 import Color from "../Selectables/Color";
 import ItemRow from "../Selectables/ItemRow";
 
-const ringOptions = [
-  {
-    name: "Color",
-    values: [
-      {
-        name: "Silver",
-        color: "lightgrey"
-      },
-      {
-        name: "Black",
-        color: "black"
-      },
-      {
-        name: "Stealth",
-        color: "red"
-      },
-      {
-        name: "Diamond",
-        color: "yellow"
-      }
-    ]
-  },
-  {
-    name: "Style",
-    values: [
-      {
-        name: "Heritage"
-      },
-      {
-        name: "Balance"
-      }
-    ]
-  },
-  {
-    name: "Size",
-    values: [
-      {
-        name: "US 8"
-      },
-      {
-        name: "US 9"
-      },
-      {
-        name: "US 10"
-      },
-      {
-        name: "US 11"
-      },
-      {
-        name: "US 12"
-      }
-    ]
-  }
-];
-
-const product = {
-  name: "Ring",
-  handle: "ring",
-  options: ringOptions
-};
+import product from "../data";
 
 export const hook = () => {
-  const { options } = useOptionPicker({ product });
+  const { options, productVariant } = useOptionPicker({ product });
 
   return (
     <div>
+      <div>Variant price: {productVariant.price}$</div>
+
       {options.map(option => {
         if (option.name === "Color") {
           return (
@@ -93,8 +36,8 @@ export const hook = () => {
               {option.values.map(value => (
                 <Color
                   key={value.name}
-                  {...value.selectableLinkProps}
                   color={value.color}
+                  {...value.selectableLinkProps}
                 />
               ))}
             </HorizontalStack>

@@ -117,7 +117,11 @@ function SelectNative$(props) {
   label = label || placeholder;
 
   const [focused, setFocused] = useState(false);
-  const [empty, setEmpty] = useState(true);
+  let [empty, setEmpty] = useState(true);
+
+  if (value) {
+    empty = value === "";
+  }
 
   const state = {
     focused,
@@ -215,7 +219,7 @@ function SelectNative$(props) {
     placeholder,
     value,
     ...inputProps,
-    defaultValue: "",
+    // defaultValue: "",
     ref: inputRef
   });
 

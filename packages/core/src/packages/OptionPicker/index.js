@@ -2,14 +2,37 @@
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "../index";
 
+function findProductVariantBySelectedOptions(product, options) {
+  RootLoop: for (let i = 0; i < product.variants.length; i++) {
+    const productVariant = product.variants[i];
+    const selectedOptions = productVariant.selectedOptions;
+
+    for (let name in selectedOptions) {
+      if (options[name] !== selectedOptions[name]) {
+        continue RootLoop;
+      }
+    }
+
+    return productVariant;
+  }
+}
+
 function useOptionPicker(props = {}) {
   const { product } = props;
 
-  const options = [];
+  const initOptions = {};
+  product.options.forEach(({ name, values }) => {
+    initOptions[name] = values[0].name;
+  });
 
-  // button + dialog
-  const [isOpen, setOpen] = useState(false);
-  const buttonRef = useRef(null);
+  const [selectedOptions, setSelectedOptions] = useState(initOptions);
+
+  const productVariant = findProductVariantBySelectedOptions(
+    product,
+    selectedOptions
+  );
+
+  const options = [];
 
   product.options.forEach(option => {
     const id = `${product.handle}-${option.name}`;
@@ -18,10 +41,15 @@ function useOptionPicker(props = {}) {
       ...option,
       selectProps: {
         options: option.values.map(value => ({
-          key: `${option.name}-${value.name}`,
+          value: value.name,
           label: value.name
         })),
         placeholder: option.name,
+        value: selectedOptions[option.name],
+        onChange: val => {
+          console.log(val);
+          setSelectedOptions({ ...selectedOptions, [option.name]: val });
+        },
         id
       },
       labelProps: {
@@ -48,8 +76,11 @@ function useOptionPicker(props = {}) {
     });
   });
 
+  console.log(options);
+
   return {
-    options
+    options,
+    productVariant
   };
 }
 
