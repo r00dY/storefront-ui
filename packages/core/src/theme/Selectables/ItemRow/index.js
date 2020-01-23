@@ -22,6 +22,9 @@ function ItemRow(props) {
             lineHeight: 1,
             font: "body",
             bg: "#fafafa",
+            ":hover": {
+              bg: "rgb(230,230,230)"
+            },
             opacity: disabled ? 0.5 : 1
           }}
         >
