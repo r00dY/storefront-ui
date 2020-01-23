@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Layer from "../Layer";
 
 function useMenu(props) {
-  const { options } = props;
+  const { options, onClick } = props;
 
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
@@ -20,8 +20,11 @@ function useMenu(props) {
       role: "menuitem",
       onClick: e => {
         setOpen(false);
-      },
-      selected: index === 0
+
+        if (onClick) {
+          onClick(option.value, option, e);
+        }
+      }
     }
   }));
 
@@ -75,8 +78,8 @@ function Menu$(props) {
   );
 }
 
-function MenuButton({ button, menu, options }) {
-  const { buttonProps, menuProps } = useMenu({ options });
+function MenuButton({ button, menu, ...restProps }) {
+  const { buttonProps, menuProps } = useMenu({ ...restProps });
 
   const buttonElem = React.cloneElement(button, buttonProps);
   const menuElem = React.cloneElement(menu, menuProps);

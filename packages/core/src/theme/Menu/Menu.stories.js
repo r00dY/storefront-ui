@@ -15,96 +15,49 @@ const colors = [
   { color: "purple", value: "purple" }
 ];
 
-const MenuWithButton = ({ children, options, ...restProps }) => {
-  const { buttonProps, menuProps } = useMenu({ options });
+export const unstyled = () => {
+  const [selectedValue, setSelectedValue] = useState(null);
 
   return (
     <div>
-      <Button {...buttonProps}>open</Button>
-
-      <Menu {...menuProps} {...restProps}>
-        {params => (
-          <div sx={{ border: "1px solid black", bg: "white", p: 2 }}>
-            {children(params)}
-          </div>
-        )}
-      </Menu>
+      <MenuButton
+        button={<Button>{selectedValue || "Pick color"}</Button>}
+        menu={
+          <Menu
+            config={{
+              xs: {
+                mode: "slide-from-bottom",
+                height: "auto"
+              },
+              md: {
+                anchored: true
+              }
+            }}
+          >
+            {({ anchored, options }) => (
+              <>
+                {options.map(option => (
+                  <div sx={{ mb: 1 }} key={option.color}>
+                    <Color
+                      {...option.itemProps}
+                      color={option.color}
+                      label={option.color}
+                      selected={option.value === selectedValue}
+                    />
+                  </div>
+                ))}
+              </>
+            )}
+          </Menu>
+        }
+        options={colors}
+        onClick={val => {
+          setSelectedValue(val);
+        }}
+      />
     </div>
   );
 };
-
-export const unstyled = () => (
-  <div>
-    <MenuWithButton
-      config={{
-        xs: {
-          mode: "slide-from-bottom",
-          height: "auto"
-        },
-        md: {
-          anchored: true
-        }
-      }}
-      options={[
-        { color: "red", value: "red" },
-        { color: "blue", value: "blue" },
-        { color: "yellow", value: "yellow" },
-        { color: "green", value: "green" },
-        { color: "magenta", value: "magenta" },
-        { color: "purple", value: "purple" }
-      ]}
-    >
-      {({ anchored, options }) => (
-        <>
-          {options.map(option => (
-            <div sx={{ mb: 1 }} key={option.color}>
-              <Color
-                {...option.itemProps}
-                color={option.color}
-                label={option.color}
-              />
-            </div>
-          ))}
-        </>
-      )}
-    </MenuWithButton>
-
-    <br />
-    <br />
-
-    <MenuButton
-      button={<Button>open</Button>}
-      menu={
-        <Menu
-          config={{
-            xs: {
-              mode: "slide-from-bottom",
-              height: "auto"
-            },
-            md: {
-              anchored: true
-            }
-          }}
-        >
-          {({ anchored, options }) => (
-            <>
-              {options.map(option => (
-                <div sx={{ mb: 1 }} key={option.color}>
-                  <Color
-                    {...option.itemProps}
-                    color={option.color}
-                    label={option.color}
-                  />
-                </div>
-              ))}
-            </>
-          )}
-        </Menu>
-      }
-      options={colors}
-    />
-  </div>
-);
 
 export default {
   title: "Menu"

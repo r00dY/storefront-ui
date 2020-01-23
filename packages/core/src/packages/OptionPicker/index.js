@@ -37,16 +37,19 @@ function useOptionPicker(props = {}) {
           label: `${option.name} ${value.name}`
         }
       })),
-      buttonProps: {
-        buttonRef,
-        onClick: () => {
-          setOpen(true);
-        }
-      },
-      dialogProps: {
-        isOpen,
-        onRequestClose: () => setOpen(false),
-        anchorRef: buttonRef
+      // buttonProps: {
+      //   buttonRef,
+      //   onClick: () => {
+      //     setOpen(true);
+      //   }
+      // },
+      // dialogProps: {
+      //   isOpen,
+      //   onRequestClose: () => setOpen(false),
+      //   anchorRef: buttonRef
+      // },
+      menuButtonProps: {
+        values: option.values
       }
     });
   });
