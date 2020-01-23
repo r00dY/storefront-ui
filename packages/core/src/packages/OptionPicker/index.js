@@ -47,7 +47,6 @@ function useOptionPicker(props = {}) {
         placeholder: option.name,
         value: selectedOptions[option.name],
         onChange: val => {
-          console.log(val);
           setSelectedOptions({ ...selectedOptions, [option.name]: val });
         },
         id
@@ -75,8 +74,6 @@ function useOptionPicker(props = {}) {
       }
     });
   });
-
-  console.log(options);
 
   return {
     options,
