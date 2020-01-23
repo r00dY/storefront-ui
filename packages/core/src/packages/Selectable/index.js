@@ -3,6 +3,7 @@ import React, { useRef, useState } from "react";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
 import Box from "../Box";
 import LinkRaw$ from "../LinkRaw";
+import RadioRaw$ from "../RadioRaw";
 
 function Selectable$(props) {
   const {
@@ -15,6 +16,8 @@ function Selectable$(props) {
     children,
     onFocus,
     onBlur,
+    onSelect,
+    id,
     ...restProps
   } = props;
 
@@ -24,11 +27,13 @@ function Selectable$(props) {
 
   const state = {
     disabled,
-    focused: as === "link" ? internalFocused : focused,
+    focused: internalFocused,
     selected
   };
 
   const content = children(state);
+
+  const radioRef = useRef(null);
 
   if (!label) {
     console.error(
@@ -57,10 +62,57 @@ function Selectable$(props) {
             onBlur(e);
           }
         }}
+        id={id}
         {...restProps}
       >
         {content}
       </LinkRaw$>
+    );
+  }
+
+  if (as === "radio") {
+    return (
+      <Box
+        sx={{ display: "block", cursor: "pointer", ...css }}
+        onClick={() => {
+          if (disabled) {
+            return;
+          }
+          radioRef.current.focus();
+          if (onSelect) {
+            onSelect();
+          }
+        }}
+      >
+        <label htmlFor={id} sx={{ visibility: "hidden", position: "absolute" }}>
+          {label}
+        </label>
+        <RadioRaw$
+          {...restProps}
+          id={id}
+          onFocus={e => {
+            setInternalFocused(true);
+            if (onFocus) {
+              onFocus(e);
+            }
+          }}
+          onBlur={e => {
+            setInternalFocused(false);
+            if (onBlur) {
+              onBlur(e);
+            }
+          }}
+          checked={selected}
+          disabled={disabled}
+          onChange={() => {
+            if (onSelect) {
+              onSelect();
+            }
+          }}
+          inputRef={radioRef}
+        />
+        {content}
+      </Box>
     );
   }
 

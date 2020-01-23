@@ -19,7 +19,7 @@ const ringOptions = [
       },
       {
         name: "Black",
-        color: "black"
+        color: "grey"
       },
       {
         name: "Stealth",
@@ -57,13 +57,13 @@ const variants = [];
 
 ringOptions[0].values.forEach((style, i1) => {
   ringOptions[1].values.forEach((color, i2) => {
-    if (color.name === "Stealth" && style.name === "Balance") {
-      return;
-    }
-
-    if (color.name === "Diamond" && style.name === "Heritage") {
-      return;
-    }
+    // if (color.name === "Stealth" && style.name === "Balance") {
+    //   return;
+    // }
+    //
+    // if (color.name === "Diamond" && style.name === "Heritage") {
+    //   return;
+    // }
 
     ringOptions[2].values.forEach((size, i3) => {
       variants.push({
@@ -79,6 +79,7 @@ ringOptions[0].values.forEach((style, i1) => {
 });
 
 const product = {
+  handle: "ring",
   options: ringOptions,
   variants: variants
 };

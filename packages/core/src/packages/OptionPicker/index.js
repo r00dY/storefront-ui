@@ -59,9 +59,23 @@ function useOptionPicker(props = {}) {
         selectableLinkProps: {
           as: "link",
           href: "#",
-          selected: true,
+          selected: selectedOptions[option.name] === value.name,
           disabled: false,
           label: `${option.name} ${value.name}`
+        },
+        selectableRadioProps: {
+          as: "radio",
+          id: `${id}-${value.name}`,
+          label: `${option.name} ${value.name}`,
+          name: id,
+          selected: selectedOptions[option.name] === value.name,
+          onSelect: () => {
+            setSelectedOptions({
+              ...selectedOptions,
+              [option.name]: value.name
+            });
+          },
+          disabled: false
         }
       })),
       menuButtonProps: {

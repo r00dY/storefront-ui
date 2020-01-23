@@ -35,7 +35,7 @@ export const hook = () => {
                 <Color
                   key={value.name}
                   color={value.color}
-                  {...value.selectableLinkProps}
+                  {...value.selectableRadioProps}
                 />
               ))}
             </HorizontalStack>
