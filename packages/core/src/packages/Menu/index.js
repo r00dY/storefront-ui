@@ -17,7 +17,6 @@ function useMenu(props) {
   const newOptions = options.map((option, index) => ({
     ...option,
     itemProps: {
-      role: "menuitem",
       onClick: e => {
         setOpen(false);
 
@@ -60,7 +59,7 @@ function useMenu(props) {
 }
 
 function Menu$(props) {
-  let { children, options, ...restProps } = props;
+  let { children, options, menuProps, ...restProps } = props;
 
   children =
     children || options.map(o => <div role={"menuitem"}>{o.value}</div>);
