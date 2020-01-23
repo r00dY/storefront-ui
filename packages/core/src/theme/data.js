@@ -67,7 +67,7 @@ ringOptions[0].values.forEach((style, i1) => {
 
     ringOptions[2].values.forEach((size, i3) => {
       variants.push({
-        price: 100 + 50 * i1 + 10 * i2,
+        price: 100 + 50 * i1 + 10 * i2 + i3 * 1,
         selectedOptions: {
           Style: style.name,
           Color: color.name,

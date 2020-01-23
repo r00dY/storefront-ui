@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import Layer from "../Layer";
 
 function useMenu(props) {
-  const { options, onClick } = props;
+  const { options, onClick, value, onChange } = props;
 
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
@@ -17,8 +17,13 @@ function useMenu(props) {
   const newOptions = options.map((option, index) => ({
     ...option,
     itemProps: {
+      selected: value === option.value,
       onClick: e => {
         setOpen(false);
+
+        if (onChange) {
+          onChange(option.value);
+        }
 
         if (onClick) {
           onClick(option.value, option, e);

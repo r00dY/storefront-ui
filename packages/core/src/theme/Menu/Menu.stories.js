@@ -51,7 +51,8 @@ export const unstyled = () => {
           </Menu>
         }
         options={colors}
-        onClick={val => {
+        value={selectedValue}
+        onChange={val => {
           setSelectedValue(val);
         }}
       />

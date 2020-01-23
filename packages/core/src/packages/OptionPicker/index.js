@@ -84,7 +84,10 @@ function useOptionPicker(props = {}) {
           label: value.name,
           ...value
         })),
-        onClick: () => {}
+        value: selectedOptions[option.name],
+        onChange: val => {
+          setSelectedOptions({ ...selectedOptions, [option.name]: val });
+        }
       }
     });
   });

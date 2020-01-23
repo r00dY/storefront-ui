@@ -47,7 +47,7 @@ export const hook = () => {
             <MenuButton
               key={option.name}
               {...option.menuButtonProps}
-              button={<Button>Pick size</Button>}
+              button={<Button>{productVariant.selectedOptions.Size}</Button>}
               menu={
                 <Menu
                   config={{
