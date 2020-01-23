@@ -43,9 +43,7 @@ function useOptionPicker(props = {}) {
           label: value.name,
           ...value
         })),
-        onClick: () => {
-          console.log("clicked!");
-        }
+        onClick: () => {}
       }
     });
   });
