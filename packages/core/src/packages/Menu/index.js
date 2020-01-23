@@ -4,6 +4,8 @@ import Layer from "../Layer";
 function useMenu(props) {
   const { options, onClick } = props;
 
+  console.log("OPTIONS", options);
+
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
 
@@ -80,6 +82,8 @@ function Menu$(props) {
 
 function MenuButton({ button, menu, ...restProps }) {
   const { buttonProps, menuProps } = useMenu({ ...restProps });
+
+  console.log("rest props", restProps);
 
   const buttonElem = React.cloneElement(button, buttonProps);
   const menuElem = React.cloneElement(menu, menuProps);

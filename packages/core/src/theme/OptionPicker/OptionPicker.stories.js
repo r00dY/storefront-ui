@@ -13,17 +13,12 @@ import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
 import Box from "@commerce-ui/core/Box";
 
-import SelectNative$ from "@commerce-ui/core/SelectNative2";
+import Menu, { MenuButton } from "@commerce-ui/core/Menu";
 
 import SelectNative from "../SelectNative";
 
 import Color from "../Selectables/Color";
-
-// export const unstyled = () => (
-//     <div>
-//         <Counter />
-//     </div>
-// );
+import ItemRow from "../Selectables/ItemRow";
 
 const ringOptions = [
   {
@@ -103,6 +98,41 @@ export const hook = () => {
                 />
               ))}
             </HorizontalStack>
+          );
+        }
+
+        if (option.name === "Size") {
+          return (
+            <MenuButton
+              key={option.name}
+              {...option.menuButtonProps}
+              button={<Button>Pick size</Button>}
+              menu={
+                <Menu
+                  config={{
+                    xs: {
+                      mode: "slide-from-bottom",
+                      height: "auto"
+                    },
+                    md: {
+                      anchored: true
+                    }
+                  }}
+                >
+                  {({ anchored, options }) => (
+                    <>
+                      {options.map(option => (
+                        <ItemRow
+                          key={option.value}
+                          label={option.value}
+                          {...option.itemProps}
+                        />
+                      ))}
+                    </>
+                  )}
+                </Menu>
+              }
+            />
           );
         }
 

@@ -37,19 +37,15 @@ function useOptionPicker(props = {}) {
           label: `${option.name} ${value.name}`
         }
       })),
-      // buttonProps: {
-      //   buttonRef,
-      //   onClick: () => {
-      //     setOpen(true);
-      //   }
-      // },
-      // dialogProps: {
-      //   isOpen,
-      //   onRequestClose: () => setOpen(false),
-      //   anchorRef: buttonRef
-      // },
       menuButtonProps: {
-        values: option.values
+        options: option.values.map(value => ({
+          value: value.name,
+          label: value.name,
+          ...value
+        })),
+        onClick: () => {
+          console.log("clicked!");
+        }
       }
     });
   });
