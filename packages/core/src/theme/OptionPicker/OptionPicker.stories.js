@@ -11,8 +11,6 @@ import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
-import Box from "@commerce-ui/core/Box";
-
 import Menu, { MenuButton } from "@commerce-ui/core/Menu";
 
 import SelectNative from "../SelectNative";
