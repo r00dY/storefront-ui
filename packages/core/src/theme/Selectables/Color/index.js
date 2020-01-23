@@ -14,7 +14,7 @@ function Color(props) {
             width: "32px",
             height: "32px",
             display: "flex",
-            borderRadius: "12px",
+            borderRadius: "16px",
             alignItems: "center",
             justifyContent: "center",
             pointerEvents: "none",

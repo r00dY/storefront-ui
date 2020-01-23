@@ -67,8 +67,10 @@ function Selectable$(props) {
   return (
     <Box
       sx={{
-        display: "block"
+        display: "block",
+        cursor: disabled ? "not-allowed" : "pointer"
       }}
+      {...restProps}
     >
       {content}
     </Box>

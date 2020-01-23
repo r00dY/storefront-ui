@@ -7,6 +7,8 @@ import { Button$ } from "@commerce-ui/core/Button2";
 import InputRaw$ from "@commerce-ui/core/InputRaw";
 import Input from "../Input";
 
+import HorizontalStack from "@commerce-ui/core/HorizontalStack";
+
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
 import Box from "@commerce-ui/core/Box";
@@ -92,7 +94,7 @@ export const hook = () => {
       {options.map(option => {
         if (option.name === "Color") {
           return (
-            <div key={option.name}>
+            <HorizontalStack key={option.name} sx={{ $gutter: "10px" }}>
               {option.values.map(value => (
                 <Color
                   key={value.name}
@@ -100,7 +102,7 @@ export const hook = () => {
                   color={value.color}
                 />
               ))}
-            </div>
+            </HorizontalStack>
           );
         }
 

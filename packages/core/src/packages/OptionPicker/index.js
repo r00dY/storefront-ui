@@ -7,6 +7,10 @@ function useOptionPicker(props = {}) {
 
   const options = [];
 
+  // button + dialog
+  const [isOpen, setOpen] = useState(false);
+  const buttonRef = useRef(null);
+
   product.options.forEach(option => {
     const id = `${product.handle}-${option.name}`;
 
@@ -32,7 +36,18 @@ function useOptionPicker(props = {}) {
           disabled: false,
           label: `${option.name} ${value.name}`
         }
-      }))
+      })),
+      buttonProps: {
+        buttonRef,
+        onClick: () => {
+          setOpen(true);
+        }
+      },
+      dialogProps: {
+        isOpen,
+        onRequestClose: () => setOpen(false),
+        anchorRef: buttonRef
+      }
     });
   });
 
