@@ -7,7 +7,7 @@ breakpoints.xl = breakpoints[0];
 
 const theme = {
   colors: {
-    black: "#000e1a",
+    black: "#2E4557",
     white: "#fff",
     primary: "blue",
     blue: "#007ce0",
@@ -35,6 +35,14 @@ const theme = {
       fontSize: 14,
       fontFamily: "sans-serif",
       lineHeight: 1.2
+    },
+    label: {
+      fontSize: 13,
+      fontFamily: "sans-serif",
+      lineHeight: 1,
+      letterSpacing: "0.03em",
+      fontWeight: 600,
+      textTransform: "uppercase"
     },
     heading: {
       fontSize: 28,

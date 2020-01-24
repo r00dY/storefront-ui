@@ -8,7 +8,7 @@ import RadioRaw$ from "../RadioRaw";
 function Selectable$(props) {
   const {
     disabled,
-    focused,
+    highlighted,
     selected,
     label,
     sx,
@@ -21,13 +21,14 @@ function Selectable$(props) {
     ...restProps
   } = props;
 
-  const [internalFocused, setInternalFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
 
   const [css, customSx] = splitSx(sx);
 
   const state = {
     disabled,
-    focused: internalFocused,
+    focused,
+    highlighted,
     selected
   };
 
@@ -51,13 +52,13 @@ function Selectable$(props) {
           ...css
         }}
         onFocus={e => {
-          setInternalFocused(true);
+          setFocused(true);
           if (onFocus) {
             onFocus(e);
           }
         }}
         onBlur={e => {
-          setInternalFocused(false);
+          setFocused(false);
           if (onBlur) {
             onBlur(e);
           }
@@ -91,13 +92,13 @@ function Selectable$(props) {
           {...restProps}
           id={id}
           onFocus={e => {
-            setInternalFocused(true);
+            setFocused(true);
             if (onFocus) {
               onFocus(e);
             }
           }}
           onBlur={e => {
-            setInternalFocused(false);
+            setFocused(false);
             if (onBlur) {
               onBlur(e);
             }

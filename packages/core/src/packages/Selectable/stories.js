@@ -11,13 +11,21 @@ function selectableStories(selectable, options = {}) {
   });
 
   stories.push({
-    name: "Focused",
-    component: React.cloneElement(selectable, { focused: true })
+    name: "Highlighted",
+    component: React.cloneElement(selectable, { highlighted: true })
   });
 
   stories.push({
     name: "Selected",
     component: React.cloneElement(selectable, { selected: true })
+  });
+
+  stories.push({
+    name: "Highlighted & Selected",
+    component: React.cloneElement(selectable, {
+      selected: true,
+      highlighted: true
+    })
   });
 
   stories.push({
