@@ -13,6 +13,8 @@ import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
 import { MenuButton } from "@commerce-ui/core/Menu";
 
+import ButtonSelect from "./Button/ButtonSelect";
+
 import Menu from "../Menu";
 
 import SelectNative from "../SelectNative";
@@ -45,9 +47,11 @@ export const standard = () => {
             <label {...options.labelProps} sx={{ color: "mono700" }}>
               {option.name}
             </label>{" "}
-            <span sx={{ color: "navy" }}>
-              {productVariant.selectedOptions[option.name]}
-            </span>
+            {option.name === "Color" && (
+              <span sx={{ color: "navy" }}>
+                {productVariant.selectedOptions[option.name]}
+              </span>
+            )}
           </Box>
         ];
 
@@ -76,7 +80,11 @@ export const standard = () => {
             <MenuButton
               key={option.name}
               {...option.menuButtonProps}
-              button={<Button>{productVariant.selectedOptions.Color}</Button>}
+              button={
+                <ButtonSelect>
+                  {productVariant.selectedOptions.Color}
+                </ButtonSelect>
+              }
               menu={
                 <Menu>
                   {({ anchored, options }) =>
@@ -114,7 +122,11 @@ export const standard = () => {
             <MenuButton
               key={option.name}
               {...option.menuButtonProps}
-              button={<Button>{productVariant.selectedOptions.Size}</Button>}
+              button={
+                <ButtonSelect>
+                  {productVariant.selectedOptions.Size}
+                </ButtonSelect>
+              }
               menu={
                 <Menu
                   config={{
