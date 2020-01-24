@@ -22,14 +22,17 @@ function ColorRow(props) {
             flexDirection: "row",
             alignItems: "center",
             bg: highlighted ? "mono100" : "transparent",
+            ":hover": {
+              bg: "mono100"
+            },
             color: "black"
           }}
         >
           <Box
             sx={{
               position: "relative",
-              width: "46px",
-              height: "46px",
+              width: "40px",
+              height: "40px",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",

@@ -60,6 +60,48 @@ export const standard = () => {
               ))}
             </HorizontalStack>
           );
+
+          items.push(
+            <MenuButton
+              key={option.name}
+              {...option.menuButtonProps}
+              button={<Button>{productVariant.selectedOptions.Color}</Button>}
+              menu={
+                <Menu
+                  config={{
+                    xs: {
+                      mode: "slide-from-bottom",
+                      height: "auto"
+                    },
+                    md: {
+                      anchored: true
+                    }
+                  }}
+                >
+                  {({ anchored, options }) => (
+                    <Box
+                      sx={{
+                        width: anchored ? "300px" : "auto",
+                        boxShadow: anchored
+                          ? "0 4px 16px hsla(0, 0%, 0%, 0.16);"
+                          : "none",
+                        bg: "white"
+                      }}
+                    >
+                      {options.map(option => (
+                        <ColorRow
+                          color={option.color}
+                          key={option.value}
+                          label={option.value}
+                          {...option.itemProps}
+                        />
+                      ))}
+                    </Box>
+                  )}
+                </Menu>
+              }
+            />
+          );
         } else if (option.name === "Size") {
           items.push(
             <MenuButton
