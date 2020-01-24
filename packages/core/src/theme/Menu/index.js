@@ -4,7 +4,7 @@ import Menu$ from "@commerce-ui/core/Menu";
 import Box from "@commerce-ui/core/Box";
 
 function Menu(props) {
-  let { config, children, ...restProps } = props;
+  let { config, children, width, ...restProps } = props;
 
   config = config || {
     xs: {
@@ -22,7 +22,7 @@ function Menu(props) {
       {({ anchored, options }) => (
         <Box
           sx={{
-            width: anchored ? "300px" : "auto",
+            width: anchored ? width || "300px" : "auto",
             overflow: "auto",
             maxHeight: "500px",
             boxShadow: anchored ? "0 4px 16px hsla(0, 0%, 0%, 0.16);" : "none",

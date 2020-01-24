@@ -101,6 +101,45 @@ export const standard = () => {
               }
             />
           );
+
+          items.push(<br />);
+          items.push(<br />);
+
+          items.push(
+            <MenuButton
+              key={option.name}
+              {...option.menuButtonProps}
+              button={
+                <ButtonSelect>
+                  {productVariant.selectedOptions.Color}
+                </ButtonSelect>
+              }
+              menu={
+                <Menu>
+                  {({ anchored, options }) => (
+                    <div
+                      sx={{
+                        display: "grid",
+                        position: "relative",
+                        padding: 3,
+                        gridTemplateColumns: "repeat(auto-fill, 50px)",
+                        gridGap: "10px"
+                      }}
+                    >
+                      {options.map(option => (
+                        <ColorSquare
+                          color={option.color}
+                          key={option.value}
+                          label={option.value}
+                          {...option.itemProps}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </Menu>
+              }
+            />
+          );
         } else if (option.name === "Size") {
           items.push(
             <div
