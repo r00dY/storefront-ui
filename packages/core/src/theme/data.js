@@ -14,20 +14,20 @@ const ringOptions = [
     name: "Color",
     values: [
       {
-        name: "Silver",
-        color: "lightgrey"
+        name: "Triumph Mustard",
+        color: "#9F8F37"
       },
       {
-        name: "Black",
-        color: "grey"
+        name: "Soft mineral",
+        color: "#8EB0B1"
       },
       {
-        name: "Stealth",
-        color: "red"
+        name: "Sand",
+        color: "#EFEEE9"
       },
       {
-        name: "Diamond",
-        color: "yellow"
+        name: "Graphite",
+        color: "#55544F"
       }
     ]
   },

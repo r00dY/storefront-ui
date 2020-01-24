@@ -4,31 +4,55 @@ import { jsx } from "@commerce-ui/core";
 import Selectable from "@commerce-ui/core/Selectable";
 import Box from "@commerce-ui/core/Box";
 
+import Check from "../../../svg/check.svg";
+
 function ItemRow(props) {
   const { ...restProps } = props;
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, focused, selected }) => (
+      {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
-            width: "100%",
-            minWidth: "250px",
-            height: "44px",
+            paddingLeft: 3,
+            paddingRight: 3,
+            paddingTop: 2,
+            paddingBottom: 2,
             display: "flex",
-            padding: "12px",
+            flexDirection: "row",
             alignItems: "center",
-            // pointerEvents: "none",
-            lineHeight: 1,
-            font: "body",
-            bg: "#fafafa",
+            bg: highlighted ? "mono100" : "transparent",
             ":hover": {
-              bg: "rgb(230,230,230)"
+              bg: "mono100"
             },
-            opacity: disabled ? 0.5 : 1
+            color: "black",
+            minHeight: "44px"
           }}
         >
-          {restProps.label} {selected ? "✔" : ""}
+          <Box
+            sx={{
+              font: "label",
+              flexGrow: 1
+            }}
+          >
+            {restProps.label}
+          </Box>
+
+          <Box
+            sx={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              pointerEvents: "none",
+              lineHeight: 1,
+              opacity: disabled ? 0.5 : 1,
+              marginRight: 2,
+              flex: "0 0 auto"
+            }}
+          >
+            {selected && <Check />}
+          </Box>
         </Box>
       )}
     </Selectable>
