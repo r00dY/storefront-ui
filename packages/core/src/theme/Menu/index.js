@@ -24,7 +24,7 @@ function Menu(props) {
           sx={{
             width: anchored ? "300px" : "auto",
             overflow: "auto",
-            maxHeight: "600px",
+            maxHeight: "500px",
             boxShadow: anchored ? "0 4px 16px hsla(0, 0%, 0%, 0.16);" : "none",
             bg: "white"
           }}
