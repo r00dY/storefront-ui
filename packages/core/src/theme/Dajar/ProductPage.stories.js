@@ -11,13 +11,16 @@ import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
-import Menu, { MenuButton } from "@commerce-ui/core/Menu";
+import { MenuButton } from "@commerce-ui/core/Menu";
+
+import Menu from "../Menu";
 
 import SelectNative from "../SelectNative";
 
 import ColorSquare from "./Selectables/ColorSquare";
 import ColorRow from "./Selectables/ColorRow";
 import ItemRow from "./Selectables/ItemRow";
+import Pill from "./Selectables/Pill";
 
 import Box from "@commerce-ui/core/Box";
 
@@ -27,7 +30,7 @@ export const standard = () => {
   const { options, productVariant } = useOptionPicker({ product });
 
   return (
-    <div>
+    <div sx={{ maxWidth: "476px" }}>
       <div>Variant price: {productVariant.price}$</div>
 
       {options.map(option => {
@@ -61,48 +64,46 @@ export const standard = () => {
             </HorizontalStack>
           );
 
+          items.push(<br />);
+
           items.push(
             <MenuButton
               key={option.name}
               {...option.menuButtonProps}
               button={<Button>{productVariant.selectedOptions.Color}</Button>}
               menu={
-                <Menu
-                  config={{
-                    xs: {
-                      mode: "slide-from-bottom",
-                      height: "auto"
-                    },
-                    md: {
-                      anchored: true
-                    }
-                  }}
-                >
-                  {({ anchored, options }) => (
-                    <Box
-                      sx={{
-                        width: anchored ? "300px" : "auto",
-                        boxShadow: anchored
-                          ? "0 4px 16px hsla(0, 0%, 0%, 0.16);"
-                          : "none",
-                        bg: "white"
-                      }}
-                    >
-                      {options.map(option => (
-                        <ColorRow
-                          color={option.color}
-                          key={option.value}
-                          label={option.value}
-                          {...option.itemProps}
-                        />
-                      ))}
-                    </Box>
-                  )}
+                <Menu>
+                  {({ anchored, options }) =>
+                    options.map(option => (
+                      <ColorRow
+                        color={option.color}
+                        key={option.value}
+                        label={option.value}
+                        {...option.itemProps}
+                      />
+                    ))
+                  }
                 </Menu>
               }
             />
           );
         } else if (option.name === "Size") {
+          items.push(
+            <div
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
+                gridGap: "10px"
+              }}
+            >
+              {option.values.map(value => (
+                <Pill key={value.name} {...value.selectableRadioProps} />
+              ))}
+            </div>
+          );
+
+          items.push(<br />);
+
           items.push(
             <MenuButton
               key={option.name}

@@ -66,7 +66,7 @@ function useOptionPicker(props = {}) {
         selectableRadioProps: {
           as: "radio",
           id: `${id}-${value.name}`,
-          label: `${option.name} ${value.name}`,
+          label: `${value.name}`,
           name: id,
           selected: selectedOptions[option.name] === value.name,
           onSelect: () => {
