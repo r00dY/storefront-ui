@@ -9,7 +9,8 @@ function Menu(props) {
   config = config || {
     xs: {
       mode: "slide-from-bottom",
-      height: "auto"
+      height: "auto",
+      maxHeight: "80vh"
     },
     md: {
       anchored: true

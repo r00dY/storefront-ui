@@ -53,7 +53,13 @@ export const standard = () => {
 
         if (option.name === "Color") {
           items.push(
-            <HorizontalStack key={option.name} sx={{ $gutter: "10px" }}>
+            <div
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fill, 50px)",
+                gridGap: "10px"
+              }}
+            >
               {option.values.map(value => (
                 <ColorSquare
                   key={value.name}
@@ -61,7 +67,7 @@ export const standard = () => {
                   {...value.selectableRadioProps}
                 />
               ))}
-            </HorizontalStack>
+            </div>
           );
 
           items.push(<br />);

@@ -28,6 +28,38 @@ const ringOptions = [
       {
         name: "Graphite",
         color: "#55544F"
+      },
+      {
+        name: "Lava red",
+        color: "#9F8F37"
+      },
+      {
+        name: "Coral red",
+        color: "#8EB0B1"
+      },
+      {
+        name: "Grey",
+        color: "#EFEEE9"
+      },
+      {
+        name: "Blue",
+        color: "#55544F"
+      },
+      {
+        name: "Yellow",
+        color: "#9F8F37"
+      },
+      {
+        name: "Red",
+        color: "#8EB0B1"
+      },
+      {
+        name: "Black",
+        color: "#EFEEE9"
+      },
+      {
+        name: "White",
+        color: "#55544F"
       }
     ]
   },
