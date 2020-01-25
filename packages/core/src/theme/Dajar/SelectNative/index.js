@@ -15,7 +15,7 @@ const SelectNative = props => {
         $root: ({ focused, disabled, invalid }) => ({
           height: "50px",
           border: "1px solid",
-          borderColor: invalid ? "red" : focused ? "black" : "mono300",
+          borderColor: invalid ? "red" : "mono300",
           bg: disabled ? "lightgrey" : "transparent",
           minWidth: "200px",
           cursor: "pointer",

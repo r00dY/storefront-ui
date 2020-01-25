@@ -171,7 +171,10 @@ function Input$(props) {
   );
 
   return (
-    <Box sx={[defaults.rootCss(state), rootCss, css]}>
+    <Box
+      sx={[defaults.rootCss(state), rootCss, css]}
+      className={focused && !customSx.$resetFocus ? "__commui_focus" : ""}
+    >
       {leftEnhancerContainer}
       {inputContainer}
       {rightEnhancerContainer}

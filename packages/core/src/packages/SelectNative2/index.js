@@ -260,7 +260,10 @@ function SelectNative$(props) {
   );
 
   return (
-    <Box sx={[defaults.rootCss(state), rootCss, css]}>
+    <Box
+      sx={[defaults.rootCss(state), rootCss, css]}
+      className={focused ? "__commui_focus" : ""}
+    >
       {leftEnhancerContainer}
       {inputContainer}
       {rightEnhancerContainer}

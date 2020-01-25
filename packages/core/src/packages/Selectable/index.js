@@ -84,6 +84,7 @@ function Selectable$(props) {
             onSelect();
           }
         }}
+        className={focused ? "__commui_focus" : ""}
       >
         <label htmlFor={id} sx={{ visibility: "hidden", position: "absolute" }}>
           {label}

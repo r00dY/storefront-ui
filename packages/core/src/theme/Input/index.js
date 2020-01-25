@@ -11,7 +11,8 @@ const Input = props => {
       {...props}
       sx={{
         ...css,
-        ...formStyles
+        ...formStyles,
+        $resetFocus: true
       }}
     />
   );
