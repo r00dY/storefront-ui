@@ -17,7 +17,7 @@ import ButtonSelect from "./Button/ButtonSelect";
 
 import Menu from "../Menu";
 
-import SelectNative from "../SelectNative";
+import SelectNative from "./SelectNative";
 
 import ColorSquare from "./Selectables/ColorSquare";
 import ColorRow from "./Selectables/ColorRow";

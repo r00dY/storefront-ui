@@ -40,7 +40,7 @@ export const unstyled = () => {
       <form action={"/action"} method={"post"}>
         <h2>General</h2>
 
-        <p>Type = text</p>
+        <p>Standard</p>
         <SelectNative placeholder={"City"} options={stringOptions} />
 
         <p>Disabled</p>

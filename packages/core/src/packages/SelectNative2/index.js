@@ -128,8 +128,7 @@ function SelectNative$(props) {
     invalid,
     disabled,
     empty,
-    placeholder,
-    label
+    placeholder
   };
 
   sx = typeof sx === "function" ? sx(state) : sx;
@@ -242,9 +241,11 @@ function SelectNative$(props) {
   };
 
   if (customSx.$labelInside) {
+    state.label = label;
     inputContainerState.label = createElement(
       getElementSpec(customSx.$label, defaults.$label, state)
     );
+    console.log("create label inside");
   }
 
   inputContainer = createElement(
