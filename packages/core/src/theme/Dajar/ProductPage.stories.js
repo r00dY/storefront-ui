@@ -86,7 +86,7 @@ export const standard = () => {
                 </ButtonSelect>
               }
               menu={
-                <Menu>
+                <Menu title={option.name}>
                   {({ anchored, options }) =>
                     options.map(option => (
                       <ColorRow
@@ -115,7 +115,7 @@ export const standard = () => {
                 </ButtonSelect>
               }
               menu={
-                <Menu>
+                <Menu title={option.name}>
                   {({ anchored, options }) => (
                     <div
                       sx={{
