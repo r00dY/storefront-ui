@@ -30,6 +30,7 @@ function ColorBigTile(props) {
           <Box
             sx={{
               paddingBottom: "63%",
+              width: "100%",
               position: "relative",
               pointerEvents: "none",
               lineHeight: 1,
@@ -40,8 +41,8 @@ function ColorBigTile(props) {
             <Box
               sx={{
                 position: "absolute",
-                top: 0,
-                left: 0,
+                top: "1px",
+                left: "1px",
                 width: "calc(100% - 2px)",
                 height: "calc(100% - 2px)",
                 bg: color,

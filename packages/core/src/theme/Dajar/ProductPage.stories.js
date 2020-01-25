@@ -1,13 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import ButtonMinimal from "../Button/ButtonMinimal";
-import Button from "../Button/Button";
 import { Button$ } from "@commerce-ui/core/Button2";
-import InputRaw$ from "@commerce-ui/core/InputRaw";
-import Input from "../Input";
-
-import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
@@ -20,6 +14,7 @@ import Menu from "../Menu";
 import SelectNative from "./SelectNative";
 
 import ColorSquare from "./Selectables/ColorSquare";
+import ColorBigTile from "./Selectables/ColorBigTile";
 import ColorRow from "./Selectables/ColorRow";
 import ItemRow from "./Selectables/ItemRow";
 import Pill from "./Selectables/Pill";
@@ -140,6 +135,52 @@ export const standard = () => {
               }
             />
           );
+
+          items.push(<br />);
+          items.push(<br />);
+
+          items.push(
+            <MenuButton
+              key={option.name}
+              {...option.menuButtonProps}
+              button={
+                <ButtonSelect>
+                  {productVariant.selectedOptions.Color}
+                </ButtonSelect>
+              }
+              menu={
+                <Menu
+                  title={option.name}
+                  config={{
+                    anchored: false,
+                    mode: "slide-from-right",
+                    width: "50vw"
+                  }}
+                >
+                  {({ anchored, options }) => (
+                    <div
+                      sx={{
+                        display: "grid",
+                        position: "relative",
+                        padding: 3,
+                        gridTemplateColumns: "1fr 1fr",
+                        gridGap: "10px"
+                      }}
+                    >
+                      {options.map(option => (
+                        <ColorBigTile
+                          color={option.color}
+                          key={option.value}
+                          label={option.value}
+                          {...option.itemProps}
+                        />
+                      ))}
+                    </div>
+                  )}
+                </Menu>
+              }
+            />
+          );
         } else if (option.name === "Size") {
           items.push(
             <div
@@ -211,6 +252,18 @@ export const standard = () => {
 
         return items;
       })}
+
+      {/*<div sx={{*/}
+      {/*border: "1px solid black;",*/}
+      {/*width: "200px",*/}
+      {/*height: "200px",*/}
+      {/*":focus-visible": {*/}
+      {/*border: "2px solid orange"*/}
+      {/*}*/}
+
+      {/*}} tabIndex={0}>*/}
+
+      {/*</div>*/}
     </div>
   );
 };

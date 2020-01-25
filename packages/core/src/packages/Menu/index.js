@@ -72,11 +72,11 @@ function Menu$(props) {
   return (
     <Layer {...restProps}>
       {params => (
-        <div role={"menuitem"}>
+        <>
           {typeof children === "function"
             ? children({ options, ...params })
             : children}
-        </div>
+        </>
       )}
     </Layer>
   );

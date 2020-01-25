@@ -17,17 +17,6 @@ export const standard = () => (
     <StoryWrapper
       stories={selectableStories(<ColorBigTile color={"blue"} label={"red"} />)}
     />
-
-    <br />
-    <br />
-    <ColorBigTile as={"link"} href={"#"} color={"red"} label={"red"} />
-    <ColorBigTile
-      as={"link"}
-      href={"#"}
-      color={"red"}
-      label={"red"}
-      selected={true}
-    />
   </div>
 );
 
