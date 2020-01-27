@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import Menu, { useMenu, MenuButton } from "@commerce-ui/core/Menu";
+import Select, { useSelect, SelectButton } from "@commerce-ui/core/Select2";
 
 import Button from "../Button/Button";
 import Color from "../Selectables/Color";
@@ -20,10 +20,10 @@ export const unstyled = () => {
 
   return (
     <div>
-      <MenuButton
+      <SelectButton
         button={<Button>{selectedValue || "Pick color"}</Button>}
         menu={
-          <Menu
+          <Select
             config={{
               xs: {
                 mode: "slide-from-bottom",
@@ -34,21 +34,12 @@ export const unstyled = () => {
               }
             }}
           >
-            {({ anchored, options }) => (
-              <>
-                {options.map(option => (
-                  <div sx={{ mb: 1 }} key={option.color}>
-                    <Color
-                      {...option.itemProps}
-                      color={option.color}
-                      label={option.color}
-                      selected={option.value === selectedValue}
-                    />
-                  </div>
-                ))}
-              </>
-            )}
-          </Menu>
+            {({ anchored, options }) =>
+              options.map(option => (
+                <Color color={option.color} label={option.color} />
+              ))
+            }
+          </Select>
         }
         options={colors}
         value={selectedValue}
@@ -56,10 +47,13 @@ export const unstyled = () => {
           setSelectedValue(val);
         }}
       />
+
+      <Button>Test</Button>
+      <Button>Test2</Button>
     </div>
   );
 };
 
 export default {
-  title: "Menu"
+  title: "Select"
 };

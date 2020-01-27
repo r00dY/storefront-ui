@@ -9,7 +9,7 @@ import { MenuButton } from "@commerce-ui/core/Menu";
 
 import ButtonSelect from "./Button/ButtonSelect";
 
-import Menu from "../Menu";
+import Menu from "../Select";
 
 import SelectNative from "./SelectNative";
 

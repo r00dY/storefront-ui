@@ -1,11 +1,11 @@
 import React from "react";
 
-import Menu$ from "@commerce-ui/core/Menu";
+import Select$ from "@commerce-ui/core/Select2";
 import Box from "@commerce-ui/core/Box";
 
 import Icon from "../svg/close.svg";
 
-function Menu(props) {
+function Select(props) {
   let { config, children, width, title = "Title", ...restProps } = props;
 
   config = config || {
@@ -20,7 +20,7 @@ function Menu(props) {
   }; // default config
 
   return (
-    <Menu$ config={config} {...restProps}>
+    <Select$ config={config} {...restProps}>
       {({ anchored, options }) => (
         <Box
           sx={{
@@ -74,8 +74,8 @@ function Menu(props) {
           </Box>
         </Box>
       )}
-    </Menu$>
+    </Select$>
   );
 }
 
-export default Menu;
+export default Select;

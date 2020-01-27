@@ -1,12 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layer from "../Layer";
 
-import { useSelect } from "downshift";
+import { useSelect as useSelectDownshift } from "downshift";
 
-function useMenu(props) {
+function useSelect(props) {
   const { options, onClick, value, onChange } = props;
 
-  const downshiftSelect = useSelect({ items: options });
+  const downshiftSelect = useSelectDownshift({ items: options });
 
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
@@ -26,9 +26,6 @@ function useMenu(props) {
   const newOptions = options.map((option, index) => ({
     ...option,
     itemProps: {
-      selected: value === option.value,
-      // test: console.log(downshiftSelect.highlightedIndex === index),
-      highlighted: downshiftSelect.highlightedIndex === index,
       ...downshiftSelect.getItemProps({ index, item: option })
 
       // onClick: e => {
@@ -43,6 +40,12 @@ function useMenu(props) {
       //   }
       // },
       // role: "menuitem"
+    },
+    selectableProps: {
+      selected:
+        downshiftSelect.selectedItem &&
+        option.value === downshiftSelect.selectedItem.value,
+      highlighted: downshiftSelect.highlightedIndex === index
     }
   }));
 
@@ -51,7 +54,9 @@ function useMenu(props) {
     onRequestClose: () => setOpen(false),
     anchorRef: buttonPropsDownshift.buttonRef,
     options: newOptions,
-    menuProps: downshiftSelect.getMenuProps()
+    menuProps: {
+      ...downshiftSelect.getMenuProps()
+    }
   };
 
   // useEffect(() => {
@@ -78,27 +83,35 @@ function useMenu(props) {
   return { buttonProps, menuProps };
 }
 
-function Menu$(props) {
+function Select$(props) {
   let { children, options, menuProps, ...restProps } = props;
-
-  children =
-    children || options.map(o => <div role={"menuitem"}>{o.value}</div>);
 
   return (
     <Layer {...restProps}>
-      {params => (
-        <div {...menuProps}>
-          {typeof children === "function"
+      {params => {
+        // If children are function
+        children =
+          typeof children === "function"
             ? children({ options, ...params })
-            : children}
-        </div>
-      )}
+            : children;
+
+        // Default children
+        children = children || options.map(o => <>{o.value}</>);
+
+        const items = children.map((selectable, i) => (
+          <div {...options[i].itemProps}>
+            {React.cloneElement(selectable, { ...options[i].selectableProps })}
+          </div>
+        ));
+
+        return <div {...menuProps}>{items}</div>;
+      }}
     </Layer>
   );
 }
 
-function MenuButton({ button, menu, ...restProps }) {
-  const { buttonProps, menuProps } = useMenu({ ...restProps });
+function SelectButton({ button, menu, ...restProps }) {
+  const { buttonProps, menuProps } = useSelect({ ...restProps });
 
   const buttonElem = React.cloneElement(button, buttonProps);
   const menuElem = React.cloneElement(menu, menuProps);
@@ -111,6 +124,6 @@ function MenuButton({ button, menu, ...restProps }) {
   );
 }
 
-export default Menu$;
+export default Select$;
 
-export { useMenu, MenuButton };
+export { useSelect, SelectButton };
