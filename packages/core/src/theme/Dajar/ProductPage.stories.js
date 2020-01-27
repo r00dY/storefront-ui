@@ -144,7 +144,10 @@ export const standard = () => {
               config={{
                 anchored: false,
                 mode: "slide-from-right",
-                width: "50vw"
+                width: rs({
+                  xs: "90vw",
+                  lg: "40vw"
+                })
               }}
               sx={{
                 $root: {
