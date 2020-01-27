@@ -1,6 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "../index";
+import { useSelect } from "@commerce-ui/core/Select2";
 
 function findProductVariantBySelectedOptions(product, options) {
   RootLoop: for (let i = 0; i < product.variants.length; i++) {
@@ -36,6 +37,12 @@ function useOptionPicker(props = {}) {
 
   product.options.forEach(option => {
     const id = `${product.handle}-${option.name}`;
+
+    const values2 = option.values.map(value => ({
+      value: value.name,
+      label: value.name,
+      ...value
+    }));
 
     options.push({
       ...option,
@@ -78,15 +85,11 @@ function useOptionPicker(props = {}) {
           disabled: false
         }
       })),
-      menuButtonProps: {
-        options: option.values.map(value => ({
-          value: value.name,
-          label: value.name,
-          ...value
-        })),
-        value: selectedOptions[option.name],
+      select2Props: {
+        options: values2,
+        value: values2.find(v => v.value === selectedOptions[option.name]),
         onChange: val => {
-          setSelectedOptions({ ...selectedOptions, [option.name]: val });
+          setSelectedOptions({ ...selectedOptions, [option.name]: val.value });
         }
       }
     });

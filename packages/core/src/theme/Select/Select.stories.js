@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import { useSelect, Select$, SelectInline$ } from "@commerce-ui/core/Select2";
+import { Select$, SelectInline$ } from "@commerce-ui/core/Select2";
 
 import Button from "../Button/Button";
 import Color from "../Selectables/Color";
@@ -16,14 +16,12 @@ const colors = [
 ];
 
 export const unstyled = () => {
-  const { selectProps, buttonProps } = useSelect({ options: colors });
+  const [value, setValue] = useState(colors[2]);
 
   return (
     <div>
       <Button>Test</Button>
       <Button>Test2</Button>
-
-      <Button {...buttonProps}>Pick color</Button>
 
       <Select$
         config={{
@@ -35,7 +33,12 @@ export const unstyled = () => {
             anchored: true
           }
         }}
-        {...selectProps}
+        button={({ selectedItem }) => (
+          <Button>{selectedItem ? selectedItem.value : "Pick color"}</Button>
+        )}
+        options={colors}
+        value={value}
+        onChange={value => setValue(value)}
       >
         {({ options }) =>
           options.map(option => (

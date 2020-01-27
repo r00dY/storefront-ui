@@ -11,12 +11,12 @@ import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
-import Menu, { MenuButton } from "@commerce-ui/core/Menu";
-
 import SelectNative from "../SelectNative";
 
 import Color from "../Selectables/Color";
 import ItemRow from "../Selectables/ItemRow";
+
+import { Select$ } from "@commerce-ui/core/Select2";
 
 import product from "../data";
 
@@ -44,36 +44,26 @@ export const hook = () => {
 
         if (option.name === "Size") {
           return (
-            <MenuButton
+            <Select$
               key={option.name}
-              {...option.menuButtonProps}
               button={<Button>{productVariant.selectedOptions.Size}</Button>}
-              menu={
-                <Menu
-                  config={{
-                    xs: {
-                      mode: "slide-from-bottom",
-                      height: "auto"
-                    },
-                    md: {
-                      anchored: true
-                    }
-                  }}
-                >
-                  {({ anchored, options }) => (
-                    <>
-                      {options.map(option => (
-                        <ItemRow
-                          key={option.value}
-                          label={option.value}
-                          {...option.itemProps}
-                        />
-                      ))}
-                    </>
-                  )}
-                </Menu>
+              config={{
+                xs: {
+                  mode: "slide-from-bottom",
+                  height: "auto"
+                },
+                md: {
+                  anchored: true
+                }
+              }}
+              {...option.select2Props}
+            >
+              {({ options }) =>
+                options.map(option => (
+                  <ItemRow key={option.value} label={option.value} />
+                ))
               }
-            />
+            </Select$>
           );
         }
 

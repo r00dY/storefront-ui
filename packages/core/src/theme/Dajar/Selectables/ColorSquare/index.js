@@ -9,7 +9,7 @@ function Color(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, focused, selected }) => (
+      {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
             position: "relative",
@@ -21,7 +21,10 @@ function Color(props) {
             pointerEvents: "none",
             borderColor: "black",
             borderStyle: "solid",
-            borderWidth: selected ? "1px" : 0
+            borderWidth: selected ? "1px" : 0,
+            outlineColor: "black",
+            outlineStyle: "solid",
+            outlineWidth: highlighted ? "3px" : 0
           }}
         >
           <Box

@@ -13,7 +13,7 @@ function ColorBigTile(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, focused, selected }) => (
+      {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
             position: "relative",
@@ -24,6 +24,9 @@ function ColorBigTile(props) {
             borderColor: "black",
             borderStyle: "solid",
             borderWidth: selected ? "1px" : 0,
+            outlineColor: "black",
+            outlineStyle: "solid",
+            outlineWidth: highlighted ? "3px" : 0,
             ...css
           }}
         >

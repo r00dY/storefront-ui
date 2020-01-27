@@ -1,12 +1,12 @@
 import React from "react";
 
-import Select$ from "@commerce-ui/core/Select2";
+import { Select$ } from "@commerce-ui/core/Select2";
 import Box from "@commerce-ui/core/Box";
 
 import Icon from "../svg/close.svg";
 
 function Select(props) {
-  let { config, children, width, title = "Title", ...restProps } = props;
+  let { config, width, title = "Title", ...restProps } = props;
 
   config = config || {
     xs: {
@@ -20,8 +20,10 @@ function Select(props) {
   }; // default config
 
   return (
-    <Select$ config={config} {...restProps}>
-      {({ anchored, options }) => (
+    <Select$
+      config={config}
+      {...restProps}
+      wrapper={({ content, anchored }) => (
         <Box
           sx={{
             position: "relative",
@@ -70,11 +72,11 @@ function Select(props) {
               paddingBottom: "8px"
             }}
           >
-            {children({ anchored, options })}
+            {content}
           </Box>
         </Box>
       )}
-    </Select$>
+    />
   );
 }
 

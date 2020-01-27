@@ -9,7 +9,7 @@ function Pill(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, focused, selected }) => (
+      {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
             position: "relative",
@@ -23,6 +23,10 @@ function Pill(props) {
             ":hover": {
               borderColor: "black"
             },
+
+            outlineColor: "black",
+            outlineStyle: "solid",
+            outlineWidth: highlighted ? "2px" : 0,
             transition: "all .1s",
             color: "black",
             font: "body"

@@ -9,7 +9,7 @@ function ItemRow(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, focused, selected }) => (
+      {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
             width: "100%",
@@ -21,7 +21,7 @@ function ItemRow(props) {
             // pointerEvents: "none",
             lineHeight: 1,
             font: "body",
-            bg: "#fafafa",
+            bg: highlighted ? "rgb(230,230,230)" : "#fafafa",
             ":hover": {
               bg: "rgb(230,230,230)"
             },

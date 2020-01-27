@@ -1,12 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layer from "../Layer";
+import Box from "../Box";
 
 import { useSelect as useSelectDownshift } from "downshift";
 
-function useSelect(props) {
-  const { options, onClick, value, onChange } = props;
-
-  const downshiftSelect = useSelectDownshift({ items: options });
+function useSelect({ options, value, onChange, ...restProps }) {
+  const downshiftSelect = useSelectDownshift({
+    ...restProps,
+    items: options,
+    selectedItem: value,
+    onSelectedItemChange: item => {
+      onChange(item.selectedItem);
+    }
+  });
 
   const buttonPropsDownshift = downshiftSelect.getToggleButtonProps();
 
@@ -47,13 +53,13 @@ function useSelect(props) {
     layerProps
   };
 
-  return { buttonProps, selectProps, layerProps };
+  return { buttonProps, selectProps, layerProps, ...downshiftSelect };
 }
 
 // This is the list which is inline (without button and Layer etc).
 // todo: make Root styleable, make list tabbable (tabIndex from downshift is -1) etc.
 function SelectInline$(props) {
-  let { children, options, menuProps, ...restProps } = props;
+  let { children, options, sx = {}, menuProps, ...restProps } = props;
 
   children = typeof children === "function" ? children({ options }) : children;
 
@@ -61,34 +67,34 @@ function SelectInline$(props) {
   children = children || options.map(o => <>{o.value}</>);
 
   const items = children.map((selectable, i) => (
-    <div {...options[i].itemProps}>
+    <Box {...options[i].itemProps}>
       {React.cloneElement(selectable, { ...options[i].selectableProps })}
-    </div>
+    </Box>
   ));
 
-  return <div {...menuProps}>{items}</div>;
+  return (
+    <Box {...menuProps} sx={sx.$root}>
+      {items}
+    </Box>
+  );
 }
 
+// todo: Select$ is "Stateful", in future this should change into more consistent architecture
 function Select$(props) {
-  let {
-    children,
-    options,
-    menuProps,
-    layerProps,
-    wrapper,
-    ...restProps
-  } = props;
+  let { children, wrapper, config, sx, button, ...restProps } = props;
+  const { selectProps, buttonProps, layerProps, ...rest } = useSelect(
+    restProps
+  );
+
+  button = typeof button === "function" ? button(rest) : button;
 
   return (
     <>
-      <Layer {...layerProps} {...restProps}>
+      {React.cloneElement(button, { ...buttonProps })}
+      <Layer {...layerProps} config={config}>
         {params => {
           const select = (
-            <SelectInline$
-              options={options}
-              menuProps={menuProps}
-              options={options}
-            >
+            <SelectInline$ {...selectProps} sx={sx}>
               {children}
             </SelectInline$>
           );
