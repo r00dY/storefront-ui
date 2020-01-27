@@ -10,7 +10,9 @@ function useSelect({ options, value, onChange, ...restProps }) {
     items: options,
     selectedItem: value,
     onSelectedItemChange: item => {
-      onChange(item.selectedItem);
+      if (onChange) {
+        onChange(item.selectedItem);
+      }
     }
   });
 
