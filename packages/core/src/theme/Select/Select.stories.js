@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import Select, { useSelect, SelectButton } from "@commerce-ui/core/Select2";
+import { useSelect, Select$, SelectInline$ } from "@commerce-ui/core/Select2";
 
 import Button from "../Button/Button";
 import Color from "../Selectables/Color";
@@ -16,37 +16,61 @@ const colors = [
 ];
 
 export const unstyled = () => {
-  const [selectedValue, setSelectedValue] = useState(null);
+  const { selectProps, buttonProps } = useSelect({ options: colors });
 
   return (
     <div>
-      <SelectButton
-        button={<Button>{selectedValue || "Pick color"}</Button>}
-        menu={
-          <Select
-            config={{
-              xs: {
-                mode: "slide-from-bottom",
-                height: "auto"
-              },
-              md: {
-                anchored: true
-              }
-            }}
-          >
-            {({ anchored, options }) =>
-              options.map(option => (
-                <Color color={option.color} label={option.color} />
-              ))
-            }
-          </Select>
-        }
-        options={colors}
-        value={selectedValue}
-        onChange={val => {
-          setSelectedValue(val);
+      <Button>Test</Button>
+      <Button>Test2</Button>
+
+      <Button {...buttonProps}>Pick color</Button>
+
+      <Select$
+        config={{
+          xs: {
+            mode: "slide-from-bottom",
+            height: "auto"
+          },
+          md: {
+            anchored: true
+          }
         }}
-      />
+        {...selectProps}
+      >
+        {({ options }) =>
+          options.map(option => (
+            <Color color={option.color} label={option.color} />
+          ))
+        }
+      </Select$>
+
+      <Button>Test</Button>
+      <Button>Test2</Button>
+    </div>
+  );
+};
+
+export const inline = () => {
+  const { selectProps } = useSelect({ options: colors });
+
+  return (
+    <div>
+      <Button>Test</Button>
+      <Button>Test2</Button>
+
+      <br />
+      <br />
+
+      <SelectInline$ {...selectProps}>
+        {({ options }) =>
+          options.map(option => (
+            <Color color={option.color} label={option.color} />
+          ))
+        }
+      </SelectInline$>
+
+      <br />
+      <br />
 
       <Button>Test</Button>
       <Button>Test2</Button>

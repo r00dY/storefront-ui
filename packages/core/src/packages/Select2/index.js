@@ -8,38 +8,25 @@ function useSelect(props) {
 
   const downshiftSelect = useSelectDownshift({ items: options });
 
-  const [isOpen, setOpen] = useState(false);
-  const buttonRef = useRef(null);
-
   const buttonPropsDownshift = downshiftSelect.getToggleButtonProps();
-  buttonPropsDownshift.buttonRef = buttonPropsDownshift.ref;
-  delete buttonPropsDownshift.ref;
+
+  const anchorRef = useRef(null);
+
+  const buttonRef = element => {
+    buttonPropsDownshift.ref(element);
+    anchorRef.current = element;
+  };
 
   const buttonProps = {
-    // buttonRef,
-    // onClick: () => {
-    //   setOpen(true);
-    // },
-    ...buttonPropsDownshift
+    ...buttonPropsDownshift,
+    buttonRef: buttonRef,
+    ref: undefined
   };
 
   const newOptions = options.map((option, index) => ({
     ...option,
     itemProps: {
       ...downshiftSelect.getItemProps({ index, item: option })
-
-      // onClick: e => {
-      //   setOpen(false);
-      //
-      //   if (onChange) {
-      //     onChange(option.value);
-      //   }
-      //
-      //   if (onClick) {
-      //     onClick(option.value, option, e);
-      //   }
-      // },
-      // role: "menuitem"
     },
     selectableProps: {
       selected:
@@ -49,81 +36,74 @@ function useSelect(props) {
     }
   }));
 
-  const menuProps = {
+  const layerProps = {
     isOpen: downshiftSelect.isOpen,
-    onRequestClose: () => setOpen(false),
-    anchorRef: buttonPropsDownshift.buttonRef,
-    options: newOptions,
-    menuProps: {
-      ...downshiftSelect.getMenuProps()
-    }
+    anchorRef
   };
 
-  // useEffect(() => {
-  //   const onDocumentKeyPress = evt => {
-  //     if (evt.key !== "Escape") {
-  //       return;
-  //     }
-  //
-  //     // Ignore events that have been `event.preventDefault()` marked.
-  //     if (event.defaultPrevented) {
-  //       return;
-  //     }
-  //
-  //     setOpen(false);
-  //   };
-  //
-  //   document.addEventListener("keyup", onDocumentKeyPress);
-  //
-  //   return () => {
-  //     document.removeEventListener("keyup", onDocumentKeyPress);
-  //   };
-  // });
+  const selectProps = {
+    options: newOptions,
+    menuProps: downshiftSelect.getMenuProps(),
+    layerProps
+  };
 
-  return { buttonProps, menuProps };
+  return { buttonProps, selectProps, layerProps };
+}
+
+// This is the list which is inline (without button and Layer etc).
+// todo: make Root styleable, make list tabbable (tabIndex from downshift is -1) etc.
+function SelectInline$(props) {
+  let { children, options, menuProps, ...restProps } = props;
+
+  children = typeof children === "function" ? children({ options }) : children;
+
+  // Default children
+  children = children || options.map(o => <>{o.value}</>);
+
+  const items = children.map((selectable, i) => (
+    <div {...options[i].itemProps}>
+      {React.cloneElement(selectable, { ...options[i].selectableProps })}
+    </div>
+  ));
+
+  return <div {...menuProps}>{items}</div>;
 }
 
 function Select$(props) {
-  let { children, options, menuProps, ...restProps } = props;
-
-  return (
-    <Layer {...restProps}>
-      {params => {
-        // If children are function
-        children =
-          typeof children === "function"
-            ? children({ options, ...params })
-            : children;
-
-        // Default children
-        children = children || options.map(o => <>{o.value}</>);
-
-        const items = children.map((selectable, i) => (
-          <div {...options[i].itemProps}>
-            {React.cloneElement(selectable, { ...options[i].selectableProps })}
-          </div>
-        ));
-
-        return <div {...menuProps}>{items}</div>;
-      }}
-    </Layer>
-  );
-}
-
-function SelectButton({ button, menu, ...restProps }) {
-  const { buttonProps, menuProps } = useSelect({ ...restProps });
-
-  const buttonElem = React.cloneElement(button, buttonProps);
-  const menuElem = React.cloneElement(menu, menuProps);
+  let {
+    children,
+    options,
+    menuProps,
+    layerProps,
+    wrapper,
+    ...restProps
+  } = props;
 
   return (
     <>
-      {buttonElem}
-      {menuElem}
+      <Layer {...layerProps} {...restProps}>
+        {params => {
+          const select = (
+            <SelectInline$
+              options={options}
+              menuProps={menuProps}
+              options={options}
+            >
+              {children}
+            </SelectInline$>
+          );
+
+          let content = select;
+
+          if (wrapper) {
+            content = wrapper({ ...params, content: select });
+          }
+
+          return content;
+        }}
+      </Layer>
     </>
   );
 }
 
-export default Select$;
-
-export { useSelect, SelectButton };
+export { useSelect, SelectInline$, Select$ };
