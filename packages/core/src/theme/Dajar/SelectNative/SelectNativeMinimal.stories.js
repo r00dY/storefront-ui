@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
 import HorizontalStack from "@commerce-ui/core/HorizontalStack";
-import SelectNative from "./SelectNative";
+import SelectNativeMinimal from "./SelectNativeMinimal";
 import React, { useRef } from "react";
 
 const stringOptions = [
@@ -40,30 +40,63 @@ export const unstyled = () => {
         <h2>General</h2>
 
         <p>Standard</p>
-        <SelectNative placeholder={"City"} options={stringOptions} />
+        <SelectNativeMinimal placeholder={"City"} options={stringOptions} />
 
         <p>Disabled</p>
-        <SelectNative
+        <SelectNativeMinimal
           disabled={true}
           placeholder={"City"}
           options={stringOptions}
         />
 
-        <p>Error</p>
-        <SelectNative
-          invalid={true}
+        <p>No placeholder</p>
+        <SelectNativeMinimal
+          label={"City"}
+          type={"text"}
+          options={stringOptions}
+        />
+
+        <p>Size</p>
+        <SelectNativeMinimal
+          sx={{
+            width: "320px",
+            height: "150px"
+          }}
           placeholder={"City"}
           options={stringOptions}
         />
 
+        <h2>Hide arrow</h2>
+
+        <p>Standard</p>
+        <SelectNativeMinimal
+          placeholder={"City"}
+          options={stringOptions}
+          sx={{ $hideArrow: true }}
+        />
+
+        <p>Disabled</p>
+        <SelectNativeMinimal
+          disabled={true}
+          placeholder={"City"}
+          options={stringOptions}
+          sx={{ $hideArrow: true }}
+        />
+
         <p>No placeholder</p>
-        <SelectNative label={"City"} type={"text"} options={stringOptions} />
+        <SelectNativeMinimal
+          label={"City"}
+          type={"text"}
+          options={stringOptions}
+          sx={{ $hideArrow: true }}
+        />
 
         <p>Size</p>
-        <SelectNative
+        <SelectNativeMinimal
           sx={{
             width: "320px",
-            height: "150px"
+            height: "150px",
+            $hideArrow: true
           }}
           placeholder={"City"}
           options={stringOptions}
@@ -74,5 +107,5 @@ export const unstyled = () => {
 };
 
 export default {
-  title: "Dajar.SelectNative"
+  title: "Dajar.SelectNativeMinimal"
 };

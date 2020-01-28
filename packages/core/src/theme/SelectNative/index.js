@@ -4,7 +4,7 @@ import { jsx, splitSx } from "@commerce-ui/core";
 
 import formStyles from "../form-styles";
 
-const SelectNative = props => {
+const Index = props => {
   const [css, customSx] = splitSx(props.sx);
 
   return (
@@ -25,4 +25,4 @@ const SelectNative = props => {
   );
 };
 
-export default SelectNative;
+export default Index;

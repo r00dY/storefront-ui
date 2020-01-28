@@ -8,10 +8,13 @@ import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 import { Select$ } from "@commerce-ui/core/Select2";
 
 import ButtonSelect from "./Button/ButtonSelect";
+import Button from "./Button/Button";
+
+import IconAddToCart from "../svg/add_shopping_cart.svg";
 
 import Select from "../Select";
 
-import SelectNative from "./SelectNative";
+import SelectNative from "./SelectNative/SelectNative";
 
 import ColorSquare from "./Selectables/ColorSquare";
 import ColorBigTile from "./Selectables/ColorBigTile";
@@ -21,10 +24,14 @@ import Pill from "./Selectables/Pill";
 
 import Box from "@commerce-ui/core/Box";
 
+import { useCounter } from "@commerce-ui/core/Counter";
+import Counter from "./Counter";
+
 import product from "../data";
 
 export const standard = () => {
   const { options, productVariant } = useOptionPicker({ product });
+  const counter = useCounter();
 
   return (
     <div sx={{ maxWidth: "476px" }}>
@@ -243,6 +250,27 @@ export const standard = () => {
 
         return items;
       })}
+
+      <br />
+      <br />
+
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row"
+        }}
+      >
+        <Counter
+          {...counter}
+          sx={{ flex: "0 0 auto", height: "50px", mr: "10px" }}
+        />
+        <Button
+          startEnhancer={<IconAddToCart />}
+          sx={{ width: "100%", flexGrow: 1 }}
+        >
+          Add to cart
+        </Button>
+      </Box>
     </div>
   );
 };

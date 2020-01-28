@@ -4,11 +4,11 @@ import { jsx } from "@commerce-ui/core";
 import { buttonStories } from "@commerce-ui/core/Button2/stories";
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
-import Button from "./Button";
+import ButtonSelect from "./ButtonSelect";
 
 const Square = () => (
   <div
-    sx={{ width: "16px", height: "16px", position: "relative", bg: "white" }}
+    sx={{ width: "16px", height: "16px", position: "relative", bg: "black" }}
   />
 );
 
@@ -19,7 +19,7 @@ export const standard = () => (
   <div>
     <h2>Standard text</h2>
     <StoryWrapper
-      stories={buttonStories(<Button>Standard button</Button>, {
+      stories={buttonStories(<ButtonSelect>Standard button</ButtonSelect>, {
         disabled: true,
         loading: true
       })}
@@ -27,7 +27,7 @@ export const standard = () => (
 
     <h2>Long text</h2>
     <StoryWrapper
-      stories={buttonStories(<Button>{LABEL_LONG}</Button>, {
+      stories={buttonStories(<ButtonSelect>{LABEL_LONG}</ButtonSelect>, {
         disabled: true,
         loading: true
       })}
@@ -36,9 +36,9 @@ export const standard = () => (
     <h2>Standard text with enhancers</h2>
     <StoryWrapper
       stories={buttonStories(
-        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
+        <ButtonSelect startEnhancer={<Square />} endEnhancer={<Square />}>
           Standard button
-        </Button>,
+        </ButtonSelect>,
         {
           disabled: true,
           loading: true
@@ -49,9 +49,9 @@ export const standard = () => (
     <h2>Long text with enhancers</h2>
     <StoryWrapper
       stories={buttonStories(
-        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
+        <ButtonSelect startEnhancer={<Square />} endEnhancer={<Square />}>
           {LABEL_LONG}
-        </Button>,
+        </ButtonSelect>,
         { disabled: true, loading: true }
       )}
     />
@@ -59,5 +59,5 @@ export const standard = () => (
 );
 
 export default {
-  title: "Dajar.Button"
+  title: "Dajar.ButtonSelect"
 };

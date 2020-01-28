@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
 import HorizontalStack from "@commerce-ui/core/HorizontalStack";
-import SelectNative from ".";
+import Index from "./index";
 import Button from "../Button/Button";
 import React, { useRef } from "react";
 
@@ -41,29 +41,21 @@ export const unstyled = () => {
         <h2>General</h2>
 
         <p>Standard</p>
-        <SelectNative placeholder={"City"} options={stringOptions} />
+        <Index placeholder={"City"} options={stringOptions} />
 
         <p>Disabled</p>
-        <SelectNative
-          disabled={true}
-          placeholder={"City"}
-          options={stringOptions}
-        />
+        <Index disabled={true} placeholder={"City"} options={stringOptions} />
 
         <p>Error</p>
-        <SelectNative
-          invalid={true}
-          placeholder={"City"}
-          options={stringOptions}
-        />
+        <Index invalid={true} placeholder={"City"} options={stringOptions} />
 
         <p>No placeholder</p>
-        <SelectNative label={"City"} type={"text"} options={stringOptions} />
+        <Index label={"City"} type={"text"} options={stringOptions} />
 
         <p>ref</p>
 
         <HorizontalStack sx={{ $gutter: "8px" }}>
-          <SelectNative
+          <Index
             inputRef={inputRef}
             placeholder={"City"}
             options={stringOptions}
@@ -80,7 +72,7 @@ export const unstyled = () => {
         </HorizontalStack>
 
         <p>Size</p>
-        <SelectNative
+        <Index
           sx={{
             width: "320px",
             height: "150px"
@@ -91,35 +83,35 @@ export const unstyled = () => {
 
         <h2>Enhancers</h2>
         <p>Left enhancer</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           leftEnhancer={"$"}
         />
 
         <p>Left enhancer double</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           leftEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
         />
 
         <p>Right enhancer</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           rightEnhancer={"$"}
         />
 
         <p>Right enhancer double</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           rightEnhancer={[<div key={1}>$</div>, <div key={2}>€</div>]}
         />
 
         <p>Both enhancers</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           rightEnhancer={"$"}
@@ -127,7 +119,7 @@ export const unstyled = () => {
         />
 
         <p>Both enhancers double (change of color on focus)</p>
-        <SelectNative
+        <Index
           placeholder={"City"}
           options={stringOptions}
           rightEnhancer={({ focused }) => [

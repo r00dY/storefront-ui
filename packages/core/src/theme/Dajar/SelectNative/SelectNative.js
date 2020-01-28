@@ -28,19 +28,8 @@ const SelectNative = props => {
           font: "body",
           color: "black",
           lineHeight: 1,
-          transition: "padding .2s ease-out",
           pr: "36px"
         }),
-        $leftEnhancersContainer: {
-          $gutter: "8px",
-          pl: "16px",
-          font: "body"
-        },
-        $rightEnhancersContainer: {
-          $gutter: "8px",
-          pr: "16px",
-          font: "body"
-        },
         $arrow: {
           pr: "10px",
           color: "black",
