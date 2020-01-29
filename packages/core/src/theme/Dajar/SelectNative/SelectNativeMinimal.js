@@ -19,7 +19,7 @@ const SelectNative = props => {
           color: disabled ? "mono500" : "black",
           lineHeight: 1,
           pr: customSx.$hideArrow ? 0 : "36px",
-          textAlignLast: customSx.$hideArrow ? "center" : "left"
+          textAlignLast: customSx.$alignLeft ? "left" : "center"
         }),
         $arrow: ({ disabled }) => ({
           color: disabled ? "mono500" : "black",

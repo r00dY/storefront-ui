@@ -12,12 +12,13 @@ const Button = props => {
       sx={{
         minHeight: "50px",
         minWidth: "200px",
+
+        ...css,
+
         ":hover": {
           borderColor: "black"
         },
         transition: "all .1s",
-
-        ...css,
 
         // minWidth: "500px",
         $foreground: ({ disabled }) => ({
@@ -46,10 +47,6 @@ const Button = props => {
         },
         $endEnhancerContainer: {
           ml: 2
-          // display: "flex",
-          // flexAlign: "center",
-          // alignItems: "center",
-          // color: "white"
         }
       }}
     />

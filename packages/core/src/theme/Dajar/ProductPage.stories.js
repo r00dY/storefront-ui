@@ -28,14 +28,15 @@ import { useCounter } from "@commerce-ui/core/Counter";
 import Counter from "./Counter";
 
 import product from "../data";
+import ColorRowWithPrice from "./Selectables/ColorRowWithPrice";
 
 export const standard = () => {
   const { options, productVariant } = useOptionPicker({ product });
   const counter = useCounter();
 
   return (
-    <div sx={{ maxWidth: "476px" }}>
-      <div>Variant price: {productVariant.price}$</div>
+    <Box sx={{ maxWidth: "320px" }}>
+      <Box>Variant price: {productVariant.price}$</Box>
 
       {options.map(option => {
         let items = [
@@ -46,7 +47,7 @@ export const standard = () => {
               paddingBottom: 2
             }}
           >
-            <label {...options.labelProps} sx={{ color: "mono700" }}>
+            <label {...option.labelProps} sx={{ color: "mono700" }}>
               {option.name}
             </label>{" "}
             {option.name === "Color" && (
@@ -59,7 +60,7 @@ export const standard = () => {
 
         if (option.name === "Color") {
           items.push(
-            <div
+            <Box
               sx={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fill, 50px)",
@@ -73,7 +74,7 @@ export const standard = () => {
                   {...value.selectableRadioProps}
                 />
               ))}
-            </div>
+            </Box>
           );
 
           items.push(<br />);
@@ -94,6 +95,33 @@ export const standard = () => {
                     color={option.color}
                     key={option.value}
                     label={option.value}
+                    {...option.itemProps}
+                  />
+                ))
+              }
+            </Select>
+          );
+
+          items.push(<br />);
+          items.push(<br />);
+
+          items.push(
+            <Select
+              key={option.name}
+              {...option.select2Props}
+              button={
+                <ButtonSelect>
+                  {productVariant.selectedOptions.Color}
+                </ButtonSelect>
+              }
+            >
+              {({ options }) =>
+                options.map(value => (
+                  <ColorRowWithPrice
+                    color={value.color}
+                    key={value.value}
+                    label={value.value}
+                    productVariant={value.productVariant}
                     {...option.itemProps}
                   />
                 ))
@@ -179,7 +207,7 @@ export const standard = () => {
           );
         } else if (option.name === "Size") {
           items.push(
-            <div
+            <Box
               sx={{
                 display: "grid",
                 gridTemplateColumns: "repeat(auto-fit, minmax(100px, 1fr))",
@@ -189,7 +217,7 @@ export const standard = () => {
               {option.values.map(value => (
                 <Pill key={value.name} {...value.selectableRadioProps} />
               ))}
-            </div>
+            </Box>
           );
 
           items.push(<br />);
@@ -242,9 +270,9 @@ export const standard = () => {
           );
         } else {
           items.push(
-            <div key={option.name}>
+            <Box key={option.name}>
               <SelectNative {...option.selectProps} />
-            </div>
+            </Box>
           );
         }
 
@@ -271,7 +299,7 @@ export const standard = () => {
           Add to cart
         </Button>
       </Box>
-    </div>
+    </Box>
   );
 };
 

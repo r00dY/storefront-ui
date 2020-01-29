@@ -27,7 +27,7 @@ function Select(props) {
         <Box
           sx={{
             position: "relative",
-            width: anchored ? width || "300px" : "auto",
+            width: anchored ? width || "420px" : "auto",
             maxHeight: anchored ? "500px" : "100%",
             boxShadow: anchored ? "0 4px 16px hsla(0, 0%, 0%, 0.16);" : "none",
             bg: "white",

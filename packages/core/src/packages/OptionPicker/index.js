@@ -41,7 +41,11 @@ function useOptionPicker(props = {}) {
     const values2 = option.values.map(value => ({
       value: value.name,
       label: value.name,
-      ...value
+      ...value,
+      productVariant: findProductVariantBySelectedOptions(product, {
+        ...selectedOptions,
+        [option.name]: value.name
+      })
     }));
 
     options.push({

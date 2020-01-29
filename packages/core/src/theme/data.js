@@ -22,7 +22,7 @@ const ringOptions = [
         color: "#8EB0B1"
       },
       {
-        name: "Sand",
+        name: "Sand light",
         color: "#EFEEE9"
       },
       {
@@ -31,35 +31,27 @@ const ringOptions = [
       },
       {
         name: "Lava red",
-        color: "#9F8F37"
+        color: "#C24225"
       },
       {
-        name: "Coral red",
-        color: "#8EB0B1"
+        name: "Sand",
+        color: "#DAD5C1"
       },
       {
-        name: "Grey",
-        color: "#EFEEE9"
+        name: "Green",
+        color: "#6CAD85"
       },
       {
-        name: "Blue",
-        color: "#55544F"
+        name: "Granite",
+        color: "#8E8D8B"
       },
       {
-        name: "Yellow",
-        color: "#9F8F37"
+        name: "Coal",
+        color: "#312D2A"
       },
       {
-        name: "Red",
-        color: "#8EB0B1"
-      },
-      {
-        name: "Black",
-        color: "#EFEEE9"
-      },
-      {
-        name: "White",
-        color: "#55544F"
+        name: "Navy",
+        color: "#3D5476"
       }
     ]
   },
@@ -100,6 +92,8 @@ ringOptions[0].values.forEach((style, i1) => {
     ringOptions[2].values.forEach((size, i3) => {
       variants.push({
         price: 100 + 50 * i1 + 10 * i2 + i3 * 1,
+        discountPrice:
+          i2 % 3 === 0 ? 100 + 50 * i1 + 10 * i2 + i3 * 1 - 40 : undefined,
         selectedOptions: {
           Style: style.name,
           Color: color.name,

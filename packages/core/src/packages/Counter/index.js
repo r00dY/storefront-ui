@@ -126,6 +126,7 @@ function useCounter(props = {}) {
     inputProps,
     selectProps,
     amount,
+    setAmount: setValue,
     setValue
   };
 }

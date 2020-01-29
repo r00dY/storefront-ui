@@ -12,6 +12,8 @@ const theme = {
     primary: "blue",
     blue: "#007ce0",
     navy: "#004175",
+    success: "#6CAD85",
+    red: "#C94E2C",
 
     mono50: "#fafafa",
     mono100: "#f5f5f5",
@@ -45,7 +47,7 @@ const theme = {
     },
     heading: {
       fontSize: 28,
-      fontFamily: "serif"
+      fontFamily: "sans-serif"
     }
   },
   space: [0, 4, 8, 16, 32, 64],
