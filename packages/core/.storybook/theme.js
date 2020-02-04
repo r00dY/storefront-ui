@@ -1,9 +1,13 @@
 // Theme
+
 const breakpoints = ["320px", "768px", "1024px", "1600px"];
 breakpoints.xs = breakpoints[0];
-breakpoints.md = breakpoints[0];
-breakpoints.lg = breakpoints[0];
-breakpoints.xl = breakpoints[0];
+breakpoints.md = breakpoints[1];
+breakpoints.lg = breakpoints[2];
+breakpoints.xl = breakpoints[3];
+
+let space = [0, 4, 8, 16, 32, 64];
+space.big = 50;
 
 const theme = {
   colors: {
@@ -50,7 +54,7 @@ const theme = {
       fontFamily: "sans-serif"
     }
   },
-  space: [0, 4, 8, 16, 32, 64],
+  space,
   breakpoints
 };
 

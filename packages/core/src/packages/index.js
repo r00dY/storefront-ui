@@ -1,6 +1,6 @@
 import React from "react";
 import { jsx as emotionJsx } from "@emotion/core";
-import styledSystemCss from "@styled-system/css";
+import styledSystemCss from "./css";
 import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
 
 function rs(config) {

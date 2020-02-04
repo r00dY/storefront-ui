@@ -30,9 +30,82 @@ import Counter from "./Counter";
 import product from "../data";
 import ColorRowWithPrice from "./Selectables/ColorRowWithPrice";
 
+import { variant, layout } from "styled-system";
+import css from "@commerce-ui/core/css";
+import { useTheme } from "emotion-theming";
+
+const res = map => ({ __isRes: true, ...map });
+
 export const standard = () => {
   const { options, productVariant } = useOptionPicker({ product });
   const counter = useCounter();
+  const theme = useTheme();
+
+  const v = variant({
+    prop: "font",
+    variants: {
+      big: {
+        fontSize: {
+          dupa: 8
+        },
+        lineHeight: "heading"
+      },
+      small: {
+        fontSize: 1,
+        lineHeight: "body"
+      }
+    }
+  });
+
+  // console.log(v({
+  //     font: ["big", "small"],
+  //     "@media (min-width: 520px)": {
+  //         font: "small"
+  //     }
+  // }));
+  //
+
+  console.log("LAYOUT");
+
+  console.log(
+    layout({
+      width: [0, 100, 100, 100],
+      font: "body1"
+    })
+  );
+
+  console.log("THEME", theme);
+
+  console.log(
+    css({
+      pt: [10, "big"],
+      // width: [10, 20, 30, 40],
+      // font: ['body', null, null, 'body2'],
+
+      font: res({
+        _: "body",
+        lg: "body2"
+      }),
+
+      pb: res({
+        _: 10,
+        md: 20,
+        lg: 30
+      })
+
+      // border: (t) => `1px solid ${t.colors.primary}`,
+      // height: {
+      //     dupa: 10
+      // },
+      // pt: { _: 10, md: 20 },
+      // display: ["none", "block"],
+
+      // "@media (min-width: 320px)": {
+      //     width: [20, 40, 60, 80],
+      //     font: 'body2'
+      // }
+    })(theme)
+  );
 
   return (
     <Box sx={{ maxWidth: "320px" }}>
