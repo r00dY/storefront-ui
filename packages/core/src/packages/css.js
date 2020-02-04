@@ -202,12 +202,6 @@ export const responsive = styles => theme => {
     }
 
     if (!Array.isArray(value)) {
-      // Check if this is breakpoints object
-
-      if (value.dupa) {
-        console.log("dupa!!!", value.dupa);
-      }
-
       next[key] = value;
       continue;
     }
