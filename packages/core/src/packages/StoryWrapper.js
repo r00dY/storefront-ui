@@ -9,7 +9,12 @@ function StoryWrapper({ stories }) {
   return (
     <>
       {stories.map((story, i) => (
-        <div key={i}>
+        <div
+          key={i}
+          sx={{
+            marginBottom: "24px"
+          }}
+        >
           <p
             sx={{
               fontSize: "12px",

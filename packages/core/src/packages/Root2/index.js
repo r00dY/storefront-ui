@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { ThemeProvider } from "emotion-theming";
+import { ThemeProvider } from "../Theme2";
 import ReactModal from "react-modal";
 
 /** @jsx jsx */

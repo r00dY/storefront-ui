@@ -34,7 +34,6 @@ import { variant, layout } from "styled-system";
 import css from "@commerce-ui/core/css";
 import { useTheme } from "emotion-theming";
 
-const res = map => ({ __isRes: true, ...map });
 const lin = (from, to, isInf = false) => ({
   __isLinear: true,
   from,
@@ -88,20 +87,23 @@ export const standard = () => {
       // width: [10, 20, 30, 40],
       // font: ['body', null, null, 'body2'],
 
-      font: res({
+      font: {
         _: "body",
         lg: "body2"
-      }),
+      },
 
-      pb: res({
+      pb: {
         _: 10,
         md: 20,
         lg: 30
-      }),
+      },
 
       pr: lin(10, 20),
-
-      pl: lin(10, 10)
+      pl: {
+        _: 10,
+        md: 20,
+        lg: lin(10, 20)
+      }
 
       // border: (t) => `1px solid ${t.colors.primary}`,
       // height: {

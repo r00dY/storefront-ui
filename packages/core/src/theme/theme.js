@@ -31,7 +31,7 @@ const theme = {
     mono900: "#212121",
     mono1000: "#000000"
   },
-  typography: {
+  fonts: {
     body: {
       fontSize: 16,
       fontFamily: "sans-serif",

@@ -172,12 +172,14 @@ export const responsive = styles => theme => {
       continue;
     }
 
+    const breakpointKeys = Object.keys(breakpoints);
+
     /** MODIFICATION 2, check if this is responsive object **/
-    if (typeof value === "object" && value.__isRes) {
+    if (typeof value === "object" && typeof value._ !== "undefined") {
       for (let breakpoint in value) {
-        if (breakpoint === "__isRes") {
-          continue;
-        }
+        // if (breakpoint === "__isRes") {
+        //     continue;
+        // }
 
         if (breakpoint !== "_" && !breakpoints[breakpoint]) {
           throw new Error(
@@ -238,7 +240,7 @@ export const css = args => (props = {}) => {
 
     /** MODIFICATION 1, special value font **/
     if (key === "font") {
-      const variant = css(get(theme, "typography." + val))(theme);
+      const variant = css(get(theme, "fonts." + val))(theme);
       result = { ...result, ...variant };
       continue;
     }

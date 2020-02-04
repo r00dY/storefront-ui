@@ -1,6 +1,6 @@
 import { configure, addDecorator } from "@storybook/react";
 import Root from "@commerce-ui/core/Root2";
-import theme from "./theme";
+import theme from "../src/theme/theme";
 
 const withTheme = Story => (
   <Root theme={theme}>

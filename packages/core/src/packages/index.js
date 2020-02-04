@@ -166,7 +166,7 @@ function css(styles) {
 
   return theme =>
     styles.map(stylesSet => {
-      return styledSystemCss(traverseAndOverride(stylesSet, theme))(theme);
+      return styledSystemCss(stylesSet)(theme);
     });
 }
 
