@@ -164,8 +164,6 @@ export const responsive = styles => theme => {
     if (typeof value === "object" && value.__isLinear) {
       const css = rslin(value.from, value.to, value.isInf).cssObject(key);
 
-      console.log(key, css);
-
       for (let media in css) {
         next[media] = next[media] || {};
         next[media][key] = css[media][key];

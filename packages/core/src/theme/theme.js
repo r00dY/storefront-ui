@@ -14,6 +14,7 @@ breakpoints.xl = breakpoints[3];
 
 let space = [0, 4, 8, 16, 32, 64];
 space.big = 50;
+space.responsive = rslin(20, 50);
 
 const theme = {
   colors: {
