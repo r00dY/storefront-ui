@@ -1,9 +1,10 @@
 // Theme
-
 import {
   generateMonoPalette,
   generateColorPalette
 } from "@commerce-ui/core/generateColorPalette";
+
+import { rslin } from "@commerce-ui/core";
 
 const breakpoints = ["320px", "768px", "1024px", "1600px"];
 breakpoints.xs = breakpoints[0];
@@ -43,7 +44,7 @@ const theme = {
       textTransform: "uppercase"
     },
     heading: {
-      fontSize: 28,
+      fontSize: rslin(24, 32),
       fontFamily: "sans-serif"
     }
   },

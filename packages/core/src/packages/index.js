@@ -1,13 +1,10 @@
 import React from "react";
 import { jsx as emotionJsx } from "@emotion/core";
 import styledSystemCss from "./css";
-import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
+// import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
 
 function rs(config) {
-  return {
-    config,
-    __isRs: true
-  };
+  return config;
 }
 
 function rslin(from, to, isInf) {
@@ -15,138 +12,138 @@ function rslin(from, to, isInf) {
     from,
     to,
     isInf,
-    __isRslin: true
+    __isLinear: true
   };
 }
-
-// Traverses through rs and rslin objects (from above) and changes values according to values from "space"
-function traverseRsAndOverrideSpacing(obj, space) {
-  // If string like "10px" or "90%"
-  if (typeof obj === "string") {
-    return obj;
-  }
-
-  // If number
-  if (typeof obj === "number") {
-    if (space && space[obj]) {
-      return space[obj];
-    }
-    return obj;
-  }
-
-  let newObject = { ...obj };
-  // If object
-  if (obj.__isRs) {
-    let config = {};
-    for (const key in obj.config) {
-      config[key] = traverseRsAndOverrideSpacing(obj.config[key], space);
-    }
-    newObject.config = config;
-  } else if (obj.__isRslin) {
-    if (space) {
-      newObject.from = space[newObject.from] || newObject.from;
-      newObject.to = space[newObject.to] || newObject.to;
-    }
-  }
-
-  return newObject;
-}
-
 //
-// function mergeStyleObjects(...args) {
-//     let ret = {};
-//     args.forEach(x => {
-//         ret = {...ret, ...x};
-//     });
-//     return ret;
+// // Traverses through rs and rslin objects (from above) and changes values according to values from "space"
+// function traverseRsAndOverrideSpacing(obj, space) {
+//   // If string like "10px" or "90%"
+//   if (typeof obj === "string") {
+//     return obj;
+//   }
+//
+//   // If number
+//   if (typeof obj === "number") {
+//     if (space && space[obj]) {
+//       return space[obj];
+//     }
+//     return obj;
+//   }
+//
+//   let newObject = { ...obj };
+//   // If object
+//   if (obj.__isRs) {
+//     let config = {};
+//     for (const key in obj.config) {
+//       config[key] = traverseRsAndOverrideSpacing(obj.config[key], space);
+//     }
+//     newObject.config = config;
+//   } else if (obj.__isRslin) {
+//     if (space) {
+//       newObject.from = space[newObject.from] || newObject.from;
+//       newObject.to = space[newObject.to] || newObject.to;
+//     }
+//   }
+//
+//   return newObject;
 // }
 //
-
-function merge2StyleObject(x, y) {
-  let ret = { ...x };
-  for (const yKey in y) {
-    if (typeof x[yKey] === "object" && typeof y[yKey] === "object") {
-      ret[yKey] = merge2StyleObject(x[yKey], y[yKey]);
-    } else {
-      ret[yKey] = y[yKey];
-    }
-  }
-
-  return ret;
-}
-
-function mergeStyleObjects(...args) {
-  let ret = {};
-  args.forEach(x => {
-    ret = merge2StyleObject(ret, x);
-  });
-  return ret;
-}
-
-function traverseAndOverride(styles, theme) {
-  if (Array.isArray(styles)) {
-    return styles;
-  }
-  let restStyles = {};
-
-  // Responsive styles
-  let responsiveStyles = {};
-
-  Object.entries(styles).forEach(([cssProp, val]) => {
-    if (val.__isRs || val.__isRslin) {
-      let newVal = traverseRsAndOverrideSpacing(val, theme.space);
-
-      let responsiveSize;
-      if (val.__isRs) {
-        // Nested rslins in rs
-        let newConfig = { ...newVal.config };
-
-        for (const key in newConfig) {
-          if (newConfig[key].__isRslin) {
-            newConfig[key] = rslin_(
-              newConfig[key].from,
-              newConfig[key].to,
-              newConfig[key].isInf
-            );
-          }
-        }
-        //
-        responsiveSize = rs_(newConfig);
-      } else if (val.__isRslin) {
-        responsiveSize = rslin_(newVal.from, newVal.to, newVal.isInf);
-      }
-
-      const css = responsiveSize.cssObject(cssProp);
-
-      responsiveStyles = mergeStyleObjects(responsiveStyles, css);
-    } else {
-      restStyles[cssProp] = val;
-    }
-  });
-
-  // Check for font!
-  const font = restStyles.font;
-  delete restStyles.font;
-
-  let fontStyles = {};
-
-  if (font && theme.typography && theme.typography[font]) {
-    fontStyles = theme.typography[font];
-  }
-
-  // Traverse the rest
-  for (const key in restStyles) {
-    if (typeof restStyles[key] === "object") {
-      restStyles[key] = traverseAndOverride(restStyles[key], theme);
-    }
-  }
-
-  return mergeStyleObjects(fontStyles, responsiveStyles, restStyles);
-
-  // Do recursive search for "font" existence. We should do recursive call ONLY for media queries / :hover etc, not for Array / object sizes.
-  // TODO: do it right
-  // For now we just traverse, we don't expect to find 'font' key anywhere in the object.
-}
+// //
+// // function mergeStyleObjects(...args) {
+// //     let ret = {};
+// //     args.forEach(x => {
+// //         ret = {...ret, ...x};
+// //     });
+// //     return ret;
+// // }
+// //
+//
+// function merge2StyleObject(x, y) {
+//   let ret = { ...x };
+//   for (const yKey in y) {
+//     if (typeof x[yKey] === "object" && typeof y[yKey] === "object") {
+//       ret[yKey] = merge2StyleObject(x[yKey], y[yKey]);
+//     } else {
+//       ret[yKey] = y[yKey];
+//     }
+//   }
+//
+//   return ret;
+// }
+//
+// function mergeStyleObjects(...args) {
+//   let ret = {};
+//   args.forEach(x => {
+//     ret = merge2StyleObject(ret, x);
+//   });
+//   return ret;
+// }
+//
+// function traverseAndOverride(styles, theme) {
+//   if (Array.isArray(styles)) {
+//     return styles;
+//   }
+//   let restStyles = {};
+//
+//   // Responsive styles
+//   let responsiveStyles = {};
+//
+//   Object.entries(styles).forEach(([cssProp, val]) => {
+//     if (val.__isRs || val.__isRslin) {
+//       let newVal = traverseRsAndOverrideSpacing(val, theme.space);
+//
+//       let responsiveSize;
+//       if (val.__isRs) {
+//         // Nested rslins in rs
+//         let newConfig = { ...newVal.config };
+//
+//         for (const key in newConfig) {
+//           if (newConfig[key].__isRslin) {
+//             newConfig[key] = rslin_(
+//               newConfig[key].from,
+//               newConfig[key].to,
+//               newConfig[key].isInf
+//             );
+//           }
+//         }
+//         //
+//         responsiveSize = rs_(newConfig);
+//       } else if (val.__isRslin) {
+//         responsiveSize = rslin_(newVal.from, newVal.to, newVal.isInf);
+//       }
+//
+//       const css = responsiveSize.cssObject(cssProp);
+//
+//       responsiveStyles = mergeStyleObjects(responsiveStyles, css);
+//     } else {
+//       restStyles[cssProp] = val;
+//     }
+//   });
+//
+//   // Check for font!
+//   const font = restStyles.font;
+//   delete restStyles.font;
+//
+//   let fontStyles = {};
+//
+//   if (font && theme.typography && theme.typography[font]) {
+//     fontStyles = theme.typography[font];
+//   }
+//
+//   // Traverse the rest
+//   for (const key in restStyles) {
+//     if (typeof restStyles[key] === "object") {
+//       restStyles[key] = traverseAndOverride(restStyles[key], theme);
+//     }
+//   }
+//
+//   return mergeStyleObjects(fontStyles, responsiveStyles, restStyles);
+//
+//   // Do recursive search for "font" existence. We should do recursive call ONLY for media queries / :hover etc, not for Array / object sizes.
+//   // TODO: do it right
+//   // For now we just traverse, we don't expect to find 'font' key anywhere in the object.
+// }
 
 /**
  * Let's just add:
