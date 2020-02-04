@@ -35,6 +35,12 @@ import css from "@commerce-ui/core/css";
 import { useTheme } from "emotion-theming";
 
 const res = map => ({ __isRes: true, ...map });
+const lin = (from, to, isInf = false) => ({
+  __isLinear: true,
+  from,
+  to,
+  isInf
+});
 
 export const standard = () => {
   const { options, productVariant } = useOptionPicker({ product });
@@ -91,7 +97,11 @@ export const standard = () => {
         _: 10,
         md: 20,
         lg: 30
-      })
+      }),
+
+      pr: lin(10, 20),
+
+      pl: lin(10, 10)
 
       // border: (t) => `1px solid ${t.colors.primary}`,
       // height: {

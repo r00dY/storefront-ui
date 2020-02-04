@@ -1,3 +1,5 @@
+import { rslin as rslin_, rslin } from "responsive-helpers";
+
 // based on https://github.com/developit/dlv
 export const get = (obj, key, def, p, undef) => {
   key = key && key.split ? key.split(".") : [key];
@@ -157,6 +159,18 @@ export const responsive = styles => theme => {
       typeof styles[key] === "function" ? styles[key](theme) : styles[key];
 
     if (value == null) continue;
+
+    /** MODIFICATION 3, linear spacings **/
+    if (typeof value === "object" && value.__isLinear) {
+      const css = rslin(value.from, value.to, value.isInf).cssObject(key);
+
+      for (let media in css) {
+        next[media] = next[media] || {};
+        next[media][key] = css[media][key];
+      }
+
+      continue;
+    }
 
     /** MODIFICATION 2, check if this is responsive object **/
     if (typeof value === "object" && value.__isRes) {
