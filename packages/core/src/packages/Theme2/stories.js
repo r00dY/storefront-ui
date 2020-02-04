@@ -4,9 +4,9 @@ import Box from "@commerce-ui/core/Box";
 
 function fontStories(options = {}) {
   let stories = [];
-  const theme = useTheme();
+  const { fonts } = useTheme();
 
-  for (let font in theme.fonts) {
+  for (let font in fonts) {
     stories.push({
       name: font,
       component: (
@@ -29,4 +29,96 @@ function fontStories(options = {}) {
   return stories;
 }
 
-export { fontStories };
+function spaceStories(options = {}) {
+  let stories = [];
+  const { space } = useTheme();
+
+  const SpaceSquare = ({ space }) => (
+    <Box
+      sx={{
+        position: "relative",
+        bg: "black",
+        width: space,
+        height: space
+      }}
+    />
+  );
+
+  Object.keys(space).forEach(spaceKey => {
+    const spaceKeyNormalized = isNaN(parseInt(spaceKey))
+      ? spaceKey
+      : parseInt(spaceKey);
+
+    stories.push({
+      name: spaceKeyNormalized,
+      component: <SpaceSquare space={space[spaceKeyNormalized]} />
+    });
+  });
+
+  return stories;
+}
+
+function colorStories(options = {}) {
+  let stories = [];
+  const { colors } = useTheme();
+
+  const groups = {};
+
+  Object.entries(colors).forEach(([name, value]) => {
+    const res = name.match(/(.*?)([0-9]*)$/);
+    const prefix = res[1];
+
+    if (!groups[prefix]) {
+      groups[prefix] = [];
+    }
+
+    groups[prefix].push({
+      name,
+      value
+    });
+  });
+
+  const ColorSquare = ({ color, children }) => (
+    <Box>
+      <Box
+        sx={{
+          position: "relative",
+          bg: color,
+          width: "100px",
+          height: "100px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          font: "body",
+          marginBottom: "8px"
+        }}
+      />
+      <Box sx={{ textAlign: "center", font: "body2" }}>{children}</Box>
+    </Box>
+  );
+
+  for (const groupName in groups) {
+    const colors = groups[groupName];
+
+    stories.push({
+      name: groupName,
+      component: (
+        <Box
+          sx={{
+            display: "flex",
+            gap: 10,
+            flexDirection: "row"
+          }}
+        >
+          {colors.map(({ name, value }) => (
+            <ColorSquare color={value}>{name}</ColorSquare>
+          ))}
+        </Box>
+      )
+    });
+  }
+
+  return stories;
+}
+
+export { fontStories, spaceStories, colorStories };
