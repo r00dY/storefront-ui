@@ -1,11 +1,11 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 
 import { useOptionPicker } from "@commerce-ui/core/OptionPicker";
 
-import { Select$ } from "@commerce-ui/core/Select2";
+import { Select$ } from "@commerce-ui/core/Select";
 
 import ButtonSelect from "./Button/ButtonSelect";
 import Button from "./Button/Button";

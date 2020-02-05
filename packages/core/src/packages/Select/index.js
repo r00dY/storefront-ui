@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import Layer from "../../packages_old/Layer";
+import Layer from "../Layer";
 import Box from "../Box";
 
 import { useSelect as useSelectDownshift } from "downshift";

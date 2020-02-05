@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 
 import { useCounter } from "@commerce-ui/core/Counter";
 

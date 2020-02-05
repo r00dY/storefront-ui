@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Layer from "../../packages_old/Layer";
+import Layer from "../Layer";
 
 import FocusLock from "react-focus-lock";
 

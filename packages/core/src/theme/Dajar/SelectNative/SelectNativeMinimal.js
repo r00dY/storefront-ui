@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import SelectNative$ from "@commerce-ui/core/SelectNative2";
+import SelectNative$ from "@commerce-ui/core/SelectNative";
 import { jsx, splitSx } from "@commerce-ui/core";
 
 import IconArrowDown from "../../svg/keyboard_arrow_down.svg";

@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Select$ } from "@commerce-ui/core/Select2";
+import { Select$ } from "@commerce-ui/core/Select";
 import Box from "@commerce-ui/core/Box";
 
 import Icon from "../svg/close.svg";

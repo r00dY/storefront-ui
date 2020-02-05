@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import Input$ from "@commerce-ui/core/Input2";
+import Input$ from "@commerce-ui/core/Input";
 import { jsx, splitSx } from "@commerce-ui/core";
 import formStyles from "../form-styles";
 

@@ -7,7 +7,7 @@ import {
   ThreeButtons,
   ThreeButtons2,
   ButtonSuper
-} from "@commerce-ui/core/ButtonRaw2";
+} from "@commerce-ui/core/ButtonRaw";
 
 import { Box } from "@commerce-ui/core/Box";
 import { jsx } from "@commerce-ui/core";

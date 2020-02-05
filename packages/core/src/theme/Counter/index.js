@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import Counter$ from "@commerce-ui/core/Counter";
 import { jsx, splitSx } from "@commerce-ui/core";
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 import ButtonMinimal from "../Button/ButtonMinimal";
 
 const Counter = props => {

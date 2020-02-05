@@ -4,7 +4,7 @@ import { jsx, rs } from "@commerce-ui/core";
 import Counter from "./index";
 import ButtonMinimal from "../Button/ButtonMinimal";
 import Button from "../Button/Button";
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 import InputRaw$ from "@commerce-ui/core/InputRaw";
 import Input from "../Input";
 
@@ -12,7 +12,7 @@ import { useCounter } from "@commerce-ui/core/Counter";
 
 import Box from "@commerce-ui/core/Box";
 
-import SelectNative$ from "@commerce-ui/core/SelectNative2";
+import SelectNative$ from "@commerce-ui/core/SelectNative";
 
 export const unstyled = () => (
   <div>

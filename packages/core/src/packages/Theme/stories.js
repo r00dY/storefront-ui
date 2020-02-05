@@ -1,5 +1,5 @@
 import React from "react";
-import { useTheme } from "@commerce-ui/core/Theme2";
+import { useTheme } from "@commerce-ui/core/Theme";
 import Box from "@commerce-ui/core/Box";
 
 function fontStories(options = {}) {

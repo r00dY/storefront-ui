@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { storiesOf } from "@storybook/react";
-import Index from "../Container/Container";
+import Index from "../../packages_old/Container/Container";
 import Image from "./Image";
 import ImageZoomable from "./ImageZoomable";
 

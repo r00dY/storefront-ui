@@ -1,19 +1,19 @@
 /** @jsx jsx */
 
 import React, { useState, useEffect, useRef } from "react";
-import { Layer, TetherBehavior } from "../../packages/base/layer/index.js";
+import { Layer, TetherBehavior } from "../base/layer/index.js";
 import { jsx, rs } from "@commerce-ui/core";
-import Ease from "../Ease";
+import Ease from "../../packages_old/Ease";
 import { rm } from "responsive-helpers";
 import {
   fromPopperPlacement,
   getEndPosition,
   getPopoverMarginStyles,
   getStartPosition
-} from "../../packages/base/popover/utils";
-import { ANIMATE_IN_TIME, PLACEMENT } from "../../packages/base/popover";
-import { createElement, getElementSpec } from "../../packages";
-import { SharedStylePropsArgT } from "../../packages/base/popover/types";
+} from "../base/popover/utils";
+import { ANIMATE_IN_TIME, PLACEMENT } from "../base/popover";
+import { createElement, getElementSpec } from "..";
+import { SharedStylePropsArgT } from "../base/popover/types";
 
 const mountNode = () => {
   if (typeof document !== "undefined") {

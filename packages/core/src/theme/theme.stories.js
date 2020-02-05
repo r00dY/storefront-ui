@@ -5,7 +5,7 @@ import {
   fontStories,
   spaceStories,
   colorStories
-} from "@commerce-ui/core/Theme2/stories";
+} from "@commerce-ui/core/Theme/stories";
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
 export const fonts = () => (

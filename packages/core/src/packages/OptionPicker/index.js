@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "..";
-import { useSelect } from "@commerce-ui/core/Select2";
+import { useSelect } from "../Select";
 
 function findProductVariantBySelectedOptions(product, options) {
   RootLoop: for (let i = 0; i < product.variants.length; i++) {

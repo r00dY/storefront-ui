@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
 import ButtonMinimal from "../Button/ButtonMinimal";
 import Button from "../Button/Button";
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 import InputRaw$ from "@commerce-ui/core/InputRaw";
 import Input from "../Input";
 
@@ -16,7 +16,7 @@ import SelectNative from "../SelectNative";
 import Color from "../Selectables/Color";
 import ItemRow from "../Selectables/ItemRow";
 
-import { Select$ } from "@commerce-ui/core/Select2";
+import { Select$ } from "@commerce-ui/core/Select";
 
 import product from "../data";
 

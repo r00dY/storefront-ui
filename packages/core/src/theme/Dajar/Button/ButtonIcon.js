@@ -1,4 +1,4 @@
-import { Button$ } from "@commerce-ui/core/Button2";
+import { Button$ } from "@commerce-ui/core/Button";
 
 const Button = props => (
   <Button$

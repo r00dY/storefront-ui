@@ -1,4 +1,4 @@
-import ButtonRaw$ from "@commerce-ui/core/ButtonRaw2";
+import ButtonRaw$ from "@commerce-ui/core/ButtonRaw";
 
 const ButtonRaw = ButtonRaw$;
 

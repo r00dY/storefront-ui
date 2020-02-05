@@ -1,4 +1,4 @@
-import { ButtonText$ } from "@commerce-ui/core/Button2";
+import { ButtonText$ } from "@commerce-ui/core/Button";
 import Spinner from "../Spinner";
 import { jsx, splitSx } from "@commerce-ui/core";
 
