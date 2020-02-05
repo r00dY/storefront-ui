@@ -13,11 +13,11 @@ CheckoutLineItemRow is made to display lists of products in such contexts like b
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/CheckoutLineItemRow/examples/01-checkout-line-item-row.js")
+      require("!!raw-loader!../src/packages_old/CheckoutLineItemRow/examples/01-checkout-line-item-row.js")
         .default
     }
     component={
-      require("../src/packages/CheckoutLineItemRow/examples/01-checkout-line-item-row.js")
+      require("../src/packages_old/CheckoutLineItemRow/examples/01-checkout-line-item-row.js")
         .default
     }
   />
@@ -32,11 +32,11 @@ Below we have example with theme overrides, \`"full"\` mode which breaks above \
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/CheckoutLineItemRow/examples/02-checkout-line-item-row.js")
+      require("!!raw-loader!../src/packages_old/CheckoutLineItemRow/examples/02-checkout-line-item-row.js")
         .default
     }
     component={
-      require("../src/packages/CheckoutLineItemRow/examples/02-checkout-line-item-row.js")
+      require("../src/packages_old/CheckoutLineItemRow/examples/02-checkout-line-item-row.js")
         .default
     }
   />
@@ -46,11 +46,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/CheckoutLineItemRow/examples/03-checkout-line-item-row.js")
+      require("!!raw-loader!../src/packages_old/CheckoutLineItemRow/examples/03-checkout-line-item-row.js")
         .default
     }
     component={
-      require("../src/packages/CheckoutLineItemRow/examples/03-checkout-line-item-row.js")
+      require("../src/packages_old/CheckoutLineItemRow/examples/03-checkout-line-item-row.js")
         .default
     }
   />

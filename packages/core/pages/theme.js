@@ -10,10 +10,12 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Theme/examples/01-colors.js")
+      require("!!raw-loader!../src/packages_old/Theme/examples/01-colors.js")
         .default
     }
-    component={require("../src/packages/Theme/examples/01-colors.js").default}
+    component={
+      require("../src/packages_old/Theme/examples/01-colors.js").default
+    }
   />
 )}
 
@@ -22,10 +24,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Theme/examples/02-spacings.js")
+      require("!!raw-loader!../src/packages_old/Theme/examples/02-spacings.js")
         .default
     }
-    component={require("../src/packages/Theme/examples/02-spacings.js").default}
+    component={
+      require("../src/packages_old/Theme/examples/02-spacings.js").default
+    }
   />
 )}
 
@@ -34,9 +38,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Theme/examples/03-fonts.js").default
+      require("!!raw-loader!../src/packages_old/Theme/examples/03-fonts.js")
+        .default
     }
-    component={require("../src/packages/Theme/examples/03-fonts.js").default}
+    component={
+      require("../src/packages_old/Theme/examples/03-fonts.js").default
+    }
   />
 )}
 

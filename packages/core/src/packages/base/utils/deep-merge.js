@@ -7,8 +7,8 @@ LICENSE file in the root directory of this source tree.
 
 // @flow
 
-import Color from "../../Color";
-import Font from "../../Font";
+import Color from "../../../packages_old/Color";
+import Font from "../../../packages_old/Font";
 import { RangeSet, RangeMap, ResponsiveSize } from "responsive-helpers";
 
 export default function deepMerge(

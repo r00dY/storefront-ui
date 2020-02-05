@@ -26,11 +26,11 @@ ${<CodeBlock code={require("!!raw-loader!../data/images.js").default} />}
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Image/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Image/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Image/examples/01-standard-use.js").default
+      require("../src/packages_old/Image/examples/01-standard-use.js").default
     }
   />
 )}
@@ -40,11 +40,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Image/examples/02-custom-load-time.js")
+      require("!!raw-loader!../src/packages_old/Image/examples/02-custom-load-time.js")
         .default
     }
     component={
-      require("../src/packages/Image/examples/02-custom-load-time.js").default
+      require("../src/packages_old/Image/examples/02-custom-load-time.js")
+        .default
     }
   />
 )}
@@ -54,11 +55,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Image/examples/03-image-zoomable.js")
+      require("!!raw-loader!../src/packages_old/Image/examples/03-image-zoomable.js")
         .default
     }
     component={
-      require("../src/packages/Image/examples/03-image-zoomable.js").default
+      require("../src/packages_old/Image/examples/03-image-zoomable.js").default
     }
   />
 )}
@@ -71,9 +72,12 @@ It's very easy to add videos instead of images. Actually you must use \\\`Image\
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Image/examples/04-video.js").default
+      require("!!raw-loader!../src/packages_old/Image/examples/04-video.js")
+        .default
     }
-    component={require("../src/packages/Image/examples/04-video.js").default}
+    component={
+      require("../src/packages_old/Image/examples/04-video.js").default
+    }
   />
 )}
 

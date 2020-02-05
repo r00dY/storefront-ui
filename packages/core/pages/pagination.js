@@ -10,11 +10,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/usePagination/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/usePagination/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/usePagination/examples/01-standard-use.js")
+      require("../src/packages_old/usePagination/examples/01-standard-use.js")
         .default
     }
   />
@@ -25,11 +25,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Pagination/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Pagination/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Pagination/examples/01-standard-use.js").default
+      require("../src/packages_old/Pagination/examples/01-standard-use.js")
+        .default
     }
   />
 )}

@@ -42,11 +42,12 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Container/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Container/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Container/examples/01-standard-use.js").default
+      require("../src/packages_old/Container/examples/01-standard-use.js")
+        .default
     }
   />
 )}
@@ -63,11 +64,11 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Grid/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Grid/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Grid/examples/01-standard-use.js").default
+      require("../src/packages_old/Grid/examples/01-standard-use.js").default
     }
   />
 )}
@@ -80,11 +81,12 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Grid/examples/05-fractional-widths.js")
+      require("!!raw-loader!../src/packages_old/Grid/examples/05-fractional-widths.js")
         .default
     }
     component={
-      require("../src/packages/Grid/examples/05-fractional-widths.js").default
+      require("../src/packages_old/Grid/examples/05-fractional-widths.js")
+        .default
     }
   />
 )}
@@ -100,11 +102,12 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Grid/examples/02-custom-col-number.js")
+      require("!!raw-loader!../src/packages_old/Grid/examples/02-custom-col-number.js")
         .default
     }
     component={
-      require("../src/packages/Grid/examples/02-custom-col-number.js").default
+      require("../src/packages_old/Grid/examples/02-custom-col-number.js")
+        .default
     }
   />
 )}
@@ -119,11 +122,11 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Grid/examples/03-responsive-col-number.js")
+      require("!!raw-loader!../src/packages_old/Grid/examples/03-responsive-col-number.js")
         .default
     }
     component={
-      require("../src/packages/Grid/examples/03-responsive-col-number.js")
+      require("../src/packages_old/Grid/examples/03-responsive-col-number.js")
         .default
     }
   />
@@ -137,11 +140,11 @@ ${(
   <Example
     fullWidth={true}
     code={
-      require("!!raw-loader!../src/packages/Grid/examples/04-nested-grid.js")
+      require("!!raw-loader!../src/packages_old/Grid/examples/04-nested-grid.js")
         .default
     }
     component={
-      require("../src/packages/Grid/examples/04-nested-grid.js").default
+      require("../src/packages_old/Grid/examples/04-nested-grid.js").default
     }
   />
 )}

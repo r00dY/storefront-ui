@@ -1,8 +1,8 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
-import { getElementSpec, jsx, createElement, splitSx } from "../index";
+import { getElementSpec, jsx, createElement, splitSx } from "..";
 
-import ButtonRaw2 from "../ButtonRaw2";
+import ButtonRaw2 from "../ButtonRaw";
 import InputRaw$ from "../InputRaw";
 
 const defaults = {

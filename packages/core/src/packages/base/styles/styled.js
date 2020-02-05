@@ -53,9 +53,9 @@ import styledEmotion from "@emotion/styled";
 
 import React, { useContext } from "react";
 
-import { ThemeContext } from "../../Theme";
+import { ThemeContext } from "../../../packages_old/Theme";
 
-import Color from "../../Color";
+import Color from "../../../packages_old/Color";
 
 /**
  * TODO: temporarily transforms legacy styled-components.js format styles to our format by proper use of Font and Color classes.

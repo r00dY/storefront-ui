@@ -14,11 +14,11 @@ Most commonly used within the checkout flow at the top of page, and other flows 
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ProgressSteps/examples/01-progress-steps.js")
+      require("!!raw-loader!../src/packages_old/ProgressSteps/examples/01-progress-steps.js")
         .default
     }
     component={
-      require("../src/packages/ProgressSteps/examples/01-progress-steps.js")
+      require("../src/packages_old/ProgressSteps/examples/01-progress-steps.js")
         .default
     }
   />

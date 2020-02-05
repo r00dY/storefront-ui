@@ -12,11 +12,11 @@ Below examples how to use them in \`storefront-ui\`.
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Modal/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Modal/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Modal/examples/01-standard-use.js").default
+      require("../src/packages_old/Modal/examples/01-standard-use.js").default
     }
   />
 )}
@@ -26,11 +26,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Modal/examples/03-header-and-footer.js")
+      require("!!raw-loader!../src/packages_old/Modal/examples/03-header-and-footer.js")
         .default
     }
     component={
-      require("../src/packages/Modal/examples/03-header-and-footer.js").default
+      require("../src/packages_old/Modal/examples/03-header-and-footer.js")
+        .default
     }
   />
 )}

@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
-import { getElementSpec, jsx, createElement, splitSx } from "../index";
+import { getElementSpec, jsx, createElement, splitSx } from "..";
 import { useSelect } from "@commerce-ui/core/Select2";
 
 function findProductVariantBySelectedOptions(product, options) {

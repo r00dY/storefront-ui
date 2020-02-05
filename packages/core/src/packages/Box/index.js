@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx } from "../index";
+import { jsx } from "..";
 
 const boxStyles = {
   boxSizing: "border-box",

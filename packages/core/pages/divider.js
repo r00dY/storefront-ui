@@ -14,11 +14,11 @@ Simple usage
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Divider/examples/01-divider.js")
+      require("!!raw-loader!../src/packages_old/Divider/examples/01-divider.js")
         .default
     }
     component={
-      require("../src/packages/Divider/examples/01-divider.js").default
+      require("../src/packages_old/Divider/examples/01-divider.js").default
     }
   />
 )}
@@ -28,11 +28,11 @@ With label
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Divider/examples/02-divider-with-label.js")
+      require("!!raw-loader!../src/packages_old/Divider/examples/02-divider-with-label.js")
         .default
     }
     component={
-      require("../src/packages/Divider/examples/02-divider-with-label.js")
+      require("../src/packages_old/Divider/examples/02-divider-with-label.js")
         .default
     }
   />

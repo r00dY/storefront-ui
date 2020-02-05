@@ -37,7 +37,7 @@ import type {
 import type { PopperDataObjectT, NormalizedOffsetsT } from "../layer/types.js";
 
 /** @jsx jsx */
-import { jsx, createElement, getElementSpec } from "../../index";
+import { jsx, createElement, getElementSpec } from "../..";
 
 import Box from "../../Box";
 import { SharedStylePropsT } from "./types";

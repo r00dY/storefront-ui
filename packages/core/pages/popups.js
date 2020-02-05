@@ -12,11 +12,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Popover/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Popover/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Popover/examples/01-standard-use.js").default
+      require("../src/packages_old/Popover/examples/01-standard-use.js").default
     }
   />
 )}

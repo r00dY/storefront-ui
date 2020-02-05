@@ -13,11 +13,12 @@ Let's start with raw example
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ProductCard/examples/01-product-card.js")
+      require("!!raw-loader!../src/packages_old/ProductCard/examples/01-product-card.js")
         .default
     }
     component={
-      require("../src/packages/ProductCard/examples/01-product-card.js").default
+      require("../src/packages_old/ProductCard/examples/01-product-card.js")
+        .default
     }
   />
 )}

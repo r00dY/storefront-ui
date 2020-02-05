@@ -8,11 +8,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Button/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Button/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Button/examples/01-standard-use.js").default
+      require("../src/packages_old/Button/examples/01-standard-use.js").default
     }
   />
 )}
@@ -26,11 +26,12 @@ Important thing is to know how \\\`Button\\\` is sized. If it's a standard butto
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ButtonGroup/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/ButtonGroup/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ButtonGroup/examples/01-standard-use.js").default
+      require("../src/packages_old/ButtonGroup/examples/01-standard-use.js")
+        .default
     }
   />
 )}
@@ -40,11 +41,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ButtonRaw/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/ButtonRaw/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ButtonRaw/examples/01-standard-use.js").default
+      require("../src/packages_old/ButtonRaw/examples/01-standard-use.js")
+        .default
     }
   />
 )}

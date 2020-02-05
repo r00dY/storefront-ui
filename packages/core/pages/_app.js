@@ -1,7 +1,7 @@
 import React from "react";
 import App, { Container } from "next/app";
 
-import Root from "../src/packages/Root";
+import Root from "../src/packages_old/Root";
 import { ThemeProvider } from "emotion-theming";
 import { theme2, theme } from "../theme";
 

@@ -10,11 +10,12 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/MediaQuery/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/MediaQuery/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/MediaQuery/examples/01-standard-use.js").default
+      require("../src/packages_old/MediaQuery/examples/01-standard-use.js")
+        .default
     }
   />
 )}
@@ -24,11 +25,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Device/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Device/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Device/examples/01-standard-use.js").default
+      require("../src/packages_old/Device/examples/01-standard-use.js").default
     }
   />
 )}

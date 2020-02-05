@@ -8,11 +8,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/TabBar/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/TabBar/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/TabBar/examples/01-standard-use.js").default
+      require("../src/packages_old/TabBar/examples/01-standard-use.js").default
     }
   />
 )}

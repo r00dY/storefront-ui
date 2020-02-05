@@ -9,8 +9,8 @@ LICENSE file in the root directory of this source tree.
 import type { ThemeT } from "../styles/types.js";
 import type { PrimitivesT } from "./types.js";
 import deepMerge from "../utils/deep-merge.js";
-import Font from "../../Font";
-import Color from "../../Color";
+import Font from "../../../packages_old/Font";
+import Color from "../../../packages_old/Color";
 
 const BLACK = new Color("#000000");
 const WHITE = new Color("#ffffff");

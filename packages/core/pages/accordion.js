@@ -10,11 +10,12 @@ Most basic accordion (\`AccordionRaw\`) as raw as it possibly could be. No state
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Accordion/examples/01-accordion-raw.js")
+      require("!!raw-loader!../src/packages_old/Accordion/examples/01-accordion-raw.js")
         .default
     }
     component={
-      require("../src/packages/Accordion/examples/01-accordion-raw.js").default
+      require("../src/packages_old/Accordion/examples/01-accordion-raw.js")
+        .default
     }
   />
 )}
@@ -26,11 +27,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Accordion/examples/02-accordion.js")
+      require("!!raw-loader!../src/packages_old/Accordion/examples/02-accordion.js")
         .default
     }
     component={
-      require("../src/packages/Accordion/examples/02-accordion.js").default
+      require("../src/packages_old/Accordion/examples/02-accordion.js").default
     }
   />
 )}
@@ -43,11 +44,11 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/AccordionHeader/examples/03-accordion-header.js")
+      require("!!raw-loader!../src/packages_old/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
     component={
-      require("../src/packages/AccordionHeader/examples/03-accordion-header.js")
+      require("../src/packages_old/AccordionHeader/examples/03-accordion-header.js")
         .default
     }
   />
@@ -60,11 +61,11 @@ Frequently we need to show item list with couple of items hidden and possible to
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/ItemListAccordion/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/ItemListAccordion/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/ItemListAccordion/examples/01-standard-use.js")
+      require("../src/packages_old/ItemListAccordion/examples/01-standard-use.js")
         .default
     }
   />

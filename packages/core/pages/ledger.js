@@ -10,10 +10,12 @@ Ledger is part of storefront checkout
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Ledger/examples/01-ledger.js")
+      require("!!raw-loader!../src/packages_old/Ledger/examples/01-ledger.js")
         .default
     }
-    component={require("../src/packages/Ledger/examples/01-ledger.js").default}
+    component={
+      require("../src/packages_old/Ledger/examples/01-ledger.js").default
+    }
   />
 )}
 

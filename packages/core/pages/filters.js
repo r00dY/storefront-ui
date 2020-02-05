@@ -24,11 +24,12 @@ Let's start with simple filter column, so common in all kinds of e-commerce site
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Filters/examples/01-filters-column.js")
+      require("!!raw-loader!../src/packages_old/Filters/examples/01-filters-column.js")
         .default
     }
     component={
-      require("../src/packages/Filters/examples/01-filters-column.js").default
+      require("../src/packages_old/Filters/examples/01-filters-column.js")
+        .default
     }
   />
 )}
@@ -38,11 +39,12 @@ ${(
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/RangePicker/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/RangePicker/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/RangePicker/examples/01-standard-use.js").default
+      require("../src/packages_old/RangePicker/examples/01-standard-use.js")
+        .default
     }
   />
 )}

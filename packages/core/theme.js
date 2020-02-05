@@ -1,7 +1,7 @@
-import { createTheme } from "./src/packages/Theme";
-import Layout from "./src/packages/Layout";
-import Font from "./src/packages/Font";
-import Color from "./src/packages/Color";
+import { createTheme } from "./src/packages_old/Theme";
+import Layout from "./src/packages_old/Layout";
+import Font from "./src/packages_old/Font";
+import Color from "./src/packages_old/Color";
 
 import { rslin, rs, R } from "responsive-helpers";
 

@@ -8,11 +8,11 @@ const content = md`
 ${(
   <Example
     code={
-      require("!!raw-loader!../src/packages/Notifications/examples/01-standard-use.js")
+      require("!!raw-loader!../src/packages_old/Notifications/examples/01-standard-use.js")
         .default
     }
     component={
-      require("../src/packages/Notifications/examples/01-standard-use.js")
+      require("../src/packages_old/Notifications/examples/01-standard-use.js")
         .default
     }
   />

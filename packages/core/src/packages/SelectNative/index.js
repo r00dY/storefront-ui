@@ -1,181 +1,274 @@
-import React, { useState } from "react";
-import PropTypes from "prop-types";
-
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import React, { useState, useLayoutEffect, useRef } from "react";
+import Box from "../Box";
+import HorizontalStack from "../HorizontalStack";
+import { jsx, createElement, getElementSpec, splitSx } from "..";
 
-import { SelectStyled, RootStyled, IconStyled } from "./styled-components";
-import { getOverrides } from "../base/helpers/overrides";
-
-/**
- * Problems with native select
- *
- * - There's one layout problem with native select. It's automatic width always equals longest option. Only setting width explicitly solves this -> and it sucks.
- * - select renders option label. Rest of stuff (like down arrow etc) must be positioned absolute and this should be taken into account in select padding. Unfortunately you can't open native select with JS, so having arrow not "inside select rectangle" will make cliking on arrow NOT open select, which definitely sucks.
- *
- * TODO: correct so that icon is not absolute and clicking on it will focus the input!!!
- */
-
-const getOptionFields = (option, props) => {
-  if (typeof option === "undefined" || option === null) {
-    return ["", ""];
-  }
-
-  let value, label;
-
-  if (typeof option === "object") {
-    label = option[props.labelKey];
-    value = option[props.valueKey] || label;
-  } else {
-    value = option;
-    label = option;
-  }
-
-  return [value, label];
+const inputResetStyles = {
+  outline: 0,
+  margin: 0,
+  padding: 0,
+  border: 0,
+  bg: "transparent",
+  boxSizing: "border-box",
+  appearance: "none"
+  // ":focus": {
+  //   outline: 0,
+  //   boxShadow: "none"
+  // },
+  // ":invalid": {
+  //   boxShadow: "none",
+  //   outline: "none"
+  // }
 };
 
-const SelectNative$ = props => {
-  const {
-    options,
-    value,
-    onChange,
-    placeholder,
-    disabled,
-    required,
-    labelKey,
-    valueKey,
-    overrides: {
-      Root: RootOverride,
-      Select: SelectOverride,
-      Icon: IconOverride
-    },
-    autoFocus,
+const defaults = {
+  rootCss: ({ focused }) => ({
+    position: "relative",
+    display: "inline-flex",
+    verticalAlign: "top",
+    overflow: "hidden",
+    flexDirection: "row"
+  }),
+  $input: {
+    __type: "select",
+    height: "100%",
+    width: "100%",
+    ...inputResetStyles,
+    __children: [
+      <option>One but longer a bit</option>,
+      <option>Two</option>,
+      <option>Three</option>
+    ]
+  },
+  $leftEnhancersContainer: ({ leftEnhancer }) => ({
+    __type: HorizontalStack,
+    height: "100%",
+    flexGrow: 0,
+    flexShrink: 0,
+    __children: leftEnhancer
+  }),
+  $rightEnhancersContainer: ({ rightEnhancer }) => ({
+    __type: HorizontalStack,
+    height: "100%",
+    flexGrow: 0,
+    flexShrink: 0,
+    __children: rightEnhancer
+  }),
+  $inputContainer: ({ input, label, arrowContainer }) => ({
+    __type: "label",
+    position: "relative",
+    boxSizing: "border-box",
+    height: "100%",
+    flexGrow: 1,
+    flexShrink: 1,
+    __children: (
+      <>
+        {label}
+        {input}
+        {arrowContainer}
+      </>
+    )
+  }),
+  $label: ({ label, empty }) => ({
+    __type: "span",
+    position: "absolute",
+    pointerEvents: "none",
+    top: 0,
+    left: 0,
+    opacity: empty ? 0 : 1,
+    __children: label
+  }),
+  $arrowContainer: ({ arrow }) => ({
+    position: "absolute",
+    top: 0,
+    right: 0,
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    pointerEvents: "none",
+    __children: arrow
+  }),
+  $arrow: {
+    __children: <>⌄</>
+  }
+};
+
+function SelectNative$(props) {
+  let {
+    sx,
     onFocus,
     onBlur,
-    error,
-    size,
-    ...restProps
+    onChange,
+    autoFocus,
+    inputRef,
+    invalid,
+    disabled,
+    placeholder,
+    leftEnhancer,
+    rightEnhancer,
+    label,
+    value,
+    options,
+    ...inputProps
   } = props;
 
-  const [isFocused, setFocused] = useState(autoFocus || false);
+  label = label || placeholder;
 
-  const onFocus_ = e => {
-    setFocused(true);
-    if (onFocus) {
-      onFocus(e);
+  const [focused, setFocused] = useState(false);
+  let [empty, setEmpty] = useState(true);
+
+  if (value) {
+    empty = value === "";
+  }
+
+  const state = {
+    focused,
+    invalid,
+    disabled,
+    empty,
+    placeholder
+  };
+
+  sx = typeof sx === "function" ? sx(state) : sx;
+  const [css, customSx] = splitSx(sx);
+
+  const rootCss =
+    typeof customSx.$root === "function"
+      ? customSx.$root(state)
+      : customSx.$root;
+
+  leftEnhancer =
+    typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
+  const leftEnhancersContainerSpec = getElementSpec(
+    customSx.$leftEnhancersContainer,
+    defaults.$leftEnhancersContainer,
+    { ...state, leftEnhancer }
+  );
+  const leftEnhancerContainer =
+    leftEnhancer && createElement(leftEnhancersContainerSpec);
+
+  rightEnhancer =
+    typeof rightEnhancer === "function" ? rightEnhancer(state) : rightEnhancer;
+  const rightEnhancersContainerSpec = getElementSpec(
+    customSx.$rightEnhancersContainer,
+    defaults.$rightEnhancersContainer,
+    { ...state, rightEnhancer }
+  );
+  const rightEnhancerContainer =
+    rightEnhancer && createElement(rightEnhancersContainerSpec);
+
+  let optionElems = [];
+
+  if (placeholder) {
+    optionElems.push(
+      <option disabled value={""} key={"__default__"}>
+        {placeholder}
+      </option>
+    );
+  }
+
+  options.map(option => {
+    let value, label;
+    if (typeof option === "object") {
+      value = option.value;
+      label = option.label;
+    } else {
+      value = option;
+      label = option;
     }
+    optionElems.push(
+      <option value={value} key={value}>
+        {label}
+      </option>
+    );
+  });
+
+  const inputSpec = getElementSpec(
+    customSx.$input,
+    { ...defaults.$input, __children: optionElems },
+    state
+  );
+
+  const input = createElement(inputSpec, {
+    onFocus: e => {
+      setFocused(true);
+      if (onFocus) {
+        onFocus(e);
+      }
+    },
+    onBlur: e => {
+      setFocused(false);
+      if (onBlur) {
+        onBlur(e);
+      }
+    },
+    onChange: e => {
+      if (!e.target.value || e.target.value === "") {
+        setEmpty(true);
+      } else {
+        setEmpty(false);
+      }
+      if (onChange) {
+        onChange(e.target.value, e);
+      }
+    },
+    disabled,
+    placeholder,
+    value,
+    ...inputProps,
+    // defaultValue: "",
+    ref: inputRef
+  });
+
+  const arrow = createElement(
+    getElementSpec(customSx.$arrow, defaults.$arrow, state)
+  );
+  const arrowContainer = createElement(
+    getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
+      ...state,
+      arrow
+    })
+  );
+
+  let inputContainer;
+  let inputContainerState = {
+    ...state,
+    input,
+    arrowContainer,
+    arrow
   };
 
-  const onBlur_ = e => {
-    setFocused(false);
-    if (onBlur) {
-      onBlur(e);
-    }
-  };
+  if (customSx.$labelInside) {
+    state.label = label;
+    inputContainerState.label = createElement(
+      getElementSpec(customSx.$label, defaults.$label, state)
+    );
+    console.log("create label inside");
+  }
 
-  const $sharedProps = {
-    $isFocused: isFocused,
-    $disabled: disabled,
-    $error: error,
-    $required: required,
-    $size: size,
-    $adjoined: "none"
-  };
-
-  const selectedValue = getOptionFields(value, props)[0];
-
-  const [Root, rootProps] = getOverrides(RootOverride, RootStyled);
-  const [Select, selectProps] = getOverrides(SelectOverride, SelectStyled);
-  const [Icon, iconProps] = getOverrides(IconOverride, IconStyled);
+  inputContainer = createElement(
+    getElementSpec(
+      customSx.$inputContainer,
+      {
+        ...defaults.$inputContainer(inputContainerState),
+        __type: customSx.$labelInside ? "label" : "div"
+      },
+      inputContainerState
+    )
+  );
 
   return (
-    <Root {...rootProps} {...$sharedProps}>
-      <Select
-        {...selectProps}
-        {...$sharedProps}
-        {...restProps}
-        value={selectedValue}
-        disabled={disabled}
-        onChange={e => {
-          let newSelectedOption = options.find(x => {
-            return getOptionFields(x, props)[0] === e.target.value;
-          });
-
-          if (onChange) {
-            onChange(newSelectedOption);
-          }
-        }}
-        onBlur={onBlur_}
-        onFocus={onFocus_}
-      >
-        {placeholder && (
-          <option disabled value={""}>
-            {placeholder}
-          </option>
-        )}
-        {options.map(option => {
-          let value, label;
-
-          if (typeof option === "object") {
-            label = option[labelKey];
-            value = option[valueKey] || label;
-          } else {
-            value = option;
-            label = option;
-          }
-
-          return (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          );
-        })}
-      </Select>
-
-      <Icon {...iconProps} {...$sharedProps}>
-        <svg
-          data-baseweb="icon"
-          viewBox="0 0 24 24"
-          width="16"
-          fill="currentColor"
-        >
-          <title>open</title>
-          <path d="M12.7071 15.2929L17.1464 10.8536C17.4614 10.5386 17.2383 10 16.7929 10L7.20711 10C6.76165 10 6.53857 10.5386 6.85355 10.8536L11.2929 15.2929C11.6834 15.6834 12.3166 15.6834 12.7071 15.2929Z" />
-        </svg>
-      </Icon>
-    </Root>
+    <Box
+      sx={[defaults.rootCss(state), rootCss, css]}
+      className={focused ? "__commui_focus" : ""}
+    >
+      {leftEnhancerContainer}
+      {inputContainer}
+      {rightEnhancerContainer}
+    </Box>
   );
-};
+}
 
-SelectNative$.defaultProps = {
-  placeholder: "Select",
-  labelKey: "label",
-  valueKey: "value",
-  error: false,
-  disabled: false,
-  required: false,
-  size: "default",
-  overrides: {}
-};
-
-SelectNative$.propTypes = {};
-
-const StatefulSelectNative$ = props => {
-  const [value, setValue] = useState(props.initValue);
-
-  return (
-    <SelectNative$
-      {...props}
-      value={value}
-      onChange={newValue => {
-        setValue(newValue);
-
-        if (props.onChange) {
-          props.onChange(newValue);
-        }
-      }}
-    />
-  );
-};
-
-export { SelectNative$, StatefulSelectNative$ };
+export default SelectNative$;
