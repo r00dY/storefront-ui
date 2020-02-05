@@ -15,6 +15,8 @@ function rslin(from, to, isInf) {
     __isLinear: true
   };
 }
+
+const lin = rslin;
 //
 // // Traverses through rs and rslin objects (from above) and changes values according to values from "space"
 // function traverseRsAndOverrideSpacing(obj, space) {
@@ -287,7 +289,7 @@ function splitSx(sx) {
   return [css, customSx];
 }
 
-export { jsx, rs, rslin, getElementSpec, createElement, splitSx };
+export { jsx, rs, rslin, lin, getElementSpec, createElement, splitSx };
 
 /**
  What do we want?
