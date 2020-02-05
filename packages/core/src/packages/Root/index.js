@@ -1,17 +1,10 @@
 import React, { useEffect } from "react";
 import { ThemeProvider } from "../Theme";
-import ReactModal from "react-modal";
 
 /** @jsx jsx */
 import { css, Global, jsx } from "@emotion/core";
 
-// import { NotificationsContainer } from "../Notifications";
-
 export default ({ theme, children }) => {
-  useEffect(() => {
-    ReactModal.setAppElement("#__app__");
-  }, []);
-
   return (
     <ThemeProvider theme={theme}>
       <Global
