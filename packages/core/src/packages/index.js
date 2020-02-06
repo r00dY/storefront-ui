@@ -1,6 +1,7 @@
 import React from "react";
 import { jsx as emotionJsx } from "@emotion/core";
 import styledSystemCss from "./css";
+import { useTheme } from "./Theme";
 // import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
 
 function rs(config) {
@@ -173,7 +174,7 @@ function jsx(type, props, ...children) {
   let newProps = { ...props };
   let createElement = React.createElement;
 
-  if (typeof type === "string" && props.sx) {
+  if (typeof type === "string" && props && props.sx) {
     // const [_css, _] = splitSx(props.sx); // for primitive components we ignore custom sx and just extract CSS to pass it through emotion "css" prop
     newProps.css = css(props.sx); //theme => { return css(props.sx, theme) }
     delete newProps.sx;
@@ -289,7 +290,69 @@ function splitSx(sx) {
   return [css, customSx];
 }
 
-export { jsx, rs, rslin, lin, getElementSpec, createElement, splitSx };
+function responsiveValueForEach(resVal, callback) {
+  const { breakpoints } = useTheme();
+
+  if (Array.isArray(resVal)) {
+    resVal.forEach((val, index) => {
+      if (val === null) return;
+      if (index === 0) {
+        callback(val, null);
+        return;
+      }
+      callback(val, breakpoints[index - 1]);
+    });
+    return;
+  } else if (typeof resVal === "object") {
+    for (let key in resVal) {
+      if (key === "_") {
+        callback(resVal[key], null);
+        continue;
+      }
+      if (!breakpoints[key]) {
+        throw new Error("Non-existent breakpoint");
+      }
+      callback(resVal[key], breakpoints[key]);
+    }
+    return;
+  }
+  callback(resVal, null);
+}
+
+function responsiveValueMap(resVal, mapper) {
+  const { breakpoints } = useTheme();
+
+  if (Array.isArray(resVal)) {
+    const newResVal = [];
+    for (let index in resVal) {
+      if (resVal[index] === null) {
+        newResVal.push(null);
+        continue;
+      }
+      newResVal.push(mapper(resVal[index]));
+    }
+    return newResVal;
+  } else if (typeof resVal === "object") {
+    const newResVal = {};
+    for (let key in resVal) {
+      newResVal[key] = mapper(resVal[key]);
+    }
+    return newResVal;
+  }
+  return mapper(resVal);
+}
+
+export {
+  jsx,
+  rs,
+  rslin,
+  lin,
+  getElementSpec,
+  createElement,
+  splitSx,
+  responsiveValueMap,
+  responsiveValueForEach
+};
 
 /**
  What do we want?

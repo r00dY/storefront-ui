@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 
 /** @jsx jsx */
-import { css, jsx } from "@emotion/core";
+import { jsx } from "../index";
 
 const logDeprecationNotice = (prop, replacement) => {
   if (process.env.NODE_ENV === `production`) {
@@ -388,6 +388,8 @@ class Image extends React.Component {
       Tag,
       itemProp,
       loading,
+      specialStyles,
+      sx,
       draggable
     } = convertProps(this.props);
 
@@ -428,23 +430,25 @@ class Image extends React.Component {
 
       return (
         <Tag
-          className={`${className ? className : ``} gatsby-image-wrapper`}
-          style={{
-            position: `relative`,
-            // overflow: `hidden`,
-            ...style
+          // className={`${className ? className : ``} gatsby-image-wrapper`}
+          // style={{
+          //   position: `relative`,
+          //   // overflow: `hidden`,
+          //   ...style
+          // }}
+          sx={{
+            position: "relative",
+            ...sx
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
           {/* Preserve the aspect ratio. */}
           <Tag
-            css={css`
-              ${{
-                width: `100%`
-              }}
-              ${this.props._emotionStyles.wrapper}
-            `}
+            sx={{
+              width: "100%",
+              paddingBottom: specialStyles.paddingBottom
+            }}
           />
 
           {/* Show a solid background color. */}
@@ -495,9 +499,14 @@ class Image extends React.Component {
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
-                css={css`
-                  ${imageStyle} ${this.props._emotionStyles.img}
-                `}
+                sx={{
+                  objectFit: specialStyles.objectFit || "cover",
+                  objectPosition:
+                    specialStyles.objectPosition || "center center"
+                }}
+                // css={css`
+                //   ${imageStyle} ${this.props._emotionStyles.img}
+                // `}
                 ref={this.imageRef}
                 onLoad={this.handleImageLoaded}
                 onError={this.props.onError}

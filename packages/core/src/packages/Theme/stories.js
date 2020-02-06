@@ -1,6 +1,6 @@
 import React from "react";
-import { useTheme } from "@commerce-ui/core/Theme";
-import Box from "@commerce-ui/core/Box";
+import { useTheme } from "../Theme";
+import Box from "../Box";
 
 function fontStories(options = {}) {
   let stories = [];

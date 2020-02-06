@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import React from "react";
-import { jsx } from "@commerce-ui/core";
+import { jsx } from "./index";
 
 function StoryWrapper({ stories }) {
   if (!Array.isArray(stories)) {
