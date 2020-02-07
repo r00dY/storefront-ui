@@ -53,7 +53,7 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.6.7",
+  "version": "0.10.0",
   "license": "GPL-3.0",
   "publishConfig": {
     "directory": "dist"
