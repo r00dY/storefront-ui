@@ -145,40 +145,6 @@ export const basic = () => (
         }
       ]}
     />
-
-    {/*<p>Responsive variant, mode and objectPosition</p>*/}
-
-    {/*<Image*/}
-    {/*css={css`*/}
-    {/*${imgBorderStyles}*/}
-    {/*`}*/}
-    {/*image={catImage}*/}
-    {/*_responsiveProps={{*/}
-    {/*xs: {*/}
-    {/*objectFit: "contain",*/}
-    {/*objectPosition: "top"*/}
-    {/*},*/}
-    {/*md: {*/}
-    {/*objectFit: "cover",*/}
-    {/*objectPosition: "right"*/}
-    {/*}*/}
-    {/*}}*/}
-    {/*/>*/}
-
-    {/*<p>Add some div on image</p>*/}
-
-    {/*<Image image={catImage}>*/}
-    {/*<div*/}
-    {/*css={css`*/}
-    {/*position: absolute;*/}
-    {/*top: 0;*/}
-    {/*left: 0;*/}
-    {/*width: 100%;*/}
-    {/*height: 100%;*/}
-    {/*background-color: rgba(255, 0, 0, 0.5);*/}
-    {/*`}*/}
-    {/*/>*/}
-    {/*</Image>*/}
   </Box>
 );
 

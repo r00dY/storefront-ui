@@ -1,5 +1,4 @@
-import { ButtonText$ } from "@commerce-ui/core/Button";
-import Spinner from "../Spinner";
+import ButtonText$ from "@commerce-ui/core/ButtonText";
 import { jsx, splitSx } from "@commerce-ui/core";
 
 const styles = {
@@ -8,7 +7,7 @@ const styles = {
       minHeight: "50px"
     },
 
-    $foreground: {
+    $body: {
       pl: 3,
       pr: 3,
       pt: 2,
@@ -20,7 +19,7 @@ const styles = {
     $css: {
       minHeight: "60px"
     },
-    $foreground: {
+    $body: {
       pl: 4,
       pr: 4,
       pt: 2,
@@ -31,20 +30,18 @@ const styles = {
 };
 
 const Button = props => {
-  const [css, customSx] = splitSx(props.sx);
-
-  const $size = customSx.$size || "standard";
+  const $size = (props.sx && props.sx.$size) || "standard";
 
   return (
     <ButtonText$
       {...props}
       sx={{
         ...styles[$size].$css,
-        ...css,
 
-        // minWidth: "500px",
-        $foreground: ({ disabled }) => ({
-          ...styles[$size].$foreground,
+        height: "50px",
+
+        $body: ({ disabled }) => ({
+          ...styles[$size].$body,
           color: disabled ? "mono500" : "black",
           textAlign: "center"
         }),
@@ -54,15 +51,18 @@ const Button = props => {
           transition: "opacity .1s",
           borderRadius: 6
         }),
-        $loader: {
-          __children: <Spinner />
+        $gap: 2,
+        $layout: "lcr",
+        $leftIcon: {
+          width: 32,
+          height: 32
         },
-        $startEnhancerContainer: {
-          mr: 2
+        $rightIcon: {
+          width: 32,
+          height: 32
         },
-        $endEnhancerContainer: {
-          ml: 2
-        }
+
+        ...props.sx
       }}
     />
   );

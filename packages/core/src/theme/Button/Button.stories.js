@@ -6,6 +6,11 @@ import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
 import Button from "./Button";
 import ButtonMinimal from "./ButtonMinimal";
+import Button2 from "./Button2";
+import Button3 from "./Button3";
+
+import IconBuy from "../svg/add_shopping_cart.svg";
+import IconPlus from "../svg/add.svg";
 
 const Square = () => (
   <div
@@ -18,6 +23,7 @@ const LABEL_LONG =
 
 export const standard = () => (
   <div>
+    <br />
     <h2>Standard text</h2>
     <StoryWrapper
       stories={buttonStories(<Button>Standard button</Button>, {
@@ -37,7 +43,7 @@ export const standard = () => (
     <h2>Standard text with enhancers</h2>
     <StoryWrapper
       stories={buttonStories(
-        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
+        <Button leftIcon={<IconBuy />} rightIcon={<IconPlus />}>
           Standard button
         </Button>,
         {
@@ -50,7 +56,7 @@ export const standard = () => (
     <h2>Long text with enhancers</h2>
     <StoryWrapper
       stories={buttonStories(
-        <Button startEnhancer={<Square />} endEnhancer={<Square />}>
+        <Button leftIcon={<IconBuy />} rightIcon={<IconPlus />}>
           {LABEL_LONG}
         </Button>,
         { disabled: true, loading: true }
@@ -94,6 +100,51 @@ export const minimal = () => (
     <h2>Long text</h2>
     <StoryWrapper
       stories={buttonStories(<ButtonMinimal>{LABEL_LONG}</ButtonMinimal>, {
+        disabled: true
+      })}
+    />
+  </div>
+);
+
+export const button2 = () => (
+  <div>
+    <h2>Standard text</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button2>
+          {({ isLoading }) => {
+            return isLoading ? "loading..." : "Label";
+          }}
+        </Button2>,
+        {
+          disabled: true,
+          loading: true
+        }
+      )}
+    />
+
+    <h2>Long text</h2>
+    <StoryWrapper
+      stories={buttonStories(<Button2>{LABEL_LONG}</Button2>, {
+        disabled: true
+      })}
+    />
+  </div>
+);
+
+export const button3 = () => (
+  <div>
+    <h2>Standard text</h2>
+    <StoryWrapper
+      stories={buttonStories(<Button3>Test</Button3>, {
+        disabled: true,
+        loading: true
+      })}
+    />
+
+    <h2>Long text</h2>
+    <StoryWrapper
+      stories={buttonStories(<Button3>{LABEL_LONG}</Button3>, {
         disabled: true
       })}
     />
