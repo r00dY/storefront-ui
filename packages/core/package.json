@@ -1,10 +1,10 @@
 {
-  "name": "@commerce-ui/core",
+  "name": "@commerce-ui/core2",
   "description": "React PWA (single page application) e-commerce UI framework",
   "scripts": {
     "publish-docs": "now --target production -t $NOW_TOKEN --scope commerce-ui",
     "watch": "babel src/packages --out-dir dist --watch",
-    "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist",
+    "build": "babel src/packages --out-dir dist && rm -Rf dist/*/examples && cp package.json dist && cp -R src/packages/svg dist/svg",
     "dev": "next --port 3333",
     "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@commerce-ui && mkdir -p ./demo/node_modules/@commerce-ui/core && cp -R dist/* ./demo/node_modules/@commerce-ui/core",
     "now-build": "npm run build && next build",

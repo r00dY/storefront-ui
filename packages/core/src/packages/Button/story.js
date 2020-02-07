@@ -55,9 +55,11 @@ function storiesOfButton(button, options = {}) {
       name: "Size set by parent as small (width=50px, height=50px)",
       component: React.cloneElement(button, {
         sx: {
-          ...button.sx,
+          ...button.props.sx,
           width: "50px",
-          height: "50px"
+          height: "50px",
+          minWidth: "1px",
+          minHeight: "1px"
         }
       })
     })
