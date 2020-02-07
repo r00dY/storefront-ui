@@ -10,6 +10,17 @@ export default createComponent(ButtonText$, {
     opacity: isHovered ? 0.75 : 1
   }),
 
+  $gap: "4px",
+
+  $leftIcon: {
+    width: 20,
+    height: 20
+  },
+  $rightIcon: {
+    width: 20,
+    height: 20
+  },
+
   $loader: {
     __children: <Spinner />
   }

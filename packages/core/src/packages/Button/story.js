@@ -1,4 +1,5 @@
 import React from "react";
+import StoryWrapper from "../StoryWrapper";
 
 function getBoth(story) {
   const button = React.cloneElement(story.component, {
@@ -24,8 +25,8 @@ function getBoth(story) {
   ];
 }
 
-function buttonStories(button, options = {}) {
-  const { disabled, loading } = options;
+function storiesOfButton(button, options = {}) {
+  const { disabled = true, loading = true } = options;
 
   let stories = [];
 
@@ -99,113 +100,9 @@ function buttonStories(button, options = {}) {
   return stories;
 }
 
-{
-  /*<h2>Standard text</h2>*/
-}
-{
-  /*<StoryWrapper*/
-}
-{
-  /*stories={buttonStories(<Button>Standard button</Button>, {*/
-}
-{
-  /*disabled: true,*/
-}
-{
-  /*loading: true*/
-}
-{
-  /*})}*/
-}
-{
-  /*/>*/
+function storyOfButton(...args) {
+  return () => <StoryWrapper stories={storiesOfButton(...args)} />;
 }
 
-{
-  /*<h2>Long text</h2>*/
-}
-{
-  /*<StoryWrapper*/
-}
-{
-  /*stories={buttonStories(<Button>{LABEL_LONG}</Button>, {*/
-}
-{
-  /*disabled: true,*/
-}
-{
-  /*loading: true*/
-}
-{
-  /*})}*/
-}
-{
-  /*/>*/
-}
-
-{
-  /*<h2>Standard text with enhancers</h2>*/
-}
-{
-  /*<StoryWrapper*/
-}
-{
-  /*stories={buttonStories(*/
-}
-{
-  /*<Button leftIcon={<IconBuy />} rightIcon={<IconPlus />}>*/
-}
-{
-  /*Standard button*/
-}
-{
-  /*</Button>,*/
-}
-{
-  /*{*/
-}
-{
-  /*disabled: true,*/
-}
-{
-  /*loading: true*/
-}
-{
-  /*}*/
-}
-{
-  /*)}*/
-}
-{
-  /*/>*/
-}
-
-{
-  /*<h2>Long text with enhancers</h2>*/
-}
-{
-  /*<StoryWrapper*/
-}
-{
-  /*stories={buttonStories(*/
-}
-{
-  /*<Button leftIcon={<IconBuy />} rightIcon={<IconPlus />}>*/
-}
-{
-  /*{LABEL_LONG}*/
-}
-{
-  /*</Button>,*/
-}
-{
-  /*{ disabled: true, loading: true }*/
-}
-{
-  /*)}*/
-}
-{
-  /*/>*/
-}
-
-export { buttonStories };
+export default storyOfButton;
+export { storiesOfButton };

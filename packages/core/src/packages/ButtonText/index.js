@@ -5,7 +5,13 @@ import Button$ from "../Button";
 import Box from "../Box";
 
 const defaultBody = ({ children, leftIcon, rightIcon }) => ({
-  __children: [leftIcon, children, rightIcon]
+  __children: (
+    <>
+      {leftIcon}
+      {children}
+      {rightIcon}
+    </>
+  )
 });
 
 export default props => {

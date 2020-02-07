@@ -1,4 +1,5 @@
 import React from "react";
+import StoryWrapper from "../StoryWrapper";
 
 function getBoth(story) {
   const button = React.cloneElement(story.component, {
