@@ -8,6 +8,7 @@ import Button from "./Button";
 import ButtonMinimal from "./ButtonMinimal";
 import Button2 from "./Button2";
 import Button3 from "./Button3";
+import ButtonIcon from "./ButtonIcon";
 
 import IconBuy from "../svg/add_shopping_cart.svg";
 import IconPlus from "../svg/add.svg";
@@ -60,6 +61,24 @@ export const standard = () => (
           {LABEL_LONG}
         </Button>,
         { disabled: true, loading: true }
+      )}
+    />
+  </div>
+);
+
+export const icon = () => (
+  <div>
+    <br />
+    <h2>Standard</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <ButtonIcon>
+          <IconBuy />
+        </ButtonIcon>,
+        {
+          disabled: true,
+          loading: true
+        }
       )}
     />
   </div>
