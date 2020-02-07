@@ -85,6 +85,37 @@ export const standardLarge = () => (
         { disabled: true, loading: true }
       )}
     />
+
+    <h2>Standard text with enhancers</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button
+          sx={{ $size: "large" }}
+          leftIcon={<IconBuy />}
+          rightIcon={<IconPlus />}
+        >
+          Standard button
+        </Button>,
+        {
+          disabled: true,
+          loading: true
+        }
+      )}
+    />
+
+    <h2>Long text with enhancers</h2>
+    <StoryWrapper
+      stories={buttonStories(
+        <Button
+          sx={{ $size: "large" }}
+          leftIcon={<IconBuy />}
+          rightIcon={<IconPlus />}
+        >
+          {LABEL_LONG}
+        </Button>,
+        { disabled: true, loading: true }
+      )}
+    />
   </div>
 );
 

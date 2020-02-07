@@ -13,7 +13,9 @@ const styles = {
       pt: 2,
       pb: 2,
       font: "body2"
-    }
+    },
+
+    $iconSize: 24
   },
   large: {
     $css: {
@@ -25,7 +27,8 @@ const styles = {
       pt: 2,
       pb: 2,
       font: "body"
-    }
+    },
+    $iconSize: 32
   }
 };
 
@@ -44,11 +47,11 @@ export default createComponent(ButtonText$, ({ $size = "standard" }) => ({
   }),
   $gap: 2,
   $leftIcon: {
-    width: 24,
-    height: 24
+    width: styles[$size].$iconSize,
+    height: styles[$size].$iconSize
   },
   $rightIcon: {
-    width: 24,
-    height: 24
+    width: styles[$size].$iconSize,
+    height: styles[$size].$iconSize
   }
 }));
