@@ -5,7 +5,11 @@ import { jsx } from "..";
 
 const boxStyles = {
   boxSizing: "border-box",
-  minWidth: "0px"
+  minWidth: "0px",
+  m: 0,
+  p: 0,
+  border: 0,
+  listStyle: "none"
 };
 
 function Box_(props) {
