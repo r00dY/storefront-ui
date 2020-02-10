@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-import Button$ from "../Button";
+import ButtonBase from "../ButtonBase";
 import Box from "../Box";
 
 const defaultBody = ({ children, leftIcon, rightIcon }) => ({
@@ -18,7 +18,7 @@ export default props => {
   let { leftIcon, rightIcon, children, sx, ...restProps } = props;
 
   return (
-    <Button$
+    <ButtonBase
       {...restProps}
       sx={state => {
         sx = typeof sx === "function" ? sx(state) : sx;

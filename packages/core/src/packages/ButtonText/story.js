@@ -1,6 +1,6 @@
 import React from "react";
 import StoryWrapper from "../StoryWrapper";
-import { storiesOfButton } from "../Button/story";
+import { storiesOfButton } from "../ButtonBase/story";
 
 import IconAddToBasket from "../svg/add_shopping_cart.svg";
 import IconAdd from "../svg/add.svg";

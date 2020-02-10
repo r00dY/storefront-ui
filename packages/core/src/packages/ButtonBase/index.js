@@ -1,64 +1,101 @@
 /** @jsx jsx */
 import React, { useRef, useState } from "react";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-import useHover from "../useHover";
-import ButtonRaw$ from "../ButtonRaw";
-import LinkRaw$ from "../LinkRaw";
+
+import Button from "../Button";
+
+let defaults = {
+  background: {
+    boxSizing: "border-box",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    right: 0,
+    bottom: 0
+  },
+  body: ({ children, isLoading }) => ({
+    boxSizing: "border-box",
+    position: "relative",
+    pointerEvents: "none",
+    height: "100%",
+    minHeight: "inherit",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    visibility: isLoading ? "hidden" : "visible",
+    overflow: "hidden",
+    textAlign: "center",
+
+    // lineHeight: "1 !important",
+    // whiteSpace: "nowrap",
+    // textOverflow: "ellipsis", display: block must be on to make this work!!!
+
+    __children: children
+  }),
+  loader: {
+    boxSizing: "border-box",
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    __children: "LOAD"
+  }
+};
 
 export default props => {
-  // look
-  let {
-    disabled,
-    children,
-    label,
-    buttonRef,
-    isLoading,
-    href,
-    sx,
-    ...restProps
-  } = props;
-
-  let buttonRefInternal = useRef(null);
-  buttonRef = buttonRef || buttonRefInternal;
-
-  const isHovered = useHover(buttonRef);
-
-  const state = {
-    disabled,
-    isHovered,
-    isLoading
-  };
-
-  sx = typeof sx === "function" ? sx(state) : sx;
-
-  const [css, customSx] = splitSx(sx);
-
-  const Component = href ? LinkRaw$ : ButtonRaw$;
-
-  const componentProps = {
-    ...restProps,
-    sx: {
-      $css: [
-        {
-          position: "relative",
-          display: "inline-block",
-          verticalAlign: "top"
-        },
-        css
-      ]
-    },
-    ref: buttonRef
-  };
-
-  if (!href) {
-    componentProps.disabled = disabled;
-  } else {
-    componentProps.href = href;
-  }
+  let { sx, children, ...restProps } = props;
 
   return (
-    <Component {...componentProps}>
-      {typeof children === "function" ? children(state) : children}
-    </Component>
+    <Button
+      sx={state => {
+        const [css, customSx] = splitSx(
+          typeof sx === "function" ? sx(state) : sx
+        );
+        return css;
+      }}
+      {...restProps}
+    >
+      {state => {
+        const newState = {
+          ...state,
+          children: typeof children === "function" ? children(state) : children
+        };
+
+        const [css, customSx] = splitSx(
+          typeof sx === "function" ? sx(newState) : sx
+        );
+
+        const loaderSpec = getElementSpec(
+          customSx.$loader,
+          defaults.loader,
+          newState
+        );
+
+        const backgroundSpec = getElementSpec(
+          customSx.$background,
+          defaults.background,
+          newState
+        );
+
+        const bodySpec = getElementSpec(
+          customSx.$body,
+          defaults.body,
+          newState
+        );
+
+        return (
+          <>
+            {createElement(backgroundSpec)}
+            {createElement(bodySpec)}
+            {newState.isLoading && createElement(loaderSpec)}
+          </>
+        );
+      }}
+    </Button>
   );
 };

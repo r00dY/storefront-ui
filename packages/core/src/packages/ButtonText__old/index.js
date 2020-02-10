@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React from "react";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-import Button$ from "../Button";
+import Button$ from "../ButtonBase";
 
 const defaultBody = ({ label, startEnhancer, endEnhancer }) => ({
   __children: (

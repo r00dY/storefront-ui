@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
 
-import { buttonStories } from "@commerce-ui/core/Button/stories";
+import { buttonStories } from "@commerce-ui/core/ButtonBase/stories";
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
 import ButtonIcon from "./ButtonIcon";

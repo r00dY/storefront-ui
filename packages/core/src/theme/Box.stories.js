@@ -3,7 +3,7 @@ import { jsx, rs } from "@commerce-ui/core";
 
 import Box from "@commerce-ui/core/Box";
 
-import ButtonBase from "@commerce-ui/core/ButtonBase";
+import Button from "@commerce-ui/core/Button";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
@@ -98,20 +98,18 @@ export const basic = () => (
         },
         {
           name: "ButtonBase",
-          component: (
-            <ButtonBase sx={{ p: 2, bg: "mono300" }}>Click me!</ButtonBase>
-          )
+          component: <Button sx={{ p: 2, bg: "mono300" }}>Click me!</Button>
         },
         {
-          name: "ButtonBase href",
+          name: "Button href",
           component: (
-            <ButtonBase
+            <Button
               sx={{ p: 2, bg: "mono300" }}
               href={"https://wikipedia.org"}
               target={"blank"}
             >
               Click me!
-            </ButtonBase>
+            </Button>
           )
         }
       ]}
