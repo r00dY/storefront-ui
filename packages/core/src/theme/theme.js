@@ -50,7 +50,11 @@ const theme = {
     }
   },
   space,
-  breakpoints
+  breakpoints,
+  containers: {
+    default: ["10vw", null, null, "20vw", "calc(calc(100vw - 1500px) / 2)"],
+    secondary: ["30vw", null, null, "20vw"]
+  }
 };
 
 export default theme;

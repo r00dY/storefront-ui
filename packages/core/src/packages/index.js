@@ -214,6 +214,7 @@ function responsiveValueMap(resVal, mapper) {
   return mapper(resVal);
 }
 
+// Helper for quick creating of components
 const createComponent = (Component, newSx) => {
   return ({ sx, ...restProps }) => {
     const [css, customSx] = splitSx(sx);
@@ -231,6 +232,16 @@ const createComponent = (Component, newSx) => {
     );
   };
 };
+
+//
+// function superResponsive(val, dict) {
+//   if (Array.isArray(val)) {
+//     return val.map((x, index) => Array.isArray(x) ? x[index] : x);
+//   }
+//   else if (typeof val === 'object') {
+//
+//   }
+// }
 
 export {
   jsx,
