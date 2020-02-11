@@ -11,12 +11,10 @@ export default ({
   minItemWidth,
   ...restProps
 }) => {
-  const { gridGaps = {} } = useTheme();
+  const { gaps = {} } = useTheme();
 
   const columnGap =
-    typeof gap !== "undefined"
-      ? gridGaps[gap] || gap
-      : gridGaps["default"] || "10px";
+    typeof gap !== "undefined" ? gaps[gap] || gap : gaps["main"] || "10px";
 
   let gridTemplateColumns = responsiveValueMap(cols, x =>
     typeof x === "number" ? `repeat(${x}, 1fr)` : x

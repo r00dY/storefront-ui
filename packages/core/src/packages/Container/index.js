@@ -7,7 +7,7 @@ export default ({ sx = {}, variant, ...restProps }) => {
 
   const margin = variant
     ? containers[variant] || variant
-    : containers["default"] || "10vw";
+    : containers["main"] || "10vw";
 
   // console.log('-----');
   // console.log(superResponsive(margin));

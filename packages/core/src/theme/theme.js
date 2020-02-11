@@ -52,11 +52,11 @@ const theme = {
   space,
   breakpoints,
   containers: {
-    default: ["10vw", null, null, "12vw", "calc(calc(100vw - 1500px) / 2)"],
+    main: ["10vw", null, null, "12vw", "calc(calc(100vw - 1500px) / 2)"],
     secondary: ["30vw", null, null, "20vw"]
   },
-  gridGaps: {
-    default: ["10px", null, "15px", "20px", "25px"]
+  gaps: {
+    main: ["10px", null, "15px", "20px", "25px"]
   }
 };
 
