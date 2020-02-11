@@ -234,13 +234,11 @@ const createComponent = (Component, newSx) => {
 };
 
 //
-// function superResponsive(val, dict) {
-//   if (Array.isArray(val)) {
-//     return val.map((x, index) => Array.isArray(x) ? x[index] : x);
-//   }
-//   else if (typeof val === 'object') {
-//
-//   }
+// function superResponsive(val, dict = {}) {
+//   return responsiveValueMap(val, (x, breakpoint) => {
+//     console.log(x, breakpoint);
+//     return typeof dict[x] === 'undefined' ? x : dict[x];
+//   })
 // }
 
 export {
@@ -253,5 +251,6 @@ export {
   splitSx,
   responsiveValueMap,
   responsiveValueForEach,
+  // superResponsive,
   createComponent
 };
