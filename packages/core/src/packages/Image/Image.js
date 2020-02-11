@@ -1,5 +1,5 @@
 import React from "react";
-import { RangeMap } from "responsive-helpers";
+// import { RangeMap } from "responsive-helpers";
 import GatsbyImage from "./gatsby-image";
 
 import { responsiveValueForEach, responsiveValueMap } from "../index";
@@ -58,20 +58,20 @@ function Image$(props) {
   if (loading === "eager" && typeof fadeIn === "undefined") {
     gatsbyImageProps.fadeIn = false;
   }
-
-  let rangeMap = new RangeMap(
-    props._responsiveProps || {
-      objectFit: props.objectFit,
-      objectPosition: props.objectPosition,
-      variant: props.variant
-    }
-  );
-  // Defaults for _responsive
-  rangeMap.forEach((val, range) => {
-    val.variant = val.variant || "natural";
-    val.objectFit = val.objectFit || "cover";
-    val.objectPosition = val.objectPosition || "center center";
-  });
+  //
+  // let rangeMap = new RangeMap(
+  //   props._responsiveProps || {
+  //     objectFit: props.objectFit,
+  //     objectPosition: props.objectPosition,
+  //     variant: props.variant
+  //   }
+  // );
+  // // Defaults for _responsive
+  // rangeMap.forEach((val, range) => {
+  //   val.variant = val.variant || "natural";
+  //   val.objectFit = val.objectFit || "cover";
+  //   val.objectPosition = val.objectPosition || "center center";
+  // });
 
   const sxVariant = sx && sx.variant ? sx.variant : "natural";
 
@@ -89,16 +89,22 @@ function Image$(props) {
     });
   });
 
-  const { objectFit, objectPosition, ...restSx } = sx;
+  const { objectFit, objectPosition, aspectRatio, ...restSx } = sx;
+
+  const paddingBottom = aspectRatio
+    ? responsiveValueMap(aspectRatio, x => `${x * 100}%`)
+    : responsiveValueMap(
+        sxVariant,
+        variantName =>
+          `${(1 / findVariant(image, variantName).aspectRatio) * 100}%`
+      );
+
+  console.log("pb", paddingBottom);
 
   const specialStyles = {
     objectFit,
     objectPosition,
-    paddingBottom: responsiveValueMap(
-      sxVariant,
-      variantName =>
-        `${(1 / findVariant(image, variantName).aspectRatio) * 100}%`
-    )
+    paddingBottom
   };
 
   return (

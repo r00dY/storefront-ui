@@ -142,6 +142,17 @@ export const basic = () => (
               />
             </Image>
           )
+        },
+        {
+          name: "Explicit aspect ratio",
+          component: (
+            <Image
+              image={catImage}
+              sx={{
+                aspectRatio: [0.3, null, 0.2, null, 0.1]
+              }}
+            />
+          )
         }
       ]}
     />
