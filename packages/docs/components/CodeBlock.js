@@ -84,8 +84,9 @@ export default props => {
             <Box mx={"1.25em"} color={"#DF4F5C"}>
               <LiveError />
             </Box>
-            <Box p={"0.5em"} bg={prismTheme.plain.backgroundColor}>
+            <Box bg={prismTheme.plain.backgroundColor}>
               <LiveEditor />
+              {/*<Prism {...props} />*/}
             </Box>
           </Box>
         </LiveProvider>
