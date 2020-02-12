@@ -6,6 +6,7 @@ import { ThemeProvider } from "theme-ui";
 import theme from "../theme";
 import { Box } from "theme-ui";
 import Prism from "@theme-ui/prism";
+import Fullscreen from "../components/Fullscreen";
 
 const font = {
   fontFamily: "sans-serif"
@@ -30,10 +31,32 @@ const mdComponents = {
   )
 };
 
+const PAGE_PADDING = [3, null, 6];
+
 const components = {
   pre: ({ children }) => <>{children}</>,
-  code: CodeBlock
-  // h1: props => <h1 {...props} style={{fontSize: "100px"}} />
+  code: CodeBlock,
+
+  wrapper: ({ children, ...props }) => {
+    return React.Children.toArray(children).map(x => {
+      if (x.props.originalType === Fullscreen) {
+        return x;
+      }
+
+      return (
+        <Box
+          sx={{
+            position: "relative",
+            maxWidth: "850px",
+            px: PAGE_PADDING
+          }}
+          key={x.key}
+        >
+          {x}
+        </Box>
+      );
+    });
+  }
 };
 
 // {/*<MDXProvider components={mdComponents}>*/}
@@ -42,22 +65,20 @@ const components = {
 
 const App_ = ({ Component, pageProps }) => (
   <ThemeProvider theme={theme} components={components}>
-    <Box as={"header"} px={[3, null, 5]} py={3}>
+    <Box as={"header"} px={PAGE_PADDING} py={3}>
       <strong>commerce-ui</strong>
     </Box>
 
     <Box
       sx={{
-        display: "flex",
-        flexDirection: "row",
-        px: [3, null, 5],
-        pt: [2, null, null, 5]
+        mb: 6
       }}
     >
       <Box
         sx={{
-          flex: "0 0 auto",
-          display: ["none", null, null, "flex"]
+          px: PAGE_PADDING,
+          pt: 4,
+          pb: 5
         }}
       >
         <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
@@ -67,14 +88,7 @@ const App_ = ({ Component, pageProps }) => (
           <Box as={"li"}>Fourth chapter</Box>
         </Box>
       </Box>
-      <Box
-        sx={{
-          mx: [0, null, null, "auto"],
-          maxWidth: "750px",
-          pl: [0, null, null, 5],
-          flexGrow: 1
-        }}
-      >
+      <Box>
         <Component {...pageProps} />
       </Box>
     </Box>
