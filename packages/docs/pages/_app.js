@@ -42,8 +42,41 @@ const components = {
 
 const App_ = ({ Component, pageProps }) => (
   <ThemeProvider theme={theme} components={components}>
-    <Box p={5}>
-      <Component {...pageProps} />
+    <Box as={"header"} px={[3, null, 5]} py={3}>
+      <strong>commerce-ui</strong>
+    </Box>
+
+    <Box
+      sx={{
+        display: "flex",
+        flexDirection: "row",
+        px: [3, null, 5],
+        pt: [2, null, null, 5]
+      }}
+    >
+      <Box
+        sx={{
+          flex: "0 0 auto",
+          display: ["none", null, null, "flex"]
+        }}
+      >
+        <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
+          <Box as={"li"}>First chapter</Box>
+          <Box as={"li"}>Second chapter</Box>
+          <Box as={"li"}>Third chapter</Box>
+          <Box as={"li"}>Fourth chapter</Box>
+        </Box>
+      </Box>
+      <Box
+        sx={{
+          mx: [0, null, null, "auto"],
+          maxWidth: "750px",
+          pl: [0, null, null, 5],
+          flexGrow: 1
+        }}
+      >
+        <Component {...pageProps} />
+      </Box>
     </Box>
   </ThemeProvider>
 );
