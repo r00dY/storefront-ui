@@ -2,6 +2,10 @@ import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import CodeBlock from "../components/CodeBlock";
 import App from "next/app";
+import { ThemeProvider } from "theme-ui";
+import theme from "../theme";
+import { Box } from "theme-ui";
+import Prism from "@theme-ui/prism";
 
 const font = {
   fontFamily: "sans-serif"
@@ -26,10 +30,22 @@ const mdComponents = {
   )
 };
 
+const components = {
+  pre: ({ children }) => <>{children}</>,
+  code: CodeBlock
+  // h1: props => <h1 {...props} style={{fontSize: "100px"}} />
+};
+
+// {/*<MDXProvider components={mdComponents}>*/}
+// {/*<Component {...pageProps} />*/}
+// {/*</MDXProvider>*/}
+
 const App_ = ({ Component, pageProps }) => (
-  <MDXProvider components={mdComponents}>
-    <Component {...pageProps} />
-  </MDXProvider>
+  <ThemeProvider theme={theme} components={components}>
+    <Box p={5}>
+      <Component {...pageProps} />
+    </Box>
+  </ThemeProvider>
 );
 
 App_.getInitialProps = async appContext => {

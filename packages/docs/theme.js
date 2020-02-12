@@ -1,4 +1,5 @@
 // import prism from '@theme-ui/prism/presets/theme-ui'
+import prismTheme from "@theme-ui/prism/presets/duotone-light.json";
 
 export default {
   colors: {
@@ -295,8 +296,7 @@ export default {
       variant: "prism"
     },
     code: {
-      fontFamily: "monospace",
-      fontSize: 1
+      ...prismTheme
     },
     inlineCode: {
       fontFamily: "monospace",

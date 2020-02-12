@@ -8,6 +8,6 @@ export default props => (
       color: props.color || "red"
     }}
   >
-    Test
+    <h1>test</h1>
   </div>
 );
