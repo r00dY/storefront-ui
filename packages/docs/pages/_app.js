@@ -2,8 +2,6 @@ import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import CodeBlock from "../components/CodeBlock";
 import App from "next/app";
-// import {ThemeProvider} from 'theme-ui';
-// import theme from "../theme";
 
 const font = {
   fontFamily: "sans-serif"
