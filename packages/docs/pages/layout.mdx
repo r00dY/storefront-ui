@@ -53,3 +53,101 @@ You can easily add styles like background or margin to a `Container`:
 ```
 
 ## `Grid`
+
+Let's start with a grid
+
+```javascript live=true fullscreen=true
+<Container>
+  <Grid>
+    {Array.from(Array(32).keys()).map(x => (
+      <Box
+        key={x}
+        sx={{
+          p: 7,
+          bg: "coral",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        Test
+      </Box>
+    ))}
+  </Grid>
+</Container>
+```
+
+`Grid` is a helper around CSS Grid. By default it has 12 equally spaced columns with gutter taken from `theme.gaps.main`.
+
+Let's change number of columns and vertical gap:
+
+```javascript live=true fullscreen=true
+<Container>
+  <Grid cols={[2, 4, 6, 8, 12]} rowGap={4}>
+    {Array.from(Array(32).keys()).map(x => (
+      <Box
+        key={x}
+        sx={{
+          p: 7,
+          bg: "coral",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        Test
+      </Box>
+    ))}
+  </Grid>
+</Container>
+```
+
+Horizontal gap can be custom too:
+
+```javascript live=true fullscreen=true
+<Container>
+  <Grid gap={[0, null, "1px"]} rowGap={"1px"}>
+    {Array.from(Array(32).keys()).map(x => (
+      <Box
+        key={x}
+        sx={{
+          p: 7,
+          bg: "coral",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        Test
+      </Box>
+    ))}
+  </Grid>
+</Container>
+```
+
+#### `minItemWidth`
+
+`Grid` comes with a `minItemWidth` property. If used, number of columns will be automatic so that item width won't be lower than `minItemWidth`.
+
+```javascript live=true
+<Grid minItemWidth={[100, null, 200]}>
+  {Array.from(Array(16).keys()).map(x => (
+    <Box
+      key={x}
+      sx={{
+        p: 7,
+        bg: "coral",
+        color: "white",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center"
+      }}
+    >
+      Test
+    </Box>
+  ))}
+</Grid>
+```
