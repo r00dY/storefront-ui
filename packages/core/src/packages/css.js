@@ -162,7 +162,11 @@ export const responsive = styles => theme => {
 
     /** MODIFICATION 3, linear spacings **/
     if (typeof value === "object" && value.__isLinear) {
-      const css = rslin(value.from, value.to, value.isInf).cssObject(key);
+      const css = rslin(
+        theme.space[value.from] || value.from,
+        theme.space[value.to] || value.to,
+        value.isInf
+      ).cssObject(key);
 
       for (let media in css) {
         next[media] = next[media] || {};
