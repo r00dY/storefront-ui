@@ -1,0 +1,296 @@
+import Test from "../components/Test";
+import Fullscreen from "../components/Fullscreen";
+import Box from "@commerce-ui/core2/Box";
+
+# Styling
+
+Create a theme object to include custom color, typography, and layout values.
+
+```javascript
+// example theme.js
+
+export default {
+  colors: {
+    primary: "#33e"
+  },
+  fonts: {
+    body: {
+      fontSize: 16,
+      fontFamily: "sans-serif",
+      lineHeight: 1.2
+    },
+    body2: {
+      fontSize: 14,
+      fontFamily: "sans-serif",
+      lineHeight: 1.2
+    },
+    label: {
+      fontSize: 13,
+      fontFamily: "sans-serif",
+      lineHeight: 1,
+      fontWeight: 600,
+      textTransform: "uppercase"
+    },
+    heading: {
+      fontSize: lin(24, 32),
+      fontFamily: "sans-serif"
+    }
+  }
+};
+```
+
+## Using theme values in code, `Box` component
+
+In order to fully take advantage of `commerce-ui`, you should use `Box` component instead of standard HTML tags like `<div>`, `<span>`, `<section>`, etc.
+
+Instead of this:
+
+```jsx
+<div>
+    <ul>
+        <li>One</li>
+        <li>Two</li>
+        <li>Three</li>
+    </ul>
+<div>
+```
+
+Do this:
+
+```jsx
+<Box>
+    <Box as='ul'>
+        <Box as='li'>One</Box>
+        <Box as='li'>Two</Box>
+        <Box as='li'>Three</Box>
+    </ul>
+<Box>
+```
+
+`Box` does couple of important things:
+
+1. It has by default `box-sizing: border-box;`
+2. `margin`, `padding` and `border` are respectively `0` and `none`.
+3. Lists have no styling.
+4. `Box` can consume values from theme and have very handy syntax for responsive styles.
+
+## Adding CSS, `sx` prop
+
+To style elements in `Box` you should use `sx` property:
+
+```jsx live=true
+<Box
+  sx={{
+    color: "white",
+    backgroundColor: "coral",
+    borderRadius: "4px",
+    paddingTop: "8px",
+    paddingBottom: "8px",
+    paddingLeft: "16px",
+    paddingRight: "16px"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+### Short property names
+
+`sx` prop comes with handy shorthand names for commonly used CSS properties:
+
+| Prop                  | CSS Property                       |
+| --------------------- | ---------------------------------- |
+| `bg`,                 | `backgroundColor`                  |
+| `m`, `margin`         | `margin`                           |
+| `mt`, `marginTop`     | `margin-top`                       |
+| `mr`, `marginRight`   | `margin-right`                     |
+| `mb`, `marginBottom`  | `margin-bottom`                    |
+| `ml`, `marginLeft`    | `margin-left`                      |
+| `mx`                  | `margin-left` and `margin-right`   |
+| `my`                  | `margin-top` and `margin-bottom`   |
+| `p`, `padding`        | `padding`                          |
+| `pt`, `paddingTop`    | `padding-top`                      |
+| `pr`, `paddingRight`  | `padding-right`                    |
+| `pb`, `paddingBottom` | `padding-bottom`                   |
+| `pl`, `paddingLeft`   | `padding-left`                     |
+| `px`                  | `padding-left` and `padding-right` |
+| `py`                  | `padding-top` and `padding-bottom` |
+
+So above-mentioned code could be written as:
+
+```jsx live=true
+<Box
+  sx={{
+    color: "white",
+    bg: "coral",
+    borderRadius: "4px",
+    px: "16px",
+    py: "8px"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+## Theme values
+
+`sx` prop can consume values defined in a global theme object.
+
+### Colors
+
+Below we use color `primary` and `mono200` from our theme:
+
+```jsx live=true
+<Box
+  sx={{
+    color: "primary",
+    bg: "mono200",
+    borderRadius: "4px",
+    px: "16px",
+    py: "8px"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+### Spacings
+
+You can specify `space` property in a theme which defines standardized spacing scale.
+
+```javascript
+const theme = {
+  space: [0, 1, 2, 4, 6, 8, 12, 16, 20, 24, 30, 36, 48, 60]
+  // ...rest of the theme values
+};
+```
+
+Now you can use it in your project:
+
+```jsx live=true
+<Box
+  sx={{
+    color: "primary",
+    bg: "mono200",
+    borderRadius: 3,
+    px: 7,
+    py: 5
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+Sometimes you want _named_ spacings, for example for big spacings between sections. You can easily add named spacings too:
+
+```javascript
+const space = [0, 1, 2, 4, 6, 8, 12, 16, 20, 24, 30, 36, 48, 60];
+space.s1 = 16;
+space.s2 = 32;
+space.s3 = 50;
+
+const theme = {
+  space
+  // ...rest of the theme values
+};
+```
+
+Now you could use them in your code:
+
+```jsx
+<SectionHeader sx={{mb: "s3"}} />
+<SectionContent />
+```
+
+### Fonts
+
+You can defined a finite set of fonts that are used in your app:
+
+```javascript
+export default {
+  fonts: {
+    body: {
+      fontSize: 16,
+      fontFamily: "sans-serif",
+      lineHeight: 1.2
+    },
+    body2: {
+      fontSize: 14,
+      fontFamily: "sans-serif",
+      lineHeight: 1.2
+    },
+    label: {
+      fontSize: 13,
+      fontFamily: "sans-serif",
+      lineHeight: 1,
+      fontWeight: 600,
+      textTransform: "uppercase"
+    },
+    heading: {
+      fontSize: lin(24, 32),
+      fontFamily: "sans-serif"
+    }
+  }
+  // ...rest of theme
+};
+```
+
+Now, to use selected fonts, use special `font` property in your `Box`:
+
+```jsx live=true
+<Box
+  sx={{
+    color: "primary",
+    bg: "mono200",
+    borderRadius: 3,
+    px: 7,
+    py: 5,
+    font: "label"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+### Theme values and shorthand CSS properties
+
+Remember that theme values won't work with shorthand properties. In the code below, border color won't be set properly:
+
+```jsx live=true
+<Box
+  sx={{
+    p: "8px",
+    border: "1px solid primary"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+You should do this instead:
+
+```jsx live=true
+<Box
+  sx={{
+    p: "8px",
+    borderWidth: "1px",
+    borderStyle: "solid",
+    borderColor: "primary"
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+If you really want to use theme value in a shorthand property, there's a little hack for that too:
+
+```jsx live=true
+<Box
+  sx={{
+    p: "8px",
+    border: t => `1px solid ${t.colors.primary}`
+  }}
+>
+  Lorem ipsum
+</Box>
+```

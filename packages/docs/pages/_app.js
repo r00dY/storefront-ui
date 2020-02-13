@@ -8,6 +8,11 @@ import { Box } from "theme-ui";
 import Prism from "@theme-ui/prism";
 import Fullscreen from "../components/Fullscreen";
 
+import { ThemeProvider as ThemeProvider_ } from "@commerce-ui/core2/theme";
+import theme_ from "../theme-commerceui";
+
+import Link from "next/link";
+
 const font = {
   fontFamily: "sans-serif"
 };
@@ -64,35 +69,43 @@ const components = {
 // {/*</MDXProvider>*/}
 
 const App_ = ({ Component, pageProps }) => (
-  <ThemeProvider theme={theme} components={components}>
-    <Box as={"header"} px={PAGE_PADDING} py={3}>
-      <strong>commerce-ui</strong>
-    </Box>
+  <ThemeProvider_ theme={theme_}>
+    <ThemeProvider theme={theme} components={components}>
+      <Box as={"header"} px={PAGE_PADDING} py={3}>
+        <strong>commerce-ui</strong>
+      </Box>
 
-    <Box
-      sx={{
-        mb: 6
-      }}
-    >
       <Box
         sx={{
-          px: PAGE_PADDING,
-          pt: 4,
-          pb: 5
+          mb: 6
         }}
       >
-        <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
-          <Box as={"li"}>First chapter</Box>
-          <Box as={"li"}>Second chapter</Box>
-          <Box as={"li"}>Third chapter</Box>
-          <Box as={"li"}>Fourth chapter</Box>
+        <Box
+          sx={{
+            px: PAGE_PADDING,
+            pt: 4,
+            pb: 5
+          }}
+        >
+          <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
+            <Box as={"li"}>
+              <Link href={"/styling"}>
+                <a>Styling, Box, and sx property</a>
+              </Link>
+            </Box>
+            <Box as={"li"}>
+              <Link href={"/image"}>
+                <a>Image</a>
+              </Link>
+            </Box>
+          </Box>
+        </Box>
+        <Box>
+          <Component {...pageProps} />
         </Box>
       </Box>
-      <Box>
-        <Component {...pageProps} />
-      </Box>
-    </Box>
-  </ThemeProvider>
+    </ThemeProvider>
+  </ThemeProvider_>
 );
 
 App_.getInitialProps = async appContext => {

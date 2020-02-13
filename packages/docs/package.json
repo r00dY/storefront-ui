@@ -24,7 +24,8 @@
     "next": "^9.2.1",
     "prism-react-renderer": "^1.0.2",
     "react-live": "^2.2.2",
-    "theme-ui": "^0.3.1"
+    "theme-ui": "^0.3.1",
+    "@commerce-ui/core2": "^0.10.2"
   },
   "scripts": {
     "dev": "next --port 3333",

@@ -4,8 +4,8 @@ export default props => (
   <div
     style={{
       padding: "16px",
-      backgroundColor: "lightgrey",
-      color: props.color || "red"
+      backgroundColor: "#eaeaea",
+      color: props.color || "coral"
     }}
   >
     <h1>test</h1>

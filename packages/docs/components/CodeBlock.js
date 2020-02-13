@@ -12,6 +12,14 @@ import Prism from "@theme-ui/prism";
 
 import { Box } from "theme-ui";
 
+import Box_ from "@commerce-ui/core2/Box";
+
+const scope = {
+  Test,
+  Box: Box_,
+  mdx
+};
+
 export default props => {
   const { children, className, live, render } = props;
 
@@ -70,7 +78,7 @@ export default props => {
         <LiveProvider
           code={children.trim()}
           transformCode={code => "/** @jsx mdx */" + code}
-          scope={{ mdx, Test }}
+          scope={scope}
           theme={prismTheme}
         >
           <Box
