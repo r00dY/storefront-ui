@@ -294,3 +294,33 @@ If you really want to use theme value in a shorthand property, there's a little 
   Lorem ipsum
 </Box>
 ```
+
+## Responsive styles
+
+The `sx` prop also supports using arrays as values to change properties responsively with a mobile-first approach.
+
+**Play with resizing your browser to test example below!**
+
+```jsx live=true
+/** @jsx jsx */
+<Box
+  sx={{
+    bg: "mono200",
+    borderRadius: 3,
+    px: 7,
+    py: 5,
+    textAlign: "center",
+
+    // applies width 100% to all viewport widths,
+    // width 50% above the first breakpoint,
+    // and 25% above the next breakpoint
+    width: ["100%", "50%", "25%"],
+
+    // every CSS property can be responsive
+    // null doesn't apply a value to a breakpoint
+    color: ["primary", null, "negative", "positive"]
+  }}
+>
+  Lorem ipsum
+</Box>
+```
