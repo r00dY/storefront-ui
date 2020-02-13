@@ -16,6 +16,10 @@ import Box_ from "@commerce-ui/core2/Box";
 import { lin } from "@commerce-ui/core2";
 import images from "../images";
 import Image from "@commerce-ui/core2/Image";
+import ButtonText from "@commerce-ui/core2/ButtonText";
+import ButtonIcon from "@commerce-ui/core2/ButtonIcon";
+
+import IconCart from "../svg/add_shopping_cart.svg";
 
 const scope = {
   Test,
@@ -23,58 +27,16 @@ const scope = {
   mdx,
   lin,
   images,
-  Image
+  Image,
+  ButtonText,
+  ButtonIcon,
+  IconCart
 };
 
 export default props => {
   const { children, className, live, render } = props;
 
   const language = className.replace(/language-/, "");
-
-  // if (live) {
-  //   return (
-  //     <Box>
-  //       <LiveProvider
-  //         code={children.trim()}
-  //         transformCode={code => "/** @jsx mdx */" + code}
-  //         scope={{ mdx, Test }}
-  //         theme={prismTheme}
-  //       >
-  //         <Box
-  //             sx={{
-  //                 border: `1px solid ${prismTheme.plain.backgroundColor}`
-  //             }}
-  //         >
-  //           <Box m={"1em"}>
-  //             <LivePreview />
-  //           </Box>
-  //           <Box
-  //               mx={"1.25em"}
-  //               color={"#DF4F5C"}
-  //           >
-  //             <LiveError />
-  //           </Box>
-  //           <Box
-  //               p={"0.5em"}
-  //               bg={prismTheme.plain.backgroundColor}
-  //           >
-  //             <LiveEditor />
-  //           </Box>
-  //         </Box>
-  //       </LiveProvider>
-  //     </Box>
-  //   );
-  // }
-  //
-  // if (render) {
-  //   return (
-  //     <div style={{ marginTop: "40px" }}>
-  //       <LiveProvider code={children}>
-  //         <LivePreview />
-  //       </LiveProvider>
-  //     </div>
-  //   );
-  // }
 
   // TODO: temporary - not live
 
@@ -107,6 +69,8 @@ export default props => {
       </Box>
     );
   }
+
+  console.log(props);
 
   return <Prism {...props} />;
 

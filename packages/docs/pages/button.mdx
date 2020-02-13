@@ -1,0 +1,52 @@
+import Test from "../components/Test";
+import Image from "@commerce-ui/core2/Image";
+import images from "../images";
+import ButtonText from "@commerce-ui/core2/ButtonText";
+import IconCart from "../svg/add_shopping_cart.svg";
+
+# Button
+
+`commerce-ui` comes with handy helpers for creating buttons in your e-commerce.
+
+However, we don't ship a button that have properties like `shape`, `size`, or anything like it. Every project is unique and you have full freedom in building any buttons you want.
+
+## `ButtonText`
+
+This is the helper for creating buttons that have:
+
+- text label
+- left icon
+- right icon
+- left enhancer (any component)
+- right enhancer (any component)
+
+By default it's very raw:
+
+```jsx live=true
+<ButtonText leftIcon={<IconCart />}>Click me!</ButtonText>
+```
+
+Let's style it a little bit:
+
+```jsx live=true
+<ButtonText
+  leftIcon={<IconCart />}
+  sx={{
+    minHeight: "44px",
+    px: 4,
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: "1px",
+    borderRadius: "6px",
+    color: "black",
+    overflow: "hidden",
+    font: "label",
+    $background: {
+      bg: "lightgrey"
+    },
+    $gap: 2
+  }}
+>
+  Click me!
+</ButtonText>
+```

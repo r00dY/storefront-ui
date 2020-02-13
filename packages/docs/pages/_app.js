@@ -5,7 +5,6 @@ import App from "next/app";
 import Prism from "@theme-ui/prism";
 import Fullscreen from "../components/Fullscreen";
 
-
 import { ThemeProvider } from "theme-ui";
 import { Box } from "theme-ui";
 import theme from "../theme";
@@ -71,7 +70,7 @@ const components = {
 // {/*</MDXProvider>*/}
 
 const App_ = ({ Component, pageProps }) => (
-    <ThemeProvider_ theme={theme_}>
+  <ThemeProvider_ theme={theme_}>
     <ThemeProvider theme={theme} components={components}>
       <Box as={"header"} px={PAGE_PADDING} py={3}>
         <strong>commerce-ui</strong>
@@ -100,6 +99,11 @@ const App_ = ({ Component, pageProps }) => (
                 <a>Image</a>
               </Link>
             </Box>
+            <Box as={"li"}>
+              <Link href={"/button"}>
+                <a>Button</a>
+              </Link>
+            </Box>
           </Box>
         </Box>
         <Box>
@@ -107,7 +111,7 @@ const App_ = ({ Component, pageProps }) => (
         </Box>
       </Box>
     </ThemeProvider>
-    </ThemeProvider_>
+  </ThemeProvider_>
 );
 
 App_.getInitialProps = async appContext => {
