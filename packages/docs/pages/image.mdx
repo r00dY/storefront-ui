@@ -1,5 +1,177 @@
 import Test from "../components/Test";
+import Image from "@commerce-ui/core2/Image";
+import images from "../images";
 
 # Image
 
-Lorem ipsum
+`commerce-ui` comes with built-in `Image` component. You should always use it when dealing with images. Features of `Image`:
+
+- always takes space for image even if image is not loaded yet. This prevents layout jumping around when images load
+- built-in lazy loading mechanism (uses `loading="lazy"` for browsers which support it!)
+- deals easily with different image variants changing for different resolutions. Like square image on mobile and panoramic image on desktop.
+
+## Data format
+
+Image requires images to come in a following format:
+
+```javascript
+const image = {
+    altText: "Sweet kitty",
+    originalSrc: "/cat/cat_1920.png",
+    variants: [
+        {
+            name: "natural",
+            aspectRatio: 1.786,
+            srcset: [
+                {
+                    url: "/cat/cat_420.png",
+                    w: 420,
+                    h: 236
+                },
+                {
+                    url: "/cat/cat_768.png",
+                    w: 768,
+                    h: 430
+                },
+                {
+                    url: "/cat/cat_1024.png",
+                    w: 1024,
+                    h: 534
+                },
+                {
+                    url: "/cat/cat_1280.png",
+                    w: 1280,
+                    h: 717
+                },
+                {
+                    url: "/cat/cat_1600.png",
+                    w: 1600,
+                    h: 896
+                },
+                {
+                    url: "/cat/cat_1920.png",
+                    w: 1920,
+                    h: 1075
+                }
+            ]
+        },
+        {
+            name: "portrait",
+            aspectRatio: 0.95611578,
+            srcset: [
+                {
+                    url: "/cat/cat_p420.png",
+                    w: 420,
+                    h: 489
+                },
+                {
+                    url: "/cat/cat_p768.png",
+                    w: 768,
+                    h: 894
+                },
+                {
+                    url: "/cat/cat_p920.png",
+                    w: 1024,
+                    h: 1071
+                }
+            ]
+        }
+    ]
+};
+```
+
+Variant "natural"` should always be present in the image!
+
+## Examples
+
+Most basic image usage
+
+```jsx live=true
+<Image image={images.cat} />
+```
+
+#### Variants
+
+If you want to pick other image variant than `natural`, you can use `variant` property in your `sx`:
+
+```jsx live=true
+<Image image={images.cat} sx={{
+    variant: "portrait"
+ }}/>
+```
+
+Variants can be responsive:
+
+```jsx live=true
+
+<Image
+  image={images.cat}
+  sx={{
+    variant: ["portrait", null, "natural"]
+  }}
+/>
+```
+
+
+#### Sizing
+
+You can set size of the image explicitly. By default it has `objectFit: cover` mode:
+
+```jsx live=true
+<Image
+    image={images.cat}
+    sx={{
+        height: "200px"
+    }}
+/>
+```
+
+#### `objectFit` and `objectPosition`
+
+You can use different mode by using `objectFit` property:
+
+```jsx live=true
+<Box sx={{ border: "1px dotted black" }}>
+  <Image
+    image={images.cat}
+    sx={{
+      height: "600px",
+      objectFit: "contain"
+    }}
+  />
+</Box>
+```
+
+`objectPosition` is available too:
+
+```jsx live=true
+<Box sx={{ border: "1px dotted black" }}>
+  <Image
+    image={images.cat}
+    sx={{
+      height: "600px",
+      objectFit: "contain",
+      objectPosition: "top left"
+    }}
+  />
+</Box>
+```
+
+#### Responsive properties
+
+Let's play a bit with responsive props:
+
+```jsx live=true
+<Box sx={{ border: "1px dotted black" }}>
+  <Image
+    image={images.cat}
+    sx={{
+      height: ["400px", null, "600px"],
+      variant: ["portrait", null, "natural"],
+      objectFit: ["cover", null, "contain"],
+      objectPosition: ["top left", null, "bottom right"]
+    }}
+  />
+</Box>
+```
+

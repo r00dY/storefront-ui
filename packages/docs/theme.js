@@ -1,7 +1,15 @@
 // import prism from '@theme-ui/prism/presets/theme-ui'
 import prismTheme from "@theme-ui/prism/presets/duotone-light.json";
 
+const breakpoints = ["420px", "720px", "960px", "1200px", "1600px"];
+breakpoints.xs = breakpoints[0];
+breakpoints.sm = breakpoints[1];
+breakpoints.md = breakpoints[2];
+breakpoints.lg = breakpoints[3];
+breakpoints.xl = breakpoints[4];
+
 export default {
+  breakpoints,
   colors: {
     text: "#000000",
     background: "#ffffff",

@@ -99,8 +99,6 @@ function Image$(props) {
           `${(1 / findVariant(image, variantName).aspectRatio) * 100}%`
       );
 
-  console.log("pb", paddingBottom);
-
   const specialStyles = {
     objectFit,
     objectPosition,

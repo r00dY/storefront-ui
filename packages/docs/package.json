@@ -17,15 +17,15 @@
   "version": "0.0.1",
   "license": "GPL-3.0",
   "dependencies": {
+    "@commerce-ui/core2": "^0.10.2",
     "@mdx-js/loader": "^1.5.5",
+    "@mdx-js/react": "^1.5.5",
     "@next/mdx": "^9.2.1",
     "@theme-ui/prism": "^0.3.0",
-    "fs": "0.0.1-security",
     "next": "^9.2.1",
     "prism-react-renderer": "^1.0.2",
     "react-live": "^2.2.2",
-    "theme-ui": "^0.3.1",
-    "@commerce-ui/core2": "^0.10.2"
+    "theme-ui": "^0.3.1"
   },
   "scripts": {
     "dev": "next --port 3333",

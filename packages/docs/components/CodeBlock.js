@@ -14,12 +14,16 @@ import { Box } from "theme-ui";
 
 import Box_ from "@commerce-ui/core2/Box";
 import { lin } from "@commerce-ui/core2";
+import images from "../images";
+import Image from "@commerce-ui/core2/Image";
 
 const scope = {
   Test,
   Box: Box_,
   mdx,
-  lin
+  lin,
+  images,
+  Image
 };
 
 export default props => {

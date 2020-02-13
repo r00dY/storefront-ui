@@ -2,11 +2,13 @@ import React from "react";
 import { MDXProvider } from "@mdx-js/react";
 import CodeBlock from "../components/CodeBlock";
 import App from "next/app";
-import { ThemeProvider } from "theme-ui";
-import theme from "../theme";
-import { Box } from "theme-ui";
 import Prism from "@theme-ui/prism";
 import Fullscreen from "../components/Fullscreen";
+
+
+import { ThemeProvider } from "theme-ui";
+import { Box } from "theme-ui";
+import theme from "../theme";
 
 import { ThemeProvider as ThemeProvider_ } from "@commerce-ui/core2/theme";
 import theme_ from "../theme-commerceui";
@@ -69,7 +71,7 @@ const components = {
 // {/*</MDXProvider>*/}
 
 const App_ = ({ Component, pageProps }) => (
-  <ThemeProvider_ theme={theme_}>
+    <ThemeProvider_ theme={theme_}>
     <ThemeProvider theme={theme} components={components}>
       <Box as={"header"} px={PAGE_PADDING} py={3}>
         <strong>commerce-ui</strong>
@@ -105,7 +107,7 @@ const App_ = ({ Component, pageProps }) => (
         </Box>
       </Box>
     </ThemeProvider>
-  </ThemeProvider_>
+    </ThemeProvider_>
 );
 
 App_.getInitialProps = async appContext => {
