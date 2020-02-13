@@ -175,3 +175,35 @@ Let's play a bit with responsive props:
 </Box>
 ```
 
+#### Explicit aspect ratio
+
+You can set any aspect ratio you want for image with an `aspectRatio` `sx` prop:
+
+```jsx live=true
+<Image
+  image={images.cat}
+  sx={{
+    aspectRatio: [0.3, null, 0.2, null, 0.1]
+  }}
+/>
+```
+
+#### Overlay
+
+You can quickly add overlay on any image:
+
+```jsx live=true
+<Image image={images.cat}>
+    <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          bg: "rgba(255, 0, 0, 0.5)"
+        }}
+    />
+</Image>
+```
+
