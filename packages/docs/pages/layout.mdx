@@ -128,6 +128,31 @@ Horizontal gap can be custom too:
 </Container>
 ```
 
+Setting CSS grid properties to children:
+
+```javascript live=true fullscreen=true
+<Container>
+  <Grid>
+    {Array.from(Array(32).keys()).map(x => (
+      <Box
+        key={x}
+        sx={{
+          p: 7,
+          bg: "coral",
+          color: "white",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          gridColumnStart: ["span 6", null, "span 4", "span 2"] // We set gridColumnSpan for children! Grid has fixed 12 cols.
+        }}
+      >
+        Test
+      </Box>
+    ))}
+  </Grid>
+</Container>
+```
+
 #### `minItemWidth`
 
 `Grid` comes with a `minItemWidth` property. If used, number of columns will be automatic so that item width won't be lower than `minItemWidth`.
