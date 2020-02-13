@@ -13,11 +13,13 @@ import Prism from "@theme-ui/prism";
 import { Box } from "theme-ui";
 
 import Box_ from "@commerce-ui/core2/Box";
+import { lin } from "@commerce-ui/core2";
 
 const scope = {
   Test,
   Box: Box_,
-  mdx
+  mdx,
+  lin
 };
 
 export default props => {

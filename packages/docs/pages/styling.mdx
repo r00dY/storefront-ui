@@ -1,6 +1,7 @@
 import Test from "../components/Test";
 import Fullscreen from "../components/Fullscreen";
 import Box from "@commerce-ui/core2/Box";
+import { lin } from "@commerce-ui/core2";
 
 # Styling
 
@@ -299,10 +300,7 @@ If you really want to use theme value in a shorthand property, there's a little 
 
 The `sx` prop also supports using arrays as values to change properties responsively with a mobile-first approach.
 
-**Play with resizing your browser to test example below!**
-
 ```jsx live=true
-/** @jsx jsx */
 <Box
   sx={{
     bg: "mono200",
@@ -319,6 +317,44 @@ The `sx` prop also supports using arrays as values to change properties responsi
     // every CSS property can be responsive
     // null doesn't apply a value to a breakpoint
     color: ["primary", null, "negative", "positive"]
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+## Linear sizing
+
+You can use `lin` helper function to use linear spacings.
+
+Remember to import it first:
+
+```javascript
+import { lin } from "@commerce-ui/core2";
+```
+
+```jsx live=true
+<Box
+  sx={{
+    bg: "mono200",
+    color: "primary",
+    borderRadius: 4,
+    p: lin(25, 100)
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
+You can use values from `space` scale in `lin` function:
+
+```jsx live=true
+<Box
+  sx={{
+    bg: "mono200",
+    color: "primary",
+    borderRadius: 4,
+    p: lin(4, 8)
   }}
 >
   Lorem ipsum
