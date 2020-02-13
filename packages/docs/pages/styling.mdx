@@ -346,6 +346,21 @@ import { lin } from "@commerce-ui/core2";
 </Box>
 ```
 
+`lin` can be mixed with array responsive styles:
+
+```jsx live=true
+<Box
+  sx={{
+    bg: "mono200",
+    color: "primary",
+    borderRadius: 4,
+    p: [0, null, lin(25, 100)]
+  }}
+>
+  Lorem ipsum
+</Box>
+```
+
 You can use values from `space` scale in `lin` function:
 
 ```jsx live=true
