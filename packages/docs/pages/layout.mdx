@@ -35,3 +35,19 @@ As you see, apart from `main` we also defined `secondary` container. We can use 
   <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
 </Container>
 ```
+
+If you want to contextually create a different `Container` and not put it into a theme, this is how you do it:
+
+```javascript live=true fullscreen=true
+<Container variant={["20px", "40px", "60px", "80px", "100px"]}>
+  <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
+</Container>
+```
+
+You can easily add styles like background or margin to a `Container`:
+
+```javascript live=true fullscreen=true
+<Container sx={{ bg: "coral", py: 8 }}>
+  <Box>Lorem ipsum dolor sit amet</Box>
+</Container>
+```
