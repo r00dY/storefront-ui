@@ -245,7 +245,7 @@ export const css = args => (props = {}) => {
 
     /** MODIFICATION 1, special value font **/
     if (key === "font") {
-      const variant = css(get(theme, "fonts." + val))(theme);
+      const variant = css(get(theme, "typography." + val))(theme);
       result = { ...result, ...variant };
       continue;
     }

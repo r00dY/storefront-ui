@@ -1,0 +1,37 @@
+# Layout, Container and Grid
+
+Any well-designed project should be done in a grid. This chapter describes how to code grid in your project.
+
+## `Container`
+
+Main element is `Container`. It doesn't do much, just creates a container with margins.
+
+```javascript live=true fullscreen=true
+<Container>
+  <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
+</Container>
+```
+
+By default `Container` has `10vw` margin.
+
+You can change default in a theme by setting `containers.main` value:
+
+```javascript
+// theme.js
+
+export default {
+  containers: {
+    main: ["10px", null, "10vw"],
+    secondary: ["30vw", null, null, "20vw"]
+  }
+  // remaining config...
+};
+```
+
+As you see, apart from `main` we also defined `secondary` container. We can use it this way:
+
+```javascript live=true fullscreen=true
+<Container variant={"secondary"}>
+  <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
+</Container>
+```

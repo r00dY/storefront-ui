@@ -4,9 +4,9 @@ import Box from "../Box";
 
 function fontStories(options = {}) {
   let stories = [];
-  const { fonts } = useTheme();
+  const { typography } = useTheme();
 
-  for (let font in fonts) {
+  for (let font in typography) {
     stories.push({
       name: font,
       component: (

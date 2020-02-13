@@ -9,9 +9,6 @@ import { ThemeProvider } from "theme-ui";
 import { Box } from "theme-ui";
 import theme from "../theme";
 
-import { ThemeProvider as ThemeProvider_ } from "@commerce-ui/core2/theme";
-import theme_ from "../theme-commerceui";
-
 import Link from "next/link";
 
 const font = {
@@ -37,7 +34,7 @@ const mdComponents = {
   )
 };
 
-const PAGE_PADDING = [3, null, 6];
+const PAGE_PADDING = [6, null, "120px"];
 
 const components = {
   pre: ({ children }) => <>{children}</>,
@@ -46,6 +43,13 @@ const components = {
   wrapper: ({ children, ...props }) => {
     return React.Children.toArray(children).map(x => {
       if (x.props.originalType === Fullscreen) {
+        return x;
+      }
+
+      if (
+        x.props.originalType === "pre" &&
+        x.props.children.props.fullscreen === "true"
+      ) {
         return x;
       }
 
@@ -70,48 +74,51 @@ const components = {
 // {/*</MDXProvider>*/}
 
 const App_ = ({ Component, pageProps }) => (
-  <ThemeProvider_ theme={theme_}>
-    <ThemeProvider theme={theme} components={components}>
-      <Box as={"header"} px={PAGE_PADDING} py={3}>
-        <strong>commerce-ui</strong>
-      </Box>
+  <ThemeProvider theme={theme} components={components}>
+    <Box as={"header"} px={PAGE_PADDING} py={8}>
+      <strong>commerce-ui</strong>
+    </Box>
 
+    <Box
+      sx={{
+        mb: 12
+      }}
+    >
       <Box
         sx={{
-          mb: 6
+          px: PAGE_PADDING,
+          pt: 12,
+          pb: 12
         }}
       >
-        <Box
-          sx={{
-            px: PAGE_PADDING,
-            pt: 4,
-            pb: 5
-          }}
-        >
-          <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
-            <Box as={"li"}>
-              <Link href={"/styling"}>
-                <a>Styling, Box, and sx property</a>
-              </Link>
-            </Box>
-            <Box as={"li"}>
-              <Link href={"/image"}>
-                <a>Image</a>
-              </Link>
-            </Box>
-            <Box as={"li"}>
-              <Link href={"/button"}>
-                <a>Button</a>
-              </Link>
-            </Box>
+        <Box as={"ul"} sx={{ listStyle: "none", margin: 0, padding: 0 }}>
+          <Box as={"li"}>
+            <Link href={"/styling"}>
+              <a>Styling, Box, and sx property</a>
+            </Link>
+          </Box>
+          <Box as={"li"}>
+            <Link href={"/image"}>
+              <a>Image</a>
+            </Link>
+          </Box>
+          <Box as={"li"}>
+            <Link href={"/button"}>
+              <a>Button</a>
+            </Link>
+          </Box>
+          <Box as={"li"}>
+            <Link href={"/layout"}>
+              <a>Layout, Container and Grid</a>
+            </Link>
           </Box>
         </Box>
-        <Box>
-          <Component {...pageProps} />
-        </Box>
       </Box>
-    </ThemeProvider>
-  </ThemeProvider_>
+      <Box>
+        <Component {...pageProps} />
+      </Box>
+    </Box>
+  </ThemeProvider>
 );
 
 App_.getInitialProps = async appContext => {

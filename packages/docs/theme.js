@@ -1,15 +1,9 @@
 // import prism from '@theme-ui/prism/presets/theme-ui'
 import prismTheme from "@theme-ui/prism/presets/duotone-light.json";
 
-const breakpoints = ["420px", "720px", "960px", "1200px", "1600px"];
-breakpoints.xs = breakpoints[0];
-breakpoints.sm = breakpoints[1];
-breakpoints.md = breakpoints[2];
-breakpoints.lg = breakpoints[3];
-breakpoints.xl = breakpoints[4];
+import themeCommerceUI from "./theme-commerceui";
 
 export default {
-  breakpoints,
   colors: {
     text: "#000000",
     background: "#ffffff",
@@ -51,7 +45,8 @@ export default {
         muted: "hsl(10, 20%, 94%)",
         gray: "hsl(10, 20%, 50%)"
       }
-    }
+    },
+    ...themeCommerceUI.colors
   },
   fonts: {
     body:
@@ -352,6 +347,12 @@ export default {
         color: "primary"
       }
     }
-  }
+  },
+
+  typography: themeCommerceUI.typography,
+  containers: themeCommerceUI.containers,
+  gaps: themeCommerceUI.gaps,
+  breakpoints: themeCommerceUI.breakpoints,
+  space: themeCommerceUI.space
   // prism,
 };

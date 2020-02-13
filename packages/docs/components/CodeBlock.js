@@ -18,6 +18,8 @@ import images from "../images";
 import Image from "@commerce-ui/core2/Image";
 import ButtonText from "@commerce-ui/core2/ButtonText";
 import ButtonIcon from "@commerce-ui/core2/ButtonIcon";
+import Grid from "@commerce-ui/core2/Grid";
+import Container from "@commerce-ui/core2/Container";
 
 import IconCart from "../svg/add_shopping_cart.svg";
 
@@ -30,7 +32,9 @@ const scope = {
   Image,
   ButtonText,
   ButtonIcon,
-  IconCart
+  IconCart,
+  Container,
+  Grid
 };
 
 export default props => {
@@ -69,8 +73,6 @@ export default props => {
       </Box>
     );
   }
-
-  console.log(props);
 
   return <Prism {...props} />;
 

@@ -12,9 +12,7 @@ breakpoints.md = breakpoints[1];
 breakpoints.lg = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
-let space = [0, 4, 8, 16, 32, 64];
-space.big = 50;
-space.responsive = rslin(20, 50);
+let space = [0, 1, 2, 4, 6, 8, 12, 16, 20, 24, 32, 40, 48, 60, 72, 84, 100];
 
 const theme = {
   colors: {
@@ -26,7 +24,7 @@ const theme = {
     ...generateColorPalette("primary", "#004175"),
     ...generateMonoPalette()
   },
-  fonts: {
+  typography: {
     body: {
       fontSize: 16,
       fontFamily: "sans-serif",
