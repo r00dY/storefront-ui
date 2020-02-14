@@ -15,15 +15,15 @@ function HorizontalStack({ sx, children, ...restProps }) {
 
   const gap = customSx.$gap || 0;
   const align = customSx.$align || "left";
+  const padding = customSx.$container || 0;
 
   let itemSize;
 
   if (customSx.$itemSize) {
     itemSize = customSx.$itemSize;
   } else if (customSx.$itemsVisible) {
-    itemSize = `calc(calc(100% - ${gap * (customSx.$itemsVisible - 1)}px) / ${
-      customSx.$itemsVisible
-    })`;
+    itemSize = `calc(calc(100% - ${gap * (customSx.$itemsVisible - 1) +
+      padding * 2}px) / ${customSx.$itemsVisible})`;
   }
 
   console.log("item size", itemSize);
@@ -34,7 +34,11 @@ function HorizontalStack({ sx, children, ...restProps }) {
         {
           position: "relative",
           display: "flex",
-          overflowX: "auto"
+          overflowX: "auto",
+          "::-webkit-scrollbar": {
+            display: "none"
+          },
+          scrollbarWidth: "none"
         },
         css
       ]}
@@ -48,12 +52,22 @@ function HorizontalStack({ sx, children, ...restProps }) {
           // mr: responsiveValueMap(align, x => x === "center" || x === "left" ? "auto" : "initial"),
         }}
       >
+        <Box
+          sx={{
+            position: "relative",
+            flexGrow: 0,
+            flexShrink: 0,
+            flexBasis: padding
+          }}
+        />
         {React.Children.map(children, (child, index) => {
+          const isFirst = index === 0;
+          const isLast = index === React.Children.count(children) - 1;
+
           return (
             <Box
               sx={{
-                marginRight:
-                  index === React.Children.count(children) - 1 ? 0 : "20px",
+                marginRight: isLast ? 0 : gap,
                 flexGrow: 0,
                 flexShrink: 0,
                 flexBasis: itemSize
@@ -63,6 +77,14 @@ function HorizontalStack({ sx, children, ...restProps }) {
             </Box>
           );
         })}
+        <Box
+          sx={{
+            position: "relative",
+            flexGrow: 0,
+            flexShrink: 0,
+            flexBasis: padding
+          }}
+        />
       </Box>
     </Box>
   );
