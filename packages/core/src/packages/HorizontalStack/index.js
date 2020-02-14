@@ -98,9 +98,6 @@ function HorizontalStack({ sx, children, ...restProps }) {
           display: "flex",
           flexDirection: "row",
           ...innerContainerStyles
-          // width: "100%",
-          // ml: responsiveValueMap(align, x => x === "center" || x === "right" ? "auto" : "initial"),
-          // mr: responsiveValueMap(align, x => x === "center" || x === "left" ? "auto" : "initial"),
         }}
       >
         <Box
@@ -112,16 +109,10 @@ function HorizontalStack({ sx, children, ...restProps }) {
           }}
         />
         {childrenArray.map((child, index) => {
-          // if (!child) {
-          //     return
-          // }
-          const isFirst = index === 0;
-          const isLast = index === childrenArray.length - 1;
-
           return (
             <Box
               sx={{
-                marginRight: isLast ? 0 : gap,
+                marginRight: index === childrenArray.length - 1 ? 0 : gap,
                 flexGrow: 0,
                 flexShrink: 0,
                 ...itemProps
