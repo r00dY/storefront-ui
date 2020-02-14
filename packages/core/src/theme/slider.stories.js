@@ -6,13 +6,15 @@ import Box from "@commerce-ui/core/Box";
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
+const container = ["5vw", null, null, "10vw"];
+
 export const basic = () => (
   <StoryWrapper
     stories={[
       {
         name: "Horizontal stack - natural item width",
         component: (
-          <Container>
+          <Container variant={container}>
             <HorizontalStack
               sx={{
                 position: "relative",
@@ -74,7 +76,7 @@ export const basic = () => (
       {
         name: "Horizontal stack - item width set directly",
         component: (
-          <Container>
+          <Container variant={container}>
             <HorizontalStack
               sx={{
                 position: "relative",
@@ -96,7 +98,7 @@ export const basic = () => (
       {
         name: "Horizontal stack - item width set by grid",
         component: (
-          <Container>
+          <Container variant={container}>
             <HorizontalStack
               sx={{
                 position: "relative",
@@ -120,11 +122,10 @@ export const basic = () => (
         component: (
           <HorizontalStack
             sx={{
-              position: "relative",
               border: "1px dotted black",
-              $gap: 20,
-              $itemsVisible: 3,
-              $container: 145
+              $gap: [20, null, null, 40],
+              $itemsVisible: [2, null, null, 3],
+              $container: container
             }}
           >
             <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>

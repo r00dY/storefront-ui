@@ -3,6 +3,10 @@ import { jsx as emotionJsx } from "@emotion/core";
 import styledSystemCss from "./css";
 import { useTheme } from "./Theme";
 
+import { RangeMap, ResponsiveSize } from "responsive-helpers";
+
+// import { R}
+
 // import { rs as rs_, rslin as rslin_ } from "responsive-helpers";
 
 function rs(config) {
@@ -212,6 +216,30 @@ function responsiveValueMap(resVal, mapper) {
     return newResVal;
   }
   return mapper(resVal);
+}
+
+/**
+ * ARITHMETICS ON RESPONSIVE ARRAYS
+ */
+
+function castResponsiveValue(resVal, Type) {
+  let config = {};
+  responsiveValueForEach(resVal, (val, breakpoint) => {
+    if (breakpoint === null) {
+      config[0] = val;
+    } else {
+      config[parseInt(breakpoint)] = val;
+    }
+  });
+  return new Type(config);
+}
+
+export function responsiveValueToRangeMap(resVal) {
+  return castResponsiveValue(resVal, RangeMap);
+}
+
+export function responsiveValueToResponsiveSize(resVal) {
+  return castResponsiveValue(resVal, ResponsiveSize);
 }
 
 // Helper for quick creating of components

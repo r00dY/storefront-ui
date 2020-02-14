@@ -3,7 +3,8 @@ import React from "react";
 import { jsx, splitSx } from "..";
 import Box from "../Box";
 
-import { responsiveValueMap } from "..";
+import { responsiveValueToRangeMap, responsiveValueToResponsiveSize } from "..";
+import { rs } from "responsive-helpers";
 
 /**
  * Helper component placing components next to each other with gutter.
@@ -17,16 +18,33 @@ function HorizontalStack({ sx, children, ...restProps }) {
   const align = customSx.$align || "left";
   const padding = customSx.$container || 0;
 
-  let itemSize;
+  let itemProps;
 
   if (customSx.$itemSize) {
-    itemSize = customSx.$itemSize;
+    itemProps = { flexBasis: customSx.$itemSize };
   } else if (customSx.$itemsVisible) {
-    itemSize = `calc(calc(100% - ${gap * (customSx.$itemsVisible - 1) +
-      padding * 2}px) / ${customSx.$itemsVisible})`;
-  }
+    // TODO: unify responsive values arithmetics
 
-  console.log("item size", itemSize);
+    let itemsVisibleMap = responsiveValueToRangeMap(customSx.$itemsVisible);
+    let paddingRs = responsiveValueToResponsiveSize(padding);
+    let gapRs = responsiveValueToResponsiveSize(gap);
+
+    let multiplier = {};
+    itemsVisibleMap.forEach((itemsVisible, range) => {
+      multiplier[range.from] = (itemsVisible - 1) / itemsVisible;
+    });
+
+    let base = rs("100%");
+    // if (!props.itemsVisibleIncludeMargins) {
+    base = base.subtract(paddingRs).subtract(paddingRs);
+    // }
+
+    let size = base
+      .divide(itemsVisibleMap)
+      .subtract(gapRs.multiply(multiplier));
+
+    itemProps = size.cssObject("flexBasis");
+  }
 
   return (
     <Box
@@ -70,7 +88,7 @@ function HorizontalStack({ sx, children, ...restProps }) {
                 marginRight: isLast ? 0 : gap,
                 flexGrow: 0,
                 flexShrink: 0,
-                flexBasis: itemSize
+                ...itemProps
               }}
             >
               {child}
