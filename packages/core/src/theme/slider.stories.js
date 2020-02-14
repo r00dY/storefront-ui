@@ -17,20 +17,32 @@ const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
         ...props
       }}
     >
-      <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-      <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+      <Box sx={{ height: "200px", bg: "coral", p: 10 }} tabIndex={0}>
+        Coral
+      </Box>
+      <Box sx={{ height: "200px", bg: "blue", p: 10 }} tabIndex={0}>
+        Blue
+      </Box>
 
       {!smallQuantity && (
-        <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+        <Box sx={{ height: "200px", bg: "red", p: 10 }} tabIndex={0}>
+          Red
+        </Box>
       )}
       {!smallQuantity && (
-        <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+        <Box sx={{ height: "200px", bg: "grey", p: 10 }} tabIndex={0}>
+          Grey
+        </Box>
       )}
       {!smallQuantity && (
-        <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+        <Box sx={{ height: "200px", bg: "yellow", p: 10 }} tabIndex={0}>
+          Yellow
+        </Box>
       )}
       {!smallQuantity && (
-        <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+        <Box sx={{ height: "200px", bg: "magenta", p: 10 }} tabIndex={0}>
+          Magenta
+        </Box>
       )}
     </HorizontalStack>
   );
