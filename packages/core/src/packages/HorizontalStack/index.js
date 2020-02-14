@@ -63,10 +63,6 @@ function HorizontalStack({ sx, children, ...restProps }) {
   /**
    * Inner container styles
    */
-  // let innerContainerStyles = {
-  //   width: "100%"
-  // };
-
   let innerContainerStyles = {
     width: responsiveValueMap(align, x => (x === "left" ? "100%" : undefined)),
     ml: responsiveValueMap(align, x =>
