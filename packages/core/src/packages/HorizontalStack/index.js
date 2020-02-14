@@ -3,7 +3,11 @@ import React from "react";
 import { jsx, splitSx } from "..";
 import Box from "../Box";
 
-import { responsiveValueToRangeMap, responsiveValueToResponsiveSize } from "..";
+import {
+  responsiveValueMap,
+  responsiveValueToRangeMap,
+  responsiveValueToResponsiveSize
+} from "..";
 import { rs } from "responsive-helpers";
 
 /**
@@ -15,15 +19,22 @@ function HorizontalStack({ sx, children, ...restProps }) {
   const [css, customSx] = splitSx(sx);
 
   const gap = customSx.$gap || 0;
-  const align = customSx.$align || "left";
+  let align = customSx.$align || "left";
   const padding = customSx.$container || 0;
 
   let itemProps;
 
   if (customSx.$itemSize) {
-    itemProps = { flexBasis: customSx.$itemSize };
+    itemProps = { width: customSx.$itemSize };
   } else if (customSx.$itemsVisible) {
     // TODO: unify responsive values arithmetics
+
+    if (align !== "left") {
+      console.warn(
+        `Warning: HorizontalStack uses $itemsVisible + $align, this behaviour is not allowed. If you want to use $align, please use $itemSize property or go with natural item widths.`
+      );
+      align = "left";
+    }
 
     let itemsVisibleMap = responsiveValueToRangeMap(customSx.$itemsVisible);
     let paddingRs = responsiveValueToResponsiveSize(padding);
@@ -43,8 +54,29 @@ function HorizontalStack({ sx, children, ...restProps }) {
       .divide(itemsVisibleMap)
       .subtract(gapRs.multiply(multiplier));
 
-    itemProps = size.cssObject("flexBasis");
+    itemProps = size.cssObject("width");
   }
+
+  /**
+   * Inner container styles
+   */
+  let innerContainerStyles = {
+    width: "100%"
+  };
+
+  if (align !== "left") {
+    innerContainerStyles = {
+      width: "auto",
+      ml: responsiveValueMap(align, x =>
+        x === "center" || x === "right" ? "auto" : "initial"
+      ),
+      mr: responsiveValueMap(align, x =>
+        x === "center" || x === "left" ? "auto" : "initial"
+      )
+    };
+  }
+
+  const childrenArray = React.Children.toArray(children);
 
   return (
     <Box
@@ -65,7 +97,8 @@ function HorizontalStack({ sx, children, ...restProps }) {
         sx={{
           display: "flex",
           flexDirection: "row",
-          width: "100%"
+          ...innerContainerStyles
+          // width: "100%",
           // ml: responsiveValueMap(align, x => x === "center" || x === "right" ? "auto" : "initial"),
           // mr: responsiveValueMap(align, x => x === "center" || x === "left" ? "auto" : "initial"),
         }}
@@ -78,9 +111,12 @@ function HorizontalStack({ sx, children, ...restProps }) {
             flexBasis: padding
           }}
         />
-        {React.Children.map(children, (child, index) => {
+        {childrenArray.map((child, index) => {
+          // if (!child) {
+          //     return
+          // }
           const isFirst = index === 0;
-          const isLast = index === React.Children.count(children) - 1;
+          const isLast = index === childrenArray.length - 1;
 
           return (
             <Box

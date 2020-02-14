@@ -8,135 +8,174 @@ import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
 const container = ["5vw", null, null, "10vw"];
 
+const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
+  const body = (
+    <HorizontalStack
+      sx={{
+        position: "relative",
+        border: "1px dotted black",
+        ...props
+      }}
+    >
+      <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
+      <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+
+      {!smallQuantity && (
+        <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+      )}
+      {!smallQuantity && (
+        <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+      )}
+      {!smallQuantity && (
+        <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+      )}
+      {!smallQuantity && (
+        <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+      )}
+    </HorizontalStack>
+  );
+
+  return {
+    name,
+    component: wrap ? <Container variant={container}> {body}</Container> : body
+  };
+};
+
+const horizontalStackStories = (name, props, wrap = true) => {
+  return [
+    horizontalStackStory(
+      `${name} - many items`,
+      { ...props, $test: "dupa" },
+      wrap,
+      false
+    ),
+    horizontalStackStory(
+      `${name} - 2 items only, align=center`,
+      { ...props, $align: "center" },
+      wrap,
+      true
+    ),
+    horizontalStackStory(
+      `${name} - 2 items only, align=right`,
+      { ...props, $align: "right" },
+      wrap,
+      true
+    )
+  ];
+};
+
 export const basic = () => (
   <StoryWrapper
     stories={[
-      {
-        name: "Horizontal stack - natural item width",
-        component: (
-          <Container variant={container}>
-            <HorizontalStack
-              sx={{
-                position: "relative",
-                border: "1px dotted black",
-                $gap: "20px"
-              }}
-            >
-              <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-              <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-              <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
-              <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
-              <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
-              <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-            </HorizontalStack>
-          </Container>
-        )
-      },
+      ...horizontalStackStories("Natural item width", {
+        $gap: 20
+      }),
+      ...horizontalStackStories("$itemSize", {
+        $gap: 20,
+        $itemSize: [200, null, null, 330]
+      }),
+
+      ...horizontalStackStories("$itemsVisible", {
+        $gap: 20,
+        $itemsVisible: [2, null, null, 3]
+      }),
+      ...horizontalStackStories(
+        "$itemsVisible + $container",
+        {
+          $gap: [20, null, null, 40],
+          $itemsVisible: [2, null, null, 3],
+          $container: container
+        },
+        false
+      )
+
+      // ...horizontalStackStories("Natural item width", { $gap: 20 }),
+      // ...horizontalStackStories("Natural item width", { $gap: 20 }),
       // {
-      //     name: "Horizontal stack - natural item width ($align = center)",
-      //     component: (
-      //         <Container>
-      //             <HorizontalStack sx={{
-      //                 position: "relative",
-      //                 border: "1px dotted black",
-      //                 $gap: 20,
-      //                 $align: "center",
-      //                 $itemWidth: 300
-      //             }}>
-      //                 <Box sx={{height: "200px",  bg: "coral", p: 10}}>Coral</Box>
-      //                 <Box sx={{height: "200px",  bg: "blue", p: 10}}>Blue</Box>
-      //                 <Box sx={{height: "200px",  bg: "red", p: 10}}>Red</Box>
-      //                 <Box sx={{height: "200px",  bg: "grey", p: 10}}>Grey</Box>
-      //                 <Box sx={{height: "200px",  bg: "yellow", p: 10}}>Yellow</Box>
-      //                 <Box sx={{height: "200px",  bg: "magenta", p: 10}}>Magenta</Box>
-      //             </HorizontalStack>
-      //         </Container>
-      //     )
+      //   name: "Horizontal stack - natural item width",
+      //   component: (
+      //     <Container variant={container}>
+      //       <HorizontalStack
+      //         sx={{
+      //           position: "relative",
+      //           border: "1px dotted black",
+      //           $gap: "20px"
+      //         }}
+      //       >
+      //         <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
+      //         <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+      //         <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+      //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+      //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+      //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+      //       </HorizontalStack>
+      //     </Container>
+      //   )
       // },
       // {
-      //     name: "Horizontal stack - natural item width ($align = right)",
-      //     component: (
-      //         <Container>
-      //             <HorizontalStack sx={{
-      //                 position: "relative",
-      //                 border: "1px dotted black",
-      //                 $gap: "20px",
-      //                 $align: "right"
-      //             }}>
-      //                 <Box sx={{height: "200px",  bg: "coral", p: 10}}>Coral</Box>
-      //                 <Box sx={{height: "200px",  bg: "blue", p: 10}}>Blue</Box>
-      //                 <Box sx={{height: "200px",  bg: "red", p: 10}}>Red</Box>
-      //                 <Box sx={{height: "200px",  bg: "grey", p: 10}}>Grey</Box>
-      //                 <Box sx={{height: "200px",  bg: "yellow", p: 10}}>Yellow</Box>
-      //                 <Box sx={{height: "200px",  bg: "magenta", p: 10}}>Magenta</Box>
-      //             </HorizontalStack>
-      //         </Container>
-      //     )
+      //   name: "Horizontal stack - item width set directly",
+      //   component: (
+      //     <Container variant={container}>
+      //       <HorizontalStack
+      //         sx={{
+      //           position: "relative",
+      //           border: "1px dotted black",
+      //           $gap: 20,
+      //           $itemSize: 300
+      //         }}
+      //       >
+      //         <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
+      //         <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+      //         <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+      //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+      //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+      //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+      //       </HorizontalStack>
+      //     </Container>
+      //   )
       // },
-      {
-        name: "Horizontal stack - item width set directly",
-        component: (
-          <Container variant={container}>
-            <HorizontalStack
-              sx={{
-                position: "relative",
-                border: "1px dotted black",
-                $gap: 20,
-                $itemSize: 300
-              }}
-            >
-              <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-              <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-              <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
-              <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
-              <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
-              <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-            </HorizontalStack>
-          </Container>
-        )
-      },
-      {
-        name: "Horizontal stack - item width set by grid",
-        component: (
-          <Container variant={container}>
-            <HorizontalStack
-              sx={{
-                position: "relative",
-                border: "1px dotted black",
-                $gap: 20,
-                $itemsVisible: 3
-              }}
-            >
-              <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-              <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-              <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
-              <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
-              <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
-              <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-            </HorizontalStack>
-          </Container>
-        )
-      },
-      {
-        name: "Horizontal stack - item width set by grid",
-        component: (
-          <HorizontalStack
-            sx={{
-              border: "1px dotted black",
-              $gap: [20, null, null, 40],
-              $itemsVisible: [2, null, null, 3],
-              $container: container
-            }}
-          >
-            <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-            <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-            <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
-            <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
-            <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
-            <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-          </HorizontalStack>
-        )
-      }
+      // {
+      //   name: "Horizontal stack - item width set by grid",
+      //   component: (
+      //     <Container variant={container}>
+      //       <HorizontalStack
+      //         sx={{
+      //           position: "relative",
+      //           border: "1px dotted black",
+      //           $gap: 20,
+      //           $itemsVisible: 3
+      //         }}
+      //       >
+      //         <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
+      //         <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+      //         <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+      //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+      //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+      //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+      //       </HorizontalStack>
+      //     </Container>
+      //   )
+      // },
+      // {
+      //   name: "Horizontal stack - item width set by grid, heavy responsiveness",
+      //   component: (
+      //     <HorizontalStack
+      //       sx={{
+      //         border: "1px dotted black",
+      //         $gap: [20, null, null, 40],
+      //         $itemsVisible: [2, null, null, 3],
+      //         $container: container
+      //       }}
+      //     >
+      //       <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
+      //       <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+      //       <Box sx={{ height: "200px", bg: "red", p: 10 }}>Red</Box>
+      //       <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
+      //       <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
+      //       <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
+      //     </HorizontalStack>
+      //   )
+      // }
 
       // {
       //   name: "Natural width",
