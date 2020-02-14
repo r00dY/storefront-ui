@@ -69,7 +69,7 @@ const horizontalStackStories = (name, props, wrap = true) => {
     ),
     horizontalStackStory(
       `${name} - 2 items only, align=right`,
-      { ...props, $align: "right" },
+      { ...props, $align: ["center", null, null, "right"] },
       wrap,
       true
     )

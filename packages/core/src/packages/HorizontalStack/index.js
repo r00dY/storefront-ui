@@ -5,6 +5,7 @@ import Box from "../Box";
 
 import {
   responsiveValueMap,
+  responsiveValueForEach,
   responsiveValueToRangeMap,
   responsiveValueToResponsiveSize
 } from "..";
@@ -29,12 +30,14 @@ function HorizontalStack({ sx, children, ...restProps }) {
   } else if (customSx.$itemsVisible) {
     // TODO: unify responsive values arithmetics
 
-    if (align !== "left") {
-      console.warn(
-        `Warning: HorizontalStack uses $itemsVisible + $align, this behaviour is not allowed. If you want to use $align, please use $itemSize property or go with natural item widths.`
-      );
-      align = "left";
-    }
+    responsiveValueForEach(align, val => {
+      if (val !== "left") {
+        console.warn(
+          `Warning: HorizontalStack uses $itemsVisible + $align, this behaviour is not allowed. If you want to use $align, please use $itemSize property or go with natural item widths.`
+        );
+      }
+    });
+    align = "left";
 
     let itemsVisibleMap = responsiveValueToRangeMap(customSx.$itemsVisible);
     let paddingRs = responsiveValueToResponsiveSize(padding);
@@ -60,21 +63,19 @@ function HorizontalStack({ sx, children, ...restProps }) {
   /**
    * Inner container styles
    */
-  let innerContainerStyles = {
-    width: "100%"
-  };
+  // let innerContainerStyles = {
+  //   width: "100%"
+  // };
 
-  if (align !== "left") {
-    innerContainerStyles = {
-      width: "auto",
-      ml: responsiveValueMap(align, x =>
-        x === "center" || x === "right" ? "auto" : "initial"
-      ),
-      mr: responsiveValueMap(align, x =>
-        x === "center" || x === "left" ? "auto" : "initial"
-      )
-    };
-  }
+  let innerContainerStyles = {
+    width: responsiveValueMap(align, x => (x === "left" ? "100%" : undefined)),
+    ml: responsiveValueMap(align, x =>
+      x === "center" || x === "right" ? "auto" : "initial"
+    ),
+    mr: responsiveValueMap(align, x =>
+      x === "center" || x === "left" ? "auto" : "initial"
+    )
+  };
 
   const childrenArray = React.Children.toArray(children);
 
@@ -117,6 +118,7 @@ function HorizontalStack({ sx, children, ...restProps }) {
                 flexShrink: 0,
                 ...itemProps
               }}
+              key={child.key}
             >
               {child}
             </Box>
