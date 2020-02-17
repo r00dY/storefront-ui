@@ -33,18 +33,36 @@ Let's style it a little bit:
   leftIcon={<IconCart />}
   sx={{
     minHeight: "44px",
-    px: 4,
-    borderColor: "black",
-    borderStyle: "solid",
-    borderWidth: "1px",
+    px: 8,
     borderRadius: "6px",
     color: "black",
     overflow: "hidden",
     font: "label",
-    $background: {
-      bg: "lightgrey"
-    },
-    $gap: 2
+    bg: "mono200",
+    $gap: 4
+  }}
+>
+  Click me!
+</ButtonText>
+```
+
+`$gap` is special property that defines gap between icons and label.
+
+Another special property is `$iconSize` which allows you to set icon size:
+
+```jsx live=true
+<ButtonText
+  leftIcon={<IconCart />}
+  sx={{
+    minHeight: "50px",
+    px: 8,
+    borderRadius: "6px",
+    color: "black",
+    overflow: "hidden",
+    font: "label",
+    bg: "mono200",
+    $gap: 4,
+    $iconSize: 32
   }}
 >
   Click me!

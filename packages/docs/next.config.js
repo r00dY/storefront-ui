@@ -15,9 +15,9 @@ module.exports = withMDX({
     // Perform customizations to webpack config
     // Important: return the modified config
 
-    // config.resolve.alias["@commerce-ui/core"] = path.resolve(
+    // config.resolve.alias["@commerce-ui/core2"] = path.resolve(
     //     __dirname,
-    //     "../core/src/packages/"
+    //     "../core2/src/packages/"
     // );
 
     config.module.rules.push({

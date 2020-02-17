@@ -24,20 +24,44 @@ export default props => {
         sx = typeof sx === "function" ? sx(state) : sx;
         const [css, customSx] = splitSx(sx);
 
-        const { $leftIcon, $rightIcon, $body, $gap, ...restSx } = customSx;
+        const {
+          $leftIcon,
+          $rightIcon,
+          $body,
+          $gap,
+          $iconSize,
+          ...restSx
+        } = customSx;
 
         const gap = $gap || 0;
+        const iconSize = $iconSize || "auto";
 
         // TODO: wrapper should not be there, styles should be applied directly to icon. We should have `size` parameter for Icons and we can have fixed amount of icon sizes!
         const leftIconWrapper = leftIcon && (
-          <Box sx={{ mr: gap, flex: "0 0 auto", ...$leftIcon }}>
+          <Box
+            sx={{
+              mr: gap,
+              flex: "0 0 auto",
+              width: iconSize,
+              height: iconSize,
+              ...$leftIcon
+            }}
+          >
             {React.cloneElement(leftIcon, {
               style: { width: "100%", height: "100%" }
             })}
           </Box>
         );
         const rightIconWrapper = rightIcon && (
-          <Box sx={{ ml: gap, flex: "0 0 auto", ...$rightIcon }}>
+          <Box
+            sx={{
+              ml: gap,
+              flex: "0 0 auto",
+              width: iconSize,
+              height: iconSize,
+              ...$rightIcon
+            }}
+          >
             {React.cloneElement(rightIcon, {
               style: { width: "100%", height: "100%" }
             })}
