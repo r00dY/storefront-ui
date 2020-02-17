@@ -5,13 +5,13 @@
     "test": "jest"
   },
   "dependencies": {
-    "@commerce-ui/data-mock": "^0.6.7",
-    "@commerce-ui/data-source-helpers": "^0.6.7",
+    "@commerce-ui/data-mock": "^0.10.3",
+    "@commerce-ui/data-source-helpers": "^0.10.3",
     "apollo-server": "^2.9.13",
     "cross-fetch": "^3.0.4",
     "graphql": "^14.5.8"
   },
-  "version": "0.6.7",
+  "version": "0.10.3",
   "devDependencies": {
     "@babel/core": "^7.7.5",
     "@babel/preset-env": "^7.7.6",
