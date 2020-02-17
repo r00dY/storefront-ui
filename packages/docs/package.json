@@ -14,7 +14,7 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.10.4",
+  "version": "0.10.3",
   "license": "GPL-3.0",
   "dependencies": {
     "@commerce-ui/core2": "^0.10.3",
