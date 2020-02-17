@@ -30,6 +30,7 @@
   "scripts": {
     "dev": "next --port 3333",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "publish": "now --target production -t $NOW_TOKEN --scope commerce-ui"
   }
 }
