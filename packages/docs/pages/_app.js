@@ -11,6 +11,8 @@ import theme from "../theme";
 
 import Link from "next/link";
 
+import packageJson from "../package.json";
+
 const font = {
   fontFamily: "sans-serif"
 };
@@ -76,7 +78,7 @@ const components = {
 const App_ = ({ Component, pageProps }) => (
   <ThemeProvider theme={theme} components={components}>
     <Box as={"header"} px={PAGE_PADDING} py={8}>
-      <strong>commerce-ui</strong>
+      <strong>commerce-ui</strong> <code>{packageJson.version}</code>
     </Box>
 
     <Box
