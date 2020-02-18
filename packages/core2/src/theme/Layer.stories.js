@@ -5,6 +5,8 @@ import Layer from "@commerce-ui/core/Layer";
 
 import Button from "./Button/Button";
 
+import Box from "@commerce-ui/core/Box";
+
 const Paragraph = () => (
   <p sx={{ maxWidth: "500px" }}>
     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
@@ -58,17 +60,20 @@ const LayerWithButton = ({
         {...restProps}
       >
         {({ anchored }) => (
-          <div
+          <Box
             sx={{
               border: "1px solid black",
               height: "100%",
               width: "100%",
+              minHeight: "inherit",
+              maxHeight: "inherit",
+              overflow: "auto",
               bg: "red",
               p: 2
             }}
           >
             {children}
-          </div>
+          </Box>
         )}
       </Layer>
     </div>
@@ -87,7 +92,7 @@ export const unstyled = () => (
 
     <LayerWithButton
       width={["90vw", null, "50vw", null, "33vw"]}
-      height={["80vh", null, "50vh", null, "33vh"]}
+      minHeight={["80vh", null, "50vh", null, "33vh"]}
     >
       <div>Lorem ipsum</div>
     </LayerWithButton>
@@ -113,86 +118,78 @@ export const unstyled = () => (
 
     <Paragraph />
 
-    <LayerWithButton anchoredOnDesktop={true} width={["90vw", null, "300px"]}>
-      <div>Lorem ipsum</div>
+    <LayerWithButton
+      anchoredOnDesktop={true}
+      width={["90vw", null, "300px"]}
+      minHeight={[null, null, "300px"]}
+      maxHeight={["50vh", null, "400px"]}
+    >
+      <div>
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+        Lorem ipsum
+        <br />
+      </div>
     </LayerWithButton>
 
-    {/*<LayerWithButton*/}
-    {/*width={["90vw", null, "50vw", null, "33vw"]}*/}
-    {/*height={["80vh", null, "50vh", null, "33vh"]}*/}
-    {/*placement={["left", "bottom", "right", "top", "center"]}*/}
-    {/*>*/}
-    {/*<div>Dupa</div>*/}
-    {/*</LayerWithButton>*/}
-
-    {/*<br />*/}
-    {/*<br />*/}
-
-    {/*<LayerWithButton*/}
-    {/*config={{*/}
-    {/*mode: "slide-from-right",*/}
-    {/*width: rs({*/}
-    {/*xs: "90vw",*/}
-    {/*md: "50vw",*/}
-    {/*lg: "33vw"*/}
-    {/*})*/}
-    {/*}}*/}
-    {/*anchoredTo={"dupa"}*/}
-    {/*>*/}
-    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>*/}
-    {/*Dupa <br />*/}
-    {/*<br />*/}
-    {/*<Button>Some button</Button>*/}
-    {/*</div>*/}
-    {/*</LayerWithButton>*/}
-
-    {/*<br />*/}
-    {/*<br />*/}
-    {/*<LayerWithButton*/}
-    {/*config={{*/}
-    {/*xs: {*/}
-    {/*mode: "slide-from-top",*/}
-    {/*height: "90%"*/}
-    {/*},*/}
-    {/*md: {*/}
-    {/*mode: "slide-from-right",*/}
-    {/*width: "50%"*/}
-    {/*}*/}
-    {/*}}*/}
-    {/*>*/}
-    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>*/}
-    {/*</LayerWithButton>*/}
-
-    {/*<br />*/}
-    {/*<LayerWithButton*/}
-    {/*config={{*/}
-    {/*anchored: true*/}
-    {/*}}*/}
-    {/*>*/}
-    {/*<div sx={{ bg: "red", p: 2 }}>Dupa</div>*/}
-    {/*</LayerWithButton>*/}
-
-    {/*<br />*/}
-    {/*<LayerWithButton*/}
-    {/*config={{*/}
-    {/*lg: {*/}
-    {/*anchored: true*/}
-    {/*},*/}
-    {/*xs: {*/}
-    {/*mode: "slide-from-right",*/}
-    {/*width: "50%"*/}
-    {/*}*/}
-    {/*}}*/}
-    {/*>*/}
-    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>*/}
-    {/*</LayerWithButton>*/}
-
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
     <Paragraph />
     <Paragraph />
     <Paragraph />

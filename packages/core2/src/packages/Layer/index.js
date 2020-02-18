@@ -17,63 +17,21 @@ import { SharedStylePropsArgT } from "../base/popover/types";
 
 import { responsiveValueForEach, responsiveValueCurrent } from "..";
 
+import Box from "../Box";
+
 const mountNode = () => {
   if (typeof document !== "undefined") {
     return document.getElementById("__layers__");
   }
 };
 
-// const globalDefaults = {
-//     animationTime: 0.3,
-//     animationEase: Ease.expoOut,
-//     backgroundColor: "rgba(0, 0, 0, 0.5)"
-// };
-//
-// const defaults = {
-//     centered: {
-//         width: rs({
-//             0: "90%",
-//             720: "50%"
-//         }),
-//         height: "auto"
-//     },
-//     "slide-from-left": {
-//         width: rs({
-//             0: "90%",
-//             720: "35%"
-//         }),
-//         height: "100%"
-//     },
-//     "slide-from-right": {
-//         width: rs({
-//             0: "90%",
-//             720: "35%"
-//         }),
-//         height: "100%"
-//     },
-//     "slide-from-top": {
-//         width: "100%",
-//         height: rs({
-//             0: "90%",
-//             720: "35%"
-//         })
-//     },
-//     "slide-from-bottom": {
-//         width: "100%",
-//         height: rs({
-//             0: "90%",
-//             720: "35%"
-//         })
-//     }
-// };
-
 const centered = ({
   width,
   height,
-  // minWidth,
-  // minHeight,
-  // maxWidth,
-  // maxHeight,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
   animationTime,
   animationEase,
   backgroundColor,
@@ -87,7 +45,11 @@ const centered = ({
   },
   contentWrapper: {
     width,
-    height
+    height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight
   },
   content: {
     transition: `all ${animationTime}s ${animationEase.css}`,
@@ -98,6 +60,10 @@ const centered = ({
 const slide = ({
   width,
   height,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
   animationTime,
   animationEase,
   backgroundColor,
@@ -118,7 +84,11 @@ const slide = ({
     left: (axis === "X" && fromStart) || axis === "Y" ? 0 : "auto",
     right: axis === "X" && !fromStart ? 0 : "auto",
     width,
-    height
+    height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight
   },
   content: {
     transition: `all ${animationTime}s ${animationEase.css}`,
@@ -137,10 +107,13 @@ const popoverRootDefault = ({
   showArrow,
   placement,
   width,
-  height
+  height,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight
 }) => ({
   boxSizing: "border-box",
-  minWidth: 0,
   position: "absolute",
   top: 0,
   left: 0,
@@ -153,6 +126,10 @@ const popoverRootDefault = ({
   ...getPopoverMarginStyles(showArrow, placement),
   width,
   height,
+  minWidth,
+  minHeight,
+  maxWidth,
+  maxHeight,
   __children: children
 });
 
@@ -169,6 +146,10 @@ function Layer$(props) {
     anchoredTo,
     width,
     height,
+    minWidth,
+    minHeight,
+    maxWidth,
+    maxHeight,
     animationTime,
     animationEase,
     backgroundColor,
@@ -208,79 +189,6 @@ function Layer$(props) {
 
   const shouldShow = isVisible && isOpen;
 
-  // let configs = rm(config || defaults.centered);
-
-  // let rawConfigs = {};
-  // configs.forEach((config, range) => {
-  //     // ANCHORED
-  //     if (config.anchored) {
-  //         rawConfigs[range.from] = {
-  //             anchored: true
-  //         };
-  //
-  //         return;
-  //     }
-  //
-  //     // OVERLAY
-  //
-  //     config.mode = config.mode || "centered";
-  //     config = Object.assign({}, defaults[config.mode], globalDefaults, config);
-  //
-  //     if (config.animationTime > closeTimeout) {
-  //         closeTimeout = config.animationTime;
-  //     }
-  //
-  //     switch (config.mode) {
-  //         case "centered":
-  //             rawConfigs[range.from] = centered({
-  //                 ...config,
-  //                 shouldShow
-  //             });
-  //             break;
-  //         case "slide-from-left":
-  //             rawConfigs[range.from] = slide({
-  //                 ...config,
-  //                 height: "100%",
-  //                 axis: "X",
-  //                 fromStart: true,
-  //                 shouldShow
-  //             });
-  //             break;
-  //         case "slide-from-right":
-  //             rawConfigs[range.from] = slide({
-  //                 ...config,
-  //                 height: "100%",
-  //                 axis: "X",
-  //                 fromStart: false,
-  //                 shouldShow
-  //             });
-  //             break;
-  //         case "slide-from-top":
-  //             rawConfigs[range.from] = slide({
-  //                 ...config,
-  //                 width: "100%",
-  //                 axis: "Y",
-  //                 fromStart: true,
-  //                 shouldShow
-  //             });
-  //             break;
-  //         case "slide-from-bottom":
-  //             rawConfigs[range.from] = slide({
-  //                 ...config,
-  //                 width: "100%",
-  //                 axis: "Y",
-  //                 fromStart: false,
-  //                 shouldShow
-  //             });
-  //     }
-  // });
-
-  // console.log(rawConfigs);
-  //
-  // console.log(responsiveValueCurrent([1, 2, 3, 4, 5]));
-
-  // let styles = rm(rawConfigs);
-
   anchoredTo = responsiveValueCurrent(anchoredTo) || "window";
   const isAnchored = anchoredTo && anchoredTo !== "window";
   const currentPlacement = responsiveValueCurrent(placement);
@@ -291,6 +199,10 @@ function Layer$(props) {
     placement: currentPlacement,
     width: width || "auto",
     height: height || "auto",
+    minWidth: minWidth || 0,
+    minHeight: minHeight || 0,
+    maxWidth: maxWidth || "10000px",
+    maxHeight: maxHeight || "10000px",
     animationTime: animationTime || 0.3,
     animationEase: animationEase || Ease.expoOut,
     backgroundColor: backgroundColor || "rgba(0,0,0,0.3)",
@@ -373,7 +285,7 @@ function Layer$(props) {
 
     return (
       <Layer mountNode={mountNode()}>
-        <div
+        <Box
           sx={{
             position: "fixed",
             top: 0,
@@ -385,7 +297,7 @@ function Layer$(props) {
             alignItems: "center"
           }}
         >
-          <div
+          <Box
             sx={{
               position: "absolute",
               top: 0,
@@ -399,25 +311,29 @@ function Layer$(props) {
             onClick={onClickOutside}
           />
 
-          <div
+          <Box
             sx={{
               ...styles.contentWrapper
             }}
           >
-            <div
+            <Box
               sx={{
                 position: "relative",
                 width: "100%",
                 height: "100%",
+                minHeight: "inherit",
+                minWidth: "inherit",
+                maxHeight: "inherit",
+                maxWidth: "inherit",
                 ...styles.content
               }}
             >
               {typeof props.children === "function"
                 ? props.children({ anchored: current.isAnchored })
                 : props.children}
-            </div>
-          </div>
-        </div>
+            </Box>
+          </Box>
+        </Box>
       </Layer>
     );
   }
@@ -481,6 +397,10 @@ function Layer$(props) {
 
         width: current.width,
         height: current.height,
+        minWidth: current.minWidth,
+        maxWidth: current.maxWidth,
+        minHeight: current.minHeight,
+        maxHeight: current.maxHeight,
         children
       }
     );
