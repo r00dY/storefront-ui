@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import Layer from "../Layer";
 
 import FocusLock from "react-focus-lock";
-import Box from "../Box";
 
 function Dialog$(props) {
   const { children, onRequestClose, ...restProps } = props;
