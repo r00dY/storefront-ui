@@ -6,7 +6,7 @@ import {
 
 import { rslin } from "@commerce-ui/core";
 
-const breakpoints = ["320px", "768px", "1024px", "1600px"];
+const breakpoints = ["420px", "768px", "1024px", "1600px"];
 breakpoints.xs = breakpoints[0];
 breakpoints.md = breakpoints[1];
 breakpoints.lg = breakpoints[2];

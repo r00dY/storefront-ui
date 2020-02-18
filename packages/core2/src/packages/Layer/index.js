@@ -15,59 +15,65 @@ import { ANIMATE_IN_TIME, PLACEMENT } from "../base/popover";
 import { createElement, getElementSpec } from "..";
 import { SharedStylePropsArgT } from "../base/popover/types";
 
+import { responsiveValueForEach, responsiveValueCurrent } from "..";
+
 const mountNode = () => {
   if (typeof document !== "undefined") {
     return document.getElementById("__layers__");
   }
 };
 
-const globalDefaults = {
-  animationTime: 0.3,
-  animationEase: Ease.expoOut,
-  backgroundColor: "rgba(0, 0, 0, 0.5)"
-};
-
-const defaults = {
-  centered: {
-    width: rs({
-      0: "90%",
-      720: "50%"
-    }),
-    height: "auto"
-  },
-  "slide-from-left": {
-    width: rs({
-      0: "90%",
-      720: "35%"
-    }),
-    height: "100%"
-  },
-  "slide-from-right": {
-    width: rs({
-      0: "90%",
-      720: "35%"
-    }),
-    height: "100%"
-  },
-  "slide-from-top": {
-    width: "100%",
-    height: rs({
-      0: "90%",
-      720: "35%"
-    })
-  },
-  "slide-from-bottom": {
-    width: "100%",
-    height: rs({
-      0: "90%",
-      720: "35%"
-    })
-  }
-};
+// const globalDefaults = {
+//     animationTime: 0.3,
+//     animationEase: Ease.expoOut,
+//     backgroundColor: "rgba(0, 0, 0, 0.5)"
+// };
+//
+// const defaults = {
+//     centered: {
+//         width: rs({
+//             0: "90%",
+//             720: "50%"
+//         }),
+//         height: "auto"
+//     },
+//     "slide-from-left": {
+//         width: rs({
+//             0: "90%",
+//             720: "35%"
+//         }),
+//         height: "100%"
+//     },
+//     "slide-from-right": {
+//         width: rs({
+//             0: "90%",
+//             720: "35%"
+//         }),
+//         height: "100%"
+//     },
+//     "slide-from-top": {
+//         width: "100%",
+//         height: rs({
+//             0: "90%",
+//             720: "35%"
+//         })
+//     },
+//     "slide-from-bottom": {
+//         width: "100%",
+//         height: rs({
+//             0: "90%",
+//             720: "35%"
+//         })
+//     }
+// };
 
 const centered = ({
   width,
   height,
+  // minWidth,
+  // minHeight,
+  // maxWidth,
+  // maxHeight,
   animationTime,
   animationEase,
   backgroundColor,
@@ -129,7 +135,9 @@ const popoverRootDefault = ({
   isVisible,
   popoverOffset,
   showArrow,
-  placement
+  placement,
+  width,
+  height
 }) => ({
   boxSizing: "border-box",
   minWidth: 0,
@@ -143,6 +151,8 @@ const popoverRootDefault = ({
       ? getEndPosition(popoverOffset)
       : getStartPosition(popoverOffset, placement, showArrow),
   ...getPopoverMarginStyles(showArrow, placement),
+  width,
+  height,
   __children: children
 });
 
@@ -151,7 +161,20 @@ function Layer$(props) {
   const [isVisible, setVisible] = useState(false);
   const [isLayerMounted, setLayerMounted] = useState(false);
 
-  const { onClickOutside, config, isOpen, anchorRef } = props;
+  let {
+    onClickOutside,
+    config,
+    isOpen,
+    anchorRef,
+    anchoredTo,
+    width,
+    height,
+    animationTime,
+    animationEase,
+    backgroundColor,
+    placement,
+    wrapper
+  } = props;
 
   let closeTimeout = 0;
 
@@ -185,79 +208,99 @@ function Layer$(props) {
 
   const shouldShow = isVisible && isOpen;
 
-  let configs = rm(config || defaults.centered);
+  // let configs = rm(config || defaults.centered);
 
-  let rawConfigs = {};
-  configs.forEach((config, range) => {
-    // ANCHORED
-    if (config.anchored) {
-      rawConfigs[range.from] = {
-        anchored: true
-      };
+  // let rawConfigs = {};
+  // configs.forEach((config, range) => {
+  //     // ANCHORED
+  //     if (config.anchored) {
+  //         rawConfigs[range.from] = {
+  //             anchored: true
+  //         };
+  //
+  //         return;
+  //     }
+  //
+  //     // OVERLAY
+  //
+  //     config.mode = config.mode || "centered";
+  //     config = Object.assign({}, defaults[config.mode], globalDefaults, config);
+  //
+  //     if (config.animationTime > closeTimeout) {
+  //         closeTimeout = config.animationTime;
+  //     }
+  //
+  //     switch (config.mode) {
+  //         case "centered":
+  //             rawConfigs[range.from] = centered({
+  //                 ...config,
+  //                 shouldShow
+  //             });
+  //             break;
+  //         case "slide-from-left":
+  //             rawConfigs[range.from] = slide({
+  //                 ...config,
+  //                 height: "100%",
+  //                 axis: "X",
+  //                 fromStart: true,
+  //                 shouldShow
+  //             });
+  //             break;
+  //         case "slide-from-right":
+  //             rawConfigs[range.from] = slide({
+  //                 ...config,
+  //                 height: "100%",
+  //                 axis: "X",
+  //                 fromStart: false,
+  //                 shouldShow
+  //             });
+  //             break;
+  //         case "slide-from-top":
+  //             rawConfigs[range.from] = slide({
+  //                 ...config,
+  //                 width: "100%",
+  //                 axis: "Y",
+  //                 fromStart: true,
+  //                 shouldShow
+  //             });
+  //             break;
+  //         case "slide-from-bottom":
+  //             rawConfigs[range.from] = slide({
+  //                 ...config,
+  //                 width: "100%",
+  //                 axis: "Y",
+  //                 fromStart: false,
+  //                 shouldShow
+  //             });
+  //     }
+  // });
 
-      return;
-    }
+  // console.log(rawConfigs);
+  //
+  // console.log(responsiveValueCurrent([1, 2, 3, 4, 5]));
 
-    // OVERLAY
+  // let styles = rm(rawConfigs);
 
-    config.mode = config.mode || "centered";
-    config = Object.assign({}, defaults[config.mode], globalDefaults, config);
+  anchoredTo = responsiveValueCurrent(anchoredTo) || "window";
+  const isAnchored = anchoredTo && anchoredTo !== "window";
+  const currentPlacement = responsiveValueCurrent(placement);
 
-    if (config.animationTime > closeTimeout) {
-      closeTimeout = config.animationTime;
-    }
-
-    switch (config.mode) {
-      case "centered":
-        rawConfigs[range.from] = centered({
-          ...config,
-          shouldShow
-        });
-        break;
-      case "slide-from-left":
-        rawConfigs[range.from] = slide({
-          ...config,
-          height: "100%",
-          axis: "X",
-          fromStart: true,
-          shouldShow
-        });
-        break;
-      case "slide-from-right":
-        rawConfigs[range.from] = slide({
-          ...config,
-          height: "100%",
-          axis: "X",
-          fromStart: false,
-          shouldShow
-        });
-        break;
-      case "slide-from-top":
-        rawConfigs[range.from] = slide({
-          ...config,
-          width: "100%",
-          axis: "Y",
-          fromStart: true,
-          shouldShow
-        });
-        break;
-      case "slide-from-bottom":
-        rawConfigs[range.from] = slide({
-          ...config,
-          width: "100%",
-          axis: "Y",
-          fromStart: false,
-          shouldShow
-        });
-    }
-  });
-
-  let styles = rm(rawConfigs);
+  const current = {
+    isAnchored,
+    anchoredTo,
+    placement: currentPlacement,
+    width: width || "auto",
+    height: height || "auto",
+    animationTime: animationTime || 0.3,
+    animationEase: animationEase || Ease.expoOut,
+    backgroundColor: backgroundColor || "rgba(0,0,0,0.3)",
+    shouldShow
+  };
 
   useEffect(
     () => {
       if (isOpen) {
-        if (!styles.current.anchored) {
+        if (!current.isAnchored) {
           show();
         }
       } else {
@@ -268,7 +311,7 @@ function Layer$(props) {
   );
 
   useOnClickOutside([popperRef.current, arrowRef.current], () => {
-    if (styles.current.anchored) {
+    if (current.isAnchored) {
       if (onClickOutside) {
         onClickOutside();
       }
@@ -283,18 +326,50 @@ function Layer$(props) {
     return null;
   }
 
-  if (!styles.current.anchored) {
+  if (!current.isAnchored) {
     if (!isOpen && !isVisible) {
       return null;
     }
 
-    const backgroundStyles = styles.cssObject(styles => ({
-      ...styles.background
-    }));
-    const contentWrapperStyles = styles.cssObject(styles => ({
-      ...styles.contentWrapper
-    }));
-    const contentStyles = styles.cssObject(styles => ({ ...styles.content }));
+    let styles;
+
+    switch (currentPlacement) {
+      case "left":
+        styles = slide({
+          ...current,
+          height: "100%",
+          axis: "X",
+          fromStart: true
+        });
+        break;
+      case "right":
+        styles = slide({
+          ...current,
+          height: "100%",
+          axis: "X",
+          fromStart: false
+        });
+        break;
+      case "top":
+        styles = slide({
+          ...current,
+          width: "100%",
+          axis: "Y",
+          fromStart: true
+        });
+        break;
+      case "bottom":
+        styles = slide({
+          ...current,
+          width: "100%",
+          axis: "Y",
+          fromStart: false
+        });
+        break;
+      default:
+        // "center"
+        styles = centered(current);
+    }
 
     return (
       <Layer mountNode={mountNode()}>
@@ -319,14 +394,14 @@ function Layer$(props) {
               height: "100%",
               bg: "rgba(0,0,0,0.5)",
               zIndex: "-1",
-              ...backgroundStyles
+              ...styles.background
             }}
             onClick={onClickOutside}
           />
 
           <div
             sx={{
-              ...contentWrapperStyles
+              ...styles.contentWrapper
             }}
           >
             <div
@@ -334,11 +409,11 @@ function Layer$(props) {
                 position: "relative",
                 width: "100%",
                 height: "100%",
-                ...contentStyles
+                ...styles.content
               }}
             >
               {typeof props.children === "function"
-                ? props.children({ anchored: !!styles.current.anchored })
+                ? props.children({ anchored: current.isAnchored })
                 : props.children}
             </div>
           </div>
@@ -379,7 +454,7 @@ function Layer$(props) {
       placement: popoverPlacement,
       isVisible: isVisible,
       isOpen: isOpen,
-      anchorWidth: anchorRef.current.clientWidth
+      anchorWidth: anchoredTo.current.clientWidth
     };
   };
 
@@ -388,7 +463,7 @@ function Layer$(props) {
 
     const state = {
       ...getSharedProps(),
-      anchored: !!styles.current.anchored
+      anchored: !!current.isAnchored
     };
 
     const children =
@@ -403,6 +478,9 @@ function Layer$(props) {
       popoverRootDefault,
       {
         ...state,
+
+        width: current.width,
+        height: current.height,
         children
       }
     );
@@ -423,7 +501,7 @@ function Layer$(props) {
       onUnmount={() => setLayerMounted(false)}
     >
       <TetherBehavior
-        anchorRef={anchorRef.current}
+        anchorRef={anchoredTo.current}
         arrowRef={arrowRef.current}
         popperRef={popperRef.current}
         // Remove the `ignoreBoundary` prop in the next major version
@@ -434,7 +512,7 @@ function Layer$(props) {
           }
         }}
         onPopperUpdate={onPopperUpdate}
-        placement={"bottomLeft"}
+        placement={currentPlacement || "bottomLeft"}
       >
         {renderPopover()}
       </TetherBehavior>

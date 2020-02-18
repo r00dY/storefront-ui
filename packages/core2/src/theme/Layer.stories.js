@@ -22,7 +22,11 @@ const Paragraph = () => (
   </p>
 );
 
-const LayerWithButton = ({ children, ...restProps }) => {
+const LayerWithButton = ({
+  children,
+  anchoredOnDesktop = false,
+  ...restProps
+}) => {
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
 
@@ -48,11 +52,23 @@ const LayerWithButton = ({ children, ...restProps }) => {
       <Layer
         isOpen={isOpen}
         onClickOutside={() => setOpen(false)}
-        anchorRef={buttonRef}
+        anchoredTo={anchoredOnDesktop ? ["window", null, buttonRef] : "window"}
+        // anchorRef={buttonRef}
+
         {...restProps}
       >
         {({ anchored }) => (
-          <div sx={{ border: "1px solid black" }}>{children}</div>
+          <div
+            sx={{
+              border: "1px solid black",
+              height: "100%",
+              width: "100%",
+              bg: "red",
+              p: 2
+            }}
+          >
+            {children}
+          </div>
         )}
       </Layer>
     </div>
@@ -64,69 +80,112 @@ export const unstyled = () => (
     <Paragraph />
 
     <LayerWithButton>
-      <div sx={{ bg: "red", p: 2 }}>Dupa</div>
+      <div>Lorem ipsum</div>
     </LayerWithButton>
 
-    <br />
-    <br />
+    <Paragraph />
 
     <LayerWithButton
-      config={{
-        mode: "slide-from-right",
-        width: rs({
-          xs: "90vw",
-          md: "50vw",
-          lg: "33vw"
-        })
-      }}
+      width={["90vw", null, "50vw", null, "33vw"]}
+      height={["80vh", null, "50vh", null, "33vh"]}
     >
-      <div sx={{ bg: "red", p: 2, height: "100%" }}>
-        Dupa <br />
-        <br />
-        <Button>Some button</Button>
-      </div>
+      <div>Lorem ipsum</div>
     </LayerWithButton>
 
-    <br />
-    <br />
+    <Paragraph />
+
     <LayerWithButton
-      config={{
-        xs: {
-          mode: "slide-from-top",
-          height: "90%"
-        },
-        md: {
-          mode: "slide-from-right",
-          width: "50%"
-        }
-      }}
+      width={["90vw", null, "50vw", null, "33vw"]}
+      placement={"right"}
     >
-      <div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>
+      <div>Lorem ipsum</div>
     </LayerWithButton>
 
-    <br />
+    <Paragraph />
+
     <LayerWithButton
-      config={{
-        anchored: true
-      }}
+      width={["90vw", null, "50vw", null, "33vw"]}
+      height={["80vh", null, "50vh", null, "33vh"]}
+      placement={["left", "bottom", "right", "top", "center"]}
     >
-      <div sx={{ bg: "red", p: 2 }}>Dupa</div>
+      <div>Lorem ipsum</div>
     </LayerWithButton>
 
-    <br />
-    <LayerWithButton
-      config={{
-        lg: {
-          anchored: true
-        },
-        xs: {
-          mode: "slide-from-right",
-          width: "50%"
-        }
-      }}
-    >
-      <div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>
+    <Paragraph />
+
+    <LayerWithButton anchoredOnDesktop={true} width={["90vw", null, "300px"]}>
+      <div>Lorem ipsum</div>
     </LayerWithButton>
+
+    {/*<LayerWithButton*/}
+    {/*width={["90vw", null, "50vw", null, "33vw"]}*/}
+    {/*height={["80vh", null, "50vh", null, "33vh"]}*/}
+    {/*placement={["left", "bottom", "right", "top", "center"]}*/}
+    {/*>*/}
+    {/*<div>Dupa</div>*/}
+    {/*</LayerWithButton>*/}
+
+    {/*<br />*/}
+    {/*<br />*/}
+
+    {/*<LayerWithButton*/}
+    {/*config={{*/}
+    {/*mode: "slide-from-right",*/}
+    {/*width: rs({*/}
+    {/*xs: "90vw",*/}
+    {/*md: "50vw",*/}
+    {/*lg: "33vw"*/}
+    {/*})*/}
+    {/*}}*/}
+    {/*anchoredTo={"dupa"}*/}
+    {/*>*/}
+    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>*/}
+    {/*Dupa <br />*/}
+    {/*<br />*/}
+    {/*<Button>Some button</Button>*/}
+    {/*</div>*/}
+    {/*</LayerWithButton>*/}
+
+    {/*<br />*/}
+    {/*<br />*/}
+    {/*<LayerWithButton*/}
+    {/*config={{*/}
+    {/*xs: {*/}
+    {/*mode: "slide-from-top",*/}
+    {/*height: "90%"*/}
+    {/*},*/}
+    {/*md: {*/}
+    {/*mode: "slide-from-right",*/}
+    {/*width: "50%"*/}
+    {/*}*/}
+    {/*}}*/}
+    {/*>*/}
+    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>*/}
+    {/*</LayerWithButton>*/}
+
+    {/*<br />*/}
+    {/*<LayerWithButton*/}
+    {/*config={{*/}
+    {/*anchored: true*/}
+    {/*}}*/}
+    {/*>*/}
+    {/*<div sx={{ bg: "red", p: 2 }}>Dupa</div>*/}
+    {/*</LayerWithButton>*/}
+
+    {/*<br />*/}
+    {/*<LayerWithButton*/}
+    {/*config={{*/}
+    {/*lg: {*/}
+    {/*anchored: true*/}
+    {/*},*/}
+    {/*xs: {*/}
+    {/*mode: "slide-from-right",*/}
+    {/*width: "50%"*/}
+    {/*}*/}
+    {/*}}*/}
+    {/*>*/}
+    {/*<div sx={{ bg: "red", p: 2, height: "100%" }}>Dupa</div>*/}
+    {/*</LayerWithButton>*/}
 
     <Paragraph />
     <Paragraph />

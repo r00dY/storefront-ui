@@ -242,6 +242,21 @@ export function responsiveValueToResponsiveSize(resVal) {
   return castResponsiveValue(resVal, ResponsiveSize);
 }
 
+export function responsiveValueCurrent(resVal) {
+  let activeVal;
+  responsiveValueForEach(resVal, (val, breakpoint) => {
+    if (!breakpoint) {
+      activeVal = val;
+      return;
+    }
+    if (window.matchMedia(`screen and (min-width: ${breakpoint})`).matches) {
+      activeVal = val;
+    }
+  });
+
+  return activeVal;
+}
+
 // Helper for quick creating of components
 const createComponent = (Component, newSx) => {
   return ({ sx, ...restProps }) => {
