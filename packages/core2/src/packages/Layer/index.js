@@ -196,8 +196,24 @@ function Layer$(props) {
     isAnchored,
     anchoredTo,
     placement: currentPlacement,
-    width: width || "auto",
-    height: height || "auto",
+    width:
+      typeof width === "function"
+        ? width({
+            anchorRect:
+              (anchoredTo.current &&
+                anchoredTo.current.getBoundingClientRect()) ||
+              new DOMRect()
+          })
+        : width || "auto",
+    height:
+      typeof height === "function"
+        ? height({
+            anchorRect:
+              (anchoredTo.current &&
+                anchoredTo.current.getBoundingClientRect()) ||
+              new DOMRect()
+          })
+        : height || "auto",
     minWidth: minWidth || 0,
     minHeight: minHeight || 0,
     maxWidth: maxWidth || "10000px",

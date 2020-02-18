@@ -7,8 +7,8 @@ import Button from "./Button/Button";
 
 import Box from "@commerce-ui/core/Box";
 
-const Paragraph = () => (
-  <p sx={{ maxWidth: "500px" }}>
+const Paragraph = React.forwardRef((props, ref) => (
+  <p sx={{ maxWidth: "500px" }} ref={ref}>
     Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
     doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
     veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
@@ -22,7 +22,7 @@ const Paragraph = () => (
     voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem
     eum fugiat quo voluptas nulla pariatur?
   </p>
-);
+));
 
 const LayerWithButton = ({
   children,
@@ -33,24 +33,29 @@ const LayerWithButton = ({
   const buttonRef = useRef(null);
 
   return (
-    <div>
+    <Box>
       <Button
         buttonRef={buttonRef}
         onClick={() => {
           setOpen(true);
         }}
+        sx={{
+          width: "200px"
+        }}
       >
         open
       </Button>
-
+      &nbsp;
       <Button
         onClick={() => {
           setOpen(false);
         }}
+        sx={{
+          width: "200px"
+        }}
       >
         close
       </Button>
-
       <Layer
         isOpen={isOpen}
         onClickOutside={() => setOpen(false)}
@@ -76,130 +81,187 @@ const LayerWithButton = ({
           </Box>
         )}
       </Layer>
-    </div>
+    </Box>
   );
 };
 
-export const unstyled = () => (
-  <div>
-    <Paragraph />
+export const unstyled = () => {
+  const paragraphRef = useRef(null);
 
-    <LayerWithButton>
-      <div>Lorem ipsum</div>
-    </LayerWithButton>
+  return (
+    <Box>
+      <Paragraph />
 
-    <Paragraph />
+      <Box as={"p"}>
+        <Box as={"strong"}>Standard</Box>
+      </Box>
 
-    <LayerWithButton
-      width={["90vw", null, "50vw", null, "33vw"]}
-      minHeight={["80vh", null, "50vh", null, "33vh"]}
-    >
-      <div>Lorem ipsum</div>
-    </LayerWithButton>
+      <LayerWithButton>
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
 
-    <Paragraph />
+      <Paragraph />
 
-    <LayerWithButton
-      width={["90vw", null, "50vw", null, "33vw"]}
-      placement={"right"}
-    >
-      <div>Lorem ipsum</div>
-    </LayerWithButton>
+      <Box as={"p"}>
+        <Box as={"strong"}>Responsive attached to window</Box>
+      </Box>
 
-    <Paragraph />
+      <LayerWithButton
+        width={["90vw", null, "50vw", null, "33vw"]}
+        minHeight={["80vh", null, "50vh", null, "33vh"]}
+      >
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
 
-    <LayerWithButton
-      width={["90vw", null, "50vw", null, "33vw"]}
-      height={["80vh", null, "50vh", null, "33vh"]}
-      placement={["left", "bottom", "right", "top", "center"]}
-    >
-      <div>Lorem ipsum</div>
-    </LayerWithButton>
+      <Paragraph />
 
-    <Paragraph />
+      <Box as={"p"}>
+        <Box as={"strong"}>placement=right</Box>
+      </Box>
 
-    <LayerWithButton
-      anchoredOnDesktop={true}
-      width={["90vw", null, "300px"]}
-      minHeight={[null, null, "300px"]}
-      maxHeight={["50vh", null, "400px"]}
-    >
-      <div>
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-        Lorem ipsum
-        <br />
-      </div>
-    </LayerWithButton>
+      <LayerWithButton
+        width={["90vw", null, "50vw", null, "33vw"]}
+        placement={"right"}
+      >
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
 
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-  </div>
-);
+      <Paragraph />
+
+      <Box as={"p"}>
+        <Box as={"strong"}>Responsive placement</Box>
+      </Box>
+
+      <LayerWithButton
+        width={["90vw", null, "50vw", null, "33vw"]}
+        height={["80vh", null, "50vh", null, "33vh"]}
+        placement={["left", "bottom", "right", "top", "center"]}
+      >
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
+
+      <Paragraph />
+
+      <Box as={"p"}>
+        <Box as={"strong"}>
+          Anchored on desktop, long content, minHeight + maxHeight
+        </Box>
+      </Box>
+
+      <LayerWithButton
+        anchoredOnDesktop={true}
+        width={["90vw", null, "300px"]}
+        minHeight={[null, null, "300px"]}
+        maxHeight={["50vh", null, "400px"]}
+      >
+        <Box>
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+          Lorem ipsum
+          <br />
+        </Box>
+      </LayerWithButton>
+
+      <Paragraph />
+
+      <Box as={"p"}>
+        <Box as={"strong"}>width as function dependent on anchorRect</Box>
+      </Box>
+
+      <LayerWithButton
+        anchoredOnDesktop={true}
+        width={({ anchorRect }) => ["90vw", null, anchorRect.width]}
+        minHeight={[null, null, "300px"]}
+        maxHeight={["50vh", null, "400px"]}
+      >
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
+
+      <Paragraph />
+
+      <Box as={"p"}>
+        <Box as={"strong"}>anchored to another element, paragraph</Box>
+      </Box>
+
+      <LayerWithButton
+        anchoredTo={["window", null, null, paragraphRef]}
+        width={({ anchorRect }) => ["90vw", null, anchorRect.width]}
+        minHeight={[null, null, "300px"]}
+        maxHeight={["50vh", null, "400px"]}
+      >
+        <Box>Lorem ipsum</Box>
+      </LayerWithButton>
+
+      <Paragraph ref={paragraphRef} />
+
+      <Paragraph />
+      <Paragraph />
+      <Paragraph />
+      <Paragraph />
+      <Paragraph />
+      <Paragraph />
+      <Paragraph />
+    </Box>
+  );
+};
 
 export default {
   title: "Layer"
