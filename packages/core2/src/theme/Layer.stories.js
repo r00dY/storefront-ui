@@ -259,25 +259,6 @@ export const unstyled = () => {
 
       <Paragraph />
 
-      <Box as={"p"}>
-        <Box as={"strong"}>focus lock</Box>
-      </Box>
-
-      <LayerWithButton
-        anchoredOnDesktop={true}
-        focusLock={{ returnFocus: true }}
-      >
-        <Button>One</Button>
-        <br />
-        <br />
-        <Button>Two</Button>
-        <br />
-        <br />
-        <Button>Three</Button>
-        <br />
-        <br />
-      </LayerWithButton>
-
       <Paragraph />
       <Paragraph />
       <Paragraph />
