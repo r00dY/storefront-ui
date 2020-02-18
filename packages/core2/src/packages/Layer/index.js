@@ -2,9 +2,8 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Layer, TetherBehavior } from "../base/layer/index.js";
-import { jsx, rs } from "@commerce-ui/core";
+import { jsx } from "@commerce-ui/core";
 import Ease from "../../packages_old/Ease";
-import { rm } from "responsive-helpers";
 import {
   fromPopperPlacement,
   getEndPosition,
@@ -15,7 +14,7 @@ import { ANIMATE_IN_TIME, PLACEMENT } from "../base/popover";
 import { createElement, getElementSpec } from "..";
 import { SharedStylePropsArgT } from "../base/popover/types";
 
-import { responsiveValueForEach, responsiveValueCurrent } from "..";
+import { responsiveValueCurrent } from "..";
 
 import Box from "../Box";
 
