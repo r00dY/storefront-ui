@@ -87,6 +87,7 @@ const LayerWithButton = ({
 
 export const unstyled = () => {
   const paragraphRef = useRef(null);
+  const paragraphRef2 = useRef(null);
 
   return (
     <Box>
@@ -238,11 +239,13 @@ export const unstyled = () => {
       <Paragraph />
 
       <Box as={"p"}>
-        <Box as={"strong"}>anchored to another element, paragraph</Box>
+        <Box as={"strong"}>
+          anchored to another element, paragraph and paragraph2
+        </Box>
       </Box>
 
       <LayerWithButton
-        anchoredTo={["window", null, null, paragraphRef]}
+        anchoredTo={["window", null, null, paragraphRef, paragraphRef2]}
         width={({ anchorRect }) => ["90vw", null, anchorRect.width]}
         minHeight={[null, null, "300px"]}
         maxHeight={["50vh", null, "400px"]}
@@ -252,7 +255,7 @@ export const unstyled = () => {
 
       <Paragraph ref={paragraphRef} />
 
-      <Paragraph />
+      <Paragraph ref={paragraphRef2} />
       <Paragraph />
       <Paragraph />
       <Paragraph />
