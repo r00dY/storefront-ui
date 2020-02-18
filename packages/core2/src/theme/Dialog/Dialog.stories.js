@@ -48,11 +48,21 @@ const DialogWithButton = ({ children, ...restProps }) => {
       <Dialog
         isOpen={isOpen}
         onRequestClose={() => setOpen(false)}
-        anchorRef={buttonRef}
+        anchoredTo={["window", null, null, buttonRef]}
         {...restProps}
       >
         {({ anchored }) => (
-          <div sx={{ border: "1px solid black" }}>{children}</div>
+          <div
+            sx={{
+              border: "1px solid black",
+              height: "100%",
+              minHeight: "100%",
+              bg: "red",
+              p: 2
+            }}
+          >
+            {children}
+          </div>
         )}
       </Dialog>
     </div>
@@ -64,30 +74,21 @@ export const unstyled = () => (
     <Paragraph />
 
     <DialogWithButton
-      config={{
-        xs: {
-          mode: "slide-from-bottom",
-          height: "auto"
-        },
-        md: {
-          anchored: true
-        }
-      }}
+      placement={["right", null, null, "bottomLeft"]}
+      minWidth={["90vw", null, null, "300px"]}
     >
-      <div sx={{ bg: "red", p: 2 }}>
-        <Button>One</Button>
-        <br />
-        <br />
-        <Button>Two</Button>
-        <br />
-        <br />
-        <Button>Three</Button>
-        <br />
-        <br />
-        <Button>Four</Button>
-        <br />
-        <br />
-      </div>
+      <Button>One</Button>
+      <br />
+      <br />
+      <Button>Two</Button>
+      <br />
+      <br />
+      <Button>Three</Button>
+      <br />
+      <br />
+      <Button>Four</Button>
+      <br />
+      <br />
     </DialogWithButton>
 
     <Paragraph />

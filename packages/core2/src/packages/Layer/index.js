@@ -152,8 +152,7 @@ function Layer$(props) {
     animationTime,
     animationEase,
     backgroundColor,
-    placement,
-    wrapper
+    placement
   } = props;
 
   let closeTimeout = 0;

@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Layer from "../Layer";
 
 import FocusLock from "react-focus-lock";
+import Box from "../Box";
 
 function Dialog$(props) {
   const { children, onRequestClose, ...restProps } = props;
@@ -30,12 +31,23 @@ function Dialog$(props) {
   });
 
   return (
-    <Layer {...props} onRequestClose={onRequestClose}>
+    <Layer {...restProps} onClickOutside={onRequestClose}>
       {params => (
-        <FocusLock returnFocus>
-          <div role={"dialog"}>
-            {typeof children === "function" ? children(params) : children}
-          </div>
+        <FocusLock
+          returnFocus
+          lockProps={{
+            style: {
+              width: "100%",
+              height: "100%",
+              maxWidth: "inherit",
+              maxHeight: "inherit",
+              minWidth: "inherit",
+              minHeight: "inherit"
+            },
+            role: "dialog"
+          }}
+        >
+          {typeof children === "function" ? children(params) : children}
         </FocusLock>
       )}
     </Layer>
