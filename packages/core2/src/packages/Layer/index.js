@@ -151,11 +151,7 @@ function Layer$(props) {
   const [isVisible, setVisible] = useState(false);
   const [isLayerMounted, setLayerMounted] = useState(false);
 
-  const { onRequestClose, config, isOpen, anchorRef } = props;
-
-  let configs = rm(config || defaults.centered);
-
-  let rawConfigs = {};
+  const { onClickOutside, config, isOpen, anchorRef } = props;
 
   let closeTimeout = 0;
 
@@ -189,6 +185,9 @@ function Layer$(props) {
 
   const shouldShow = isVisible && isOpen;
 
+  let configs = rm(config || defaults.centered);
+
+  let rawConfigs = {};
   configs.forEach((config, range) => {
     // ANCHORED
     if (config.anchored) {
@@ -270,8 +269,8 @@ function Layer$(props) {
 
   useOnClickOutside([popperRef.current, arrowRef.current], () => {
     if (styles.current.anchored) {
-      if (onRequestClose) {
-        onRequestClose();
+      if (onClickOutside) {
+        onClickOutside();
       }
     }
   });
@@ -322,7 +321,7 @@ function Layer$(props) {
               zIndex: "-1",
               ...backgroundStyles
             }}
-            onClick={onRequestClose}
+            onClick={onClickOutside}
           />
 
           <div

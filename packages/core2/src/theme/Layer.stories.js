@@ -47,7 +47,7 @@ const LayerWithButton = ({ children, ...restProps }) => {
 
       <Layer
         isOpen={isOpen}
-        onRequestClose={() => setOpen(false)}
+        onClickOutside={() => setOpen(false)}
         anchorRef={buttonRef}
         {...restProps}
       >
