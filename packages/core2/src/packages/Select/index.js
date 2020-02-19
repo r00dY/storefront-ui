@@ -4,6 +4,8 @@ import Box from "../Box";
 
 import { useSelect as useSelectDownshift } from "downshift";
 
+import { responsiveValueMap } from "../index";
+
 function useSelect({
   options,
   value,
@@ -69,8 +71,7 @@ function useSelect({
   });
 
   const layerProps = {
-    isOpen: downshiftSelect.isOpen,
-    anchorRef
+    isOpen: downshiftSelect.isOpen
   };
 
   const selectProps = {
@@ -84,6 +85,7 @@ function useSelect({
     selectProps,
     menuProps: downshiftSelect.getMenuProps(),
     layerProps,
+    anchorRef,
     options: newOptions,
     ...downshiftSelect
   };
@@ -150,11 +152,14 @@ function Select2(props) {
 
   const { $layer, $button, $separator, $selectable, $wrapper, ...restSx } = sx;
 
-  const { buttonProps, layerProps, menuProps, options, ...rest } = useSelect(
-    restProps
-  );
-
-  console.log(options);
+  const {
+    buttonProps,
+    layerProps,
+    menuProps,
+    options,
+    anchorRef,
+    ...rest
+  } = useSelect(restProps);
 
   // TODO: should be possible to make it a function
   // TODO: pass "selected", "disabled", "error", "placehoder", "selectedOption", "selectedValue"
@@ -165,27 +170,44 @@ function Select2(props) {
 
   // const wrapper = $wrapper;
 
-  const layer = React.cloneElement($layer, layerProps, params => {
-    return (
-      <Box {...menuProps}>
-        {options.map((option, i) =>
-          React.cloneElement($selectable, option.selectableProps)
-        )}
-      </Box>
-    );
+  // console.log("anchorRef", anchorRef && anchorRef.current);
 
-    // TODO: wrapper
+  //
+  // console.log('tudum!!!', $layer.props.anchoredTo);
+  //
+  // // const anchoredTo = $layer.props.anchoredTo ? responsiveValueMap($layer.props.anchoredTo, x => x === "trigger" ? anchorRef : x) : anchorRef;
+  //
+  // const anchoredTo = anchorRef;
+  //
+  // console.log('anchoredTo', anchoredTo);
 
-    // const select = <SelectInline$ {...selectProps}>{children}</SelectInline$>;
-    //
-    // let content = select;
-    //
-    // if (wrapper) {
-    //   content = wrapper({ ...params, content: select });
-    // }
-    //
-    // return content;
-  });
+  // const anchoredTo = "window";
+
+  const layer = React.cloneElement(
+    $layer,
+    { ...layerProps, anchoredTo: ["window", null, anchorRef] },
+    params => {
+      return (
+        <Box {...menuProps}>
+          {options.map((option, i) =>
+            React.cloneElement($selectable, option.selectableProps)
+          )}
+        </Box>
+      );
+
+      // TODO: wrapper
+
+      // const select = <SelectInline$ {...selectProps}>{children}</SelectInline$>;
+      //
+      // let content = select;
+      //
+      // if (wrapper) {
+      //   content = wrapper({ ...params, content: select });
+      // }
+      //
+      // return content;
+    }
+  );
 
   return (
     <>
