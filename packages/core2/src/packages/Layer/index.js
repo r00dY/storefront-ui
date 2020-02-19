@@ -137,11 +137,9 @@ function Layer$(props) {
   const [isVisible, setVisible] = useState(false);
   const [isLayerMounted, setLayerMounted] = useState(false);
 
+  let { onClickOutside, isOpen, sx = {} } = props;
+
   let {
-    onClickOutside,
-    config,
-    isOpen,
-    anchorRef,
     anchoredTo,
     width,
     height,
@@ -153,7 +151,7 @@ function Layer$(props) {
     animationEase,
     backgroundColor,
     placement
-  } = props;
+  } = sx;
 
   let closeTimeout = 0;
 

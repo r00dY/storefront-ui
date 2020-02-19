@@ -59,10 +59,14 @@ const LayerWithButton = ({
       <Layer
         isOpen={isOpen}
         onClickOutside={() => setOpen(false)}
-        anchoredTo={anchoredOnDesktop ? ["window", null, buttonRef] : "window"}
         // anchorRef={buttonRef}
 
-        {...restProps}
+        sx={{
+          anchoredTo: anchoredOnDesktop
+            ? ["window", null, buttonRef]
+            : "window",
+          ...restProps
+        }}
       >
         {({ anchored }) => (
           <Box
