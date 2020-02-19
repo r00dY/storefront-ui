@@ -1,10 +1,17 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import { Select$, SelectInline$, useSelect } from "@commerce-ui/core/Select";
+import {
+  Select$,
+  SelectInline$,
+  useSelect,
+  Select2
+} from "@commerce-ui/core/Select";
 
 import Button from "../Button/Button";
 import Color from "../Selectables/Color";
+
+import Layer from "@commerce-ui/core/Layer";
 
 const colors = [
   { color: "red", value: "red" },
@@ -14,6 +21,32 @@ const colors = [
   { color: "magenta", value: "magenta" },
   { color: "purple", value: "purple" }
 ];
+
+export const newSelect = () => {
+  const [value, setValue] = useState(null); // useState(colors[2]);
+
+  return (
+    <div>
+      <Button>Test</Button>
+      <Button>Test2</Button>
+
+      <Select2
+        sx={{
+          $layer: <Layer />,
+          $button: <Button />,
+          $selectable: <Color />,
+          width: "400px"
+        }}
+        options={colors}
+        value={value}
+        onChange={value => setValue(value)}
+      />
+
+      <Button>Test</Button>
+      <Button>Test2</Button>
+    </div>
+  );
+};
 
 export const unstyled = () => {
   const [value, setValue] = useState(colors[2]);

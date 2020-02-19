@@ -4,7 +4,13 @@ import Box from "../Box";
 
 import { useSelect as useSelectDownshift } from "downshift";
 
-function useSelect({ options, value, onChange, ...restProps }) {
+function useSelect({
+  options,
+  value,
+  onChange,
+  placeholder = "Select",
+  ...restProps
+}) {
   const downshiftSelect = useSelectDownshift({
     ...restProps,
     items: options,
@@ -28,22 +34,39 @@ function useSelect({ options, value, onChange, ...restProps }) {
   const buttonProps = {
     ...buttonPropsDownshift,
     buttonRef: buttonRef,
-    ref: undefined
+    ref: undefined,
+    children: downshiftSelect.selectedItem
+      ? downshiftSelect.selectedItem.value
+      : placeholder
   };
 
-  const newOptions = options.map((option, index) => ({
-    ...option,
-    // itemProps: {
-    //     ...downshiftSelect.getItemProps({index, item: option})
-    // },
-    selectableProps: {
-      selected:
-        downshiftSelect.selectedItem &&
-        option.value === downshiftSelect.selectedItem.value,
-      highlighted: downshiftSelect.highlightedIndex === index,
-      ...downshiftSelect.getItemProps({ index, item: option })
-    }
-  }));
+  delete buttonProps.ref;
+
+  const newOptions = options.map((option, index) => {
+    const itemDownshiftProps = downshiftSelect.getItemProps({
+      index,
+      item: option
+    });
+    itemDownshiftProps.forwardedRef = itemDownshiftProps.ref;
+    delete itemDownshiftProps.ref;
+
+    return {
+      ...option,
+      // itemProps: {
+      //     ...downshiftSelect.getItemProps({index, item: option})
+      // },
+      selectableProps: {
+        selected:
+          downshiftSelect.selectedItem &&
+          option.value === downshiftSelect.selectedItem.value,
+        highlighted: downshiftSelect.highlightedIndex === index,
+        option: option,
+        value: option.value,
+        key: option.value,
+        ...itemDownshiftProps
+      }
+    };
+  });
 
   const layerProps = {
     isOpen: downshiftSelect.isOpen,
@@ -56,33 +79,19 @@ function useSelect({ options, value, onChange, ...restProps }) {
     layerProps
   };
 
-  return { buttonProps, selectProps, layerProps, ...downshiftSelect };
+  return {
+    buttonProps,
+    selectProps,
+    menuProps: downshiftSelect.getMenuProps(),
+    layerProps,
+    options: newOptions,
+    ...downshiftSelect
+  };
 }
 
 // This is the list which is inline (without button and Layer etc).
 // todo: make Root styleable, make list tabbable (tabIndex from downshift is -1) etc.
 function SelectInline$(props) {
-  let { children, options, sx = {}, menuProps, ...restProps } = props;
-
-  children = typeof children === "function" ? children({ options }) : children;
-
-  // Default children
-  children = children || options.map(o => <>{o.value}</>);
-
-  const items = children.map((selectable, i) => (
-    <Box {...options[i].itemProps}>
-      {React.cloneElement(selectable, { ...options[i].selectableProps })}
-    </Box>
-  ));
-
-  return (
-    <Box {...menuProps} sx={sx.$root}>
-      {items}
-    </Box>
-  );
-}
-
-function SelectInline2(props) {
   let { children, options, sx = {}, menuProps, ...restProps } = props;
 
   children = typeof children === "function" ? children({ options }) : children;
@@ -139,54 +148,51 @@ function Select$(props) {
 function Select2(props) {
   let { sx = {}, ...restProps } = props;
 
-  const { $layer, $button, $separator, $selectable, $wrapper, ...css } = sx;
+  const { $layer, $button, $separator, $selectable, $wrapper, ...restSx } = sx;
 
-  const { selectProps, buttonProps, layerProps, ...rest } = useSelect(
+  const { buttonProps, layerProps, menuProps, options, ...rest } = useSelect(
     restProps
   );
 
-  // TODO: should be possible to make it a function
-  // TODO: pass "selected", "disabled", "error", "placehoder", "selectedOption", "selectedStringValue"
-  const button = React.cloneElement(
-    $button,
-    { ...buttonProps, sx: { ...$button.props.sx, ...css } },
-    "dupa"
-  );
+  console.log(options);
 
-  const wrapper = $wrapper;
+  // TODO: should be possible to make it a function
+  // TODO: pass "selected", "disabled", "error", "placehoder", "selectedOption", "selectedValue"
+  const button = React.cloneElement($button, {
+    ...buttonProps,
+    sx: { ...$button.props.sx, ...restSx }
+  });
+
+  // const wrapper = $wrapper;
 
   const layer = React.cloneElement($layer, layerProps, params => {
-    const select = <SelectInline$ {...selectProps}>{children}</SelectInline$>;
+    return (
+      <Box {...menuProps}>
+        {options.map((option, i) =>
+          React.cloneElement($selectable, option.selectableProps)
+        )}
+      </Box>
+    );
 
-    let content = select;
+    // TODO: wrapper
 
-    if (wrapper) {
-      content = wrapper({ ...params, content: select });
-    }
-
-    return content;
+    // const select = <SelectInline$ {...selectProps}>{children}</SelectInline$>;
+    //
+    // let content = select;
+    //
+    // if (wrapper) {
+    //   content = wrapper({ ...params, content: select });
+    // }
+    //
+    // return content;
   });
 
   return (
     <>
       {button}
-      <Layer {...layerProps} config={config}>
-        {params => {
-          const select = (
-            <SelectInline$ {...selectProps}>{children}</SelectInline$>
-          );
-
-          let content = select;
-
-          if (wrapper) {
-            content = wrapper({ ...params, content: select });
-          }
-
-          return content;
-        }}
-      </Layer>
+      {layer}
     </>
   );
 }
 
-export { useSelect, SelectInline$, Select$, Select2, SelectInline2 };
+export { useSelect, SelectInline$, Select$, Select2 };

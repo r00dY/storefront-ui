@@ -5,7 +5,7 @@ import Selectable from "@commerce-ui/core/Selectable";
 import Box from "@commerce-ui/core/Box";
 
 function Color(props) {
-  const { color, ...restProps } = props;
+  const { option, ...restProps } = props;
 
   return (
     <Selectable {...restProps}>
@@ -20,7 +20,7 @@ function Color(props) {
             justifyContent: "center",
             pointerEvents: "none",
             lineHeight: 1,
-            bg: color,
+            bg: option.color,
             border: highlighted ? "2px solid black" : "2px solid transparent",
             font: "body",
             opacity: disabled ? 0.5 : 1
