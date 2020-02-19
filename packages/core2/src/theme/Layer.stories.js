@@ -27,10 +27,17 @@ const Paragraph = React.forwardRef((props, ref) => (
 const LayerWithButton = ({
   children,
   anchoredOnDesktop = false,
+  anchoredTo,
   ...restProps
 }) => {
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
+
+  const anchor = anchoredTo
+    ? anchoredTo
+    : anchoredOnDesktop
+    ? ["window", null, buttonRef]
+    : "window";
 
   return (
     <Box>
@@ -59,14 +66,8 @@ const LayerWithButton = ({
       <Layer
         isOpen={isOpen}
         onClickOutside={() => setOpen(false)}
-        // anchorRef={buttonRef}
-
-        sx={{
-          anchoredTo: anchoredOnDesktop
-            ? ["window", null, buttonRef]
-            : "window",
-          ...restProps
-        }}
+        anchoredTo={anchor}
+        sx={restProps}
       >
         {({ anchored }) => (
           <Box

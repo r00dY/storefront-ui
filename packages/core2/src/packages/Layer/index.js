@@ -137,10 +137,9 @@ function Layer$(props) {
   const [isVisible, setVisible] = useState(false);
   const [isLayerMounted, setLayerMounted] = useState(false);
 
-  let { onClickOutside, isOpen, sx = {} } = props;
+  let { onClickOutside, isOpen, anchoredTo, sx = {} } = props;
 
   let {
-    anchoredTo,
     width,
     height,
     minWidth,
