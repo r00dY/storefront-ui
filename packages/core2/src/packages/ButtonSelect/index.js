@@ -3,7 +3,7 @@ import React, { useState, useLayoutEffect, useRef } from "react";
 import Box from "../Box";
 import HorizontalStackSimple from "../HorizontalStackSimple";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-import InputRaw$ from "../InputRaw";
+import ButtonRaw from "../ButtonRaw";
 
 const defaults = {
   rootCss: ({ focused }) => ({
@@ -12,19 +12,22 @@ const defaults = {
     verticalAlign: "top",
     overflow: "hidden",
     flexDirection: "row",
-    cursor: "text"
+    cursor: "pointer"
   }),
   $input: ({}) => ({
-    __type: InputRaw$,
+    __type: ButtonRaw,
     height: "100%",
-    width: "100%"
+    width: "100%",
+    ":focus": {
+      outline: "none"
+    },
+    __children: "Test"
   }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
     __type: HorizontalStackSimple,
     height: "100%",
     flexGrow: 0,
     flexShrink: 0,
-    pointerEvents: "none",
     __children: leftEnhancer
   }),
   $rightEnhancersContainer: ({ rightEnhancer }) => ({
@@ -56,7 +59,10 @@ const defaults = {
     left: 0,
     opacity: empty ? 0 : 1,
     __children: placeholder
-  })
+  }),
+  $arrow: {
+    __children: <Box>⌄</Box>
+  }
 };
 
 function Input$(props) {
@@ -64,8 +70,8 @@ function Input$(props) {
     sx,
     onFocus,
     onBlur,
-    onChange,
     onClick,
+    onChange,
     autoFocus,
     inputRef,
     invalid,
@@ -74,6 +80,7 @@ function Input$(props) {
     leftEnhancer,
     rightEnhancer,
     label,
+    showLabel,
     ...inputProps
   } = props;
 
@@ -84,8 +91,7 @@ function Input$(props) {
     empty = props.value === "";
   }
 
-  const internalInputRef = useRef(null);
-  inputRef = inputRef || internalInputRef;
+  empty = showLabel ? false : empty;
 
   const state = {
     focused,
@@ -104,6 +110,10 @@ function Input$(props) {
       ? customSx.$root(state)
       : customSx.$root;
 
+  const arrow = createElement(
+    getElementSpec(customSx.$arrow, defaults.$arrow, state)
+  );
+
   leftEnhancer =
     typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
   const leftEnhancersContainerSpec = getElementSpec(
@@ -116,6 +126,11 @@ function Input$(props) {
 
   rightEnhancer =
     typeof rightEnhancer === "function" ? rightEnhancer(state) : rightEnhancer;
+  rightEnhancer = Array.isArray(rightEnhancer)
+    ? rightEnhancer
+    : [rightEnhancer];
+  rightEnhancer.unshift(arrow);
+
   const rightEnhancersContainerSpec = getElementSpec(
     customSx.$rightEnhancersContainer,
     defaults.$rightEnhancersContainer,
@@ -138,20 +153,10 @@ function Input$(props) {
         onBlur(e);
       }
     },
-    onChange: e => {
-      if (!e.target.value || e.target.value === "") {
-        setEmpty(true);
-      } else {
-        setEmpty(false);
-      }
-      if (onChange) {
-        onChange(e);
-      }
-    },
     disabled,
     placeholder,
     ...inputProps,
-    inputRef
+    ref: inputRef
   });
 
   let inputContainer;
@@ -178,15 +183,7 @@ function Input$(props) {
   );
 
   return (
-    <Box
-      sx={[defaults.rootCss(state), rootCss, css]}
-      onClick={(...args) => {
-        if (onClick) {
-          onClick(...args);
-        }
-        inputRef.current.focus();
-      }}
-    >
+    <Box sx={[defaults.rootCss(state), rootCss, css]} onClick={onClick}>
       {leftEnhancerContainer}
       {inputContainer}
       {rightEnhancerContainer}
