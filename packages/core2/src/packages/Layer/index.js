@@ -185,6 +185,7 @@ function Layer$(props) {
   const shouldShow = isVisible && isOpen;
 
   anchoredTo = responsiveValueCurrent(anchoredTo) || "window";
+
   const isAnchored = anchoredTo && anchoredTo !== "window";
   const currentPlacement = responsiveValueCurrent(placement);
 

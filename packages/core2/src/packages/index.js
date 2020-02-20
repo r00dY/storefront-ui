@@ -179,7 +179,7 @@ function responsiveValueForEach(resVal, callback) {
       callback(val, breakpoints[index - 1]);
     });
     return;
-  } else if (typeof resVal === "object") {
+  } else if (typeof resVal === "object" && typeof resVal._ !== "undefined") {
     for (let key in resVal) {
       if (key === "_") {
         callback(resVal[key], null);

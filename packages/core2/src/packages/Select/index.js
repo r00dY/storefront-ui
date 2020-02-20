@@ -6,17 +6,29 @@ import { useSelect as useSelectDownshift } from "downshift";
 
 import { responsiveValueMap } from "../index";
 
-function useSelect({
-  options,
-  value,
-  onChange,
-  placeholder = "Select",
-  ...restProps
-}) {
+function useSelect(props) {
+  const {
+    options,
+    value,
+    onChange,
+    initialValue,
+    placeholder = "Select",
+    ...restProps
+  } = props;
+
+  /**
+   * we keep a bit different naming:
+   * - options
+   * - value
+   * - onChange
+   */
+
+  // Stateful / Stateless
   const downshiftSelect = useSelectDownshift({
     ...restProps,
     items: options,
     selectedItem: value,
+    initialSelectedItem: initialValue,
     onSelectedItemChange: item => {
       if (onChange) {
         onChange(item.selectedItem);
@@ -54,9 +66,6 @@ function useSelect({
 
     return {
       ...option,
-      // itemProps: {
-      //     ...downshiftSelect.getItemProps({index, item: option})
-      // },
       selectableProps: {
         selected:
           downshiftSelect.selectedItem &&
@@ -168,24 +177,14 @@ function Select2(props) {
     sx: { ...$button.props.sx, ...restSx }
   });
 
-  // const wrapper = $wrapper;
-
-  // console.log("anchorRef", anchorRef && anchorRef.current);
-
-  //
-  // console.log('tudum!!!', $layer.props.anchoredTo);
-  //
-  // // const anchoredTo = $layer.props.anchoredTo ? responsiveValueMap($layer.props.anchoredTo, x => x === "trigger" ? anchorRef : x) : anchorRef;
-  //
-  // const anchoredTo = anchorRef;
-  //
-  // console.log('anchoredTo', anchoredTo);
-
-  // const anchoredTo = "window";
-
   const layer = React.cloneElement(
     $layer,
-    { ...layerProps, anchoredTo: ["window", null, anchorRef] },
+    {
+      ...layerProps,
+      anchoredTo: responsiveValueMap($layer.props.anchoredTo || "trigger", x =>
+        x === "trigger" ? anchorRef : x
+      )
+    },
     params => {
       return (
         <Box {...menuProps}>

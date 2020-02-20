@@ -32,7 +32,7 @@ export const newSelect = () => {
 
       <Select2
         sx={{
-          $layer: <Layer />,
+          $layer: <Layer anchoredTo={["window", null, "trigger"]} />,
           $button: <Button />,
           $selectable: <Color />,
           width: "400px"
