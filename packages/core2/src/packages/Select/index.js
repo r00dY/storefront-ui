@@ -186,25 +186,15 @@ function Select2(props) {
       )
     },
     params => {
-      return (
-        <Box {...menuProps}>
-          {options.map((option, i) =>
-            React.cloneElement($selectable, option.selectableProps)
-          )}
-        </Box>
-      );
+      const children = [];
+      options.forEach((option, i) => {
+        children.push(React.cloneElement($selectable, option.selectableProps));
+        if ($separator) {
+          children.push(React.cloneElement($separator, { role: "separator" }));
+        }
+      });
 
-      // TODO: wrapper
-
-      // const select = <SelectInline$ {...selectProps}>{children}</SelectInline$>;
-      //
-      // let content = select;
-      //
-      // if (wrapper) {
-      //   content = wrapper({ ...params, content: select });
-      // }
-      //
-      // return content;
+      return React.cloneElement($wrapper, menuProps, children);
     }
   );
 

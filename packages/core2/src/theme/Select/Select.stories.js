@@ -10,6 +10,7 @@ import {
 
 import Button from "../Button/Button";
 import Color from "../Selectables/Color";
+import Box from "@commerce-ui/core/Box";
 
 import Layer from "@commerce-ui/core/Layer";
 
@@ -35,6 +36,8 @@ export const newSelect = () => {
           $layer: <Layer anchoredTo={["window", null, "trigger"]} />,
           $button: <Button />,
           $selectable: <Color />,
+          $wrapper: <Box sx={{ p: 6 }} />,
+          $separator: <Box sx={{ height: 4 }} />,
           width: "400px"
         }}
         options={colors}
