@@ -57,6 +57,7 @@ const DialogWithButton = ({ children, ...restProps }) => {
               border: "1px solid black",
               height: "100%",
               minHeight: "100%",
+              width: "300px",
               bg: "red",
               p: 2
             }}
