@@ -190,10 +190,14 @@ function InputContainer$(props) {
     );
 
     const arrowContainer = createElement(
-      getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
-        ...state,
-        arrow
-      })
+      getElementSpec(
+        customSx.$nativeSelectArrowContainer,
+        defaults.$arrowContainer,
+        {
+          ...state,
+          arrow
+        }
+      )
     );
 
     inputContainerState.arrow = arrowContainer;
