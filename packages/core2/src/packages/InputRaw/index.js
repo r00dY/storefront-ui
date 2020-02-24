@@ -35,4 +35,7 @@ function InputRaw_(props) {
   return <input sx={[inputResetStyles, css]} {...restProps} ref={inputRef} />;
 }
 
-export default InputRaw_;
+const InputRaw = React.forwardRef((props, ref) => (
+  <InputRaw_ inputRef={ref} {...props} />
+));
+export default InputRaw;
