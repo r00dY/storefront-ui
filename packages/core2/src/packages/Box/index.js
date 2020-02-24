@@ -13,18 +13,16 @@ const boxStyles = {
 };
 
 function Box_(props) {
-  const { sx, as, forwardedRef, ...restProps } = props;
+  const { sx, as, _ref, ...restProps } = props;
 
   return jsx(as, {
     sx: [boxStyles, sx],
-    ref: forwardedRef,
+    ref: _ref,
     ...restProps
   });
 }
 
-const Box = React.forwardRef((props, ref) => (
-  <Box_ {...props} forwardedRef={ref} />
-));
+const Box = React.forwardRef((props, ref) => <Box_ _ref={ref} {...props} />);
 
 Box.defaultProps = {
   as: "div"
