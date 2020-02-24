@@ -97,12 +97,15 @@ function InputContainer$(props) {
     invalid,
     disabled,
     empty,
-    placeholder,
-    label
+    placeholder
   };
 
   sx = typeof sx === "function" ? sx(state) : sx;
   const [css, customSx] = splitSx(sx);
+
+  if (customSx.$labelInside) {
+    state.label = label;
+  }
 
   const rootCss =
     typeof customSx.$root === "function"
@@ -190,7 +193,6 @@ function InputContainer$(props) {
     <Box
       sx={[defaults.rootCss(state), rootCss, css]}
       onClick={(...args) => {
-        console.log("on click!");
         if (onClick) {
           onClick(...args);
         }
