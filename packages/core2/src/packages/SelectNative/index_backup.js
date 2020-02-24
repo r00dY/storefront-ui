@@ -1,54 +1,72 @@
 /** @jsx jsx */
 import React, { useState, useLayoutEffect, useRef } from "react";
 import Box from "../Box";
-import HorizontalStackSimple from "../HorizontalStackSimple";
+import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
-import InputRaw$ from "../InputRaw";
+
+const inputResetStyles = {
+  outline: 0,
+  margin: 0,
+  padding: 0,
+  border: 0,
+  bg: "transparent",
+  boxSizing: "border-box",
+  appearance: "none"
+  // ":focus": {
+  //   outline: 0,
+  //   boxShadow: "none"
+  // },
+  // ":invalid": {
+  //   boxShadow: "none",
+  //   outline: "none"
+  // }
+};
 
 const defaults = {
   rootCss: ({ focused }) => ({
     position: "relative",
-    display: "flex",
+    display: "inline-flex",
     verticalAlign: "top",
     overflow: "hidden",
-    flexDirection: "row",
-    cursor: "text"
+    flexDirection: "row"
   }),
-  $input: ({}) => ({
-    __type: InputRaw$,
+  $input: {
+    __type: "select",
     height: "100%",
-    width: "100%"
-  }),
+    width: "100%",
+    ...inputResetStyles,
+    __children: [
+      <option>One but longer a bit</option>,
+      <option>Two</option>,
+      <option>Three</option>
+    ]
+  },
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
-    __type: HorizontalStackSimple,
+    __type: HorizontalStack,
     height: "100%",
     flexGrow: 0,
     flexShrink: 0,
-    pointerEvents: "none",
     __children: leftEnhancer
   }),
   $rightEnhancersContainer: ({ rightEnhancer }) => ({
-    __type: HorizontalStackSimple,
+    __type: HorizontalStack,
     height: "100%",
     flexGrow: 0,
     flexShrink: 0,
-    pointerEvents: "none",
     __children: rightEnhancer
   }),
-  $controlContainer: ({ control, label, arrow }) => ({
+  $inputContainer: ({ input, label, arrowContainer }) => ({
+    __type: "label",
     position: "relative",
     boxSizing: "border-box",
     height: "100%",
     flexGrow: 1,
     flexShrink: 1,
-    display: "flex",
-    alignItems: "center",
-    // pointerEvents: "none",
     __children: (
       <>
         {label}
-        {control}
-        {arrow}
+        {input}
+        {arrowContainer}
       </>
     )
   }),
@@ -77,36 +95,33 @@ const defaults = {
   }
 };
 
-function InputContainer$(props) {
+function SelectNative$(props) {
   let {
     sx,
     onFocus,
     onBlur,
     onChange,
-    onClick,
     autoFocus,
-    controlRef,
+    inputRef,
     invalid,
     disabled,
     placeholder,
     leftEnhancer,
     rightEnhancer,
     label,
-    children,
-    empty = true,
-    showArrow = false,
+    value,
+    options,
     ...inputProps
   } = props;
 
-  const [focused, setFocused] = useState(false);
-  // let [empty, setEmpty] = useState(true);
-  //
-  // if (props.value) {
-  //     empty = props.value === "";
-  // }
+  label = label || placeholder;
 
-  const internalControlRef = useRef(null);
-  controlRef = controlRef || internalControlRef;
+  const [focused, setFocused] = useState(false);
+  let [empty, setEmpty] = useState(true);
+
+  if (value) {
+    empty = value === "";
+  }
 
   const state = {
     focused,
@@ -118,10 +133,6 @@ function InputContainer$(props) {
 
   sx = typeof sx === "function" ? sx(state) : sx;
   const [css, customSx] = splitSx(sx);
-
-  if (customSx.$labelInside) {
-    state.label = label;
-  }
 
   const rootCss =
     typeof customSx.$root === "function"
@@ -148,14 +159,39 @@ function InputContainer$(props) {
   const rightEnhancerContainer =
     rightEnhancer && createElement(rightEnhancersContainerSpec);
 
-  const controlRaw = React.Children.only(children);
+  let optionElems = [];
 
-  const controlCss =
-    typeof customSx.$control === "function"
-      ? customSx.$control(state)
-      : customSx.$control;
+  if (placeholder) {
+    optionElems.push(
+      <option disabled value={""} key={"__default__"}>
+        {placeholder}
+      </option>
+    );
+  }
 
-  const control = React.cloneElement(controlRaw, {
+  options.map(option => {
+    let value, label;
+    if (typeof option === "object") {
+      value = option.value;
+      label = option.label;
+    } else {
+      value = option;
+      label = option;
+    }
+    optionElems.push(
+      <option value={value} key={value}>
+        {label}
+      </option>
+    );
+  });
+
+  const inputSpec = getElementSpec(
+    customSx.$input,
+    { ...defaults.$input, __children: optionElems },
+    state
+  );
+
+  const input = createElement(inputSpec, {
     onFocus: e => {
       setFocused(true);
       if (onFocus) {
@@ -168,49 +204,56 @@ function InputContainer$(props) {
         onBlur(e);
       }
     },
+    onChange: e => {
+      if (!e.target.value || e.target.value === "") {
+        setEmpty(true);
+      } else {
+        setEmpty(false);
+      }
+      if (onChange) {
+        onChange(e.target.value, e);
+      }
+    },
     disabled,
     placeholder,
+    value,
     ...inputProps,
-    sx: {
-      ...controlCss,
-      ...controlRaw.props.sx
-    },
-    ref: controlRef
+    // defaultValue: "",
+    ref: inputRef
   });
+
+  const arrow = createElement(
+    getElementSpec(customSx.$arrow, defaults.$arrow, state)
+  );
+  const arrowContainer = createElement(
+    getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
+      ...state,
+      arrow
+    })
+  );
 
   let inputContainer;
   let inputContainerState = {
     ...state,
-    control
+    input,
+    arrowContainer,
+    arrow
   };
 
-  if (showArrow) {
-    const arrow = createElement(
-      getElementSpec(customSx.$arrow, defaults.$arrow, state)
-    );
-
-    const arrowContainer = createElement(
-      getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
-        ...state,
-        arrow
-      })
-    );
-
-    inputContainerState.arrow = arrowContainer;
-  }
-
-  if (sx.$labelInside) {
+  if (customSx.$labelInside) {
+    state.label = label;
     inputContainerState.label = createElement(
       getElementSpec(customSx.$label, defaults.$label, state)
     );
+    console.log("create label inside");
   }
 
   inputContainer = createElement(
     getElementSpec(
-      customSx.$controlContainer,
+      customSx.$inputContainer,
       {
-        ...defaults.$controlContainer(inputContainerState),
-        __type: sx.$labelInside ? "label" : "div"
+        ...defaults.$inputContainer(inputContainerState),
+        __type: customSx.$labelInside ? "label" : "div"
       },
       inputContainerState
     )
@@ -219,12 +262,7 @@ function InputContainer$(props) {
   return (
     <Box
       sx={[defaults.rootCss(state), rootCss, css]}
-      onClick={(...args) => {
-        if (onClick) {
-          onClick(...args);
-        }
-        controlRef.current.focus();
-      }}
+      className={focused ? "__commui_focus" : ""}
     >
       {leftEnhancerContainer}
       {inputContainer}
@@ -233,4 +271,4 @@ function InputContainer$(props) {
   );
 }
 
-export default InputContainer$;
+export default SelectNative$;

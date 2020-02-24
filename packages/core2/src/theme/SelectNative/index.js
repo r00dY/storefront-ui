@@ -16,8 +16,8 @@ const Index = props => {
         $arrow: {
           pr: "10px"
         },
-        $input: state => ({
-          ...formStyles.$input(state),
+        $control: state => ({
+          ...formStyles.$control(state),
           pr: "28px"
         })
       }}
