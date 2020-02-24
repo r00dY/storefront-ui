@@ -15,9 +15,10 @@ const formStyles = {
     pl: "10px"
   },
   $control: ({ empty }) => ({
+    position: "relative",
     font: "body2",
-    pt: empty ? 0 : "16px",
-    transition: "padding .2s ease-out"
+    top: empty ? 0 : "8px",
+    transition: "all .2s ease-out"
   }),
   $leftEnhancersContainer: {
     $gutter: "8px",
