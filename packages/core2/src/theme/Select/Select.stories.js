@@ -84,7 +84,8 @@ export const newSelect = () => {
           ...formStyles,
           width: "400px"
         }}
-        label={"Test select"}
+        label={"Color"}
+        placeholder={"Pick a color"}
         options={colors}
         value={value}
         onChange={value => setValue(value)}
@@ -112,7 +113,7 @@ export const unstyled = () => {
           }
         }}
         button={({ selectedItem }) => (
-          <Button>{selectedItem ? selectedItem.value : "Pick color"}</Button>
+          <Button>{selectedItem ? selectedItem.value : "Pick a color"}</Button>
         )}
         options={colors}
         value={value}
