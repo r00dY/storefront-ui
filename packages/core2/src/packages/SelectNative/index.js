@@ -72,11 +72,13 @@ function Input$(props) {
       empty={empty}
       label={props.label || props.placeholder}
       showArrow={"inline"}
+      cursor={"pointer"}
     >
       <SelectNativeRaw
         sx={{
           height: "100%",
-          width: "100%"
+          width: "100%",
+          cursor: "pointer"
         }}
         onChange={onChangeEvent}
       >

@@ -64,7 +64,7 @@ function useSelect(props) {
       index,
       item: option
     });
-    itemDownshiftProps.forwardedRef = itemDownshiftProps.ref;
+    itemDownshiftProps._ref = itemDownshiftProps.ref;
     delete itemDownshiftProps.ref;
 
     return {
@@ -184,7 +184,13 @@ function Select$(props) {
 // }
 
 function Select2(props) {
-  let { sx = {}, label, placeholder = "Select value", ...restProps } = props;
+  let {
+    sx = {},
+    label,
+    placeholder = "Select value",
+    onClick,
+    ...restProps
+  } = props;
 
   const {
     $layer,
@@ -204,7 +210,9 @@ function Select2(props) {
     options,
     anchorRef,
     isOpen,
-    selectedItem
+    selectedItem,
+    openMenu,
+    ...rest
   } = useSelect(restProps);
 
   // TODO: should be possible to make it a function
@@ -237,8 +245,18 @@ function Select2(props) {
       empty={selectedItem === null}
       label={label || placeholder}
       showArrow={"enhancer"}
+      cursor={"pointer"}
+      onClick={(...args) => {
+        openMenu();
+
+        if (onClick) {
+          onClick(...args);
+        }
+      }}
     >
-      <ButtonRaw {...buttonProps}>{value}</ButtonRaw>
+      <ButtonRaw {...buttonProps} sx={{ cursor: "pointer" }}>
+        {value}
+      </ButtonRaw>
     </InputContainer>
   );
 

@@ -29,6 +29,7 @@ function Input$(props) {
       {...props}
       empty={empty}
       label={props.label || props.placeholder}
+      cursor={"text"}
     >
       <InputRaw$
         sx={{ width: "100%", height: "100%" }}

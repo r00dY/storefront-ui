@@ -35,7 +35,7 @@ const defaults = {
     pointerEvents: "none",
     __children: rightEnhancer
   }),
-  $controlContainer: ({ control, label, arrow }) => ({
+  $controlContainer: ({ control, label, arrow, cursor }) => ({
     position: "relative",
     boxSizing: "border-box",
     height: "100%",
@@ -43,6 +43,7 @@ const defaults = {
     flexShrink: 1,
     display: "flex",
     alignItems: "center",
+    cursor,
     // pointerEvents: "none",
     __children: (
       <>
@@ -95,6 +96,7 @@ function InputContainer$(props) {
     children,
     forceFocused = false,
     rootRef,
+    cursor = "default",
     empty = true,
     showArrow = false,
     ...inputProps
@@ -158,7 +160,7 @@ function InputContainer$(props) {
       ...controlCss,
       ...controlRaw.props.sx
     },
-    ref: controlRef,
+    _ref: controlRef,
     noFocus: true
   });
 
@@ -193,6 +195,8 @@ function InputContainer$(props) {
       getElementSpec(customSx.$label, defaults.$label, state)
     );
   }
+
+  inputContainerState.cursor = cursor;
 
   inputContainer = createElement(
     getElementSpec(
@@ -238,14 +242,14 @@ function InputContainer$(props) {
 
   return (
     <Box
-      sx={[defaults.rootCss(state), rootCss, css]}
+      sx={[defaults.rootCss(state), { cursor }, rootCss, css]}
       ref={rootRef}
-      // onClick={(...args) => {
-      //   if (onClick) {
-      //     onClick(...args);
-      //   }
-      //   controlRef.current.focus();
-      // }}
+      onClick={(...args) => {
+        if (onClick) {
+          onClick(...args);
+        }
+        controlRef.current.focus();
+      }}
     >
       {leftEnhancerContainer}
       {inputContainer}
