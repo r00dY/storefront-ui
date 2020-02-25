@@ -158,7 +158,8 @@ function InputContainer$(props) {
       ...controlCss,
       ...controlRaw.props.sx
     },
-    ref: controlRef
+    ref: controlRef,
+    noFocus: true
   });
 
   let inputContainer;

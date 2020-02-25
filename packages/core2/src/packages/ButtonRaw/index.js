@@ -2,6 +2,7 @@
 
 import React from "react";
 import { jsx, splitSx } from "..";
+import Box from "../Box";
 
 /**
  * Button Raw
@@ -28,8 +29,14 @@ function ButtonRaw_(props) {
   const { sx, buttonRef, ...restProps } = props;
 
   const [css, customSx] = splitSx(sx);
+
   return (
-    <button sx={[buttonResetStyles, css]} {...restProps} ref={buttonRef} />
+    <Box
+      as={"button"}
+      sx={[buttonResetStyles, css]}
+      {...restProps}
+      ref={buttonRef}
+    />
   );
 }
 

@@ -1,7 +1,7 @@
 /** @jsx jsx */
 
 import React from "react";
-import { jsx } from "..";
+import { jsx, splitSx } from "..";
 
 const boxStyles = {
   boxSizing: "border-box",
@@ -12,11 +12,17 @@ const boxStyles = {
   listStyle: "none"
 };
 
+const focusReset = {
+  ":focus": {
+    outline: "none"
+  }
+};
+
 function Box_(props) {
-  const { sx, as, _ref, ...restProps } = props;
+  const { sx, as, _ref, noFocus = false, ...restProps } = props;
 
   return jsx(as, {
-    sx: [boxStyles, sx],
+    sx: [boxStyles, noFocus && focusReset, sx],
     ref: _ref,
     ...restProps
   });
