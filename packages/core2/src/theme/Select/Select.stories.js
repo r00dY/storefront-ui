@@ -51,6 +51,44 @@ export const newSelect = () => {
 
       <Button>Test</Button>
       <Button>Test2</Button>
+
+      <Select2
+        sx={{
+          $layer: <Layer anchoredTo={["window", null, "trigger"]} />,
+          // $button: <Button />,
+          $selectable: <Color />,
+          $wrapper: <Box sx={{ p: 6 }} />,
+          $separator: <Box sx={{ height: 4 }} />,
+          $value: ({ selectedItem, placeholder }) => (
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "row",
+                alignItems: "center"
+              }}
+            >
+              {selectedItem && (
+                <Box
+                  sx={{
+                    width: "14px",
+                    height: "14px",
+                    borderRadius: "7px",
+                    mr: "4px",
+                    bg: selectedItem.color
+                  }}
+                />
+              )}
+              {selectedItem ? selectedItem.value : placeholder}
+            </Box>
+          ),
+          ...formStyles,
+          width: "400px"
+        }}
+        label={"Test select"}
+        options={colors}
+        value={value}
+        onChange={value => setValue(value)}
+      />
     </div>
   );
 };

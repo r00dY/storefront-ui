@@ -14,7 +14,7 @@ function useSelect(props) {
     value,
     onChange,
     initialValue,
-    placeholder = "Select",
+    // placeholder = "Select",
     ...restProps
   } = props;
 
@@ -49,12 +49,12 @@ function useSelect(props) {
 
   const buttonProps = {
     ...buttonPropsDownshift,
-    buttonRef: buttonRef,
+    buttonRef: buttonRef
     // ref: undefined,
     // ref: buttonRef,
-    children: downshiftSelect.selectedItem
-      ? downshiftSelect.selectedItem.value
-      : placeholder
+    // children: downshiftSelect.selectedItem
+    //   ? downshiftSelect.selectedItem.value
+    //   : placeholder
   };
 
   delete buttonProps.ref;
@@ -184,7 +184,7 @@ function Select$(props) {
 // }
 
 function Select2(props) {
-  let { sx = {}, label, ...restProps } = props;
+  let { sx = {}, label, placeholder = "Select value", ...restProps } = props;
 
   const {
     $layer,
@@ -192,6 +192,7 @@ function Select2(props) {
     $separator,
     $selectable,
     $wrapper,
+    $value,
     endEnhancer,
     ...restSx
   } = sx;
@@ -215,9 +216,18 @@ function Select2(props) {
 
   const rootRef = useRef(null);
 
-  console.log(buttonProps);
+  // Calculate button content
+  let value = selectedItem ? selectedItem.value : placeholder;
 
-  const endEnhancer2 = [];
+  if ($value) {
+    value = $value({ selectedItem, placeholder });
+  }
+
+  // children: downshiftSelect.selectedItem
+  //   ? downshiftSelect.selectedItem.value
+  //   : placeholder
+
+  // const value = $value || value;
 
   const button = (
     <InputContainer
@@ -225,10 +235,10 @@ function Select2(props) {
       forceFocused={isOpen}
       rootRef={rootRef}
       empty={selectedItem === null}
-      label={label}
+      label={label || placeholder}
       showArrow={"enhancer"}
     >
-      <ButtonRaw {...buttonProps} />
+      <ButtonRaw {...buttonProps}>{value}</ButtonRaw>
     </InputContainer>
   );
 
