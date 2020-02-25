@@ -1,7 +1,5 @@
 /** @jsx jsx */
 import React, { useState, useLayoutEffect, useRef } from "react";
-import Box from "../Box";
-import HorizontalStackSimple from "../HorizontalStackSimple";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
 import ButtonRaw from "../ButtonRaw";
 

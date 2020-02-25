@@ -23,6 +23,8 @@ const colors = [
   { color: "purple", value: "purple" }
 ];
 
+import formStyles from "../form-styles";
+
 export const newSelect = () => {
   const [value, setValue] = useState(null); // useState(colors[2]);
 
@@ -34,12 +36,14 @@ export const newSelect = () => {
       <Select2
         sx={{
           $layer: <Layer anchoredTo={["window", null, "trigger"]} />,
-          $button: <Button />,
+          // $button: <Button />,
           $selectable: <Color />,
           $wrapper: <Box sx={{ p: 6 }} />,
           $separator: <Box sx={{ height: 4 }} />,
+          ...formStyles,
           width: "400px"
         }}
+        label={"Test select"}
         options={colors}
         value={value}
         onChange={value => setValue(value)}

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from "react";
 import Layer from "../Layer";
 import Box from "../Box";
+import ButtonRaw from "../ButtonRaw";
 
 import { useSelect as useSelectDownshift } from "downshift";
 
-import { responsiveValueMap } from "../index";
+import { jsx, responsiveValueMap } from "../index";
+import InputContainer from "../InputContainer";
 
 function useSelect(props) {
   const {
@@ -48,7 +50,8 @@ function useSelect(props) {
   const buttonProps = {
     ...buttonPropsDownshift,
     buttonRef: buttonRef,
-    ref: undefined,
+    // ref: undefined,
+    // ref: buttonRef,
     children: downshiftSelect.selectedItem
       ? downshiftSelect.selectedItem.value
       : placeholder
@@ -156,10 +159,42 @@ function Select$(props) {
   );
 }
 
-function Select2(props) {
-  let { sx = {}, ...restProps } = props;
+// function ButtonSelect$(props) {
+//   let { onChange, ...restProps } = props;
+//
+//   let [empty, setEmpty] = useState(true);
+//
+//   if (props.value) {
+//     empty = props.value === "";
+//   }
+//
+//   return (
+//       <InputContainer
+//           {...props}
+//           empty={empty}
+//           label={props.label || props.placeholder}
+//       >
+//         <ButtonRaw
+//             sx={{ width: "100%", height: "100%" }}
+//         >
+//           Test
+//         </ButtonRaw>
+//       </InputContainer>
+//   );
+// }
 
-  const { $layer, $button, $separator, $selectable, $wrapper, ...restSx } = sx;
+function Select2(props) {
+  let { sx = {}, label, ...restProps } = props;
+
+  const {
+    $layer,
+    $button,
+    $separator,
+    $selectable,
+    $wrapper,
+    endEnhancer,
+    ...restSx
+  } = sx;
 
   const {
     buttonProps,
@@ -167,22 +202,44 @@ function Select2(props) {
     menuProps,
     options,
     anchorRef,
-    ...rest
+    isOpen,
+    selectedItem
   } = useSelect(restProps);
 
   // TODO: should be possible to make it a function
   // TODO: pass "selected", "disabled", "error", "placehoder", "selectedOption", "selectedValue"
-  const button = React.cloneElement($button, {
-    ...buttonProps,
-    sx: { ...$button.props.sx, ...restSx }
-  });
+  // const button = React.cloneElement($button, {
+  //   ...buttonProps,
+  //   sx: { ...$button.props.sx, ...restSx }
+  // });
+
+  const rootRef = useRef(null);
+
+  console.log(buttonProps);
+
+  const endEnhancer2 = [];
+
+  const button = (
+    <InputContainer
+      sx={restSx}
+      forceFocused={isOpen}
+      rootRef={rootRef}
+      empty={selectedItem === null}
+      label={label}
+      showArrow={true}
+    >
+      <ButtonRaw {...buttonProps} />
+    </InputContainer>
+  );
+
+  // console.log(buttonProps.ref);
 
   const layer = React.cloneElement(
     $layer,
     {
       ...layerProps,
       anchoredTo: responsiveValueMap($layer.props.anchoredTo || "trigger", x =>
-        x === "trigger" ? anchorRef : x
+        x === "trigger" ? rootRef : x
       )
     },
     params => {

@@ -93,12 +93,15 @@ function InputContainer$(props) {
     rightEnhancer,
     label,
     children,
+    forceFocused = false,
+    rootRef,
     empty = true,
     showArrow = false,
     ...inputProps
   } = props;
 
-  const [focused, setFocused] = useState(false);
+  let [focused, setFocused] = useState(false);
+  focused = focused || forceFocused;
   // let [empty, setEmpty] = useState(true);
   //
   // if (props.value) {
@@ -223,12 +226,13 @@ function InputContainer$(props) {
   return (
     <Box
       sx={[defaults.rootCss(state), rootCss, css]}
-      onClick={(...args) => {
-        if (onClick) {
-          onClick(...args);
-        }
-        controlRef.current.focus();
-      }}
+      ref={rootRef}
+      // onClick={(...args) => {
+      //   if (onClick) {
+      //     onClick(...args);
+      //   }
+      //   controlRef.current.focus();
+      // }}
     >
       {leftEnhancerContainer}
       {inputContainer}

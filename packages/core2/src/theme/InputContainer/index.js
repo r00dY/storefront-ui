@@ -10,11 +10,9 @@ const formStyles = {
     borderRadius: "8px",
     bg: disabled ? "lightgrey" : "#f7f7f7"
   }),
-  $controlContainer: {
-    pr: "10px",
-    pl: "10px"
-  },
   $control: ({ empty }) => ({
+    pr: "10px",
+    pl: "10px",
     position: "relative",
     font: "body2",
     top: empty ? 0 : "8px",
@@ -31,8 +29,7 @@ const formStyles = {
     font: "body2"
   },
   $label: ({ empty }) => ({
-    top: "50%",
-    transform: empty ? "translateY(-12px)" : "translateY(-18px)",
+    top: empty ? 12 : 5,
     opacity: empty ? 0 : 1,
     transition: "all .2s ease-out",
     left: "10px",
