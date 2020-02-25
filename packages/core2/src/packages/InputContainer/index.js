@@ -71,7 +71,10 @@ const defaults = {
     justifyContent: "center",
     alignItems: "center",
     pointerEvents: "none",
-    __children: arrow
+    __children: arrow,
+    __props: {
+      key: "arrow"
+    }
   }),
   $arrow: {
     __children: <>⌄</>

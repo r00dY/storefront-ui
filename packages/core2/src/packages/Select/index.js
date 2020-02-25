@@ -275,7 +275,12 @@ function Select2(props) {
       options.forEach((option, i) => {
         children.push(React.cloneElement($selectable, option.selectableProps));
         if ($separator) {
-          children.push(React.cloneElement($separator, { role: "separator" }));
+          children.push(
+            React.cloneElement($separator, {
+              role: "separator",
+              key: "separator-" + i
+            })
+          );
         }
       });
 

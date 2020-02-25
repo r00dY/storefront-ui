@@ -24,8 +24,8 @@ export const unstyled = () => {
 
       <p>Enhancers</p>
       <InputContainerTest
-        leftEnhancer={[<Box>$</Box>, <Box>X</Box>]}
-        rightEnhancer={[<Box>$</Box>, <Box>X</Box>]}
+        leftEnhancer={[<Box key={"a"}>$</Box>, <Box key={"b"}>X</Box>]}
+        rightEnhancer={[<Box key={"a"}>$</Box>, <Box key={"b"}>X</Box>]}
       />
 
       <p>Non empty</p>
@@ -34,8 +34,8 @@ export const unstyled = () => {
       <p>Non empty with enhancers</p>
 
       <InputContainerTest
-        leftEnhancer={[<Box>$</Box>, <Box>X</Box>]}
-        rightEnhancer={[<Box>$</Box>, <Box>X</Box>]}
+        leftEnhancer={[<Box key={"a"}>$</Box>, <Box key={"b"}>X</Box>]}
+        rightEnhancer={[<Box key={"a"}>$</Box>, <Box key={"b"}>X</Box>]}
         label={"Lorem ipsum"}
         empty={false}
       />
