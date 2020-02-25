@@ -106,7 +106,9 @@ function InputContainer$(props) {
   } = props;
 
   let [focused, setFocused] = useState(false);
+
   focused = focused || forceFocused;
+
   // let [empty, setEmpty] = useState(true);
   //
   // if (props.value) {
@@ -246,11 +248,12 @@ function InputContainer$(props) {
   return (
     <Box
       sx={[defaults.rootCss(state), { cursor }, rootCss, css]}
-      ref={rootRef}
+      _ref={rootRef}
       onClick={(...args) => {
         if (onClick) {
           onClick(...args);
         }
+        // console.log('on open');
         controlRef.current.focus();
       }}
     >
