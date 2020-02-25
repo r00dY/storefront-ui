@@ -61,6 +61,9 @@ const formStyles = {
     pr: "16px",
     font: "body2"
   },
+  $arrow: {
+    pr: "10px"
+  },
   $label: ({ empty }) => ({
     top: "50%",
     left: "10px",

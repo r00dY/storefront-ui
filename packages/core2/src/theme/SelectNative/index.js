@@ -13,9 +13,6 @@ const Index = props => {
       sx={{
         ...css,
         ...formStyles,
-        $nativeSelectArrowContainer: {
-          pr: "10px"
-        },
         $control: state => ({
           ...formStyles.$control(state),
           pr: "28px"

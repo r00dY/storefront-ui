@@ -71,7 +71,7 @@ function Input$(props) {
       {...props}
       empty={empty}
       label={props.label || props.placeholder}
-      showArrow={true}
+      showArrow={"inline"}
     >
       <SelectNativeRaw
         sx={{

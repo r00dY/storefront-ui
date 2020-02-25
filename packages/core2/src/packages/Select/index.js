@@ -226,7 +226,7 @@ function Select2(props) {
       rootRef={rootRef}
       empty={selectedItem === null}
       label={label}
-      showArrow={true}
+      showArrow={"enhancer"}
     >
       <ButtonRaw {...buttonProps} />
     </InputContainer>

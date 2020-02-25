@@ -131,26 +131,6 @@ function InputContainer$(props) {
       ? customSx.$root(state)
       : customSx.$root;
 
-  leftEnhancer =
-    typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
-  const leftEnhancersContainerSpec = getElementSpec(
-    customSx.$leftEnhancersContainer,
-    defaults.$leftEnhancersContainer,
-    { ...state, leftEnhancer }
-  );
-  const leftEnhancerContainer =
-    leftEnhancer && createElement(leftEnhancersContainerSpec);
-
-  rightEnhancer =
-    typeof rightEnhancer === "function" ? rightEnhancer(state) : rightEnhancer;
-  const rightEnhancersContainerSpec = getElementSpec(
-    customSx.$rightEnhancersContainer,
-    defaults.$rightEnhancersContainer,
-    { ...state, rightEnhancer }
-  );
-  const rightEnhancerContainer =
-    rightEnhancer && createElement(rightEnhancersContainerSpec);
-
   const controlRaw = React.Children.only(children);
 
   const controlCss =
@@ -187,23 +167,24 @@ function InputContainer$(props) {
     control
   };
 
+  let arrowContainer;
+
   if (showArrow) {
     const arrow = createElement(
       getElementSpec(customSx.$arrow, defaults.$arrow, state)
     );
 
-    const arrowContainer = createElement(
-      getElementSpec(
-        customSx.$nativeSelectArrowContainer,
-        defaults.$arrowContainer,
-        {
-          ...state,
-          arrow
-        }
-      )
+    arrowContainer = createElement(
+      getElementSpec(customSx.$arrowContainer, defaults.$arrowContainer, {
+        ...state,
+        arrow
+      })
     );
+  }
 
+  if (showArrow === "inline") {
     inputContainerState.arrow = arrowContainer;
+    arrowContainer = null;
   }
 
   if (sx.$labelInside) {
@@ -222,6 +203,37 @@ function InputContainer$(props) {
       inputContainerState
     )
   );
+
+  leftEnhancer =
+    typeof leftEnhancer === "function" ? leftEnhancer(state) : leftEnhancer;
+  const leftEnhancersContainerSpec = getElementSpec(
+    customSx.$leftEnhancersContainer,
+    defaults.$leftEnhancersContainer,
+    { ...state, leftEnhancer }
+  );
+  const leftEnhancerContainer =
+    leftEnhancer && createElement(leftEnhancersContainerSpec);
+
+  rightEnhancer =
+    typeof rightEnhancer === "function" ? rightEnhancer(state) : rightEnhancer;
+
+  const rightEnhancer2 = Array.isArray(rightEnhancer)
+    ? rightEnhancer
+    : rightEnhancer
+    ? [rightEnhancer]
+    : [];
+
+  if (showArrow === "enhancer") {
+    rightEnhancer2.unshift(arrowContainer);
+  }
+
+  const rightEnhancersContainerSpec = getElementSpec(
+    customSx.$rightEnhancersContainer,
+    defaults.$rightEnhancersContainer,
+    { ...state, rightEnhancer: rightEnhancer2 }
+  );
+  const rightEnhancerContainer =
+    rightEnhancer2.length > 0 && createElement(rightEnhancersContainerSpec);
 
   return (
     <Box
