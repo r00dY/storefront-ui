@@ -253,14 +253,13 @@ function Select2(props) {
           onClick(...args);
         }
       }}
+      {...restProps}
     >
       <ButtonRaw {...buttonProps} sx={{ cursor: "pointer" }}>
         {value}
       </ButtonRaw>
     </InputContainer>
   );
-
-  // console.log(buttonProps.ref);
 
   const layer = React.cloneElement(
     $layer,
