@@ -1,7 +1,6 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "..";
-import { useSelect } from "../Select";
 
 function findProductVariantBySelectedOptions(product, options) {
   RootLoop: for (let i = 0; i < product.variants.length; i++) {
@@ -105,4 +104,93 @@ function useOptionPicker(props = {}) {
   };
 }
 
-export { useOptionPicker };
+function getMatcherFromOption(matcher) {
+  return (
+    option.matcher ||
+    (p => p.selectedOptions.find(o => o.id === option.id).value)
+  );
+}
+
+function getValuesFromProduct(product, options) {
+  const ret = {};
+
+  options.forEach(option => {
+    const matcher = getMatcherFromOption(option);
+    ret[option.id] = values.find(v => matcher(p) === v);
+  });
+
+  return ret;
+}
+
+function getProductFromValues(values, products) {}
+
+function useOptionPicker2(config = {}) {
+  const { products = [], initialProduct, options = [] } = config;
+
+  const product = useState(initialProduct);
+
+  // TODO: calculate options
+
+  const currentValues = getValuesFromProduct(product, options);
+
+  const retOptions = [];
+
+  options.forEach(option => {
+    const matcher =
+      option.matcher ||
+      (p => p.selectedOptions.find(o => o.id === option.id).value);
+
+    const currentValue = currentValues[option.id];
+
+    // const uniqueId = `${product.handle}-${option.name}`;
+
+    const selectOptions = option.values.map(value => ({
+      ...value,
+      product: getProductFromValues({
+        ...currentValues,
+        [option.id]: currentValue
+      }) // TODO: add product
+    }));
+
+    retOptions.push({
+      ...option,
+      selectProps: {
+        options: selectOptions,
+        value: values.find(v => v.id === currentValue), // TODO: find active option
+        placeholder: option.name,
+        onChange: val => {}
+      }
+    });
+
+    // selectProps: {
+    //     options: option.values.map(value => ({
+    //         value: value.name,
+    //         label: value.name
+    //     })),
+    //         placeholder: option.name,
+    //         value: selectedOptions[option.name],
+    //         onChange: val => {
+    //         setSelectedOptions({...selectedOptions, [option.name]: val});
+    //     },
+    //         id
+    // },
+    // labelProps: {
+    //     htmlFor: id
+    // },
+  });
+}
+
+function useDupa(initVal) {
+  const [val, setVal] = useState(initVal);
+
+  const increment = () => {
+    setVal(val + 1);
+  };
+
+  return {
+    val,
+    increment
+  };
+}
+
+export { useOptionPicker, useDupa };
