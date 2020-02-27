@@ -47,44 +47,54 @@ export const unstyled = () => {
       <form action={"/action"} method={"post"}>
         <h2>Uncontrolled</h2>
 
-        <p>Standard (uncontrolled, no placeholder)</p>
+        <p>Standard</p>
         <SelectNative options={options} onChange={val => console.log} />
 
-        <p>Standard (uncontrolled, no placeholder, default value)</p>
+        <p>Standard (default value)</p>
         <SelectNative
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
         />
 
-        <p>Standard (uncontrolled, placeholder)</p>
+        <p>Standard (allowEmpty=false)</p>
         <SelectNative
           options={options}
           onChange={val => console.log}
-          placeholder={"City"}
+          allowEmpty={false}
         />
 
-        <p>Standard (uncontrolled, placeholder, default value)</p>
+        <p>Standard (default value, allowEmpty=false)</p>
         <SelectNative
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
-          placeholder={"City"}
+          allowEmpty={false}
         />
 
         <h2>Controlled</h2>
 
-        <p>Standard (controlled)</p>
+        <p>Standard</p>
+        <SelectNative options={options} value={val} onChange={setVal} />
+
+        <p>Standard (default value)</p>
+        <SelectNative options={options} value={val2} onChange={setVal2} />
+
+        <p>Standard (allowEmpty=false)</p>
         <SelectNative
           options={options}
           value={val}
           onChange={setVal}
-          placeholder={"City"}
+          allowEmpty={false}
         />
 
-        <p>Standard (controlled, default value)</p>
-        <SelectNative options={options} value={val2} onChange={setVal2} />
-
+        <p>Standard (default value, allowEmpty=false)</p>
+        <SelectNative
+          options={options}
+          value={val2}
+          onChange={setVal2}
+          allowEmpty={false}
+        />
         <br />
 
         {/*<p>Standard (controlled, placeholder)</p>*/}
