@@ -26,17 +26,24 @@ function useSelect(props) {
    */
 
   // Stateful / Stateless
-  const downshiftSelect = useSelectDownshift({
+
+  const downshiftOptions = {
     ...restProps,
     items: options,
-    selectedItem: value,
-    initialSelectedItem: initialValue,
     onSelectedItemChange: item => {
       if (onChange) {
         onChange(item.selectedItem);
       }
     }
-  });
+  };
+
+  if (typeof value !== "undefined") {
+    downshiftOptions.seledctedItem = value;
+  } else if (typeof initialValue !== "undefined") {
+    downshiftOptions.initialSelectedItem = initialValue;
+  }
+
+  const downshiftSelect = useSelectDownshift(downshiftOptions);
 
   const buttonPropsDownshift = downshiftSelect.getToggleButtonProps();
 
@@ -77,6 +84,7 @@ function useSelect(props) {
         option: option,
         value: option.value,
         key: option.value,
+        children: option.value,
         ...itemDownshiftProps
       }
     };
@@ -273,7 +281,7 @@ function Select2(props) {
       const children = [];
       options.forEach((option, i) => {
         children.push(React.cloneElement($selectable, option.selectableProps));
-        if ($separator) {
+        if ($separator && i < options.length - 1) {
           children.push(
             React.cloneElement($separator, {
               role: "separator",

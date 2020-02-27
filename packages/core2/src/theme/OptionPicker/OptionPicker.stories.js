@@ -1,11 +1,8 @@
 /** @jsx jsx */
 import React, { useState, useEffect, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import ButtonMinimal from "../Button/ButtonMinimal";
 import Button from "../Button/Button";
 import { Button$ } from "@commerce-ui/core/Button";
-import InputRaw$ from "@commerce-ui/core/InputRaw";
-import Input from "../Input";
 
 import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 
@@ -16,67 +13,78 @@ import SelectNative from "../SelectNative";
 import Color from "../Selectables/Color";
 import ItemRow from "../Selectables/ItemRow";
 
-import { Select$ } from "@commerce-ui/core/Select";
+import Box from "@commerce-ui/core/Box";
 
-import product from "../data";
+import { products, options } from "@commerce-ui/core/OptionPicker/data";
+import formStyles from "../form-styles";
+
+import Select2 from "../Select/Select2";
+
+const values = [{ value: "one" }, { value: "two" }];
 
 export const hook = () => {
-  const { options, productVariant } = useOptionPicker({ product });
+  const { product } = useOptionPicker({
+    products,
+    options,
+    initialProduct: products[10]
+  });
 
   return (
-    <div>
-      <div>Variant price: {productVariant.price}$</div>
+    <Box>
+      <Box>Product id: {product.id}</Box>
 
-      {options.map(option => {
-        if (option.name === "Color") {
-          return (
-            <HorizontalStack key={option.name} sx={{ $gutter: "10px" }}>
-              {option.values.map(value => (
-                <Color
-                  key={value.name}
-                  color={value.color}
-                  {...value.selectableRadioProps}
-                />
-              ))}
-            </HorizontalStack>
-          );
-        }
+      <Select2 options={values} initialValue={values[1]} />
 
-        if (option.name === "Size") {
-          return (
-            <Select$
-              key={option.name}
-              button={<Button>{productVariant.selectedOptions.Size}</Button>}
-              config={{
-                xs: {
-                  mode: "slide-from-bottom",
-                  height: "auto"
-                },
-                md: {
-                  anchored: true
-                }
-              }}
-              {...option.select2Props}
-            >
-              {({ options }) =>
-                options.map(option => (
-                  <ItemRow key={option.value} label={option.value} />
-                ))
-              }
-            </Select$>
-          );
-        }
+      {/*{options.map(option => {*/}
+      {/*if (option.name === "Color") {*/}
+      {/*return (*/}
+      {/*<HorizontalStack key={option.name} sx={{ $gutter: "10px" }}>*/}
+      {/*{option.values.map(value => (*/}
+      {/*<Color*/}
+      {/*key={value.name}*/}
+      {/*color={value.color}*/}
+      {/*{...value.selectableRadioProps}*/}
+      {/*/>*/}
+      {/*))}*/}
+      {/*</HorizontalStack>*/}
+      {/*);*/}
+      {/*}*/}
 
-        return (
-          <div key={option.name}>
-            <label {...option.labelProps} sx={{ display: "block" }}>
-              {option.name}
-            </label>
-            <SelectNative {...option.selectProps} />
-          </div>
-        );
-      })}
-    </div>
+      {/*if (option.name === "Size") {*/}
+      {/*return (*/}
+      {/*<Select$*/}
+      {/*key={option.name}*/}
+      {/*button={<Button>{productVariant.selectedOptions.Size}</Button>}*/}
+      {/*config={{*/}
+      {/*xs: {*/}
+      {/*mode: "slide-from-bottom",*/}
+      {/*height: "auto"*/}
+      {/*},*/}
+      {/*md: {*/}
+      {/*anchored: true*/}
+      {/*}*/}
+      {/*}}*/}
+      {/*{...option.select2Props}*/}
+      {/*>*/}
+      {/*{({ options }) =>*/}
+      {/*options.map(option => (*/}
+      {/*<ItemRow key={option.value} label={option.value} />*/}
+      {/*))*/}
+      {/*}*/}
+      {/*</Select$>*/}
+      {/*);*/}
+      {/*}*/}
+
+      {/*return (*/}
+      {/*<Box key={option.name}>*/}
+      {/*<label {...option.labelProps} sx={{ display: "block" }}>*/}
+      {/*{option.name}*/}
+      {/*</label>*/}
+      {/*<SelectNative {...option.selectProps} />*/}
+      {/*</Box>*/}
+      {/*);*/}
+      {/*})}*/}
+    </Box>
   );
 };
 

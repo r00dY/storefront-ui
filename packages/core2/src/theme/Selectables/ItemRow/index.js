@@ -28,7 +28,7 @@ function ItemRow(props) {
             opacity: disabled ? 0.5 : 1
           }}
         >
-          {restProps.label} {selected ? "✔" : ""}
+          {props.children} {selected ? "✔" : ""}
         </Box>
       )}
     </Selectable>

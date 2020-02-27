@@ -9,9 +9,7 @@ import ItemRow from "./index";
 export const standard = () => (
   <div>
     <h2>Red color</h2>
-    <StoryWrapper
-      stories={selectableStories(<ItemRow color={"red"} label={"red"} />)}
-    />
+    <StoryWrapper stories={selectableStories(<ItemRow>Lorem ipsum</ItemRow>)} />
   </div>
 );
 

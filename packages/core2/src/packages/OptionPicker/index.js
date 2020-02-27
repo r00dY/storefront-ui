@@ -210,9 +210,6 @@ function useOptionPicker(config = {}) {
       onChange: val => {
         selectValue(option, val);
       }
-      // value: values.find(v => v.id === currentValue), // TODO: find active option
-      // placeholder: option.name,
-      // onChange: val => {}
     };
 
     retOptions.push({
@@ -239,10 +236,8 @@ function useOptionPicker(config = {}) {
     // },
   });
 
-  // console.log('RETURN', retOptions);
-
   return {
-    options,
+    options: retOptions,
     selectedValues,
     selectValue,
     product,
