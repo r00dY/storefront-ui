@@ -34,8 +34,6 @@ function SelectNative(props) {
 
   const data = useNormalizedOptions(props);
 
-  console.log(data);
-
   // const isControlled = typeof value !== "undefined";
   //
   // // Normalize options
@@ -70,17 +68,6 @@ function SelectNative(props) {
   // }
 
   // TODO: detect wrong values!
-
-  const onChangeEvent = e => {
-    // if (!e.target.value || e.target.value === "") {
-    //     setEmpty(true);
-    // } else {
-    //     setEmpty(false);
-    // }
-    if (onChange) {
-      onChange(e);
-    }
-  };
 
   let optionElems = [];
 
@@ -120,8 +107,20 @@ function SelectNative(props) {
             e
           );
         }}
-        defaultValue={!data.isControlled && (data.defaultValue || "")}
-        value={data.isControlled && data.value}
+        defaultValue={
+          data.defaultValue === undefined
+            ? undefined
+            : data.defaultValue === null
+            ? ""
+            : data.defaultValue.id
+        }
+        value={
+          data.value === undefined
+            ? undefined
+            : data.value === null
+            ? ""
+            : data.value.id
+        }
       >
         {optionElems}
       </SelectNativeRaw>
