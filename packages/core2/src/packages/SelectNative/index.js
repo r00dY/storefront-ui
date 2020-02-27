@@ -5,6 +5,7 @@ import { jsx, createElement, getElementSpec, splitSx } from "..";
 import InputContainer from "../InputContainer";
 
 import SelectNativeRaw from "../SelectNativeRaw";
+import useNormalizedOptions from "../useNormalizedOptions";
 
 const defaults = {
   $arrowContainer: ({ arrow }) => ({
@@ -26,51 +27,56 @@ function SelectNative(props) {
     value,
     defaultValue,
     options,
-    placeholder,
+    placeholder = "Select",
+    allowEmpty = true,
     ...restProps
   } = props;
 
-  const isControlled = typeof value !== "undefined";
+  const data = useNormalizedOptions(props);
 
-  // Normalize options
-  options = options.map(option => {
-    if (typeof option === "object") {
-      if (!option.label) {
-        return {
-          ...option,
-          label: option.id
-        };
-      }
-      return option;
-    }
-    return {
-      id: option,
-      label: option
-    };
-  });
+  console.log(data);
 
-  // This "local empty" will be active only if component is uncontrolled
-  let [empty, setEmpty] = useState(
-    !!(typeof defaultValue === "undefined" && placeholder)
-  );
-
-  let value2;
-
-  if (isControlled) {
-    empty = value === null || value === undefined;
-
-    value2 = value === null ? "" : typeof value === "object" ? value.id : value;
-    defaultValue = undefined;
-  }
+  // const isControlled = typeof value !== "undefined";
+  //
+  // // Normalize options
+  // options = options.map(option => {
+  //     if (typeof option === "object") {
+  //         if (!option.label) {
+  //             return {
+  //                 ...option,
+  //                 label: option.id
+  //             };
+  //         }
+  //         return option;
+  //     }
+  //     return {
+  //         id: option,
+  //         label: option
+  //     };
+  // });
+  //
+  // // This "local empty" will be active only if component is uncontrolled
+  // let [empty, setEmpty] = useState(
+  //     !!(typeof defaultValue === "undefined" && placeholder)
+  // );
+  //
+  // let value2;
+  //
+  // if (isControlled) {
+  //     empty = value === null || value === undefined;
+  //
+  //     value2 = value === null ? "" : typeof value === "object" ? value.id : value;
+  //     defaultValue = undefined;
+  // }
 
   // TODO: detect wrong values!
 
   const onChangeEvent = e => {
-    if (!e.target.value || e.target.value === "") {
-      setEmpty(true);
-    } else {
-      setEmpty(false);
-    }
+    // if (!e.target.value || e.target.value === "") {
+    //     setEmpty(true);
+    // } else {
+    //     setEmpty(false);
+    // }
     if (onChange) {
       onChange(e);
     }
@@ -78,17 +84,12 @@ function SelectNative(props) {
 
   let optionElems = [];
 
-  if (placeholder) {
+  if (allowEmpty) {
     optionElems.push(
       <option disabled value={""} key={"__default__"}>
         {placeholder}
       </option>
     );
-
-    if (typeof defaultValue === "undefined" && !isControlled) {
-      // If we show placeholder, default value should be placeholder in case of no value
-      defaultValue = "";
-    }
   }
 
   options.map(({ id, label }) => {
@@ -102,7 +103,7 @@ function SelectNative(props) {
   return (
     <InputContainer
       {...restProps}
-      empty={empty}
+      empty={data.empty}
       label={props.label || props.placeholder}
       showArrow={"inline"}
       cursor={"pointer"}
@@ -113,9 +114,14 @@ function SelectNative(props) {
           width: "100%",
           cursor: "pointer"
         }}
-        onChange={onChangeEvent}
-        defaultValue={defaultValue}
-        value={value2}
+        onChange={e => {
+          data.onChange(
+            !e.target.value || e.target.value === "" ? null : e.target.value,
+            e
+          );
+        }}
+        defaultValue={!data.isControlled && (data.defaultValue || "")}
+        value={data.isControlled && data.value}
       >
         {optionElems}
       </SelectNativeRaw>
