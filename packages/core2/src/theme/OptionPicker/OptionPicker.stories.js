@@ -13,8 +13,7 @@ import {
 } from "@commerce-ui/core/OptionPicker/data";
 
 import Select2 from "../Select/Select2";
-
-const values = [{ value: "one" }, { value: "two" }];
+import SelectNative from "../SelectNative";
 
 export const hook = () => {
   const { product, options } = useOptionPicker({
@@ -26,8 +25,7 @@ export const hook = () => {
   return (
     <Box>
       <Box>Product id: {product.id}</Box>
-
-      <Select2 options={values} initialValue={values[1]} />
+      <br />
 
       <Select2 {...options[0].selectProps} />
       <br />
@@ -35,7 +33,7 @@ export const hook = () => {
       <Select2 {...options[1].selectProps} />
       <br />
 
-      <Select2 {...options[2].selectProps} />
+      <SelectNative {...options[2].selectProps} />
     </Box>
   );
 };

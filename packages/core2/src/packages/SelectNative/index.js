@@ -20,14 +20,50 @@ const defaults = {
   })
 };
 
-function Input$(props) {
-  let { onChange, value, options, placeholder, ...restProps } = props;
+function SelectNative(props) {
+  let {
+    onChange,
+    value,
+    defaultValue,
+    options,
+    placeholder,
+    ...restProps
+  } = props;
 
-  let [empty, setEmpty] = useState(true);
+  const isControlled = typeof value !== "undefined";
 
-  if (value) {
-    empty = value === "";
+  // Normalize options
+  options = options.map(option => {
+    if (typeof option === "object") {
+      if (!option.label) {
+        return {
+          ...option,
+          label: option.id
+        };
+      }
+      return option;
+    }
+    return {
+      id: option,
+      label: option
+    };
+  });
+
+  // This "local empty" will be active only if component is uncontrolled
+  let [empty, setEmpty] = useState(
+    !!(typeof defaultValue === "undefined" && placeholder)
+  );
+
+  let value2;
+
+  if (isControlled) {
+    empty = value === null || value === undefined;
+
+    value2 = value === null ? "" : typeof value === "object" ? value.id : value;
+    defaultValue = undefined;
   }
+
+  // TODO: detect wrong values!
 
   const onChangeEvent = e => {
     if (!e.target.value || e.target.value === "") {
@@ -48,19 +84,16 @@ function Input$(props) {
         {placeholder}
       </option>
     );
+
+    if (typeof defaultValue === "undefined" && !isControlled) {
+      // If we show placeholder, default value should be placeholder in case of no value
+      defaultValue = "";
+    }
   }
 
-  options.map(option => {
-    let value, label;
-    if (typeof option === "object") {
-      value = option.value;
-      label = option.label;
-    } else {
-      value = option;
-      label = option;
-    }
+  options.map(({ id, label }) => {
     optionElems.push(
-      <option value={value} key={value}>
+      <option value={id} key={id}>
         {label}
       </option>
     );
@@ -68,7 +101,7 @@ function Input$(props) {
 
   return (
     <InputContainer
-      {...props}
+      {...restProps}
       empty={empty}
       label={props.label || props.placeholder}
       showArrow={"inline"}
@@ -81,6 +114,8 @@ function Input$(props) {
           cursor: "pointer"
         }}
         onChange={onChangeEvent}
+        defaultValue={defaultValue}
+        value={value2}
       >
         {optionElems}
       </SelectNativeRaw>
@@ -88,7 +123,7 @@ function Input$(props) {
   );
 }
 
-export default Input$;
+export default SelectNative;
 
 //
 // function SelectNative$(props) {

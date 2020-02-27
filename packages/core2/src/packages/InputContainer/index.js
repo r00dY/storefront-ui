@@ -130,7 +130,7 @@ function InputContainer$(props) {
   const [css, customSx] = splitSx(sx);
 
   if (customSx.$labelInside) {
-    state.label = label;
+    state.label = label || placeholder || "Label";
   }
 
   const rootCss =
