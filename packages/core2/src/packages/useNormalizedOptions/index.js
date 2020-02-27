@@ -1,5 +1,19 @@
 import { useState } from "react";
 
+/**
+ * This hook deserves some explanation.
+ *
+ * It allows for standardization of format for options, value, defaultValue, allowEmpty in Select, SelectNative, RadioButtons, etc.
+ *
+ * So basically:
+ * - if value is undefined, component is uncontrolled
+ * - defaultValue is used only at initialization,
+ * - options is array with objects with ID!!!
+ * - value / defaultValue can be object with ID or string with ID
+ * - allowEmpty allows for null value
+ *
+ */
+
 function useNormalizedOptions(props) {
   let {
     options,
