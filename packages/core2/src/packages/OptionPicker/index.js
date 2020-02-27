@@ -17,7 +17,7 @@ function findProductVariantBySelectedOptions(product, options) {
   }
 }
 
-function useOptionPicker(props = {}) {
+function useOptionPickerOld(props = {}) {
   const { product } = props;
 
   const initOptions = {};
@@ -104,82 +104,6 @@ function useOptionPicker(props = {}) {
   };
 }
 
-function getMatcherFromOption(matcher) {
-  return (
-    option.matcher ||
-    (p => p.selectedOptions.find(o => o.id === option.id).value)
-  );
-}
-
-function getValuesFromProduct(product, options) {
-  const ret = {};
-
-  options.forEach(option => {
-    const matcher = getMatcherFromOption(option);
-    ret[option.id] = values.find(v => matcher(p) === v);
-  });
-
-  return ret;
-}
-
-function getProductFromValues(values, products) {}
-
-function useOptionPicker2(config = {}) {
-  const { products = [], initialProduct, options = [] } = config;
-
-  const product = useState(initialProduct);
-
-  // TODO: calculate options
-
-  const currentValues = getValuesFromProduct(product, options);
-
-  const retOptions = [];
-
-  options.forEach(option => {
-    const matcher =
-      option.matcher ||
-      (p => p.selectedOptions.find(o => o.id === option.id).value);
-
-    const currentValue = currentValues[option.id];
-
-    // const uniqueId = `${product.handle}-${option.name}`;
-
-    const selectOptions = option.values.map(value => ({
-      ...value,
-      product: getProductFromValues({
-        ...currentValues,
-        [option.id]: currentValue
-      }) // TODO: add product
-    }));
-
-    retOptions.push({
-      ...option,
-      selectProps: {
-        options: selectOptions,
-        value: values.find(v => v.id === currentValue), // TODO: find active option
-        placeholder: option.name,
-        onChange: val => {}
-      }
-    });
-
-    // selectProps: {
-    //     options: option.values.map(value => ({
-    //         value: value.name,
-    //         label: value.name
-    //     })),
-    //         placeholder: option.name,
-    //         value: selectedOptions[option.name],
-    //         onChange: val => {
-    //         setSelectedOptions({...selectedOptions, [option.name]: val});
-    //     },
-    //         id
-    // },
-    // labelProps: {
-    //     htmlFor: id
-    // },
-  });
-}
-
 function useDupa(initVal) {
   const [val, setVal] = useState(initVal);
 
@@ -190,6 +114,139 @@ function useDupa(initVal) {
   return {
     val,
     increment
+  };
+}
+
+function getMatcherFromOption(option) {
+  return (
+    option.matcher || ((p, valId) => p.selectedOptions[option.id] === valId)
+  );
+}
+
+function getValuesFromProduct(product, options) {
+  const ret = {};
+
+  options.forEach(option => {
+    const matcher = getMatcherFromOption(option);
+    ret[option.id] = option.values.find(v => matcher(product, v.id));
+  });
+
+  return ret;
+}
+
+function getProductFromValues(values, options, products) {
+  root: for (let i = 0; i < products.length; i++) {
+    const product = products[i];
+
+    for (let j = 0; j < options.length; j++) {
+      const option = options[j];
+      const matcher = getMatcherFromOption(option);
+
+      if (!matcher(product, values[option.id].id)) {
+        continue root;
+      }
+    }
+
+    return product;
+  }
+}
+
+function useOptionPicker(config = {}) {
+  const { products = [], initialProduct, options = [] } = config;
+
+  const [product, selectProduct] = useState(initialProduct);
+
+  // TODO: calculate options
+
+  const selectedValues = getValuesFromProduct(product, options);
+
+  const selectValue = (o, v) => {
+    const optionId = typeof o === "object" ? o.id : o;
+    const option = options.find(opt => opt.id === optionId);
+
+    const valueId = typeof v === "object" ? v.id : v;
+    const value = option.values.find(val => val.id === valueId);
+
+    selectProduct(
+      getProductFromValues(
+        {
+          ...selectedValues,
+          [optionId]: value
+        },
+        options,
+        products
+      )
+    );
+  };
+
+  // console.log('values', selectedValues);
+  //
+  // console.log('product', getProductFromValues({ ...selectedValues, color: options[1].values[0]}, options, products));
+
+  const retOptions = [];
+
+  options.forEach(option => {
+    const currentValue = selectedValues[option.id];
+
+    // const uniqueId = `${product.handle}-${option.name}`;
+
+    const selectOptions = option.values.map(value => ({
+      ...value,
+      value: value.id,
+      product: getProductFromValues(
+        {
+          ...selectedValues,
+          [option.id]: currentValue
+        },
+        options,
+        products
+      ) // TODO: add product
+    }));
+
+    const selectProps = {
+      options: selectOptions,
+      value: selectedValues[option.id],
+      placeholder: option.name,
+      onChange: val => {
+        selectValue(option, val);
+      }
+      // value: values.find(v => v.id === currentValue), // TODO: find active option
+      // placeholder: option.name,
+      // onChange: val => {}
+    };
+
+    retOptions.push({
+      ...option,
+      selectProps
+    });
+
+    // console.log(selectProps);
+
+    // selectProps: {
+    //     options: option.values.map(value => ({
+    //         value: value.name,
+    //         label: value.name
+    //     })),
+    //         placeholder: option.name,
+    //         value: selectedValues[option.name],
+    //         onChange: val => {
+    //         setSelectedOptions({...selectedOptions, [option.name]: val});
+    //     },
+    //         id
+    // },
+    // labelProps: {
+    //     htmlFor: id
+    // },
+  });
+
+  // console.log('RETURN', retOptions);
+
+  return {
+    options,
+    selectedValues,
+    selectValue,
+    product,
+    selectProduct
   };
 }
 
