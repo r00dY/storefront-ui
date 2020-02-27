@@ -21,7 +21,7 @@ const Select = props => (
       ),
       // $button: <Button />,
       $selectable: <ItemRow />,
-      $wrapper: <Box sx={{ p: 6 }} />,
+      $wrapper: <Box />,
       $separator: <Box sx={{ height: 1, bg: "mono200" }} />,
       ...formStyles,
       width: "400px"
