@@ -27,8 +27,8 @@ function SelectNative(props) {
     value,
     defaultValue,
     options,
-    placeholder = "Select",
     allowEmpty = true,
+    placeholder = "Select",
     ...restProps
   } = props;
 

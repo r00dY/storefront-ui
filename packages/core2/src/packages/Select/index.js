@@ -1,6 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import Layer from "../Layer";
-import Box from "../Box";
 import ButtonRaw from "../ButtonRaw";
 
 import { useSelect as useSelectDownshift } from "downshift";
@@ -8,16 +6,9 @@ import { useSelect as useSelectDownshift } from "downshift";
 import { jsx, responsiveValueMap } from "../index";
 import InputContainer from "../InputContainer";
 
-function useSelect(props) {
-  const {
-    options,
-    value,
-    onChange,
-    initialValue,
-    // placeholder = "Select",
-    ...restProps
-  } = props;
+import useNormalizedOptions from "../useNormalizedOptions";
 
+function useSelect(props) {
   /**
    * we keep a bit different naming:
    * - options
@@ -25,10 +16,18 @@ function useSelect(props) {
    * - onChange
    */
 
-  // Stateful / Stateless
+  const {
+    options,
+    value,
+    defaultValue,
+    empty,
+    onChange,
+    isControlled
+  } = useNormalizedOptions(props);
 
+  // Stateful / Stateless
   const downshiftOptions = {
-    ...restProps,
+    ...props,
     items: options,
     onSelectedItemChange: item => {
       if (onChange) {
@@ -37,10 +36,10 @@ function useSelect(props) {
     }
   };
 
-  if (typeof value !== "undefined") {
+  if (isControlled) {
     downshiftOptions.seledctedItem = value;
-  } else if (typeof initialValue !== "undefined") {
-    downshiftOptions.initialSelectedItem = initialValue;
+  } else {
+    downshiftOptions.initialSelectedItem = defaultValue;
   }
 
   const downshiftSelect = useSelectDownshift(downshiftOptions);
@@ -79,12 +78,12 @@ function useSelect(props) {
       selectableProps: {
         selected:
           downshiftSelect.selectedItem &&
-          option.value === downshiftSelect.selectedItem.value,
+          option.id === downshiftSelect.selectedItem.id,
         highlighted: downshiftSelect.highlightedIndex === index,
         option: option,
-        value: option.value,
-        key: option.value,
-        children: option.value,
+        value: option.id,
+        key: option.id,
+        children: option.label,
         ...itemDownshiftProps
       }
     };
@@ -111,87 +110,7 @@ function useSelect(props) {
   };
 }
 
-// This is the list which is inline (without button and Layer etc).
-// todo: make Root styleable, make list tabbable (tabIndex from downshift is -1) etc.
-function SelectInline$(props) {
-  let { children, options, sx = {}, menuProps, ...restProps } = props;
-
-  children = typeof children === "function" ? children({ options }) : children;
-
-  // Default children
-  children = children || options.map(o => <>{o.value}</>);
-
-  const items = children.map((selectable, i) => (
-    <Box {...options[i].itemProps}>
-      {React.cloneElement(selectable, { ...options[i].selectableProps })}
-    </Box>
-  ));
-
-  return (
-    <Box {...menuProps} sx={sx.$root}>
-      {items}
-    </Box>
-  );
-}
-
-// todo: Select$ is "Stateful", in future this should change into more consistent architecture
-function Select$(props) {
-  let { children, wrapper, config, sx, button, ...restProps } = props;
-  const { selectProps, buttonProps, layerProps, ...rest } = useSelect(
-    restProps
-  );
-
-  button = typeof button === "function" ? button(rest) : button;
-
-  return (
-    <>
-      {React.cloneElement(button, { ...buttonProps })}
-      <Layer {...layerProps} config={config}>
-        {params => {
-          const select = (
-            <SelectInline$ {...selectProps} sx={sx}>
-              {children}
-            </SelectInline$>
-          );
-
-          let content = select;
-
-          if (wrapper) {
-            content = wrapper({ ...params, content: select });
-          }
-
-          return content;
-        }}
-      </Layer>
-    </>
-  );
-}
-
-// function ButtonSelect$(props) {
-//   let { onChange, ...restProps } = props;
-//
-//   let [empty, setEmpty] = useState(true);
-//
-//   if (props.value) {
-//     empty = props.value === "";
-//   }
-//
-//   return (
-//       <InputContainer
-//           {...props}
-//           empty={empty}
-//           label={props.label || props.placeholder}
-//       >
-//         <ButtonRaw
-//             sx={{ width: "100%", height: "100%" }}
-//         >
-//           Test
-//         </ButtonRaw>
-//       </InputContainer>
-//   );
-// }
-
-function Select2(props) {
+function Select(props) {
   let {
     sx = {},
     label,
@@ -233,7 +152,7 @@ function Select2(props) {
   const rootRef = useRef(null);
 
   // Calculate button content
-  let value = selectedItem ? selectedItem.value : placeholder;
+  let value = selectedItem ? selectedItem.label : placeholder;
 
   if ($value) {
     value = $value({ selectedItem, placeholder });
@@ -303,4 +222,5 @@ function Select2(props) {
   );
 }
 
-export { useSelect, SelectInline$, Select$, Select2 };
+export { useSelect };
+export default Select;

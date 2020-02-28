@@ -12,7 +12,7 @@ import {
   options as productOptions
 } from "@commerce-ui/core/OptionPicker/data";
 
-import Select2 from "../Select/Select2";
+import Select from "../Select";
 import SelectNative from "../SelectNative";
 
 export const hook = () => {
@@ -29,10 +29,10 @@ export const hook = () => {
       <Box>Product id: {product.id}</Box>
       <br />
 
-      <Select2 {...options[0].selectProps} />
+      <Select {...options[0].selectProps} />
       <br />
 
-      <Select2 {...options[1].selectProps} />
+      <Select {...options[1].selectProps} />
       <br />
 
       <SelectNative {...options[2].selectProps} />
