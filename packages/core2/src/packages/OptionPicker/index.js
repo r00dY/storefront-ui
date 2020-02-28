@@ -211,14 +211,22 @@ function useOptionPicker(config = {}) {
 
     // const uniqueId = `${product.handle}-${option.name}`;
 
-    const selectOptions = option.values.map(value => {
-      const state = stateForValue(option, currentValue);
+    const selectOptions = [];
 
-      return {
+    option.values.forEach(value => {
+      const state = stateForValue(option, value);
+
+      // console.log(option, currentValue);
+
+      if (state === "disabled" || state === "hidden") {
+        return;
+      }
+
+      selectOptions.push({
         ...value,
         id: value.id,
         product: state.product
-      };
+      });
     });
 
     const selectProps = {

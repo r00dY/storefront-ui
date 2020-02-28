@@ -9,17 +9,41 @@ import Box from "@commerce-ui/core/Box";
 
 import {
   products,
+  productsPartial,
   options as productOptions
 } from "@commerce-ui/core/OptionPicker/data";
 
 import Select from "../Select";
 import SelectNative from "../SelectNative";
 
-export const hook = () => {
+export const allOptionsAvailable = () => {
   const { product, options } = useOptionPicker({
     products,
     options: productOptions,
     initialProduct: products[10]
+  });
+
+  return (
+    <Box>
+      <Box>Product id: {product.id}</Box>
+      <br />
+
+      <Select {...options[0].selectProps} />
+      <br />
+
+      <Select {...options[1].selectProps} />
+      <br />
+
+      <SelectNative {...options[2].selectProps} />
+    </Box>
+  );
+};
+
+export const partialOptionsHidden = () => {
+  const { product, options } = useOptionPicker({
+    products: productsPartial,
+    options: productOptions,
+    initialProduct: products[0]
   });
 
   return (
