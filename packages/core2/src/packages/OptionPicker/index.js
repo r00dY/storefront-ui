@@ -179,10 +179,6 @@ function useOptionPicker(config = {}) {
     );
   };
 
-  // console.log('values', selectedValues);
-  //
-  // console.log('product', getProductFromValues({ ...selectedValues, color: options[1].values[0]}, options, products));
-
   const retOptions = [];
 
   options.forEach(option => {
