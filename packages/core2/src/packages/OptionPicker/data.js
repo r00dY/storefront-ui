@@ -88,6 +88,11 @@ options[0].values.forEach((size, i) => {
         return;
       }
 
+      // red shoes are ONLY in 38 size
+      if (color.id === "red" && size.id !== "38") {
+        return;
+      }
+
       productsPartial.push(product);
     });
   });

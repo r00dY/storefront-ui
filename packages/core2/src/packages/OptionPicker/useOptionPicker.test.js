@@ -116,7 +116,7 @@ test("properly applies default 'hidden' strategy", () => {
   expect(result.current.stateForValue("size", "42")).toBe("hidden");
   expect(result.current.stateForValue("color", "green")).toBe("hidden");
 
-  expect(typeof result.current.stateForValue("size", "40")).toBe("object");
+  expect(typeof result.current.stateForValue("color", "blue")).toBe("object");
 });
 
 test("properly applies default 'disabled' strategy", () => {
@@ -138,5 +138,30 @@ test("properly applies default 'disabled' strategy", () => {
   expect(result.current.stateForValue("color", "green")).toBe("hidden");
   expect(result.current.stateForValue("style", "modern")).toBe("disabled");
 
-  expect(typeof result.current.stateForValue("size", "40")).toBe("object");
+  expect(typeof result.current.stateForValue("color", "blue")).toBe("object");
+});
+
+test("properly applies default 'alternative' strategy", () => {
+  const modifiedOptions = options.map(o => ({
+    ...o,
+    missingProductStrategy: "alternative"
+  }));
+
+  const { result } = renderHook(() =>
+    useOptionPicker({
+      options: modifiedOptions,
+      products: productsPartial,
+      initialProduct: productsPartial[0]
+    })
+  );
+
+  expect(typeof result.current.stateForValue("size", "39")).toBe("object");
+
+  act(() => {
+    result.current.selectValue("size", "39");
+  });
+
+  expect(result.current.selectedValues.color.id).toBe("blue");
+  expect(result.current.selectedValues.size.id).toBe("39");
+  expect(result.current.selectedValues.style.id).toBe("rustic");
 });

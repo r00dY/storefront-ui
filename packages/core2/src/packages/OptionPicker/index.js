@@ -151,6 +151,52 @@ function getProductFromValues(values, options, products) {
   }
 }
 
+/**
+ * TODO: this is very inefficient, fix later.
+ */
+function allPossibleCases(arr) {
+  if (arr.length == 1) {
+    return arr[0];
+  } else {
+    let result = [];
+    let allCasesOfRest = allPossibleCases(arr.slice(1)); // recur with the rest of array
+    for (let i = 0; i < allCasesOfRest.length; i++) {
+      for (let j = 0; j < arr[0].length; j++) {
+        result.push({ ...arr[0][j], ...allCasesOfRest[i] });
+      }
+    }
+    return result;
+  }
+}
+
+function cartesianProductForValues(options) {
+  const arr = options.map(o => o.values.map(v => ({ [o.id]: v })));
+  return allPossibleCases(arr);
+}
+
+function findAlternativeBasicStrategy(
+  values,
+  mainOption /* it can't change */,
+  options,
+  products
+) {
+  const allCombinations = cartesianProductForValues([...options].reverse());
+
+  for (let i = 0; i < allCombinations.length; i++) {
+    const iteratorValues = allCombinations[i];
+
+    if (iteratorValues[mainOption.id].id !== values[mainOption.id].id) {
+      // main option MUST be selected
+      continue;
+    }
+
+    const product = getProductFromValues(iteratorValues, options, products);
+    if (product) {
+      return product;
+    }
+  }
+}
+
 function useOptionPicker(config = {}) {
   const { products = [], initialProduct, options = [] } = config;
 
@@ -169,14 +215,12 @@ function useOptionPicker(config = {}) {
 
     const strategy = option.missingProductStrategy || "hidden";
 
-    const newProduct = getProductFromValues(
-      {
-        ...selectedValues,
-        [optionId]: value
-      },
-      options,
-      products
-    );
+    const newValues = {
+      ...selectedValues,
+      [optionId]: value
+    };
+
+    const newProduct = getProductFromValues(newValues, options, products);
 
     if (newProduct) {
       return newProduct;
@@ -186,6 +230,15 @@ function useOptionPicker(config = {}) {
       return "disabled";
     }
     if (strategy === "alternative") {
+      const alternative = findAlternativeBasicStrategy(
+        newValues,
+        option,
+        options,
+        products
+      );
+      if (alternative) {
+        return alternative;
+      }
     }
 
     return "hidden"; // default
