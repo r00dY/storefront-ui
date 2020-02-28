@@ -114,6 +114,42 @@ export const partialOptionsAlternative = () => {
   );
 };
 
+export const partialOptionsMixedStrategies = () => {
+  const { product, options } = useOptionPicker({
+    products: productsPartial,
+    options: [
+      {
+        ...productOptions[0],
+        missingProductStrategy: "hidden"
+      },
+      {
+        ...productOptions[1],
+        missingProductStrategy: "alternative"
+      },
+      {
+        ...productOptions[2],
+        missingProductStrategy: "disabled"
+      }
+    ],
+    initialProduct: products[0]
+  });
+
+  return (
+    <Box>
+      <Box>Product id: {product.id}</Box>
+      <br />
+
+      <Select {...options[0].selectProps} />
+      <br />
+
+      <Select {...options[1].selectProps} />
+      <br />
+
+      <SelectNative {...options[2].selectProps} />
+    </Box>
+  );
+};
+
 export default {
   title: "OptionPicker"
 };
