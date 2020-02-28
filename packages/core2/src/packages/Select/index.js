@@ -37,7 +37,7 @@ function useSelect(props) {
   };
 
   if (isControlled) {
-    downshiftOptions.seledctedItem = value;
+    downshiftOptions.selectedItem = value;
   } else {
     downshiftOptions.initialSelectedItem = defaultValue;
   }
@@ -116,10 +116,17 @@ function Select(props) {
     label,
     placeholder = "Select value",
     onClick,
+
+    options,
+    value, // can be object or id
+    defaultValue, // can be object or id
+    onChange,
+    allowEmpty = true,
+
     ...restProps
   } = props;
 
-  const {
+  let {
     $layer,
     $button,
     $separator,
@@ -130,17 +137,26 @@ function Select(props) {
     ...restSx
   } = sx;
 
-  const {
+  const controller = useSelect({
+    options,
+    value, // can be object or id
+    defaultValue, // can be object or id
+    onChange,
+    allowEmpty
+  });
+
+  let {
     buttonProps,
     layerProps,
     menuProps,
-    options,
     anchorRef,
     isOpen,
     selectedItem,
     openMenu,
     ...rest
-  } = useSelect(restProps);
+  } = controller;
+
+  options = controller.options;
 
   // TODO: should be possible to make it a function
   // TODO: pass "selected", "disabled", "error", "placehoder", "selectedOption", "selectedValue"
@@ -152,17 +168,11 @@ function Select(props) {
   const rootRef = useRef(null);
 
   // Calculate button content
-  let value = selectedItem ? selectedItem.label : placeholder;
+  let buttonLabel = selectedItem ? selectedItem.label : placeholder;
 
   if ($value) {
-    value = $value({ selectedItem, placeholder });
+    buttonLabel = $value({ selectedItem, placeholder });
   }
-
-  // children: downshiftSelect.selectedItem
-  //   ? downshiftSelect.selectedItem.value
-  //   : placeholder
-
-  // const value = $value || value;
 
   const button = (
     <InputContainer
@@ -183,7 +193,7 @@ function Select(props) {
       {...restProps}
     >
       <ButtonRaw {...buttonProps} sx={{ cursor: "pointer" }}>
-        {value}
+        {buttonLabel}
       </ButtonRaw>
     </InputContainer>
   );

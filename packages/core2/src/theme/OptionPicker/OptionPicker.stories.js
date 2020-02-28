@@ -22,7 +22,7 @@ export const hook = () => {
     initialProduct: products[10]
   });
 
-  console.log(options[2].selectProps);
+  console.log(options[0].selectProps);
 
   return (
     <Box>

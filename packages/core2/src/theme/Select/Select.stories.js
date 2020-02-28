@@ -26,7 +26,8 @@ const options = [
 ];
 
 export const newSelect = () => {
-  const [value, setValue] = useState(null); // useState(colors[2]);
+  const [val, setVal] = useState(null);
+  const [val2, setVal2] = useState(options[2]);
 
   return (
     <Box>
@@ -57,29 +58,29 @@ export const newSelect = () => {
         allowEmpty={false}
       />
 
-      {/*<h2>Controlled</h2>*/}
+      <h2>Controlled</h2>
 
-      {/*<p>Standard</p>*/}
-      {/*<Select options={options} value={val} onChange={setVal} />*/}
+      <p>Standard</p>
+      <Select options={options} value={val} onChange={setVal} />
 
-      {/*<p>Standard (default value)</p>*/}
-      {/*<Select options={options} value={val2} onChange={setVal2} />*/}
+      <p>Standard (default value)</p>
+      <Select options={options} value={val2} onChange={setVal2} />
 
-      {/*<p>Standard (allowEmpty=false)</p>*/}
-      {/*<Select*/}
-      {/*options={options}*/}
-      {/*value={val}*/}
-      {/*onChange={setVal}*/}
-      {/*allowEmpty={false}*/}
-      {/*/>*/}
+      <p>Standard (allowEmpty=false)</p>
+      <Select
+        options={options}
+        value={val}
+        onChange={setVal}
+        allowEmpty={false}
+      />
 
-      {/*<p>Standard (default value, allowEmpty=false)</p>*/}
-      {/*<Select*/}
-      {/*options={options}*/}
-      {/*value={val2}*/}
-      {/*onChange={setVal2}*/}
-      {/*allowEmpty={false}*/}
-      {/*/>*/}
+      <p>Standard (default value, allowEmpty=false)</p>
+      <Select
+        options={options}
+        value={val2}
+        onChange={setVal2}
+        allowEmpty={false}
+      />
 
       {/*<Button>Test</Button>*/}
       {/*<Button>Test2</Button>*/}
