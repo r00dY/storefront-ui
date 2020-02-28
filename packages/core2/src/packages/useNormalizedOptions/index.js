@@ -10,7 +10,12 @@ import { useState } from "react";
  * - defaultValue is used only at initialization,
  * - options is array with objects with ID!!!
  * - value / defaultValue can be object with ID or string with ID
- * - allowEmpty allows for null value
+ * - allowEmpty allows for null value. If allowEmpty = false, then null value will result in first option selected!
+ *
+ * This behaviour is analogous to React native <select> behaviour.
+ *
+ * TODO: Warning when wrong option is selected.
+ * TODO: Allow for array of strings?
  *
  */
 
@@ -37,11 +42,11 @@ function useNormalizedOptions(props) {
       }
       return option;
     }
-    throw new Error("options must be objects with ID!!!");
-    // return {
-    //     id: option,
-    //     label: option
-    // };
+    // throw new Error("options must be objects with ID!!!");
+    return {
+      id: option,
+      label: option
+    };
   });
 
   // Let's see if value or defaultValue is one from the options list or not

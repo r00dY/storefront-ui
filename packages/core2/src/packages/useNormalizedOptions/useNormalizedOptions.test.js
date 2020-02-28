@@ -16,6 +16,8 @@ const animals = [
   }
 ];
 
+const animalsStrings = ["cat", "dog", "hog", "cow"];
+
 test("works in uncontrolled state / allowEmpty=true / no default", () => {
   const { result } = renderHook(() =>
     useNormalizedOptions({
@@ -207,4 +209,15 @@ test("controlled state: value as object", () => {
   expect(result.current.value.id).toBe("cow");
   expect(result.current.empty).toBe(false);
   expect(result.current.isControlled).toBe(true);
+});
+
+test("works with string array as input", () => {
+  const { result } = renderHook(() =>
+    useNormalizedOptions({
+      options: animalsStrings,
+      value: "dog"
+    })
+  );
+
+  expect(result.current.value.id).toBe("dog");
 });
