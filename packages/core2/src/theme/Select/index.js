@@ -23,7 +23,7 @@ export default props => (
       ),
       // $button: <Button />,
       $selectable: <ItemRow />,
-      $wrapper: <Box />,
+      $wrapper: <Box sx={{ bg: "white" }} />,
       $separator: <Box sx={{ height: 1, bg: "mono200" }} />,
       ...formStyles
     }}

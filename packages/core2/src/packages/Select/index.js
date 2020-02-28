@@ -80,6 +80,7 @@ function useSelect(props) {
           downshiftSelect.selectedItem &&
           option.id === downshiftSelect.selectedItem.id,
         highlighted: downshiftSelect.highlightedIndex === index,
+        disabled: !!option.disabled,
         option: option,
         value: option.id,
         key: option.id,

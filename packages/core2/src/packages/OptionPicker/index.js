@@ -218,14 +218,15 @@ function useOptionPicker(config = {}) {
 
       // console.log(option, currentValue);
 
-      if (state === "disabled" || state === "hidden") {
+      if (state === "hidden") {
         return;
       }
 
       selectOptions.push({
         ...value,
         id: value.id,
-        product: state.product
+        product: typeof state === "object" && state,
+        disabled: state === "disabled"
       });
     });
 

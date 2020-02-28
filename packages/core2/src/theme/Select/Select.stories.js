@@ -5,6 +5,7 @@ import { jsx, rs } from "@commerce-ui/core";
 import Box from "@commerce-ui/core/Box";
 
 import Select from "./index";
+import SelectNative from "../SelectNative/SelectNative.stories";
 
 const options = [
   {
@@ -18,6 +19,26 @@ const options = [
   {
     id: "london",
     label: "London"
+  },
+  {
+    id: "warsaw",
+    label: "Warsaw"
+  }
+];
+const optionsWithDisabled = [
+  {
+    id: "new-york",
+    label: "New York",
+    disabled: true
+  },
+  {
+    id: "washington",
+    label: "Washington"
+  },
+  {
+    id: "london",
+    label: "London",
+    disabled: true
   },
   {
     id: "warsaw",
@@ -81,6 +102,19 @@ export const newSelect = () => {
         onChange={setVal2}
         allowEmpty={false}
       />
+
+      <h2>Disabled states</h2>
+
+      <p>Entire control disabled</p>
+      <Select
+        options={options}
+        onChange={val => console.log}
+        disabled
+        allowEmpty={false}
+      />
+
+      <p>Items disabled</p>
+      <Select options={optionsWithDisabled} onChange={val => console.log} />
 
       {/*<Button>Test</Button>*/}
       {/*<Button>Test2</Button>*/}

@@ -79,9 +79,9 @@ function SelectNative(props) {
     );
   }
 
-  data.options.map(({ id, label }) => {
+  data.options.map(({ id, label, disabled = false }) => {
     optionElems.push(
-      <option value={id} key={id}>
+      <option value={id} key={id} disabled={disabled}>
         {label}
       </option>
     );

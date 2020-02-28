@@ -32,6 +32,27 @@ const options = [
   }
 ];
 
+const optionsWithDisabled = [
+  {
+    id: "new-york",
+    label: "New York",
+    disabled: true
+  },
+  {
+    id: "washington",
+    label: "Washington"
+  },
+  {
+    id: "london",
+    label: "London",
+    disabled: true
+  },
+  {
+    id: "warsaw",
+    label: "Warsaw"
+  }
+];
+
 const vals = ["a", "b", "c"];
 
 export const unstyled = () => {
@@ -95,7 +116,22 @@ export const unstyled = () => {
           onChange={setVal2}
           allowEmpty={false}
         />
-        <br />
+
+        <h2>Disabled states</h2>
+
+        <p>Entire control disabled</p>
+        <SelectNative
+          options={options}
+          onChange={val => console.log}
+          disabled
+          allowEmpty={false}
+        />
+
+        <p>Items disabled</p>
+        <SelectNative
+          options={optionsWithDisabled}
+          onChange={val => console.log}
+        />
 
         {/*<p>Standard (controlled, placeholder)</p>*/}
         {/*<SelectNative options={options} onChange={val => console.log} placeholder={"City"}/>*/}
