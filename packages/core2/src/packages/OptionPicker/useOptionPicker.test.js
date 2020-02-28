@@ -1,7 +1,7 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import { useOptionPicker } from "./index";
 
-import { options, products } from "./data";
+import { options, products, productsPartial } from "./data";
 
 test("extracts selectedValues properly", () => {
   const { result } = renderHook(() =>
@@ -81,14 +81,24 @@ test("properly selects values", () => {
   expect(result.current.selectedValues.style.id).toBe("modern");
 });
 
-test("properly creates selectProps", () => {
+test("properly doest NOT select value when it doesn't exist", () => {
   const { result } = renderHook(() =>
     useOptionPicker({
       options,
-      products,
-      initialProduct: products[10]
+      products: productsPartial,
+      initialProduct: productsPartial[10]
     })
   );
 
-  console.log(result.current.options.map(o => o.selectProps));
+  expect(result.current.selectedValues.size.id).toBe("39");
+  expect(result.current.selectedValues.color.id).toBe("green");
+  expect(result.current.selectedValues.style.id).toBe("rustic");
+
+  act(() => {
+    result.current.selectValue("style", "modern"); // option and value as ID
+  });
+
+  expect(result.current.selectedValues.size.id).toBe("39");
+  expect(result.current.selectedValues.color.id).toBe("green");
+  expect(result.current.selectedValues.style.id).toBe("rustic");
 });

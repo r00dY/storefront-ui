@@ -1,121 +1,121 @@
 /** @jsx jsx */
 import React, { useState, useRef, useLayoutEffect } from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "..";
-
-function findProductVariantBySelectedOptions(product, options) {
-  RootLoop: for (let i = 0; i < product.variants.length; i++) {
-    const productVariant = product.variants[i];
-    const selectedOptions = productVariant.selectedOptions;
-
-    for (let name in selectedOptions) {
-      if (options[name] !== selectedOptions[name]) {
-        continue RootLoop;
-      }
-    }
-
-    return productVariant;
-  }
-}
-
-function useOptionPickerOld(props = {}) {
-  const { product } = props;
-
-  const initOptions = {};
-  product.options.forEach(({ name, values }) => {
-    initOptions[name] = values[0].name;
-  });
-
-  const [selectedOptions, setSelectedOptions] = useState(initOptions);
-
-  const productVariant = findProductVariantBySelectedOptions(
-    product,
-    selectedOptions
-  );
-
-  const options = [];
-
-  product.options.forEach(option => {
-    const id = `${product.handle}-${option.name}`;
-
-    const values2 = option.values.map(value => ({
-      value: value.name,
-      label: value.name,
-      ...value,
-      productVariant: findProductVariantBySelectedOptions(product, {
-        ...selectedOptions,
-        [option.name]: value.name
-      })
-    }));
-
-    options.push({
-      ...option,
-      selectProps: {
-        options: option.values.map(value => ({
-          value: value.name,
-          label: value.name
-        })),
-        placeholder: option.name,
-        value: selectedOptions[option.name],
-        onChange: val => {
-          setSelectedOptions({ ...selectedOptions, [option.name]: val });
-        },
-        id
-      },
-      labelProps: {
-        htmlFor: id
-      },
-      values: option.values.map(value => ({
-        ...value,
-        selectableLinkProps: {
-          as: "link",
-          href: "#",
-          selected: selectedOptions[option.name] === value.name,
-          disabled: false,
-          label: `${option.name} ${value.name}`
-        },
-        selectableRadioProps: {
-          as: "radio",
-          id: `${id}-${value.name}`,
-          label: `${value.name}`,
-          name: id,
-          selected: selectedOptions[option.name] === value.name,
-          onSelect: () => {
-            setSelectedOptions({
-              ...selectedOptions,
-              [option.name]: value.name
-            });
-          },
-          disabled: false
-        }
-      })),
-      select2Props: {
-        options: values2,
-        value: values2.find(v => v.value === selectedOptions[option.name]),
-        onChange: val => {
-          setSelectedOptions({ ...selectedOptions, [option.name]: val.value });
-        }
-      }
-    });
-  });
-
-  return {
-    options,
-    productVariant
-  };
-}
-
-function useDupa(initVal) {
-  const [val, setVal] = useState(initVal);
-
-  const increment = () => {
-    setVal(val + 1);
-  };
-
-  return {
-    val,
-    increment
-  };
-}
+//
+// function findProductVariantBySelectedOptions(product, options) {
+//   RootLoop: for (let i = 0; i < product.variants.length; i++) {
+//     const productVariant = product.variants[i];
+//     const selectedOptions = productVariant.selectedOptions;
+//
+//     for (let name in selectedOptions) {
+//       if (options[name] !== selectedOptions[name]) {
+//         continue RootLoop;
+//       }
+//     }
+//
+//     return productVariant;
+//   }
+// }
+//
+// function useOptionPickerOld(props = {}) {
+//   const { product } = props;
+//
+//   const initOptions = {};
+//   product.options.forEach(({ name, values }) => {
+//     initOptions[name] = values[0].name;
+//   });
+//
+//   const [selectedOptions, setSelectedOptions] = useState(initOptions);
+//
+//   const productVariant = findProductVariantBySelectedOptions(
+//     product,
+//     selectedOptions
+//   );
+//
+//   const options = [];
+//
+//   product.options.forEach(option => {
+//     const id = `${product.handle}-${option.name}`;
+//
+//     const values2 = option.values.map(value => ({
+//       value: value.name,
+//       label: value.name,
+//       ...value,
+//       productVariant: findProductVariantBySelectedOptions(product, {
+//         ...selectedOptions,
+//         [option.name]: value.name
+//       })
+//     }));
+//
+//     options.push({
+//       ...option,
+//       selectProps: {
+//         options: option.values.map(value => ({
+//           value: value.name,
+//           label: value.name
+//         })),
+//         placeholder: option.name,
+//         value: selectedOptions[option.name],
+//         onChange: val => {
+//           setSelectedOptions({ ...selectedOptions, [option.name]: val });
+//         },
+//         id
+//       },
+//       labelProps: {
+//         htmlFor: id
+//       },
+//       values: option.values.map(value => ({
+//         ...value,
+//         selectableLinkProps: {
+//           as: "link",
+//           href: "#",
+//           selected: selectedOptions[option.name] === value.name,
+//           disabled: false,
+//           label: `${option.name} ${value.name}`
+//         },
+//         selectableRadioProps: {
+//           as: "radio",
+//           id: `${id}-${value.name}`,
+//           label: `${value.name}`,
+//           name: id,
+//           selected: selectedOptions[option.name] === value.name,
+//           onSelect: () => {
+//             setSelectedOptions({
+//               ...selectedOptions,
+//               [option.name]: value.name
+//             });
+//           },
+//           disabled: false
+//         }
+//       })),
+//       select2Props: {
+//         options: values2,
+//         value: values2.find(v => v.value === selectedOptions[option.name]),
+//         onChange: val => {
+//           setSelectedOptions({ ...selectedOptions, [option.name]: val.value });
+//         }
+//       }
+//     });
+//   });
+//
+//   return {
+//     options,
+//     productVariant
+//   };
+// }
+//
+// function useDupa(initVal) {
+//   const [val, setVal] = useState(initVal);
+//
+//   const increment = () => {
+//     setVal(val + 1);
+//   };
+//
+//   return {
+//     val,
+//     increment
+//   };
+// }
 
 function getMatcherFromOption(option) {
   return (
@@ -167,16 +167,23 @@ function useOptionPicker(config = {}) {
     const valueId = typeof v === "object" ? v.id : v;
     const value = option.values.find(val => val.id === valueId);
 
-    selectProduct(
-      getProductFromValues(
-        {
-          ...selectedValues,
-          [optionId]: value
-        },
-        options,
-        products
-      )
+    const newProduct = getProductFromValues(
+      {
+        ...selectedValues,
+        [optionId]: value
+      },
+      options,
+      products
     );
+
+    if (!newProduct) {
+      console.warn(
+        `[useOptionPicker] you can't set option "${optionId}" to value "${valueId}" because this combination doesn't exist`
+      );
+      return;
+    }
+
+    selectProduct(newProduct);
   };
 
   const retOptions = [];
@@ -188,7 +195,7 @@ function useOptionPicker(config = {}) {
 
     const selectOptions = option.values.map(value => ({
       ...value,
-      value: value.id,
+      id: value.id,
       product: getProductFromValues(
         {
           ...selectedValues,
@@ -241,4 +248,4 @@ function useOptionPicker(config = {}) {
   };
 }
 
-export { useOptionPicker, useDupa };
+export { useOptionPicker };

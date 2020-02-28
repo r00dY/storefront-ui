@@ -63,20 +63,30 @@ const options = [
 ];
 
 const products = [];
+const productsPartial = [];
 
 options[0].values.forEach((size, i) => {
   options[1].values.forEach((color, j) => {
     options[2].values.forEach((style, k) => {
-      products.push({
+      const product = {
         id: "product-" + (i * 100 + j * 10 + k),
         selectedOptions: {
           size: size.id,
           color: color.id,
           style: style.id
         }
-      });
+      };
+
+      products.push(product);
+
+      // modern green have only size 38
+      if (style.id === "modern" && color.id === "green" && size.id !== "38") {
+        return;
+      }
+
+      productsPartial.push(product);
     });
   });
 });
 
-export { products, options };
+export { products, productsPartial, options };
