@@ -160,12 +160,14 @@ function useOptionPicker(config = {}) {
 
   const selectedValues = getValuesFromProduct(product, options);
 
-  const selectValue = (o, v) => {
+  const stateForValue = (o, v) => {
     const optionId = typeof o === "object" ? o.id : o;
     const option = options.find(opt => opt.id === optionId);
 
     const valueId = typeof v === "object" ? v.id : v;
     const value = option.values.find(val => val.id === valueId);
+
+    const strategy = option.missingProductStrategy || "hidden";
 
     const newProduct = getProductFromValues(
       {
@@ -176,9 +178,25 @@ function useOptionPicker(config = {}) {
       products
     );
 
-    if (!newProduct) {
+    if (newProduct) {
+      return newProduct;
+    }
+
+    if (strategy === "disabled") {
+      return "disabled";
+    }
+    if (strategy === "alternative") {
+    }
+
+    return "hidden"; // default
+  };
+
+  const selectValue = (o, v) => {
+    const newProduct = stateForValue(o, v);
+
+    if (typeof newProduct !== "object") {
       console.warn(
-        `[useOptionPicker] you can't set option "${optionId}" to value "${valueId}" because this combination doesn't exist`
+        `[useOptionPicker] you can't set option "${o}" to value "${v}" because this combination doesn't exist`
       );
       return;
     }
@@ -193,18 +211,15 @@ function useOptionPicker(config = {}) {
 
     // const uniqueId = `${product.handle}-${option.name}`;
 
-    const selectOptions = option.values.map(value => ({
-      ...value,
-      id: value.id,
-      product: getProductFromValues(
-        {
-          ...selectedValues,
-          [option.id]: currentValue
-        },
-        options,
-        products
-      ) // TODO: add product
-    }));
+    const selectOptions = option.values.map(value => {
+      const state = stateForValue(option, currentValue);
+
+      return {
+        ...value,
+        id: value.id,
+        product: state.product
+      };
+    });
 
     const selectProps = {
       options: selectOptions,
@@ -244,7 +259,8 @@ function useOptionPicker(config = {}) {
     selectedValues,
     selectValue,
     product,
-    selectProduct
+    selectProduct,
+    stateForValue
   };
 }
 

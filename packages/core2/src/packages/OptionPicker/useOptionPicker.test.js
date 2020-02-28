@@ -86,19 +86,57 @@ test("properly doest NOT select value when it doesn't exist", () => {
     useOptionPicker({
       options,
       products: productsPartial,
-      initialProduct: productsPartial[10]
+      initialProduct: productsPartial[0]
     })
   );
 
-  expect(result.current.selectedValues.size.id).toBe("39");
-  expect(result.current.selectedValues.color.id).toBe("green");
+  expect(result.current.selectedValues.size.id).toBe("38");
+  expect(result.current.selectedValues.color.id).toBe("red");
   expect(result.current.selectedValues.style.id).toBe("rustic");
 
   act(() => {
     result.current.selectValue("style", "modern"); // option and value as ID
   });
 
-  expect(result.current.selectedValues.size.id).toBe("39");
-  expect(result.current.selectedValues.color.id).toBe("green");
+  expect(result.current.selectedValues.size.id).toBe("38");
+  expect(result.current.selectedValues.color.id).toBe("red");
   expect(result.current.selectedValues.style.id).toBe("rustic");
+});
+
+test("properly applies default 'hidden' strategy", () => {
+  const { result } = renderHook(() =>
+    useOptionPicker({
+      options,
+      products: productsPartial,
+      initialProduct: productsPartial[0]
+    })
+  );
+
+  expect(result.current.stateForValue("style", "modern")).toBe("hidden");
+  expect(result.current.stateForValue("size", "42")).toBe("hidden");
+  expect(result.current.stateForValue("color", "green")).toBe("hidden");
+
+  expect(typeof result.current.stateForValue("size", "40")).toBe("object");
+});
+
+test("properly applies default 'disabled' strategy", () => {
+  const modifiedOptions = [...options];
+  modifiedOptions[2] = {
+    ...modifiedOptions[2],
+    missingProductStrategy: "disabled"
+  };
+
+  const { result } = renderHook(() =>
+    useOptionPicker({
+      options: modifiedOptions,
+      products: productsPartial,
+      initialProduct: productsPartial[0]
+    })
+  );
+
+  expect(result.current.stateForValue("size", "42")).toBe("hidden");
+  expect(result.current.stateForValue("color", "green")).toBe("hidden");
+  expect(result.current.stateForValue("style", "modern")).toBe("disabled");
+
+  expect(typeof result.current.stateForValue("size", "40")).toBe("object");
 });

@@ -79,8 +79,12 @@ options[0].values.forEach((size, i) => {
 
       products.push(product);
 
-      // modern green have only size 38
-      if (style.id === "modern" && color.id === "green" && size.id !== "38") {
+      // last option from list is never available
+      if (
+        i === options[0].values.length - 1 ||
+        j === options[1].values.length - 1 ||
+        k === options[2].values.length - 1
+      ) {
         return;
       }
 
