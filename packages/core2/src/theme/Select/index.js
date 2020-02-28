@@ -25,8 +25,7 @@ export default props => (
       $selectable: <ItemRow />,
       $wrapper: <Box />,
       $separator: <Box sx={{ height: 1, bg: "mono200" }} />,
-      ...formStyles,
-      width: "400px"
+      ...formStyles
     }}
     {...props}
   />
