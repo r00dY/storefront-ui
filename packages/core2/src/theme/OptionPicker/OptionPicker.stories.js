@@ -22,6 +22,8 @@ export const hook = () => {
     initialProduct: products[10]
   });
 
+  console.log(options[2].selectProps);
+
   return (
     <Box>
       <Box>Product id: {product.id}</Box>

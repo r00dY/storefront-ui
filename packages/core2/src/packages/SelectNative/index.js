@@ -79,7 +79,7 @@ function SelectNative(props) {
     );
   }
 
-  options.map(({ id, label }) => {
+  data.options.map(({ id, label }) => {
     optionElems.push(
       <option value={id} key={id}>
         {label}

@@ -66,6 +66,7 @@ function useNormalizedOptions(props) {
     defaultValue: !isControlled ? defaultValue : undefined,
     value: isControlled ? value : undefined,
     empty: isControlled ? value === null : empty,
+    options,
     onChange: (val, e) => {
       setEmpty(allowEmpty && val === null);
 
