@@ -165,3 +165,38 @@ test("properly applies default 'alternative' strategy", () => {
   expect(result.current.selectedValues.size.id).toBe("39");
   expect(result.current.selectedValues.style.id).toBe("rustic");
 });
+
+test("extracts options properly (all options)", () => {
+  const { result } = renderHook(() =>
+    useOptionPicker({
+      products,
+      initialProduct: products[0],
+      options: [
+        {
+          id: "size",
+          value: p => p._size // can return object or string. If string then it's treated as ID. If value exist in values then values takes precedence.
+        },
+        {
+          id: "color",
+          value: p => p._color
+        },
+        {
+          id: "style",
+          value: p => p._style
+        }
+      ]
+    })
+  );
+
+  expect(result.current.options[0].values.length).toBe(5);
+  expect(result.current.options[1].values.length).toBe(3);
+  expect(result.current.options[2].values.length).toBe(2);
+  //
+  // act(() => {
+  //   result.current.selectProduct(products[products.length - 1]);
+  // });
+  //
+  // expect(result.current.selectedValues.size.id).toBe("42");
+  // expect(result.current.selectedValues.color.id).toBe("green");
+  // expect(result.current.selectedValues.style.id).toBe("modern");
+});

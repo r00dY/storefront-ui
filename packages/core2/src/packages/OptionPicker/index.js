@@ -198,11 +198,41 @@ function findAlternativeBasicStrategy(
 }
 
 function useOptionPicker(config = {}) {
-  const { products = [], initialProduct, options = [] } = config;
+  let { products = [], initialProduct, options = [] } = config;
 
   const [product, selectProduct] = useState(initialProduct);
 
-  // TODO: calculate options
+  // calculate options
+
+  options = options.map(option => {
+    let newValues = Array.isArray(option.values) ? [...option.values] : [];
+
+    if (option.value) {
+      products.forEach(product => {
+        const ret = option.value(product);
+
+        if (typeof ret === "string") {
+          if (!newValues.find(x => x.id === ret)) {
+            newValues.push({
+              id: ret,
+              name: ret
+            });
+          }
+        } else if (typeof ret === "object") {
+          if (!newValues.find(x => x.id === ret.id)) {
+            newValues.push(ret);
+          }
+        } else {
+          throw new Error("option.value must return string or object");
+        }
+      });
+    }
+
+    return {
+      ...option,
+      values: newValues
+    };
+  });
 
   const selectedValues = getValuesFromProduct(product, options);
 

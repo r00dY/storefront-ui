@@ -74,7 +74,11 @@ options[0].values.forEach((size, i) => {
           size: size.id,
           color: color.id,
           style: style.id
-        }
+        },
+        // following for purpose of automatic option extraction
+        _size: size,
+        _color: color,
+        _style: style
       };
 
       products.push(product);
