@@ -37,6 +37,7 @@ export const hook = () => {
           <InputRaw$
             {...counter.inputProps}
             sx={{ width: "50px", textAlign: "center" }}
+            noFocus={true}
           />
         )}
         {!counter.exceedsSelectRange && (
@@ -48,6 +49,7 @@ export const hook = () => {
               $arrowContainer: { __children: <div /> },
               $input: { textAlign: "center" }
             }}
+            allowEmpty={false}
           />
         )}
         <Button {...counter.buttonIncrementProps}>+</Button>
