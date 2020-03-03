@@ -1,5 +1,6 @@
 import ButtonText$ from "@commerce-ui/core/ButtonText";
 import { createComponent } from "@commerce-ui/core";
+import Spinner from "../Spinner";
 
 const styles = {
   standard: {
@@ -53,5 +54,9 @@ export default createComponent(ButtonText$, ({ $size = "standard" }) => ({
   $rightIcon: {
     width: styles[$size].$iconSize,
     height: styles[$size].$iconSize
+  },
+
+  $loader: {
+    __children: <Spinner />
   }
 }));

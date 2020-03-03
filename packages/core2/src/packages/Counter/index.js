@@ -191,8 +191,6 @@ function Counter$(props) {
     )
   );
 
-  console.log(buttonDecrease);
-
   const buttonIncrease = createElement(
     getElementSpec(
       customSx.$buttonIncrease,
@@ -206,6 +204,7 @@ function Counter$(props) {
       "+"
     )
   );
+
   const input = createElement(
     getElementSpec(customSx.$input, defaults.$input, state),
     {

@@ -7,7 +7,7 @@ export default createComponent(ButtonBase$, {
   color: "black",
   overflow: "hidden",
   borderRadius: "6px",
-  p: 2,
+  p: "10px",
   ":before": {
     content: "''",
     position: "absolute",
