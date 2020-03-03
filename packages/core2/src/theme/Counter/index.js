@@ -17,7 +17,7 @@ const Counter = props => {
           borderColor: focused ? "black" : "mono300"
         }),
         $buttonIncrease: {
-          __type: Button$,
+          __type: ButtonMinimal,
           width: "44px",
           height: "44px",
           $foreground: {
@@ -27,7 +27,7 @@ const Counter = props => {
           }
         },
         $buttonDecrease: {
-          __type: Button$,
+          __type: ButtonMinimal,
           width: "44px",
           height: "44px",
           $foreground: {
@@ -39,6 +39,11 @@ const Counter = props => {
         $input: {
           font: "body",
           width: "44px"
+        },
+        $select: {
+          $control: {
+            font: "body"
+          }
         }
       }}
     />

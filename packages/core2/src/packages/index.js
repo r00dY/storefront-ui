@@ -269,7 +269,8 @@ const createComponent = (Component, newSx) => {
         {...restProps}
         sx={{
           ...newSx2,
-          ...sx
+          ...sx,
+          $css: css
         }}
       />
     );

@@ -56,7 +56,10 @@ export default props => {
         const [css, customSx] = splitSx(
           typeof sx === "function" ? sx(state) : sx
         );
-        return css;
+
+        return {
+          $css: css
+        };
       }}
       {...restProps}
     >

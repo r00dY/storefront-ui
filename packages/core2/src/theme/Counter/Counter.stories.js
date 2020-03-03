@@ -22,7 +22,6 @@ export const unstyled = () => (
 
 export const hook = () => {
   const counter = useCounter({ step: 6 });
-
   const counter2 = useCounter();
 
   return (

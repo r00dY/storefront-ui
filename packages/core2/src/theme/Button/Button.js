@@ -8,10 +8,10 @@ const styles = {
     },
 
     $body: {
-      pl: 3,
-      pr: 3,
-      pt: 2,
-      pb: 2,
+      pl: "16px",
+      pr: "16px",
+      pt: "10px",
+      pb: "10px",
       font: "body2"
     },
 

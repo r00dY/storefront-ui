@@ -4,6 +4,10 @@ import { getElementSpec, jsx, createElement, splitSx } from "..";
 
 import ButtonRaw2 from "../ButtonRaw";
 import InputRaw$ from "../InputRaw";
+import Box from "../Box";
+
+import SelectNative from "../SelectNative";
+import InputRaw from "../InputRaw";
 
 const defaults = {
   $buttonDecrease: {
@@ -22,16 +26,28 @@ const defaults = {
     flexDirection: "row"
   }),
   $input: ({}) => ({
-    __type: InputRaw$,
+    __type: InputRaw,
     textAlign: "center"
+  }),
+  $select: () => ({
+    __type: SelectNative,
+    __props: {
+      allowEmpty: false
+    }
   })
 };
 
 function useCounter(props = {}) {
-  let { step = 1, initialValue, max = 999, selectOptionsAmount = 19 } = props;
+  let {
+    step = 1,
+    defaultValue,
+    maxValue = 999,
+    selectOptionsAmount = 19,
+    onChange
+  } = props;
 
-  const [amount, setAmount] = useState(initialValue || step);
-  const [inputValue, setInputValue] = useState(initialValue || step);
+  const [amount, setAmount] = useState(defaultValue || step);
+  const [inputValue, setInputValue] = useState(defaultValue || step);
   const [
     inputFocusedAfterSelectingMore,
     setInputFocusedAfterSelectingMore
@@ -46,7 +62,7 @@ function useCounter(props = {}) {
     }
 
     newVal = Math.max(newVal, step);
-    newVal = Math.min(newVal, max);
+    newVal = Math.min(newVal, maxValue);
 
     // Check if multiple of step
     const rest = newVal % step;
@@ -56,6 +72,10 @@ function useCounter(props = {}) {
 
     setAmount(newVal);
     setInputValue(newVal);
+
+    if (newVal !== amount && onChange) {
+      onChange(newVal);
+    }
   };
 
   const buttonIncrementProps = {
@@ -119,20 +139,21 @@ function useCounter(props = {}) {
   };
 
   return {
-    inputFocusedAfterSelectingMore,
+    // inputFocusedAfterSelectingMore,
     exceedsSelectRange,
     buttonIncrementProps,
     buttonDecrementProps,
     inputProps,
     selectProps,
     amount,
-    setAmount: setValue,
-    setValue
+    setAmount: setValue
   };
 }
 
 function Counter$(props) {
   let { sx = {} } = props;
+
+  const controller = useCounter(props);
 
   const [focused, setFocused] = useState(false);
 
@@ -157,34 +178,71 @@ function Counter$(props) {
   };
 
   const buttonDecrease = createElement(
-    getElementSpec(customSx.$buttonDecrease, defaults.$buttonDecrease, state, {
-      onFocus,
-      onBlur
-    })
+    getElementSpec(
+      customSx.$buttonDecrease,
+      defaults.$buttonDecrease,
+      state,
+      {
+        onFocus,
+        onBlur,
+        ...controller.buttonDecrementProps
+      },
+      "-"
+    )
   );
+
+  console.log(buttonDecrease);
+
   const buttonIncrease = createElement(
-    getElementSpec(customSx.$buttonIncrease, defaults.$buttonIncrease, state, {
-      onFocus,
-      onBlur
-    })
+    getElementSpec(
+      customSx.$buttonIncrease,
+      defaults.$buttonIncrease,
+      state,
+      {
+        onFocus,
+        onBlur,
+        ...controller.buttonIncrementProps
+      },
+      "+"
+    )
   );
   const input = createElement(
     getElementSpec(customSx.$input, defaults.$input, state),
     {
       type: "number",
       onFocus,
-      onBlur
+      onBlur,
+      ...controller.inputProps
+    }
+  );
+
+  const select = createElement(
+    getElementSpec(customSx.$select, defaults.$select, state),
+    {
+      onFocus,
+      onBlur,
+      ...controller.selectProps
     }
   );
 
   return (
-    <div sx={css}>
-      <div sx={[defaults.$root(state), rootCss]}>
+    <Box sx={css}>
+      <Box
+        sx={[
+          {
+            display: "flex",
+            flexDirection: "row"
+          },
+          defaults.$root(state),
+          rootCss
+        ]}
+      >
         {buttonDecrease}
-        {input}
+        {controller.exceedsSelectRange && input}
+        {!controller.exceedsSelectRange && select}
         {buttonIncrease}
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

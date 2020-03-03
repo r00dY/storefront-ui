@@ -3,7 +3,7 @@ import { createComponent } from "@commerce-ui/core";
 
 export default createComponent(ButtonIcon$, {
   $body: ({ disabled }) => ({
-    p: 2,
+    p: "10px",
     color: disabled ? "mono500" : "black"
   }),
   $background: ({ isHovered, disabled }) => ({

@@ -78,7 +78,7 @@ export default props => {
         const bodySpec = getElementSpec($body, defaultBody, newState);
 
         return {
-          ...css,
+          $css: css,
           $body: bodySpec,
           ...restSx
         };
