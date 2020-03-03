@@ -21,8 +21,10 @@ const focusReset = {
 function Box_(props) {
   const { sx, as, _ref, noFocus = false, ...restProps } = props;
 
+  const [css, customSx] = splitSx(sx);
+
   return jsx(as, {
-    sx: [boxStyles, noFocus && focusReset, sx],
+    sx: [boxStyles, noFocus && focusReset, css],
     ref: _ref,
     ...restProps
   });

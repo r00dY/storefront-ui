@@ -78,16 +78,21 @@ function useCounter(props = {}) {
     }
   };
 
+  const isMin = amount === step;
+  const isMax = amount === maxValue - (maxValue % step);
+
   const buttonIncrementProps = {
     onClick: () => {
       setValue(amount + step);
-    }
+    },
+    disabled: isMax
   };
 
   const buttonDecrementProps = {
     onClick: () => {
       setValue(amount - step);
-    }
+    },
+    disabled: isMin
   };
 
   const inputProps = {
@@ -146,6 +151,8 @@ function useCounter(props = {}) {
     inputProps,
     selectProps,
     amount,
+    isMax,
+    isMin,
     setAmount: setValue
   };
 

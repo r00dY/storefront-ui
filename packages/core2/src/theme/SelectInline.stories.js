@@ -1,22 +1,10 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
-import HorizontalStack from "@commerce-ui/core/HorizontalStack";
-import SelectNative from "./index";
-import Button from "../Button/Button";
+import SelectInline$ from "@commerce-ui/core/SelectInline";
+import Grid from "@commerce-ui/core/Grid";
 import React, { useRef, useState } from "react";
 
-import storyOfSelectNative from "@commerce-ui/core/SelectNative/story";
-import ButtonIcon from "../Button/Button.stories";
-
-export const selectNative = storyOfSelectNative(<SelectNative />);
-
-const stringOptions = [
-  "New York",
-  "Washington",
-  "London",
-  "Warsaw",
-  "City with a very long name"
-];
+import ItemRow from "./Selectables/ItemRow";
 
 const options = [
   {
@@ -58,15 +46,28 @@ const optionsWithDisabled = [
   }
 ];
 
-const vals = ["a", "b", "c"];
+const SelectInline = props => (
+  <SelectInline$
+    {...props}
+    sx={{
+      $label: {
+        font: "heading",
+        pb: "16px"
+      },
+      $selectable: <ItemRow />,
+      $optionsContainer: {
+        __type: Grid,
+        __props: {
+          minItemWidth: 300
+        }
+      }
+    }}
+  />
+);
 
-export const unstyled = () => {
-  const inputRef = useRef(null);
-
+export const basic = () => {
   const [val, setVal] = useState(null);
   const [val2, setVal2] = useState(options[2]);
-
-  const [val3, setVal3] = useState("c");
 
   return (
     <>
@@ -74,24 +75,28 @@ export const unstyled = () => {
         <h2>Uncontrolled</h2>
 
         <p>Standard</p>
-        <SelectNative options={options} onChange={val => console.log} />
+        <SelectInline
+          options={options}
+          onChange={val => console.log}
+          label={"Label"}
+        />
 
         <p>Standard (default value)</p>
-        <SelectNative
+        <SelectInline
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
         />
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectNative
+        <SelectInline
           options={options}
           onChange={val => console.log}
           allowEmpty={false}
         />
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectNative
+        <SelectInline
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
@@ -101,13 +106,13 @@ export const unstyled = () => {
         <h2>Controlled</h2>
 
         <p>Standard</p>
-        <SelectNative options={options} value={val} onChange={setVal} />
+        <SelectInline options={options} value={val} onChange={setVal} />
 
         <p>Standard (default value)</p>
-        <SelectNative options={options} value={val2} onChange={setVal2} />
+        <SelectInline options={options} value={val2} onChange={setVal2} />
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectNative
+        <SelectInline
           options={options}
           value={val}
           onChange={setVal}
@@ -115,7 +120,7 @@ export const unstyled = () => {
         />
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectNative
+        <SelectInline
           options={options}
           value={val2}
           onChange={setVal2}
@@ -125,7 +130,7 @@ export const unstyled = () => {
         <h2>Disabled states</h2>
 
         <p>Entire control disabled</p>
-        <SelectNative
+        <SelectInline
           options={options}
           onChange={val => console.log}
           disabled
@@ -133,7 +138,7 @@ export const unstyled = () => {
         />
 
         <p>Items disabled</p>
-        <SelectNative
+        <SelectInline
           options={optionsWithDisabled}
           onChange={val => console.log}
         />
@@ -143,5 +148,5 @@ export const unstyled = () => {
 };
 
 export default {
-  title: "SelectNative"
+  title: "SelectInline"
 };

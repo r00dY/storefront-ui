@@ -93,7 +93,7 @@ const theme = {
       textTransform: "uppercase"
     },
     heading: {
-      fontSize: rslin(24, 32),
+      fontSize: 24,
       fontFamily: "sans-serif"
     }
   },

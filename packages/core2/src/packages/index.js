@@ -150,11 +150,24 @@ function splitSx(sx) {
   let css = {};
   let customSx = {};
 
-  for (const prop in sx) {
-    if (prop.startsWith("$")) {
-      customSx[prop] = sx[prop];
-    } else {
-      css[prop] = sx[prop];
+  if (Array.isArray(sx)) {
+    customSx.$css = [];
+
+    sx.forEach(subSx => {
+      const [css_, sx_] = splitSx(subSx);
+      customSx.$css.push(css_);
+      customSx = {
+        ...customSx,
+        ...sx_
+      };
+    });
+  } else {
+    for (const prop in sx) {
+      if (prop.startsWith("$")) {
+        customSx[prop] = sx[prop];
+      } else {
+        css[prop] = sx[prop];
+      }
     }
   }
 
