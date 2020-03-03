@@ -23,7 +23,7 @@ function ItemRow(props) {
             font: "body",
             bg: highlighted ? "rgb(230,230,230)" : "#fafafa",
             ":hover": {
-              bg: "rgb(230,230,230)"
+              bg: disabled ? "#fafafa" : "rgb(230,230,230)"
             },
             opacity: disabled ? 0.5 : 1
           }}
