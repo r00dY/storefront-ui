@@ -14,11 +14,21 @@ import Box from "@commerce-ui/core/Box";
 
 import SelectNative$ from "@commerce-ui/core/SelectNative";
 
-export const unstyled = () => (
+export const componnt = () => (
   <div>
     <Counter />
   </div>
 );
+
+export const componentDrivenByHook = () => {
+  const counter = useCounter({ step: 6 });
+
+  return (
+    <div>
+      <Counter {...counter.counterProps} />
+    </div>
+  );
+};
 
 export const hook = () => {
   const counter = useCounter({ step: 6 });
