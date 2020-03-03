@@ -61,7 +61,7 @@ const Spinner = ({ sx = {}, light = true }) => {
 
     borderRadius: "50%",
     textIndent: "-9999em",
-    borderWidth: `${width}px`,
+    borderWidth: width,
     borderStyle: "solid",
     borderTopColor: color2,
     borderRightColor: color2,
@@ -80,7 +80,7 @@ const Spinner = ({ sx = {}, light = true }) => {
   };
 
   return (
-    <Box sx={[{ position: "relative", width: "44px" }, sx]}>
+    <Box sx={[{ position: "relative", width: "24px" }, sx]}>
       <Box sx={{ pb: "100%" }}>
         <Box sx={styles}>Spin...</Box>
       </Box>
