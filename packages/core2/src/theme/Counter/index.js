@@ -42,7 +42,11 @@ const Counter = props => {
         },
         $select: {
           $control: {
-            font: "body"
+            font: "body",
+            textAlignLast: "center"
+          },
+          $arrow: {
+            display: "none"
           }
         }
       }}

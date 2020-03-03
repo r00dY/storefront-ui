@@ -138,7 +138,7 @@ function useCounter(props = {}) {
     }
   };
 
-  return {
+  const ret = {
     // inputFocusedAfterSelectingMore,
     exceedsSelectRange,
     buttonIncrementProps,
@@ -148,12 +148,25 @@ function useCounter(props = {}) {
     amount,
     setAmount: setValue
   };
+
+  return {
+    ...ret,
+    counterProps: {
+      controller: ret
+    }
+  };
 }
 
 function Counter$(props) {
   let { sx = {} } = props;
 
-  const controller = useCounter(props);
+  let controller;
+
+  if (props.controller) {
+    controller = props.controller;
+  } else {
+    controller = useCounter(props);
+  }
 
   const [focused, setFocused] = useState(false);
 
