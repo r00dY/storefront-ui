@@ -80,7 +80,7 @@ const Spinner = ({ sx = {}, light = true }) => {
   };
 
   return (
-    <Box sx={[{ position: "relative" }, sx]}>
+    <Box sx={[{ position: "relative", width: "44px" }, sx]}>
       <Box sx={{ pb: "100%" }}>
         <Box sx={styles}>Spin...</Box>
       </Box>

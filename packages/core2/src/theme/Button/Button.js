@@ -1,6 +1,6 @@
 import ButtonText$ from "@commerce-ui/core/ButtonText";
 import { createComponent } from "@commerce-ui/core";
-import Spinner from "../Spinner";
+import Spinner from "@commerce-ui/core/Spinner";
 
 const styles = {
   standard: {

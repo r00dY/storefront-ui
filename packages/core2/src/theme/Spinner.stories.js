@@ -14,11 +14,7 @@ export const basic = () => (
         name: "Basic spinner",
         component: (
           <Container>
-            <Spinner
-              sx={{
-                width: "44px"
-              }}
-            />
+            <Spinner />
           </Container>
         )
       },
@@ -28,7 +24,7 @@ export const basic = () => (
           <Container>
             <Spinner
               sx={{
-                width: "100px"
+                width: "160px"
               }}
             />
           </Container>
@@ -40,9 +36,8 @@ export const basic = () => (
           <Container>
             <Spinner
               sx={{
-                width: "45px",
-                $color: "red",
-                $color2: "blue"
+                $color: "blue",
+                $color2: "red"
               }}
             />
           </Container>
