@@ -15,6 +15,28 @@ import {
 
 import Select from "../Select";
 import SelectNative from "../SelectNative";
+import ItemRow from "../Selectables/ItemRow";
+import SelectInline$ from "@commerce-ui/core/SelectInline";
+import Grid from "@commerce-ui/core/Grid";
+
+const SelectInline = props => (
+  <SelectInline$
+    {...props}
+    sx={{
+      $label: {
+        font: "label",
+        pb: "12px"
+      },
+      $selectable: <ItemRow />,
+      $optionsContainer: {
+        __type: Grid,
+        __props: {
+          minItemWidth: 300
+        }
+      }
+    }}
+  />
+);
 
 export const allOptionsAvailable = () => {
   const { product, options } = useOptionPicker({
@@ -31,10 +53,10 @@ export const allOptionsAvailable = () => {
       <Select {...options[0].selectProps} />
       <br />
 
-      <Select {...options[1].selectProps} />
+      <SelectNative {...options[1].selectProps} />
       <br />
 
-      <SelectNative {...options[2].selectProps} />
+      <SelectInline {...options[2].selectProps} />
     </Box>
   );
 };
@@ -54,10 +76,10 @@ export const partialOptionsHidden = () => {
       <Select {...options[0].selectProps} />
       <br />
 
-      <Select {...options[1].selectProps} />
+      <SelectNative {...options[1].selectProps} />
       <br />
 
-      <SelectNative {...options[2].selectProps} />
+      <SelectInline {...options[2].selectProps} />
     </Box>
   );
 };
@@ -80,10 +102,10 @@ export const partialOptionsDisabled = () => {
       <Select {...options[0].selectProps} />
       <br />
 
-      <Select {...options[1].selectProps} />
+      <SelectNative {...options[1].selectProps} />
       <br />
 
-      <SelectNative {...options[2].selectProps} />
+      <SelectInline {...options[2].selectProps} />
     </Box>
   );
 };
@@ -106,10 +128,10 @@ export const partialOptionsAlternative = () => {
       <Select {...options[0].selectProps} />
       <br />
 
-      <Select {...options[1].selectProps} />
+      <SelectNative {...options[1].selectProps} />
       <br />
 
-      <SelectNative {...options[2].selectProps} />
+      <SelectInline {...options[2].selectProps} />
     </Box>
   );
 };
@@ -142,10 +164,10 @@ export const partialOptionsMixedStrategies = () => {
       <Select {...options[0].selectProps} />
       <br />
 
-      <Select {...options[1].selectProps} />
+      <SelectNative {...options[1].selectProps} />
       <br />
 
-      <SelectNative {...options[2].selectProps} />
+      <SelectInline {...options[2].selectProps} />
     </Box>
   );
 };
