@@ -35,7 +35,7 @@ function css(styles) {
 
   // console.log('before css flattened styles', styles);
 
-  styles = styles.flat([9]);
+  styles = styles.flat([100]);
   styles = styles.filter(x => !!x);
 
   // console.log('after css flattened styles', styles);
