@@ -1,10 +1,14 @@
+/** @jsx jsx */
 import React from "react";
+import { jsx } from "@commerce-ui/core";
 import Selectable from "@commerce-ui/core/Selectable";
 import Box from "@commerce-ui/core/Box";
 
 function ItemRow(props) {
+  const { ...restProps } = props;
+
   return (
-    <Selectable {...props}>
+    <Selectable {...restProps}>
       {({ disabled, highlighted, selected }) => (
         <Box
           sx={{

@@ -5,28 +5,42 @@ import Selectable from "@commerce-ui/core/Selectable";
 import Box from "@commerce-ui/core/Box";
 
 function Color(props) {
-  const { option, ...restProps } = props;
-
   return (
-    <Selectable {...restProps}>
+    <Selectable {...props}>
       {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
-            width: "32px",
-            height: "32px",
+            position: "relative",
+            width: "100%",
+            pb: "100%",
             display: "flex",
-            borderRadius: "16px",
             alignItems: "center",
             justifyContent: "center",
             pointerEvents: "none",
-            lineHeight: 1,
-            bg: option.color,
-            border: highlighted ? "2px solid black" : "2px solid transparent",
-            font: "body",
-            opacity: disabled ? 0.5 : 1
+            borderColor: "black",
+            borderStyle: "solid",
+            outlineColor: "black",
+            outlineStyle: "solid",
+            outlineWidth: highlighted || selected ? "1px" : 0
           }}
         >
-          {selected ? "✔" : ""}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 1,
+              left: 1,
+              width: "calc(100% - 2px)",
+              height: "calc(100% - 2px)",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              pointerEvents: "none",
+              lineHeight: 1,
+              bg: props.option.color,
+              font: "body",
+              opacity: disabled ? 0.5 : 1
+            }}
+          />
         </Box>
       )}
     </Selectable>

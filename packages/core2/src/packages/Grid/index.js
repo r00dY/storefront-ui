@@ -24,7 +24,9 @@ export default ({
     gridTemplateColumns = responsiveValueMap(
       minItemWidth,
       x =>
-        `repeat(auto-fit, minmax(${typeof x === "number" ? `${x}px` : x}, 1fr))`
+        `repeat(auto-fill, minmax(${
+          typeof x === "number" ? `${x}px` : x
+        }, 1fr))`
     );
   }
 

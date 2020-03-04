@@ -54,6 +54,9 @@ function SelectInline(props) {
         selected: value_ && option.id === value_.id,
         label: option.label,
         disabled: option.disabled,
+
+        option: option,
+
         key: option.id,
         onClick: () => {
           if (option.disabled) {

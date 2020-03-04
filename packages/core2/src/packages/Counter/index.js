@@ -153,7 +153,10 @@ function useCounter(props = {}) {
     amount,
     isMax,
     isMin,
-    setAmount: setValue
+    setAmount: setValue,
+    reset: () => {
+      setValue(-1);
+    }
   };
 
   return {
