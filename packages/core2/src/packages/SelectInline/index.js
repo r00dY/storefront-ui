@@ -3,7 +3,7 @@ import Box from "../Box";
 import { createElement, getElementSpec, splitSx } from "../index";
 import InputContainer from "../InputContainer";
 
-import useNormalizedOptions from "../useNormalizedOptions";
+import useSelectState from "../useSelectState";
 
 const defaults = {
   label: ({ label }) => ({
@@ -20,18 +20,9 @@ const defaults = {
 };
 
 function SelectInline(props) {
-  let {
-    onChange,
-    value,
-    defaultValue,
-    options,
-    allowEmpty = true,
-    label = "Select",
-    sx,
-    ...restProps
-  } = props;
+  const { value, options, empty, setValue } = useSelectState(props);
 
-  const data = useNormalizedOptions(props);
+  let { label = "Select", sx, ...restProps } = props;
 
   const state = {
     label
@@ -43,15 +34,11 @@ function SelectInline(props) {
     getElementSpec(customSx.$label, defaults.label, state)
   );
 
-  const [internalValue, setInternalValue] = useState(data.defaultValue);
-
-  const value_ = data.isControlled ? data.value : internalValue;
-
-  const selectables = data.options.map(option => {
+  const selectables = options.map(option => {
     return React.cloneElement(
       sx.$selectable,
       {
-        selected: value_ && option.id === value_.id,
+        selected: value && option.id === value.id,
         label: option.label,
         disabled: option.disabled,
 
@@ -59,13 +46,7 @@ function SelectInline(props) {
 
         key: option.id,
         onClick: () => {
-          if (option.disabled) {
-            return;
-          }
-          if (!data.isControlled) {
-            setInternalValue(option);
-          }
-          onChange(option);
+          setValue(option);
         }
       },
       option.label
@@ -80,7 +61,7 @@ function SelectInline(props) {
   );
 
   return (
-    <Box as={"fieldset"} {...restProps} sx={{ $css: css }}>
+    <Box as={"fieldset"} sx={{ $css: css }}>
       {legend}
       {optionsContainer}
     </Box>

@@ -5,7 +5,7 @@ import { jsx, createElement, getElementSpec, splitSx } from "..";
 import InputContainer from "../InputContainer";
 
 import SelectNativeRaw from "../SelectNativeRaw";
-import useNormalizedOptions from "../useNormalizedOptions";
+import useSelectState from "../useSelectState";
 
 const defaults = {
   $arrowContainer: ({ arrow }) => ({
@@ -32,7 +32,7 @@ function SelectNative(props) {
     ...restProps
   } = props;
 
-  const data = useNormalizedOptions(props);
+  const selectState = useSelectState(props);
 
   let optionElems = [];
 
