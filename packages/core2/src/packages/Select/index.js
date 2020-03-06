@@ -6,7 +6,7 @@ import { useSelect as useSelectDownshift } from "downshift";
 import { jsx, responsiveValueMap } from "../index";
 import InputContainer from "../InputContainer";
 
-import useNormalizedOptions from "../useNormalizedOptions";
+import useSelectState from "../useSelectState";
 
 function useSelect(props) {
   /**
@@ -16,31 +16,18 @@ function useSelect(props) {
    * - onChange
    */
 
-  const {
-    options,
-    value,
-    defaultValue,
-    empty,
-    onChange,
-    isControlled
-  } = useNormalizedOptions(props);
+  const selectState = useSelectState(props);
+
+  const { options, value, setValue } = selectState;
 
   // Stateful / Stateless
   const downshiftOptions = {
-    ...props,
     items: options,
+    selectedItem: value,
     onSelectedItemChange: item => {
-      if (onChange) {
-        onChange(item.selectedItem);
-      }
+      setValue(item.selectedItem);
     }
   };
-
-  if (isControlled) {
-    downshiftOptions.selectedItem = value;
-  } else {
-    downshiftOptions.initialSelectedItem = defaultValue;
-  }
 
   const downshiftSelect = useSelectDownshift(downshiftOptions);
 
@@ -76,9 +63,7 @@ function useSelect(props) {
     return {
       ...option,
       selectableProps: {
-        selected:
-          downshiftSelect.selectedItem &&
-          option.id === downshiftSelect.selectedItem.id,
+        selected: value && option.id === value.id,
         highlighted: downshiftSelect.highlightedIndex === index,
         disabled: !!option.disabled,
         option: option,
@@ -94,20 +79,25 @@ function useSelect(props) {
     isOpen: downshiftSelect.isOpen
   };
 
-  const selectProps = {
-    options: newOptions,
-    menuProps: downshiftSelect.getMenuProps(),
-    layerProps
-  };
+  const controller = {
+    ...downshiftSelect,
+    ...selectState,
 
-  return {
-    buttonProps,
-    selectProps,
+    // TODO: open, close functions
+
+    options: newOptions,
     menuProps: downshiftSelect.getMenuProps(),
     layerProps,
     anchorRef,
-    options: newOptions,
-    ...downshiftSelect
+    buttonProps
+  };
+
+  return {
+    ...controller,
+
+    selectProps: {
+      controller: controller
+    }
   };
 }
 
@@ -117,15 +107,16 @@ function Select(props) {
     label,
     placeholder = "Select value",
     onClick,
-
-    options,
-    value, // can be object or id
-    defaultValue, // can be object or id
-    onChange,
-    allowEmpty = true,
+    controller,
 
     ...restProps
   } = props;
+
+  if (!controller) {
+    controller = useSelect(props);
+  }
+
+  restProps = useSelectState.filterProps(restProps);
 
   let {
     $layer,
@@ -138,23 +129,15 @@ function Select(props) {
     ...restSx
   } = sx;
 
-  const controller = useSelect({
-    options,
-    value, // can be object or id
-    defaultValue, // can be object or id
-    onChange,
-    allowEmpty
-  });
-
   let {
     buttonProps,
     layerProps,
     menuProps,
     anchorRef,
+    options,
+    value,
     isOpen,
-    selectedItem,
-    openMenu,
-    ...rest
+    openMenu
   } = controller;
 
   options = controller.options;
@@ -169,10 +152,10 @@ function Select(props) {
   const rootRef = useRef(null);
 
   // Calculate button content
-  let buttonLabel = selectedItem ? selectedItem.label : placeholder;
+  let buttonLabel = value ? value.label : placeholder;
 
   if ($value) {
-    buttonLabel = $value({ selectedItem, placeholder });
+    buttonLabel = $value({ value, placeholder });
   }
 
   const button = (
@@ -180,7 +163,7 @@ function Select(props) {
       sx={restSx}
       forceFocused={isOpen}
       rootRef={rootRef}
-      empty={selectedItem === null}
+      empty={value === null}
       label={label || placeholder}
       showArrow={"enhancer"}
       cursor={"pointer"}
