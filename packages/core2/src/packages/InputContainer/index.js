@@ -86,7 +86,6 @@ function InputContainer$(props) {
     sx,
     onFocus,
     onBlur,
-    onChange,
     onClick,
     autoFocus,
     controlRef,

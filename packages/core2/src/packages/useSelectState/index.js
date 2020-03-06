@@ -19,6 +19,19 @@ import { useState, useEffect } from "react";
  *
  */
 
+function filterProps(props) {
+  const {
+    options,
+    value, // can be object or id
+    defaultValue, // can be object or id
+    onChange,
+    allowEmpty,
+    ...restProps
+  } = props;
+
+  return restProps;
+}
+
 function useSelectState(props) {
   let {
     options,
@@ -109,5 +122,7 @@ function useSelectState(props) {
   // Jaki output chcemy?
   // 1. value (as object), defaultValue (as object), both can be undefined
 }
+
+useSelectState.filterProps = filterProps;
 
 export default useSelectState;

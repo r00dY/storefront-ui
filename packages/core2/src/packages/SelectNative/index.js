@@ -1,38 +1,17 @@
-/** @jsx jsx */
-import React, { useState, useLayoutEffect, useRef } from "react";
-import Box from "../Box";
-import { jsx, createElement, getElementSpec, splitSx } from "..";
+import React from "react";
 import InputContainer from "../InputContainer";
 
 import SelectNativeRaw from "../SelectNativeRaw";
 import useSelectState from "../useSelectState";
 
-const defaults = {
-  $arrowContainer: ({ arrow }) => ({
-    position: "absolute",
-    top: 0,
-    right: 0,
-    height: "100%",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    pointerEvents: "none",
-    __children: arrow
-  })
-};
-
 function SelectNative(props) {
-  let {
-    onChange,
-    value,
-    defaultValue,
-    options,
-    allowEmpty = true,
-    placeholder = "Select",
-    ...restProps
-  } = props;
+  let { setValue, value, options, empty } = useSelectState(props);
 
-  const selectState = useSelectState(props);
+  let {
+    placeholder = "Select",
+    allowEmpty = true,
+    ...restProps
+  } = useSelectState.filterProps(props);
 
   let optionElems = [];
 
@@ -44,7 +23,7 @@ function SelectNative(props) {
     );
   }
 
-  data.options.map(({ id, label, disabled = false }) => {
+  options.map(({ id, label, disabled = false }) => {
     optionElems.push(
       <option value={id} key={id} disabled={disabled}>
         {label}
@@ -55,7 +34,7 @@ function SelectNative(props) {
   return (
     <InputContainer
       {...restProps}
-      empty={data.empty}
+      empty={empty}
       label={props.label || props.placeholder}
       showArrow={"inline"}
       cursor={"pointer"}
@@ -67,25 +46,11 @@ function SelectNative(props) {
           cursor: "pointer"
         }}
         onChange={e => {
-          data.onChange(
-            !e.target.value || e.target.value === "" ? null : e.target.value,
-            e
+          setValue(
+            !e.target.value || e.target.value === "" ? null : e.target.value
           );
         }}
-        defaultValue={
-          data.defaultValue === undefined
-            ? undefined
-            : data.defaultValue === null
-            ? ""
-            : data.defaultValue.id
-        }
-        value={
-          data.value === undefined
-            ? undefined
-            : data.value === null
-            ? ""
-            : data.value.id
-        }
+        value={value ? value.id : ""}
       >
         {optionElems}
       </SelectNativeRaw>
