@@ -1,6 +1,5 @@
-/** @jsx jsx */
-import React from "react";
-import { jsx, splitSx } from "..";
+import React, { useRef } from "react";
+import { splitSx } from "..";
 import Box from "../Box";
 
 import {
@@ -17,16 +16,36 @@ import { rs } from "responsive-helpers";
  * Gutter can be responsive but items layout can not. So it's usable ONLY if on all resolutions items will be next to each other and won't wrap.
  */
 
-function useScrollableStack(props) {
-  const scrollableStackProps = {};
+export function useScrollableStack(props) {
+  const scrollableContainerRef = useRef(null);
+
+  const scrollTo = x => {
+    scrollableContainerRef.current.scroll({
+      left: x,
+      behavior: "smooth"
+    });
+  };
+
+  const ret = {
+    scrollTo
+  };
 
   return {
-    scrollableStackProps
+    ...ret,
+    controller: {
+      ...ret,
+      scrollableContainerRef
+    }
   };
 }
 
-function ScrollableStack({ sx, children, ...restProps }) {
+function ScrollableStack({ sx, children, controller, ...restProps }) {
   const [css, customSx] = splitSx(sx);
+
+  let scrollableContainerRef = useRef(null);
+  if (controller) {
+    scrollableContainerRef = controller.scrollableContainerRef;
+  }
 
   const gap = customSx.$gap || 0;
   let align = customSx.$align || "left";
@@ -98,6 +117,7 @@ function ScrollableStack({ sx, children, ...restProps }) {
         },
         css
       ]}
+      _ref={scrollableContainerRef}
     >
       <Box
         sx={{
