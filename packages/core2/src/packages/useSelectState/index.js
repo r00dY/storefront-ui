@@ -19,7 +19,7 @@ import { useState, useEffect } from "react";
  *
  */
 
-function useNormalizedOptions(props) {
+function useSelectState(props) {
   let {
     options,
     value, // can be object or id
@@ -51,49 +51,63 @@ function useNormalizedOptions(props) {
 
   // Let's see if value or defaultValue is one from the options list or not
 
-  let defaultValueId =
-    typeof defaultValue === "object" && defaultValue !== null
-      ? defaultValue.id
-      : defaultValue;
-  let valueId = typeof value === "object" && value !== null ? value.id : value;
+  const normalizeValue = val => {
+    let valueId = typeof val === "object" && val !== null ? val.id : val;
+    let valueObject = options.find(o => o.id === valueId);
+    val = valueObject || (allowEmpty ? null : options[0]);
+    return val;
+  };
 
-  let defaultValueObject = options.find(o => o.id === defaultValueId);
-  let valueObject = options.find(o => o.id === valueId);
-
-  defaultValue = defaultValueObject || (allowEmpty ? null : options[0]);
-  value = valueObject || (allowEmpty ? null : options[0]);
+  // let defaultValueId =
+  //   typeof defaultValue === "object" && defaultValue !== null
+  //     ? defaultValue.id
+  //     : defaultValue;
+  // let valueId = typeof value === "object" && value !== null ? value.id : value;
+  //
+  // let defaultValueObject = options.find(o => o.id === defaultValueId);
+  // let valueObject = options.find(o => o.id === valueId);
+  //
+  // defaultValue = defaultValueObject || (allowEmpty ? null : options[0]);
+  // value = valueObject || (allowEmpty ? null : options[0]);
 
   // This "local empty" will be used only if component is uncontrolled
-  let [internalValue, setInternalValue] = useState(defaultValue);
+  let [internalValue, setInternalValue] = useState(
+    normalizeValue(defaultValue)
+  );
 
-  const currentValue = isControlled ? value : internalValue;
+  const currentValue = isControlled ? normalizeValue(value) : internalValue;
+
+  const setValue = newVal => {
+    newVal = normalizeValue(newVal);
+
+    if (newVal === null && currentValue === null) {
+      return;
+    }
+    if (newVal && currentValue && newVal.id === currentValue.id) {
+      return;
+    }
+
+    if (!isControlled) {
+      setInternalValue(newVal);
+    }
+
+    if (onChange) {
+      onChange(newVal);
+    }
+  };
 
   return {
     value: currentValue,
     empty: currentValue === null,
     options,
     reset: () => {
-      if (!isControlled) {
-        setInternalValue(defaultValue);
-      }
-
-      if (onChange) {
-        onChange(defaultValue);
-      }
+      setValue(null);
     },
-    setValue: val => {
-      if (!isControlled) {
-        setInternalValue(val);
-      }
-
-      if (onChange) {
-        onChange(val);
-      }
-    }
+    setValue
   };
 
   // Jaki output chcemy?
   // 1. value (as object), defaultValue (as object), both can be undefined
 }
 
-export default useNormalizedOptions;
+export default useSelectState;
