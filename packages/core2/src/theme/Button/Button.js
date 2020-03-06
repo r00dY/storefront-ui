@@ -33,30 +33,33 @@ const styles = {
   }
 };
 
-export default createComponent(ButtonText$, ({ $size = "standard" }) => ({
-  ...styles[$size].$css,
-  $body: ({ disabled }) => ({
-    ...styles[$size].$body,
-    color: disabled ? "mono500" : "black",
-    textAlign: "center"
-  }),
-  $background: ({ isHovered, disabled }) => ({
-    bg: disabled ? "mono300" : "mono200",
-    opacity: isHovered ? 0.75 : 1,
-    transition: "opacity .1s",
-    borderRadius: 6
-  }),
-  $gap: 2,
-  $leftIcon: {
-    width: styles[$size].$iconSize,
-    height: styles[$size].$iconSize
-  },
-  $rightIcon: {
-    width: styles[$size].$iconSize,
-    height: styles[$size].$iconSize
-  },
+export default createComponent(
+  ButtonText$,
+  ({ $size = "standard" }) => ({ disabled, isHovered }) => ({
+    ...styles[$size].$css,
+    $body: {
+      ...styles[$size].$body,
+      color: disabled ? "mono500" : "black",
+      textAlign: "center"
+    },
+    $background: {
+      bg: disabled ? "mono300" : "mono200",
+      opacity: isHovered ? 0.75 : 1,
+      transition: "opacity .1s",
+      borderRadius: 6
+    },
+    $gap: 2,
+    $leftIcon: {
+      width: styles[$size].$iconSize,
+      height: styles[$size].$iconSize
+    },
+    $rightIcon: {
+      width: styles[$size].$iconSize,
+      height: styles[$size].$iconSize
+    },
 
-  $loader: {
-    __children: <Spinner />
-  }
-}));
+    $loader: {
+      __children: <Spinner />
+    }
+  })
+);

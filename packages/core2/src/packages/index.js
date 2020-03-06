@@ -277,16 +277,15 @@ const createComponent = (Component, newSx) => {
 
     let newSx2 = typeof newSx === "function" ? newSx(customSx) : newSx;
 
-    return (
-      <Component
-        {...restProps}
-        sx={{
-          ...newSx2,
-          ...sx,
-          $css: css
-        }}
-      />
-    );
+    let newSx3;
+
+    if (typeof newSx2 === "function") {
+      newSx3 = (...args) => ({ ...newSx2(...args), ...sx, $css: css });
+    } else {
+      newSx3 = { ...newSx2, ...sx, $css: css };
+    }
+
+    return <Component {...restProps} sx={newSx3} />;
   };
 };
 

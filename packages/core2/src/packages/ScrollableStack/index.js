@@ -16,7 +16,16 @@ import { rs } from "responsive-helpers";
  *
  * Gutter can be responsive but items layout can not. So it's usable ONLY if on all resolutions items will be next to each other and won't wrap.
  */
-function HorizontalStack({ sx, children, ...restProps }) {
+
+function useScrollableStack(props) {
+  const scrollableStackProps = {};
+
+  return {
+    scrollableStackProps
+  };
+}
+
+function ScrollableStack({ sx, children, ...restProps }) {
   const [css, customSx] = splitSx(sx);
 
   const gap = customSx.$gap || 0;
@@ -33,7 +42,7 @@ function HorizontalStack({ sx, children, ...restProps }) {
     responsiveValueForEach(align, val => {
       if (val !== "left") {
         console.warn(
-          `Warning: HorizontalStack uses $itemsVisible + $align, this behaviour is not allowed. If you want to use $align, please use $itemSize property or go with natural item widths.`
+          `Warning: ScrollableStack uses $itemsVisible + $align, this behaviour is not allowed. If you want to use $align, please use $itemSize property or go with natural item widths.`
         );
       }
     });
@@ -133,4 +142,4 @@ function HorizontalStack({ sx, children, ...restProps }) {
   );
 }
 
-export default HorizontalStack;
+export default ScrollableStack;

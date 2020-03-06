@@ -4,13 +4,13 @@ import Container from "@commerce-ui/core/Container";
 import Box from "@commerce-ui/core/Box";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
-import HorizontalStack from "@commerce-ui/core/HorizontalStack";
+import ScrollableStack from "@commerce-ui/core/ScrollableStack";
 
 const container = ["5vw", null, null, "10vw"];
 
 const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
   const body = (
-    <HorizontalStack
+    <ScrollableStack
       sx={{
         position: "relative",
         border: "1px dotted black",
@@ -44,7 +44,7 @@ const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
           Magenta
         </Box>
       )}
-    </HorizontalStack>
+    </ScrollableStack>
   );
 
   return {
@@ -107,7 +107,7 @@ export const basic = () => (
       //   name: "Horizontal stack - natural item width",
       //   component: (
       //     <Container variant={container}>
-      //       <HorizontalStack
+      //       <ScrollableStack
       //         sx={{
       //           position: "relative",
       //           border: "1px dotted black",
@@ -120,7 +120,7 @@ export const basic = () => (
       //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
       //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
       //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-      //       </HorizontalStack>
+      //       </ScrollableStack>
       //     </Container>
       //   )
       // },
@@ -128,7 +128,7 @@ export const basic = () => (
       //   name: "Horizontal stack - item width set directly",
       //   component: (
       //     <Container variant={container}>
-      //       <HorizontalStack
+      //       <ScrollableStack
       //         sx={{
       //           position: "relative",
       //           border: "1px dotted black",
@@ -142,7 +142,7 @@ export const basic = () => (
       //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
       //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
       //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-      //       </HorizontalStack>
+      //       </ScrollableStack>
       //     </Container>
       //   )
       // },
@@ -150,7 +150,7 @@ export const basic = () => (
       //   name: "Horizontal stack - item width set by grid",
       //   component: (
       //     <Container variant={container}>
-      //       <HorizontalStack
+      //       <ScrollableStack
       //         sx={{
       //           position: "relative",
       //           border: "1px dotted black",
@@ -164,14 +164,14 @@ export const basic = () => (
       //         <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
       //         <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
       //         <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-      //       </HorizontalStack>
+      //       </ScrollableStack>
       //     </Container>
       //   )
       // },
       // {
       //   name: "Horizontal stack - item width set by grid, heavy responsiveness",
       //   component: (
-      //     <HorizontalStack
+      //     <ScrollableStack
       //       sx={{
       //         border: "1px dotted black",
       //         $gap: [20, null, null, 40],
@@ -185,7 +185,7 @@ export const basic = () => (
       //       <Box sx={{ height: "200px", bg: "grey", p: 10 }}>Grey</Box>
       //       <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>Yellow</Box>
       //       <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>Magenta</Box>
-      //     </HorizontalStack>
+      //     </ScrollableStack>
       //   )
       // }
 
