@@ -1,7 +1,6 @@
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React from "react";
 import Box from "../Box";
 import { createElement, getElementSpec, splitSx } from "../index";
-import InputContainer from "../InputContainer";
 
 import useSelectState from "../useSelectState";
 
@@ -9,7 +8,7 @@ const defaults = {
   label: ({ label }) => ({
     __type: Box,
     __props: {
-      as: "legend"
+      role: "group"
     },
     __children: label
   }),
@@ -19,8 +18,19 @@ const defaults = {
   })
 };
 
+export function useSelectInline(props) {
+  return useSelectState(props);
+}
+
 function SelectInline(props) {
-  const { value, options, empty, setValue } = useSelectState(props);
+  let controller;
+  if (props.controller) {
+    controller = props.controller;
+  } else {
+    controller = useSelectInline(props);
+  }
+
+  const { value, options, empty, setValue } = controller;
 
   let { label = "Select", sx, ...restProps } = props;
 
@@ -28,9 +38,9 @@ function SelectInline(props) {
     label
   };
 
-  const [css, customSx] = splitSx(props.sx);
+  const [css, customSx] = splitSx(sx);
 
-  const legend = createElement(
+  const labelElem = createElement(
     getElementSpec(customSx.$label, defaults.label, state)
   );
 
@@ -62,10 +72,12 @@ function SelectInline(props) {
 
   return (
     <Box as={"fieldset"} sx={{ $css: css }}>
-      {legend}
+      {labelElem}
       {optionsContainer}
     </Box>
   );
 }
+
+// TODO: accessibility
 
 export default SelectInline;

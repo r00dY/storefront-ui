@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
-import SelectInline$ from "@commerce-ui/core/SelectInline";
+import SelectScrollableStack$ from "@commerce-ui/core/SelectScrollableStack";
 import Grid from "@commerce-ui/core/Grid";
 import React, { useRef, useState } from "react";
 
@@ -46,8 +46,8 @@ const optionsWithDisabled = [
   }
 ];
 
-const SelectInline = props => (
-  <SelectInline$
+const SelectScrollableStack = props => (
+  <SelectScrollableStack$
     {...props}
     sx={{
       $label: {
@@ -55,11 +55,9 @@ const SelectInline = props => (
         pb: "12px"
       },
       $selectable: <ItemRow />,
-      $optionsContainer: {
-        __type: Grid,
-        __props: {
-          minItemWidth: 300
-        }
+      $scrollableStack: {
+        $itemSize: 300,
+        $gap: 50
       }
     }}
   />
@@ -75,28 +73,28 @@ export const basic = () => {
         <h2>Uncontrolled</h2>
 
         <p>Standard</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           onChange={val => console.log}
           label={"Pick a value"}
         />
 
         <p>Standard (default value)</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
         />
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           onChange={val => console.log}
           allowEmpty={false}
         />
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           defaultValue={"london"}
           onChange={val => console.log}
@@ -106,13 +104,21 @@ export const basic = () => {
         <h2>Controlled</h2>
 
         <p>Standard</p>
-        <SelectInline options={options} value={val} onChange={setVal} />
+        <SelectScrollableStack
+          options={options}
+          value={val}
+          onChange={setVal}
+        />
 
         <p>Standard (default value)</p>
-        <SelectInline options={options} value={val2} onChange={setVal2} />
+        <SelectScrollableStack
+          options={options}
+          value={val2}
+          onChange={setVal2}
+        />
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           value={val}
           onChange={setVal}
@@ -120,7 +126,7 @@ export const basic = () => {
         />
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           value={val2}
           onChange={setVal2}
@@ -130,7 +136,7 @@ export const basic = () => {
         <h2>Disabled states</h2>
 
         <p>Entire control disabled</p>
-        <SelectInline
+        <SelectScrollableStack
           options={options}
           onChange={val => console.log}
           disabled
@@ -138,7 +144,7 @@ export const basic = () => {
         />
 
         <p>Items disabled</p>
-        <SelectInline
+        <SelectScrollableStack
           options={optionsWithDisabled}
           onChange={val => console.log}
         />
@@ -148,5 +154,5 @@ export const basic = () => {
 };
 
 export default {
-  title: "SelectInline"
+  title: "SelectScrollableStack"
 };

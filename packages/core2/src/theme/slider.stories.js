@@ -114,7 +114,7 @@ export const basic = () => {
                   $itemSize: 400,
                   $gap: 10
                 }}
-                controller={scrollableStack.controller}
+                controller={scrollableStack}
               >
                 <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
                 <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
@@ -140,5 +140,5 @@ export const basic = () => {
 };
 
 export default {
-  title: "HorizontalItemsContainer"
+  title: "ScrollableStack"
 };

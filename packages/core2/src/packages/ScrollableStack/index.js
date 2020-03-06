@@ -32,10 +32,7 @@ export function useScrollableStack(props) {
 
   return {
     ...ret,
-    controller: {
-      ...ret,
-      scrollableContainerRef
-    }
+    scrollableContainerRef
   };
 }
 
