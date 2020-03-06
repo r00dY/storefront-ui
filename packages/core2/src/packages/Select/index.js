@@ -79,7 +79,7 @@ function useSelect(props) {
     isOpen: downshiftSelect.isOpen
   };
 
-  const controller = {
+  return {
     ...downshiftSelect,
     ...selectState,
 
@@ -90,14 +90,6 @@ function useSelect(props) {
     layerProps,
     anchorRef,
     buttonProps
-  };
-
-  return {
-    ...controller,
-
-    selectProps: {
-      controller: controller
-    }
   };
 }
 
