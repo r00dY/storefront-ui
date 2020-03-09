@@ -2,14 +2,7 @@ import React from "react";
 
 import SelectInline, { useSelectInline } from "../SelectInline";
 import ScrollableStack, { useScrollableStack } from "../ScrollableStack";
-import { createElement, getElementSpec, splitSx } from "../index";
-
-const defaults = {
-  scrollableStack: ({ children }) => ({
-    __type: ScrollableStack,
-    __children: children
-  })
-};
+import { splitSx } from "../index";
 
 export function useSelectScrollableStack(props = {}) {
   const { scrollableStack = {}, ...selectInlineProps } = props;

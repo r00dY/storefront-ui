@@ -64,4 +64,42 @@ const catImage = {
   variants: [catLandscape, catPortrait]
 };
 
-export { catImage };
+const pan1 = {
+  id: "22222",
+  altText: "super pan!",
+  originalSrc: "/images/pan1.jpg",
+  variants: [
+    {
+      name: "natural",
+      aspectRatio: 1,
+      srcset: [
+        {
+          url: "/images/pan1.jpg",
+          w: 702,
+          h: 702
+        }
+      ]
+    }
+  ]
+};
+
+const pan2 = {
+  id: "22222",
+  altText: "super pan!",
+  originalSrc: "/images/pan2.jpg",
+  variants: [
+    {
+      name: "natural",
+      aspectRatio: 1,
+      srcset: [
+        {
+          url: "/images/pan2.jpg",
+          w: 702,
+          h: 702
+        }
+      ]
+    }
+  ]
+};
+
+export { catImage, pan1, pan2 };

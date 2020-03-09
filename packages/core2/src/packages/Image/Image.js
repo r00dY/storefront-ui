@@ -2,7 +2,7 @@ import React from "react";
 // import { RangeMap } from "responsive-helpers";
 import GatsbyImage from "./gatsby-image";
 
-import { responsiveValueForEach, responsiveValueMap } from "../index";
+import { responsiveValueForEach, responsiveValueMap, splitSx } from "../index";
 
 function findVariant(image, variant) {
   return image.variants.find(v => v.name === variant);
@@ -30,7 +30,7 @@ function Image$(props) {
     loading,
     sizes,
     draggable,
-    sx,
+    sx = {},
     className,
     style,
     children
@@ -73,7 +73,27 @@ function Image$(props) {
   //   val.objectPosition = val.objectPosition || "center center";
   // });
 
-  const sxVariant = sx && sx.variant ? sx.variant : "natural";
+  // TODO: make $ available for image
+  if (!sx.$variant) {
+    sx.$variant = sx.variant;
+  }
+  if (!sx.$objectFit) {
+    sx.$objectFit = sx.objectFit;
+  }
+  if (!sx.$objectPosition) {
+    sx.$objectPosition = sx.objectPosition;
+  }
+  if (!sx.$aspectRatio) {
+    sx.$aspectRatio = sx.aspectRatio;
+  }
+  delete sx.variant;
+  delete sx.objectFit;
+  delete sx.objectPosition;
+  delete sx.aspectRatio;
+
+  const [css, customSx] = splitSx(sx);
+
+  const sxVariant = customSx.$variant ? customSx.$variant : "natural";
 
   let sources = [];
 
@@ -89,10 +109,10 @@ function Image$(props) {
     });
   });
 
-  const { objectFit, objectPosition, aspectRatio, ...restSx } = sx;
+  const { $objectFit, $objectPosition, $aspectRatio } = customSx;
 
-  const paddingBottom = aspectRatio
-    ? responsiveValueMap(aspectRatio, x => `${x * 100}%`)
+  const paddingBottom = $aspectRatio
+    ? responsiveValueMap($aspectRatio, x => `${x * 100}%`)
     : responsiveValueMap(
         sxVariant,
         variantName =>
@@ -100,8 +120,8 @@ function Image$(props) {
       );
 
   const specialStyles = {
-    objectFit,
-    objectPosition,
+    objectFit: $objectFit,
+    objectPosition: $objectPosition,
     paddingBottom
   };
 
@@ -113,7 +133,9 @@ function Image$(props) {
       title={image.title}
       alt={image.alt}
       specialStyles={specialStyles}
-      sx={restSx}
+      sx={{
+        $css: css
+      }}
     />
   );
 }

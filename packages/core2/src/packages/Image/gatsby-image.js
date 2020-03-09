@@ -1,5 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
+import Box from "../Box";
 
 /** @jsx jsx */
 import { jsx } from "../index";
@@ -429,7 +430,7 @@ class Image extends React.Component {
       const image = imageVariants[0];
 
       return (
-        <Tag
+        <Box
           // className={`${className ? className : ``} gatsby-image-wrapper`}
           // style={{
           //   position: `relative`,
@@ -532,7 +533,7 @@ class Image extends React.Component {
             />
           )}
           {this.props.children}
-        </Tag>
+        </Box>
       );
     }
 
