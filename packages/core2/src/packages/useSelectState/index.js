@@ -92,7 +92,14 @@ function useSelectState(props) {
   const currentValue = isControlled ? normalizeValue(value) : internalValue;
 
   const getValIndex = val => {
-    return val !== null && options.findIndex(x => x.id === val.id);
+    if (val === null) {
+      return null;
+    }
+    const index = options.findIndex(x => x.id === val.id);
+    if (index === -1) {
+      return null;
+    }
+    return index;
   };
 
   const setValue = newVal => {

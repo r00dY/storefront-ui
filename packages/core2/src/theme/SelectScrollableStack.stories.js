@@ -60,7 +60,7 @@ const SelectScrollableStack = props => (
         $gap: 50,
         $floatingElement: {
           height: "2px",
-          bg: "blac"
+          bg: "black"
         }
       }
     }}
