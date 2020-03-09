@@ -79,7 +79,7 @@ const horizontalStackStories = (name, props, wrap = true) => {
 };
 
 export const basic = () => {
-  const scrollableStack = useScrollableStack();
+  const scrollableStack = useScrollableStack({ length: 5 });
 
   return (
     <StoryWrapper
@@ -111,16 +111,46 @@ export const basic = () => {
             <Box>
               <ScrollableStack
                 sx={{
-                  $itemSize: 400,
+                  // $itemSize: 400,
                   $gap: 10
                 }}
                 controller={scrollableStack}
               >
-                <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>
-                <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-                <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-                <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
-                <Box sx={{ height: "200px", bg: "blue", p: 10 }}>Blue</Box>
+                <Box
+                  sx={{ width: "200px", height: "200px", bg: "coral", p: 10 }}
+                >
+                  Coral
+                </Box>
+                <Box
+                  sx={{
+                    width: "150px",
+                    height: "200px",
+                    bg: "lightblue",
+                    p: 10
+                  }}
+                >
+                  Blue
+                </Box>
+                <Box
+                  sx={{ width: "400px", height: "200px", bg: "coral", p: 10 }}
+                >
+                  Blue
+                </Box>
+                <Box
+                  sx={{
+                    width: "100px",
+                    height: "200px",
+                    bg: "lightblue",
+                    p: 10
+                  }}
+                >
+                  Blue
+                </Box>
+                <Box
+                  sx={{ width: "500px", height: "200px", bg: "coral", p: 10 }}
+                >
+                  Blue
+                </Box>
               </ScrollableStack>
               <br />
 
@@ -130,6 +160,30 @@ export const basic = () => {
                 }}
               >
                 Scroll to 0
+              </button>
+
+              <button
+                onClick={() => {
+                  scrollableStack.moveFloatingElementToItem(0);
+                }}
+              >
+                Move floating to 0
+              </button>
+
+              <button
+                onClick={() => {
+                  scrollableStack.moveFloatingElementToItem(1);
+                }}
+              >
+                Move floating to 1
+              </button>
+
+              <button
+                onClick={() => {
+                  scrollableStack.moveFloatingElementToItem(4);
+                }}
+              >
+                Move floating to 4
               </button>
             </Box>
           )

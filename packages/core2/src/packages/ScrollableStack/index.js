@@ -18,6 +18,7 @@ import { rs } from "responsive-helpers";
 
 export function useScrollableStack(props) {
   const scrollableContainerRef = useRef(null);
+  const floatingElementRef = useRef(null);
 
   const scrollTo = x => {
     scrollableContainerRef.current.scroll({
@@ -26,22 +27,56 @@ export function useScrollableStack(props) {
     });
   };
 
+  // const [itemRefs, setItemRefs] = React.useState([]);
+
+  const itemRefs = useRef(null);
+
+  if (!itemRefs.current) {
+    itemRefs.current = [];
+    for (let i = 0; i < props.length; i++) {
+      itemRefs.current.push(React.createRef());
+    }
+  }
+
+  const moveFloatingElementToItem = n => {
+    const offsetLeft = itemRefs.current[n].current.offsetLeft;
+    const width = itemRefs.current[n].current.clientWidth;
+
+    floatingElementRef.current.style.transform = `translateX(${offsetLeft}px)`;
+    floatingElementRef.current.style.width = `${width}px`;
+  };
+
+  React.useEffect(
+    () => {
+      moveFloatingElementToItem(0);
+    },
+    [props.length]
+  );
+
   const ret = {
     scrollTo
   };
 
   return {
     ...ret,
-    scrollableContainerRef
+    scrollableContainerRef,
+    itemRefs: itemRefs.current,
+    floatingElementRef,
+    moveFloatingElementToItem
   };
 }
 
-function ScrollableStack({ sx, children, controller, ...restProps }) {
+function ScrollableStack(props) {
+  let { sx, children, controller, ...restProps } = props;
+
   const [css, customSx] = splitSx(sx);
 
   let scrollableContainerRef = useRef(null);
-  if (controller) {
-    scrollableContainerRef = controller.scrollableContainerRef;
+  if (!controller) {
+    controller = useScrollableStack({
+      ...props,
+      length: props.children.length
+    });
   }
 
   const gap = customSx.$gap || 0;
@@ -100,61 +135,82 @@ function ScrollableStack({ sx, children, controller, ...restProps }) {
 
   const childrenArray = React.Children.toArray(children);
 
+  // TODO: floating line!!! (rect) => ...
+
   return (
-    <Box
-      sx={[
-        {
-          position: "relative",
-          display: "flex",
-          overflowX: "auto",
-          "::-webkit-scrollbar": {
-            display: "none"
-          },
-          scrollbarWidth: "none"
-        },
-        css
-      ]}
-      _ref={scrollableContainerRef}
-    >
+    <Box sx={css}>
       <Box
-        sx={{
-          display: "flex",
-          flexDirection: "row",
-          flexWrap: "nowrap",
-          ...innerContainerStyles
-        }}
+        sx={[
+          {
+            position: "relative",
+            display: "flex",
+            height: "100%",
+            minHeight: "inherit",
+            overflowX: "auto",
+            "::-webkit-scrollbar": {
+              display: "none"
+            },
+            scrollbarWidth: "none"
+          }
+        ]}
+        _ref={controller.scrollableContainerRef}
       >
         <Box
           sx={{
-            position: "relative",
-            flexGrow: 0,
-            flexShrink: 0,
-            flexBasis: padding
+            display: "flex",
+            flexDirection: "row",
+            flexWrap: "nowrap",
+            ...innerContainerStyles
           }}
-        />
-        {childrenArray.map((child, index) => {
-          return (
-            <Box
-              sx={{
-                marginRight: index === childrenArray.length - 1 ? 0 : gap,
-                flexGrow: 0,
-                flexShrink: 0,
-                ...itemProps
-              }}
-              key={child.key}
-            >
-              {child}
-            </Box>
-          );
-        })}
-        <Box
-          sx={{
-            position: "relative",
-            flexGrow: 0,
-            flexShrink: 0,
-            flexBasis: padding
-          }}
-        />
+        >
+          <Box
+            sx={{
+              position: "absolute",
+              width: 0,
+              bg: "black",
+              zIndex: 1,
+              bottom: 0,
+              left: 0,
+              height: "3px",
+              transition: "all .15s ease-out"
+            }}
+            _ref={controller.floatingElementRef}
+          />
+          <Box
+            sx={{
+              position: "relative",
+              flexGrow: 0,
+              flexShrink: 0,
+              flexBasis: padding,
+              zIndex: 0
+            }}
+          />
+          {childrenArray.map((child, index) => {
+            return (
+              <Box
+                sx={{
+                  position: "relative",
+                  marginRight: index === childrenArray.length - 1 ? 0 : gap,
+                  flexGrow: 0,
+                  flexShrink: 0,
+                  ...itemProps
+                }}
+                key={child.key}
+                _ref={controller.itemRefs[index]}
+              >
+                {child}
+              </Box>
+            );
+          })}
+          <Box
+            sx={{
+              position: "relative",
+              flexGrow: 0,
+              flexShrink: 0,
+              flexBasis: padding
+            }}
+          />
+        </Box>
       </Box>
     </Box>
   );
