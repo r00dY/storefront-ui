@@ -120,6 +120,7 @@ function ScrollableStack({ sx, children, controller, ...restProps }) {
         sx={{
           display: "flex",
           flexDirection: "row",
+          flexWrap: "nowrap",
           ...innerContainerStyles
         }}
       >
