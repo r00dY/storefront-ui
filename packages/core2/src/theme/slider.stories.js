@@ -112,7 +112,11 @@ export const basic = () => {
               <ScrollableStack
                 sx={{
                   // $itemSize: 400,
-                  $gap: 10
+                  $gap: 10,
+                  $floatingElement: {
+                    height: "3px",
+                    bg: "black"
+                  }
                 }}
                 controller={scrollableStack}
               >

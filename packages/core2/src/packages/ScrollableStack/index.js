@@ -1,5 +1,5 @@
 import React, { useRef } from "react";
-import { splitSx } from "..";
+import { getElementSpec, createElement, splitSx } from "..";
 import Box from "../Box";
 
 import {
@@ -9,6 +9,7 @@ import {
   responsiveValueToResponsiveSize
 } from "..";
 import { rs } from "responsive-helpers";
+import Image from "../Image";
 
 /**
  * Helper component placing components next to each other with gutter.
@@ -39,6 +40,9 @@ export function useScrollableStack(props) {
   }
 
   const moveFloatingElementToItem = n => {
+    if (!floatingElementRef.current) {
+      return;
+    }
     const offsetLeft = itemRefs.current[n].current.offsetLeft;
     const width = itemRefs.current[n].current.clientWidth;
 
@@ -49,6 +53,12 @@ export function useScrollableStack(props) {
   React.useEffect(
     () => {
       moveFloatingElementToItem(0);
+
+      setTimeout(() => {
+        if (floatingElementRef.current) {
+          floatingElementRef.current.style.transition = `all .15s ease-out`;
+        }
+      }, 500);
     },
     [props.length]
   );
@@ -120,6 +130,28 @@ function ScrollableStack(props) {
     itemProps = size.cssObject("width");
   }
 
+  let floatingElement;
+
+  if (customSx.$floatingElement) {
+    floatingElement = createElement(
+      getElementSpec(
+        customSx.$floatingElement,
+        {
+          __type: Box,
+          position: "absolute",
+          width: 0,
+          zIndex: customSx.$floatingElementUnder ? -1 : 1,
+          bottom: 0,
+          left: 0
+        },
+        {}
+      ),
+      {
+        _ref: controller.floatingElementRef
+      }
+    );
+  }
+
   /**
    * Inner container styles
    */
@@ -163,19 +195,7 @@ function ScrollableStack(props) {
             ...innerContainerStyles
           }}
         >
-          <Box
-            sx={{
-              position: "absolute",
-              width: 0,
-              bg: "black",
-              zIndex: 1,
-              bottom: 0,
-              left: 0,
-              height: "3px",
-              transition: "all .15s ease-out"
-            }}
-            _ref={controller.floatingElementRef}
-          />
+          {floatingElement}
           <Box
             sx={{
               position: "relative",
