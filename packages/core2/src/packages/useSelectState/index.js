@@ -26,6 +26,7 @@ function filterProps(props) {
     defaultValue, // can be object or id
     onChange,
     allowEmpty,
+
     ...restProps
   } = props;
 
@@ -90,6 +91,10 @@ function useSelectState(props) {
 
   const currentValue = isControlled ? normalizeValue(value) : internalValue;
 
+  const getValIndex = val => {
+    return val !== null && options.findIndex(x => x.id === val.id);
+  };
+
   const setValue = newVal => {
     newVal = normalizeValue(newVal);
 
@@ -105,13 +110,14 @@ function useSelectState(props) {
     }
 
     if (onChange) {
-      onChange(newVal);
+      onChange(newVal, getValIndex(newVal));
     }
   };
 
   return {
     value: currentValue,
     empty: currentValue === null,
+    selectedIndex: getValIndex(currentValue),
     options,
     reset: () => {
       setValue(null);

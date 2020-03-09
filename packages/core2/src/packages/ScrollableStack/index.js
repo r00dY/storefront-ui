@@ -9,7 +9,6 @@ import {
   responsiveValueToResponsiveSize
 } from "..";
 import { rs } from "responsive-helpers";
-import Image from "../Image";
 
 /**
  * Helper component placing components next to each other with gutter.
@@ -39,29 +38,45 @@ export function useScrollableStack(props) {
     }
   }
 
-  const moveFloatingElementToItem = n => {
+  const setFloatingElementIndex = n => {
     if (!floatingElementRef.current) {
       return;
     }
-    const offsetLeft = itemRefs.current[n].current.offsetLeft;
-    const width = itemRefs.current[n].current.clientWidth;
+
+    if (typeof props.length !== "number") {
+      throw new Error(
+        "You're must pass 'length' parameter to useScrollableStack in order to make it work with floating element!!!"
+      );
+    }
+
+    let offsetLeft;
+    let width;
+
+    if (n === null) {
+      offsetLeft = 0;
+      width = 0;
+    } else {
+      offsetLeft = itemRefs.current[n].current.offsetLeft;
+      width = itemRefs.current[n].current.clientWidth;
+    }
 
     floatingElementRef.current.style.transform = `translateX(${offsetLeft}px)`;
     floatingElementRef.current.style.width = `${width}px`;
   };
 
-  React.useEffect(
-    () => {
-      moveFloatingElementToItem(0);
+  React.useEffect(() => {
+    setFloatingElementIndex(
+      typeof props.initialFloatingElementIndex === "number"
+        ? props.initialFloatingElementIndex
+        : 0
+    );
 
-      setTimeout(() => {
-        if (floatingElementRef.current) {
-          floatingElementRef.current.style.transition = `all .15s ease-out`;
-        }
-      }, 500);
-    },
-    [props.length]
-  );
+    setTimeout(() => {
+      if (floatingElementRef.current) {
+        floatingElementRef.current.style.transition = `all .15s ease-out`;
+      }
+    }, 500);
+  }, []);
 
   const ret = {
     scrollTo
@@ -72,7 +87,7 @@ export function useScrollableStack(props) {
     scrollableContainerRef,
     itemRefs: itemRefs.current,
     floatingElementRef,
-    moveFloatingElementToItem
+    setFloatingElementIndex
   };
 }
 
@@ -81,7 +96,6 @@ function ScrollableStack(props) {
 
   const [css, customSx] = splitSx(sx);
 
-  let scrollableContainerRef = useRef(null);
   if (!controller) {
     controller = useScrollableStack({
       ...props,

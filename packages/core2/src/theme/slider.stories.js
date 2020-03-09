@@ -168,7 +168,7 @@ export const basic = () => {
 
               <button
                 onClick={() => {
-                  scrollableStack.moveFloatingElementToItem(0);
+                  scrollableStack.setFloatingElementIndex(0);
                 }}
               >
                 Move floating to 0
@@ -176,7 +176,7 @@ export const basic = () => {
 
               <button
                 onClick={() => {
-                  scrollableStack.moveFloatingElementToItem(1);
+                  scrollableStack.setFloatingElementIndex(1);
                 }}
               >
                 Move floating to 1
@@ -184,7 +184,7 @@ export const basic = () => {
 
               <button
                 onClick={() => {
-                  scrollableStack.moveFloatingElementToItem(4);
+                  scrollableStack.setFloatingElementIndex(4);
                 }}
               >
                 Move floating to 4

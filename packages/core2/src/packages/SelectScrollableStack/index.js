@@ -12,18 +12,21 @@ export function useSelectScrollableStack(props = {}) {
 
   selectInlineController = useSelectInline({
     ...selectInlineProps,
-    onChange: (...args) => {
+    onChange: (val, index, ...args) => {
       // TODO: run snap!!!
       // scrollableStackController.scrollTo(0);
+      scrollableStackController.setFloatingElementIndex(index);
 
       if (selectInlineProps.onChange) {
-        selectInlineProps.onChange(...args);
+        selectInlineProps.onChange(val, index, ...args);
       }
     }
   });
 
   scrollableStackController = useScrollableStack({
-    ...scrollableStack
+    ...scrollableStack,
+    length: props.options.length,
+    initialFloatingElementIndex: selectInlineController.selectedIndex
   });
 
   return {
@@ -38,7 +41,7 @@ function SelectScrollableStack(props) {
   const [css, customSx] = splitSx(sx);
 
   if (!controller) {
-    controller = useSelectScrollableStack(props);
+    controller = useSelectScrollableStack({ ...props });
   }
 
   const selectInlineController = { ...controller };
