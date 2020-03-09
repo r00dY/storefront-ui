@@ -5,12 +5,17 @@ import { getElementSpec, createElement, splitSx } from "../index";
 import useSelectState from "../useSelectState";
 
 export function useImageSlider(props) {
-  const { images, active, defaultActive = 0 } = props;
+  const { images, active, defaultActive = 0, onChange } = props;
 
   const { value, setValue } = useSelectState({
     options: Array.from(Array(images.length).keys()),
     value: active,
-    defaultValue: defaultActive
+    defaultValue: defaultActive,
+    onChange: newVal => {
+      if (onChange) {
+        onChange(newVal.id);
+      }
+    }
   });
 
   return {

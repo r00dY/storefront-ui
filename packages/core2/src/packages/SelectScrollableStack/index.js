@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 import SelectInline, { useSelectInline } from "../SelectInline";
 import ScrollableStack, { useScrollableStack } from "../ScrollableStack";
@@ -10,18 +10,16 @@ export function useSelectScrollableStack(props = {}) {
   let selectInlineController;
   let scrollableStackController;
 
-  selectInlineController = useSelectInline({
-    ...selectInlineProps,
-    onChange: (val, index, ...args) => {
-      // TODO: run snap!!!
-      // scrollableStackController.scrollTo(0);
-      scrollableStackController.setFloatingElementIndex(index);
+  selectInlineController = useSelectInline(selectInlineProps);
 
-      if (selectInlineProps.onChange) {
-        selectInlineProps.onChange(val, index, ...args);
-      }
-    }
-  });
+  useEffect(
+    () => {
+      scrollableStackController.setFloatingElementIndex(
+        selectInlineController.selectedIndex
+      );
+    },
+    [selectInlineController.selectedIndex]
+  );
 
   scrollableStackController = useScrollableStack({
     ...scrollableStack,

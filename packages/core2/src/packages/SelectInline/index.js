@@ -45,22 +45,24 @@ function SelectInline(props) {
   );
 
   const selectables = options.map(option => {
-    return React.cloneElement(
-      sx.$selectable,
-      {
-        selected: value && option.id === value.id,
-        label: option.label,
-        disabled: option.disabled,
+    const selectableProps = {
+      selected: value && option.id === value.id,
+      label: option.label,
+      disabled: option.disabled,
 
-        option: option,
+      option: option,
 
-        key: option.id,
-        onClick: () => {
-          setValue(option);
-        }
-      },
-      option.label
-    );
+      key: option.id,
+      onClick: () => {
+        setValue(option);
+      }
+    };
+
+    if (React.isValidElement(sx.$selectable)) {
+      return React.cloneElement(sx.$selectable, selectableProps, option.label);
+    } else if (typeof sx.$selectable === "function") {
+      return sx.$selectable(selectableProps);
+    }
   });
 
   const optionsContainer = createElement(

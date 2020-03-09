@@ -84,7 +84,7 @@ const pan1 = {
 };
 
 const pan2 = {
-  id: "22222",
+  id: "33333",
   altText: "super pan!",
   originalSrc: "/images/pan2.jpg",
   variants: [
