@@ -16,7 +16,8 @@ export function useImageSlider(props) {
   return {
     active: value.id,
     setActive: setValue,
-    activeImage: images[value.id]
+    activeImage: images[value.id],
+    images
   };
 }
 
@@ -49,13 +50,12 @@ function ImageSlider(props) {
       sx={{
         position: "relative",
         cursor: "pointer",
-        border: "1px solid black",
         overflow: "hidden",
         ...css
       }}
       onClick={() => {
         controller.setActive(
-          controller.active + 1 === props.images.length
+          controller.active + 1 === controller.images.length
             ? 0
             : controller.active + 1
         );
