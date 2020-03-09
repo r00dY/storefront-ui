@@ -12,12 +12,31 @@ import SelectScrollableStack from "../packages/SelectScrollableStack";
 
 import Image from "@commerce-ui/core/Image";
 
-const images = [catImage, pan1, pan2];
+const images = [
+  catImage,
+  pan1,
+  pan2,
+  catImage,
+  pan1,
+  pan2,
+  catImage,
+  pan1,
+  pan2,
+  catImage,
+  pan1,
+  pan2,
+  catImage,
+  pan1,
+  pan2,
+  catImage,
+  pan1,
+  pan2
+].map((x, index) => ({ ...x, id: index }));
 
 export const basic = () => {
-  // const imageSlider = useImageSlider({
-  //     images: [catImage, pan1, pan2]
-  // });
+  const imageSlider = useImageSlider({
+    images: [catImage, pan1, pan2]
+  });
 
   let imageSlider2;
   let thumbnails2;
@@ -27,7 +46,6 @@ export const basic = () => {
   imageSlider2 = useImageSlider({
     images: images,
     onChange: index => {
-      // console.log('image slider on change', index);
       setIndex(index);
     },
     active: index
@@ -39,9 +57,6 @@ export const basic = () => {
     allowEmpty: false,
     onChange: (_, index) => {
       setIndex(index);
-      // setIndex(index):
-      // console.log('thumbnails on change', index);
-      // imageSlider2.setActive(index)
     }
   });
 
@@ -49,27 +64,27 @@ export const basic = () => {
     <Box sx={{ maxWidth: "800px" }}>
       <StoryWrapper
         stories={[
-          // {
-          //     name: "Basic use case",
-          //     component: (
-          //         <ImageSlider
-          //             images={[catImage, pan1, pan2]}
-          //             sx={{height: "500px"}}
-          //         />
-          //     )
-          // },
+          {
+            name: "Basic use case",
+            component: (
+              <ImageSlider
+                images={[catImage, pan1, pan2]}
+                sx={{ height: "500px" }}
+              />
+            )
+          },
 
           {
             name: "Controlled",
             component: (
               <Box>
-                {/*<ImageSlider*/}
-                {/*controller={imageSlider}*/}
-                {/*sx={{height: "500px"}}*/}
-                {/*/>*/}
-                {/*<button onClick={() => imageSlider.setActive(0)}>*/}
-                {/*Go to first image*/}
-                {/*</button>*/}
+                <ImageSlider
+                  controller={imageSlider}
+                  sx={{ height: "500px" }}
+                />
+                <button onClick={() => imageSlider.setActive(0)}>
+                  Go to first image
+                </button>
               </Box>
             )
           },
