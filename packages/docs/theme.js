@@ -350,8 +350,6 @@ export default {
   },
 
   typography: themeCommerceUI.typography,
-  containers: themeCommerceUI.containers,
-  gaps: themeCommerceUI.gaps,
   breakpoints: themeCommerceUI.breakpoints,
   space: themeCommerceUI.space
   // prism,

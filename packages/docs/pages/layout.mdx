@@ -31,7 +31,7 @@ export default {
 As you see, apart from `main` we also defined `secondary` container. We can use it this way:
 
 ```javascript live=true fullscreen=true
-<Container variant={"secondary"}>
+<Container margin={"secondary"}>
   <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
 </Container>
 ```
@@ -39,7 +39,15 @@ As you see, apart from `main` we also defined `secondary` container. We can use 
 If you want to contextually create a different `Container` and not put it into a theme, this is how you do it:
 
 ```javascript live=true fullscreen=true
-<Container variant={["20px", "40px", "60px", "80px", "100px"]}>
+<Container margin={["20px", "40px", "60px", "80px", "100px"]}>
+  <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
+</Container>
+```
+
+Frequently you want to zero margins on mobile and have them on desktop (or other way round). This is how it's done:
+
+```javascript live=true fullscreen=true
+<Container margin={[0, null, "main"]}>
   <Box sx={{ bg: "mono300", p: 3 }}>Lorem ipsum dolor sit amet</Box>
 </Container>
 ```
