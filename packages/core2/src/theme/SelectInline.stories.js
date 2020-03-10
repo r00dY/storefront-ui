@@ -60,7 +60,8 @@ const SelectInline = props => (
         __props: {
           minItemWidth: 300
         }
-      }
+      },
+      ...props.sx
     }}
   />
 );
@@ -141,6 +142,15 @@ export const basic = () => {
         <SelectInline
           options={optionsWithDisabled}
           onChange={val => console.log}
+        />
+
+        <p>Hide label</p>
+        <SelectInline
+          options={optionsWithDisabled}
+          onChange={val => console.log}
+          sx={{
+            $hideLabel: true
+          }}
         />
       </form>
     </>

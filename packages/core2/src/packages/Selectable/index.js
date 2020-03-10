@@ -74,7 +74,12 @@ function Selectable$(props) {
   if (as === "radio") {
     return (
       <Box
-        sx={{ display: "block", cursor: "pointer", ...css }}
+        sx={{
+          display: "block",
+          position: "relative",
+          cursor: "pointer",
+          ...css
+        }}
         onClick={() => {
           if (disabled) {
             return;
@@ -122,6 +127,7 @@ function Selectable$(props) {
     <Box
       sx={{
         display: "block",
+        position: "relative",
         cursor: disabled ? "not-allowed" : "pointer",
         ...css
       }}

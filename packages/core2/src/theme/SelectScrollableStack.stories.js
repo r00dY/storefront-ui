@@ -50,10 +50,6 @@ const SelectScrollableStack = props => (
   <SelectScrollableStack$
     {...props}
     sx={{
-      $label: {
-        font: "label",
-        pb: "12px"
-      },
       $selectable: <ItemRow />,
       $scrollableStack: {
         $itemSize: 300,

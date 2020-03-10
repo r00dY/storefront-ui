@@ -7,10 +7,22 @@ import useSelectState from "../useSelectState";
 const defaults = {
   label: ({ label }) => ({
     __type: Box,
+    __children: label,
     __props: {
-      role: "group"
+      as: "legend"
+    }
+  }),
+  labelHidden: ({ label }) => ({
+    __type: Box,
+    __children: label,
+    __props: {
+      as: "legend"
     },
-    __children: label
+    position: "absolute !important",
+    width: "1px",
+    height: "1px",
+    overflow: "hidden",
+    whiteSpace: "nowrap"
   }),
   optionsContainer: ({ children }) => ({
     __type: Box,
@@ -41,7 +53,11 @@ function SelectInline(props) {
   const [css, customSx] = splitSx(sx);
 
   const labelElem = createElement(
-    getElementSpec(customSx.$label, defaults.label, state)
+    getElementSpec(
+      customSx.$label,
+      customSx.$hideLabel ? defaults.labelHidden : defaults.label,
+      state
+    )
   );
 
   const selectables = options.map(option => {
@@ -66,10 +82,17 @@ function SelectInline(props) {
   });
 
   const optionsContainer = createElement(
-    getElementSpec(customSx.$optionsContainer, defaults.optionsContainer, {
-      ...state,
-      children: selectables
-    })
+    getElementSpec(
+      customSx.$optionsContainer,
+      defaults.optionsContainer,
+      {
+        ...state,
+        children: selectables
+      },
+      {
+        role: "group"
+      }
+    )
   );
 
   return (
