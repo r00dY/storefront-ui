@@ -227,7 +227,7 @@ export const responsive = styles => theme => {
   return next;
 };
 
-export const css = args => (props = {}) => {
+export const cssSingle = args => (props = {}) => {
   const theme = { ...defaultTheme, ...(props.theme || props) };
   let result = {};
   const obj = typeof args === "function" ? args(theme) : args;
@@ -273,6 +273,15 @@ export const css = args => (props = {}) => {
   }
 
   return result;
+};
+
+/**
+ * MODIFICATION 4
+ *
+ * Calling this double time allows for stuff like margin: [0, 0, "main"], where "main" is a RESPONSIVE value already in a scale.
+ */
+export const css = (...args) => {
+  return cssSingle(cssSingle(...args));
 };
 
 export default css;

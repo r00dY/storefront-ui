@@ -1,16 +1,18 @@
 import React from "react";
 import Box from "../Box";
 import { useTheme } from "../Theme";
+import { responsiveValueTransformScales } from "../index";
 
-export default ({ sx = {}, variant, ...restProps }) => {
-  const { containers = {} } = useTheme();
+export default ({ sx = {}, margin = "main", ...restProps }) => {
+  const theme = useTheme();
 
-  const margin = variant
-    ? containers[variant] || variant
-    : containers["main"] || "10vw";
-
-  // console.log('-----');
-  // console.log(superResponsive(margin));
+  margin =
+    responsiveValueTransformScales(
+      margin,
+      theme,
+      "containerMargins",
+      "space"
+    ) || "10vw";
 
   return (
     <Box

@@ -1,6 +1,6 @@
 import React from "react";
 import { jsx as emotionJsx } from "@emotion/core";
-import styledSystemCss from "./css";
+import styledSystemCss, { get } from "./css";
 import { useTheme } from "./Theme";
 
 import { RangeMap, ResponsiveSize } from "responsive-helpers";
@@ -288,6 +288,37 @@ const createComponent = (Component, newSx) => {
     return <Component {...restProps} sx={newSx3} />;
   };
 };
+
+export function responsiveValueTransformScales(value, theme, scale, mainScale) {
+  if (Array.isArray(value)) {
+    return value.map(v =>
+      responsiveValueTransformScales(v, theme, scale, mainScale)
+    );
+  } else if (typeof value === "object" && value !== null) {
+    const newObj = {};
+
+    for (let key in value) {
+      newObj[key] = responsiveValueTransformScales(
+        value[key],
+        theme,
+        scale,
+        mainScale
+      );
+    }
+    return newObj;
+  } else if (typeof value === "string") {
+    const key = `${scale}.${value}`;
+    const transformedVal = get(theme, `${mainScale}.${key}`);
+
+    if (transformedVal) {
+      return key;
+    }
+
+    return value;
+  }
+
+  return value;
+}
 
 //
 // function superResponsive(val, dict = {}) {

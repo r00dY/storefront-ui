@@ -1,20 +1,25 @@
 import React from "react";
 import Box from "../Box";
 import { useTheme } from "../Theme";
-import { responsiveValueMap } from "../index";
+import { responsiveValueMap, responsiveValueTransformScales } from "../index";
 
-export default ({
-  sx = {},
-  cols = 12,
-  gap,
-  rowGap = 0,
-  minItemWidth,
-  ...restProps
-}) => {
-  const { gaps = {} } = useTheme();
+export default props => {
+  let {
+    sx = {},
+    cols = 12,
+    gap = "main",
+    rowGap,
+    minItemWidth,
+    ...restProps
+  } = props;
+  const theme = useTheme();
 
-  const columnGap =
-    typeof gap !== "undefined" ? gaps[gap] || gap : gaps["main"] || "10px";
+  gap = responsiveValueTransformScales(gap, theme, "gaps", "space");
+  rowGap = responsiveValueTransformScales(rowGap, theme, "gaps", "space");
+
+  if (typeof rowGap === "undefined" || rowGap === null) {
+    rowGap = gap;
+  }
 
   let gridTemplateColumns = responsiveValueMap(cols, x =>
     typeof x === "number" ? `repeat(${x}, 1fr)` : x
@@ -34,8 +39,8 @@ export default ({
     <Box
       sx={{
         display: "grid",
-        gridColumnGap: columnGap,
-        gridRowGap: rowGap || columnGap,
+        gridColumnGap: gap,
+        gridRowGap: rowGap,
         gridTemplateColumns,
         ...sx
       }}

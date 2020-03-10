@@ -4,7 +4,7 @@ import {
   generateColorPalette
 } from "@commerce-ui/core/generateColorPalette";
 
-import { rslin } from "@commerce-ui/core";
+import { lin } from "@commerce-ui/core";
 
 const breakpoints = ["420px", "768px", "1024px", "1600px"];
 breakpoints.xs = breakpoints[0];
@@ -64,6 +64,15 @@ space.s12 = 96;
 space.s13 = 128;
 space.s14 = 160;
 
+space.containerMargins = {
+  main: ["10vw", null, null, "12vw", "calc(calc(100vw - 1500px) / 2)"],
+  secondary: ["30vw", null, null, "20vw"]
+};
+
+space.gaps = {
+  main: ["10px", null, "15px", "20px", "25px"]
+};
+
 const theme = {
   colors: {
     black: "#2E4557",
@@ -98,14 +107,7 @@ const theme = {
     }
   },
   space,
-  breakpoints,
-  containers: {
-    main: ["10vw", null, null, "12vw", "calc(calc(100vw - 1500px) / 2)"],
-    secondary: ["30vw", null, null, "20vw"]
-  },
-  gaps: {
-    main: ["10px", null, "15px", "20px", "25px"]
-  }
+  breakpoints
 };
 
 export default theme;
