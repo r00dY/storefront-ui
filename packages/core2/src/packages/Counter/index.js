@@ -118,7 +118,7 @@ function useCounter(props = {}) {
   // select
   const selectOptions = [];
   for (let i = 1; i <= selectOptionsAmount; i++) {
-    selectOptions.push(i * step);
+    selectOptions.push(`${i * step}`);
   }
 
   const maxSelectAmount = selectOptionsAmount * step;
@@ -130,16 +130,15 @@ function useCounter(props = {}) {
 
   const selectProps = {
     options: selectOptions,
-    value: exceedsSelectRange ? moreOption : amount,
+    value: exceedsSelectRange ? moreOption : `${amount}`,
     onChange: val => {
-      if (val === moreOption) {
+      if (val.id === moreOption) {
         setInputValue("");
         setInputFocusedAfterSelectingMore(true);
         // inputRef.current.focus();
       } else {
-        setValue(val);
+        setValue(parseInt(val.id));
       }
-      // console.log('on change!', val);
     }
   };
 
