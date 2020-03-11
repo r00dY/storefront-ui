@@ -269,17 +269,26 @@ export const basic = () => {
                   $innerMargin: 100,
                   $gap: 10
                 }}
-                previousButton={({ isAtStart }) => ({
+                previousButton={({ isAtStart, isParentHovered }) => ({
                   button: (
-                    <ButtonRaw sx={{ display: isAtStart ? "none" : "block" }}>
+                    <ButtonRaw
+                      sx={{
+                        display:
+                          isAtStart || !isParentHovered ? "none" : "block"
+                      }}
+                    >
                       Prev
                     </ButtonRaw>
                   ),
                   offset: -10
                 })}
-                nextButton={({ isAtEnd }) => ({
+                nextButton={({ isAtEnd, isParentHovered }) => ({
                   button: (
-                    <ButtonRaw sx={{ display: isAtEnd ? "none" : "block" }}>
+                    <ButtonRaw
+                      sx={{
+                        display: isAtEnd || !isParentHovered ? "none" : "block"
+                      }}
+                    >
                       Next
                     </ButtonRaw>
                   ),

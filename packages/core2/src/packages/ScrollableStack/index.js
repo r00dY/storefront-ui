@@ -10,6 +10,8 @@ import {
 } from "..";
 import { rs } from "responsive-helpers";
 
+import useHover from "../useHover";
+
 /**
  * Helper component placing components next to each other with gutter.
  *
@@ -146,6 +148,9 @@ function ScrollableStack(props) {
 
   const [css, customSx] = splitSx(sx);
 
+  const rootRef = useRef(null);
+  const isRootHovered = useHover(rootRef);
+
   if (!controller) {
     controller = useScrollableStack({
       ...props,
@@ -238,7 +243,10 @@ function ScrollableStack(props) {
    */
   if (previousButton) {
     if (typeof previousButton === "function") {
-      previousButton = previousButton(controller);
+      previousButton = previousButton({
+        ...controller,
+        isParentHovered: isRootHovered
+      });
     }
     if (React.isValidElement(previousButton)) {
       previousButton = {
@@ -252,7 +260,10 @@ function ScrollableStack(props) {
 
   if (nextButton) {
     if (typeof nextButton === "function") {
-      nextButton = nextButton(controller);
+      nextButton = nextButton({
+        ...controller,
+        isParentHovered: isRootHovered
+      });
     }
     if (React.isValidElement(nextButton)) {
       nextButton = {
@@ -265,7 +276,7 @@ function ScrollableStack(props) {
   }
 
   return (
-    <Box sx={{ position: "relative", ...css }}>
+    <Box sx={{ position: "relative", ...css }} _ref={rootRef}>
       <Box
         sx={[
           {

@@ -23,6 +23,10 @@ function useHover(ref) {
     [ref.current] // Recall only if ref changes
   );
 
+  if (!window.matchMedia("screen and (pointer: fine)").matches) {
+    return false;
+  }
+
   return value;
 }
 
