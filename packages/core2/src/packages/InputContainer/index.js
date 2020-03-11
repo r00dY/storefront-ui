@@ -1,7 +1,7 @@
 /** @jsx jsx */
 import React, { useState, useLayoutEffect, useRef } from "react";
 import Box from "../Box";
-import HorizontalStackSimple from "../HorizontalStackSimple";
+import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
 import InputRaw$ from "../InputRaw";
 
@@ -20,7 +20,7 @@ const defaults = {
     width: "100%"
   }),
   $leftEnhancersContainer: ({ leftEnhancer }) => ({
-    __type: HorizontalStackSimple,
+    __type: HorizontalStack,
     height: "100%",
     flexGrow: 0,
     flexShrink: 0,
@@ -28,7 +28,7 @@ const defaults = {
     __children: leftEnhancer
   }),
   $rightEnhancersContainer: ({ rightEnhancer }) => ({
-    __type: HorizontalStackSimple,
+    __type: HorizontalStack,
     height: "100%",
     flexGrow: 0,
     flexShrink: 0,

@@ -8,7 +8,33 @@ import ScrollableStack, {
   useScrollableStack
 } from "@commerce-ui/core/ScrollableStack";
 
+import ButtonRaw from "@commerce-ui/core/ButtonRaw";
+
 const container = ["5vw", null, null, "10vw"];
+
+const boxes = [
+  <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>,
+  <Box
+    sx={{
+      height: "200px",
+      bg: "lightblue",
+      p: 10
+    }}
+  >
+    Blue
+  </Box>,
+  <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Blue</Box>,
+  <Box
+    sx={{
+      height: "200px",
+      bg: "lightblue",
+      p: 10
+    }}
+  >
+    Blue
+  </Box>,
+  <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Blue</Box>
+];
 
 const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
   const body = (
@@ -101,7 +127,7 @@ export const basic = () => {
           {
             $gap: [20, null, null, 40],
             $itemsVisible: [2, null, null, 3],
-            $container: container
+            $innerMargin: container
           },
           false
         ),
@@ -189,6 +215,79 @@ export const basic = () => {
               >
                 Move floating to 4
               </button>
+            </Box>
+          )
+        },
+        {
+          name: "arrows",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  $itemsVisible: 4,
+                  $innerMargin: 100
+                }}
+                previousButton={<ButtonRaw>Previous</ButtonRaw>}
+                nextButton={<ButtonRaw>Next</ButtonRaw>}
+              >
+                {boxes}
+              </ScrollableStack>
+            </Box>
+          )
+        },
+        {
+          name: "arrows with config",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  $itemsVisible: 4,
+                  $innerMargin: 100,
+                  $gap: 10
+                }}
+                previousButton={{
+                  button: <ButtonRaw>Prev</ButtonRaw>,
+                  offset: -10
+                }}
+                nextButton={{
+                  button: <ButtonRaw>Next</ButtonRaw>,
+                  offset: -10
+                }}
+              >
+                {boxes}
+              </ScrollableStack>
+            </Box>
+          )
+        },
+        {
+          name: "arrows with config as function",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  $itemsVisible: 4,
+                  $innerMargin: 100,
+                  $gap: 10
+                }}
+                previousButton={({ isAtStart }) => ({
+                  button: (
+                    <ButtonRaw sx={{ display: isAtStart ? "none" : "block" }}>
+                      Prev
+                    </ButtonRaw>
+                  ),
+                  offset: -10
+                })}
+                nextButton={({ isAtEnd }) => ({
+                  button: (
+                    <ButtonRaw sx={{ display: isAtEnd ? "none" : "block" }}>
+                      Next
+                    </ButtonRaw>
+                  ),
+                  offset: -10
+                })}
+              >
+                {boxes}
+              </ScrollableStack>
             </Box>
           )
         }

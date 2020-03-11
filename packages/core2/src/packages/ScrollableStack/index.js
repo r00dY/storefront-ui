@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import { getElementSpec, createElement, splitSx } from "..";
 import Box from "../Box";
 
@@ -27,7 +27,8 @@ export function useScrollableStack(props) {
     });
   };
 
-  // const [itemRefs, setItemRefs] = React.useState([]);
+  const [isAtStart, setIsAtStart] = useState(true);
+  const [isAtEnd, setIsAtEnd] = useState(true);
 
   const itemRefs = useRef(null);
 
@@ -64,7 +65,7 @@ export function useScrollableStack(props) {
     floatingElementRef.current.style.width = `${width}px`;
   };
 
-  React.useEffect(() => {
+  useEffect(() => {
     setFloatingElementIndex(
       typeof props.initialFloatingElementIndex === "number"
         ? props.initialFloatingElementIndex
@@ -78,8 +79,48 @@ export function useScrollableStack(props) {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    const elem = scrollableContainerRef.current;
+
+    const listener = () => {
+      const isStart = elem.scrollLeft <= 0;
+      const isEnd = elem.scrollWidth - elem.scrollLeft <= elem.clientWidth;
+
+      setIsAtStart(isStart);
+      setIsAtEnd(isEnd);
+    };
+
+    listener();
+
+    elem.addEventListener("scroll", listener, { passive: true });
+
+    return () => {
+      elem.removeEventListener("scroll", listener);
+    };
+  }, []);
+
   const ret = {
-    scrollTo
+    scrollTo,
+    isAtStart,
+    isAtEnd
+  };
+
+  const previousButtonProps = {
+    onClick: () => {
+      scrollableContainerRef.current.scroll({
+        left: 0,
+        behavior: "smooth"
+      });
+    }
+  };
+
+  const nextButtonProps = {
+    onClick: () => {
+      scrollableContainerRef.current.scroll({
+        left: 10000,
+        behavior: "smooth"
+      });
+    }
   };
 
   return {
@@ -87,12 +128,21 @@ export function useScrollableStack(props) {
     scrollableContainerRef,
     itemRefs: itemRefs.current,
     floatingElementRef,
-    setFloatingElementIndex
+    setFloatingElementIndex,
+    previousButtonProps,
+    nextButtonProps
   };
 }
 
 function ScrollableStack(props) {
-  let { sx, children, controller, ...restProps } = props;
+  let {
+    sx,
+    children,
+    controller,
+    previousButton,
+    nextButton,
+    ...restProps
+  } = props;
 
   const [css, customSx] = splitSx(sx);
 
@@ -105,7 +155,7 @@ function ScrollableStack(props) {
 
   const gap = customSx.$gap || 0;
   let align = customSx.$align || "left";
-  const padding = customSx.$container || 0;
+  const padding = customSx.$innerMargin || 0;
 
   let itemProps;
 
@@ -183,8 +233,39 @@ function ScrollableStack(props) {
 
   // TODO: floating line!!! (rect) => ...
 
+  /**
+   * Buttons
+   */
+  if (previousButton) {
+    if (typeof previousButton === "function") {
+      previousButton = previousButton(controller);
+    }
+    if (React.isValidElement(previousButton)) {
+      previousButton = {
+        button: previousButton
+      };
+    }
+
+    previousButton.offset = previousButton.offset || 0;
+    previousButton.hideOnTouch = previousButton.hideOnTouch || true;
+  }
+
+  if (nextButton) {
+    if (typeof nextButton === "function") {
+      nextButton = nextButton(controller);
+    }
+    if (React.isValidElement(nextButton)) {
+      nextButton = {
+        button: nextButton
+      };
+    }
+
+    nextButton.offset = nextButton.offset || 0;
+    nextButton.hideOnTouch = nextButton.hideOnTouch || true;
+  }
+
   return (
-    <Box sx={css}>
+    <Box sx={{ position: "relative", ...css }}>
       <Box
         sx={[
           {
@@ -246,6 +327,67 @@ function ScrollableStack(props) {
           />
         </Box>
       </Box>
+
+      {previousButton && (
+        <Box
+          sx={{
+            position: "absolute",
+            left: padding,
+            top: 0,
+            height: "100%",
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
+          <Box
+            sx={{
+              position: "relative",
+              left: previousButton.offset,
+              ...(previousButton.hideOnTouch
+                ? {
+                    "@media not all and (pointer: fine)": {
+                      display: "none"
+                    }
+                  }
+                : {})
+            }}
+          >
+            {React.cloneElement(
+              previousButton.button,
+              controller.previousButtonProps
+            )}
+          </Box>
+        </Box>
+      )}
+
+      {nextButton && (
+        <Box
+          sx={{
+            position: "absolute",
+            right: padding,
+            top: 0,
+            height: "100%",
+            display: "flex",
+            alignItems: "center"
+          }}
+        >
+          <Box
+            sx={{
+              position: "relative",
+              right: nextButton.offset,
+              ...(nextButton.hideOnTouch
+                ? {
+                    "@media not all and (pointer: fine)": {
+                      display: "none"
+                    }
+                  }
+                : {})
+            }}
+          >
+            {React.cloneElement(nextButton.button, controller.nextButtonProps)}
+          </Box>
+        </Box>
+      )}
     </Box>
   );
 }

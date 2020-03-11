@@ -179,6 +179,18 @@ function splitSx(sx) {
   return [css, customSx];
 }
 
+//
+// function responsiveValueGetValueForBreakpoint(value, breakpoint) {
+//   const theme = useTheme();
+//
+//   if (typeof value === 'string') {
+//     const potentialValueFromTheme = get(theme.space || {}, value);
+//     if (potentialValueFromTheme) {
+//       value = potentialValueFromTheme;
+//     }
+//   }
+// }
+
 function responsiveValueForEach(resVal, callback) {
   const { breakpoints } = useTheme();
 
@@ -235,9 +247,27 @@ function responsiveValueMap(resVal, mapper) {
  * ARITHMETICS ON RESPONSIVE ARRAYS
  */
 
-function castResponsiveValue(resVal, Type) {
+function castResponsiveValue(resVal, Type, scale) {
+  const theme = useTheme();
+
+  // if (scale) {
+  //   scale = theme[scale] || {};
+  // }
+
   let config = {};
   responsiveValueForEach(resVal, (val, breakpoint) => {
+    //
+    // if (scale && typeof val === 'string') {
+    //   const potentialValueFromTheme = get(scale, val);
+    //
+    //   console.log('potential value', potentialValueFromTheme, 'from', val);
+    //   if (potentialValueFromTheme) {
+    //     val = potentialValueFromTheme;
+    //   }
+    //   // console.log('before', val, 'after', val2)
+    //
+    // }
+
     if (breakpoint === null) {
       config[0] = val;
     } else {
@@ -252,7 +282,7 @@ export function responsiveValueToRangeMap(resVal) {
 }
 
 export function responsiveValueToResponsiveSize(resVal) {
-  return castResponsiveValue(resVal, ResponsiveSize);
+  return castResponsiveValue(resVal, ResponsiveSize, "space");
 }
 
 export function responsiveValueCurrent(resVal) {

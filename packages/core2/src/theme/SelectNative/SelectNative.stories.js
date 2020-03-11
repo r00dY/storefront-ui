@@ -1,12 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
-import HorizontalStack from "@commerce-ui/core/HorizontalStack";
 import SelectNative from "./index";
-import Button from "../Button/Button";
 import React, { useRef, useState } from "react";
 
 import storyOfSelectNative from "@commerce-ui/core/SelectNative/story";
-import ButtonIcon from "../Button/Button.stories";
 
 export const selectNative = storyOfSelectNative(<SelectNative />);
 

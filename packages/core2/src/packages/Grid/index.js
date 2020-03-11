@@ -7,15 +7,12 @@ export default props => {
   let {
     sx = {},
     cols = 12,
-    gap = "main",
+    gap = "gridGap",
     rowGap,
     minItemWidth,
     ...restProps
   } = props;
   const theme = useTheme();
-
-  gap = responsiveValueTransformScales(gap, theme, "gaps", "space");
-  rowGap = responsiveValueTransformScales(rowGap, theme, "gaps", "space");
 
   if (typeof rowGap === "undefined" || rowGap === null) {
     rowGap = gap;

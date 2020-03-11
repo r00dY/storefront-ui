@@ -25,7 +25,7 @@ export const basic = () => {
         {
           name: "Container secondary",
           component: (
-            <Container margin={"secondary"}>
+            <Container margin={"containerMarginSecondary"}>
               <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
             </Container>
           )
@@ -41,7 +41,7 @@ export const basic = () => {
         {
           name: "Container 0 on mobile, main on rest",
           component: (
-            <Container margin={[0, null, "main"]}>
+            <Container margin={[0, null, "containerMargin"]}>
               <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
             </Container>
           )

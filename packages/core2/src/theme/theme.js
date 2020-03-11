@@ -64,14 +64,17 @@ space.s12 = 96;
 space.s13 = 128;
 space.s14 = 160;
 
-space.containerMargins = {
-  main: ["10vw", null, null, "12vw", "calc(calc(100vw - 1500px) / 2)"],
-  secondary: ["30vw", null, null, "20vw"]
-};
+space.containerMargin = [
+  "5vw",
+  null,
+  null,
+  null,
+  "7.5vw",
+  "calc(50vw - 800px)"
+];
+space.gridGap = [10, null, null, 15, 25, 35];
 
-space.gaps = {
-  main: ["10px", null, "15px", "20px", "25px"]
-};
+space.containerMarginSecondary = "30vw";
 
 const theme = {
   colors: {
