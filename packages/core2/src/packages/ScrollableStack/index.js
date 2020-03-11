@@ -110,8 +110,8 @@ export function useScrollableStack(props) {
   const previousButtonProps = {
     onClick: () => {
       scrollableContainerRef.current.scroll({
-        left: 0,
-        behavior: "smooth"
+        left: 0
+        // behavior: "smooth"
       });
     }
   };
@@ -119,8 +119,8 @@ export function useScrollableStack(props) {
   const nextButtonProps = {
     onClick: () => {
       scrollableContainerRef.current.scroll({
-        left: 10000,
-        behavior: "smooth"
+        left: 10000
+        // behavior: "smooth"
       });
     }
   };
