@@ -118,7 +118,6 @@ export const accordion = () => {
             component: (
               <Accordion sx={{ width: "500px" }}>
                 <Accordion.Section
-                  key={1}
                   isOpenAtInit={true}
                   sx={{ p: 16, bg: "antiquewhite" }}
                 >
@@ -137,7 +136,7 @@ export const accordion = () => {
                   </ShowHide>
                 </Accordion.Section>
                 <Box sx={{ height: "1px", bg: "black" }} />
-                <Accordion.Section key={2} sx={{ p: 16, bg: "antiquewhite" }}>
+                <Accordion.Section sx={{ p: 16, bg: "antiquewhite" }}>
                   <Button sx={{ width: "100%" }}>Buttonix</Button>
                   <ShowHide>
                     <Box
@@ -153,7 +152,7 @@ export const accordion = () => {
                   </ShowHide>
                 </Accordion.Section>
                 <Box sx={{ height: "1px", bg: "black" }} />
-                <Accordion.Section key={3} sx={{ p: 16, bg: "antiquewhite" }}>
+                <Accordion.Section sx={{ p: 16, bg: "antiquewhite" }}>
                   <Button sx={{ width: "100%" }}>Buttonix</Button>
                   <ShowHide>
                     <Box

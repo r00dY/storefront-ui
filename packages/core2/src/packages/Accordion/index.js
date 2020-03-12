@@ -72,11 +72,14 @@ export function Accordion(props) {
     if (child.type === AccordionSection) {
       const grandChildren = React.Children.toArray(child.props.children);
 
+      const { isOpenAtInit, ...restProps } = child.props;
+
       sections.push({
         button: grandChildren[0],
         showHide: grandChildren[1],
         headerAs: child.props.headerAs || "h6",
-        props: child.props
+        isOpenAtInit,
+        props: restProps
       });
     }
   });
@@ -84,7 +87,7 @@ export function Accordion(props) {
   if (!controller) {
     controller = useAccordion({
       sections: sections.map(section => ({
-        ...section.props
+        isOpenAtInit: section.isOpenAtInit
       })),
       ...props
     });
@@ -94,14 +97,14 @@ export function Accordion(props) {
 
   return (
     <Box {...restProps}>
-      {children.map(child => {
+      {children.map((child, index) => {
         if (child.type === AccordionSection) {
           const section = sections[i];
           const sectionController = controller.sections[i];
           i++;
 
           return (
-            <Box {...section.props}>
+            <Box {...section.props} key={child.key || index}>
               <Box as={section.headerAs}>
                 {React.cloneElement(
                   section.button,
