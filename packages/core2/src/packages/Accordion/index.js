@@ -3,91 +3,125 @@ import React, { useState } from "react";
 import Box from "../Box";
 
 export function useAccordion(props = {}) {
-  let { isOpen, isOpenAtInit = false, onClick } = props;
+  let { sections, oneAtATime = false } = props;
 
-  const [isOpenInternal, setIsOpenInternal] = useState(isOpenAtInit);
+  // Hook uncontrolled right now
 
-  const isControlled = typeof isOpen !== "undefined";
+  const [isOpen, setOpen] = useState(
+    sections.map(s => s.isOpenAtInit || false)
+  );
 
-  isOpen = isControlled ? isOpen : isOpenInternal;
+  const newSections = sections.map((section, index) => {
+    const open = () => {
+      let newIsOpen = [...isOpen];
+      //
+      // if (oneAtATime) {
+      //     newIsOpen = new Array(sections.length).fill(false);
+      // }
 
-  const open = () => {
-    if (isControlled) {
-      return;
-    }
-    setIsOpenInternal(true);
-  };
-
-  const close = () => {
-    if (isControlled) {
-      return;
-    }
-    setIsOpenInternal(false);
-  };
-
-  const toggle = () => {
-    if (isOpen) {
-      close();
-    } else {
-      open();
-    }
-  };
-
-  const buttonProps = {
-    onClick: (...args) => {
-      if (!isControlled) {
-        toggle();
+      newIsOpen[index] = true;
+      setOpen(newIsOpen);
+    };
+    const close = () => {
+      const newIsOpen = [...isOpen];
+      newIsOpen[index] = false;
+      setOpen(newIsOpen);
+    };
+    const toggle = () => {
+      if (isOpen[index]) {
+        close();
+      } else {
+        open();
       }
-      if (onClick) {
-        onClick(...args);
-      }
-    },
-    selected: isOpen
-  };
+    };
 
-  const showHideProps = {
-    isOpen
-  };
+    return {
+      open,
+      close,
+      toggle,
+      buttonProps: {
+        onClick: (...args) => {
+          toggle();
+          if (sections.onClick) {
+            onClick(...args);
+          }
+        },
+        selected: isOpen[index]
+      },
+      showHideProps: {
+        isOpen: isOpen[index]
+      }
+    };
+  });
 
   return {
-    isOpen,
-    open,
-    close,
-    toggle,
-    buttonProps,
-    showHideProps
+    sections: newSections
   };
 }
 
-function Accordion(props) {
-  let {
-    headerAs = "h6",
-    children,
-    controller,
-    isOpen,
-    isOpenAtInit,
-    onOpen,
-    onClose,
-    ...restProps
-  } = props;
+function AccordionSection(props) {}
 
-  if (!controller) {
-    controller = useAccordion(props);
-  }
+export function Accordion(props) {
+  let { children, controller, ...restProps } = props;
 
   children = React.Children.toArray(children);
 
-  const button = children[0];
-  const showHide = children[1];
+  let sections = [];
+
+  children.forEach((child, index) => {
+    if (child.type === AccordionSection) {
+      const grandChildren = React.Children.toArray(child.props.children);
+
+      sections.push({
+        button: grandChildren[0],
+        showHide: grandChildren[1],
+        headerAs: child.props.headerAs || "h6",
+        props: child.props
+      });
+    }
+  });
+
+  if (!controller) {
+    controller = useAccordion({
+      sections: sections.map(section => ({
+        ...section.props
+      })),
+      ...props
+    });
+  }
+
+  let i = 0;
 
   return (
     <Box {...restProps}>
-      <Box as={headerAs}>
-        {React.cloneElement(button, controller.buttonProps)}
-      </Box>
-      {React.cloneElement(showHide, controller.showHideProps)}
+      {children.map(child => {
+        if (child.type === AccordionSection) {
+          const section = sections[i];
+          const sectionController = controller.sections[i];
+          i++;
+
+          return (
+            <Box {...section.props}>
+              <Box as={section.headerAs}>
+                {React.cloneElement(
+                  section.button,
+                  sectionController.buttonProps
+                )}
+              </Box>
+              {React.cloneElement(
+                section.showHide,
+                sectionController.showHideProps
+              )}
+            </Box>
+          );
+        }
+
+        return child;
+      })}
     </Box>
   );
 }
+
+Accordion.Section = AccordionSection;
 
 export default Accordion;

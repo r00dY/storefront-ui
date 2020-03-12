@@ -50,15 +50,11 @@ export const basic = () => (
 );
 
 export const accordion = () => {
-  const accordion = useAccordion();
-
-  const [open, setOpen] = useState(false);
-  const accordionControlled = useAccordion({
-    isOpen: open,
-    onClick: e => {
-      setOpen(!open);
-    }
-  });
+  // const accordion = useAccordion({
+  //     sections: [
+  //         {}
+  //     ]
+  // });
 
   return (
     <Box sx={{ maxWidth: "800px" }}>
@@ -68,37 +64,7 @@ export const accordion = () => {
             name: "Standard",
             component: (
               <Accordion sx={{ width: "500px" }}>
-                <Button>Buttonix</Button>
-                <ShowHide>
-                  <Box
-                    sx={{ height: "500px", bg: "coral", color: "white", p: 16 }}
-                  >
-                    Lorem świpsum
-                  </Box>
-                </ShowHide>
-              </Accordion>
-            )
-          },
-          {
-            name: "Standard, isOpen at first",
-            component: (
-              <Accordion sx={{ width: "500px" }} isOpenAtInit={true}>
-                <Button>Buttonix</Button>
-                <ShowHide>
-                  <Box
-                    sx={{ height: "500px", bg: "coral", color: "white", p: 16 }}
-                  >
-                    Lorem świpsum
-                  </Box>
-                </ShowHide>
-              </Accordion>
-            )
-          },
-          {
-            name: "Uncontrolled",
-            component: (
-              <Box>
-                <Accordion sx={{ width: "500px" }} controller={accordion}>
+                <Accordion.Section key={1}>
                   <Button>Buttonix</Button>
                   <ShowHide>
                     <Box
@@ -112,25 +78,8 @@ export const accordion = () => {
                       Lorem świpsum
                     </Box>
                   </ShowHide>
-                </Accordion>
-                <Button
-                  onClick={() => {
-                    accordion.toggle();
-                  }}
-                >
-                  Toggle
-                </Button>
-              </Box>
-            )
-          },
-          {
-            name: "Controlled",
-            component: (
-              <Box>
-                <Accordion
-                  sx={{ width: "500px" }}
-                  controller={accordionControlled}
-                >
+                </Accordion.Section>
+                <Accordion.Section key={2}>
                   <Button>Buttonix</Button>
                   <ShowHide>
                     <Box
@@ -144,17 +93,113 @@ export const accordion = () => {
                       Lorem świpsum
                     </Box>
                   </ShowHide>
-                </Accordion>
-                <Button
-                  onClick={() => {
-                    setOpen(!open);
-                  }}
+                </Accordion.Section>
+                <Accordion.Section key={3}>
+                  <Button>Buttonix</Button>
+                  <ShowHide>
+                    <Box
+                      sx={{
+                        height: "500px",
+                        bg: "coral",
+                        color: "white",
+                        p: 16
+                      }}
+                    >
+                      Lorem świpsum
+                    </Box>
+                  </ShowHide>
+                </Accordion.Section>
+              </Accordion>
+            )
+          },
+          {
+            name:
+              "Standard, isOpen at first, separator and styles for Accordion.Section",
+            component: (
+              <Accordion sx={{ width: "500px" }}>
+                <Accordion.Section
+                  key={1}
+                  isOpenAtInit={true}
+                  sx={{ p: 16, bg: "antiquewhite" }}
                 >
-                  Toggle
-                </Button>
-              </Box>
+                  <Button sx={{ width: "100%" }}>Buttonix</Button>
+                  <ShowHide>
+                    <Box
+                      sx={{
+                        height: "500px",
+                        bg: "coral",
+                        color: "white",
+                        p: 16
+                      }}
+                    >
+                      Lorem świpsum
+                    </Box>
+                  </ShowHide>
+                </Accordion.Section>
+                <Box sx={{ height: "1px", bg: "black" }} />
+                <Accordion.Section key={2} sx={{ p: 16, bg: "antiquewhite" }}>
+                  <Button sx={{ width: "100%" }}>Buttonix</Button>
+                  <ShowHide>
+                    <Box
+                      sx={{
+                        height: "500px",
+                        bg: "coral",
+                        color: "white",
+                        p: 16
+                      }}
+                    >
+                      Lorem świpsum
+                    </Box>
+                  </ShowHide>
+                </Accordion.Section>
+                <Box sx={{ height: "1px", bg: "black" }} />
+                <Accordion.Section key={3} sx={{ p: 16, bg: "antiquewhite" }}>
+                  <Button sx={{ width: "100%" }}>Buttonix</Button>
+                  <ShowHide>
+                    <Box
+                      sx={{
+                        height: "500px",
+                        bg: "coral",
+                        color: "white",
+                        p: 16
+                      }}
+                    >
+                      Lorem świpsum
+                    </Box>
+                  </ShowHide>
+                </Accordion.Section>
+              </Accordion>
             )
           }
+          // {
+          //   name: "Controlled by hook",
+          //   component: (
+          //     <Box>
+          //       <Accordion sx={{ width: "500px" }} controller={accordion}>
+          //         <Button>Buttonix</Button>
+          //         <ShowHide>
+          //           <Box
+          //             sx={{
+          //               height: "500px",
+          //               bg: "coral",
+          //               color: "white",
+          //               p: 16
+          //             }}
+          //           >
+          //             Lorem świpsum
+          //           </Box>
+          //         </ShowHide>
+          //       </Accordion>
+          //       <Button
+          //         onClick={() => {
+          //           accordion.sections[0].toggle();
+          //         }}
+          //       >
+          //         Toggle
+          //       </Button>
+          //     </Box>
+          //   )
+          // },
         ]}
       />
     </Box>
