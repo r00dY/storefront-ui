@@ -14,19 +14,19 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.10.5",
+  "version": "0.10.6",
   "license": "GPL-3.0",
   "dependencies": {
-    "@commerce-ui/core2": "^0.10.5",
+    "@commerce-ui/core2": "^0.10.6",
     "@mdx-js/loader": "^1.5.5",
     "@mdx-js/react": "^1.5.5",
     "@next/mdx": "^9.2.1",
+    "@svgr/webpack": "^4.2.0",
     "@theme-ui/prism": "^0.3.0",
     "next": "^9.2.1",
     "prism-react-renderer": "^1.0.2",
     "react-live": "^2.2.2",
-    "theme-ui": "^0.3.1",
-    "@svgr/webpack": "^4.2.0"
+    "theme-ui": "^0.3.1"
   },
   "scripts": {
     "dev": "next --port 3333",
