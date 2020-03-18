@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { jsx, createElement, getElementSpec, splitSx } from "..";
 import InputRaw$ from "../InputRaw";
 import InputContainer from "../InputContainer";
 
@@ -20,7 +18,7 @@ function Input$(props) {
       setEmpty(false);
     }
     if (onChange) {
-      onChange(e);
+      onChange(e.target.value, e);
     }
   };
 
