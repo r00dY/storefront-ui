@@ -26,10 +26,7 @@ function Selectable$(props) {
   const [css, customSx] = splitSx(sx);
 
   const state = {
-    disabled,
-    focused,
-    highlighted,
-    selected
+    ...props
   };
 
   const content = children(state);

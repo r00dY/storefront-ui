@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
-import SelectInline$ from "@commerce-ui/core/SelectInline";
+import SelectInline$, { useSelectInline } from "@commerce-ui/core/SelectInline";
 import Grid from "@commerce-ui/core/Grid";
 import React, { useRef, useState } from "react";
 
@@ -70,88 +70,144 @@ export const basic = () => {
   const [val, setVal] = useState(null);
   const [val2, setVal2] = useState(options[2]);
 
+  const { selectableProps } = useSelectInline({
+    options,
+    onChange: console.log
+  });
+
   return (
     <>
+      <h2>Controlled by hook</h2>
+
+      <Grid minItemWidth={300}>
+        {selectableProps.map(props => (
+          <ItemRow {...props} />
+        ))}
+      </Grid>
+
       <form action={"/action"} method={"post"}>
         <h2>Uncontrolled</h2>
 
         <p>Standard</p>
-        <SelectInline
-          options={options}
-          onChange={val => console.log}
-          label={"Pick a value"}
-        />
+
+        <Grid minItemWidth={300}>
+          <SelectInline options={options} onChange={val => console.log}>
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (default value)</p>
-        <SelectInline
-          options={options}
-          defaultValue={"london"}
-          onChange={val => console.log}
-        />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            defaultValue={"london"}
+            onChange={val => console.log}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectInline
-          options={options}
-          onChange={val => console.log}
-          allowEmpty={false}
-        />
+
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            onChange={val => console.log}
+            allowEmpty={false}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectInline
-          options={options}
-          defaultValue={"london"}
-          onChange={val => console.log}
-          allowEmpty={false}
-        />
+
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            defaultValue={"london"}
+            onChange={val => console.log}
+            allowEmpty={false}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <h2>Controlled</h2>
 
         <p>Standard</p>
-        <SelectInline options={options} value={val} onChange={setVal} />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            value={val}
+            onChange={setVal}
+            as={Grid}
+            minItemWidth={300}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (default value)</p>
-        <SelectInline options={options} value={val2} onChange={setVal2} />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            value={val2}
+            onChange={setVal2}
+            as={Grid}
+            minItemWidth={300}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (allowEmpty=false)</p>
-        <SelectInline
-          options={options}
-          value={val}
-          onChange={setVal}
-          allowEmpty={false}
-        />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            value={val}
+            onChange={setVal}
+            allowEmpty={false}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Standard (default value, allowEmpty=false)</p>
-        <SelectInline
-          options={options}
-          value={val2}
-          onChange={setVal2}
-          allowEmpty={false}
-        />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            value={val2}
+            onChange={setVal2}
+            allowEmpty={false}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <h2>Disabled states</h2>
 
         <p>Entire control disabled</p>
-        <SelectInline
-          options={options}
-          onChange={val => console.log}
-          disabled
-          allowEmpty={false}
-        />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={options}
+            onChange={val => console.log}
+            disabled
+            allowEmpty={false}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
 
         <p>Items disabled</p>
-        <SelectInline
-          options={optionsWithDisabled}
-          onChange={val => console.log}
-        />
 
-        <p>Hide label</p>
-        <SelectInline
-          options={optionsWithDisabled}
-          onChange={val => console.log}
-          sx={{
-            $hideLabel: true
-          }}
-        />
+        <Grid minItemWidth={300}>
+          <SelectInline
+            options={optionsWithDisabled}
+            onChange={val => console.log}
+          >
+            <ItemRow />
+          </SelectInline>
+        </Grid>
       </form>
     </>
   );

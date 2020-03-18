@@ -34,9 +34,7 @@ export function useSelectScrollableStack(props = {}) {
 }
 
 function SelectScrollableStack(props) {
-  let { sx, controller, ...restProps } = props;
-
-  const [css, customSx] = splitSx(sx);
+  let { sx, controller, children, ...restProps } = props;
 
   if (!controller) {
     controller = useSelectScrollableStack({ ...props });
@@ -47,22 +45,29 @@ function SelectScrollableStack(props) {
 
   const scrollableStackController = controller.scrollableStack;
 
+  const itemElement = React.Children.only(children);
+  children = selectInlineController.selectableProps.map(props => {
+    return React.cloneElement(itemElement, props);
+  });
+
   return (
-    <SelectInline
-      {...restProps}
-      controller={selectInlineController}
-      sx={{
-        ...css,
-        ...customSx,
-        $optionsContainer: {
-          __type: ScrollableStack,
-          __props: {
-            controller: scrollableStackController
-          },
-          ...customSx.$scrollableStack
-        }
-      }}
-    />
+    <ScrollableStack controller={scrollableStackController} sx={sx}>
+      {children}
+    </ScrollableStack>
+    // <SelectInline
+    //   {...restProps}
+    //   sx={{
+    //     ...css,
+    //     ...customSx,
+    //     $optionsContainer: {
+    //       __type: ScrollableStack,
+    //       __props: {
+    //         controller: scrollableStackController
+    //       },
+    //       ...customSx.$scrollableStack
+    //     }
+    //   }}
+    // />
   );
 }
 

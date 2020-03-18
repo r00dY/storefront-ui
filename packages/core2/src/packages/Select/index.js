@@ -69,7 +69,7 @@ function useSelect(props) {
         option: option,
         value: option.id,
         key: option.id,
-        children: option.label,
+        label: option.label,
         ...itemDownshiftProps
       }
     };

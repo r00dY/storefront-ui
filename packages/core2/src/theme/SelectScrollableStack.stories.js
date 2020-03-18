@@ -50,17 +50,16 @@ const SelectScrollableStack = props => (
   <SelectScrollableStack$
     {...props}
     sx={{
-      $selectable: <ItemRow />,
-      $scrollableStack: {
-        $itemSize: 300,
-        $gap: 50,
-        $floatingElement: {
-          height: "2px",
-          bg: "black"
-        }
+      $itemSize: 300,
+      $gap: 50,
+      $floatingElement: {
+        height: "2px",
+        bg: "black"
       }
     }}
-  />
+  >
+    <ItemRow />
+  </SelectScrollableStack$>
 );
 
 export const basic = () => {

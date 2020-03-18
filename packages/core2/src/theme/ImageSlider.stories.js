@@ -12,6 +12,8 @@ import SelectScrollableStack from "../packages/SelectScrollableStack";
 
 import Image from "@commerce-ui/core/Image";
 
+import Selectable from "@commerce-ui/core/Selectable";
+
 const images = [
   catImage,
   pan1,
@@ -60,6 +62,8 @@ export const basic = () => {
     }
   });
 
+  console.log(thumbnails2);
+
   return (
     <Box sx={{ maxWidth: "800px" }}>
       <StoryWrapper
@@ -101,29 +105,27 @@ export const basic = () => {
                 <SelectScrollableStack
                   controller={thumbnails2}
                   sx={{
-                    $label: {
-                      font: "label",
-                      display: "none",
-                      pb: "12px"
-                    },
-                    $selectable: ({ selected, option, onClick, key }) => (
-                      <Box onClick={onClick} key={key}>
-                        <Image
-                          image={option}
-                          sx={{ $objectFit: "cover", height: "70px" }}
-                        />
-                      </Box>
-                    ),
-                    $scrollableStack: {
-                      $itemSize: 70,
-                      $gap: 10,
-                      $floatingElement: {
-                        height: "2px",
-                        bg: "black"
-                      }
+                    $itemSize: 70,
+                    $gap: 10,
+                    $floatingElement: {
+                      height: "2px",
+                      bg: "black"
                     }
                   }}
-                />
+                >
+                  <Selectable>
+                    {({ selected, option }) => {
+                      return (
+                        <Box>
+                          <Image
+                            image={option}
+                            sx={{ $objectFit: "cover", height: "70px" }}
+                          />
+                        </Box>
+                      );
+                    }}
+                  </Selectable>
+                </SelectScrollableStack>
               </Box>
             )
           }

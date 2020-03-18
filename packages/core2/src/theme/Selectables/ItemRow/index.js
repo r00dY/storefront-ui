@@ -9,7 +9,7 @@ function ItemRow(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, highlighted, selected }) => (
+      {({ disabled, highlighted, selected, label }) => (
         <Box
           sx={{
             width: "100%",
@@ -28,7 +28,7 @@ function ItemRow(props) {
             opacity: disabled ? 0.5 : 1
           }}
         >
-          {props.children} {selected ? "✔" : ""}
+          {label} {selected ? "✔" : ""}
         </Box>
       )}
     </Selectable>
