@@ -11,14 +11,14 @@ function Input$(props) {
     empty = props.value === "";
   }
 
-  const onChangeEvent = e => {
-    if (!e.target.value || e.target.value === "") {
+  const onChangeEvent = (val, e) => {
+    if (!val || val === "") {
       setEmpty(true);
     } else {
       setEmpty(false);
     }
     if (onChange) {
-      onChange(e.target.value, e);
+      onChange(val, e);
     }
   };
 

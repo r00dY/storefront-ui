@@ -14,7 +14,11 @@ export const unstyled = () => {
         <h2>General</h2>
 
         <p>Type = text</p>
-        <Input type={"text"} placeholder={"First name"} />
+        <Input
+          type={"text"}
+          placeholder={"First name"}
+          onChange={console.log}
+        />
 
         <p>Type = password</p>
         <Input type={"password"} placeholder={"Placeholder..."} />

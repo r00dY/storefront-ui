@@ -22,13 +22,18 @@ const inputResetStyles = {
 };
 
 function InputRaw_(props) {
-  const { sx, inputRef, ...restProps } = props;
+  const { sx, inputRef, onChange, ...restProps } = props;
 
   const [css, customSx] = splitSx(sx);
   return (
     <Box
       as={"input"}
       sx={[inputResetStyles, css]}
+      onChange={e => {
+        if (onChange) {
+          onChange(e.target.value, e);
+        }
+      }}
       {...restProps}
       ref={inputRef}
     />

@@ -25,7 +25,7 @@ function useHover(ref) {
 
   if (
     typeof window === "object" &&
-    window.matchMedia("screen and (pointer: fine)").matches
+    !window.matchMedia("screen and (pointer: fine)").matches
   ) {
     return false;
   }

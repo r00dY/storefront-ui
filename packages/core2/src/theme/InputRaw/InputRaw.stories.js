@@ -2,7 +2,9 @@
 import { jsx } from "@commerce-ui/core";
 import InputRaw$ from "@commerce-ui/core/InputRaw";
 
-export const unstyled = () => <InputRaw$ type={"text"} />;
+export const unstyled = () => (
+  <InputRaw$ type={"text"} onChange={(val, e) => console.log(val, e)} />
+);
 export const withCSS = () => (
   <InputRaw$
     sx={{
