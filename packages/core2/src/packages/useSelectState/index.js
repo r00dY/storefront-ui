@@ -51,7 +51,8 @@ function useSelectState(props) {
       if (!option.label) {
         return {
           ...option,
-          label: option.id
+          label: option.id,
+          __originalOption: option
         };
       }
       return option;
@@ -59,7 +60,8 @@ function useSelectState(props) {
     // throw new Error("options must be objects with ID!!!");
     return {
       id: option,
-      label: option
+      label: option,
+      __originalOption: option
     };
   });
 
@@ -122,7 +124,10 @@ function useSelectState(props) {
   };
 
   return {
-    value: currentValue,
+    value:
+      currentValue === null
+        ? null
+        : currentValue.__originalOption || currentValue,
     empty: currentValue === null,
     selectedIndex: getValIndex(currentValue),
     options,

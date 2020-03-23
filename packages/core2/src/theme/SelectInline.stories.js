@@ -1,6 +1,6 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
-import SelectInline$, { useSelectInline } from "@commerce-ui/core/SelectInline";
+import SelectInline, { useSelectInline } from "@commerce-ui/core/SelectInline";
 import Grid from "@commerce-ui/core/Grid";
 import React, { useRef, useState } from "react";
 
@@ -46,26 +46,6 @@ const optionsWithDisabled = [
   }
 ];
 
-const SelectInline = props => (
-  <SelectInline$
-    {...props}
-    sx={{
-      $label: {
-        font: "label",
-        pb: "12px"
-      },
-      $selectable: <ItemRow />,
-      $optionsContainer: {
-        __type: Grid,
-        __props: {
-          minItemWidth: 300
-        }
-      },
-      ...props.sx
-    }}
-  />
-);
-
 export const basic = () => {
   const [val, setVal] = useState(null);
   const [val2, setVal2] = useState(options[2]);
@@ -83,6 +63,30 @@ export const basic = () => {
         {selectableProps.map(props => (
           <ItemRow {...props} />
         ))}
+      </Grid>
+
+      <h2>String options</h2>
+
+      <Grid minItemWidth={300}>
+        <SelectInline
+          options={options.map(o => o.label)}
+          onChange={val => console.log}
+        >
+          <ItemRow />
+        </SelectInline>
+      </Grid>
+
+      <h2>Invalid</h2>
+
+      <Grid minItemWidth={300}>
+        <SelectInline
+          options={options.map(o => o.label)}
+          allowEmpty={false}
+          onChange={val => console.log}
+          invalid
+        >
+          <ItemRow />
+        </SelectInline>
       </Grid>
 
       <form action={"/action"} method={"post"}>

@@ -41,8 +41,9 @@ export function useSelectInline(props) {
 
   const selectableProps = options.map(option => {
     return {
-      selected: value && option.id === value.id,
+      selected: value && (option.id === value || option.id === value.id),
       disabled: option.disabled,
+      invalid: !!props.invalid,
 
       option: option,
 

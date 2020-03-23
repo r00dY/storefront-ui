@@ -204,7 +204,7 @@ test("works with string array as input", () => {
     })
   );
 
-  expect(result.current.value.id).toBe("dog");
+  expect(result.current.value).toBe("dog");
 });
 
 test("events work in controlled state", () => {

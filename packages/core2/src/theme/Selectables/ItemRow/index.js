@@ -9,7 +9,7 @@ function ItemRow(props) {
 
   return (
     <Selectable {...restProps}>
-      {({ disabled, highlighted, selected, label }) => (
+      {({ disabled, highlighted, selected, label, invalid }) => (
         <Box
           sx={{
             width: "100%",
@@ -21,6 +21,7 @@ function ItemRow(props) {
             // pointerEvents: "none",
             lineHeight: 1,
             font: "body",
+            border: invalid && selected ? "1px solid red" : "none",
             bg: highlighted ? "rgb(230,230,230)" : "#fafafa",
             ":hover": {
               bg: disabled ? "#fafafa" : "rgb(230,230,230)"
