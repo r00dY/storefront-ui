@@ -12,7 +12,7 @@ export default props => {
         },
         $label: {
           font: "body",
-          pt: 1
+          pt: 2
         },
         $description: {
           font: "body2",

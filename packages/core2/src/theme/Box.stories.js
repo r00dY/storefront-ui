@@ -111,6 +111,20 @@ export const basic = () => (
               Click me!
             </Button>
           )
+        },
+        {
+          name: "fitChild",
+          component: (
+            <Box fitChild={true} sx={{ width: "300px", height: "300px" }}>
+              <Button
+                sx={{ p: 2, bg: "mono300" }}
+                href={"https://wikipedia.org"}
+                target={"blank"}
+              >
+                Click me!
+              </Button>
+            </Box>
+          )
         }
       ]}
     />

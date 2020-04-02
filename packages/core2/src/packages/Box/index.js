@@ -18,13 +18,32 @@ const focusReset = {
   }
 };
 
+const fitChildStyles = {
+  position: "relative",
+  "> *": {
+    minWidth: "inherit",
+    minHeight: "inherit",
+    maxWidth: "inherit",
+    maxHeight: "inherit",
+    width: "100%",
+    height: "100%"
+  }
+};
+
 function Box_(props) {
-  const { sx, as, _ref, noFocus = false, ...restProps } = props;
+  const {
+    sx,
+    as,
+    _ref,
+    noFocus = false,
+    fitChild = false,
+    ...restProps
+  } = props;
 
   const [css, customSx] = splitSx(sx);
 
   return jsx(as, {
-    sx: [boxStyles, noFocus && focusReset, css],
+    sx: [boxStyles, noFocus && focusReset, fitChild && fitChildStyles, css],
     ref: _ref,
     ...restProps
   });

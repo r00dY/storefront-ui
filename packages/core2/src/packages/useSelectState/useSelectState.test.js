@@ -196,15 +196,61 @@ test("controlled state: value as object", () => {
   expect(result.current.empty).toBe(false);
 });
 
-test("works with string array as input", () => {
+// test("works with string array as input", () => {
+//   const { result } = renderHook(() =>
+//     useSelectState({
+//       options: animalsStrings,
+//       value: "dog"
+//     })
+//   );
+//
+//   expect(result.current.value).toBe("dog");
+// });
+
+test("uncontrolled works with string array as input", () => {
+  const onChange = jest.fn(val => val);
+
   const { result } = renderHook(() =>
     useSelectState({
       options: animalsStrings,
-      value: "dog"
+      defaultValue: "dog",
+      onChange
     })
   );
 
   expect(result.current.value).toBe("dog");
+  expect(onChange.mock.calls.length).toBe(0);
+
+  act(() => {
+    result.current.setValue("cow"); // change to empty
+  });
+
+  expect(result.current.value).toBe("cow");
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(onChange.mock.results[0].value).toBe("cow");
+});
+
+test("controlled works with string array as input", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsStrings,
+      value: "dog",
+      onChange
+    })
+  );
+
+  expect(result.current.value).toBe("dog");
+  expect(onChange.mock.calls.length).toBe(0);
+
+  act(() => {
+    result.current.setValue("cow"); // change to empty
+  });
+
+  expect(result.current.value).toBe("dog");
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(onChange.mock.results[0].value).toBe("cow");
 });
 
 test("events work in controlled state", () => {

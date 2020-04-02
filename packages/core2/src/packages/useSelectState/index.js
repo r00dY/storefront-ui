@@ -74,6 +74,10 @@ function useSelectState(props) {
     return val;
   };
 
+  const originalValue = val => {
+    return val === null ? null : val.__originalOption || val;
+  };
+
   // let defaultValueId =
   //   typeof defaultValue === "object" && defaultValue !== null
   //     ? defaultValue.id
@@ -119,15 +123,13 @@ function useSelectState(props) {
     }
 
     if (onChange) {
-      onChange(newVal, getValIndex(newVal));
+      onChange(originalValue(newVal), getValIndex(newVal));
     }
   };
 
   return {
-    value:
-      currentValue === null
-        ? null
-        : currentValue.__originalOption || currentValue,
+    value: originalValue(currentValue),
+    valueObject: currentValue,
     empty: currentValue === null,
     selectedIndex: getValIndex(currentValue),
     options,

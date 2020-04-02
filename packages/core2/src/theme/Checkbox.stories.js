@@ -5,6 +5,7 @@ import React, { useRef, useState } from "react";
 
 import ItemRow from "./Selectables/ItemRow";
 import Checkbox from "@commerce-ui/core/Checkbox";
+import CheckboxSelectable from "./Selectables/Checkbox";
 
 export const basic = () => {
   const [val, setVal] = useState(false);
@@ -23,6 +24,15 @@ export const basic = () => {
 
       <Checkbox value={isToggled} onChange={setToggled}>
         <ItemRow label={"Test"} />
+      </Checkbox>
+
+      <h2>Checkbox checkbox</h2>
+
+      <Checkbox>
+        <CheckboxSelectable
+          label={"Test"}
+          description={"Lorem ipsum dolor sit amet"}
+        />
       </Checkbox>
     </>
   );

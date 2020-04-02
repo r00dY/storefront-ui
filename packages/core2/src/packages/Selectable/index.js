@@ -11,6 +11,7 @@ function Selectable$(props) {
     highlighted,
     selected,
     label,
+    invalid,
     sx,
     as,
     children,

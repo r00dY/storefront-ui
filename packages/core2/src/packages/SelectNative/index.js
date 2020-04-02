@@ -5,7 +5,7 @@ import SelectNativeRaw from "../SelectNativeRaw";
 import useSelectState from "../useSelectState";
 
 function SelectNative(props) {
-  let { setValue, value, options, empty } = useSelectState(props);
+  let { setValue, value, valueObject, options, empty } = useSelectState(props);
 
   let {
     placeholder = "Select",
@@ -31,6 +31,8 @@ function SelectNative(props) {
     );
   });
 
+  const selectValue = valueObject ? valueObject.id : "";
+
   return (
     <InputContainer
       {...restProps}
@@ -50,7 +52,7 @@ function SelectNative(props) {
             !e.target.value || e.target.value === "" ? null : e.target.value
           );
         }}
-        value={value ? value.id : ""}
+        value={selectValue}
       >
         {optionElems}
       </SelectNativeRaw>

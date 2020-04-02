@@ -55,6 +55,8 @@ const optionsWithDisabled = [
   }
 ];
 
+const optionsAsStrings = options.map(o => o.label);
+
 const vals = ["a", "b", "c"];
 
 export const unstyled = () => {
@@ -64,6 +66,10 @@ export const unstyled = () => {
   const [val2, setVal2] = useState(options[2]);
 
   const [val3, setVal3] = useState("c");
+
+  const [val4, setVal4] = useState("London");
+
+  console.log("val4", val4);
 
   return (
     <>
@@ -133,6 +139,23 @@ export const unstyled = () => {
         <SelectNative
           options={optionsWithDisabled}
           onChange={val => console.log}
+        />
+
+        <h2>As string</h2>
+        <SelectNative
+          options={optionsAsStrings}
+          onChange={val => {
+            console.log("value: ", val);
+          }}
+        />
+
+        <p>Controlled</p>
+        <SelectNative
+          options={optionsAsStrings}
+          onChange={val => {
+            setVal4(val);
+          }}
+          value={val4}
         />
       </form>
     </>
