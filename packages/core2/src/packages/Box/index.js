@@ -21,12 +21,18 @@ const focusReset = {
 const fitChildStyles = {
   position: "relative",
   "> *": {
-    minWidth: "inherit",
-    minHeight: "inherit",
-    maxWidth: "inherit",
-    maxHeight: "inherit",
-    width: "100%",
-    height: "100%"
+    minWidth: "inherit !important",
+    maxWidth: "inherit !important",
+    width: "100% !important"
+  }
+};
+
+const fitChildHeightStyles = {
+  position: "relative",
+  "> *": {
+    minHeight: "inherit !important",
+    maxHeight: "inherit !important",
+    height: "100% !important"
   }
 };
 
@@ -37,13 +43,20 @@ function Box_(props) {
     _ref,
     noFocus = false,
     fitChild = false,
+    fitChildHeight = false,
     ...restProps
   } = props;
 
   const [css, customSx] = splitSx(sx);
 
   return jsx(as, {
-    sx: [boxStyles, noFocus && focusReset, fitChild && fitChildStyles, css],
+    sx: [
+      boxStyles,
+      noFocus && focusReset,
+      fitChild && fitChildStyles,
+      fitChildHeight && fitChildHeightStyles,
+      css
+    ],
     ref: _ref,
     ...restProps
   });

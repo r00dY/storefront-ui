@@ -104,7 +104,7 @@ export const basic = () => (
           name: "Button href",
           component: (
             <Button
-              sx={{ p: 2, bg: "mono300" }}
+              sx={{ p: 2, bg: "mono300", width: "100px", height: "50px" }}
               href={"https://wikipedia.org"}
               target={"blank"}
             >
@@ -117,7 +117,25 @@ export const basic = () => (
           component: (
             <Box fitChild={true} sx={{ width: "300px", height: "300px" }}>
               <Button
-                sx={{ p: 2, bg: "mono300" }}
+                sx={{ p: 2, bg: "mono300", width: "100px", height: "50px" }}
+                href={"https://wikipedia.org"}
+                target={"blank"}
+              >
+                Click me!
+              </Button>
+            </Box>
+          )
+        },
+        {
+          name: "fitChild + fitChildHeight",
+          component: (
+            <Box
+              fitChild={true}
+              fitChildHeight={true}
+              sx={{ width: "300px", height: "300px" }}
+            >
+              <Button
+                sx={{ p: 2, bg: "mono300", width: "100px", height: "50px" }}
                 href={"https://wikipedia.org"}
                 target={"blank"}
               >
