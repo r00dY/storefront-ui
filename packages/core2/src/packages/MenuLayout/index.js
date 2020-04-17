@@ -20,21 +20,39 @@ function MenuBarSticky(props) {
     () => {
       let onScrollListener = () => {
         const rect = ref.current.getBoundingClientRect();
-        const thresholdPassed =
-          rect.top <
-          document.getElementById("__stickyanchor__").getBoundingClientRect()
-            .top; //container.getBoundingClientRect().top;
 
-        if (thresholdPassed && !sticky) {
-          // if just got sticky
-          setHeight(rect.height);
-        } else if (!thresholdPassed && sticky) {
-          requestAnimationFrame(() => {
+        const menuBottomY = document
+          .getElementById("__menubottom__")
+          .getBoundingClientRect().top;
+        const stickyBarY = document
+          .getElementById("__sticky__")
+          .getBoundingClientRect().top;
+
+        /**
+         * IMPORTANT!
+         *
+         * There's assymetry here. Depending on open / not open state of bar, we differently pick the moment it becomes sticky. if not opened it becomes sticky "behind the curtains" (when totally covered by menu). If opened, then standard sticky.
+         */
+        if (!sticky) {
+          if (props.open) {
+            // if sticky and open
+            if (rect.top < menuBottomY) {
+              setHeight(rect.height);
+              setSticky(true);
+            }
+          } else {
+            // if sticky but NOT open, let it flow behind menu (like it's normally in body content) and THEN fix.
+            if (rect.bottom < menuBottomY) {
+              setHeight(rect.height);
+              setSticky(true);
+            }
+          }
+        } else {
+          if (rect.top >= stickyBarY) {
             setHeight("auto");
-          });
+            setSticky(false);
+          }
         }
-
-        setSticky(thresholdPassed);
       };
 
       window.addEventListener("scroll", onScrollListener, { passive: true });
@@ -42,15 +60,8 @@ function MenuBarSticky(props) {
       return () => {
         window.removeEventListener("scroll", onScrollListener);
       };
-
-      // tell context "I'm here" and pass ref
-      // tell context "I'm out" when component dies.
-
-      // MenuBarSticky should know when to "stick"! It should be notified by context.
-
-      // context.registerSticky(ref, (sticky) => { // stickyness changed! })
     },
-    [sticky]
+    [sticky, props.open]
   );
 
   useEffect(
@@ -145,7 +156,7 @@ const isBarOpen = bar => {
 
 const MenuBarsContainer = ({ bars, isPreviousOpen = true }) => {
   if (!bars || bars.length === 0) {
-    return <Box id={"__stickyanchor__"} />;
+    return <Box id={"__menubottom__"} />;
   }
 
   const bar = bars[0];
