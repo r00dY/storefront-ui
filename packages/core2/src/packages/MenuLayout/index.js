@@ -109,17 +109,6 @@ function MenuLayout(props) {
     >
       <Box sx={{ position: "relative" }}>
         <Box
-          id={"dupa8"}
-          className={"dupa8"}
-          sx={{
-            position: "fixed",
-            top: 150,
-            left: 0,
-            width: "100%",
-            zIndex: 200
-          }}
-        />
-        <Box
           sx={{
             position: "fixed",
             top: 0,
