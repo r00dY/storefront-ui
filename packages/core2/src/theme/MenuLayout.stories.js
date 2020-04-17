@@ -22,6 +22,7 @@ export const basic = () => {
   const [menu1Open, setMenu1Open] = useState(true);
   const [menu2Open, setMenu2Open] = useState(true);
   const [menu3Open, setMenu3Open] = useState(true);
+  const [menu4Open, setMenu4Open] = useState(true);
 
   const contentWithButtons = (
     <VeryLongContent>
@@ -30,6 +31,8 @@ export const basic = () => {
       <button onClick={() => setMenu2Open(!menu2Open)}>Menu 2 toggle</button>
       &nbsp;
       <button onClick={() => setMenu3Open(!menu3Open)}>Menu 3 toggle</button>
+      &nbsp;
+      <button onClick={() => setMenu4Open(!menu4Open)}>Menu 4 toggle</button>
       &nbsp;
       <button
         onClick={() => {
@@ -58,7 +61,7 @@ export const basic = () => {
 
       {contentWithButtons}
 
-      <MenuLayout.MenuBarSticky open={menu3Open}>
+      <MenuLayout.MenuBarSticky open={menu4Open}>
         <Box sx={{ bg: "royalblue", height: 50 }} />
       </MenuLayout.MenuBarSticky>
 

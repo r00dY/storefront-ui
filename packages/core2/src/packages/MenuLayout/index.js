@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useContext } from "react";
 import Box from "../Box";
 import ReactDOM from "react-dom";
 
@@ -12,6 +12,8 @@ function MenuBarSticky(props) {
 
   const ref = useRef(null);
 
+  const context = useContext(MenuLayoutContext);
+
   const container = document.getElementById("__sticky__");
 
   useEffect(
@@ -20,7 +22,8 @@ function MenuBarSticky(props) {
         const rect = ref.current.getBoundingClientRect();
         const thresholdPassed =
           rect.top <
-          document.getElementById("__sticky__").getBoundingClientRect().top; //container.getBoundingClientRect().top;
+          document.getElementById("__stickyanchor__").getBoundingClientRect()
+            .top; //container.getBoundingClientRect().top;
 
         if (thresholdPassed && !sticky) {
           // if just got sticky
@@ -50,12 +53,19 @@ function MenuBarSticky(props) {
     [sticky]
   );
 
-  const showInPortal = sticky && container;
+  useEffect(
+    () => {
+      context.setStickyOpen(props.open);
+    },
+    [props.open]
+  );
+
+  const isDisplayedInPortal = sticky && container;
 
   return (
     <Box _ref={ref} sx={{ height }}>
-      {showInPortal && ReactDOM.createPortal(props.children, container)}
-      {!showInPortal && props.children}
+      {isDisplayedInPortal && ReactDOM.createPortal(props.children, container)}
+      {!isDisplayedInPortal && props.children}
     </Box>
   );
 }
@@ -66,6 +76,8 @@ function MenuLayout(props) {
   let children = [];
   let fixedBars = [];
 
+  const [stickyOpen, setStickyOpen] = useState(true);
+
   React.Children.forEach(props.children, child => {
     if (child.type === MenuBar) {
       fixedBars.push(child);
@@ -74,15 +86,14 @@ function MenuLayout(props) {
     }
   });
 
-  fixedBars.push(<MenuBar id={"__sticky__"} />);
-
-  const [stickyBars, setStickyBars] = useState([]);
+  fixedBars.push(<MenuBar id={"__sticky__"} open={stickyOpen} />);
 
   return (
     <MenuLayoutContext.Provider
       value={{
-        registerSticky: (ref, callback) => {},
-        unregisterSticky: () => {}
+        setStickyOpen: open => {
+          setStickyOpen(open);
+        }
       }}
     >
       <Box sx={{ position: "relative" }}>
@@ -134,7 +145,7 @@ const isBarOpen = bar => {
 
 const MenuBarsContainer = ({ bars, isPreviousOpen = true }) => {
   if (!bars || bars.length === 0) {
-    return null;
+    return <Box id={"__stickyanchor__"} />;
   }
 
   const bar = bars[0];
