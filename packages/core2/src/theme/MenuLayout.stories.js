@@ -10,7 +10,7 @@ const LOREM =
 const VeryLongContent = props => (
   <Box sx={{ m: [16, null, 50], maxWidth: 500 }}>
     {props.children}
-    {[...Array(20)].map((e, i) => (
+    {[...Array(10)].map((e, i) => (
       <Box as={"p"} sx={{ mt: 20 }} key={i}>
         {LOREM}
       </Box>
@@ -22,6 +22,25 @@ export const basic = () => {
   const [menu1Open, setMenu1Open] = useState(true);
   const [menu2Open, setMenu2Open] = useState(true);
   const [menu3Open, setMenu3Open] = useState(true);
+
+  const contentWithButtons = (
+    <VeryLongContent>
+      <button onClick={() => setMenu1Open(!menu1Open)}>Menu 1 toggle</button>
+      &nbsp;
+      <button onClick={() => setMenu2Open(!menu2Open)}>Menu 2 toggle</button>
+      &nbsp;
+      <button onClick={() => setMenu3Open(!menu3Open)}>Menu 3 toggle</button>
+      &nbsp;
+      <button
+        onClick={() => {
+          setMenu2Open(!menu2Open);
+          setMenu3Open(!menu3Open);
+        }}
+      >
+        Toggle 2 & 3
+      </button>
+    </VeryLongContent>
+  );
 
   return (
     <MenuLayout offset={150}>
@@ -37,34 +56,15 @@ export const basic = () => {
         <Box sx={{ bg: "antiquewhite", height: 50 }} />
       </MenuLayout.MenuBar>
 
-      <VeryLongContent>
-        {/*<Box sx={{position: "relative", border: "1px dotted black"}}>*/}
-        {/*<Box sx={{transform: "translateY(-100%)"}}>*/}
-        {/*<Box sx={{bg: "antiquewhite", height: 50}}>*/}
-        {/*</Box>*/}
-        {/*<Box sx={{position: "absolute", width: "100%", top: "100%", zIndex: -1}}>*/}
-        {/*<Box sx={{transform: "translateY(-100%)"}}>*/}
-        {/*<Box sx={{bg: "coral", height: 50}}>*/}
-        {/*</Box>*/}
-        {/*</Box>*/}
-        {/*</Box>*/}
-        {/*</Box>*/}
-        {/*</Box>*/}
-        <button onClick={() => setMenu1Open(!menu1Open)}>Menu 1 toggle</button>
-        &nbsp;
-        <button onClick={() => setMenu2Open(!menu2Open)}>Menu 2 toggle</button>
-        &nbsp;
-        <button onClick={() => setMenu3Open(!menu3Open)}>Menu 3 toggle</button>
-        &nbsp;
-        <button
-          onClick={() => {
-            setMenu2Open(!menu2Open);
-            setMenu3Open(!menu3Open);
-          }}
-        >
-          Toggle 2 & 3
-        </button>
-      </VeryLongContent>
+      {contentWithButtons}
+
+      <MenuLayout.MenuBarSticky open={menu3Open}>
+        <Box sx={{ bg: "royalblue", height: 50 }} />
+      </MenuLayout.MenuBarSticky>
+
+      {contentWithButtons}
+
+      {contentWithButtons}
     </MenuLayout>
   );
 };
