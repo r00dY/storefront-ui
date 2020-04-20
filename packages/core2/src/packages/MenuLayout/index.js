@@ -2,9 +2,11 @@ import React, { useEffect, useState, useRef, useContext } from "react";
 import Box from "../Box";
 import ReactDOM from "react-dom";
 
+import ShowHide from "../ShowHide";
+
 const MenuLayoutContext = React.createContext({});
 
-const MenuBar = props => <Box {...props} />;
+const MenuBar = ({ open, takesSpace, ...props }) => <Box {...props} />;
 
 function MenuBarSticky(props) {
   const [height, setHeight] = useState("auto");
@@ -82,7 +84,7 @@ function MenuBarSticky(props) {
 }
 
 function MenuLayout(props) {
-  let { offset = 0 } = props;
+  let { offset = 0, contentAbove } = props;
 
   let children = [];
   let fixedBars = [];
@@ -97,7 +99,9 @@ function MenuLayout(props) {
     }
   });
 
-  fixedBars.push(<MenuBar id={"__sticky__"} open={stickyOpen} />);
+  fixedBars.push(
+    <MenuBar id={"__sticky__"} open={stickyOpen} takesSpace={false} />
+  );
 
   return (
     <MenuLayoutContext.Provider
@@ -110,14 +114,24 @@ function MenuLayout(props) {
       <Box sx={{ position: "relative" }}>
         <Box
           sx={{
-            position: "fixed",
+            position: "relative",
+            zIndex: 200
+          }}
+        >
+          {contentAbove}
+        </Box>
+        <Box
+          sx={{
+            position: "sticky",
             top: 0,
             left: 0,
             width: "100%",
             zIndex: 100
           }}
         >
+          {/*<Box sx={{position: "absolute", top: 0, width: "100%"}}>*/}
           <MenuBarsContainer bars={fixedBars} />
+          {/*</Box>*/}
         </Box>
         <Box sx={{ pt: offset, position: "relative", zIndex: 0 }}>
           {children}
@@ -143,60 +157,204 @@ const isBarOpen = bar => {
   return open;
 };
 
-const MenuBarsContainer = ({ bars, isPreviousOpen = true }) => {
+/**
+ * Version with recursion and with ShowHide
+ */
+const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   if (!bars || bars.length === 0) {
     return <Box id={"__menubottom__"} />;
   }
 
   const bar = bars[0];
   const open = isBarOpen(bar);
+  const takesSpace = !!bar.props.takesSpace && previousBarTakesSpace;
+
+  console.log("takes space", takesSpace);
 
   return (
-    <Box sx={{ position: "relative" }}>
+    <Box
+      sx={{
+        position: takesSpace ? "relative" : "absolute",
+        top: takesSpace ? 0 : "100%",
+        width: "100%",
+        zIndex: -1
+      }}
+    >
       <Box
-        sx={{
-          transform: !open ? "translateY(-100%)" : "none",
-          transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
-        }}
+        sx={
+          takesSpace
+            ? {}
+            : {
+                transform: !open ? "translateY(-100%)" : "none",
+                transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
+              }
+        }
       >
-        {bar}
-        <Box
-          sx={{
-            position: "absolute",
-            top: "100%",
-            width: "100%",
-            zIndex: -1
-          }}
-        >
-          <MenuBarsContainer bars={bars.slice(1)} />
-        </Box>
+        {takesSpace && (
+          <ShowHide isOpen={open} stickToBottom={true}>
+            {bar}
+          </ShowHide>
+        )}
+
+        {!takesSpace && bar}
+
+        <MenuBarsContainer
+          bars={bars.slice(1)}
+          previousBarTakesSpace={takesSpace}
+        />
       </Box>
     </Box>
   );
-
-  /**
-   * Below prototype is responsible for being able to hide 2 bars at the same time without harmonica effect.
-   *
-   * This has couple of problems:
-   * 1. Sometimes it's not animated (because of jumping from absolute to relative animation doest fire
-   * 2. If C is animating under B and then suddenly B becomes hidden too how do we do it without jank?
-   * 3. Also what happens during resizing of bars?
-   *
-   *
-   */
-  // const open = isBarOpen(bar);
-  // const nextBarOpen = bars.length > 1 && isBarOpen(bars[1]);
-  //
-  // return <Box sx={{position: "relative"}}>
-  //     <Box sx={{transform: !open && isPreviousOpen ? "translateY(-100%)" : "none", transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"}}>
-  //         { bar }
-  //         <Box sx={{
-  //             position: !open && !nextBarOpen ? "relative" : "absolute",
-  //             top: !open && !nextBarOpen ? 0 : "100%",
-  //             width: "100%",
-  //             zIndex: -1}}>
-  //             <MenuBarsContainer bars={bars.slice(1)} isPreviousOpen={open} />
-  //         </Box>
-  //     </Box>
-  // </Box>
 };
+
+/**
+ * Version with recursion + margin-top
+ */
+// const MenuBarsContainer = ({ bars, isPreviousOpen = true }) => {
+//   if (!bars || bars.length === 0) {
+//     return <Box id={"__menubottom__"} />;
+//   }
+//
+//   const bar = bars[0];
+//   const open = isBarOpen(bar);
+//
+//   return (
+//     <Box sx={{ position: "relative" }}>
+//       <Box
+//         sx={{
+//           transform: !open ? "translateY(-100%)" : "none",
+//           transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
+//         }}
+//       >
+//         {bar}
+//         <Box
+//           sx={{
+//             position: "absolute",
+//             top: "100%",
+//             width: "100%",
+//             zIndex: -1
+//           }}
+//         >
+//           <MenuBarsContainer bars={bars.slice(1)} />
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+// };
+
+/**
+ * Version without recursion with margin-top
+ */
+// const MenuBarsContainer = ({bars}) => {
+//     return (
+//         <Box sx={{position: "relative"}}>
+//             {bars.map((bar, index) => {
+//
+//                 const open = isBarOpen(bar);
+//                 console.log('open', open);
+//
+//                 return <Box sx={{
+//                     position: "relative",
+//                     zIndex: 100 - index,
+//                 }}>
+//                     <Box sx={{
+//                         // transform: !open ? "translateY(-100%)" : 0,
+//                         marginTop: !open ? "-100%" : 0,
+//                         transition: "all .35s cubic-bezier(0.19, 1, 0.22, 1)"
+//                     }}>
+//                     {bar}
+//                     </Box>
+//                 </Box>
+//             })}
+//             <Box id={"__menubottom__"}/>
+//         </Box>
+//     );
+// };
+
+/**
+ * Version without recursion and with ShowHide
+ */
+// const MenuBarsContainer = ({bars}) => {
+//     return (
+//         <Box sx={{position: "relative"}}>
+//             {bars.map((bar, index) => {
+//
+//                 const open = isBarOpen(bar);
+//
+//                 return <Box sx={{
+//                     position: "relative",
+//                       transform: !open ? "translateY(-100%)" : "none",
+//                       transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)",
+//                     zIndex: 100 - index
+//
+//                 }}>
+//                     <ShowHide isOpen={/*open*/true} sx={{zIndex: 100 - index}} stickToBottom={true}>
+//                         {bar}
+//                     </ShowHide>
+//                 </Box>
+//             })}
+//             <Box id={"__menubottom__"}/>
+//         </Box>
+//     );
+// };
+
+/**
+ * Version with recursion + translate only
+ */
+// const MenuBarsContainer = ({ bars, isPreviousOpen = true }) => {
+//   if (!bars || bars.length === 0) {
+//     return <Box id={"__menubottom__"} />;
+//   }
+//
+//   const bar = bars[0];
+//   const open = isBarOpen(bar);
+//
+//   return (
+//     <Box sx={{ position: "relative" }}>
+//       <Box
+//         sx={{
+//           transform: !open ? "translateY(-100%)" : "none",
+//           transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
+//         }}
+//       >
+//         {bar}
+//         <Box
+//           sx={{
+//             position: "absolute",
+//             top: "100%",
+//             width: "100%",
+//             zIndex: -1
+//           }}
+//         >
+//           <MenuBarsContainer bars={bars.slice(1)} />
+//         </Box>
+//       </Box>
+//     </Box>
+//   );
+//
+//   /**
+//    * Below prototype is responsible for being able to hide 2 bars at the same time without harmonica effect.
+//    *
+//    * This has couple of problems:
+//    * 1. Sometimes it's not animated (because of jumping from absolute to relative animation doest fire
+//    * 2. If C is animating under B and then suddenly B becomes hidden too how do we do it without jank?
+//    * 3. Also what happens during resizing of bars?
+//    *
+//    *
+//    */
+//   // const open = isBarOpen(bar);
+//   // const nextBarOpen = bars.length > 1 && isBarOpen(bars[1]);
+//   //
+//   // return <Box sx={{position: "relative"}}>
+//   //     <Box sx={{transform: !open && isPreviousOpen ? "translateY(-100%)" : "none", transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"}}>
+//   //         { bar }
+//   //         <Box sx={{
+//   //             position: !open && !nextBarOpen ? "relative" : "absolute",
+//   //             top: !open && !nextBarOpen ? 0 : "100%",
+//   //             width: "100%",
+//   //             zIndex: -1}}>
+//   //             <MenuBarsContainer bars={bars.slice(1)} isPreviousOpen={open} />
+//   //         </Box>
+//   //     </Box>
+//   // </Box>
+// };

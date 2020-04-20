@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from "react";
 import Box from "../Box";
 
 const ShowHide = props => {
-  const { isOpen, animated = true, ...restProps } = props;
+  const {
+    isOpen,
+    animated = true,
+    stickToBottom = false,
+    ...restProps
+  } = props;
 
   const containerRef = useRef(null);
   let [height, setHeight] = useState(isOpen === true ? null : 0);
@@ -48,7 +53,8 @@ const ShowHide = props => {
         <Box
           sx={{
             position: height === null ? "relative" : "absolute",
-            width: "100%"
+            width: "100%",
+            bottom: stickToBottom ? 0 : "auto"
           }}
           ref={containerRef}
         >

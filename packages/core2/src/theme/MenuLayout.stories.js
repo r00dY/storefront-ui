@@ -18,6 +18,20 @@ const VeryLongContent = props => (
   </Box>
 );
 
+const MenuBar = ({ color }) => (
+  <Box
+    sx={{
+      bg: color,
+      height: 50,
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }}
+  >
+    Menu bar content lorem ipsum dolro sit amet
+  </Box>
+);
+
 export const basic = () => {
   const [menu1Open, setMenu1Open] = useState(true);
   const [menu2Open, setMenu2Open] = useState(true);
@@ -46,26 +60,36 @@ export const basic = () => {
   );
 
   return (
-    <MenuLayout offset={150}>
-      <MenuLayout.MenuBar open={menu1Open}>
-        <Box sx={{ bg: "lightblue", height: 50 }} />
+    <MenuLayout
+      offset={0}
+      contentAbove={
+        <Box sx={{ bg: "black", color: "white", p: 40 }}>
+          {LOREM} {LOREM} {LOREM}
+        </Box>
+      }
+    >
+      <MenuLayout.MenuBar open={menu1Open} takesSpace={true}>
+        <MenuBar color={"lightblue"} />
       </MenuLayout.MenuBar>
 
-      <MenuLayout.MenuBar open={menu2Open}>
-        <Box sx={{ bg: "coral", height: 50 }} />
+      <MenuLayout.MenuBar open={menu2Open} takesSpace={false}>
+        <MenuBar color={"coral"} />
       </MenuLayout.MenuBar>
 
-      <MenuLayout.MenuBar open={menu3Open}>
-        <Box sx={{ bg: "antiquewhite", height: 50 }} />
+      <MenuLayout.MenuBar open={menu3Open} takesSpace={false}>
+        <MenuBar color={"antiquewhite"} />
       </MenuLayout.MenuBar>
 
       {contentWithButtons}
 
       <MenuLayout.MenuBarSticky open={menu4Open}>
-        <Box sx={{ bg: "royalblue", height: 50 }} />
+        <MenuBar color={"royalblue"} />
       </MenuLayout.MenuBarSticky>
 
       {contentWithButtons}
+
+      <br />
+      <br />
 
       {contentWithButtons}
     </MenuLayout>
