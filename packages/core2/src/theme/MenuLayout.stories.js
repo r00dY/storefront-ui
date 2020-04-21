@@ -8,7 +8,7 @@ import MenuLayout from "@commerce-ui/core/MenuLayout";
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const VeryLongContent = props => (
-  <Box sx={{ m: [16, null, 50], maxWidth: 500 }}>
+  <Box sx={{ p: [16, null, 32], maxWidth: 700, bg: "#f1f1f1" }}>
     {props.children}
     {[...Array(10)].map((e, i) => (
       <Box as={"p"} sx={{ mt: 20 }} key={i}>
@@ -25,7 +25,8 @@ const MenuBar = ({ color }) => (
       height: 50,
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      opacity: 0.5
     }}
   >
     Menu bar content lorem ipsum dolro sit amet
