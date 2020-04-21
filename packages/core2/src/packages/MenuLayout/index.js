@@ -169,8 +169,6 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   const open = isBarOpen(bar);
   const takesSpace = !!bar.props.takesSpace && previousBarTakesSpace;
 
-  console.log("takes space", takesSpace);
-
   return (
     <Box
       sx={{
