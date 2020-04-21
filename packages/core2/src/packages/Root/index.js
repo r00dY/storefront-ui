@@ -4,9 +4,12 @@ import { ThemeProvider } from "../Theme";
 /** @jsx jsx */
 import { css, Global, jsx } from "@emotion/core";
 
+import GridDebugger from "../GridDebugger";
+
 export default ({ theme, children }) => {
   return (
     <ThemeProvider theme={theme}>
+      <GridDebugger />
       <Global
         styles={css`
           body.ReactModal__Body--open {
