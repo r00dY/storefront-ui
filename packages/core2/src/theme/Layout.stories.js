@@ -161,6 +161,35 @@ export const basic = () => {
               </Box>
             </Container>
           )
+        },
+        {
+          name: "Grid weird use case",
+          component: (
+            <Container>
+              <Grid cols={[3, 3, 5, 5, 5]}>
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+                <Box sx={{ bg: "red", height: "100px" }} />
+              </Grid>
+            </Container>
+          )
         }
       ]}
     />

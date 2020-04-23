@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { jsx, rs } from "@commerce-ui/core";
+import React, { useState, useRef } from "react";
 
 import Box from "@commerce-ui/core/Box";
 import { useTheme } from "@commerce-ui/core/Theme";
@@ -18,9 +17,10 @@ const VeryLongContent = props => (
   </Box>
 );
 
-const MenuBar = ({ color }) => (
+const MenuBar = ({ color, textRef }) => (
   <Box
     sx={{
+      position: "relative",
       bg: color,
       height: 50,
       display: "flex",
@@ -29,7 +29,9 @@ const MenuBar = ({ color }) => (
       opacity: 0.5
     }}
   >
-    Menu bar content lorem ipsum dolro sit amet
+    <Box as={"p"} ref={textRef}>
+      Menu bar content lorem ipsum dolro sit amet
+    </Box>
   </Box>
 );
 
@@ -38,6 +40,9 @@ export const basic = () => {
   const [menu2Open, setMenu2Open] = useState(true);
   const [menu3Open, setMenu3Open] = useState(true);
   const [menu4Open, setMenu4Open] = useState(true);
+
+  const [layer1Open, setLayer1Open] = useState(false);
+  const textRef = useRef(null);
 
   const contentWithButtons = (
     <VeryLongContent>
@@ -57,6 +62,8 @@ export const basic = () => {
       >
         Toggle 2 & 3
       </button>
+      &nbsp;
+      <button onClick={() => setLayer1Open(!layer1Open)}>Toggle layer 1</button>
     </VeryLongContent>
   );
 
@@ -64,13 +71,23 @@ export const basic = () => {
     <MenuLayout
       offset={0}
       contentAbove={
-        <Box sx={{ bg: "black", color: "white", p: 40 }}>
+        <Box sx={{ bg: "black", color: "white", p: 40, width: "100%" }}>
           {LOREM} {LOREM} {LOREM}
         </Box>
       }
     >
       <MenuLayout.MenuBar open={menu1Open} takesSpace={true}>
-        <MenuBar color={"lightblue"} />
+        <MenuBar color={"lightblue"} textRef={textRef} />
+
+        <MenuLayout.Layer
+          open={layer1Open}
+          posX={"right"}
+          offsetY={10}
+          offsetX={20}
+          anchoredTo={textRef}
+        >
+          <Box sx={{ p: 40, bg: "red", width: "100%" }}>Dupa</Box>
+        </MenuLayout.Layer>
       </MenuLayout.MenuBar>
 
       <MenuLayout.MenuBar open={menu2Open} takesSpace={false}>
@@ -89,6 +106,9 @@ export const basic = () => {
 
       {contentWithButtons}
 
+      <Box sx={{ position: "relative", transform: "translateY(-100%)" }}>
+        <MenuBar color={"red"} />
+      </Box>
       <br />
       <br />
 

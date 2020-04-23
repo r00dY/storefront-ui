@@ -72,7 +72,7 @@ space.containerMargin = [
   "7.5vw",
   "calc(50vw - 800px)"
 ];
-space.gridGap = [10, null, null, 15, 25, 35];
+space.gridGap = [10, null, null, 15, 25];
 
 space.containerMarginSecondary = "30vw";
 

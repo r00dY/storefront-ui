@@ -1,4 +1,10 @@
-import React, { useEffect, useState, useRef, useContext } from "react";
+import React, {
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+  useContext
+} from "react";
 import Box from "../Box";
 import ReactDOM from "react-dom";
 
@@ -6,7 +12,9 @@ import ShowHide from "../ShowHide";
 
 const MenuLayoutContext = React.createContext({});
 
-const MenuBar = ({ open, takesSpace, ...props }) => <Box {...props} />;
+const MenuBar = ({ open, takesSpace, ...props }) => {
+  return <Box {...props} />;
+};
 
 function MenuBarSticky(props) {
   const [height, setHeight] = useState("auto");
@@ -169,6 +177,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   const open = isBarOpen(bar);
   const takesSpace = !!bar.props.takesSpace && previousBarTakesSpace;
 
+  const dialogs = bar.props.dialogs;
+
   return (
     <Box
       sx={{
@@ -193,6 +203,20 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             {bar}
           </ShowHide>
         )}
+
+        <Box
+          className={"__menulayers__"}
+          sx={{
+            position: "absolute",
+            zIndex: 1,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center"
+          }}
+        />
+        {/*{*/}
+        {/*dialogs && <Box sx={{position: "absolute", zIndex: 1}}>{ dialogs[0] }</Box>*/}
+        {/*}*/}
 
         {!takesSpace && bar}
 
@@ -356,3 +380,101 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 //   //     </Box>
 //   // </Box>
 // };
+
+function Layer(props) {
+  const {
+    open = false,
+    posX = "left",
+    posY,
+    offsetX = 0,
+    offsetY = 0,
+    anchoredTo = "window"
+  } = props;
+
+  const [mounted, setMounted] = useState(false);
+  const [anchorRect, setAnchorRect] = useState(null);
+  const [layerRect, setLayerRect] = useState(null);
+  const [isDisplayed, setDisplayed] = useState(false);
+
+  const ref = useRef(null);
+
+  useEffect(() => {
+    setMounted(true);
+    if (anchoredTo && anchoredTo.current) {
+      setAnchorRect(anchoredTo.current.getBoundingClientRect());
+    }
+  }, []);
+
+  // useLayoutEffect(() => {
+  //     if (!open) {
+  //         setLayerRect(null);
+  //     }
+  //     else {
+  //         setLayerRect(ref.getBoundingClientRect())
+  //     }
+  //
+  // }, [open]);
+
+  if (!open || !mounted) {
+    return null;
+  }
+
+  let position = {};
+
+  if (anchoredTo === "window") {
+    switch (posX) {
+      case "center":
+        position.center = true;
+        break;
+      case "left":
+        position.left = offsetX;
+        position.right = "auto";
+        break;
+      case "right":
+        position.left = "auto";
+        position.right = offsetX;
+        break;
+    }
+  } else {
+    switch (posX) {
+      case "center":
+      // todo: center
+      case "right":
+        position.left = "auto";
+        position.right = offsetX + (window.innerWidth - anchorRect.right);
+        break;
+      case "left-outside":
+        position.left = "auto";
+        position.right = offsetX + (window.innerWidth - anchorRect.left);
+        break;
+      case "right-outside":
+        position.left = offsetX + anchorRect.right;
+        position.right = "auto";
+        break;
+      case "left":
+        position.left = offsetX + anchorRect.left;
+        position.right = "auto";
+    }
+  }
+
+  return ReactDOM.createPortal(
+    <Box
+      sx={
+        position.center
+          ? { position: "relative" }
+          : {
+              position: "absolute",
+              left: position.left,
+              right: position.right,
+              top: offsetY
+            }
+      }
+      _ref={ref}
+    >
+      {props.children}
+    </Box>,
+    document.querySelector(".__menulayers__")
+  );
+}
+
+MenuLayout.Layer = Layer;
