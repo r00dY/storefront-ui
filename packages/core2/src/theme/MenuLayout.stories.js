@@ -86,7 +86,29 @@ export const basic = () => {
           offsetX={20}
           anchoredTo={textRef}
         >
-          <Box sx={{ p: 40, bg: "red", width: "100%" }}>Dupa</Box>
+          {({ before }) => {
+            console.log("before", before);
+            return (
+              <Box
+                sx={{
+                  // opacity: before ? 0 : 1,
+                  position: "relative",
+                  overflow: "hidden"
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 40,
+                    bg: "red",
+                    transition: "all .3s ease-out",
+                    transform: before ? "translateY(-100%)" : "none"
+                  }}
+                >
+                  Dupa
+                </Box>
+              </Box>
+            );
+          }}
         </MenuLayout.Layer>
       </MenuLayout.MenuBar>
 

@@ -388,7 +388,8 @@ function Layer(props) {
     posY,
     offsetX = 0,
     offsetY = 0,
-    anchoredTo = "window"
+    anchoredTo = "window",
+    animationTime = 1000
   } = props;
 
   const [mounted, setMounted] = useState(false);
@@ -397,6 +398,7 @@ function Layer(props) {
   const [isDisplayed, setDisplayed] = useState(false);
 
   const ref = useRef(null);
+  const timeout = useRef(null);
 
   useEffect(() => {
     setMounted(true);
@@ -405,17 +407,29 @@ function Layer(props) {
     }
   }, []);
 
-  // useLayoutEffect(() => {
-  //     if (!open) {
-  //         setLayerRect(null);
-  //     }
-  //     else {
-  //         setLayerRect(ref.getBoundingClientRect())
-  //     }
-  //
-  // }, [open]);
+  useLayoutEffect(
+    () => {
+      // if (!open) {
+      //     setLayerRect(null);
+      // }
+      // else {
+      //     setLayerRect(ref.getBoundingClientRect())
+      // }
+      clearTimeout(timeout.current);
 
-  if (!open || !mounted) {
+      if (open) {
+        window.getComputedStyle(ref.current).opacity;
+        setDisplayed(true);
+      } else {
+        timeout.current = setTimeout(() => {
+          setDisplayed(false);
+        }, animationTime);
+      }
+    },
+    [open]
+  );
+
+  if ((!open && !isDisplayed) || !mounted) {
     return null;
   }
 
@@ -457,6 +471,17 @@ function Layer(props) {
     }
   }
 
+  const state = {
+    open,
+    before: (open && !isDisplayed) || (!open && isDisplayed),
+    anchorRect
+  };
+
+  const children =
+    typeof props.children === "function"
+      ? props.children(state)
+      : props.children;
+
   return ReactDOM.createPortal(
     <Box
       sx={
@@ -471,7 +496,7 @@ function Layer(props) {
       }
       _ref={ref}
     >
-      {props.children}
+      {children}
     </Box>,
     document.querySelector(".__menulayers__")
   );
