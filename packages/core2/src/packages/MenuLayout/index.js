@@ -8,6 +8,8 @@ import React, {
 import Box from "../Box";
 import ReactDOM from "react-dom";
 
+import { useDebounce } from "use-debounce";
+
 import ShowHide from "../ShowHide";
 
 const MenuLayoutContext = React.createContext({});
@@ -382,20 +384,58 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 // };
 
 function Layer(props) {
-  const {
+  let {
     open = false,
     posX = "left",
     posY,
     offsetX = 0,
     offsetY = 0,
     anchoredTo = "window",
-    animationTime = 1000
+    animationTime = 1000,
+    button,
+    openOnHover = true
   } = props;
 
   const [mounted, setMounted] = useState(false);
   const [anchorRect, setAnchorRect] = useState(null);
   const [layerRect, setLayerRect] = useState(null);
   const [isDisplayed, setDisplayed] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+
+  const buttonRef = useRef(null);
+
+  // TODO: make it possible to steer Layer from hook AND from button. For now, with Layer+button we have only "uncontrolled state". Most frequently used!
+  if (button) {
+    button = React.cloneElement(button, {
+      onClick: () => {
+        if (openOnHover) {
+          setInternalOpen(true);
+        } else {
+          setInternalOpen(!internalOpen);
+        }
+      },
+      onMouseEnter: () => {
+        if (!openOnHover) {
+          return;
+        }
+
+        setInternalOpen(true);
+      },
+      onMouseOut: () => {
+        if (!openOnHover) {
+          return;
+        }
+
+        setInternalOpen(false);
+      },
+      _ref: buttonRef
+    });
+
+    anchoredTo = buttonRef;
+
+    const [debouncedOpen] = useDebounce(internalOpen, 100);
+    open = debouncedOpen;
+  }
 
   const ref = useRef(null);
   const timeout = useRef(null);
@@ -430,6 +470,11 @@ function Layer(props) {
   );
 
   if ((!open && !isDisplayed) || !mounted) {
+    // If not displayed or mounted, just button
+    if (button) {
+      return button;
+    }
+
     return null;
   }
 
@@ -482,7 +527,11 @@ function Layer(props) {
       ? props.children(state)
       : props.children;
 
-  return ReactDOM.createPortal(
+  /**
+   * button
+   */
+
+  const portal = ReactDOM.createPortal(
     <Box
       sx={
         position.center
@@ -495,11 +544,28 @@ function Layer(props) {
             }
       }
       _ref={ref}
+      onMouseEnter={() => {
+        if (!openOnHover) {
+          return;
+        }
+        setInternalOpen(true);
+      }}
+      onMouseOut={() => {
+        if (!openOnHover) {
+          return;
+        }
+        setInternalOpen(false);
+      }}
     >
       {children}
     </Box>,
     document.querySelector(".__menulayers__")
   );
+
+  if (button) {
+    return [button, portal];
+  }
+  return portal;
 }
 
 MenuLayout.Layer = Layer;

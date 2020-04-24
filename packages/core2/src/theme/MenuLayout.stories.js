@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import Box from "@commerce-ui/core/Box";
 import { useTheme } from "@commerce-ui/core/Theme";
 import MenuLayout from "@commerce-ui/core/MenuLayout";
+import Button from "./Button/Button";
 
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
@@ -17,7 +18,7 @@ const VeryLongContent = props => (
   </Box>
 );
 
-const MenuBar = ({ color, textRef }) => (
+const MenuBar = ({ children, color }) => (
   <Box
     sx={{
       position: "relative",
@@ -29,9 +30,7 @@ const MenuBar = ({ color, textRef }) => (
       opacity: 0.5
     }}
   >
-    <Box as={"p"} ref={textRef}>
-      Menu bar content lorem ipsum dolro sit amet
-    </Box>
+    {children}
   </Box>
 );
 
@@ -77,59 +76,99 @@ export const basic = () => {
       }
     >
       <MenuLayout.MenuBar open={menu1Open} takesSpace={true}>
-        <MenuBar color={"lightblue"} textRef={textRef} />
-
-        <MenuLayout.Layer
-          open={layer1Open}
-          posX={"right"}
-          offsetY={10}
-          offsetX={20}
-          anchoredTo={textRef}
-        >
-          {({ before }) => {
-            console.log("before", before);
-            return (
-              <Box
-                sx={{
-                  // opacity: before ? 0 : 1,
-                  position: "relative",
-                  overflow: "hidden"
-                }}
-              >
+        <MenuBar color={"lightblue"}>
+          {/*<Box as={"p"} ref={textRef}>*/}
+          {/*Menu bar content lorem ipsum dolro sit amet*/}
+          {/*</Box>*/}
+          <MenuLayout.Layer
+            posX={"left"}
+            offsetY={10}
+            offsetX={0}
+            button={<Button>Open menu</Button>}
+          >
+            {({ before }) => {
+              return (
                 <Box
                   sx={{
-                    p: 40,
-                    bg: "red",
-                    transition: "all .3s ease-out",
-                    transform: before ? "translateY(-100%)" : "none"
+                    // opacity: before ? 0 : 1,
+                    position: "relative",
+                    overflow: "hidden"
                   }}
                 >
-                  Dupa
+                  <Box
+                    sx={{
+                      p: 40,
+                      bg: "red",
+                      transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
+                      transform: before ? "translateY(-100%)" : "none"
+                    }}
+                  >
+                    Dupa
+                  </Box>
                 </Box>
-              </Box>
-            );
-          }}
-        </MenuLayout.Layer>
+              );
+            }}
+          </MenuLayout.Layer>
+          &nbsp;&nbsp;
+          <MenuLayout.Layer
+            posX={"left"}
+            offsetY={10}
+            offsetX={0}
+            button={<Button>Open menu click</Button>}
+            openOnHover={false}
+          >
+            {({ before }) => {
+              return (
+                <Box
+                  sx={{
+                    // opacity: before ? 0 : 1,
+                    position: "relative",
+                    overflow: "hidden"
+                  }}
+                >
+                  <Box
+                    sx={{
+                      p: 40,
+                      bg: "red",
+                      transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
+                      transform: before ? "translateY(-100%)" : "none"
+                    }}
+                  >
+                    Dupa
+                  </Box>
+                </Box>
+              );
+            }}
+          </MenuLayout.Layer>
+        </MenuBar>
       </MenuLayout.MenuBar>
 
       <MenuLayout.MenuBar open={menu2Open} takesSpace={false}>
-        <MenuBar color={"coral"} />
+        <MenuBar color={"coral"}>
+          Menu bar content lorem ipsum dolro sit amet
+        </MenuBar>
       </MenuLayout.MenuBar>
 
       <MenuLayout.MenuBar open={menu3Open} takesSpace={false}>
-        <MenuBar color={"antiquewhite"} />
+        <MenuBar color={"antiquewhite"}>
+          Menu bar content lorem ipsum dolro sit amet
+        </MenuBar>
       </MenuLayout.MenuBar>
 
       {contentWithButtons}
 
       <MenuLayout.MenuBarSticky open={menu4Open}>
-        <MenuBar color={"royalblue"} />
+        <MenuBar color={"royalblue"}>
+          Menu bar content lorem ipsum dolro sit amet
+        </MenuBar>
       </MenuLayout.MenuBarSticky>
 
       {contentWithButtons}
 
       <Box sx={{ position: "relative", transform: "translateY(-100%)" }}>
-        <MenuBar color={"red"} />
+        <MenuBar color={"red"}>
+          Menu bar content lorem ipsum dolro sit amet
+        </MenuBar>
       </Box>
       <br />
       <br />
