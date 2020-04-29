@@ -102,7 +102,7 @@ function MenuLayout(props) {
   const [stickyOpen, setStickyOpen] = useState(true);
 
   React.Children.forEach(props.children, child => {
-    if (child.type === MenuBar) {
+    if (child && child.type === MenuBar) {
       fixedBars.push(child);
     } else {
       children.push(child);
@@ -215,7 +215,33 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             display: "flex",
             justifyContent: "center"
           }}
-        />
+        >
+          <Box
+            className={"__menulayersbackground__"}
+            sx={{
+              position: "absolute",
+              pointerEvents: "none",
+              zIndex: -1,
+              top: 0,
+              left: 0,
+              width: 1,
+              height: 1,
+              transformOrigin: "0 0"
+            }}
+          >
+            <Box
+              className={"__menulayersbackgroundinside__"}
+              sx={{
+                position: "absolute",
+                top: 0,
+                left: 0,
+                width: "100%",
+                height: "100%",
+                bg: "black"
+              }}
+            />
+          </Box>
+        </Box>
         {/*{*/}
         {/*dialogs && <Box sx={{position: "absolute", zIndex: 1}}>{ dialogs[0] }</Box>*/}
         {/*}*/}
@@ -383,6 +409,83 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 //   // </Box>
 // };
 
+//
+// function useLayer(props) {
+//     let {
+//         open,
+//         anchoredTo = "window",
+//         animationTime = 1000,
+//         openOnHover = true,
+//         onMount,
+//         onMount2
+//     } = props;
+//
+//     const [anchorRect, setAnchorRect] = useState(null);
+//     const [isDisplayed, setDisplayed] = useState(false);
+//     const [internalOpen, setInternalOpen] = useState(false);
+//
+//     const buttonRef = useRef(null);
+//
+//     // TODO: make it possible to steer Layer from hook AND from button. For now, with Layer+button we have only "uncontrolled state". Most frequently used!
+//     if (button) {
+//         button = React.cloneElement(button, {
+//             onClick: () => {
+//                 if (openOnHover) {
+//                     setInternalOpen(true);
+//                 } else {
+//                     setInternalOpen(!internalOpen);
+//                 }
+//             },
+//             onMouseEnter: () => {
+//                 if (!openOnHover) {
+//                     return;
+//                 }
+//
+//                 setInternalOpen(true);
+//             },
+//             onMouseOut: () => {
+//                 if (!openOnHover) {
+//                     return;
+//                 }
+//
+//                 setInternalOpen(false);
+//             },
+//             _ref: buttonRef
+//         });
+//
+//         anchoredTo = buttonRef;
+//
+//         const [debouncedOpen] = useDebounce(internalOpen, 100);
+//         open = debouncedOpen;
+//     }
+//
+//     const ref = useRef(null);
+//     const timeout = useRef(null);
+//
+//     useLayoutEffect(
+//         () => {
+//             clearTimeout(timeout.current);
+//
+//             if (open) {
+//                 if (onMount) { onMount(ref.current.getBoundingClientRect())}
+//
+//                 window.getComputedStyle(ref.current).opacity; // recalculate styles
+//
+//                 if (onMount2) { onMount(ref.current.getBoundingClientRect())}
+//
+//                 setDisplayed(true);
+//
+//             } else {
+//                 timeout.current = setTimeout(() => {
+//                     setDisplayed(false);
+//                 }, animationTime);
+//             }
+//         },
+//         [open]
+//     );
+//
+// }
+
 function Layer(props) {
   let {
     open = false,
@@ -393,12 +496,12 @@ function Layer(props) {
     anchoredTo = "window",
     animationTime = 1000,
     button,
-    openOnHover = true
+    openOnHover = true,
+    onMount
   } = props;
 
   const [mounted, setMounted] = useState(false);
   const [anchorRect, setAnchorRect] = useState(null);
-  const [layerRect, setLayerRect] = useState(null);
   const [isDisplayed, setDisplayed] = useState(false);
   const [internalOpen, setInternalOpen] = useState(false);
 
@@ -458,7 +561,12 @@ function Layer(props) {
       clearTimeout(timeout.current);
 
       if (open) {
-        window.getComputedStyle(ref.current).opacity;
+        if (onMount) {
+          onMount(ref.current.getBoundingClientRect());
+        }
+
+        window.getComputedStyle(ref.current).opacity; // recalculate styles
+
         setDisplayed(true);
       } else {
         timeout.current = setTimeout(() => {
@@ -556,6 +664,7 @@ function Layer(props) {
         }
         setInternalOpen(false);
       }}
+      key={"portal"}
     >
       {children}
     </Box>,
