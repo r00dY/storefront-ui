@@ -11,10 +11,12 @@ export default props => {
     disabled,
     children,
     label,
+    selected,
     buttonRef,
     isLoading,
     href,
     sx,
+    onClick,
     ...restProps
   } = props;
 
@@ -24,6 +26,7 @@ export default props => {
   const isHovered = useHover(buttonRef);
 
   const state = {
+    selected,
     disabled,
     isHovered,
     isLoading
@@ -57,7 +60,14 @@ export default props => {
   }
 
   return (
-    <Component {...componentProps}>
+    <Component
+      {...componentProps}
+      onClick={(...args) => {
+        if (onClick) {
+          onClick(...args);
+        }
+      }}
+    >
       {typeof children === "function" ? children(state) : children}
     </Component>
   );

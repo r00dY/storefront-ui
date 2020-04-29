@@ -509,6 +509,9 @@ function Layer(props) {
 
   // TODO: make it possible to steer Layer from hook AND from button. For now, with Layer+button we have only "uncontrolled state". Most frequently used!
   if (button) {
+    const [debouncedOpen] = useDebounce(internalOpen, 100);
+    open = debouncedOpen;
+
     button = React.cloneElement(button, {
       onClick: () => {
         if (openOnHover) {
@@ -531,13 +534,11 @@ function Layer(props) {
 
         setInternalOpen(false);
       },
-      _ref: buttonRef
+      _ref: buttonRef,
+      selected: open
     });
 
     anchoredTo = buttonRef;
-
-    const [debouncedOpen] = useDebounce(internalOpen, 100);
-    open = debouncedOpen;
   }
 
   const ref = useRef(null);
@@ -561,10 +562,6 @@ function Layer(props) {
       clearTimeout(timeout.current);
 
       if (open) {
-        if (onMount) {
-          onMount(ref.current.getBoundingClientRect());
-        }
-
         window.getComputedStyle(ref.current).opacity; // recalculate styles
 
         setDisplayed(true);
@@ -666,7 +663,7 @@ function Layer(props) {
       }}
       key={"portal"}
     >
-      {children}
+      {open && children}
     </Box>,
     document.querySelector(".__menulayers__")
   );

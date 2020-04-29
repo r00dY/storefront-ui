@@ -323,43 +323,22 @@ export const basic = () => {
             offsetY={10}
             offsetX={0}
             button={<Button>Open menu</Button>}
-            onMount={onMount}
-            backgroundStyles={{
-              backgroundColor: "coral"
-            }}
-            backgroundBeforeAnimation={rect => ({
-              // background has position: absolute, top, left, width, height set properly at mount!!
-              // transition,
-              opacity: 0
-              // scaleY,
-              // scaleX,
-              // translateY,
-              // translateX
-            })}
           >
-            {({ before }) => {
-              return (
-                <Box
-                  sx={{
-                    // opacity: before ? 0 : 1,
-                    position: "relative",
-                    overflow: "hidden"
-                  }}
-                >
-                  <Box
-                    sx={{
-                      p: 40,
-                      color: "white",
-                      transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
-                      opacity: before ? 0 : 1
-                      // transform: before ? "translateY(-100%)" : "none"
-                    }}
-                  >
-                    Dupa
-                  </Box>
-                </Box>
-              );
-            }}
+            <Box
+              sx={{
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <Box
+                sx={{
+                  p: 40,
+                  bg: "white"
+                }}
+              >
+                Dupa
+              </Box>
+            </Box>
           </MenuLayout.Layer>
           &nbsp;&nbsp;
           <MenuLayout.Layer
@@ -367,75 +346,40 @@ export const basic = () => {
             offsetY={10}
             offsetX={0}
             button={<Button>Open menu</Button>}
-            onMount={onMount}
           >
-            {({ before }) => {
-              return (
-                <Box
-                  sx={{
-                    // opacity: before ? 0 : 1,
-                    position: "relative",
-                    overflow: "hidden"
-                  }}
-                >
-                  <Box
-                    sx={{
-                      p: 100,
-                      // bg: "red",
-                      color: "white",
-                      transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
-                      opacity: before ? 0 : 1
-                      // transform: before ? "translateY(-100%)" : "none"
-                    }}
-                  >
-                    Dupa 2
-                  </Box>
-                </Box>
-              );
-            }}
+            <Box
+              sx={{
+                // opacity: before ? 0 : 1,
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <Box
+                sx={{
+                  p: 100,
+                  bg: "white"
+                }}
+              >
+                Dupa 2
+              </Box>
+            </Box>
           </MenuLayout.Layer>
           &nbsp;&nbsp;
           <MenuLayout.Layer
             posX={"left"}
             offsetY={10}
             offsetX={0}
-            button={<Button>Open menu click</Button>}
             openOnHover={false}
+            button={<Button>Open menu click</Button>}
           >
-            {({ before }) => {
-              return (
-                <Box
-                  sx={{
-                    // opacity: before ? 0 : 1,
-                    position: "relative",
-                    overflow: "hidden"
-                  }}
-                >
-                  <Box
-                    sx={{
-                      position: "absolute",
-                      zIndex: -1,
-                      top: 0,
-                      left: 0,
-                      width: "100%",
-                      height: "100%",
-                      bg: "red",
-                      transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
-                      transform: before ? "translateY(-100%)" : "none"
-                    }}
-                  />
-                  <Box
-                    sx={{
-                      p: 40,
-                      transition: "all .15s",
-                      opacity: before ? 0 : 1
-                    }}
-                  >
-                    Dupa
-                  </Box>
-                </Box>
-              );
-            }}
+            <Box
+              sx={{
+                p: 40,
+                bg: "white"
+              }}
+            >
+              Dupa
+            </Box>
           </MenuLayout.Layer>
         </MenuBar>
       </MenuLayout.MenuBar>
