@@ -367,6 +367,32 @@ export const basic = () => {
           &nbsp;&nbsp;
           <MenuLayout.Layer
             posX={"left"}
+            offsetY={0}
+            offsetX={0}
+            button={<Button>Open menu window</Button>}
+            anchoredTo={"window"}
+            width={"100%"}
+          >
+            <Box
+              sx={{
+                // opacity: before ? 0 : 1,
+                position: "relative",
+                overflow: "hidden"
+              }}
+            >
+              <Box
+                sx={{
+                  p: 100,
+                  bg: "white"
+                }}
+              >
+                Dupa 2
+              </Box>
+            </Box>
+          </MenuLayout.Layer>
+          &nbsp;&nbsp;
+          <MenuLayout.Layer
+            posX={"left"}
             offsetY={10}
             offsetX={0}
             openOnHover={false}

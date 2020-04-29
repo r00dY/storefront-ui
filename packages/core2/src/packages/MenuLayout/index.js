@@ -493,9 +493,10 @@ function Layer(props) {
     posY,
     offsetX = 0,
     offsetY = 0,
-    anchoredTo = "window",
+    anchoredTo,
     animationTime = 1000,
     button,
+    width,
     openOnHover = true,
     onMount
   } = props;
@@ -527,7 +528,7 @@ function Layer(props) {
 
         setInternalOpen(true);
       },
-      onMouseOut: () => {
+      onMouseLeave: () => {
         if (!openOnHover) {
           return;
         }
@@ -538,7 +539,13 @@ function Layer(props) {
       selected: open
     });
 
-    anchoredTo = buttonRef;
+    if (anchoredTo === undefined) {
+      anchoredTo = buttonRef;
+    }
+  }
+
+  if (!anchoredTo) {
+    anchoredTo = "window";
   }
 
   const ref = useRef(null);
@@ -638,16 +645,13 @@ function Layer(props) {
 
   const portal = ReactDOM.createPortal(
     <Box
-      sx={
-        position.center
-          ? { position: "relative" }
-          : {
-              position: "absolute",
-              left: position.left,
-              right: position.right,
-              top: offsetY
-            }
-      }
+      sx={{
+        position: "absolute",
+        left: position.left,
+        right: position.right,
+        top: offsetY,
+        width
+      }}
       _ref={ref}
       onMouseEnter={() => {
         if (!openOnHover) {
