@@ -41,7 +41,7 @@ const getContent = (text = "Dupa", padding = 40) => ({
       sx={{
         p: padding,
         color: "black",
-        transition: `opacity .2s`, // ${isVisible ? '.1s' : ''}`,// ${isBeforeAnimation && !isVisible && !isFirst ? ".3s" : ""}`, // delay only if "from layer to layer" and when show
+        transition: `opacity .2s`, // ${isVisible ? '.1s' : ''}`,// ${isBeforeAnimation && !isVisible && !isFirst ? "2s" : ""}`, // delay only if "from layer to layer" and when show
         opacity: isVisible ? 1 : 0
       }}
     >
@@ -126,10 +126,10 @@ export const basic = () => {
 
       background.style.opacity = 1;
       background.style.transform = "none";
-      background.style.transition = "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+      background.style.transition = "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
 
       backgroundContainer.style.transition =
-        "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+        "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
     }
   };
 
@@ -177,18 +177,24 @@ export const basic = () => {
     if (i === null) {
     }
 
-    if (index !== null && i !== null) {
-      const backgroundRect = backgroundRef.current.getBoundingClientRect();
+    const backgroundRect = backgroundRef.current.getBoundingClientRect();
 
+    if (index !== null && i !== null) {
       backgroundRef.current.style.width = backgroundRect.width + "px";
       backgroundRef.current.style.height = backgroundRect.height + "px";
       backgroundRef.current.style.transition = "none";
 
       setStatus(2);
     } else {
-      // delete backgroundRef.current.style.width;
-      // delete backgroundRef.current.style.height;
-      // delete backgroundRef.current.style.transition;
+      if (i === null) {
+        backgroundRef.current.style.width = backgroundRect.width + "px";
+        backgroundRef.current.style.height = backgroundRect.height + "px";
+        backgroundRef.current.style.transition = "none";
+      } else {
+        backgroundRef.current.style.width = "100%";
+        backgroundRef.current.style.height = "100%";
+        backgroundRef.current.style.transition = "none";
+      }
 
       setStatus(1); // first time or last time
     }
@@ -197,7 +203,6 @@ export const basic = () => {
       return j === i
         ? {
             ...item,
-            mounted: true,
             active: true,
             isVisible: false
           }
@@ -218,10 +223,12 @@ export const basic = () => {
       } else if (status === 2) {
         const containerRect = containerRef.current.getBoundingClientRect();
 
-        backgroundRef.current.style.width = containerRect.width + "px";
-        backgroundRef.current.style.height = containerRect.height + "px";
+        // backgroundRef.current.style.width = '100%';//containerRect.width + "px";
+        // backgroundRef.current.style.height = '100%';//containerRect.height + "px";
+        backgroundRef.current.style.width = "100%";
+        backgroundRef.current.style.height = "100%";
         backgroundRef.current.style.transition =
-          "all .3s cubic-bezier(0.19, 1, 0.22, 1)";
+          "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
       }
 
       setContent(
@@ -276,7 +283,7 @@ export const basic = () => {
                   left: 0,
                   width: "100%",
                   height: "100%",
-                  transition: "all .3s cubic-bezier(0.19, 1, 0.22, 1)",
+                  transition: "all 2s cubic-bezier(0.19, 1, 0.22, 1)",
                   bg: "coral",
                   transformOrigin: "0 0",
                   transform: isAnyContentActive ? "none" : "scaleY(0)"
@@ -291,13 +298,14 @@ export const basic = () => {
                   key={index}
                   sx={{
                     position: item.active ? "relative" : "absolute",
+                    pointerEvents: item.active ? "default" : "none",
                     top: 0,
                     left: 0,
                     zIndex: item.active ? 1 : 0,
                     width: "max-content"
                   }}
                 >
-                  {item.mounted && item.content(item)}
+                  {item.content(item)}
                 </Box>
               ))}
             </Box>
