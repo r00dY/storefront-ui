@@ -41,7 +41,7 @@ const getContent = (text = "Dupa", padding = 40) => ({
       sx={{
         p: padding,
         color: "black",
-        transition: `opacity .2s`, // ${isVisible ? '.1s' : ''}`,// ${isBeforeAnimation && !isVisible && !isFirst ? "2s" : ""}`, // delay only if "from layer to layer" and when show
+        transition: `opacity ..35s`, // ${isVisible ? '.1s' : ''}`,// ${isBeforeAnimation && !isVisible && !isFirst ? ".35s" : ""}`, // delay only if "from layer to layer" and when show
         opacity: isVisible ? 1 : 0
       }}
     >
@@ -126,10 +126,10 @@ export const basic = () => {
 
       background.style.opacity = 1;
       background.style.transform = "none";
-      background.style.transition = "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
+      background.style.transition = "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
 
       backgroundContainer.style.transition =
-        "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
+        "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
     }
   };
 
@@ -173,42 +173,47 @@ export const basic = () => {
    *
    **/
 
-  const setIndex = i => {
-    if (i === null) {
-    }
+  const [isEmpty, setEmpty] = useState(true);
+  const timer = useRef(null);
 
+  const setIndex = i => {
     const backgroundRect = backgroundRef.current.getBoundingClientRect();
 
-    if (index !== null && i !== null) {
+    if (i !== null) {
+      clearTimeout(timer.current);
+    }
+
+    if (isEmpty) {
+      // if coming from empty, we set init state for animation
+      backgroundRef.current.style.width = "100%";
+      backgroundRef.current.style.height = 0;
+      backgroundRef.current.style.opacity = 0;
+      backgroundRef.current.style.transition = "none";
+
+      containerRef.current.style.left = `${50 * i}px`;
+      containerRef.current.style.transition = "none";
+
+      setEmpty(false);
+    } else {
       backgroundRef.current.style.width = backgroundRect.width + "px";
       backgroundRef.current.style.height = backgroundRect.height + "px";
       backgroundRef.current.style.transition = "none";
-
-      setStatus(2);
-    } else {
-      if (i === null) {
-        backgroundRef.current.style.width = backgroundRect.width + "px";
-        backgroundRef.current.style.height = backgroundRect.height + "px";
-        backgroundRef.current.style.transition = "none";
-      } else {
-        backgroundRef.current.style.width = "100%";
-        backgroundRef.current.style.height = "100%";
-        backgroundRef.current.style.transition = "none";
-      }
-
-      setStatus(1); // first time or last time
     }
+
+    setStatus(1);
 
     const newContent = [...content].map((item, j) => {
       return j === i
         ? {
             ...item,
             active: true,
+            activeOrLastActive: true,
             isVisible: false
           }
         : {
             ...item,
             active: false,
+            activeOrLastActive: i === null ? j === index : false,
             isVisible: true
           };
     });
@@ -220,25 +225,75 @@ export const basic = () => {
   useLayoutEffect(
     () => {
       if (status === 1) {
-      } else if (status === 2) {
-        const containerRect = containerRef.current.getBoundingClientRect();
+        console.log(window.getComputedStyle(backgroundRef.current).height);
 
-        // backgroundRef.current.style.width = '100%';//containerRect.width + "px";
-        // backgroundRef.current.style.height = '100%';//containerRect.height + "px";
-        backgroundRef.current.style.width = "100%";
-        backgroundRef.current.style.height = "100%";
-        backgroundRef.current.style.transition =
-          "all 2s cubic-bezier(0.19, 1, 0.22, 1)";
+        if (index !== null) {
+          backgroundRef.current.style.width = "100%";
+          backgroundRef.current.style.height = "100%";
+          backgroundRef.current.style.opacity = 1;
+          backgroundRef.current.style.transition =
+            "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+          containerRef.current.style.left = `${50 * index}px`;
+          containerRef.current.style.transition =
+            "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+        } else {
+          backgroundRef.current.style.width = "100%";
+          backgroundRef.current.style.height = 0;
+          backgroundRef.current.style.opacity = 0;
+          backgroundRef.current.style.transition =
+            "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+          timer.current = setTimeout(() => {
+            setEmpty(true);
+          }, 350);
+        }
+
+        setContent(
+          content.map(item =>
+            item.active
+              ? { ...item, isVisible: true }
+              : { ...item, isVisible: false }
+          )
+        );
+        setStatus(0);
       }
 
-      setContent(
-        content.map(item =>
-          item.active
-            ? { ...item, isVisible: true }
-            : { ...item, isVisible: false }
-        )
-      );
-      setStatus(0);
+      // if coming from empty, set
+      // if (isEmpty) {
+      //     backgroundRef.current.style.width = '100%';
+      //     backgroundRef.current.style.height = 0;
+      //     backgroundRef.current.style.transition = "none";
+      //
+      //     console.log(window.getComputedStyle(backgroundRef.current).height);
+      // }
+
+      // if (status === 1) {
+      //
+      //     backgroundRef.current.style.width = "100%";
+      //     backgroundRef.current.style.height = "0";
+      //     backgroundRef.current.style.transition =
+      //         "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+      //
+      // } else if (status === 2) {
+      //   const containerRect = containerRef.current.getBoundingClientRect();
+      //
+      //   // backgroundRef.current.style.width = '100%';//containerRect.width + "px";
+      //   // backgroundRef.current.style.height = '100%';//containerRect.height + "px";
+      //   backgroundRef.current.style.width = "100%";
+      //   backgroundRef.current.style.height = "100%";
+      //   backgroundRef.current.style.transition =
+      //     "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+      // }
+
+      // setContent(
+      //   content.map(item =>
+      //     item.active
+      //       ? { ...item, isVisible: true }
+      //       : { ...item, isVisible: false }
+      //   )
+      // );
+      // setStatus(0);
     },
     [status]
   );
@@ -261,53 +316,66 @@ export const basic = () => {
       {mounted &&
         ReactDOM.createPortal(
           <Box
-            sx={{ position: "absolute", top: 0, left: 0 }}
-            _ref={containerRef}
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0
+              // transform: typeof index === "number" ? "translateX(" + index * 50 + "px)" : "none",
+              // transition: "all .35s cubic-bezier(0.19, 1, 0.22, 1)",
+            }}
           >
             <Box
               sx={{
                 position: "absolute",
-                top: 0,
-                left: 0,
-                transformOrigin: "0 0",
-                zIndex: -1,
-                width: "100%",
-                height: "100%"
+                top: 0
               }}
-              _ref={backgroundRef}
+              _ref={containerRef}
             >
               <Box
                 sx={{
                   position: "absolute",
                   top: 0,
                   left: 0,
-                  width: "100%",
-                  height: "100%",
-                  transition: "all 2s cubic-bezier(0.19, 1, 0.22, 1)",
-                  bg: "coral",
                   transformOrigin: "0 0",
-                  transform: isAnyContentActive ? "none" : "scaleY(0)"
-                  // opacity: isAnyContentActive ? 1 : 0
+                  zIndex: -1
                 }}
-              />
-            </Box>
-
-            <Box>
-              {content.map((item, index) => (
+                _ref={backgroundRef}
+              >
                 <Box
-                  key={index}
                   sx={{
-                    position: item.active ? "relative" : "absolute",
-                    pointerEvents: item.active ? "default" : "none",
+                    position: "absolute",
                     top: 0,
                     left: 0,
-                    zIndex: item.active ? 1 : 0,
-                    width: "max-content"
+                    width: "100%",
+                    height: "100%",
+                    transition: "all .35s cubic-bezier(0.19, 1, 0.22, 1)",
+                    bg: "coral"
+                    // transformOrigin: "0 0",
+                    // transform: isAnyContentActive ? "none" : "scaleY(0)"
+                    // opacity: isAnyContentActive ? 1 : 0
                   }}
-                >
-                  {item.content(item)}
-                </Box>
-              ))}
+                />
+              </Box>
+
+              <Box>
+                {content.map((item, index) => (
+                  <Box
+                    key={index}
+                    sx={{
+                      position: item.activeOrLastActive
+                        ? "relative"
+                        : "absolute",
+                      pointerEvents: item.active ? "default" : "none",
+                      top: 0,
+                      left: 0,
+                      zIndex: item.active ? 1 : 0,
+                      width: "max-content"
+                    }}
+                  >
+                    {item.content(item)}
+                  </Box>
+                ))}
+              </Box>
             </Box>
 
             {/*<Box>*/}
