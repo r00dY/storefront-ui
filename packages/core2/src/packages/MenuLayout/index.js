@@ -486,6 +486,202 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 //
 // }
 
+/**
+ * For now only uncontrolled (button + layer)
+ */
+function useLayers(layers = []) {
+  // let buttons = [];
+  // let buttonRefs = useRef(layers.map(_ => React.createRef()));
+
+  const [mounted, setMounted] = useState(false);
+
+  let initState = {};
+  layers.forEach((layer, index) => {
+    initState[(layer.key || index).toString()] = {
+      active: false,
+      buttonRef: React.createRef()
+    };
+  });
+
+  const anchorRects = useRef({}); // we cache anchor rects for now, not to call getBoundingClientRect every render
+
+  const [state, setState] = useState(initState);
+
+  let buttons = [];
+  let portal = [];
+
+  layers.forEach((layer, index) => {
+    const key = (layer.key || index).toString();
+
+    const isActive = state[key].active;
+
+    let button = React.cloneElement(layer.button, {
+      onClick: () => {
+        let newState = {
+          ...state
+        };
+
+        for (let k in newState) {
+          if (k === key) {
+            newState[k].active = !newState[k].active;
+          } else {
+            newState[k].active = false;
+          }
+        }
+
+        setState(newState);
+
+        // if (openOnHover) {
+        //     setInternalOpen(true);
+        // } else {
+        //     setInternalOpen(!internalOpen);
+        // }
+      },
+      // onMouseEnter: () => {
+      //     if (!openOnHover) {
+      //         return;
+      //     }
+      //
+      //     setInternalOpen(true);
+      // },
+      // onMouseLeave: () => {
+      //     if (!openOnHover) {
+      //         return;
+      //     }
+      //
+      //     setInternalOpen(false);
+      // },
+      _ref: state[key].buttonRef,
+      selected: isActive
+    });
+
+    if (isActive && mounted) {
+      let {
+        offsetX = 0,
+        offsetY = 0,
+        width,
+        anchoredTo,
+        posX = "left"
+      } = layer;
+
+      if (!anchorRects.current[key]) {
+        anchorRects.current[key] = state[
+          key
+        ].buttonRef.current.getBoundingClientRect();
+      }
+
+      const anchorRect = anchorRects.current[key];
+
+      let position = {};
+
+      if (anchoredTo === "window") {
+        switch (posX) {
+          case "center":
+            position.center = true;
+            break;
+          case "left":
+            position.left = offsetX;
+            position.right = "auto";
+            break;
+          case "right":
+            position.left = "auto";
+            position.right = offsetX;
+            break;
+        }
+      } else {
+        switch (posX) {
+          case "center":
+          // todo: center
+          case "right":
+            position.left = "auto";
+            position.right = offsetX + (window.innerWidth - anchorRect.right);
+            break;
+          case "left-outside":
+            position.left = "auto";
+            position.right = offsetX + (window.innerWidth - anchorRect.left);
+            break;
+          case "right-outside":
+            position.left = offsetX + anchorRect.right;
+            position.right = "auto";
+            break;
+          case "left":
+            position.left = offsetX + anchorRect.left;
+            position.right = "auto";
+        }
+      }
+
+      portal.push(
+        <Box
+          sx={{
+            position: "absolute",
+            left: position.left,
+            right: position.right,
+            top: offsetY,
+            width
+          }}
+          // _ref={ref}
+          // onMouseEnter={() => {
+          //     if (!openOnHover) {
+          //         return;
+          //     }
+          //     setInternalOpen(true);
+          // }}
+          // onMouseOut={() => {
+          //     if (!openOnHover) {
+          //         return;
+          //     }
+          //     setInternalOpen(false);
+          // }}
+          key={"portal-" + key}
+        >
+          {layer.content}
+        </Box>
+      );
+    }
+
+    buttons.push(button);
+  });
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  console.log(portal);
+
+  return {
+    buttons,
+    layers:
+      mounted &&
+      ReactDOM.createPortal(
+        <Box
+          sx={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%"
+          }}
+          // _ref={ref}
+          // onMouseEnter={() => {
+          //     if (!openOnHover) {
+          //         return;
+          //     }
+          //     setInternalOpen(true);
+          // }}
+          // onMouseOut={() => {
+          //     if (!openOnHover) {
+          //         return;
+          //     }
+          //     setInternalOpen(false);
+          // }}
+          key={"portal"}
+        >
+          {portal}
+        </Box>,
+        document.querySelector(".__menulayers__")
+      )
+  };
+}
+
 function Layer(props) {
   let {
     open = false,
@@ -498,8 +694,20 @@ function Layer(props) {
     button,
     width,
     openOnHover = true,
-    onMount
+    onMount,
+    controller
   } = props;
+
+  // if (!controller) {
+  //     controller = useLayers();
+  // }
+  //
+  // const idRef = useRef(null);
+  // useEffect(() => {
+  //     idRef.current = Math.random().toString();
+  // }, []);
+  //
+  // const id = idRef.current;
 
   const [mounted, setMounted] = useState(false);
   const [anchorRect, setAnchorRect] = useState(null);
@@ -679,3 +887,4 @@ function Layer(props) {
 }
 
 MenuLayout.Layer = Layer;
+MenuLayout.useLayers = useLayers;

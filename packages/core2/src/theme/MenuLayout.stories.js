@@ -6,6 +6,8 @@ import { useTheme } from "@commerce-ui/core/Theme";
 import MenuLayout from "@commerce-ui/core/MenuLayout";
 import Button from "./Button/Button";
 
+import Button$ from "@commerce-ui/core/Button";
+
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const VeryLongContent = props => (
@@ -258,42 +260,6 @@ export const basic = () => {
         );
         setStatus(0);
       }
-
-      // if coming from empty, set
-      // if (isEmpty) {
-      //     backgroundRef.current.style.width = '100%';
-      //     backgroundRef.current.style.height = 0;
-      //     backgroundRef.current.style.transition = "none";
-      //
-      //     console.log(window.getComputedStyle(backgroundRef.current).height);
-      // }
-
-      // if (status === 1) {
-      //
-      //     backgroundRef.current.style.width = "100%";
-      //     backgroundRef.current.style.height = "0";
-      //     backgroundRef.current.style.transition =
-      //         "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
-      //
-      // } else if (status === 2) {
-      //   const containerRect = containerRef.current.getBoundingClientRect();
-      //
-      //   // backgroundRef.current.style.width = '100%';//containerRect.width + "px";
-      //   // backgroundRef.current.style.height = '100%';//containerRect.height + "px";
-      //   backgroundRef.current.style.width = "100%";
-      //   backgroundRef.current.style.height = "100%";
-      //   backgroundRef.current.style.transition =
-      //     "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
-      // }
-
-      // setContent(
-      //   content.map(item =>
-      //     item.active
-      //       ? { ...item, isVisible: true }
-      //       : { ...item, isVisible: false }
-      //   )
-      // );
-      // setStatus(0);
     },
     [status]
   );
@@ -304,12 +270,37 @@ export const basic = () => {
 
   console.log(isAnyContentActive);
 
+  const { buttons, layers } = MenuLayout.useLayers([
+    {
+      button: (
+        <Button$>{({ selected }) => `Item 1 ${selected ? "[X]" : ""}`}</Button$>
+      ),
+      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>Test</Box>
+    },
+    {
+      button: (
+        <Button$>{({ selected }) => `Item 2 ${selected ? "[X]" : ""}`}</Button$>
+      ),
+      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>test2</Box>
+    },
+    {
+      button: (
+        <Button$>{({ selected }) => `Item 3 ${selected ? "[X]" : ""}`}</Button$>
+      ),
+      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>test3</Box>,
+      anchoredTo: "window",
+      width: "100%"
+    }
+  ]);
+
   return (
     <MenuLayout
       offset={0}
       contentAbove={
         <Box sx={{ bg: "black", color: "white", p: 40, width: "100%" }}>
           {LOREM} {LOREM} {LOREM}
+          {buttons}
+          {layers}
         </Box>
       }
     >
