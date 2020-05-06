@@ -505,6 +505,9 @@ function useLayers(layers = []) {
 
   const anchorRects = useRef({}); // we cache anchor rects for now, not to call getBoundingClientRect every render
 
+  const containerRef = useRef(null);
+  const backgroundRef = useRef(null);
+
   const [state, setState] = useState(initState);
 
   let buttons = [];
@@ -646,8 +649,6 @@ function useLayers(layers = []) {
     setMounted(true);
   }, []);
 
-  console.log(portal);
-
   return {
     buttons,
     layers:
@@ -674,8 +675,21 @@ function useLayers(layers = []) {
           //     setInternalOpen(false);
           // }}
           key={"portal"}
+          _ref={containerRef}
         >
-          {portal}
+          <Box
+            sx={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              transformOrigin: "0 0",
+              zIndex: -1,
+              bg: "coral"
+            }}
+            _ref={backgroundRef}
+          />
+
+          <Box>{portal}</Box>
         </Box>,
         document.querySelector(".__menulayers__")
       )

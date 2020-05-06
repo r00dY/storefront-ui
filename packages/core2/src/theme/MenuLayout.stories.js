@@ -156,24 +156,10 @@ export const basic = () => {
 
   const [index, setIndex_] = useState(null);
   const [status, setStatus] = useState(0);
-  const [backgroundRect, setBackgroundRect] = useState(null);
   const [content, setContent] = useState(initContent);
 
   const containerRef = useRef(null);
   const backgroundRef = useRef(null);
-
-  const [pos, setPos] = useState({ width: 50, height: 50 });
-
-  /**
-   * TODO:
-   *
-   * 1. Animate background first
-   * 2. After "setIndex" set background to px width / height
-   * 3. Then change content
-   * 4. Animated background back to 100% / 100%.
-   * 5. Same to content.
-   *
-   **/
 
   const [isEmpty, setEmpty] = useState(true);
   const timer = useRef(null);
@@ -265,8 +251,6 @@ export const basic = () => {
   );
 
   let isAnyContentActive = !!content.find(c => c.active);
-
-  const testCallback = () => {};
 
   console.log(isAnyContentActive);
 
