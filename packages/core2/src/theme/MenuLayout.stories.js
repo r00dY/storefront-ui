@@ -250,28 +250,79 @@ export const basic = () => {
     [status]
   );
 
-  let isAnyContentActive = !!content.find(c => c.active);
-
-  console.log(isAnyContentActive);
-
-  const { buttons, layers } = MenuLayout.useLayers([
+  const { buttons, layers, hide } = MenuLayout.useLayers([
     {
       button: (
         <Button$>{({ selected }) => `Item 1 ${selected ? "[X]" : ""}`}</Button$>
       ),
-      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>Test</Box>
+      content: ({ isVisible }) => (
+        <Box
+          sx={{
+            color: "white",
+            p: 100,
+            opacity: isVisible ? 1 : 0,
+            transition: isVisible ? "all .3s .15s" : "all .1s"
+          }}
+        >
+          Test
+        </Box>
+      )
     },
     {
       button: (
         <Button$>{({ selected }) => `Item 2 ${selected ? "[X]" : ""}`}</Button$>
       ),
-      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>test2</Box>
+      content: ({ isVisible }) => (
+        <Box
+          sx={{
+            color: "white",
+            p: 150,
+            opacity: isVisible ? 1 : 0,
+            transition: isVisible ? "all .3s .15s" : "all .1s"
+          }}
+        >
+          Test 2
+        </Box>
+      ),
+      offsetY: 20
     },
     {
       button: (
         <Button$>{({ selected }) => `Item 3 ${selected ? "[X]" : ""}`}</Button$>
       ),
-      content: <Box sx={{ color: "white", bg: "red", p: 100 }}>test3</Box>,
+      content: ({ isVisible }) => (
+        <Box
+          sx={{
+            color: "white",
+            p: 200,
+            width: "100vw",
+            opacity: isVisible ? 1 : 0,
+            transition: isVisible ? "all .3s .15s" : "all .1s"
+          }}
+        >
+          Test 3
+        </Box>
+      ),
+      anchoredTo: "window",
+      width: "100%"
+    },
+    {
+      button: (
+        <Button$>{({ selected }) => `Item 4 ${selected ? "[X]" : ""}`}</Button$>
+      ),
+      content: ({ isVisible }) => (
+        <Box
+          sx={{
+            color: "white",
+            p: 300,
+            width: "100vw",
+            opacity: isVisible ? 1 : 0,
+            transition: isVisible ? "all .3s .15s" : "all .1s"
+          }}
+        >
+          Test 4
+        </Box>
+      ),
       anchoredTo: "window",
       width: "100%"
     }
@@ -283,7 +334,14 @@ export const basic = () => {
       contentAbove={
         <Box sx={{ bg: "black", color: "white", p: 40, width: "100%" }}>
           {LOREM} {LOREM} {LOREM}
-          {buttons}
+          {buttons} &nbsp;{" "}
+          <Button
+            onClick={() => {
+              hide();
+            }}
+          >
+            Hide
+          </Button>
           {layers}
         </Box>
       }

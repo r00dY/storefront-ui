@@ -499,7 +499,9 @@ function useLayers(layers = []) {
   layers.forEach((layer, index) => {
     initState[(layer.key || index).toString()] = {
       active: false,
-      buttonRef: React.createRef()
+      relative: false,
+      buttonRef: React.createRef(),
+      layer
     };
   });
 
@@ -509,30 +511,209 @@ function useLayers(layers = []) {
   const backgroundRef = useRef(null);
 
   const [state, setState] = useState(initState);
+  const [isSwitchingState, setSwitchingState] = useState(false);
+
+  const timer = useRef(null);
 
   let buttons = [];
-  let portal = [];
+  let contents = [];
+
+  const isAtInitState = !Object.values(state).reduce(
+    (acc, val) => acc || val.relative,
+    false
+  ); // init state means that all layers are fully closed (not closing).
+  const isAnyActive = Object.values(state).reduce(
+    (acc, val) => acc || val.active,
+    false
+  ); // init state means that all layers are fully closed (not closing).
+
+  let activeKey = null;
+  Object.entries(state).forEach(([key, val]) => {
+    if (val.active) {
+      activeKey = key;
+    }
+  });
+
+  const getPosition = key => {
+    let { offsetX = 0, offsetY = 0, width, anchoredTo, posX = "left" } = state[
+      key
+    ].layer;
+
+    if (!anchorRects.current[key]) {
+      anchorRects.current[key] = state[
+        key
+      ].buttonRef.current.getBoundingClientRect();
+    }
+
+    const anchorRect = anchorRects.current[key];
+
+    let position = {};
+
+    if (anchoredTo === "window") {
+      switch (posX) {
+        case "center":
+          position.center = true;
+          break;
+        case "left":
+          position.left = offsetX;
+          position.right = "auto";
+          break;
+        case "right":
+          position.left = "auto";
+          position.right = offsetX;
+          break;
+      }
+    } else {
+      switch (posX) {
+        case "center":
+        // todo: center
+        case "right":
+          position.left = "auto";
+          position.right = offsetX + (window.innerWidth - anchorRect.right);
+          break;
+        case "left-outside":
+          position.left = "auto";
+          position.right = offsetX + (window.innerWidth - anchorRect.left);
+          break;
+        case "right-outside":
+          position.left = offsetX + anchorRect.right;
+          position.right = "auto";
+          break;
+        case "left":
+          position.left = offsetX + anchorRect.left;
+          position.right = "auto";
+      }
+    }
+
+    position.top = offsetY;
+    position.width = width;
+    position.anchoredTo = anchoredTo;
+
+    return position;
+  };
+
+  const switchLayer = key => {
+    if (key !== null) {
+      clearTimeout(timer.current);
+    }
+
+    if (isAtInitState) {
+      // if coming from empty, we set init state for animation
+      backgroundRef.current.style.width = "100%";
+      backgroundRef.current.style.height = 0;
+      backgroundRef.current.style.opacity = 0;
+      backgroundRef.current.style.transition = "none";
+
+      const pos = getPosition(key);
+
+      containerRef.current.style.left = `${pos.left}px`;
+      containerRef.current.style.right = `${pos.right}px`;
+      containerRef.current.style.top = `${pos.top}px`;
+      containerRef.current.style.transition = "none";
+    } else {
+      const backgroundRect = backgroundRef.current.getBoundingClientRect();
+
+      backgroundRef.current.style.width = backgroundRect.width + "px";
+      backgroundRef.current.style.height = backgroundRect.height + "px";
+      backgroundRef.current.style.transition = "none";
+    }
+
+    /**
+     * relative means that this menu TAKES SPACE (position: relative)
+     */
+    let newState = {
+      ...state
+    };
+
+    for (let k in newState) {
+      if (k === key) {
+        newState[k].active = true;
+        newState[k].relative = true;
+      } else {
+        if (key === null && newState[k].active) {
+          // If hiding, let's keep relative == true;
+          newState[k].relative = true;
+        } else {
+          newState[k].relative = false;
+        }
+
+        newState[k].active = false;
+      }
+    }
+
+    setState(newState);
+    setSwitchingState(true);
+  };
+
+  useLayoutEffect(
+    () => {
+      if (!isSwitchingState) {
+        return;
+      }
+
+      let _ = window.getComputedStyle(backgroundRef.current).height; // force recalculate styles
+
+      if (isAnyActive) {
+        backgroundRef.current.style.width = "100%";
+        backgroundRef.current.style.height = "100%";
+        backgroundRef.current.style.opacity = 1;
+        backgroundRef.current.style.transition =
+          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+        const pos = getPosition(activeKey);
+
+        containerRef.current.style.left = `${pos.left}px`;
+        containerRef.current.style.right = `${pos.right}px`;
+        containerRef.current.style.top = `${pos.top}px`;
+
+        // containerRef.current.style.left = `${50 * index}px`;
+        containerRef.current.style.transition =
+          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+      } else {
+        backgroundRef.current.style.width = "100%";
+        backgroundRef.current.style.height = 0;
+        backgroundRef.current.style.opacity = 0;
+        backgroundRef.current.style.transition =
+          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+        timer.current = setTimeout(() => {
+          // all relative flags must go down to false (which means that isAtInitState will light up).
+
+          let newState = {
+            ...state
+          };
+
+          for (let k in newState) {
+            newState[k].relative = false;
+          }
+
+          setState(newState);
+        }, 350);
+      }
+
+      setSwitchingState(false);
+
+      // setContent(
+      //     content.map(item =>
+      //         item.active
+      //             ? { ...item, isVisible: true }
+      //             : { ...item, isVisible: false }
+      //     )
+      // );
+      // setStatus(0);
+    },
+    [isSwitchingState]
+  );
 
   layers.forEach((layer, index) => {
     const key = (layer.key || index).toString();
 
     const isActive = state[key].active;
+    const relative = state[key].relative;
 
     let button = React.cloneElement(layer.button, {
       onClick: () => {
-        let newState = {
-          ...state
-        };
-
-        for (let k in newState) {
-          if (k === key) {
-            newState[k].active = !newState[k].active;
-          } else {
-            newState[k].active = false;
-          }
-        }
-
-        setState(newState);
+        switchLayer(key);
 
         // if (openOnHover) {
         //     setInternalOpen(true);
@@ -558,69 +739,80 @@ function useLayers(layers = []) {
       selected: isActive
     });
 
-    if (isActive && mounted) {
-      let {
-        offsetX = 0,
-        offsetY = 0,
-        width,
-        anchoredTo,
-        posX = "left"
-      } = layer;
+    if (mounted) {
+      const position = getPosition(key);
+      //
+      // let {
+      //     offsetX = 0,
+      //     offsetY = 0,
+      //     width,
+      //     anchoredTo,
+      //     posX = "left"
+      // } = layer;
+      //
+      // if (!anchorRects.current[key]) {
+      //     anchorRects.current[key] = state[
+      //         key
+      //         ].buttonRef.current.getBoundingClientRect();
+      // }
+      //
+      // const anchorRect = anchorRects.current[key];
+      //
+      // let position = {};
+      //
+      // if (anchoredTo === "window") {
+      //     switch (posX) {
+      //         case "center":
+      //             position.center = true;
+      //             break;
+      //         case "left":
+      //             position.left = offsetX;
+      //             position.right = "auto";
+      //             break;
+      //         case "right":
+      //             position.left = "auto";
+      //             position.right = offsetX;
+      //             break;
+      //     }
+      // } else {
+      //     switch (posX) {
+      //         case "center":
+      //         // todo: center
+      //         case "right":
+      //             position.left = "auto";
+      //             position.right = offsetX + (window.innerWidth - anchorRect.right);
+      //             break;
+      //         case "left-outside":
+      //             position.left = "auto";
+      //             position.right = offsetX + (window.innerWidth - anchorRect.left);
+      //             break;
+      //         case "right-outside":
+      //             position.left = offsetX + anchorRect.right;
+      //             position.right = "auto";
+      //             break;
+      //         case "left":
+      //             position.left = offsetX + anchorRect.left;
+      //             position.right = "auto";
+      //     }
+      // }
 
-      if (!anchorRects.current[key]) {
-        anchorRects.current[key] = state[
-          key
-        ].buttonRef.current.getBoundingClientRect();
-      }
+      const content =
+        typeof layer.content === "function"
+          ? layer.content({ isVisible: isActive && !isSwitchingState })
+          : layer.content;
 
-      const anchorRect = anchorRects.current[key];
-
-      let position = {};
-
-      if (anchoredTo === "window") {
-        switch (posX) {
-          case "center":
-            position.center = true;
-            break;
-          case "left":
-            position.left = offsetX;
-            position.right = "auto";
-            break;
-          case "right":
-            position.left = "auto";
-            position.right = offsetX;
-            break;
-        }
-      } else {
-        switch (posX) {
-          case "center":
-          // todo: center
-          case "right":
-            position.left = "auto";
-            position.right = offsetX + (window.innerWidth - anchorRect.right);
-            break;
-          case "left-outside":
-            position.left = "auto";
-            position.right = offsetX + (window.innerWidth - anchorRect.left);
-            break;
-          case "right-outside":
-            position.left = offsetX + anchorRect.right;
-            position.right = "auto";
-            break;
-          case "left":
-            position.left = offsetX + anchorRect.left;
-            position.right = "auto";
-        }
-      }
-
-      portal.push(
+      contents.push(
         <Box
           sx={{
-            position: "absolute",
-            left: position.left,
-            right: position.right,
-            top: offsetY,
-            width
+            position: relative ? "relative" : "absolute",
+            zIndex: relative ? 1 : 0,
+            pointerEvents: isActive ? "default" : "none",
+            // left: position.left,
+            // right: position.right,
+            // top: offsetY,
+            // width: "max-content"
+            width: "max-content"
+            // width
           }}
           // _ref={ref}
           // onMouseEnter={() => {
@@ -637,7 +829,7 @@ function useLayers(layers = []) {
           // }}
           key={"portal-" + key}
         >
-          {layer.content}
+          {content}
         </Box>
       );
     }
@@ -658,8 +850,7 @@ function useLayers(layers = []) {
           sx={{
             position: "absolute",
             top: 0,
-            left: 0,
-            width: "100%"
+            left: 0
           }}
           // _ref={ref}
           // onMouseEnter={() => {
@@ -689,10 +880,13 @@ function useLayers(layers = []) {
             _ref={backgroundRef}
           />
 
-          <Box>{portal}</Box>
+          {contents}
         </Box>,
         document.querySelector(".__menulayers__")
-      )
+      ),
+    hide: () => {
+      switchLayer(null);
+    }
   };
 }
 
