@@ -514,7 +514,6 @@ function useLayers(layers = []) {
   const [isSwitchingState, setSwitchingState] = useState(false);
 
   const timer = useRef(null);
-
   let buttons = [];
   let contents = [];
 
@@ -593,6 +592,10 @@ function useLayers(layers = []) {
   };
 
   const switchLayer = key => {
+    if (key === activeKey) {
+      return;
+    }
+
     if (key !== null) {
       clearTimeout(timer.current);
     }
@@ -705,36 +708,49 @@ function useLayers(layers = []) {
     [isSwitchingState]
   );
 
+  const hoverTimer = useRef(null);
+
+  const onHover = (key, timeout = 100) => {
+    clearTimeout(hoverTimer.current);
+
+    if (timeout <= 0) {
+      switchLayer(key);
+    } else {
+      hoverTimer.current = setTimeout(() => {
+        switchLayer(key);
+      }, timeout);
+    }
+  };
+
   layers.forEach((layer, index) => {
     const key = (layer.key || index).toString();
 
     const isActive = state[key].active;
     const relative = state[key].relative;
+    const openOnHover = !!state[key].layer.openOnHover;
 
     let button = React.cloneElement(layer.button, {
       onClick: () => {
-        switchLayer(key);
-
-        // if (openOnHover) {
-        //     setInternalOpen(true);
-        // } else {
-        //     setInternalOpen(!internalOpen);
-        // }
+        if (openOnHover) {
+          onHover(key, 0);
+        } else {
+          onHover(activeKey === key ? null : key, 0);
+        }
       },
-      // onMouseEnter: () => {
-      //     if (!openOnHover) {
-      //         return;
-      //     }
-      //
-      //     setInternalOpen(true);
-      // },
-      // onMouseLeave: () => {
-      //     if (!openOnHover) {
-      //         return;
-      //     }
-      //
-      //     setInternalOpen(false);
-      // },
+      onMouseEnter: () => {
+        if (!openOnHover) {
+          return;
+        }
+
+        onHover(key, 100);
+      },
+      onMouseLeave: () => {
+        if (!openOnHover) {
+          return;
+        }
+
+        onHover(null, 100);
+      },
       _ref: state[key].buttonRef,
       selected: isActive
     });
@@ -827,6 +843,19 @@ function useLayers(layers = []) {
           //     }
           //     setInternalOpen(false);
           // }}
+
+          onMouseEnter={() => {
+            if (!openOnHover) {
+              return;
+            }
+            onHover(key);
+          }}
+          onMouseOut={() => {
+            if (!openOnHover) {
+              return;
+            }
+            onHover(null);
+          }}
           key={"portal-" + key}
         >
           {content}

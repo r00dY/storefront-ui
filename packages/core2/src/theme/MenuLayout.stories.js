@@ -266,7 +266,8 @@ export const basic = () => {
         >
           Test
         </Box>
-      )
+      ),
+      openOnHover: true
     },
     {
       button: (
@@ -284,7 +285,8 @@ export const basic = () => {
           Test 2
         </Box>
       ),
-      offsetY: 20
+      offsetY: 20,
+      openOnHover: true
     },
     {
       button: (
@@ -304,7 +306,8 @@ export const basic = () => {
         </Box>
       ),
       anchoredTo: "window",
-      width: "100%"
+      width: "100%",
+      openOnHover: true
     },
     {
       button: (
@@ -324,7 +327,8 @@ export const basic = () => {
         </Box>
       ),
       anchoredTo: "window",
-      width: "100%"
+      width: "100%",
+      openOnHover: true
     }
   ]);
 
