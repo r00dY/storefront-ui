@@ -8,6 +8,8 @@ import Button from "./Button/Button";
 
 import Button$ from "@commerce-ui/core/Button";
 
+import Container from "@commerce-ui/core/Container";
+
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const VeryLongContent = props => (
@@ -55,6 +57,16 @@ const getContent = (text = "Dupa", padding = 40) => ({
     opacity: isVisible ? 1 : 0 // first opacity the
   })
 });
+
+const MenuButton = props => (
+  <Button$ {...props} sx={{ height: 40, px: 10 }}>
+    {({ selected }) => (
+      <Box sx={{ textDecoration: selected ? "underline" : "none" }}>
+        {props.children}
+      </Box>
+    )}
+  </Button$>
+);
 
 export const basic = () => {
   const [menu1Open, setMenu1Open] = useState(true);
