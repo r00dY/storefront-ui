@@ -207,40 +207,49 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
         )}
 
         <Box
-          className={"__menulayers__"}
           sx={{
             position: "absolute",
             zIndex: 1,
             width: "100%",
+            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            overflow: "hidden",
+            pointerEvents: "none", // VERY IMPORTANT!!!!
             display: "flex",
             justifyContent: "center"
           }}
         >
           <Box
-            className={"__menulayersbackground__"}
             sx={{
-              position: "absolute",
-              pointerEvents: "none",
-              zIndex: -1,
-              top: 0,
-              left: 0,
-              width: 1,
-              height: 1,
-              transformOrigin: "0 0"
+              pointerEvents: "auto"
             }}
-          >
-            <Box
-              className={"__menulayersbackgroundinside__"}
-              sx={{
-                position: "absolute",
-                top: 0,
-                left: 0,
-                width: "100%",
-                height: "100%",
-                bg: "black"
-              }}
-            />
-          </Box>
+            className={"__menulayers__"}
+          />
+
+          {/*<Box*/}
+          {/*className={"__menulayersbackground__"}*/}
+          {/*sx={{*/}
+          {/*position: "absolute",*/}
+          {/*pointerEvents: "none",*/}
+          {/*zIndex: -1,*/}
+          {/*top: 0,*/}
+          {/*left: 0,*/}
+          {/*width: 1,*/}
+          {/*height: 1,*/}
+          {/*transformOrigin: "0 0"*/}
+          {/*}}*/}
+          {/*>*/}
+          {/*<Box*/}
+          {/*className={"__menulayersbackgroundinside__"}*/}
+          {/*sx={{*/}
+          {/*position: "absolute",*/}
+          {/*top: 0,*/}
+          {/*left: 0,*/}
+          {/*width: "100%",*/}
+          {/*height: "100%",*/}
+          {/*bg: "black"*/}
+          {/*}}*/}
+          {/*/>*/}
+          {/*</Box>*/}
         </Box>
         {/*{*/}
         {/*dialogs && <Box sx={{position: "absolute", zIndex: 1}}>{ dialogs[0] }</Box>*/}
@@ -534,6 +543,10 @@ function useLayers(layers = []) {
   });
 
   const getPosition = key => {
+    if (key === null) {
+      return;
+    }
+
     let { offsetX = 0, offsetY = 0, width, anchoredTo, posX = "left" } = state[
       key
     ].layer;
@@ -756,7 +769,6 @@ function useLayers(layers = []) {
     });
 
     if (mounted) {
-      const position = getPosition(key);
       //
       // let {
       //     offsetX = 0,
@@ -821,6 +833,8 @@ function useLayers(layers = []) {
         <Box
           sx={{
             position: relative ? "relative" : "absolute",
+            top: 0,
+            left: 0,
             zIndex: relative ? 1 : 0,
             pointerEvents: isActive ? "default" : "none",
             // left: position.left,
@@ -850,7 +864,7 @@ function useLayers(layers = []) {
             }
             onHover(key);
           }}
-          onMouseOut={() => {
+          onMouseLeave={() => {
             if (!openOnHover) {
               return;
             }
@@ -904,7 +918,8 @@ function useLayers(layers = []) {
               left: 0,
               transformOrigin: "0 0",
               zIndex: -1,
-              bg: "coral"
+              bg: "white",
+              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
             }}
             _ref={backgroundRef}
           />
