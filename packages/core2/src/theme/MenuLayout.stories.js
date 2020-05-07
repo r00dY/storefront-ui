@@ -94,8 +94,8 @@ const MenuContent = ({
       }}
     >
       <Grid rowGap={16} cols={1}>
-        {items.map(item => (
-          <Box key={item}>{item}</Box>
+        {items.map((item, index) => (
+          <Box key={index}>{item}</Box>
         ))}
       </Grid>
 
@@ -150,67 +150,72 @@ export const basic = () => {
     </VeryLongContent>
   );
 
-  const menu1 = MenuLayout.useLayers([
-    {
-      button: <MenuButton>Lorem</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent items={ITEMS1} isVisible={isVisible} />
-      ),
-      openOnHover: true
-    },
-    {
-      button: <MenuButton>Ipsum</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent items={ITEMS2} isVisible={isVisible} />
-      ),
-      offsetY: 20,
-      openOnHover: true
-    },
-    {
-      button: <MenuButton>Dolor</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent
-          items={[...ITEMS1, ...ITEMS1]}
-          isVisible={isVisible}
-          width={"100vw"}
-          rightBox={"black"}
-        />
-      ),
-      anchoredTo: "window",
-      openOnHover: true
-    },
-    {
-      button: <MenuButton>Amet</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent
-          items={[...ITEMS2, ...ITEMS2]}
-          isVisible={isVisible}
-          width={"100vw"}
-          rightBox={"antiquewhite"}
-        />
-      ),
-      anchoredTo: "window",
-      openOnHover: true
-    }
-  ]);
+  const menu1 = MenuLayout.useLayers({
+    items: [
+      {
+        button: <MenuButton>Lorem</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent items={ITEMS1} isVisible={isVisible} />
+        ),
+        openOnHover: true
+      },
+      {
+        button: <MenuButton>Ipsum</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent items={ITEMS2} isVisible={isVisible} />
+        ),
+        offsetY: 20,
+        openOnHover: true
+      },
+      {
+        button: <MenuButton>Dolor</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent
+            items={[...ITEMS1, ...ITEMS1]}
+            isVisible={isVisible}
+            width={"100vw"}
+            rightBox={"black"}
+          />
+        ),
+        anchoredTo: "window",
+        openOnHover: true
+      },
+      {
+        button: <MenuButton>Amet</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent
+            items={[...ITEMS2, ...ITEMS2]}
+            isVisible={isVisible}
+            width={"100vw"}
+            rightBox={"antiquewhite"}
+          />
+        ),
+        anchoredTo: "window",
+        openOnHover: true
+      }
+    ]
+  });
 
-  const menu2 = MenuLayout.useLayers([
-    {
-      button: <MenuButton>Lorem</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent items={ITEMS1} isVisible={isVisible} />
-      ),
-      openOnHover: true
-    },
-    {
-      button: <MenuButton>Ipsum</MenuButton>,
-      content: ({ isVisible }) => (
-        <MenuContent items={ITEMS2} isVisible={isVisible} />
-      ),
-      offsetY: 20,
-      openOnHover: true
-    }
-  ]);
+  const menu2 = MenuLayout.useLayers({
+    items: [
+      {
+        button: <MenuButton>Lorem</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent items={ITEMS1} isVisible={isVisible} />
+        ),
+        openOnHover: true
+      },
+      {
+        button: <MenuButton>Ipsum</MenuButton>,
+        content: ({ isVisible }) => (
+          <MenuContent items={ITEMS2} isVisible={isVisible} />
+        ),
+        offsetY: 20,
+        openOnHover: true
+      }
+    ],
+    openOnHover: false
+  });
 
   return (
     <MenuLayout

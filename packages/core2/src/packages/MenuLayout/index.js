@@ -197,12 +197,15 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
                 transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
               }
         }
+        className={"__menubar__"}
       >
         {takesSpace && (
           <ShowHide isOpen={open} stickToBottom={true}>
             {bar}
           </ShowHide>
         )}
+
+        {!takesSpace && bar}
 
         <Box
           sx={{
@@ -223,8 +226,6 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             className={"__menulayers__"}
           />
         </Box>
-
-        {!takesSpace && bar}
 
         <MenuBarsContainer
           bars={bars.slice(1)}
@@ -467,7 +468,9 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 /**
  * For now only uncontrolled (button + layer)
  */
-function useLayers(layers = []) {
+function useLayers({ items, openOnHover = true }) {
+  const layers = items;
+
   // let buttons = [];
   // let buttonRefs = useRef(layers.map(_ => React.createRef()));
 
@@ -709,7 +712,6 @@ function useLayers(layers = []) {
 
     const isActive = state[key].active;
     const relative = state[key].relative;
-    const openOnHover = !!state[key].layer.openOnHover;
 
     let button = React.cloneElement(layer.button, {
       onClick: () => {
@@ -895,7 +897,10 @@ function useLayers(layers = []) {
 
           {contents}
         </Box>,
-        document.querySelector(".__menulayers__")
+        Object.values(state)[0]
+          .buttonRef.current.closest(".__menubar__")
+          .querySelector(".__menulayers__")
+        // document.querySelector(".__menulayers__")
       ),
     hide: () => {
       switchLayer(null);
