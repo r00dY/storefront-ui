@@ -106,6 +106,19 @@ const MenuContent = ({
   </Box>
 );
 
+const ITEMS1 = ["Lorem", "Ipsum dolor", "Sit", "Amet latino"];
+const ITEMS2 = [
+  "Dog",
+  "Cat",
+  "Dolphin",
+  "Fish",
+  "Racoon",
+  "Long named animal",
+  "Chicken",
+  "Whale",
+  "Tiger"
+];
+
 export const basic = () => {
   const [menu1Open, setMenu1Open] = useState(true);
   const [menu2Open, setMenu2Open] = useState(true);
@@ -137,34 +150,18 @@ export const basic = () => {
     </VeryLongContent>
   );
 
-  const { buttons, layers, hide } = MenuLayout.useLayers([
+  const menu1 = MenuLayout.useLayers([
     {
       button: <MenuButton>Lorem</MenuButton>,
       content: ({ isVisible }) => (
-        <MenuContent
-          items={["Lorem", "Ipsum dolor", "Sit", "Amet latino"]}
-          isVisible={isVisible}
-        />
+        <MenuContent items={ITEMS1} isVisible={isVisible} />
       ),
       openOnHover: true
     },
     {
       button: <MenuButton>Ipsum</MenuButton>,
       content: ({ isVisible }) => (
-        <MenuContent
-          items={[
-            "Dog",
-            "Cat",
-            "Dolphin",
-            "Fish",
-            "Racoon",
-            "Long named animal",
-            "Chicken",
-            "Whale",
-            "Tiger"
-          ]}
-          isVisible={isVisible}
-        />
+        <MenuContent items={ITEMS2} isVisible={isVisible} />
       ),
       offsetY: 20,
       openOnHover: true
@@ -173,16 +170,7 @@ export const basic = () => {
       button: <MenuButton>Dolor</MenuButton>,
       content: ({ isVisible }) => (
         <MenuContent
-          items={[
-            "Lorem",
-            "Ipsum dolor",
-            "Sit",
-            "Amet latino",
-            "Lorem",
-            "Ipsum dolor",
-            "Sit",
-            "Amet latino"
-          ]}
+          items={[...ITEMS1, ...ITEMS1]}
           isVisible={isVisible}
           width={"100vw"}
           rightBox={"black"}
@@ -195,26 +183,7 @@ export const basic = () => {
       button: <MenuButton>Amet</MenuButton>,
       content: ({ isVisible }) => (
         <MenuContent
-          items={[
-            "Dog",
-            "Cat",
-            "Dolphin",
-            "Fish",
-            "Racoon",
-            "Long named animal",
-            "Chicken",
-            "Whale",
-            "Tiger",
-            "Dog",
-            "Cat",
-            "Dolphin",
-            "Fish",
-            "Racoon",
-            "Long named animal",
-            "Chicken",
-            "Whale",
-            "Tiger"
-          ]}
+          items={[...ITEMS2, ...ITEMS2]}
           isVisible={isVisible}
           width={"100vw"}
           rightBox={"antiquewhite"}
@@ -225,29 +194,46 @@ export const basic = () => {
     }
   ]);
 
+  const menu2 = MenuLayout.useLayers([
+    {
+      button: <MenuButton>Lorem</MenuButton>,
+      content: ({ isVisible }) => (
+        <MenuContent items={ITEMS1} isVisible={isVisible} />
+      ),
+      openOnHover: true
+    },
+    {
+      button: <MenuButton>Ipsum</MenuButton>,
+      content: ({ isVisible }) => (
+        <MenuContent items={ITEMS2} isVisible={isVisible} />
+      ),
+      offsetY: 20,
+      openOnHover: true
+    }
+  ]);
+
   return (
     <MenuLayout
       offset={0}
       contentAbove={
-        <Box sx={{ bg: "black", color: "white", p: 20, width: "100%" }}>
+        <Box
+          sx={{
+            bg: "black",
+            color: "white",
+            p: 20,
+            width: "100%",
+            textAlign: "center"
+          }}
+        >
           Here comes a long message about newsletter signup, promotions or any
           other special news.
-          {/*{buttons} &nbsp;{" "}*/}
-          {/*<Button*/}
-          {/*onClick={() => {*/}
-          {/*hide();*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Hide*/}
-          {/*</Button>*/}
-          {/*{layers}*/}
         </Box>
       }
     >
       <MenuLayout.MenuBar open={menu1Open} takesSpace={true}>
         <MenuBar color={"lightblue"}>
-          {buttons}
-          {layers}
+          {menu1.buttons}
+          {menu1.layers}
 
           {/*<Box as={"p"} ref={textRef}>*/}
           {/*Menu bar content lorem ipsum dolro sit amet*/}
@@ -346,7 +332,8 @@ export const basic = () => {
 
       <MenuLayout.MenuBar open={menu2Open} takesSpace={false}>
         <MenuBar color={"coral"}>
-          Menu bar content lorem ipsum dolro sit amet
+          {menu2.buttons}
+          {menu2.layers}
         </MenuBar>
       </MenuLayout.MenuBar>
 

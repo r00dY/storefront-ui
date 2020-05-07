@@ -179,8 +179,6 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   const open = isBarOpen(bar);
   const takesSpace = !!bar.props.takesSpace && previousBarTakesSpace;
 
-  const dialogs = bar.props.dialogs;
-
   return (
     <Box
       sx={{
@@ -224,36 +222,7 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             }}
             className={"__menulayers__"}
           />
-
-          {/*<Box*/}
-          {/*className={"__menulayersbackground__"}*/}
-          {/*sx={{*/}
-          {/*position: "absolute",*/}
-          {/*pointerEvents: "none",*/}
-          {/*zIndex: -1,*/}
-          {/*top: 0,*/}
-          {/*left: 0,*/}
-          {/*width: 1,*/}
-          {/*height: 1,*/}
-          {/*transformOrigin: "0 0"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*className={"__menulayersbackgroundinside__"}*/}
-          {/*sx={{*/}
-          {/*position: "absolute",*/}
-          {/*top: 0,*/}
-          {/*left: 0,*/}
-          {/*width: "100%",*/}
-          {/*height: "100%",*/}
-          {/*bg: "black"*/}
-          {/*}}*/}
-          {/*/>*/}
-          {/*</Box>*/}
         </Box>
-        {/*{*/}
-        {/*dialogs && <Box sx={{position: "absolute", zIndex: 1}}>{ dialogs[0] }</Box>*/}
-        {/*}*/}
 
         {!takesSpace && bar}
 
