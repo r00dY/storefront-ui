@@ -74,7 +74,8 @@ const MenuContent = ({
   items,
   isVisible,
   width = "auto",
-  rightBox = false
+  rightBox = false,
+  bg = "transparent"
 }) => (
   <Box
     sx={{
@@ -83,6 +84,7 @@ const MenuContent = ({
       opacity: isVisible ? 1 : 0,
       transition: isVisible ? "all .5s .15s" : "all .05s",
       minWidth: 400,
+      bg,
       width
     }}
   >
@@ -189,7 +191,12 @@ export const basic = () => {
         ),
         anchoredTo: "window"
       }
-    ]
+    ],
+    backgroundStyles: ({ isVisible }) => ({
+      backgroundColor: "white",
+      boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+      height: isVisible ? "100%" : 0
+    })
   });
 
   const menu2 = MenuLayout.useLayers({
@@ -208,7 +215,12 @@ export const basic = () => {
         offsetY: 20
       }
     ],
-    openOnHover: false
+    openOnHover: false,
+    backgroundStyles: ({ isVisible }) => ({
+      backgroundColor: "white",
+      boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+      opacity: isVisible ? 1 : 0
+    })
   });
 
   return (
@@ -250,7 +262,11 @@ export const basic = () => {
             offsetY={10}
           >
             {({ isVisible }) => (
-              <MenuContent items={ITEMS2} isVisible={isVisible} />
+              <MenuContent
+                items={ITEMS2}
+                isVisible={isVisible}
+                bg={"antiquewhite"}
+              />
             )}
           </MenuLayout.Layer>
 
@@ -259,7 +275,7 @@ export const basic = () => {
             offsetY={10}
           >
             {({ isVisible }) => (
-              <MenuContent items={ITEMS1} isVisible={isVisible} />
+              <MenuContent items={ITEMS1} isVisible={isVisible} bg={"coral"} />
             )}
           </MenuLayout.Layer>
         </MenuBar>

@@ -468,7 +468,11 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 /**
  * For now only uncontrolled (button + layer)
  */
-function useLayers({ items, openOnHover = true }) {
+function useLayers({
+  items,
+  openOnHover = true,
+  backgroundStyles = ({ isVisible }) => ({ opacity: isVisible ? 1 : 0 })
+}) {
   const layers = items;
 
   // let buttons = [];
@@ -576,6 +580,40 @@ function useLayers({ items, openOnHover = true }) {
     return position;
   };
 
+  // 0 -> at init state
+  // 1 -> invisible
+  // 2 -> visible
+
+  const applyBackgroundStyles = ({
+    isVisible,
+    width,
+    height,
+    noTransition = false
+  }) => {
+    const bs = backgroundStyles({ isVisible });
+
+    // Defaults
+    backgroundRef.current.style.width = "100%";
+    backgroundRef.current.style.height = "100%";
+    backgroundRef.current.style.transition =
+      "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+    for (let x in bs) {
+      backgroundRef.current.style[x] = bs[x];
+    }
+
+    if (width) {
+      backgroundRef.current.style.width = width;
+    }
+    if (height) {
+      backgroundRef.current.style.height = height;
+    }
+
+    if (noTransition) {
+      backgroundRef.current.style.transition = "none";
+    }
+  };
+
   const switchLayer = key => {
     if (key === activeKey) {
       return;
@@ -587,10 +625,20 @@ function useLayers({ items, openOnHover = true }) {
 
     if (isAtInitState) {
       // if coming from empty, we set init state for animation
-      backgroundRef.current.style.width = "100%";
-      backgroundRef.current.style.height = 0;
-      backgroundRef.current.style.opacity = 0;
-      backgroundRef.current.style.transition = "none";
+
+      applyBackgroundStyles({
+        isVisible: false,
+        noTransition: true
+      });
+      // backgroundRef.current.style.width = "100%";
+      // backgroundRef.current.style.height = "100%";
+      //
+      // const bs = backgroundStyles({ isVisible: true });
+      // for (let x in bs) {
+      //     backgroundRef.current.style[x] = bs[x];
+      // }
+      //
+      // backgroundRef.current.style.transition = "none";
 
       const pos = getPosition(key);
 
@@ -599,11 +647,16 @@ function useLayers({ items, openOnHover = true }) {
       containerRef.current.style.top = `${pos.top}px`;
       containerRef.current.style.transition = "none";
     } else {
-      const backgroundRect = backgroundRef.current.getBoundingClientRect();
-
-      backgroundRef.current.style.width = backgroundRect.width + "px";
-      backgroundRef.current.style.height = backgroundRect.height + "px";
-      backgroundRef.current.style.transition = "none";
+      // const backgroundRect = backgroundRef.current.getBoundingClientRect();
+      // applyBackgroundStyles({
+      //             //     transition: "none",
+      //             //     isVisible: true,
+      //             //     width: backgroundRect.width + "px",
+      //             //     height: backgroundRect.height + "px"
+      //             // });
+      // backgroundRef.current.style.width = backgroundRect.width + "px";
+      // backgroundRef.current.style.height = backgroundRect.height + "px";
+      // backgroundRef.current.style.transition = "none";
     }
 
     /**
@@ -642,11 +695,19 @@ function useLayers({ items, openOnHover = true }) {
       let _ = window.getComputedStyle(backgroundRef.current).height; // force recalculate styles
 
       if (isAnyActive) {
-        backgroundRef.current.style.width = "100%";
-        backgroundRef.current.style.height = "100%";
-        backgroundRef.current.style.opacity = 1;
-        backgroundRef.current.style.transition =
-          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+        // backgroundRef.current.style.width = "100%";
+        // backgroundRef.current.style.height = "100%";
+        // backgroundRef.current.style.opacity = 1;
+        // backgroundRef.current.style.transition =
+        //     "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+        const containerRect = containerRef.current.getBoundingClientRect();
+
+        applyBackgroundStyles({
+          isVisible: true,
+          width: containerRect.width + "px", //"100%",
+          height: containerRect.height + "px" //"100%"
+        });
 
         const pos = getPosition(activeKey);
 
@@ -658,11 +719,26 @@ function useLayers({ items, openOnHover = true }) {
         containerRef.current.style.transition =
           "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
       } else {
-        backgroundRef.current.style.width = "100%";
-        backgroundRef.current.style.height = 0;
-        backgroundRef.current.style.opacity = 0;
-        backgroundRef.current.style.transition =
-          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+        // backgroundRef.current.style.width = "100%";
+        // backgroundRef.current.style.height = 0;
+        // backgroundRef.current.style.opacity = 0;
+        // backgroundRef.current.style.transition =
+        //     "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+        // backgroundRef.current.style.width = "100%";
+        // backgroundRef.current.style.height = "100%";
+        // backgroundRef.current.style.transition = "all 2s linear";// cubic-bezier(0.19, 1, 0.22, 1)";
+
+        applyBackgroundStyles({
+          isVisible: false
+        });
+
+        // const bs = backgroundStyles({ isVisible: false });
+        // for (let x in bs) {
+        //     backgroundRef.current.style[x] = bs[x];
+        // }
+        //
+        //
 
         timer.current = setTimeout(() => {
           // all relative flags must go down to false (which means that isAtInitState will light up).
@@ -795,7 +871,8 @@ function useLayers({ items, openOnHover = true }) {
           sx={{
             position: "absolute",
             top: 0,
-            left: 0
+            left: 0,
+            pointerEvents: isAnyActive ? "auto" : "none"
           }}
           key={"portal"}
           _ref={containerRef}
@@ -806,9 +883,9 @@ function useLayers({ items, openOnHover = true }) {
               top: 0,
               left: 0,
               transformOrigin: "0 0",
-              zIndex: -1,
-              bg: "white",
-              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
+              zIndex: -1
+              // bg: "white",
+              // boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
             }}
             _ref={backgroundRef}
           />
@@ -826,7 +903,7 @@ function useLayers({ items, openOnHover = true }) {
 }
 
 function LayerSingle(props) {
-  let { button, children, openOnHover } = props;
+  let { button, children, openOnHover, backgroundStyles } = props;
 
   const { buttons, layers } = useLayers({
     items: [
@@ -836,10 +913,10 @@ function LayerSingle(props) {
         ...props
       }
     ],
-    openOnHover
+    openOnHover,
+    backgroundStyles
   });
 
-  console.log("---", buttons, layers);
   return (
     <>
       {buttons}
