@@ -156,16 +156,14 @@ export const basic = () => {
         button: <MenuButton>Lorem</MenuButton>,
         content: ({ isVisible }) => (
           <MenuContent items={ITEMS1} isVisible={isVisible} />
-        ),
-        openOnHover: true
+        )
       },
       {
         button: <MenuButton>Ipsum</MenuButton>,
         content: ({ isVisible }) => (
           <MenuContent items={ITEMS2} isVisible={isVisible} />
         ),
-        offsetY: 20,
-        openOnHover: true
+        offsetY: 20
       },
       {
         button: <MenuButton>Dolor</MenuButton>,
@@ -177,8 +175,7 @@ export const basic = () => {
             rightBox={"black"}
           />
         ),
-        anchoredTo: "window",
-        openOnHover: true
+        anchoredTo: "window"
       },
       {
         button: <MenuButton>Amet</MenuButton>,
@@ -190,8 +187,7 @@ export const basic = () => {
             rightBox={"antiquewhite"}
           />
         ),
-        anchoredTo: "window",
-        openOnHover: true
+        anchoredTo: "window"
       }
     ]
   });
@@ -202,16 +198,14 @@ export const basic = () => {
         button: <MenuButton>Lorem</MenuButton>,
         content: ({ isVisible }) => (
           <MenuContent items={ITEMS1} isVisible={isVisible} />
-        ),
-        openOnHover: true
+        )
       },
       {
         button: <MenuButton>Ipsum</MenuButton>,
         content: ({ isVisible }) => (
           <MenuContent items={ITEMS2} isVisible={isVisible} />
         ),
-        offsetY: 20,
-        openOnHover: true
+        offsetY: 20
       }
     ],
     openOnHover: false
@@ -239,99 +233,6 @@ export const basic = () => {
         <MenuBar color={"lightblue"}>
           {menu1.buttons}
           {menu1.layers}
-
-          {/*<Box as={"p"} ref={textRef}>*/}
-          {/*Menu bar content lorem ipsum dolro sit amet*/}
-          {/*</Box>*/}
-          {/*<MenuLayout.Layer*/}
-          {/*posX={"left"}*/}
-          {/*offsetY={10}*/}
-          {/*offsetX={0}*/}
-          {/*button={<Button>Open menu</Button>}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*position: "relative",*/}
-          {/*overflow: "hidden"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*p: 40,*/}
-          {/*bg: "white"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Dupa*/}
-          {/*</Box>*/}
-          {/*</Box>*/}
-          {/*</MenuLayout.Layer>*/}
-          {/*&nbsp;&nbsp;*/}
-          {/*<MenuLayout.Layer*/}
-          {/*posX={"left"}*/}
-          {/*offsetY={10}*/}
-          {/*offsetX={0}*/}
-          {/*button={<Button>Open menu</Button>}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*// opacity: before ? 0 : 1,*/}
-          {/*position: "relative",*/}
-          {/*overflow: "hidden"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*p: 100,*/}
-          {/*bg: "white"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Dupa 2*/}
-          {/*</Box>*/}
-          {/*</Box>*/}
-          {/*</MenuLayout.Layer>*/}
-          {/*&nbsp;&nbsp;*/}
-          {/*<MenuLayout.Layer*/}
-          {/*posX={"left"}*/}
-          {/*offsetY={0}*/}
-          {/*offsetX={0}*/}
-          {/*button={<Button>Open menu window</Button>}*/}
-          {/*anchoredTo={"window"}*/}
-          {/*width={"100%"}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*// opacity: before ? 0 : 1,*/}
-          {/*position: "relative",*/}
-          {/*overflow: "hidden"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*p: 100,*/}
-          {/*bg: "white"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Dupa 2*/}
-          {/*</Box>*/}
-          {/*</Box>*/}
-          {/*</MenuLayout.Layer>*/}
-          {/*&nbsp;&nbsp;*/}
-          {/*<MenuLayout.Layer*/}
-          {/*posX={"left"}*/}
-          {/*offsetY={10}*/}
-          {/*offsetX={0}*/}
-          {/*openOnHover={false}*/}
-          {/*button={<Button>Open menu click</Button>}*/}
-          {/*>*/}
-          {/*<Box*/}
-          {/*sx={{*/}
-          {/*p: 40,*/}
-          {/*bg: "white"*/}
-          {/*}}*/}
-          {/*>*/}
-          {/*Dupa*/}
-          {/*</Box>*/}
-          {/*</MenuLayout.Layer>*/}
         </MenuBar>
       </MenuLayout.MenuBar>
 
@@ -344,7 +245,23 @@ export const basic = () => {
 
       <MenuLayout.MenuBar open={menu3Open} takesSpace={false}>
         <MenuBar color={"antiquewhite"}>
-          Menu bar content lorem ipsum dolro sit amet
+          <MenuLayout.Layer
+            button={<MenuButton>Open item</MenuButton>}
+            offsetY={10}
+          >
+            {({ isVisible }) => (
+              <MenuContent items={ITEMS2} isVisible={isVisible} />
+            )}
+          </MenuLayout.Layer>
+
+          <MenuLayout.Layer
+            button={<MenuButton>Open item 2</MenuButton>}
+            offsetY={10}
+          >
+            {({ isVisible }) => (
+              <MenuContent items={ITEMS1} isVisible={isVisible} />
+            )}
+          </MenuLayout.Layer>
         </MenuBar>
       </MenuLayout.MenuBar>
 

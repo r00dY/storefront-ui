@@ -740,61 +740,6 @@ function useLayers({ items, openOnHover = true }) {
     });
 
     if (mounted) {
-      //
-      // let {
-      //     offsetX = 0,
-      //     offsetY = 0,
-      //     width,
-      //     anchoredTo,
-      //     posX = "left"
-      // } = layer;
-      //
-      // if (!anchorRects.current[key]) {
-      //     anchorRects.current[key] = state[
-      //         key
-      //         ].buttonRef.current.getBoundingClientRect();
-      // }
-      //
-      // const anchorRect = anchorRects.current[key];
-      //
-      // let position = {};
-      //
-      // if (anchoredTo === "window") {
-      //     switch (posX) {
-      //         case "center":
-      //             position.center = true;
-      //             break;
-      //         case "left":
-      //             position.left = offsetX;
-      //             position.right = "auto";
-      //             break;
-      //         case "right":
-      //             position.left = "auto";
-      //             position.right = offsetX;
-      //             break;
-      //     }
-      // } else {
-      //     switch (posX) {
-      //         case "center":
-      //         // todo: center
-      //         case "right":
-      //             position.left = "auto";
-      //             position.right = offsetX + (window.innerWidth - anchorRect.right);
-      //             break;
-      //         case "left-outside":
-      //             position.left = "auto";
-      //             position.right = offsetX + (window.innerWidth - anchorRect.left);
-      //             break;
-      //         case "right-outside":
-      //             position.left = offsetX + anchorRect.right;
-      //             position.right = "auto";
-      //             break;
-      //         case "left":
-      //             position.left = offsetX + anchorRect.left;
-      //             position.right = "auto";
-      //     }
-      // }
-
       const content =
         typeof layer.content === "function"
           ? layer.content({ isVisible: isActive && !isSwitchingState })
@@ -815,20 +760,6 @@ function useLayers({ items, openOnHover = true }) {
             width: "max-content"
             // width
           }}
-          // _ref={ref}
-          // onMouseEnter={() => {
-          //     if (!openOnHover) {
-          //         return;
-          //     }
-          //     setInternalOpen(true);
-          // }}
-          // onMouseOut={() => {
-          //     if (!openOnHover) {
-          //         return;
-          //     }
-          //     setInternalOpen(false);
-          // }}
-
           onMouseEnter={() => {
             if (!openOnHover) {
               return;
@@ -866,19 +797,6 @@ function useLayers({ items, openOnHover = true }) {
             top: 0,
             left: 0
           }}
-          // _ref={ref}
-          // onMouseEnter={() => {
-          //     if (!openOnHover) {
-          //         return;
-          //     }
-          //     setInternalOpen(true);
-          // }}
-          // onMouseOut={() => {
-          //     if (!openOnHover) {
-          //         return;
-          //     }
-          //     setInternalOpen(false);
-          // }}
           key={"portal"}
           _ref={containerRef}
         >
@@ -899,13 +817,35 @@ function useLayers({ items, openOnHover = true }) {
         </Box>,
         Object.values(state)[0]
           .buttonRef.current.closest(".__menubar__")
-          .querySelector(".__menulayers__")
-        // document.querySelector(".__menulayers__")
+          .querySelector(".__menulayers__") // TODO: could be done better
       ),
     hide: () => {
       switchLayer(null);
     }
   };
+}
+
+function LayerSingle(props) {
+  let { button, children, openOnHover } = props;
+
+  const { buttons, layers } = useLayers({
+    items: [
+      {
+        button,
+        content: children,
+        ...props
+      }
+    ],
+    openOnHover
+  });
+
+  console.log("---", buttons, layers);
+  return (
+    <>
+      {buttons}
+      {layers}
+    </>
+  );
 }
 
 function Layer(props) {
@@ -1112,5 +1052,5 @@ function Layer(props) {
   return portal;
 }
 
-MenuLayout.Layer = Layer;
+MenuLayout.Layer = LayerSingle;
 MenuLayout.useLayers = useLayers;
