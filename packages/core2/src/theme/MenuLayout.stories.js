@@ -39,25 +39,6 @@ const MenuBar = ({ children, color }) => (
   </Box>
 );
 
-const getContent = (text = "Dupa", padding = 40) => ({
-  content: ({ isBeforeAnimation, isVisible, isFirst }) => (
-    <Box
-      sx={{
-        p: padding,
-        color: "black",
-        transition: `opacity ..35s`, // ${isVisible ? '.1s' : ''}`,// ${isBeforeAnimation && !isVisible && !isFirst ? ".35s" : ""}`, // delay only if "from layer to layer" and when show
-        opacity: isVisible ? 1 : 0
-      }}
-    >
-      {text}
-    </Box>
-  ),
-
-  background: ({ isBeforeAnimation, isVisible }) => ({
-    opacity: isVisible ? 1 : 0 // first opacity the
-  })
-});
-
 const MenuButton = props => (
   <Button$ {...props} sx={{ height: 40, px: 10 }}>
     {({ selected, isHovered }) => (
@@ -274,9 +255,11 @@ export const basic = () => {
       {contentWithButtons}
 
       <MenuLayout.MenuBarSticky open={menu4Open}>
-        <MenuBar color={"royalblue"}>
-          Menu bar content lorem ipsum dolro sit amet
-        </MenuBar>
+        {({ stuck }) => (
+          <MenuBar color={stuck ? "powderblue" : "royalblue"}>
+            Menu bar content lorem ipsum dolro sit amet
+          </MenuBar>
+        )}
       </MenuLayout.MenuBarSticky>
 
       {contentWithButtons}

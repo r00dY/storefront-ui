@@ -85,10 +85,19 @@ function MenuBarSticky(props) {
 
   const isDisplayedInPortal = sticky && container;
 
+  const state = {
+    stuck: isDisplayedInPortal
+  };
+
+  let children =
+    typeof props.children === "function"
+      ? props.children(state)
+      : props.children;
+
   return (
     <Box _ref={ref} sx={{ height }}>
-      {isDisplayedInPortal && ReactDOM.createPortal(props.children, container)}
-      {!isDisplayedInPortal && props.children}
+      {isDisplayedInPortal && ReactDOM.createPortal(children, container)}
+      {!isDisplayedInPortal && children}
     </Box>
   );
 }
