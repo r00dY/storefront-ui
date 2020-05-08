@@ -468,7 +468,7 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 /**
  * For now only uncontrolled (button + layer)
  */
-function useLayers({
+function useDialogs({
   items,
   openOnHover = true,
   backgroundStyles = ({ isVisible }) => ({ opacity: isVisible ? 1 : 0 })
@@ -905,10 +905,10 @@ function useLayers({
   };
 }
 
-function LayerSingle(props) {
+function Dialog(props) {
   let { button, children, openOnHover, backgroundStyles } = props;
 
-  const { buttons, layers } = useLayers({
+  const { buttons, layers } = useDialogs({
     items: [
       {
         button,
@@ -923,5 +923,5 @@ function LayerSingle(props) {
   return buttons;
 }
 
-MenuLayout.Layer = LayerSingle;
-MenuLayout.useLayers = useLayers;
+MenuLayout.Dialog = Dialog;
+MenuLayout.useDialogs = useDialogs;

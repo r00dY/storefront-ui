@@ -14,7 +14,7 @@ import Grid from "@commerce-ui/core/Grid";
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const VeryLongContent = props => (
-  <Box sx={{ p: [16, null, 32], maxWidth: 700, bg: "#f1f1f1" }}>
+  <Box sx={{ p: [16, null, 32], maxWidth: 700 }}>
     {props.children}
     {[...Array(10)].map((e, i) => (
       <Box as={"p"} sx={{ mt: 20 }} key={i}>
@@ -127,8 +127,6 @@ export const basic = () => {
   const [menu3Open, setMenu3Open] = useState(true);
   const [menu4Open, setMenu4Open] = useState(true);
 
-  const [layer1Open, setLayer1Open] = useState(false);
-
   const contentWithButtons = (
     <VeryLongContent>
       <button onClick={() => setMenu1Open(!menu1Open)}>Menu 1 toggle</button>
@@ -147,12 +145,10 @@ export const basic = () => {
       >
         Toggle 2 & 3
       </button>
-      &nbsp;
-      <button onClick={() => setLayer1Open(!layer1Open)}>Toggle layer 1</button>
     </VeryLongContent>
   );
 
-  const menu1 = MenuLayout.useLayers({
+  const menu1 = MenuLayout.useDialogs({
     items: [
       {
         button: <MenuButton>Lorem</MenuButton>,
@@ -199,7 +195,7 @@ export const basic = () => {
     })
   });
 
-  const menu2 = MenuLayout.useLayers({
+  const menu2 = MenuLayout.useDialogs({
     items: [
       {
         button: <MenuButton>Lorem</MenuButton>,
@@ -225,7 +221,7 @@ export const basic = () => {
 
   return (
     <MenuLayout
-      offset={0}
+      offset={100}
       contentAbove={
         <Box
           sx={{
@@ -251,7 +247,7 @@ export const basic = () => {
 
       <MenuLayout.MenuBar open={menu3Open} takesSpace={false}>
         <MenuBar color={"antiquewhite"}>
-          <MenuLayout.Layer
+          <MenuLayout.Dialog
             button={<MenuButton>Open item</MenuButton>}
             offsetY={10}
           >
@@ -262,58 +258,20 @@ export const basic = () => {
                 bg={"antiquewhite"}
               />
             )}
-          </MenuLayout.Layer>
+          </MenuLayout.Dialog>
 
-          <MenuLayout.Layer
+          <MenuLayout.Dialog
             button={<MenuButton>Open item 2</MenuButton>}
             offsetY={10}
           >
             {({ isVisible }) => (
               <MenuContent items={ITEMS1} isVisible={isVisible} bg={"coral"} />
             )}
-          </MenuLayout.Layer>
+          </MenuLayout.Dialog>
         </MenuBar>
       </MenuLayout.MenuBar>
 
       {contentWithButtons}
-
-      <br />
-
-      <button
-        onClick={() => {
-          setIndex(0);
-        }}
-      >
-        open 1
-      </button>
-      <button
-        onClick={() => {
-          setIndex(1);
-        }}
-      >
-        open 2
-      </button>
-      <button
-        onClick={() => {
-          setIndex(2);
-        }}
-      >
-        open 3
-      </button>
-      <button
-        onClick={() => {
-          setIndex(3);
-        }}
-      >
-        open 4
-      </button>
-      <button
-        onClick={() => {
-          setIndex(null);
-        }}
-      >
-        hide
-      </button>
 
       <MenuLayout.MenuBarSticky open={menu4Open}>
         <MenuBar color={"royalblue"}>
@@ -322,14 +280,6 @@ export const basic = () => {
       </MenuLayout.MenuBarSticky>
 
       {contentWithButtons}
-
-      <Box sx={{ position: "relative", transform: "translateY(-100%)" }}>
-        <MenuBar color={"red"}>
-          Menu bar content lorem ipsum dolro sit amet
-        </MenuBar>
-      </Box>
-      <br />
-      <br />
 
       {contentWithButtons}
     </MenuLayout>
