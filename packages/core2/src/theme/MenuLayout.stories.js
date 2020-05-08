@@ -242,17 +242,11 @@ export const basic = () => {
       }
     >
       <MenuLayout.MenuBar open={menu1Open} takesSpace={true}>
-        <MenuBar color={"lightblue"}>
-          {menu1.buttons}
-          {menu1.layers}
-        </MenuBar>
+        <MenuBar color={"lightblue"}>{menu1.buttons}</MenuBar>
       </MenuLayout.MenuBar>
 
       <MenuLayout.MenuBar open={menu2Open} takesSpace={false}>
-        <MenuBar color={"coral"}>
-          {menu2.buttons}
-          {menu2.layers}
-        </MenuBar>
+        <MenuBar color={"coral"}>{menu2.buttons}</MenuBar>
       </MenuLayout.MenuBar>
 
       <MenuLayout.MenuBar open={menu3Open} takesSpace={false}>

@@ -44,6 +44,8 @@ function Box_(props) {
     noFocus = false,
     fitChild = false,
     fitChildHeight = false,
+    children,
+    __portals__,
     ...restProps
   } = props;
 
@@ -58,6 +60,14 @@ function Box_(props) {
       css
     ],
     ref: _ref,
+    children: __portals__ ? (
+      <>
+        {children}
+        {__portals__}
+      </>
+    ) : (
+      children
+    ),
     ...restProps
   });
 }

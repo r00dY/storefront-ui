@@ -862,40 +862,43 @@ function useLayers({
     setMounted(true);
   }, []);
 
-  return {
-    buttons,
-    layers:
-      mounted &&
-      ReactDOM.createPortal(
+  const portal =
+    mounted &&
+    ReactDOM.createPortal(
+      <Box
+        sx={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          pointerEvents: isAnyActive ? "auto" : "none"
+        }}
+        key={"portal"}
+        _ref={containerRef}
+      >
         <Box
           sx={{
             position: "absolute",
             top: 0,
             left: 0,
-            pointerEvents: isAnyActive ? "auto" : "none"
+            transformOrigin: "0 0",
+            zIndex: -1
+            // bg: "white",
+            // boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
           }}
-          key={"portal"}
-          _ref={containerRef}
-        >
-          <Box
-            sx={{
-              position: "absolute",
-              top: 0,
-              left: 0,
-              transformOrigin: "0 0",
-              zIndex: -1
-              // bg: "white",
-              // boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
-            }}
-            _ref={backgroundRef}
-          />
+          _ref={backgroundRef}
+        />
 
-          {contents}
-        </Box>,
-        Object.values(state)[0]
-          .buttonRef.current.closest(".__menubar__")
-          .querySelector(".__menulayers__") // TODO: could be done better
-      ),
+        {contents}
+      </Box>,
+      Object.values(state)[0]
+        .buttonRef.current.closest(".__menubar__")
+        .querySelector(".__menulayers__") // TODO: could be done better
+    );
+
+  buttons[0] = React.cloneElement(buttons[0], { __portals__: portal });
+
+  return {
+    buttons,
     hide: () => {
       switchLayer(null);
     }
@@ -917,216 +920,7 @@ function LayerSingle(props) {
     backgroundStyles
   });
 
-  return (
-    <>
-      {buttons}
-      {layers}
-    </>
-  );
-}
-
-function Layer(props) {
-  let {
-    open = false,
-    posX = "left",
-    posY,
-    offsetX = 0,
-    offsetY = 0,
-    anchoredTo,
-    animationTime = 1000,
-    button,
-    width,
-    openOnHover = true,
-    onMount,
-    controller
-  } = props;
-
-  // if (!controller) {
-  //     controller = useLayers();
-  // }
-  //
-  // const idRef = useRef(null);
-  // useEffect(() => {
-  //     idRef.current = Math.random().toString();
-  // }, []);
-  //
-  // const id = idRef.current;
-
-  const [mounted, setMounted] = useState(false);
-  const [anchorRect, setAnchorRect] = useState(null);
-  const [isDisplayed, setDisplayed] = useState(false);
-  const [internalOpen, setInternalOpen] = useState(false);
-
-  const buttonRef = useRef(null);
-
-  // TODO: make it possible to steer Layer from hook AND from button. For now, with Layer+button we have only "uncontrolled state". Most frequently used!
-  if (button) {
-    const [debouncedOpen] = useDebounce(internalOpen, 100);
-    open = debouncedOpen;
-
-    button = React.cloneElement(button, {
-      onClick: () => {
-        if (openOnHover) {
-          setInternalOpen(true);
-        } else {
-          setInternalOpen(!internalOpen);
-        }
-      },
-      onMouseEnter: () => {
-        if (!openOnHover) {
-          return;
-        }
-
-        setInternalOpen(true);
-      },
-      onMouseLeave: () => {
-        if (!openOnHover) {
-          return;
-        }
-
-        setInternalOpen(false);
-      },
-      _ref: buttonRef,
-      selected: open
-    });
-
-    if (anchoredTo === undefined) {
-      anchoredTo = buttonRef;
-    }
-  }
-
-  if (!anchoredTo) {
-    anchoredTo = "window";
-  }
-
-  const ref = useRef(null);
-  const timeout = useRef(null);
-
-  useEffect(() => {
-    setMounted(true);
-    if (anchoredTo && anchoredTo.current) {
-      setAnchorRect(anchoredTo.current.getBoundingClientRect());
-    }
-  }, []);
-
-  useLayoutEffect(
-    () => {
-      // if (!open) {
-      //     setLayerRect(null);
-      // }
-      // else {
-      //     setLayerRect(ref.getBoundingClientRect())
-      // }
-      clearTimeout(timeout.current);
-
-      if (open) {
-        window.getComputedStyle(ref.current).opacity; // recalculate styles
-
-        setDisplayed(true);
-      } else {
-        timeout.current = setTimeout(() => {
-          setDisplayed(false);
-        }, animationTime);
-      }
-    },
-    [open]
-  );
-
-  if ((!open && !isDisplayed) || !mounted) {
-    // If not displayed or mounted, just button
-    if (button) {
-      return button;
-    }
-
-    return null;
-  }
-
-  let position = {};
-
-  if (anchoredTo === "window") {
-    switch (posX) {
-      case "center":
-        position.center = true;
-        break;
-      case "left":
-        position.left = offsetX;
-        position.right = "auto";
-        break;
-      case "right":
-        position.left = "auto";
-        position.right = offsetX;
-        break;
-    }
-  } else {
-    switch (posX) {
-      case "center":
-      // todo: center
-      case "right":
-        position.left = "auto";
-        position.right = offsetX + (window.innerWidth - anchorRect.right);
-        break;
-      case "left-outside":
-        position.left = "auto";
-        position.right = offsetX + (window.innerWidth - anchorRect.left);
-        break;
-      case "right-outside":
-        position.left = offsetX + anchorRect.right;
-        position.right = "auto";
-        break;
-      case "left":
-        position.left = offsetX + anchorRect.left;
-        position.right = "auto";
-    }
-  }
-
-  const state = {
-    open,
-    before: (open && !isDisplayed) || (!open && isDisplayed),
-    anchorRect
-  };
-
-  const children =
-    typeof props.children === "function"
-      ? props.children(state)
-      : props.children;
-
-  /**
-   * button
-   */
-
-  const portal = ReactDOM.createPortal(
-    <Box
-      sx={{
-        position: "absolute",
-        left: position.left,
-        right: position.right,
-        top: offsetY,
-        width
-      }}
-      _ref={ref}
-      onMouseEnter={() => {
-        if (!openOnHover) {
-          return;
-        }
-        setInternalOpen(true);
-      }}
-      onMouseOut={() => {
-        if (!openOnHover) {
-          return;
-        }
-        setInternalOpen(false);
-      }}
-      key={"portal"}
-    >
-      {open && children}
-    </Box>,
-    document.querySelector(".__menulayers__")
-  );
-
-  if (button) {
-    return [button, portal];
-  }
-  return portal;
+  return buttons;
 }
 
 MenuLayout.Layer = LayerSingle;
