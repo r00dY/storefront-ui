@@ -44,14 +44,13 @@ function Box_(props) {
     noFocus = false,
     fitChild = false,
     fitChildHeight = false,
-    children,
     __portals__,
     ...restProps
   } = props;
 
   const [css, customSx] = splitSx(sx);
 
-  return jsx(as, {
+  const ret = jsx(as, {
     sx: [
       boxStyles,
       noFocus && focusReset,
@@ -60,16 +59,18 @@ function Box_(props) {
       css
     ],
     ref: _ref,
-    children: __portals__ ? (
-      <>
-        {children}
-        {__portals__}
-      </>
-    ) : (
-      children
-    ),
     ...restProps
   });
+
+  if (__portals__) {
+    return (
+      <>
+        {__portals__}
+        {ret}
+      </>
+    );
+  }
+  return ret;
 }
 
 const Box = React.forwardRef((props, ref) => <Box_ _ref={ref} {...props} />);

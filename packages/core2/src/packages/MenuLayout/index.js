@@ -812,7 +812,8 @@ function useDialogs({
         onHover(null, 100);
       },
       _ref: state[key].buttonRef,
-      selected: isActive
+      selected: isActive,
+      key: "button-" + key
     });
 
     if (mounted) {
@@ -920,7 +921,7 @@ function Dialog(props) {
     backgroundStyles
   });
 
-  return buttons;
+  return buttons[0];
 }
 
 MenuLayout.Dialog = Dialog;
