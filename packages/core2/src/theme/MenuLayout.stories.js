@@ -131,6 +131,7 @@ export const basic = () => {
   );
 
   const menu1 = MenuLayout.useDialogs({
+    animationTimeout: 350,
     items: [
       {
         button: <MenuButton>Lorem</MenuButton>,
@@ -178,6 +179,7 @@ export const basic = () => {
   });
 
   const menu2 = MenuLayout.useDialogs({
+    animationTimeout: 350,
     items: [
       {
         button: <MenuButton>Lorem</MenuButton>,
@@ -232,6 +234,7 @@ export const basic = () => {
           <MenuLayout.Dialog
             button={<MenuButton>Open item</MenuButton>}
             offsetY={10}
+            animationTimeout={350}
           >
             {({ isVisible }) => (
               <MenuContent
@@ -245,6 +248,7 @@ export const basic = () => {
           <MenuLayout.Dialog
             button={<MenuButton>Open item 2</MenuButton>}
             offsetY={10}
+            animationTimeout={350}
           >
             {({ isVisible }) => (
               <MenuContent items={ITEMS1} isVisible={isVisible} bg={"coral"} />
@@ -252,17 +256,19 @@ export const basic = () => {
           </MenuLayout.Dialog>
 
           <MenuLayout.Dialog
-            button={<MenuButton>Open item 2</MenuButton>}
+            button={
+              <MenuButton>
+                Open item (content not a function, not animated)
+              </MenuButton>
+            }
             offsetY={10}
           >
-            {({ isVisible }) => (
-              <MenuContent
-                items={ITEMS1}
-                isVisible={isVisible}
-                bg={"royalblue"}
-                animated={false}
-              />
-            )}
+            <MenuContent
+              items={ITEMS1}
+              isVisible={true}
+              bg={"antiquewhite"}
+              animated={false}
+            />
           </MenuLayout.Dialog>
         </MenuBar>
       </MenuLayout.MenuBar>

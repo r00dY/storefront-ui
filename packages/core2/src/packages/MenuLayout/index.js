@@ -480,7 +480,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 function useDialogs({
   items,
   openOnHover = true,
-  backgroundStyles = ({ isVisible }) => ({ opacity: isVisible ? 1 : 0 })
+  backgroundStyles = ({ isVisible }) => ({ opacity: isVisible ? 1 : 0 }),
+  animationTimeout = 0
 }) {
   const layers = items;
 
@@ -493,7 +494,7 @@ function useDialogs({
   layers.forEach((layer, index) => {
     initState[(layer.key || index).toString()] = {
       active: false,
-      relative: false,
+      visible: false,
       buttonRef: React.createRef(),
       layer
     };
@@ -511,10 +512,13 @@ function useDialogs({
   let buttons = [];
   let contents = [];
 
+  const hideTimers = useRef({});
+
   const isAtInitState = !Object.values(state).reduce(
-    (acc, val) => acc || val.relative,
+    (acc, val) => acc || val.visible,
     false
   ); // init state means that all layers are fully closed (not closing).
+
   const isAnyActive = Object.values(state).reduce(
     (acc, val) => acc || val.active,
     false
@@ -628,10 +632,6 @@ function useDialogs({
       return;
     }
 
-    if (key !== null) {
-      clearTimeout(timer.current);
-    }
-
     if (isAtInitState) {
       // if coming from empty, we set init state for animation
 
@@ -671,27 +671,51 @@ function useDialogs({
     /**
      * relative means that this menu TAKES SPACE (position: relative)
      */
-    let newState = {
-      ...state
-    };
 
-    for (let k in newState) {
-      if (k === key) {
-        newState[k].active = true;
-        newState[k].relative = true;
-      } else {
-        if (key === null && newState[k].active) {
-          // If hiding, let's keep relative == true;
-          newState[k].relative = true;
+    setState(prevState => {
+      let newState = {
+        ...prevState
+      };
+
+      for (let k in newState) {
+        if (k === key) {
+          clearTimeout(hideTimers.current[k]);
+
+          newState[k].active = true;
+          newState[k].visible = true; // visible might be not active (when hiding animation in progress).
         } else {
-          newState[k].relative = false;
+          if (k === activeKey && activeKey !== null) {
+            // timeout for previous key
+
+            hideTimers.current[activeKey] = setTimeout(() => {
+              let count = 0;
+              for (let k in state) {
+                if (state[k].visible) {
+                  count++;
+                }
+              }
+
+              setState(currentState => {
+                const newState = {
+                  ...currentState,
+                  [activeKey]: {
+                    ...currentState[activeKey],
+                    visible: false
+                  }
+                };
+
+                return newState;
+              });
+            }, animationTimeout);
+          }
+
+          newState[k].active = false;
         }
-
-        newState[k].active = false;
       }
-    }
 
-    setState(newState);
+      return newState;
+    });
+
     setSwitchingState(true);
   };
 
@@ -749,19 +773,19 @@ function useDialogs({
         //
         //
 
-        timer.current = setTimeout(() => {
-          // all relative flags must go down to false (which means that isAtInitState will light up).
-
-          let newState = {
-            ...state
-          };
-
-          for (let k in newState) {
-            newState[k].relative = false;
-          }
-
-          setState(newState);
-        }, 350);
+        // timer.current = setTimeout(() => {
+        //   // all relative flags must go down to false (which means that isAtInitState will light up).
+        //
+        //   let newState = {
+        //     ...state
+        //   };
+        //
+        //   for (let k in newState) {
+        //     newState[k].relative = false;
+        //   }
+        //
+        //   setState(newState);
+        // }, 350);
       }
 
       setSwitchingState(false);
@@ -796,7 +820,7 @@ function useDialogs({
     const key = (layer.key || index).toString();
 
     const isActive = state[key].active;
-    const relative = state[key].relative;
+    const visible = state[key].visible;
 
     let button = React.cloneElement(layer.button, {
       onClick: () => {
@@ -834,11 +858,15 @@ function useDialogs({
       contents.push(
         <Box
           sx={{
-            position: relative ? "relative" : "absolute",
+            position:
+              isActive || (activeKey === null && visible)
+                ? "relative"
+                : "absolute",
             top: 0,
             left: 0,
-            zIndex: relative ? 1 : 0,
+            zIndex: isActive ? 1 : 0,
             pointerEvents: isActive ? "default" : "none",
+            opacity: visible ? 1 : 0,
             // left: position.left,
             // right: position.right,
             // top: offsetY,
@@ -916,7 +944,13 @@ function useDialogs({
 }
 
 function Dialog(props) {
-  let { button, children, openOnHover, backgroundStyles } = props;
+  let {
+    button,
+    children,
+    openOnHover,
+    backgroundStyles,
+    animationTimeout
+  } = props;
 
   const { buttons, layers } = useDialogs({
     items: [
@@ -927,7 +961,8 @@ function Dialog(props) {
       }
     ],
     openOnHover,
-    backgroundStyles
+    backgroundStyles,
+    animationTimeout
   });
 
   return buttons[0];
