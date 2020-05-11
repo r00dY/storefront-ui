@@ -56,14 +56,15 @@ const MenuContent = ({
   isVisible,
   width = "auto",
   rightBox = false,
-  bg = "transparent"
+  bg = "transparent",
+  animated = true
 }) => (
   <Box
     sx={{
       py: width === "auto" ? 32 : 64,
       px: width === "auto" ? 32 : 128,
       opacity: isVisible ? 1 : 0,
-      transition: isVisible ? "all .5s .15s" : "all .05s",
+      transition: !animated ? "none" : isVisible ? "all .5s .15s" : "all .05s",
       minWidth: 400,
       bg,
       width
@@ -247,6 +248,20 @@ export const basic = () => {
           >
             {({ isVisible }) => (
               <MenuContent items={ITEMS1} isVisible={isVisible} bg={"coral"} />
+            )}
+          </MenuLayout.Dialog>
+
+          <MenuLayout.Dialog
+            button={<MenuButton>Open item 2</MenuButton>}
+            offsetY={10}
+          >
+            {({ isVisible }) => (
+              <MenuContent
+                items={ITEMS1}
+                isVisible={isVisible}
+                bg={"royalblue"}
+                animated={false}
+              />
             )}
           </MenuLayout.Dialog>
         </MenuBar>
