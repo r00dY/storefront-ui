@@ -685,7 +685,7 @@ Image.propTypes = {
   resolutions: fixedObject,
   sizes: fluidObject,
   fixed: PropTypes.oneOfType([fixedObject, PropTypes.arrayOf(fixedObject)]),
-  fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
+  // fluid: PropTypes.oneOfType([fluidObject, PropTypes.arrayOf(fluidObject)]),
   fadeIn: PropTypes.bool,
   durationFadeIn: PropTypes.number,
   title: PropTypes.string,

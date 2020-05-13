@@ -75,7 +75,11 @@ function useSelectState(props) {
   };
 
   const originalValue = val => {
-    return val === null ? null : val.__originalOption || val;
+    return val === null
+      ? null
+      : typeof val.__originalOption === "object"
+      ? val.__originalOption
+      : val;
   };
 
   // let defaultValueId =

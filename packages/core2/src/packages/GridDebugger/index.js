@@ -52,6 +52,7 @@ function GridDebugger(props) {
                 bg: "coral",
                 opacity: 0.3
               }}
+              key={i}
             />
           ))}
         </Grid>

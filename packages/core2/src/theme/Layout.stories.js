@@ -163,7 +163,7 @@ export const basic = () => {
           )
         },
         {
-          name: "Grid weird use case",
+          name: "Grid weird use case", // TODO: fix, but can't reproduce
           component: (
             <Container>
               <Grid cols={[3, 3, 5, 5, 5]}>

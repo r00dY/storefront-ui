@@ -62,8 +62,6 @@ export const basic = () => {
     }
   });
 
-  console.log(thumbnails2);
-
   return (
     <Box sx={{ maxWidth: "800px" }}>
       <StoryWrapper

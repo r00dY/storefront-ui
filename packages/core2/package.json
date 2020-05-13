@@ -8,7 +8,7 @@
     "dev": "next --port 3333",
     "build-for-demo": "npm run build && rm -Rf ./demo/node_modules/@commerce-ui && mkdir -p ./demo/node_modules/@commerce-ui/core && cp -R dist/* ./demo/node_modules/@commerce-ui/core",
     "now-build": "npm run build && next build",
-    "storybook": "start-storybook"
+    "storybook": "start-storybook -s ./static"
   },
   "dependencies": {
     "downshift": "^4.0.7",
