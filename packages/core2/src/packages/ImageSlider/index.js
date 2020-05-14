@@ -15,13 +15,14 @@ export function useImageSlider(props) {
       if (onChange) {
         onChange(newVal.id);
       }
-    }
+    },
+    allowEmpty: false
   });
 
   return {
-    active: value.id,
+    active: value,
     setActive: setValue,
-    activeImage: images[value.id],
+    activeImage: images[value],
     images
   };
 }

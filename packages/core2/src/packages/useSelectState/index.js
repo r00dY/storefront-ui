@@ -33,6 +33,14 @@ function filterProps(props) {
   return restProps;
 }
 
+/**
+ * !!!!
+ *
+ *
+ * TODO: Take into account use cases when options changes. In case of controlled it's already taken care of. In case of uncontrolled, needs work. Why?
+ *
+ * When we switch from controlled to uncontrolled (or change options array in uncontrolled state), we need to update internal state and possibly do it in one render.
+ */
 function useSelectState(props) {
   let {
     options,
@@ -48,6 +56,12 @@ function useSelectState(props) {
   // Normalize options
   options = options.map(option => {
     if (typeof option === "object") {
+      if (option.id === undefined || option.id === null) {
+        throw new Error(
+          `[useSelectState] options must have id, this option doesn't: ${option}`
+        );
+      }
+
       if (!option.label) {
         return {
           ...option,
@@ -57,6 +71,11 @@ function useSelectState(props) {
       }
       return option;
     }
+
+    if (option === null || option === undefined) {
+      throw new Error(`[useSelectState] options can't be null or undefined`);
+    }
+
     // throw new Error("options must be objects with ID!!!");
     return {
       id: option,
@@ -77,7 +96,7 @@ function useSelectState(props) {
   const originalValue = val => {
     return val === null
       ? null
-      : typeof val.__originalOption === "object"
+      : typeof val.__originalOption !== "undefined"
       ? val.__originalOption
       : val;
   };

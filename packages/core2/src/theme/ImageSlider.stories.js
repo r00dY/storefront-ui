@@ -35,6 +35,11 @@ const images = [
   pan2
 ].map((x, index) => ({ ...x, id: index }));
 
+const differentImages = [pan1, pan2, catImage].map((x, index) => ({
+  ...x,
+  id: "different" + index
+}));
+
 export const basic = () => {
   const imageSlider = useImageSlider({
     images: [catImage, pan1, pan2]
@@ -44,9 +49,10 @@ export const basic = () => {
   let thumbnails2;
 
   const [index, setIndex] = useState(0);
+  const [images2, setImages2] = useState(images);
 
   imageSlider2 = useImageSlider({
-    images: images,
+    images: images2,
     onChange: index => {
       setIndex(index);
     },
@@ -54,8 +60,8 @@ export const basic = () => {
   });
 
   thumbnails2 = useSelectScrollableStack({
-    options: images,
-    value: images[index],
+    options: images2,
+    value: images2[index] || null, // This null is important. It prevents switching to uncontrolled mode.
     allowEmpty: false,
     onChange: (_, index) => {
       setIndex(index);
@@ -90,7 +96,6 @@ export const basic = () => {
               </Box>
             )
           },
-
           {
             name: "Controlled with thumbnails",
             component: (
@@ -124,6 +129,16 @@ export const basic = () => {
                     }}
                   </Selectable>
                 </SelectScrollableStack>
+
+                <button
+                  onClick={() =>
+                    setImages2(
+                      images2 === differentImages ? images : differentImages
+                    )
+                  }
+                >
+                  Set different images
+                </button>
               </Box>
             )
           }
