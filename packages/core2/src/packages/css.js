@@ -176,15 +176,9 @@ export const responsive = styles => theme => {
       continue;
     }
 
-    const breakpointKeys = Object.keys(breakpoints);
-
     /** MODIFICATION 2, check if this is responsive object **/
     if (typeof value === "object" && typeof value._ !== "undefined") {
       for (let breakpoint in value) {
-        // if (breakpoint === "__isRes") {
-        //     continue;
-        // }
-
         if (breakpoint !== "_" && !breakpoints[breakpoint]) {
           throw new Error(
             `Wrong breakpoint name in your rs styles: "${breakpoint}"`
@@ -215,61 +209,32 @@ export const responsive = styles => theme => {
     /**
      * IF ARRAY
      */
-    // for (let i = 0; i < value.slice(0, mediaQueries.length).length; i++) {
-    //   const media = mediaQueries[i];
-    //   if (value[i] == null) continue;
-    //
-    //   if (!media) {
-    //     next[key] = value[i];
-    //     continue;
-    //   }
-    //
-    //   next[media] = next[media] || {};
-    //   next[media][key] = value[i]
-    // }
-    /**
-     * MOFICATION: with __arrayIndex
-     */
     for (let i = 0; i < value.slice(0, mediaQueries.length).length; i++) {
       const media = mediaQueries[i];
       if (value[i] == null) continue;
 
       if (!media) {
-        next[key] = {
-          value: value[i],
-          __arrayIndex: i
-        };
+        next[key] = value[i];
         continue;
       }
 
       next[media] = next[media] || {};
-      next[media][key] = {
-        value: value[i],
-        __arrayIndex: i
-      };
+      next[media][key] = value[i];
     }
   }
 
   return next;
 };
 
-export const cssSingle = args => (props = {}) => {
+function getVal(key, value) {
   const theme = { ...defaultTheme, ...(props.theme || props) };
   let result = {};
   const obj = typeof args === "function" ? args(theme) : args;
   const styles = responsive(obj)(theme);
 
-  if (styles.gridTemplateColumns) {
-    console.log("styles", styles);
-  }
-
   for (const key in styles) {
     const x = styles[key];
     const val = typeof x === "function" ? x(theme) : x;
-
-    if (styles.gridTemplateColumns) {
-      console.log("#key", key, val);
-    }
 
     if (key === "variant") {
       const variant = cssSingle(get(theme, val))(theme);
@@ -287,11 +252,7 @@ export const cssSingle = args => (props = {}) => {
     /**
      * __arrayIndex modification -> it allows for putting items from scale into arrays like [0, null, "gridGutter"]
      */
-    if (
-      val &&
-      typeof val === "object" /**modification**/ &&
-      val.__arrayIndex === undefined
-    ) {
+    if (val && typeof val === "object") {
       result[key] = cssSingle(val)(theme);
       continue;
     }
@@ -300,17 +261,6 @@ export const cssSingle = args => (props = {}) => {
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
     const transform = get(transforms, prop, get);
-
-    /**
-     * modification with __arrayIndex cd
-     */
-    let val2;
-    if (typeof val.__arrayIndex !== "undefined") {
-      val2 = val.value;
-    } else {
-      val2 = val;
-    }
-
     const value = transform(scale, val, val);
 
     if (multiples[prop]) {
@@ -324,9 +274,57 @@ export const cssSingle = args => (props = {}) => {
     }
   }
 
-  if (styles.gridTemplateColumns) {
-    console.log("result", result);
+  return result;
+}
+
+export const cssSingle = args => (props = {}) => {
+  const theme = { ...defaultTheme, ...(props.theme || props) };
+  let result = {};
+  const obj = typeof args === "function" ? args(theme) : args;
+  const styles = responsive(obj)(theme);
+
+  for (const key in styles) {
+    const x = styles[key];
+    const val = typeof x === "function" ? x(theme) : x;
+
+    if (key === "variant") {
+      const variant = cssSingle(get(theme, val))(theme);
+      result = { ...result, ...variant };
+      continue;
+    }
+
+    /** MODIFICATION 1, special value font **/
+    if (key === "font") {
+      const variant = cssSingle(get(theme, "typography." + val))(theme);
+      result = { ...result, ...variant };
+      continue;
+    }
+
+    /**
+     * __arrayIndex modification -> it allows for putting items from scale into arrays like [0, null, "gridGutter"]
+     */
+    if (val && typeof val === "object") {
+      result[key] = cssSingle(val)(theme);
+      continue;
+    }
+
+    const prop = get(aliases, key, key);
+    const scaleName = get(scales, prop);
+    const scale = get(theme, scaleName, get(theme, prop, {}));
+    const transform = get(transforms, prop, get);
+    const value = transform(scale, val, val);
+
+    if (multiples[prop]) {
+      const dirs = multiples[prop];
+
+      for (let i = 0; i < dirs.length; i++) {
+        result[dirs[i]] = value;
+      }
+    } else {
+      result[prop] = value;
+    }
   }
+
   return result;
 };
 
