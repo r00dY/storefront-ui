@@ -212,15 +212,41 @@ export const responsive = styles => theme => {
       continue;
     }
 
+    /**
+     * IF ARRAY
+     */
+    // for (let i = 0; i < value.slice(0, mediaQueries.length).length; i++) {
+    //   const media = mediaQueries[i];
+    //   if (value[i] == null) continue;
+    //
+    //   if (!media) {
+    //     next[key] = value[i];
+    //     continue;
+    //   }
+    //
+    //   next[media] = next[media] || {};
+    //   next[media][key] = value[i]
+    // }
+    /**
+     * MOFICATION: with __arrayIndex
+     */
     for (let i = 0; i < value.slice(0, mediaQueries.length).length; i++) {
       const media = mediaQueries[i];
       if (value[i] == null) continue;
+
       if (!media) {
-        next[key] = value[i];
+        next[key] = {
+          value: value[i],
+          __arrayIndex: i
+        };
         continue;
       }
+
       next[media] = next[media] || {};
-      next[media][key] = value[i];
+      next[media][key] = {
+        value: value[i],
+        __arrayIndex: i
+      };
     }
   }
 
@@ -233,25 +259,40 @@ export const cssSingle = args => (props = {}) => {
   const obj = typeof args === "function" ? args(theme) : args;
   const styles = responsive(obj)(theme);
 
+  if (styles.gridTemplateColumns) {
+    console.log("styles", styles);
+  }
+
   for (const key in styles) {
     const x = styles[key];
     const val = typeof x === "function" ? x(theme) : x;
 
+    if (styles.gridTemplateColumns) {
+      console.log("#key", key, val);
+    }
+
     if (key === "variant") {
-      const variant = css(get(theme, val))(theme);
+      const variant = cssSingle(get(theme, val))(theme);
       result = { ...result, ...variant };
       continue;
     }
 
     /** MODIFICATION 1, special value font **/
     if (key === "font") {
-      const variant = css(get(theme, "typography." + val))(theme);
+      const variant = cssSingle(get(theme, "typography." + val))(theme);
       result = { ...result, ...variant };
       continue;
     }
 
-    if (val && typeof val === "object") {
-      result[key] = css(val)(theme);
+    /**
+     * __arrayIndex modification -> it allows for putting items from scale into arrays like [0, null, "gridGutter"]
+     */
+    if (
+      val &&
+      typeof val === "object" /**modification**/ &&
+      val.__arrayIndex === undefined
+    ) {
+      result[key] = cssSingle(val)(theme);
       continue;
     }
 
@@ -259,6 +300,17 @@ export const cssSingle = args => (props = {}) => {
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
     const transform = get(transforms, prop, get);
+
+    /**
+     * modification with __arrayIndex cd
+     */
+    let val2;
+    if (typeof val.__arrayIndex !== "undefined") {
+      val2 = val.value;
+    } else {
+      val2 = val;
+    }
+
     const value = transform(scale, val, val);
 
     if (multiples[prop]) {
@@ -272,6 +324,9 @@ export const cssSingle = args => (props = {}) => {
     }
   }
 
+  if (styles.gridTemplateColumns) {
+    console.log("result", result);
+  }
   return result;
 };
 
@@ -281,7 +336,7 @@ export const cssSingle = args => (props = {}) => {
  * Calling this double time allows for stuff like margin: [0, 0, "main"], where "main" is a RESPONSIVE value already in a scale.
  */
 export const css = (...args) => {
-  return cssSingle(cssSingle(...args));
+  return cssSingle(...args);
 };
 
 export default css;

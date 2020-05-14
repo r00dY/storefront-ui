@@ -97,8 +97,8 @@ function useQuantityPicker(props = {}) {
 
   const inputProps = {
     value: inputValue,
-    onChange: e => {
-      setInputValue(e.target.value);
+    onChange: val => {
+      setInputValue(val);
     },
     onBlur: () => {
       setValue(parseInt(inputValue));
