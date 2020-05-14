@@ -13,7 +13,7 @@ export function useImageSlider(props) {
     defaultValue: defaultActive,
     onChange: newVal => {
       if (onChange) {
-        onChange(newVal.id);
+        onChange(newVal);
       }
     },
     allowEmpty: false
