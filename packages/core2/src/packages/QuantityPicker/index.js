@@ -132,12 +132,12 @@ function useQuantityPicker(props = {}) {
     options: selectOptions,
     value: exceedsSelectRange ? moreOption : `${amount}`,
     onChange: val => {
-      if (val.id === moreOption) {
+      if (val === moreOption) {
         setInputValue("");
         setInputFocusedAfterSelectingMore(true);
         // inputRef.current.focus();
       } else {
-        setValue(parseInt(val.id));
+        setValue(parseInt(val));
       }
     },
     label: "Quantity",
