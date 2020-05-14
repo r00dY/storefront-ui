@@ -1,5 +1,32 @@
 import { rslin as rslin_, rslin } from "responsive-helpers";
 
+/**
+ * TODO: VERY IMPORTANT NOTES
+ *
+ * BEWARE!!! Fixing this file will take you longer than you think it will.
+ *
+ *
+ * 1. This file is copied from styled-system which is not maintained and theme-ui has newest version
+ * 2. Modifications in this file are:
+ * a) font -> it's just custom variant actually, we could do PR for theme-ui for this.
+ * b) linear spacings -> we should do them in array / object form with linearity done as "step functions". Arithmetic will be trivial to implement and we could add this as a PR to theme-ui.
+ * c) make it possible to use [0, 0, "gridGap"] by using recursion. We could make it as a PR too.
+ *
+ * New version of theme-ui is constantly updated, for example it now has nested array styles, one thing that was missing here.
+ *
+ * Bugs in current version: there's only one level of recursion and no nested styles so:
+ * mt: "gridGap"
+ *
+ * ... will work if this is on the top level:
+ * 1. In first iteration it will be transformed into array.
+ * 2. In second iteration array will be decoupled into values.
+ *
+ * Not sure if it work deeper.
+ *
+ * To sum up, we should sync with theme-ui and build PR for them.
+ *
+ */
+
 // based on https://github.com/developit/dlv
 export const get = (obj, key, def, p, undef) => {
   key = key && key.split ? key.split(".") : [key];
@@ -146,6 +173,22 @@ const transforms = [
   {}
 );
 
+function isStylesObject(obj) {
+  if (typeof obj !== "object") {
+    return false;
+  }
+
+  if (obj.__isLinear) {
+    return false;
+  }
+
+  if (typeof obj._ !== "undefined") {
+    return false;
+  }
+
+  return true;
+}
+
 export const responsive = styles => theme => {
   const next = {};
   const breakpoints = get(theme, "breakpoints", defaultBreakpoints);
@@ -157,6 +200,8 @@ export const responsive = styles => theme => {
   for (const key in styles) {
     const value =
       typeof styles[key] === "function" ? styles[key](theme) : styles[key];
+
+    // here we could get value from scales and transform it.
 
     if (value == null) continue;
 
@@ -202,7 +247,16 @@ export const responsive = styles => theme => {
     }
 
     if (!Array.isArray(value)) {
-      next[key] = value;
+      /** MODIFICATION: it's required for cssSingle(cssSingle(...)) recursion to work. We don't want old media queries to override new ones. **/
+      if (isStylesObject(next[key])) {
+        next[key] = {
+          ...next[key],
+          ...value
+        };
+      } else {
+        next[key] = value;
+      }
+
       continue;
     }
 
@@ -225,57 +279,6 @@ export const responsive = styles => theme => {
 
   return next;
 };
-
-function getVal(key, value) {
-  const theme = { ...defaultTheme, ...(props.theme || props) };
-  let result = {};
-  const obj = typeof args === "function" ? args(theme) : args;
-  const styles = responsive(obj)(theme);
-
-  for (const key in styles) {
-    const x = styles[key];
-    const val = typeof x === "function" ? x(theme) : x;
-
-    if (key === "variant") {
-      const variant = cssSingle(get(theme, val))(theme);
-      result = { ...result, ...variant };
-      continue;
-    }
-
-    /** MODIFICATION 1, special value font **/
-    if (key === "font") {
-      const variant = cssSingle(get(theme, "typography." + val))(theme);
-      result = { ...result, ...variant };
-      continue;
-    }
-
-    /**
-     * __arrayIndex modification -> it allows for putting items from scale into arrays like [0, null, "gridGutter"]
-     */
-    if (val && typeof val === "object") {
-      result[key] = cssSingle(val)(theme);
-      continue;
-    }
-
-    const prop = get(aliases, key, key);
-    const scaleName = get(scales, prop);
-    const scale = get(theme, scaleName, get(theme, prop, {}));
-    const transform = get(transforms, prop, get);
-    const value = transform(scale, val, val);
-
-    if (multiples[prop]) {
-      const dirs = multiples[prop];
-
-      for (let i = 0; i < dirs.length; i++) {
-        result[dirs[i]] = value;
-      }
-    } else {
-      result[prop] = value;
-    }
-  }
-
-  return result;
-}
 
 export const cssSingle = args => (props = {}) => {
   const theme = { ...defaultTheme, ...(props.theme || props) };
@@ -300,11 +303,8 @@ export const cssSingle = args => (props = {}) => {
       continue;
     }
 
-    /**
-     * __arrayIndex modification -> it allows for putting items from scale into arrays like [0, null, "gridGutter"]
-     */
     if (val && typeof val === "object") {
-      result[key] = cssSingle(val)(theme);
+      result[key] = cssSingle(val)(theme); // TODO: bug, second iteration overrides first one (or other way round), media queries are not merged in a smart way
       continue;
     }
 
@@ -334,7 +334,7 @@ export const cssSingle = args => (props = {}) => {
  * Calling this double time allows for stuff like margin: [0, 0, "main"], where "main" is a RESPONSIVE value already in a scale.
  */
 export const css = (...args) => {
-  return cssSingle(...args);
+  return cssSingle(cssSingle(...args));
 };
 
 export default css;
