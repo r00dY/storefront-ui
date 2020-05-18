@@ -52,7 +52,14 @@ function useFilters({ data, onChange }) {
     }
   };
 
+  let isAllDirty = false;
+
   const filters = internalData.map((item, index) => {
+    const isDirty = !areEqual(item.value, committedData[index].value);
+    if (isDirty) {
+      isAllDirty = true;
+    }
+
     return {
       ...item,
       selectProps: (item.type === "select" || item.type === "multiselect") && {
@@ -66,7 +73,7 @@ function useFilters({ data, onChange }) {
           setValue(item.id, null);
         }
       },
-      dirty: !areEqual(item.value, committedData[index].value)
+      isDirty
     };
   });
 
@@ -76,7 +83,8 @@ function useFilters({ data, onChange }) {
     commit: () => {
       setCommittedData(internalData_);
       onChange(internalData);
-    }
+    },
+    isDirty: isAllDirty
   };
 }
 

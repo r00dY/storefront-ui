@@ -116,10 +116,13 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
+
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
@@ -131,10 +134,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
 
   expect(onChange.mock.calls.length).toBe(1);
 
@@ -147,10 +152,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
 
   expect(onChange.mock.calls.length).toBe(2);
 
@@ -163,10 +170,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
 
   expect(onChange.mock.calls.length).toBe(3);
 
@@ -179,10 +188,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(true);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(true);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(true);
 
   expect(onChange.mock.calls.length).toBe(3);
 
@@ -195,10 +206,13 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
+
   expect(onChange.mock.calls.length).toBe(3);
 
   act(() => {
@@ -210,11 +224,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(true);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.filters[0].isDirty).toBe(true);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
 
+  expect(result.current.isDirty).toBe(true);
   expect(onChange.mock.calls.length).toBe(3);
 
   act(() => {
@@ -226,10 +241,12 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[2].value).toBe(null);
   expect(result.current.filters[3].value).toBe(null);
 
-  expect(result.current.filters[0].dirty).toBe(false);
-  expect(result.current.filters[1].dirty).toBe(false);
-  expect(result.current.filters[2].dirty).toBe(false);
-  expect(result.current.filters[3].dirty).toBe(false);
+  expect(result.current.isDirty).toBe(false);
+
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
 
   expect(onChange.mock.calls.length).toBe(4);
 });
