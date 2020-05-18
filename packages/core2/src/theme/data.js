@@ -82,7 +82,7 @@ options[0].values.forEach((size, i) => {
 const filters = [
   {
     id: "sort",
-    name: "Sort",
+    label: "Sort",
     type: "select",
     options: [
       {

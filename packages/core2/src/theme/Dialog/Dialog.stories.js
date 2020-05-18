@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
 import Dialog from ".";
 
@@ -51,20 +51,18 @@ const DialogWithButton = ({ children, ...restProps }) => {
         anchoredTo={["window", null, null, buttonRef]}
         {...restProps}
       >
-        {({ anchored }) => (
-          <div
-            sx={{
-              border: "1px solid black",
-              height: "100%",
-              minHeight: "100%",
-              width: "300px",
-              bg: "red",
-              p: 2
-            }}
-          >
-            {children}
-          </div>
-        )}
+        {/*{({anchored}) => (*/}
+        <div
+          sx={{
+            border: "1px solid black",
+            height: "100%",
+            bg: "red",
+            p: 2
+          }}
+        >
+          {children}
+        </div>
+        {/*)}*/}
       </Dialog>
     </div>
   );
@@ -94,6 +92,28 @@ export const unstyled = () => (
 
     <Paragraph />
     <Paragraph />
+
+    <DialogWithButton
+      sx={{
+        width: ["90vw", null, "50vw", null, "33vw"],
+        placement: "right"
+      }}
+      anchoredTo={"window"}
+    >
+      <Button>One</Button>
+      <br />
+      <br />
+      <Button>Two</Button>
+      <br />
+      <br />
+      <Button>Three</Button>
+      <br />
+      <br />
+      <Button>Four</Button>
+      <br />
+      <br />
+    </DialogWithButton>
+
     <Paragraph />
     <Paragraph />
     <Paragraph />

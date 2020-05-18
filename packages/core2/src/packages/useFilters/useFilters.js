@@ -1,29 +1,81 @@
 import React, { useState } from "react";
 
+import { normalizeSelectValue } from "../useSelectState";
+
+const normalizeData = item => {
+  const ret = {
+    ...item
+  };
+
+  if (ret.type === "select") {
+    ret.value = normalizeSelectValue(ret.options, ret.value, true);
+  } else {
+    ret.value = null; // TODO: do this
+  }
+  return ret;
+};
+
+const areEqual = (a, b) => {
+  return JSON.stringify(a) === JSON.stringify(b);
+};
+
 function useFilters({ data, onChange }) {
-  data = data[0];
+  const [internalData_, setInternalData] = useState(data);
+  const [committedData_, setCommittedData] = useState(data);
 
-  const [value, setValue_] = useState(data.value || null); // internal data value
+  // internalData is normalized internalData_
+  const internalData = internalData_.map(item => normalizeData(item));
+  const committedData = committedData_.map(item => normalizeData(item));
 
-  const setValue = newValue => {
-    setValue_(newValue);
+  const setValue = (id, newValue, isSoft = false) => {
+    let newData = [];
 
-    if (onChange) {
-      onChange();
+    internalData.forEach(item => {
+      if (item.id === id) {
+        let newItem = {
+          ...item,
+          value: newValue
+        };
+
+        newData.push(newItem);
+      } else {
+        newData.push({
+          ...item
+        });
+      }
+    });
+
+    setInternalData(newData);
+    if (!isSoft) {
+      setCommittedData(newData);
+      onChange(internalData);
     }
   };
 
-  const selectProps = {
-    options: data.options,
-    allowEmpty: true,
-    value,
-    onChange: setValue
-  };
+  const filters = internalData.map((item, index) => {
+    return {
+      ...item,
+      selectProps: (item.type === "select" || item.type === "multiselect") && {
+        options: item.options,
+        allowEmpty: true,
+        value: item.value === undefined ? null : item.value,
+        onChange: newVal => setValue(item.id, newVal)
+      },
+      clearButtonProps: {
+        onClick: () => {
+          setValue(item.id, null);
+        }
+      },
+      dirty: !areEqual(item.value, committedData[index].value)
+    };
+  });
 
   return {
-    selectProps,
-    clear: () => {
-      setValue(null);
+    filters,
+    setValue,
+    commit: () => {
+      setCommittedData(internalData_);
+      onChange(internalData);
     }
   };
 }

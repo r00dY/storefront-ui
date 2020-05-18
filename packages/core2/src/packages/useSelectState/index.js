@@ -41,20 +41,9 @@ function filterProps(props) {
  *
  * When we switch from controlled to uncontrolled (or change options array in uncontrolled state), we need to update internal state and possibly do it in one render.
  */
-function useSelectState(props) {
-  let {
-    options,
-    value, // can be object or id
-    defaultValue, // can be object or id
-    onChange,
-    allowEmpty = true
-  } = props;
 
-  // UNCONTROLLED ONLY IF: value === "undefined"
-  const isControlled = typeof value !== "undefined";
-
-  // Normalize options
-  options = options.map(option => {
+const normalizeSelectOptions = options =>
+  options.map(option => {
     if (typeof option === "object") {
       if (option.id === undefined || option.id === null) {
         throw new Error(
@@ -84,14 +73,33 @@ function useSelectState(props) {
     };
   });
 
+export const normalizeSelectValue = (options, val, allowEmpty) => {
+  options = normalizeSelectOptions(options);
+
+  let valueId = typeof val === "object" && val !== null ? val.id : val;
+  let valueObject = options.find(o => o.id === valueId);
+  val = valueObject || (allowEmpty ? null : options[0]);
+  return val;
+};
+
+function useSelectState(props) {
+  let {
+    options,
+    value, // can be object or id
+    defaultValue, // can be object or id
+    onChange,
+    allowEmpty = true
+  } = props;
+
+  // UNCONTROLLED ONLY IF: value === "undefined"
+  const isControlled = typeof value !== "undefined";
+
+  // Normalize options
+  options = normalizeSelectOptions(options);
+
   // Let's see if value or defaultValue is one from the options list or not
 
-  const normalizeValue = val => {
-    let valueId = typeof val === "object" && val !== null ? val.id : val;
-    let valueObject = options.find(o => o.id === valueId);
-    val = valueObject || (allowEmpty ? null : options[0]);
-    return val;
-  };
+  const normalizeValue = val => normalizeSelectValue(options, val, allowEmpty);
 
   const originalValue = val => {
     return val === null
@@ -100,18 +108,6 @@ function useSelectState(props) {
       ? val.__originalOption
       : val;
   };
-
-  // let defaultValueId =
-  //   typeof defaultValue === "object" && defaultValue !== null
-  //     ? defaultValue.id
-  //     : defaultValue;
-  // let valueId = typeof value === "object" && value !== null ? value.id : value;
-  //
-  // let defaultValueObject = options.find(o => o.id === defaultValueId);
-  // let valueObject = options.find(o => o.id === valueId);
-  //
-  // defaultValue = defaultValueObject || (allowEmpty ? null : options[0]);
-  // value = valueObject || (allowEmpty ? null : options[0]);
 
   // This "local empty" will be used only if component is uncontrolled
   let [internalValue, setInternalValue] = useState(

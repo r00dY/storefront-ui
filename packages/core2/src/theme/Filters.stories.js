@@ -14,7 +14,7 @@ import ItemRow from "./Selectables/ItemRow";
 import SelectNative from "./SelectNative";
 
 export const basic = () => {
-  const filters = useFilters({
+  const { filters } = useFilters({
     data: filtersData,
     onChange: () => {
       console.log("changed!");
@@ -23,19 +23,29 @@ export const basic = () => {
 
   return (
     <Box sx={{ p: 50 }}>
-      <SelectInline {...filters.selectProps}>
-        <ItemRow />
-      </SelectInline>
+      {filters.map(
+        filter =>
+          filter.selectProps && (
+            <Box sx={{ mb: 20 }}>
+              {filter.label}
+              <br />
+              <SelectInline {...filter.selectProps}>
+                <ItemRow />
+              </SelectInline>
+              <button {...filter.clearButtonProps}>Clear</button>
+            </Box>
+          )
+      )}
 
-      <SelectNative {...filters.selectProps} />
+      {/*<SelectNative {...filters.selectProps} />*/}
 
-      <button
-        onClick={() => {
-          filters.clear();
-        }}
-      >
-        Clear
-      </button>
+      {/*<button*/}
+      {/*onClick={() => {*/}
+      {/*filters.clear();*/}
+      {/*}}*/}
+      {/*>*/}
+      {/*Clear*/}
+      {/*</button>*/}
     </Box>
   );
 };
