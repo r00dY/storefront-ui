@@ -22,6 +22,15 @@ const areEqual = (a, b) => {
   return JSON.stringify(a) === JSON.stringify(b);
 };
 
+function getValuesObject(data) {
+  let obj = {};
+  data.forEach(item => {
+    obj[item.id] = item.value;
+  });
+
+  return obj;
+}
+
 function useFilters({ data, onChange }) {
   const [internalData_, setInternalData] = useState(data);
   const [committedData_, setCommittedData] = useState(data);
@@ -30,10 +39,24 @@ function useFilters({ data, onChange }) {
   const internalData = internalData_.map(item => normalizeData(item));
   const committedData = committedData_.map(item => normalizeData(item));
 
-  data.forEach(filter => {
-    if (filter.type === "select") {
-    }
-  });
+  // const [values, setValues] = useState(getValuesObject(data));
+  //
+  // const normalizedValues = {};
+
+  // data.forEach(filter => {
+  //   if (filter.type === "select") {
+  //     const controller = useSelectState_controlled({
+  //       options: filter.options,
+  //       allowEmpty: true,
+  //       value: values[filter.id]
+  //     });
+  //
+  //     normalizedValues[filter.id] = controller.valueObject.id;
+  //   }
+  //   else {
+  //     normalizedValues[filter.id] = null;
+  //   }
+  // });
 
   const setValue = (id, newValue, isSoft = false) => {
     let newData = [];
