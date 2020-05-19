@@ -11,7 +11,8 @@ import {
 import {
   createElement,
   getElementSpec,
-  responsiveValueCurrent
+  responsiveValueCurrent,
+  jsx
 } from "../index";
 import Box from "../Box";
 
