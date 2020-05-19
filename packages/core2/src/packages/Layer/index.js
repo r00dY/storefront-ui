@@ -2,20 +2,17 @@
 
 import React, { useState, useEffect, useRef } from "react";
 import { Layer, TetherBehavior } from "../base/layer/index.js";
-import { jsx } from "@commerce-ui/core";
-import Ease from "../../packages_old/Ease";
 import {
   fromPopperPlacement,
   getEndPosition,
   getPopoverMarginStyles,
   getStartPosition
 } from "../base/popover/utils";
-import { ANIMATE_IN_TIME, PLACEMENT } from "../base/popover";
-import { createElement, getElementSpec } from "..";
-import { SharedStylePropsArgT } from "../base/popover/types";
-
-import { responsiveValueCurrent } from "..";
-
+import {
+  createElement,
+  getElementSpec,
+  responsiveValueCurrent
+} from "../index";
 import Box from "../Box";
 
 const mountNode = () => {
@@ -39,7 +36,7 @@ const centered = ({
   anchored: false,
   background: {
     backgroundColor,
-    transition: `opacity ${animationTime}s ${animationEase.css}`,
+    transition: `opacity ${animationTime}s ${animationEase}`,
     opacity: shouldShow ? 1 : 0
   },
   contentWrapper: {
@@ -51,7 +48,7 @@ const centered = ({
     maxHeight
   },
   content: {
-    transition: `all ${animationTime}s ${animationEase.css}`,
+    transition: `all ${animationTime}s ${animationEase}`,
     opacity: shouldShow ? 1 : 0
   }
 });
@@ -73,7 +70,7 @@ const slide = ({
   anchored: false,
   background: {
     backgroundColor,
-    transition: `opacity ${animationTime}s ${animationEase.css}`,
+    transition: `opacity ${animationTime}s ${animationEase}`,
     opacity: shouldShow ? 1 : 0
   },
   contentWrapper: {
@@ -90,7 +87,7 @@ const slide = ({
     maxHeight
   },
   content: {
-    transition: `all ${animationTime}s ${animationEase.css}`,
+    transition: `all ${animationTime}s ${animationEase}`,
     transform: shouldShow
       ? "none"
       : `translate${axis}(${fromStart ? "-" : ""}100%)`,
@@ -215,7 +212,7 @@ function Layer$(props) {
     maxWidth: maxWidth || "10000px",
     maxHeight: maxHeight || "10000px",
     animationTime: animationTime || 0.3,
-    animationEase: animationEase || Ease.expoOut,
+    animationEase: animationEase || "cubic-bezier(0.19, 1, 0.22, 1)",
     backgroundColor: backgroundColor || "rgba(0,0,0,0.3)",
     shouldShow
   };
@@ -354,7 +351,7 @@ function Layer$(props) {
   }
 
   const onPopperUpdate = (normalizedOffsets, data) => {
-    const placement = fromPopperPlacement(data.placement) || PLACEMENT.top;
+    const placement = fromPopperPlacement(data.placement) || "top";
     // this.setState({
     //     arrowOffset: normalizedOffsets.arrow,
     //     popoverOffset: normalizedOffsets.popper,
