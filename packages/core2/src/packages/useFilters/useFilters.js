@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 
 import {
   normalizeSelectValue,
@@ -31,6 +31,15 @@ function getValuesObject(data) {
   return obj;
 }
 
+const normalizeFilterValue = filter => {
+  if (filter.type === "select") {
+    return normalizeSelectValue(filter.options, filter.value, true);
+  } else {
+    return null;
+  }
+};
+
+// for now: enableReinitalize not available, we assume true.
 function useFilters({ data, onChange }) {
   const [internalData_, setInternalData] = useState(data);
   const [committedData_, setCommittedData] = useState(data);
@@ -39,60 +48,56 @@ function useFilters({ data, onChange }) {
   const internalData = internalData_.map(item => normalizeData(item));
   const committedData = committedData_.map(item => normalizeData(item));
 
-  // const [values, setValues] = useState(getValuesObject(data));
-  //
-  // const normalizedValues = {};
+  const localValues = useRef({});
+  const previousValues = useRef({});
 
-  // data.forEach(filter => {
-  //   if (filter.type === "select") {
-  //     const controller = useSelectState_controlled({
-  //       options: filter.options,
-  //       allowEmpty: true,
-  //       value: values[filter.id]
-  //     });
-  //
-  //     normalizedValues[filter.id] = controller.valueObject.id;
-  //   }
-  //   else {
-  //     normalizedValues[filter.id] = null;
-  //   }
-  // });
+  const values = {}; // normalized values based on current data
+  data.forEach(filter => {
+    values[filter.id] = normalizeFilterValue(filter);
+  });
+
+  const [counter, setCounter] = useState(0);
 
   const setValue = (id, newValue, isSoft = false) => {
-    let newData = [];
+    // normalize
+    let filter = data.find(x => x.id === id);
+    newValue = normalizeFilterValue({ ...filter, value: newValue });
 
-    internalData.forEach(item => {
-      if (item.id === id) {
-        let newItem = {
-          ...item,
-          value: newValue
-        };
+    localValues.current[id] = newValue;
+    setCounter(counter + 1);
 
-        newData.push(newItem);
-      } else {
-        newData.push({
-          ...item
-        });
-      }
-    });
+    let newData = data.map(filter => ({
+      ...filter,
+      value: localValues.current[filter.id] || values[filter.id]
+    }));
 
-    setInternalData(newData);
+    onChange(newData);
+
+    // setInternalData(newData);
     if (!isSoft) {
-      setCommittedData(newData);
-      onChange(internalData);
+      // setCommittedData(newData);
+      // onChange(internalData);
     }
   };
 
   let isAnyDirty = false;
 
   const filters = internalData.map((item, index) => {
-    const isDirty = !areEqual(item.value, committedData[index].value);
+    let isDirty = !areEqual(
+      localValues.current[item.id] || null,
+      values[item.id]
+    );
+
+    console.log("---", localValues.current[item.id] || null, values[item.id]);
+
+    isDirty = false;
     if (isDirty) {
       isAnyDirty = true;
     }
 
     return {
       ...item,
+      value: localValues.current[item.id] || values[item.id],
       selectProps: (item.type === "select" || item.type === "multiselect") && {
         options: item.options,
         allowEmpty: true,
