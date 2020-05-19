@@ -52,12 +52,12 @@ function useFilters({ data, onChange }) {
     }
   };
 
-  let isAllDirty = false;
+  let isAnyDirty = false;
 
   const filters = internalData.map((item, index) => {
     const isDirty = !areEqual(item.value, committedData[index].value);
     if (isDirty) {
-      isAllDirty = true;
+      isAnyDirty = true;
     }
 
     return {
@@ -84,7 +84,7 @@ function useFilters({ data, onChange }) {
       setCommittedData(internalData_);
       onChange(internalData);
     },
-    isDirty: isAllDirty
+    isDirty: isAnyDirty
   };
 }
 

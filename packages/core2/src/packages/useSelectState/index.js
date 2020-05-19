@@ -99,15 +99,42 @@ function useSelectState(props) {
   // UNCONTROLLED ONLY IF: value === "undefined"
   const isControlled = typeof value !== "undefined";
 
-  // Normalize options
+  let [internalValue, setInternalValue] = useState(
+    normalizeSelectValue(options, defaultValue, allowEmpty)
+  );
+
+  const currentValue = isControlled ? value : internalValue;
+
+  return useSelectState_controlled({
+    ...props,
+    value: currentValue,
+    onChange: (newVal, index) => {
+      if (!isControlled) {
+        setInternalValue(newVal);
+      }
+
+      if (onChange) {
+        onChange(newVal, index);
+      }
+    }
+  });
+}
+
+export function useSelectState_controlled(props) {
+  let {
+    options,
+    value, // can be object or id
+    // defaultValue, // can be object or id
+    onChange,
+    allowEmpty = true
+  } = props;
+
   options = normalizeSelectOptions(options);
 
   // Let's see if value or defaultValue is one from the options list or not
-
   const normalizeValue = val => normalizeSelectValue(options, val, allowEmpty);
 
   const originalValue = val => {
-    console.log("to original", val);
     return val === null
       ? null
       : typeof val.__originalOption !== "undefined"
@@ -115,12 +142,7 @@ function useSelectState(props) {
       : val;
   };
 
-  // This "local empty" will be used only if component is uncontrolled
-  let [internalValue, setInternalValue] = useState(
-    normalizeValue(defaultValue)
-  );
-
-  const currentValue = isControlled ? normalizeValue(value) : internalValue;
+  const currentValue = normalizeValue(value);
 
   const getValIndex = val => {
     if (val === null) {
@@ -143,10 +165,6 @@ function useSelectState(props) {
       return;
     }
 
-    if (!isControlled) {
-      setInternalValue(newVal);
-    }
-
     if (onChange) {
       onChange(originalValue(newVal), getValIndex(newVal));
     }
@@ -163,9 +181,6 @@ function useSelectState(props) {
     },
     setValue
   };
-
-  // Jaki output chcemy?
-  // 1. value (as object), defaultValue (as object), both can be undefined
 }
 
 useSelectState.filterProps = filterProps;
