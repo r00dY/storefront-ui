@@ -51,6 +51,11 @@ const normalizeSelectOptions = options =>
         );
       }
 
+      if (typeof option.__originalOption !== "undefined") {
+        // you can't normalize already normalized value
+        return option;
+      }
+
       if (!option.label) {
         return {
           ...option,
@@ -102,6 +107,7 @@ function useSelectState(props) {
   const normalizeValue = val => normalizeSelectValue(options, val, allowEmpty);
 
   const originalValue = val => {
+    console.log("to original", val);
     return val === null
       ? null
       : typeof val.__originalOption !== "undefined"
