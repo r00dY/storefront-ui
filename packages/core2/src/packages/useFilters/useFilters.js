@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 
-import { normalizeSelectValue } from "../useSelectState";
+import {
+  normalizeSelectValue,
+  useSelectState_controlled
+} from "../useSelectState";
 
 const normalizeData = item => {
   const ret = {
@@ -26,6 +29,11 @@ function useFilters({ data, onChange }) {
   // internalData is normalized internalData_
   const internalData = internalData_.map(item => normalizeData(item));
   const committedData = committedData_.map(item => normalizeData(item));
+
+  data.forEach(filter => {
+    if (filter.type === "select") {
+    }
+  });
 
   const setValue = (id, newValue, isSoft = false) => {
     let newData = [];
