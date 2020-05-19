@@ -41,12 +41,14 @@ const normalizeFilterValue = filter => {
 
 // for now: enableReinitalize not available, we assume true.
 function useFilters({ data, onChange }) {
-  const [internalData_, setInternalData] = useState(data);
-  const [committedData_, setCommittedData] = useState(data);
-
-  // internalData is normalized internalData_
-  const internalData = internalData_.map(item => normalizeData(item));
-  const committedData = committedData_.map(item => normalizeData(item));
+  const [counter, setCounter] = useState(0);
+  //
+  // const [internalData_, setInternalData] = useState(data);
+  // const [committedData_, setCommittedData] = useState(data);
+  //
+  // // internalData is normalized internalData_
+  // const internalData = internalData_.map(item => normalizeData(item));
+  // const committedData = committedData_.map(item => normalizeData(item));
 
   const localValues = useRef({});
   const commitedValues = useRef({});
@@ -57,7 +59,26 @@ function useFilters({ data, onChange }) {
     values[filter.id] = normalizeFilterValue(filter);
   });
 
-  const [counter, setCounter] = useState(0);
+  // UPDATE local values (makes sense if data changes and we have different filters structure)
+  // Thanks to refs we can do this "right away", not on useEffect and cause re-render.
+
+  for (let filterId in localValues.current) {
+    let value = localValues.current[filterId];
+
+    // If new value for this filter from props is different from previous value from props (like value from server changed)
+    if (!areEqual(values[filterId], previousValues.current[filterId])) {
+      delete localValues.current[filterId];
+      delete commitedValues.current[filterId];
+    }
+
+    // If this filterId is not in the list anymore
+    if (!values.hasOwnProperty(filterId)) {
+      delete localValues.current[filterId];
+      delete commitedValues.current[filterId];
+    }
+  }
+
+  previousValues.current = { ...values };
 
   const getDataWithCurrentValues = () => {
     return data.map(item => ({
@@ -86,7 +107,7 @@ function useFilters({ data, onChange }) {
 
   let isAnyDirty = false;
 
-  const filters = internalData.map((item, index) => {
+  const filters = getDataWithCurrentValues().map((item, index) => {
     let isDirty = !areEqual(
       localValues.current[item.id],
       commitedValues.current[item.id]
@@ -98,7 +119,6 @@ function useFilters({ data, onChange }) {
 
     return {
       ...item,
-      value: localValues.current[item.id] || values[item.id],
       selectProps: (item.type === "select" || item.type === "multiselect") && {
         options: item.options,
         allowEmpty: true,

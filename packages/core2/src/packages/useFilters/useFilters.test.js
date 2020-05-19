@@ -1,4 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
+import { useState } from "react";
 
 import useFilters from "./useFilters";
 
@@ -249,4 +250,132 @@ test("setting select values (standard + soft)", () => {
   expect(result.current.filters[3].isDirty).toBe(false);
 
   expect(onChange.mock.calls.length).toBe(4);
+});
+
+function useFiltersWrapper(props) {
+  const [data, setData] = useState(props.data);
+
+  return {
+    ...useFilters({
+      ...props,
+      data
+    }),
+    setData
+  };
+}
+
+test("[changing filters] changing filters values from props changes internal state", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value.id).toBe("white");
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(onChange.mock.calls.length).toBe(2);
+
+  act(() => {
+    result.current.setData(
+      filtersData.map(filter => ({
+        ...filter,
+        value: filter.id === "color" ? "black" : filter.value
+      }))
+    ); // external color value changed to black.
+  });
+
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value.id).toBe("black");
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(onChange.mock.calls.length).toBe(2);
+});
+
+test("[changing filters] removing other filters from list doesn't affect existing filters state", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value.id).toBe("white");
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(onChange.mock.calls.length).toBe(2);
+
+  act(() => {
+    result.current.setData([filtersData[0], filtersData[2]]); // let's remove unset filters
+  });
+
+  expect(result.current.filters.length).toBe(2);
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value.id).toBe("white");
+
+  expect(onChange.mock.calls.length).toBe(2);
+});
+
+test("[changing filters] removing filter with local value from list, and bringing it back -> state shouldn't be preserved", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value.id).toBe("white");
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(onChange.mock.calls.length).toBe(2);
+
+  act(() => {
+    result.current.setData([filtersData[0]]); // let's remove all filters except for sort
+  });
+
+  expect(result.current.filters.length).toBe(1);
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+
+  expect(onChange.mock.calls.length).toBe(2);
+
+  act(() => {
+    result.current.setData(filtersData); // let's bring back old filters
+  });
+
+  expect(result.current.filters.length).toBe(4);
+  expect(result.current.filters[0].value.id).toBe("price-asc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value).toBe(null); // COLOR WAS REMOVED SO STATE SHOULDN'T BE KEPT HERE
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(onChange.mock.calls.length).toBe(2);
 });
