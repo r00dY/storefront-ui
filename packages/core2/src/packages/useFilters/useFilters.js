@@ -49,6 +49,7 @@ function useFilters({ data, onChange }) {
   const committedData = committedData_.map(item => normalizeData(item));
 
   const localValues = useRef({});
+  const commitedValues = useRef({});
   const previousValues = useRef({});
 
   const values = {}; // normalized values based on current data
@@ -58,39 +59,39 @@ function useFilters({ data, onChange }) {
 
   const [counter, setCounter] = useState(0);
 
+  const getDataWithCurrentValues = () => {
+    return data.map(item => ({
+      ...item,
+      value: localValues.current[item.id] || values[item.id]
+    }));
+  };
+
   const setValue = (id, newValue, isSoft = false) => {
     // normalize
     let filter = data.find(x => x.id === id);
     newValue = normalizeFilterValue({ ...filter, value: newValue });
 
     localValues.current[id] = newValue;
-    setCounter(counter + 1);
 
-    let newData = data.map(filter => ({
-      ...filter,
-      value: localValues.current[filter.id] || values[filter.id]
-    }));
-
-    onChange(newData);
-
-    // setInternalData(newData);
     if (!isSoft) {
-      // setCommittedData(newData);
-      // onChange(internalData);
+      commitedValues.current[id] = newValue;
+
+      const newData = getDataWithCurrentValues();
+
+      onChange(newData);
     }
+
+    setCounter(counter + 1);
   };
 
   let isAnyDirty = false;
 
   const filters = internalData.map((item, index) => {
     let isDirty = !areEqual(
-      localValues.current[item.id] || null,
-      values[item.id]
+      localValues.current[item.id],
+      commitedValues.current[item.id]
     );
 
-    console.log("---", localValues.current[item.id] || null, values[item.id]);
-
-    isDirty = false;
     if (isDirty) {
       isAnyDirty = true;
     }
@@ -117,8 +118,10 @@ function useFilters({ data, onChange }) {
     filters,
     setValue,
     commit: () => {
-      setCommittedData(internalData_);
-      onChange(internalData);
+      commitedValues.current = { ...localValues.current };
+      const newData = getDataWithCurrentValues();
+      onChange(newData);
+      setCounter(counter + 1);
     },
     isDirty: isAnyDirty
   };

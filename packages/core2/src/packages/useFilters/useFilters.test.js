@@ -179,75 +179,74 @@ test("setting select values (standard + soft)", () => {
 
   expect(onChange.mock.calls.length).toBe(3);
 
-  //
-  // act(() => {
-  //   result.current.setValue("sort", null, true); // setValue softly (dirty flag goes true)
-  // });
-  //
-  // expect(result.current.filters[0].value).toBe(null);
-  // expect(result.current.filters[1].value).toBe(null);
-  // expect(result.current.filters[2].value).toBe(null);
-  // expect(result.current.filters[3].value).toBe(null);
-  //
-  // expect(result.current.filters[0].isDirty).toBe(true);
-  // expect(result.current.filters[1].isDirty).toBe(false);
-  // expect(result.current.filters[2].isDirty).toBe(false);
-  // expect(result.current.filters[3].isDirty).toBe(false);
-  //
-  // expect(result.current.isDirty).toBe(true);
-  //
-  // expect(onChange.mock.calls.length).toBe(3);
-  //
-  // act(() => {
-  //   result.current.setValue("sort", "price-desc", true); // return softly to previous value (dirty will become false).
-  // });
-  //
-  // expect(result.current.filters[0].value.id).toBe("price-desc");
-  // expect(result.current.filters[1].value).toBe(null);
-  // expect(result.current.filters[2].value).toBe(null);
-  // expect(result.current.filters[3].value).toBe(null);
-  //
-  // expect(result.current.filters[0].isDirty).toBe(false);
-  // expect(result.current.filters[1].isDirty).toBe(false);
-  // expect(result.current.filters[2].isDirty).toBe(false);
-  // expect(result.current.filters[3].isDirty).toBe(false);
-  //
-  // expect(result.current.isDirty).toBe(false);
-  //
-  // expect(onChange.mock.calls.length).toBe(3);
-  //
-  // act(() => {
-  //   result.current.setValue("sort", null, true); // again setValue softly
-  // });
-  //
-  // expect(result.current.filters[0].value).toBe(null);
-  // expect(result.current.filters[1].value).toBe(null);
-  // expect(result.current.filters[2].value).toBe(null);
-  // expect(result.current.filters[3].value).toBe(null);
-  //
-  // expect(result.current.filters[0].isDirty).toBe(true);
-  // expect(result.current.filters[1].isDirty).toBe(false);
-  // expect(result.current.filters[2].isDirty).toBe(false);
-  // expect(result.current.filters[3].isDirty).toBe(false);
-  //
-  // expect(result.current.isDirty).toBe(true);
-  // expect(onChange.mock.calls.length).toBe(3);
-  //
-  // act(() => {
-  //   result.current.commit(); // commit
-  // });
-  //
-  // expect(result.current.filters[0].value).toBe(null);
-  // expect(result.current.filters[1].value).toBe(null);
-  // expect(result.current.filters[2].value).toBe(null);
-  // expect(result.current.filters[3].value).toBe(null);
-  //
-  // expect(result.current.isDirty).toBe(false);
-  //
-  // expect(result.current.filters[0].isDirty).toBe(false);
-  // expect(result.current.filters[1].isDirty).toBe(false);
-  // expect(result.current.filters[2].isDirty).toBe(false);
-  // expect(result.current.filters[3].isDirty).toBe(false);
-  //
-  // expect(onChange.mock.calls.length).toBe(4);
+  act(() => {
+    result.current.setValue("sort", null, true); // setValue softly (dirty flag goes true)
+  });
+
+  expect(result.current.filters[0].value).toBe(null);
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value).toBe(null);
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(result.current.filters[0].isDirty).toBe(true);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(true);
+
+  expect(onChange.mock.calls.length).toBe(3);
+
+  act(() => {
+    result.current.setValue("sort", "price-desc", true); // return softly to previous value (dirty will become false).
+  });
+
+  expect(result.current.filters[0].value.id).toBe("price-desc");
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value).toBe(null);
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(false);
+
+  expect(onChange.mock.calls.length).toBe(3);
+
+  act(() => {
+    result.current.setValue("sort", null, true); // again setValue softly
+  });
+
+  expect(result.current.filters[0].value).toBe(null);
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value).toBe(null);
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(result.current.filters[0].isDirty).toBe(true);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(result.current.isDirty).toBe(true);
+  expect(onChange.mock.calls.length).toBe(3);
+
+  act(() => {
+    result.current.commit(); // commit
+  });
+
+  expect(result.current.filters[0].value).toBe(null);
+  expect(result.current.filters[1].value).toBe(null);
+  expect(result.current.filters[2].value).toBe(null);
+  expect(result.current.filters[3].value).toBe(null);
+
+  expect(result.current.isDirty).toBe(false);
+
+  expect(result.current.filters[0].isDirty).toBe(false);
+  expect(result.current.filters[1].isDirty).toBe(false);
+  expect(result.current.filters[2].isDirty).toBe(false);
+  expect(result.current.filters[3].isDirty).toBe(false);
+
+  expect(onChange.mock.calls.length).toBe(4);
 });
