@@ -1,6 +1,9 @@
 /** @jsx jsx */
 import { jsx } from "@commerce-ui/core";
 import SelectInline, { useSelectInline } from "@commerce-ui/core/SelectInline";
+import MultiSelectInline, {
+  useMultiSelectInline
+} from "@commerce-ui/core/MultiSelectInline";
 import Grid from "@commerce-ui/core/Grid";
 import React, { useRef, useState } from "react";
 
@@ -211,6 +214,126 @@ export const basic = () => {
           >
             <ItemRow />
           </SelectInline>
+        </Grid>
+      </form>
+    </>
+  );
+};
+
+export const multi = () => {
+  const [val, setVal] = useState(null);
+  const [val2, setVal2] = useState(options[2]);
+
+  const { selectableProps } = useMultiSelectInline({
+    options,
+    onChange: console.log
+  });
+
+  return (
+    <>
+      <h2>Controlled by hook</h2>
+
+      <Grid minItemWidth={300}>
+        {selectableProps.map(props => (
+          <ItemRow {...props} />
+        ))}
+      </Grid>
+
+      <h2>String options</h2>
+
+      <Grid minItemWidth={300}>
+        <MultiSelectInline
+          options={options.map(o => o.label)}
+          onChange={val => console.log}
+        >
+          <ItemRow />
+        </MultiSelectInline>
+      </Grid>
+
+      <h2>Invalid</h2>
+
+      <Grid minItemWidth={300}>
+        <MultiSelectInline
+          options={options.map(o => o.label)}
+          onChange={val => console.log}
+          invalid
+        >
+          <ItemRow />
+        </MultiSelectInline>
+      </Grid>
+
+      <form action={"/action"} method={"post"}>
+        <h2>Uncontrolled</h2>
+
+        <p>Standard</p>
+
+        <Grid minItemWidth={300}>
+          <MultiSelectInline options={options} onChange={val => console.log}>
+            <ItemRow />
+          </MultiSelectInline>
+        </Grid>
+
+        <p>Standard (default value)</p>
+        <Grid minItemWidth={300}>
+          <MultiSelectInline
+            options={options}
+            defaultValue={["london", "warsaw"]}
+            onChange={val => console.log}
+          >
+            <ItemRow />
+          </MultiSelectInline>
+        </Grid>
+
+        <h2>Controlled</h2>
+
+        <p>Standard</p>
+        <Grid minItemWidth={300}>
+          <MultiSelectInline
+            options={options}
+            value={val}
+            onChange={setVal}
+            as={Grid}
+            minItemWidth={300}
+          >
+            <ItemRow />
+          </MultiSelectInline>
+        </Grid>
+
+        <p>Standard (default value)</p>
+        <Grid minItemWidth={300}>
+          <MultiSelectInline
+            options={options}
+            value={val2}
+            onChange={setVal2}
+            as={Grid}
+            minItemWidth={300}
+          >
+            <ItemRow />
+          </MultiSelectInline>
+        </Grid>
+
+        <h2>Disabled states</h2>
+
+        <p>Entire control disabled</p>
+        <Grid minItemWidth={300}>
+          <MultiSelectInline
+            options={options}
+            onChange={val => console.log}
+            disabled
+          >
+            <ItemRow />
+          </MultiSelectInline>
+        </Grid>
+
+        <p>Items disabled</p>
+
+        <Grid minItemWidth={300}>
+          <MultiSelectInline
+            options={optionsWithDisabled}
+            onChange={val => console.log}
+          >
+            <ItemRow />
+          </MultiSelectInline>
         </Grid>
       </form>
     </>

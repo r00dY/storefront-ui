@@ -2,10 +2,8 @@ import React from "react";
 
 import useSelectState from "../useSelectState";
 
-export function useSelectInline(props) {
-  let controller = useSelectState(props);
-
-  const { value, options, setValue, isSelected } = controller;
+export function getSelectableProps(controller, props) {
+  const { value, options, setValue, multi, isSelected } = controller;
 
   const selectableProps = options.map(option => {
     return {
@@ -18,25 +16,25 @@ export function useSelectInline(props) {
       key: option.id,
       label: option.label,
       onClick: () => {
-        setValue(option);
+        if (controller.isSelected(option)) {
+          if (!multi && props.allowEmpty !== false) {
+            controller.unselectValue(option);
+          }
+        } else {
+          controller.selectValue(option);
+        }
       }
     };
   });
 
-  return {
-    ...controller,
-    selectableProps
-  };
+  return selectableProps;
 }
 
-function SelectInline({ children, controller, ...props }) {
-  if (!controller) {
-    controller = useSelectInline(props);
-  }
+export function getChildren(controller, props) {
+  let children = props.children;
 
   try {
     const itemElement = React.Children.only(children);
-    // console.log(React.cloneElement(children));
     children = ({ selectableProps }) =>
       selectableProps.map(props => {
         return React.cloneElement(itemElement, props);
@@ -46,6 +44,23 @@ function SelectInline({ children, controller, ...props }) {
   children = children(controller);
 
   return children;
+}
+
+export function useSelectInline(props) {
+  let controller = useSelectState(props);
+
+  return {
+    ...controller,
+    selectableProps: getSelectableProps(controller, props)
+  };
+}
+
+export function SelectInline({ controller, ...props }) {
+  if (!controller) {
+    controller = useSelectInline(props);
+  }
+
+  return getChildren(controller, props);
 }
 
 // TODO: accessibility
