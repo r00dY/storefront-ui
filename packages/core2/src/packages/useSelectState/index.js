@@ -141,6 +141,14 @@ export function useSelectState_controlled(props) {
     }
   };
 
+  const isSelected = val => {
+    return !!(
+      val &&
+      currentValue &&
+      (currentValue.id === val || currentValue.id === val.id)
+    );
+  };
+
   return {
     value: originalValue(currentValue),
     valueObject: currentValue,
@@ -151,12 +159,14 @@ export function useSelectState_controlled(props) {
       setValue(null);
     },
     setValue,
-    isSelected: val => {
-      return !!(
-        val &&
-        currentValue &&
-        (currentValue.id === val || currentValue.id === val.id)
-      );
+    isSelected,
+    selectValue: val => {
+      setValue(val);
+    },
+    unselectValue: val => {
+      if (isSelected(val)) {
+        setValue(null);
+      }
     }
   };
 }

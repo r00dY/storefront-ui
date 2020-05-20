@@ -113,6 +113,19 @@ export function useMultiSelectState_controlled(props) {
     }
   };
 
+  const isSelected = val => {
+    if (val === undefined || val === null) {
+      return false;
+    }
+
+    let id = typeof val === "object" ? val.id : val;
+
+    if (normalizedValue.find(x => x.id === id)) {
+      return true;
+    }
+    return false;
+  };
+
   return {
     value: originalValueArray(normalizedValue),
     valueObject: normalizedValue,
@@ -122,17 +135,22 @@ export function useMultiSelectState_controlled(props) {
       setValue([]);
     },
     setValue,
-    isSelected: val => {
-      if (val === undefined || val === null) {
-        return false;
+    isSelected,
+    selectValue: val => {
+      if (isSelected(val)) {
+        return;
+      } else {
+        setValue([...normalizedValue, val]);
       }
-
-      let id = typeof val === "object" ? val.id : val;
-
-      if (normalizedValue.find(x => x.id === id)) {
-        return true;
+    },
+    unselectValue: val => {
+      if (!isSelected(val)) {
+        return;
+      } else {
+        setValue(
+          normalizedValue.filter(x => !(x.id === val.id || x.id === val))
+        );
       }
-      return false;
     }
   };
 }

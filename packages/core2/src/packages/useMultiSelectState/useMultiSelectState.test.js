@@ -280,7 +280,7 @@ test("isSelected works", () => {
   expect(result.current.isSelected(animals[3])).toBe(false);
 
   act(() => {
-    result.current.setValue(["cow", "cat"]); // change nothing
+    result.current.setValue(["cow", "cat"]);
   });
 
   expect(result.current.isSelected("cat")).toBe(true);
@@ -294,7 +294,7 @@ test("isSelected works", () => {
   expect(result.current.isSelected(animals[3])).toBe(true);
 
   act(() => {
-    result.current.setValue(["cow", "cat", "dog", "hog"]); // change nothing
+    result.current.setValue(["cow", "cat", "dog", "hog"]);
   });
 
   expect(result.current.isSelected("cat")).toBe(true);
@@ -320,4 +320,82 @@ test("isSelected works", () => {
   expect(result.current.isSelected(animals[1])).toBe(false);
   expect(result.current.isSelected(animals[2])).toBe(false);
   expect(result.current.isSelected(animals[3])).toBe(false);
+});
+
+test("select and unSelect work", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useMultiSelectState({
+      options: animals,
+      onChange
+    })
+  );
+
+  expect(result.current.isSelected("cat")).toBe(false);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.selectValue("cat");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.selectValue("blablabla");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.selectValue("dog");
+  });
+
+  act(() => {
+    result.current.selectValue("hog");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(true);
+  expect(result.current.isSelected("hog")).toBe(true);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.unselectValue("blablabla");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(true);
+  expect(result.current.isSelected("hog")).toBe(true);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.unselectValue("cat");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(false);
+  expect(result.current.isSelected("dog")).toBe(true);
+  expect(result.current.isSelected("hog")).toBe(true);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  act(() => {
+    result.current.unselectValue("dog");
+  });
+
+  act(() => {
+    result.current.unselectValue("hog");
+  });
+
+  expect(result.current.isSelected("cat")).toBe(false);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
 });
