@@ -17,7 +17,7 @@ export function getSelectableProps(controller, props) {
       label: option.label,
       onClick: () => {
         if (controller.isSelected(option)) {
-          if (!multi && props.allowEmpty !== false) {
+          if (multi || props.allowEmpty !== false) {
             controller.unselectValue(option);
           }
         } else {
