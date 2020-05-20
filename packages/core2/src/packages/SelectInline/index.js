@@ -5,11 +5,11 @@ import useSelectState from "../useSelectState";
 export function useSelectInline(props) {
   let controller = useSelectState(props);
 
-  const { value, options, setValue } = controller;
+  const { value, options, setValue, isSelected } = controller;
 
   const selectableProps = options.map(option => {
     return {
-      selected: value && (option.id === value || option.id === value.id),
+      selected: isSelected(option),
       disabled: option.disabled,
       invalid: !!props.invalid,
 

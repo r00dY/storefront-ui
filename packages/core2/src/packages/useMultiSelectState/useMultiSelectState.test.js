@@ -258,3 +258,66 @@ test("events work in controlled state", () => {
     expect.arrayContaining([animals[1], animals[2]])
   );
 });
+
+test("isSelected works", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useMultiSelectState({
+      options: animals,
+      onChange
+    })
+  );
+
+  expect(result.current.isSelected("cat")).toBe(false);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  expect(result.current.isSelected(animals[0])).toBe(false);
+  expect(result.current.isSelected(animals[1])).toBe(false);
+  expect(result.current.isSelected(animals[2])).toBe(false);
+  expect(result.current.isSelected(animals[3])).toBe(false);
+
+  act(() => {
+    result.current.setValue(["cow", "cat"]); // change nothing
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(true);
+
+  expect(result.current.isSelected(animals[0])).toBe(true);
+  expect(result.current.isSelected(animals[1])).toBe(false);
+  expect(result.current.isSelected(animals[2])).toBe(false);
+  expect(result.current.isSelected(animals[3])).toBe(true);
+
+  act(() => {
+    result.current.setValue(["cow", "cat", "dog", "hog"]); // change nothing
+  });
+
+  expect(result.current.isSelected("cat")).toBe(true);
+  expect(result.current.isSelected("dog")).toBe(true);
+  expect(result.current.isSelected("hog")).toBe(true);
+  expect(result.current.isSelected("cow")).toBe(true);
+
+  expect(result.current.isSelected(animals[0])).toBe(true);
+  expect(result.current.isSelected(animals[1])).toBe(true);
+  expect(result.current.isSelected(animals[2])).toBe(true);
+  expect(result.current.isSelected(animals[3])).toBe(true);
+
+  act(() => {
+    result.current.setValue(null); // change nothing
+  });
+
+  expect(result.current.isSelected("cat")).toBe(false);
+  expect(result.current.isSelected("dog")).toBe(false);
+  expect(result.current.isSelected("hog")).toBe(false);
+  expect(result.current.isSelected("cow")).toBe(false);
+
+  expect(result.current.isSelected(animals[0])).toBe(false);
+  expect(result.current.isSelected(animals[1])).toBe(false);
+  expect(result.current.isSelected(animals[2])).toBe(false);
+  expect(result.current.isSelected(animals[3])).toBe(false);
+});

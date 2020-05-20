@@ -121,7 +121,19 @@ export function useMultiSelectState_controlled(props) {
     reset: () => {
       setValue([]);
     },
-    setValue
+    setValue,
+    isSelected: val => {
+      if (val === undefined || val === null) {
+        return false;
+      }
+
+      let id = typeof val === "object" ? val.id : val;
+
+      if (normalizedValue.find(x => x.id === id)) {
+        return true;
+      }
+      return false;
+    }
   };
 }
 

@@ -150,7 +150,14 @@ export function useSelectState_controlled(props) {
     reset: () => {
       setValue(null);
     },
-    setValue
+    setValue,
+    isSelected: val => {
+      return !!(
+        val &&
+        currentValue &&
+        (currentValue.id === val || currentValue.id === val.id)
+      );
+    }
   };
 }
 
