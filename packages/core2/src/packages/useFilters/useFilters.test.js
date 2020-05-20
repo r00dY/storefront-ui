@@ -252,6 +252,7 @@ test("setting select values (standard + soft)", () => {
   expect(onChange.mock.calls.length).toBe(4);
 });
 
+// this wrapper mocks changing props for hook useFilters
 function useFiltersWrapper(props) {
   const [data, setData] = useState(props.data);
 

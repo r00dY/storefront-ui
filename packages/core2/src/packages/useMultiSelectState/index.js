@@ -204,8 +204,6 @@ export function useSelectState_controlled(props) {
 
 useSelectState.filterProps = filterProps;
 
-export default useSelectState;
-
 function are2ArraysOfValuesEqual(arr1, arr2) {
   if (arr1.length !== arr2.length) {
     return false;
@@ -261,3 +259,7 @@ export function useMultiSelectState_controlled(props) {
     setValue
   };
 }
+
+const useMultiSelectState = useMultiSelectState_controlled;
+
+export default useMultiSelectState;

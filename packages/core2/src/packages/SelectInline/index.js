@@ -46,7 +46,6 @@ function SelectInline({ children, controller, ...props }) {
   children = children(controller);
 
   return children;
-  8;
 }
 
 // TODO: accessibility
