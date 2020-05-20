@@ -14,7 +14,7 @@ function filterProps(props) {
   return restProps;
 }
 
-const normalizeSelectOptions = options =>
+export const normalizeSelectOptions = options =>
   options.map(option => {
     if (typeof option === "object") {
       if (option.id === undefined || option.id === null) {
@@ -50,16 +50,12 @@ const normalizeSelectOptions = options =>
     };
   });
 
-const originalValue = val => {
+export const originalValue = val => {
   return val === null
     ? null
     : typeof val.__originalOption !== "undefined"
     ? val.__originalOption
     : val;
-};
-
-const originalValueArray = arr => {
-  return arr.map(originalValue);
 };
 
 export const normalizeSelectValue = (options, val, allowEmpty) => {
@@ -71,7 +67,7 @@ export const normalizeSelectValue = (options, val, allowEmpty) => {
   return val;
 };
 
-const getValIndex = (options, val) => {
+export const getValIndex = (options, val) => {
   if (val === null) {
     return null;
   }
@@ -80,50 +76,6 @@ const getValIndex = (options, val) => {
     return null;
   }
   return index;
-};
-
-const getValIndexArray = (options, arr) => {
-  return arr.map(val => getValIndex(options, val));
-};
-
-export const normalizeMultiSelectValue = (options, val) => {
-  options = normalizeSelectOptions(options);
-
-  if (val === null || val === undefined) {
-    return [];
-  }
-
-  if (!Array.isArray(val)) {
-    return [];
-  }
-
-  let newVal = [];
-
-  for (let i = 0; i < val.length; i++) {
-    let v = val[i];
-
-    if (v === null || v === undefined) {
-      continue;
-    }
-
-    let valueObject = v;
-    if (typeof v !== "object") {
-      // if value is not object, then we treat it as id
-      valueObject = options.find(o => o.id === v);
-    }
-
-    if (
-      !valueObject ||
-      valueObject.id === null ||
-      valueObject.id === undefined
-    ) {
-      continue;
-    }
-
-    newVal.push(valueObject);
-  }
-
-  return newVal;
 };
 
 function useSelectState(props) {
@@ -205,59 +157,3 @@ export function useSelectState_controlled(props) {
 useSelectState.filterProps = filterProps;
 
 export default useSelectState;
-
-function are2ArraysOfValuesEqual(arr1, arr2) {
-  if (arr1.length !== arr2.length) {
-    return false;
-  }
-
-  let ids = {};
-  arr1.forEach(val => {
-    ids[val.id] = true;
-  });
-
-  for (let i = 0; i < arr2.length; i++) {
-    const id = arr2[i];
-
-    if (ids[id] !== true) {
-      return false;
-    }
-  }
-
-  return true;
-}
-
-export function useMultiSelectState_controlled(props) {
-  let {
-    options,
-    value, // must be array
-    onChange
-  } = props;
-
-  options = normalizeSelectOptions(options);
-
-  const normalizedValue = normalizeMultiSelectValue(options, value);
-
-  const setValue = newVal => {
-    newVal = normalizeMultiSelectValue(options, newVal);
-
-    if (are2ArraysOfValuesEqual(newVal, normalizedValue)) {
-      return;
-    }
-
-    if (onChange) {
-      onChange(originalValueArray(newVal), getValIndexArray(options, newVal));
-    }
-  };
-
-  return {
-    value: originalValueArray(normalizedValue),
-    valueObject: normalizedValue,
-    selectedIndex: getValIndexArray(options, normalizedValue),
-    options,
-    reset: () => {
-      setValue([]);
-    },
-    setValue
-  };
-}

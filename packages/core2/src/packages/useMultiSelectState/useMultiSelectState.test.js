@@ -1,5 +1,5 @@
 import { renderHook, act } from "@testing-library/react-hooks";
-import useSelectState from "./index";
+import useMultiSelectState from "./index";
 
 const animals = [
   {
@@ -18,270 +18,243 @@ const animals = [
 
 const animalsStrings = ["cat", "dog", "hog", "cow"];
 
-test("works in uncontrolled state / allowEmpty=true / no default", () => {
+test("works in uncontrolled state / no default", () => {
   const onChange = jest.fn(val => val);
 
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
       onChange
     })
   );
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
     result.current.setValue(null); // change nothing
   });
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
-    result.current.setValue(animals[1]); // change to "dog"
+    result.current.setValue([animals[1], animals[2]]); // change to "dog"
   });
 
-  expect(result.current.value.id).toBe("dog");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[1], animals[2]])
+  );
   expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value.id).toBe("dog");
-
-  act(() => {
-    result.current.setValue(null); // change back to nothing
-  });
-
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
-  expect(onChange.mock.calls.length).toBe(2);
-  expect(onChange.mock.results[1].value).toBe(null);
-});
-
-test("works in uncontrolled state / allowEmpty=false / no default", () => {
-  const onChange = jest.fn(val => val);
-
-  const { result } = renderHook(() =>
-    useSelectState({
-      options: animals,
-      allowEmpty: false,
-      onChange
-    })
+  expect(onChange.mock.results[0].value).toEqual(
+    expect.arrayContaining([animals[1], animals[2]])
   );
 
-  expect(result.current.value.id).toBe("cat");
-  expect(result.current.empty).toBe(false);
-
   act(() => {
-    result.current.setValue(null); // change to empty
+    result.current.setValue([]); // change back to nothing
   });
 
-  expect(result.current.value.id).toBe("cat");
-  expect(result.current.empty).toBe(false);
-  expect(onChange.mock.calls.length).toBe(0);
-
-  act(() => {
-    result.current.setValue(animals[1]); // change to "dog"
-  });
-
-  expect(result.current.value.id).toBe("dog");
-  expect(result.current.empty).toBe(false);
-  expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value.id).toBe("dog");
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
+  expect(onChange.mock.calls.length).toBe(2);
+  expect(onChange.mock.results[1].value).toEqual(expect.arrayContaining([]));
 });
 
 test("works in uncontrolled state / with defaults", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
       allowEmpty: false,
-      defaultValue: animals[1]
+      defaultValue: [animals[1], animals[3]]
     })
   );
 
-  expect(result.current.value.id).toBe("dog");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[1], animals[3]])
+  );
 });
 
 test("defaultValue key as string", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
       allowEmpty: false,
-      defaultValue: "dog"
+      defaultValue: ["dog", "cat"]
     })
   );
 
-  expect(result.current.value.id).toBe("dog");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[1], animals[0]])
+  );
 });
 
 test("uncontrolled with unknown defaultValue should fall back to no default", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      allowEmpty: false,
       defaultValue: "blablabla"
     })
   );
 
-  expect(result.current.value.id).toBe("cat");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
 });
 
-test("controlled state: null value with allowEmpty=true", () => {
+test("changing order of items doesn't cause onChange", () => {
+  const onChange = jest.fn(val => val);
+
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      value: null,
-      defaultValue: "blablabla" // should be ignored
+      defaultValue: ["dog", "cat", "cow"],
+      onChange
     })
   );
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(onChange.mock.calls.length).toBe(0);
+
+  act(() => {
+    result.current.setValue(["cat", "cow", "dog"]); // change nothing
+  });
+
+  expect(onChange.mock.calls.length).toBe(0);
 });
 
-test("controlled state: null value with allowEmpty=false", () => {
+test("[mutliselect] controlled state: null value", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      value: null,
-      allowEmpty: false,
-      defaultValue: "blablabla" // should be ignored
+      value: null
     })
   );
 
-  expect(result.current.value.id).toBe("cat");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
 });
 
-test("controlled state: unknown value", () => {
+test("controlled state: incorrect value (not an array)", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      value: "blablabla",
-      defaultValue: "blablabla" // should be ignored
+      value: "blablabla"
     })
   );
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
 });
 
 test("controlled state: value as string", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      value: "cow",
-      defaultValue: "blablabla" // should be ignored
+      value: ["cow", "dog"]
     })
   );
 
-  expect(result.current.value.id).toBe("cow");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[3], animals[1]])
+  );
 });
 
 test("controlled state: value as object", () => {
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
-      value: animals[3],
-      defaultValue: "blablabla" // should be ignored
+      value: [animals[3], animals[1]]
     })
   );
-
-  expect(result.current.value.id).toBe("cow");
-  expect(result.current.empty).toBe(false);
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[3], animals[1]])
+  );
 });
 
-// test("works with string array as input", () => {
-//   const { result } = renderHook(() =>
-//     useSelectState({
-//       options: animalsStrings,
-//       value: "dog"
-//     })
-//   );
-//
-//   expect(result.current.value).toBe("dog");
-// });
+test("controlled state: value as string and object (mixed)", () => {
+  const { result } = renderHook(() =>
+    useMultiSelectState({
+      options: animals,
+      value: [animals[3], "dog"]
+    })
+  );
+  expect(result.current.value).toEqual(
+    expect.arrayContaining([animals[3], animals[1]])
+  );
+});
 
 test("uncontrolled works with string array as input", () => {
   const onChange = jest.fn(val => val);
 
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animalsStrings,
-      defaultValue: "dog",
+      defaultValue: ["dog", "cat"],
       onChange
     })
   );
 
-  expect(result.current.value).toBe("dog");
+  expect(result.current.value).toEqual(expect.arrayContaining(["dog", "cat"]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
-    result.current.setValue("cow"); // change to empty
+    result.current.setValue(["cow"]); // change to empty
   });
 
-  expect(result.current.value).toBe("cow");
+  expect(result.current.value).toEqual(expect.arrayContaining(["cow"]));
   expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value).toBe("cow");
+  expect(onChange.mock.results[0].value).toEqual(
+    expect.arrayContaining(["cow"])
+  );
 });
 
 test("controlled works with string array as input", () => {
   const onChange = jest.fn(val => val);
 
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animalsStrings,
-      value: "dog",
+      value: ["cat", "dog"],
       onChange
     })
   );
 
-  expect(result.current.value).toBe("dog");
+  expect(result.current.value).toEqual(expect.arrayContaining(["cat", "dog"]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
-    result.current.setValue("cow"); // change to empty
+    result.current.setValue(["cow"]); // change to empty
   });
 
-  expect(result.current.value).toBe("dog");
+  expect(result.current.value).toEqual(expect.arrayContaining(["cat", "dog"]));
   expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value).toBe("cow");
+  expect(onChange.mock.results[0].value).toEqual(
+    expect.arrayContaining(["cow"])
+  );
 });
 
 test("events work in controlled state", () => {
   const onChange = jest.fn(val => val);
 
   const { result } = renderHook(() =>
-    useSelectState({
+    useMultiSelectState({
       options: animals,
       value: null,
       onChange
     })
   );
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
     result.current.setValue(null); // change nothing
   });
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
   expect(onChange.mock.calls.length).toBe(0);
 
   act(() => {
-    result.current.setValue(animals[1]); // change to "dog"
+    result.current.setValue([animals[1], animals[2]]); // change to "dog"
   });
 
-  expect(result.current.value).toBeNull();
-  expect(result.current.empty).toBe(true);
+  expect(result.current.value).toEqual(expect.arrayContaining([]));
   expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value.id).toBe("dog");
+  expect(onChange.mock.results[0].value).toEqual(
+    expect.arrayContaining([animals[1], animals[2]])
+  );
 });
