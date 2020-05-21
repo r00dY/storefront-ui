@@ -8,6 +8,7 @@ import useFilters from "@commerce-ui/core/useFilters";
 import { filters as filtersData } from "./data";
 
 import SelectInline from "@commerce-ui/core/SelectInline";
+import MultiSelectInline from "@commerce-ui/core/MultiSelectInline";
 
 import ItemRow from "./Selectables/ItemRow";
 
@@ -29,9 +30,16 @@ export const basic = () => {
             <Box sx={{ mb: 20 }}>
               {filter.label}
               <br />
-              <SelectInline {...filter.selectProps}>
-                <ItemRow />
-              </SelectInline>
+              {filter.type === "select" && (
+                <SelectInline {...filter.selectProps}>
+                  <ItemRow />
+                </SelectInline>
+              )}
+              {filter.type === "multiselect" && (
+                <MultiSelectInline {...filter.selectProps}>
+                  <ItemRow />
+                </MultiSelectInline>
+              )}
               <button {...filter.clearButtonProps}>Clear</button>
             </Box>
           )

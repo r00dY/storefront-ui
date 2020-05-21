@@ -1,9 +1,8 @@
 import React, { useState, useRef } from "react";
 
-import {
-  normalizeSelectValue,
-  useSelectState_controlled
-} from "../useSelectState";
+import { normalizeSelectValue } from "../useSelectState";
+
+import { normalizeMultiSelectValue } from "../useMultiSelectState";
 
 const normalizeData = item => {
   const ret = {
@@ -34,6 +33,8 @@ function getValuesObject(data) {
 const normalizeFilterValue = filter => {
   if (filter.type === "select") {
     return normalizeSelectValue(filter.options, filter.value, true);
+  } else if (filter.type === "multiselect") {
+    return normalizeMultiSelectValue(filter.options, filter.value);
   } else {
     return null;
   }
