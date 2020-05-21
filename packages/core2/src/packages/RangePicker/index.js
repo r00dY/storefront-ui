@@ -100,11 +100,11 @@ export function useRangePicker(props) {
   const [isEditing, setEditing] = useState(false);
 
   const inputFromProps = {
-    value: typeof value.from === "number" ? value.from : "",
+    value: value.from === null || value.from === undefined ? "" : value.from,
     onChange: val => {
       setValue({
         ...value,
-        from: parseInt(val)
+        from: val
       });
     },
     onFocus: () => {
@@ -112,16 +112,24 @@ export function useRangePicker(props) {
     },
     onBlur: () => {
       setEditing(false);
-      setValue(normalizeRangePickerValue(props, value));
+      setValue(
+        normalizeRangePickerValue(
+          {
+            ...props,
+            value: { from: parseInt(value.from), to: parseInt(value.to) }
+          },
+          true
+        )
+      );
     }
   };
 
   const inputToProps = {
-    value: typeof value.to === "number" ? value.to : "",
+    value: value.to === null || value.to === undefined ? "" : value.to,
     onChange: val => {
       setValue({
         ...value,
-        to: parseInt(val)
+        to: val
       });
     },
     onFocus: () => {
@@ -129,7 +137,15 @@ export function useRangePicker(props) {
     },
     onBlur: () => {
       setEditing(false);
-      setValue(normalizeRangePickerValue(props, value));
+      setValue(
+        normalizeRangePickerValue(
+          {
+            ...props,
+            value: { from: parseInt(value.from), to: parseInt(value.to) }
+          },
+          false
+        )
+      );
     }
   };
 

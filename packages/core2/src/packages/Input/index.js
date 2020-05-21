@@ -2,21 +2,13 @@ import React, { useState, useLayoutEffect, useRef } from "react";
 import InputRaw$ from "../InputRaw";
 import InputContainer from "../InputContainer";
 
+function isEmpty(val) {
+  return val === undefined || val === null || val.toString() === "";
+}
 function Input$(props) {
   let { onChange, ...restProps } = props;
 
-  let [empty, setEmpty] = useState(true);
-
-  if (props.value) {
-    empty = props.value === "";
-  }
-
   const onChangeEvent = (val, e) => {
-    if (!val || val === "") {
-      setEmpty(true);
-    } else {
-      setEmpty(false);
-    }
     if (onChange) {
       onChange(val, e);
     }
@@ -25,7 +17,7 @@ function Input$(props) {
   return (
     <InputContainer
       {...props}
-      empty={empty}
+      empty={isEmpty(props.value)}
       label={props.label || props.placeholder}
       cursor={"text"}
     >
