@@ -110,15 +110,26 @@ export function useRangePicker(props) {
   };
 
   const timeout = useRef(null);
+  const previouslyCommitedValue = useRef(value);
+
+  const normalizedValue = normalizeRangePickerValueFromInputs(value);
 
   const onBlur = () => {
-    const newVal = normalizeRangePickerValueFromInputs(value);
-    setValue(newVal);
+    setValue(normalizedValue);
 
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
+      if (
+        previouslyCommitedValue.current.from === normalizedValue.from &&
+        previouslyCommitedValue.current.to === normalizedValue.to
+      ) {
+        return;
+      }
+
+      previouslyCommitedValue.current = { ...normalizedValue };
+
       if (onChange) {
-        onChange(newVal);
+        onChange(normalizedValue);
       }
     }, 0);
   };
@@ -165,7 +176,7 @@ export function useRangePicker(props) {
   return {
     inputFromProps,
     inputToProps,
-    value: normalizeRangePickerValueFromInputs(value),
+    value: normalizedValue,
     commit: onBlur
   };
 }
