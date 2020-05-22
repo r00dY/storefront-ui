@@ -4,6 +4,8 @@ import { normalizeSelectValue } from "../useSelectState";
 
 import { normalizeMultiSelectValue } from "../useMultiSelectState";
 
+import { normalizeRangePickerValue } from "../RangePicker";
+
 const normalizeData = item => {
   const ret = {
     ...item
@@ -35,6 +37,8 @@ const normalizeFilterValue = filter => {
     return normalizeSelectValue(filter.options, filter.value, true);
   } else if (filter.type === "multiselect") {
     return normalizeMultiSelectValue(filter.options, filter.value);
+  } else if (filter.type === "range") {
+    return normalizeRangePickerValue(filter);
   } else {
     return null;
   }
@@ -124,6 +128,13 @@ function useFilters({ data, onChange }) {
         options: item.options,
         allowEmpty: true,
         value: item.value === undefined ? null : item.value,
+        onChange: newVal => setValue(item.id, newVal)
+      },
+      rangePickerProps: item.type === "range" && {
+        min: item.min,
+        max: item.max,
+        allowEmpty: item.allowEmpty,
+        value: item.value,
         onChange: newVal => setValue(item.id, newVal)
       },
       clearButtonProps: {

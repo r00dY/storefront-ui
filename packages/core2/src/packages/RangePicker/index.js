@@ -91,45 +91,58 @@ export function normalizeRangePickerValue(props, keepMin = true) {
   return ret;
 }
 
-// for now only uncontrolled
 export function useRangePicker(props) {
-  const { defaultValue, onChange, onChangeTimeout = null } = props;
+  const isControlled = typeof props.value !== "undefined";
 
-  const [value, setValue] = useState(
-    normalizeRangePickerValue(props, defaultValue)
+  const [internalValue, setInternalValue] = useState(props.defaultValue);
+
+  return useRangePicker_controlled(
+    isControlled
+      ? props
+      : {
+          ...props,
+          value: internalValue,
+          onChange: newVal => {
+            setInternalValue(newVal);
+            if (props.onChange) {
+              props.onChange(newVal);
+            }
+          }
+        }
   );
+}
 
-  const normalizeRangePickerValueFromInputs = (value, keepMin) => {
-    return normalizeRangePickerValue(
-      {
-        ...props,
-        value: { from: parseInt(value.from), to: parseInt(value.to) }
-      },
-      keepMin
-    );
-  };
+export function useRangePicker_controlled(props) {
+  let { value, onChange, onChangeTimeout = null } = props;
+  value = normalizeRangePickerValue(props, value);
+
+  const [inputValue, setInputValue] = useState({
+    ...value,
+    lastEdited: "from"
+  }); // raw input data
 
   const timeout = useRef(null);
-  const previouslyCommitedValue = useRef(value);
 
-  const normalizedValue = normalizeRangePickerValueFromInputs(value);
+  // internal value is normalized value based on current inputValue (doesn't have to be commited value!)
+  const internalValue = normalizeRangePickerValue(
+    {
+      ...props,
+      value: { from: parseInt(inputValue.from), to: parseInt(inputValue.to) }
+    },
+    inputValue.lastEdited === "from"
+  );
 
   const onBlur = () => {
-    setValue(normalizedValue);
+    setInputValue(internalValue);
 
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      if (
-        previouslyCommitedValue.current.from === normalizedValue.from &&
-        previouslyCommitedValue.current.to === normalizedValue.to
-      ) {
+      if (value.from === internalValue.from && value.to === internalValue.to) {
         return;
       }
 
-      previouslyCommitedValue.current = { ...normalizedValue };
-
       if (onChange) {
-        onChange(normalizedValue);
+        onChange(internalValue);
       }
     }, 0);
   };
@@ -138,21 +151,28 @@ export function useRangePicker(props) {
     clearTimeout(timeout.current);
   };
 
-  const change = newVal => {
+  const change = (newVal, lastEdited) => {
     newVal = {
-      ...value,
-      ...newVal
+      ...inputValue,
+      ...newVal,
+      lastEdited
     };
 
-    setValue(newVal);
+    setInputValue(newVal);
   };
 
   const inputFromProps = {
-    value: value.from === null || value.from === undefined ? "" : value.from,
-    onChange: val => {
-      change({
-        from: val
-      });
+    value:
+      inputValue.from === null || inputValue.from === undefined
+        ? ""
+        : inputValue.from,
+    onChange: newVal => {
+      change(
+        {
+          from: newVal
+        },
+        "from"
+      );
     },
     onBlur,
     onFocus,
@@ -161,11 +181,17 @@ export function useRangePicker(props) {
   };
 
   const inputToProps = {
-    value: value.to === null || value.to === undefined ? "" : value.to,
-    onChange: val => {
-      change({
-        to: val
-      });
+    value:
+      inputValue.to === null || inputValue.to === undefined
+        ? ""
+        : inputValue.to,
+    onChange: newVal => {
+      change(
+        {
+          to: newVal
+        },
+        "to"
+      );
     },
     onBlur,
     onFocus,
@@ -176,7 +202,7 @@ export function useRangePicker(props) {
   return {
     inputFromProps,
     inputToProps,
-    value: normalizedValue,
+    value: internalValue,
     commit: onBlur
   };
 }
@@ -205,11 +231,11 @@ function RangePicker({ controller, ...props }) {
 
   inputFrom = React.cloneElement(inputFrom, {
     ...controller.inputFromProps,
-    label: inputFrom.props.label
+    label: inputFrom.props && inputFrom.props.label
   });
   inputTo = React.cloneElement(inputTo, {
     ...controller.inputToProps,
-    label: inputTo.props.label
+    label: inputTo.props && inputTo.props.label
   });
 
   return (
