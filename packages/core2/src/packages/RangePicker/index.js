@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import Box from "../Box";
 
 /**
  * Behaviour:
@@ -92,70 +93,103 @@ export function normalizeRangePickerValue(props, keepMin = true) {
 
 // for now only uncontrolled
 export function useRangePicker(props) {
-  const { defaultValue } = props;
+  const { defaultValue, onChange } = props;
 
   const [value, setValue] = useState(
     normalizeRangePickerValue(props, defaultValue)
   );
-  const [isEditing, setEditing] = useState(false);
+
+  const normalizeRangePickerValueFromInputs = (value, keepMin) => {
+    return normalizeRangePickerValue(
+      {
+        ...props,
+        value: { from: parseInt(value.from), to: parseInt(value.to) }
+      },
+      keepMin
+    );
+  };
+
+  const onBlur = () => {
+    setValue(normalizeRangePickerValueFromInputs(value));
+  };
+
+  const change = newVal => {
+    newVal = {
+      ...value,
+      ...newVal
+    };
+
+    setValue(newVal);
+    if (onChange) {
+      onChange(normalizeRangePickerValueFromInputs(newVal));
+    }
+  };
 
   const inputFromProps = {
     value: value.from === null || value.from === undefined ? "" : value.from,
     onChange: val => {
-      setValue({
-        ...value,
+      change({
         from: val
       });
     },
-    onFocus: () => {
-      setEditing(true);
-    },
-    onBlur: () => {
-      setEditing(false);
-      setValue(
-        normalizeRangePickerValue(
-          {
-            ...props,
-            value: { from: parseInt(value.from), to: parseInt(value.to) }
-          },
-          true
-        )
-      );
-    }
+    onBlur,
+    label: "From"
   };
 
   const inputToProps = {
     value: value.to === null || value.to === undefined ? "" : value.to,
     onChange: val => {
-      setValue({
-        ...value,
+      change({
         to: val
       });
     },
-    onFocus: () => {
-      setEditing(true);
-    },
-    onBlur: () => {
-      setEditing(false);
-      setValue(
-        normalizeRangePickerValue(
-          {
-            ...props,
-            value: { from: parseInt(value.from), to: parseInt(value.to) }
-          },
-          false
-        )
-      );
-    }
+    onBlur,
+    label: "To"
   };
 
   return {
     inputFromProps,
     inputToProps,
-    value // what should go here?
+    value: normalizeRangePickerValueFromInputs(value) // what should go here?
   };
 }
 
-function RangePicker(props) {}
+function RangePicker({ controller, ...props }) {
+  if (!controller) {
+    controller = useRangePicker(props);
+  }
+
+  let { inputFrom, inputTo, separator } = props;
+
+  if (React.isValidElement(separator)) {
+  } else if (typeof separator === "object") {
+    separator = <Box sx={{ ...separator }} />;
+  }
+
+  inputFrom = React.cloneElement(inputFrom, {
+    ...controller.inputFromProps,
+    label: inputFrom.props.label
+  });
+  inputTo = React.cloneElement(inputTo, {
+    ...controller.inputToProps,
+    label: inputTo.props.label
+  });
+
+  return (
+    <Box
+      sx={{
+        position: "relative",
+        display: "flex",
+        alignItems: "center"
+      }}
+    >
+      <Box sx={{ flex: "1 1 auto" }}>{inputFrom}</Box>
+
+      {separator && <Box sx={{ flex: "0 0 auto" }}>{separator}</Box>}
+
+      <Box sx={{ flex: "1 1 auto" }}>{inputTo}</Box>
+    </Box>
+  );
+}
 
 export default RangePicker;
