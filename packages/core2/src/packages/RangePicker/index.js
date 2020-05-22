@@ -93,7 +93,7 @@ export function normalizeRangePickerValue(props, keepMin = true) {
 
 // for now only uncontrolled
 export function useRangePicker(props) {
-  const { defaultValue, onChange } = props;
+  const { defaultValue, onChange, onChangeTimeout = null } = props;
 
   const [value, setValue] = useState(
     normalizeRangePickerValue(props, defaultValue)
@@ -109,8 +109,22 @@ export function useRangePicker(props) {
     );
   };
 
+  const timeout = useRef(null);
+
   const onBlur = () => {
-    setValue(normalizeRangePickerValueFromInputs(value));
+    const newVal = normalizeRangePickerValueFromInputs(value);
+    setValue(newVal);
+
+    clearTimeout(timeout.current);
+    timeout.current = setTimeout(() => {
+      if (onChange) {
+        onChange(newVal);
+      }
+    }, 0);
+  };
+
+  const onFocus = () => {
+    clearTimeout(timeout.current);
   };
 
   const change = newVal => {
@@ -120,9 +134,6 @@ export function useRangePicker(props) {
     };
 
     setValue(newVal);
-    if (onChange) {
-      onChange(normalizeRangePickerValueFromInputs(newVal));
-    }
   };
 
   const inputFromProps = {
@@ -133,7 +144,9 @@ export function useRangePicker(props) {
       });
     },
     onBlur,
-    label: "From"
+    onFocus,
+    label: "From",
+    type: "number"
   };
 
   const inputToProps = {
@@ -144,16 +157,29 @@ export function useRangePicker(props) {
       });
     },
     onBlur,
-    label: "To"
+    onFocus,
+    label: "To",
+    type: "number"
   };
 
   return {
     inputFromProps,
     inputToProps,
-    value: normalizeRangePickerValueFromInputs(value) // what should go here?
+    value: normalizeRangePickerValueFromInputs(value),
+    commit: onBlur
   };
 }
 
+/**
+ * NOTES:
+ *
+ * 1. We should work on accessibility, labels, fieldset, etc. We should think if there shouldn't be form.
+ * 2. We should add clear button.
+ * 3. Basic layout (input, separator, input, potentially clear button on the left / right handside) is just basic. We should allow for render props to do ANY layout out of those elements.
+ * 4. Timeout / ENTER on submit.
+ * 5. Think of mobile users. What happens when someone wants to hide the keyboard, or submits. Keyboard should hide and calculations should take place!
+ * 6. We should have onChange and onCommit events. onCommit doesn't run when someone is editing the price (to prevent unnecessary reloads etc). onCommit can run after timeout of user being idle. OR on ENTER. OR on keyboard submit on mobile.
+ */
 function RangePicker({ controller, ...props }) {
   if (!controller) {
     controller = useRangePicker(props);
@@ -177,10 +203,15 @@ function RangePicker({ controller, ...props }) {
 
   return (
     <Box
+      as={"form"}
       sx={{
         position: "relative",
         display: "flex",
         alignItems: "center"
+      }}
+      onSubmit={e => {
+        e.preventDefault();
+        controller.commit();
       }}
     >
       <Box sx={{ flex: "1 1 auto" }}>{inputFrom}</Box>
@@ -188,6 +219,8 @@ function RangePicker({ controller, ...props }) {
       {separator && <Box sx={{ flex: "0 0 auto" }}>{separator}</Box>}
 
       <Box sx={{ flex: "1 1 auto" }}>{inputTo}</Box>
+
+      <button type={"submit"} hidden />
     </Box>
   );
 }
