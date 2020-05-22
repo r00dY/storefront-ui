@@ -96,7 +96,7 @@ export function useRangePicker(props) {
 
   const [internalValue, setInternalValue] = useState(props.defaultValue);
 
-  return useRangePicker_controlled(
+  let controller = useRangePicker_controlled(
     isControlled
       ? props
       : {
@@ -110,6 +110,15 @@ export function useRangePicker(props) {
           }
         }
   );
+
+  return {
+    ...controller,
+    setValue: newVal => {
+      if (!isControlled) {
+        setInternalValue(newVal);
+      }
+    }
+  };
 }
 
 export function useRangePicker_controlled(props) {
@@ -120,6 +129,16 @@ export function useRangePicker_controlled(props) {
     ...value,
     lastEdited: "from"
   }); // raw input data
+
+  useEffect(
+    () => {
+      setInputValue({
+        ...value,
+        lastEdited: inputValue.lastEdited
+      });
+    },
+    [value.from, value.to]
+  );
 
   const timeout = useRef(null);
 
