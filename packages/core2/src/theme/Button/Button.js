@@ -35,8 +35,9 @@ const styles = {
 
 export default createComponent(
   ButtonText$,
-  ({ $size = "standard" }) => ({ disabled, isHovered }) => ({
+  ({ $size = "standard" }) => ({ disabled, isHovered, selected }) => ({
     ...styles[$size].$css,
+    border: selected ? "2px solid black" : "none",
     $body: {
       ...styles[$size].$body,
       color: disabled ? "mono500" : "black",

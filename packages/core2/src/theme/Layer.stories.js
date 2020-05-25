@@ -90,6 +90,23 @@ const LayerWithButton = ({
   );
 };
 
+const SomeContent = ({ children }) => (
+  <Box
+    sx={{
+      border: "1px solid black",
+      height: "100%",
+      width: "100%",
+      minHeight: "inherit",
+      maxHeight: "inherit",
+      overflow: "auto",
+      bg: "red",
+      p: 2
+    }}
+  >
+    {children}
+  </Box>
+);
+
 export const unstyled = () => {
   const paragraphRef = useRef(null);
   const paragraphRef2 = useRef(null);
@@ -102,9 +119,9 @@ export const unstyled = () => {
         <Box as={"strong"}>Standard</Box>
       </Box>
 
-      <LayerWithButton>
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+      <Layer button={<Button>Open</Button>} anchoredTo={"window"}>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -112,12 +129,14 @@ export const unstyled = () => {
         <Box as={"strong"}>Responsive attached to window</Box>
       </Box>
 
-      <LayerWithButton
+      <Layer
         width={["90vw", null, "50vw", null, "33vw"]}
         minHeight={["80vh", null, "50vh", null, "33vh"]}
+        button={<Button>Open</Button>}
+        anchoredTo={"window"}
       >
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -125,12 +144,14 @@ export const unstyled = () => {
         <Box as={"strong"}>placement=right</Box>
       </Box>
 
-      <LayerWithButton
+      <Layer
         width={["90vw", null, "50vw", null, "33vw"]}
         placement={"right"}
+        button={<Button>Open</Button>}
+        anchoredTo={"window"}
       >
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -138,13 +159,15 @@ export const unstyled = () => {
         <Box as={"strong"}>Responsive placement</Box>
       </Box>
 
-      <LayerWithButton
+      <Layer
         width={["90vw", null, "50vw", null, "33vw"]}
         height={["80vh", null, "50vh", null, "33vh"]}
         placement={["left", "bottom", "right", "top", "center"]}
+        button={<Button>Open</Button>}
+        anchoredTo={"window"}
       >
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -154,13 +177,14 @@ export const unstyled = () => {
         </Box>
       </Box>
 
-      <LayerWithButton
-        anchoredOnDesktop={true}
+      <Layer
+        anchoredTo={["window", null, "button"]}
         width={["90vw", null, "300px"]}
         minHeight={[null, null, "300px"]}
         maxHeight={["50vh", null, "400px"]}
+        button={<Button>Open</Button>}
       >
-        <Box>
+        <SomeContent>
           Lorem ipsum
           <br />
           Lorem ipsum
@@ -223,8 +247,8 @@ export const unstyled = () => {
           <br />
           Lorem ipsum
           <br />
-        </Box>
-      </LayerWithButton>
+        </SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -232,14 +256,15 @@ export const unstyled = () => {
         <Box as={"strong"}>width as function dependent on anchorRect</Box>
       </Box>
 
-      <LayerWithButton
-        anchoredOnDesktop={true}
+      <Layer
+        anchoredTo={["window", null, "button"]}
         width={({ anchorRect }) => ["90vw", null, anchorRect.width]}
         minHeight={[null, null, "300px"]}
         maxHeight={["50vh", null, "400px"]}
+        button={<Button sx={{ width: 200 }}>Open</Button>}
       >
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph />
 
@@ -249,14 +274,15 @@ export const unstyled = () => {
         </Box>
       </Box>
 
-      <LayerWithButton
+      <Layer
         anchoredTo={["window", null, null, paragraphRef, paragraphRef2]}
         width={({ anchorRect }) => ["90vw", null, anchorRect.width]}
         minHeight={[null, null, "300px"]}
         maxHeight={["50vh", null, "400px"]}
+        button={<Button>Open</Button>}
       >
-        <Box>Lorem ipsum</Box>
-      </LayerWithButton>
+        <SomeContent>Lorem ipsum</SomeContent>
+      </Layer>
 
       <Paragraph ref={paragraphRef} />
 

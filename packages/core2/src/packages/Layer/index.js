@@ -148,7 +148,7 @@ function Layer$(props) {
     animationEase,
     backgroundColor,
     placement
-  } = sx;
+  } = Object.assign({ ...sx }, props);
 
   let closeTimeout = 0;
 
@@ -232,6 +232,9 @@ function Layer$(props) {
   );
 
   useOnClickOutside([popperRef.current, arrowRef.current], () => {
+    if (!isOpen) {
+      return;
+    }
     if (current.isAnchored) {
       if (onClickOutside) {
         onClickOutside();
@@ -479,4 +482,39 @@ function useOnClickOutside(nodes, callback) {
   });
 }
 
-export default Layer$;
+// Layer with Button
+function Layer$$({ button, anchoredTo = "button", ...restProps }) {
+  const [isOpen, setOpen] = useState(false);
+  const buttonRef = useRef(null);
+
+  // TODO: Make this not only array
+  if (Array.isArray(anchoredTo)) {
+    anchoredTo = anchoredTo.map(x => (x === "button" ? buttonRef : x));
+  } else {
+    anchoredTo = anchoredTo === "button" ? buttonRef : anchoredTo;
+  }
+
+  if (!button) {
+    return <Layer$ {...restProps} anchoredTo={anchoredTo} />;
+  }
+
+  return React.cloneElement(button, {
+    onClick: () => {
+      setOpen(true);
+    },
+    buttonRef,
+    selected: isOpen,
+    __portals__: (
+      <Layer$
+        {...restProps}
+        anchoredTo={anchoredTo}
+        isOpen={isOpen}
+        onClickOutside={() => {
+          setOpen(false);
+        }}
+      />
+    )
+  });
+}
+
+export default Layer$$;
