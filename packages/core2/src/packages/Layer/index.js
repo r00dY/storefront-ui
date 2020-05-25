@@ -483,7 +483,12 @@ function useOnClickOutside(nodes, callback) {
 }
 
 // Layer with Button
-function Layer$$({ button, anchoredTo = "button", ...restProps }) {
+function Layer$$({
+  button,
+  anchoredTo = "button",
+  closeOnEsc = true,
+  ...restProps
+}) {
   const [isOpen, setOpen] = useState(false);
   const buttonRef = useRef(null);
 
@@ -493,6 +498,31 @@ function Layer$$({ button, anchoredTo = "button", ...restProps }) {
   } else {
     anchoredTo = anchoredTo === "button" ? buttonRef : anchoredTo;
   }
+
+  useEffect(() => {
+    const onDocumentKeyPress = evt => {
+      if (!closeOnEsc) {
+        return;
+      }
+
+      if (evt.key !== "Escape") {
+        return;
+      }
+
+      // Ignore events that have been `event.preventDefault()` marked.
+      if (event.defaultPrevented) {
+        return;
+      }
+
+      setOpen(false);
+    };
+
+    document.addEventListener("keyup", onDocumentKeyPress);
+
+    return () => {
+      document.removeEventListener("keyup", onDocumentKeyPress);
+    };
+  });
 
   if (!button) {
     return <Layer$ {...restProps} anchoredTo={anchoredTo} />;

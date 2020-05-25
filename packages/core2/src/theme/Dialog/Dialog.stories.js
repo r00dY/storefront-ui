@@ -68,51 +68,70 @@ const DialogWithButton = ({ children, ...restProps }) => {
   );
 };
 
+const SomeContent = ({ children }) => (
+  <div
+    sx={{
+      border: "1px solid black",
+      height: "100%",
+      bg: "red",
+      p: 2
+    }}
+  >
+    {children}
+  </div>
+);
+
 export const unstyled = () => (
   <div>
     <Paragraph />
 
-    <DialogWithButton
+    <Dialog
       placement={["right", null, null, "bottomLeft"]}
       minWidth={["90vw", null, null, "300px"]}
+      button={<Button>Open</Button>}
     >
-      <Button>One</Button>
-      <br />
-      <br />
-      <Button>Two</Button>
-      <br />
-      <br />
-      <Button>Three</Button>
-      <br />
-      <br />
-      <Button>Four</Button>
-      <br />
-      <br />
-    </DialogWithButton>
+      <SomeContent>
+        <Button>One</Button>
+        <br />
+        <br />
+        <Button>Two</Button>
+        <br />
+        <br />
+        <Button>Three</Button>
+        <br />
+        <br />
+        <Button>Four</Button>
+        <br />
+        <br />
+      </SomeContent>
+    </Dialog>
 
     <Paragraph />
     <Paragraph />
 
-    <DialogWithButton
+    <Dialog
       sx={{
         width: ["90vw", null, "50vw", null, "33vw"],
         placement: "right"
       }}
       anchoredTo={"window"}
+      button={<Button>Open</Button>}
     >
-      <Button>One</Button>
-      <br />
-      <br />
-      <Button>Two</Button>
-      <br />
-      <br />
-      <Button>Three</Button>
-      <br />
-      <br />
-      <Button>Four</Button>
-      <br />
-      <br />
-    </DialogWithButton>
+      <SomeContent>
+        <Button>One</Button>
+        <br />
+        <br />
+        <Button>Two</Button>
+        <br />
+        <br />
+        <Button>Three</Button>
+        <br />
+        <br />
+        <Button>Four</Button>
+        <br />
+        <br />
+      </SomeContent>
+    </Dialog>
 
     <Paragraph />
     <Paragraph />

@@ -12,6 +12,8 @@ function Dialog$(props) {
         return;
       }
 
+      console.log("on document key press");
+
       // Ignore events that have been `event.preventDefault()` marked.
       if (event.defaultPrevented) {
         return;
