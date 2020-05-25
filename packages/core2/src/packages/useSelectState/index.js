@@ -29,9 +29,12 @@ export const normalizeSelectOptions = options =>
       }
 
       if (!option.label) {
+        const id = option.id.toString();
+
         return {
           ...option,
-          label: option.id,
+          id: id,
+          label: id,
           __originalOption: option
         };
       }
@@ -44,8 +47,8 @@ export const normalizeSelectOptions = options =>
 
     // throw new Error("options must be objects with ID!!!");
     return {
-      id: option,
-      label: option,
+      id: option.toString(),
+      label: option.toString(),
       __originalOption: option
     };
   });
@@ -61,7 +64,12 @@ export const originalValue = val => {
 export const normalizeSelectValue = (options, val, allowEmpty) => {
   options = normalizeSelectOptions(options);
 
-  let valueId = typeof val === "object" && val !== null ? val.id : val;
+  let valueId =
+    val === undefined || val === null
+      ? val
+      : typeof val === "object"
+      ? val.id.toString()
+      : val.toString();
   let valueObject = options.find(o => o.id === valueId);
   val = valueObject || (allowEmpty ? null : options[0]);
   return val;
