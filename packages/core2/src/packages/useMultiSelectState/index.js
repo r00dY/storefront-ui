@@ -52,7 +52,7 @@ export const normalizeMultiSelectValue = (options, val) => {
     let valueObject = v;
     if (typeof v !== "object") {
       // if value is not object, then we treat it as id
-      valueObject = options.find(o => o.id === v);
+      valueObject = options.find(o => o.id === v.toString());
     }
 
     if (
@@ -62,6 +62,8 @@ export const normalizeMultiSelectValue = (options, val) => {
     ) {
       continue;
     }
+
+    valueObject.id = valueObject.id.toString();
 
     newVal.push(valueObject);
   }

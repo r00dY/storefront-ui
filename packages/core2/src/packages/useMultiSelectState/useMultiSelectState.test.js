@@ -1,5 +1,6 @@
 import { renderHook, act } from "@testing-library/react-hooks";
 import useMultiSelectState from "./index";
+import useSelectState from "../useSelectState";
 
 const animals = [
   {
@@ -17,6 +18,25 @@ const animals = [
 ];
 
 const animalsStrings = ["cat", "dog", "hog", "cow"];
+
+const animalsWithNumberIds = [
+  {
+    id: 1,
+    value: "cat"
+  },
+  {
+    id: 2,
+    value: "dog"
+  },
+  {
+    id: 3,
+    value: "hog"
+  },
+  {
+    id: 4,
+    value: "cow"
+  }
+];
 
 test("works in uncontrolled state / no default", () => {
   const onChange = jest.fn(val => val);
@@ -398,4 +418,27 @@ test("select and unSelect work", () => {
   expect(result.current.isSelected("dog")).toBe(false);
   expect(result.current.isSelected("hog")).toBe(false);
   expect(result.current.isSelected("cow")).toBe(false);
+});
+
+test("number ids work", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useMultiSelectState({
+      options: animalsWithNumberIds,
+      value: [1],
+      onChange
+    })
+  );
+
+  expect(result.current.isSelected(1));
+
+  act(() => {
+    result.current.selectValue("2"); // change nothing
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(onChange.mock.results[0].value).toEqual(
+    expect.arrayContaining([animalsWithNumberIds[0], animalsWithNumberIds[1]])
+  );
 });
