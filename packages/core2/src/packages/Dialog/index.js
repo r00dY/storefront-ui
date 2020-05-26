@@ -1,35 +1,74 @@
-import React, { useEffect } from "react";
+import React from "react";
 import Layer from "../Layer";
+import Box from "../Box";
 
 import FocusLock from "react-focus-lock";
 
+function DialogHeader(props) {
+  return props.children;
+}
+
+function DialogFooter(props) {
+  return props.children;
+}
+
+function getLayout(children) {
+  let header, footer;
+  let filteredChildren = [];
+
+  React.Children.forEach(children, child => {
+    if (child.type === DialogHeader) {
+      header = child;
+    } else if (child.type === DialogFooter) {
+      footer = child;
+    } else {
+      filteredChildren.push(child);
+    }
+  });
+
+  const containerSx = {
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    height: "100%"
+  };
+
+  return (
+    <Box sx={containerSx}>
+      {header && (
+        <Box
+          sx={{
+            flex: "0 0 auto"
+          }}
+        >
+          {header}
+        </Box>
+      )}
+
+      <Box
+        sx={{
+          flex: "1 1 auto",
+          overflow: "auto"
+        }}
+      >
+        {filteredChildren}
+      </Box>
+
+      {footer && (
+        <Box
+          sx={{
+            flex: "0 0 auto"
+          }}
+        >
+          {footer}
+        </Box>
+      )}
+    </Box>
+  );
+}
+
 function Dialog$(props) {
   const { children, onRequestClose, ...restProps } = props;
-
-  useEffect(() => {
-    const onDocumentKeyPress = evt => {
-      if (evt.key !== "Escape") {
-        return;
-      }
-
-      console.log("on document key press");
-
-      // Ignore events that have been `event.preventDefault()` marked.
-      if (event.defaultPrevented) {
-        return;
-      }
-
-      if (onRequestClose) {
-        onRequestClose();
-      }
-    };
-
-    document.addEventListener("keyup", onDocumentKeyPress);
-
-    return () => {
-      document.removeEventListener("keyup", onDocumentKeyPress);
-    };
-  });
 
   return (
     <Layer {...restProps} onClickOutside={onRequestClose}>
@@ -48,11 +87,16 @@ function Dialog$(props) {
             role: "dialog"
           }}
         >
-          {typeof children === "function" ? children(params) : children}
+          {getLayout(
+            typeof children === "function" ? children(params) : children
+          )}
         </FocusLock>
       )}
     </Layer>
   );
 }
+
+Dialog$.Header = DialogHeader;
+Dialog$.Footer = DialogFooter;
 
 export default Dialog$;

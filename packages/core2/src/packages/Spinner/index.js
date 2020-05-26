@@ -1,7 +1,4 @@
-/** @jsx jsx */
-import { jsx } from "../index";
 import React from "react";
-
 import Box from "../Box";
 
 import { keyframes } from "@emotion/core";
@@ -35,11 +32,6 @@ const Spinner = ({ sx = {}, light = true }) => {
     borderLeftColor: color,
 
     transform: "translateZ(0)",
-    // ":after": {
-    //     borderRadius: "50%",
-    //     width: "10em",
-    //     height: "10em"
-    // },
 
     animation: `${animation} 1s infinite linear`,
     overflow: "hidden"

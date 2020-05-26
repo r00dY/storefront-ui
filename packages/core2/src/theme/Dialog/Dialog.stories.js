@@ -1,7 +1,8 @@
 /** @jsx jsx */
 import React, { useState, useRef } from "react";
 import { jsx, rs } from "@commerce-ui/core";
-import Dialog from ".";
+import Dialog from "@commerce-ui/core/Dialog";
+import Box from "@commerce-ui/core/Box";
 
 import Button from "../Button/Button";
 
@@ -81,6 +82,21 @@ const SomeContent = ({ children }) => (
   </div>
 );
 
+const Bar = props => (
+  <Box
+    sx={{
+      height: 50,
+      width: "100%",
+      bg: "white",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center"
+    }}
+  >
+    {props.children}
+  </Box>
+);
+
 export const unstyled = () => (
   <div>
     <Paragraph />
@@ -135,6 +151,99 @@ export const unstyled = () => (
 
     <Paragraph />
     <Paragraph />
+
+    <p>Header and footer</p>
+
+    <Dialog
+      width={200}
+      height={200}
+      button={<Button>Open</Button>}
+      root={{
+        border: "3px solid blue"
+      }}
+    >
+      <Dialog.Header>
+        <Bar>SIEMA</Bar>
+      </Dialog.Header>
+
+      <Box sx={{ border: "1px solid black", bg: "red" }}>
+        <button>One</button>
+        <br />
+        <br />
+        <button>Two</button>
+        <br />
+        <br />
+        <button>Three</button>
+        <br />
+        <br />
+        <button>Four</button>
+        <br />
+        <br />
+        <button>Five</button>
+        <br />
+        <br />
+        <button>Six</button>
+        <br />
+        <br />
+        <button>seven</button>
+        <br />
+        <br />
+        <button>Eight</button>
+        <br />
+        <br />
+      </Box>
+
+      <Dialog.Footer>
+        <Bar>NARA</Bar>
+      </Dialog.Footer>
+    </Dialog>
+
+    <p>Header and footer (anchored to window)</p>
+
+    <Dialog
+      width={400}
+      height={200}
+      button={<Button>Open</Button>}
+      root={{
+        border: "3px solid blue"
+      }}
+      anchoredTo={"window"}
+    >
+      <Dialog.Header>
+        <Bar>SIEMA</Bar>
+      </Dialog.Header>
+
+      <Box sx={{ border: "1px solid black", bg: "red" }}>
+        <button>One</button>
+        <br />
+        <br />
+        <button>Two</button>
+        <br />
+        <br />
+        <button>Three</button>
+        <br />
+        <br />
+        <button>Four</button>
+        <br />
+        <br />
+        <button>Five</button>
+        <br />
+        <br />
+        <button>Six</button>
+        <br />
+        <br />
+        <button>seven</button>
+        <br />
+        <br />
+        <button>Eight</button>
+        <br />
+        <br />
+      </Box>
+      <Dialog.Footer>
+        <Bar>NARA</Bar>
+      </Dialog.Footer>
+    </Dialog>
+
     <Paragraph />
     <Paragraph />
     <Paragraph />

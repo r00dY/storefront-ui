@@ -1,5 +1,4 @@
 /** @jsx jsx */
-
 import React, { useState, useEffect, useRef } from "react";
 import { Layer, TetherBehavior } from "../base/layer/index.js";
 import {
@@ -147,8 +146,9 @@ function Layer$(props) {
     animationTime,
     animationEase,
     backgroundColor,
+    root = {},
     placement
-  } = Object.assign({ ...sx }, props);
+  } = Object.assign({ ...sx }, props); // backward compatibility. Now props are recommended.
 
   let closeTimeout = 0;
 
@@ -337,7 +337,8 @@ function Layer$(props) {
                 minWidth: "inherit",
                 maxHeight: "inherit",
                 maxWidth: "inherit",
-                ...styles.content
+                ...styles.content,
+                ...root
               }}
             >
               {typeof props.children === "function"
@@ -401,21 +402,17 @@ function Layer$(props) {
 
     // const bodyProps = this.getPopoverBodyProps();
 
-    const popoverRootSpec = getElementSpec(
-      props.sx ? props.sx.$root : undefined,
-      popoverRootDefault,
-      {
-        ...state,
+    const popoverRootSpec = getElementSpec(root, popoverRootDefault, {
+      ...state,
 
-        width: current.width,
-        height: current.height,
-        minWidth: current.minWidth,
-        maxWidth: current.maxWidth,
-        minHeight: current.minHeight,
-        maxHeight: current.maxHeight,
-        children
-      }
-    );
+      width: current.width,
+      height: current.height,
+      minWidth: current.minWidth,
+      maxWidth: current.maxWidth,
+      minHeight: current.minHeight,
+      maxHeight: current.maxHeight,
+      children
+    });
 
     const popoverRoot = createElement(popoverRootSpec, {
       ref: popperRef

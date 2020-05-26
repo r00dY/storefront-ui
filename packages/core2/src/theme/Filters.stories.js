@@ -15,6 +15,9 @@ import ItemRow from "./Selectables/ItemRow";
 import Input from "./Input";
 import SelectNative from "./SelectNative";
 
+import Dialog from "./Dialog";
+import Button from "./Button/Button";
+
 export const basic = () => {
   const { filters } = useFilters({
     data: filtersData,
@@ -30,14 +33,52 @@ export const basic = () => {
           {filter.label}
           <br />
           {filter.type === "select" && (
-            <SelectInline {...filter.selectProps}>
-              <ItemRow />
-            </SelectInline>
+            <Box>
+              <SelectInline {...filter.selectProps}>
+                <ItemRow />
+              </SelectInline>
+
+              <br />
+
+              <Dialog
+                button={
+                  <Button>
+                    {filter.label}
+                    {filter.value ? `: ${filter.value.label}` : ""}
+                  </Button>
+                }
+              >
+                <Box sx={{ border: "1px solid black" }}>
+                  <SelectInline {...filter.selectProps}>
+                    <ItemRow />
+                  </SelectInline>
+                </Box>
+              </Dialog>
+            </Box>
           )}
           {filter.type === "multiselect" && (
-            <MultiSelectInline {...filter.selectProps}>
-              <ItemRow />
-            </MultiSelectInline>
+            <Box>
+              <MultiSelectInline {...filter.selectProps}>
+                <ItemRow />
+              </MultiSelectInline>
+
+              <br />
+
+              <Dialog
+                button={
+                  <Button>
+                    {filter.label}
+                    {filter.value.length > 0 ? ": values" : ""}
+                  </Button>
+                }
+              >
+                <Box sx={{ border: "1px solid black" }}>
+                  <MultiSelectInline {...filter.selectProps}>
+                    <ItemRow />
+                  </MultiSelectInline>
+                </Box>
+              </Dialog>
+            </Box>
           )}
           {filter.type === "range" && (
             <RangePicker
