@@ -30,7 +30,7 @@ const filtersData = [
   {
     id: "brand",
     label: "Brand",
-    type: "multiselect",
+    type: "select",
     options: [
       {
         id: "nike",
@@ -94,11 +94,10 @@ const filtersData = [
     ]
   },
   {
-    id: "price",
-    label: "Price",
-    type: "range",
-    min: 0,
-    max: 1999
+    id: "model",
+    label: "Model",
+    type: "select",
+    options: ["vintage", "modern"]
   }
 ];
 
