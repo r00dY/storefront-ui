@@ -30,7 +30,11 @@ function getLayout(children) {
     display: "flex",
     flexDirection: "column",
     overflow: "hidden",
-    height: "100%"
+    height: "100%",
+    maxWidth: "inherit",
+    maxHeight: "inherit",
+    minWidth: "inherit",
+    minHeight: "inherit"
   };
 
   return (
@@ -68,10 +72,10 @@ function getLayout(children) {
 }
 
 function Dialog$(props) {
-  const { children, onRequestClose, ...restProps } = props;
+  const { children, ...restProps } = props;
 
   return (
-    <Layer {...restProps} onClickOutside={onRequestClose}>
+    <Layer {...restProps}>
       {params => (
         <FocusLock
           returnFocus

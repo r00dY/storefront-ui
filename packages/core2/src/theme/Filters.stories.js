@@ -15,11 +15,11 @@ import ItemRow from "./Selectables/ItemRow";
 import Input from "./Input";
 import SelectNative from "./SelectNative";
 
-import Dialog from "./Dialog";
+import Dialog from "@commerce-ui/core/Dialog";
 import Button from "./Button/Button";
 
 export const basic = () => {
-  const { filters } = useFilters({
+  const { filters, commit } = useFilters({
     data: filtersData,
     onChange: () => {
       console.log("changed!");
@@ -47,12 +47,37 @@ export const basic = () => {
                     {filter.value ? `: ${filter.value.label}` : ""}
                   </Button>
                 }
+                root={{
+                  border: "1px solid black",
+                  bg: "white"
+                }}
+                maxHeight={400}
+                onClose={() => {
+                  commit();
+                }}
               >
-                <Box sx={{ border: "1px solid black" }}>
-                  <SelectInline {...filter.selectProps}>
-                    <ItemRow />
-                  </SelectInline>
-                </Box>
+                {({ close }) => (
+                  <>
+                    <SelectInline {...filter.soft.selectProps}>
+                      <ItemRow />
+                    </SelectInline>
+
+                    <Dialog.Footer>
+                      <Box
+                        sx={{
+                          p: 16,
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          width: "100%"
+                        }}
+                      >
+                        <Button {...filter.soft.clearButtonProps}>Clear</Button>
+                        <Button onClick={close}>Filter</Button>
+                      </Box>
+                    </Dialog.Footer>
+                  </>
+                )}
               </Dialog>
             </Box>
           )}

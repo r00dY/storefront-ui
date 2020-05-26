@@ -134,7 +134,7 @@ function Layer$(props) {
   const [isVisible, setVisible] = useState(false);
   const [isLayerMounted, setLayerMounted] = useState(false);
 
-  let { onClickOutside, isOpen, anchoredTo, sx = {} } = props;
+  let { onClose, isOpen, anchoredTo, sx = {} } = props;
 
   let {
     width,
@@ -236,8 +236,8 @@ function Layer$(props) {
       return;
     }
     if (current.isAnchored) {
-      if (onClickOutside) {
-        onClickOutside();
+      if (onClose) {
+        onClose();
       }
     }
   });
@@ -320,7 +320,7 @@ function Layer$(props) {
               zIndex: "-1",
               ...styles.background
             }}
-            onClick={onClickOutside}
+            onClick={onClose}
           />
 
           <Box
@@ -342,7 +342,14 @@ function Layer$(props) {
               }}
             >
               {typeof props.children === "function"
-                ? props.children({ anchored: current.isAnchored })
+                ? props.children({
+                    anchored: current.isAnchored,
+                    close: () => {
+                      if (onClose) {
+                        onClose();
+                      }
+                    }
+                  })
                 : props.children}
             </Box>
           </Box>
@@ -392,7 +399,12 @@ function Layer$(props) {
 
     const state = {
       ...getSharedProps(),
-      anchored: !!current.isAnchored
+      anchored: !!current.isAnchored,
+      close: () => {
+        if (onClose) {
+          onClose();
+        }
+      }
     };
 
     const children =
@@ -484,6 +496,7 @@ function Layer$$({
   button,
   anchoredTo = "button",
   closeOnEsc = true,
+  onClose,
   ...restProps
 }) {
   const [isOpen, setOpen] = useState(false);
@@ -512,6 +525,9 @@ function Layer$$({
       }
 
       setOpen(false);
+      if (onClose) {
+        onClose();
+      }
     };
 
     document.addEventListener("keyup", onDocumentKeyPress);
@@ -536,8 +552,11 @@ function Layer$$({
         {...restProps}
         anchoredTo={anchoredTo}
         isOpen={isOpen}
-        onClickOutside={() => {
+        onClose={() => {
           setOpen(false);
+          if (onClose) {
+            onClose();
+          }
         }}
       />
     )

@@ -44,6 +44,10 @@ const normalizeFilterValue = filter => {
   }
 };
 
+/**
+ * TODO: don't run onChange when nothing changed (even if commit was run)
+ */
+
 // for now: enableReinitalize not available, we assume true.
 function useFilters({ data, onChange }) {
   const [counter, setCounter] = useState(0);
@@ -88,7 +92,7 @@ function useFilters({ data, onChange }) {
   const getDataWithCurrentValues = () => {
     return data.map(item => ({
       ...item,
-      value: localValues.current[item.id] || values[item.id]
+      value: commitedValues.current[item.id] || values[item.id]
     }));
   };
 
@@ -112,35 +116,70 @@ function useFilters({ data, onChange }) {
 
   let isAnyDirty = false;
 
+  const commit = () => {
+    commitedValues.current = { ...localValues.current };
+    const newData = getDataWithCurrentValues();
+    onChange(newData);
+    setCounter(counter + 1);
+  };
+
   const filters = getDataWithCurrentValues().map((item, index) => {
-    let isDirty = !areEqual(
-      localValues.current[item.id],
-      commitedValues.current[item.id]
-    );
+    let localValue = localValues.current[item.id];
+    if (localValue === undefined) {
+      localValue = null;
+    }
+
+    let commitedValue = commitedValues.current[item.id];
+    if (commitedValue === undefined) {
+      commitedValue = null;
+    }
+
+    let isDirty = !areEqual(localValue, commitedValue);
 
     if (isDirty) {
       isAnyDirty = true;
     }
 
-    return {
-      ...item,
-      selectProps: (item.type === "select" || item.type === "multiselect") && {
+    const selectProps = soft =>
+      (item.type === "select" || item.type === "multiselect") && {
         options: item.options,
         allowEmpty: true,
-        value: item.value === undefined ? null : item.value,
-        onChange: newVal => setValue(item.id, newVal)
-      },
-      rangePickerProps: item.type === "range" && {
+        value: localValue,
+        onChange: newVal => setValue(item.id, newVal, soft)
+      };
+
+    const rangePickerProps = soft =>
+      item.type === "range" && {
         min: item.min,
         max: item.max,
         allowEmpty: item.allowEmpty,
-        value: item.value,
-        onChange: newVal => setValue(item.id, newVal)
+        value: localValue,
+        onChange: newVal => setValue(item.id, newVal, soft)
+      };
+
+    const clearButtonProps = soft => ({
+      onClick: () => {
+        setValue(item.id, null, soft);
+      }
+    });
+
+    const commitButtonProps = soft => ({
+      onClick: () => {
+        commit();
       },
-      clearButtonProps: {
-        onClick: () => {
-          setValue(item.id, null);
-        }
+      disabled: !isDirty
+    });
+
+    return {
+      ...item,
+      selectProps: selectProps(false),
+      rangePickerProps: rangePickerProps(false),
+      clearButtonProps: clearButtonProps(false),
+      commitButtonProps,
+      soft: {
+        selectProps: selectProps(true),
+        rangePickerProps: rangePickerProps(true),
+        clearButtonProps: clearButtonProps(true)
       },
       isDirty
     };
@@ -149,12 +188,7 @@ function useFilters({ data, onChange }) {
   return {
     filters,
     setValue,
-    commit: () => {
-      commitedValues.current = { ...localValues.current };
-      const newData = getDataWithCurrentValues();
-      onChange(newData);
-      setCounter(counter + 1);
-    },
+    commit,
     isDirty: isAnyDirty
   };
 }
