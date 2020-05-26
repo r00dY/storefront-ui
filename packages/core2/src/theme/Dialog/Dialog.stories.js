@@ -74,8 +74,7 @@ const SomeContent = ({ children }) => (
     sx={{
       border: "1px solid black",
       height: "100%",
-      bg: "red",
-      p: 2
+      bg: "red"
     }}
   >
     {children}
@@ -105,48 +104,50 @@ export const unstyled = () => (
       placement={["right", null, null, "bottomLeft"]}
       minWidth={["90vw", null, null, "300px"]}
       button={<Button>Open</Button>}
+      root={{
+        border: "1px solid black",
+        bg: "red"
+      }}
     >
-      <SomeContent>
-        <Button>One</Button>
-        <br />
-        <br />
-        <Button>Two</Button>
-        <br />
-        <br />
-        <Button>Three</Button>
-        <br />
-        <br />
-        <Button>Four</Button>
-        <br />
-        <br />
-      </SomeContent>
+      <Button>One</Button>
+      <br />
+      <br />
+      <Button>Two</Button>
+      <br />
+      <br />
+      <Button>Three</Button>
+      <br />
+      <br />
+      <Button>Four</Button>
+      <br />
+      <br />
     </Dialog>
 
     <Paragraph />
     <Paragraph />
 
     <Dialog
-      sx={{
-        width: ["90vw", null, "50vw", null, "33vw"],
-        placement: "right"
-      }}
+      width={["90vw", null, "50vw", null, "33vw"]}
+      placement={"right"}
       anchoredTo={"window"}
       button={<Button>Open</Button>}
+      root={{
+        border: "1px solid black",
+        bg: "red"
+      }}
     >
-      <SomeContent>
-        <Button>One</Button>
-        <br />
-        <br />
-        <Button>Two</Button>
-        <br />
-        <br />
-        <Button>Three</Button>
-        <br />
-        <br />
-        <Button>Four</Button>
-        <br />
-        <br />
-      </SomeContent>
+      <Button>One</Button>
+      <br />
+      <br />
+      <Button>Two</Button>
+      <br />
+      <br />
+      <Button>Three</Button>
+      <br />
+      <br />
+      <Button>Four</Button>
+      <br />
+      <br />
     </Dialog>
 
     <Paragraph />
