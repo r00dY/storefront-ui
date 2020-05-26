@@ -92,7 +92,8 @@ function useFilters({ data, onChange }) {
   const getDataWithCurrentValues = () => {
     return data.map(item => ({
       ...item,
-      value: commitedValues.current[item.id] || values[item.id]
+      value: localValues.current[item.id] || values[item.id],
+      committedValue: commitedValues.current[item.id] || values[item.id]
     }));
   };
 

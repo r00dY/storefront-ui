@@ -44,7 +44,9 @@ export const basic = () => {
                 button={
                   <Button>
                     {filter.label}
-                    {filter.value ? `: ${filter.value.label}` : ""}
+                    {filter.committedValue
+                      ? `: ${filter.committedValue.label}`
+                      : ""}
                   </Button>
                 }
                 root={{
@@ -73,7 +75,9 @@ export const basic = () => {
                         }}
                       >
                         <Button {...filter.soft.clearButtonProps}>Clear</Button>
-                        <Button onClick={close}>Filter</Button>
+                        <Button onClick={close} disabled={!filter.isDirty}>
+                          Filter
+                        </Button>
                       </Box>
                     </Dialog.Footer>
                   </>
