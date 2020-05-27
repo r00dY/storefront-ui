@@ -72,8 +72,6 @@ function useFilters({ data, onChange }) {
   // Thanks to refs we can do this "right away", not on useEffect and cause re-render.
 
   for (let filterId in localValues.current) {
-    let value = localValues.current[filterId];
-
     // If new value for this filter from props is different from previous value from props (like value from server changed)
     if (!areEqual(values[filterId], previousValues.current[filterId])) {
       delete localValues.current[filterId];
@@ -109,7 +107,9 @@ function useFilters({ data, onChange }) {
 
       const newData = getDataWithCurrentValues();
 
-      onChange(newData);
+      if (onChange) {
+        onChange(newData);
+      }
     }
 
     setCounter(counter + 1);
@@ -120,7 +120,10 @@ function useFilters({ data, onChange }) {
   const commit = () => {
     commitedValues.current = { ...localValues.current };
     const newData = getDataWithCurrentValues();
-    onChange(newData);
+
+    if (onChange) {
+      onChange(newData);
+    }
     setCounter(counter + 1);
   };
 
@@ -135,7 +138,17 @@ function useFilters({ data, onChange }) {
       commitedValue = null;
     }
 
-    let isDirty = !areEqual(localValue, commitedValue);
+    // we must compare normalized value. localValue and commitedValue are normalized only after being set, before they're not. And sometimes this makes isDirty=true although it's not true.
+    let isDirty = !areEqual(
+      normalizeFilterValue({
+        ...item,
+        value: localValue
+      }),
+      normalizeFilterValue({
+        ...item,
+        value: commitedValue
+      })
+    );
 
     if (isDirty) {
       isAnyDirty = true;
@@ -155,7 +168,9 @@ function useFilters({ data, onChange }) {
         max: item.max,
         allowEmpty: item.allowEmpty,
         value: localValue,
-        onChange: newVal => setValue(item.id, newVal, soft)
+        onChange: (newVal, isCommit) => {
+          setValue(item.id, newVal, !isCommit || soft);
+        }
       };
 
     const clearButtonProps = soft => ({

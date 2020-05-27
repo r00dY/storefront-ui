@@ -7,7 +7,6 @@ function GridDebugger(props) {
   const [cols, setCols] = useState(null);
 
   const onKeyPress = event => {
-    console.log("key press");
     if (event.keyCode === 71 && event.ctrlKey) {
       if (cols) {
         setCols(null);

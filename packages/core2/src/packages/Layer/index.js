@@ -509,6 +509,8 @@ function Layer$$({
     anchoredTo = anchoredTo === "button" ? buttonRef : anchoredTo;
   }
 
+  console.log("is open", isOpen);
+
   useEffect(() => {
     const onDocumentKeyPress = evt => {
       if (!closeOnEsc) {
@@ -525,6 +527,7 @@ function Layer$$({
       }
 
       setOpen(false);
+
       if (onClose) {
         onClose();
       }

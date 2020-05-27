@@ -105,12 +105,53 @@ export const basic = () => {
             </Box>
           )}
           {filter.type === "range" && (
-            <RangePicker
-              {...filter.rangePickerProps}
-              inputFrom={<Input />}
-              inputTo={<Input />}
-              separator={<Box sx={{ width: 20 }} />}
-            />
+            <Box>
+              <RangePicker
+                {...filter.rangePickerProps}
+                inputFrom={<Input />}
+                inputTo={<Input />}
+                separator={<Box sx={{ width: 20 }} />}
+              />
+              <br />
+
+              <Dialog
+                button={
+                  <Button>
+                    {filter.label}
+                    {filter.value.length > 0 ? ": values" : ""}
+                  </Button>
+                }
+                onClose={() => {
+                  commit();
+                }}
+                width={400}
+                footer={({ close }) => (
+                  <Box
+                    sx={{
+                      p: 16,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%"
+                    }}
+                  >
+                    <Button {...filter.soft.clearButtonProps}>Clear</Button>
+                    <Button onClick={close} disabled={!filter.isDirty}>
+                      Filter
+                    </Button>
+                  </Box>
+                )}
+              >
+                <Box sx={{ border: "1px solid black", p: 16, bg: "white" }}>
+                  <RangePicker
+                    {...filter.soft.rangePickerProps}
+                    inputFrom={<Input />}
+                    inputTo={<Input />}
+                    separator={<Box sx={{ width: 20 }} />}
+                  />
+                </Box>
+              </Dialog>
+            </Box>
           )}
           <button {...filter.clearButtonProps}>Clear</button>
         </Box>

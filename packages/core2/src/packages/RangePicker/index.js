@@ -122,23 +122,13 @@ export function useRangePicker(props) {
 }
 
 export function useRangePicker_controlled(props) {
-  let { value, onChange, onChangeTimeout = null } = props;
+  let { value, onChange, onEveryChange, onChangeTimeout = null } = props;
   value = normalizeRangePickerValue(props, value);
 
   const [inputValue, setInputValue] = useState({
     ...value,
     lastEdited: "from"
   }); // raw input data
-
-  useEffect(
-    () => {
-      setInputValue({
-        ...value,
-        lastEdited: inputValue.lastEdited
-      });
-    },
-    [value.from, value.to]
-  );
 
   const timeout = useRef(null);
 
@@ -151,6 +141,32 @@ export function useRangePicker_controlled(props) {
     inputValue.lastEdited === "from"
   );
 
+  /**
+   * If value changes in props, we should update inputs. BUT, only if value REALLY changes, which means when normalized value changed compared to local state.
+   */
+  useEffect(
+    () => {
+      const newValueFromProps = normalizeRangePickerValue(
+        props,
+        inputValue.lastEdited
+      );
+
+      // This condition is very important. If value from props changes but after normalization it's same as current input values, we keep input values. Otherwise it would disrupt inputting UX.
+      if (
+        newValueFromProps.from === internalValue.from &&
+        newValueFromProps.to === internalValue.to
+      ) {
+        return;
+      }
+
+      setInputValue({
+        ...value,
+        lastEdited: inputValue.lastEdited
+      });
+    },
+    [value.from, value.to]
+  );
+
   const onBlur = () => {
     setInputValue(internalValue);
 
@@ -161,7 +177,7 @@ export function useRangePicker_controlled(props) {
       }
 
       if (onChange) {
-        onChange(internalValue);
+        onChange(internalValue, true);
       }
     }, 0);
   };
@@ -178,6 +194,22 @@ export function useRangePicker_controlled(props) {
     };
 
     setInputValue(newVal);
+
+    if (onChange) {
+      onChange(
+        normalizeRangePickerValue(
+          {
+            ...props,
+            value: {
+              from: parseInt(newVal.from),
+              to: parseInt(newVal.to)
+            }
+          },
+          lastEdited
+        ),
+        false
+      );
+    }
   };
 
   const inputFromProps = {
