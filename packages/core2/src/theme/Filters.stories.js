@@ -57,31 +57,26 @@ export const basic = () => {
                 onClose={() => {
                   commit();
                 }}
-              >
-                {({ close }) => (
-                  <>
-                    <SelectInline {...filter.soft.selectProps}>
-                      <ItemRow />
-                    </SelectInline>
-
-                    <Dialog.Footer>
-                      <Box
-                        sx={{
-                          p: 16,
-                          display: "flex",
-                          justifyContent: "space-between",
-                          alignItems: "center",
-                          width: "100%"
-                        }}
-                      >
-                        <Button {...filter.soft.clearButtonProps}>Clear</Button>
-                        <Button onClick={close} disabled={!filter.isDirty}>
-                          Filter
-                        </Button>
-                      </Box>
-                    </Dialog.Footer>
-                  </>
+                footer={({ close }) => (
+                  <Box
+                    sx={{
+                      p: 16,
+                      display: "flex",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      width: "100%"
+                    }}
+                  >
+                    <Button {...filter.soft.clearButtonProps}>Clear</Button>
+                    <Button onClick={close} disabled={!filter.isDirty}>
+                      Filter
+                    </Button>
+                  </Box>
                 )}
+              >
+                <SelectInline {...filter.soft.selectProps}>
+                  <ItemRow />
+                </SelectInline>
               </Dialog>
             </Box>
           )}

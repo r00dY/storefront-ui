@@ -12,19 +12,19 @@ function DialogFooter(props) {
   return props.children;
 }
 
-function getLayout(children) {
-  let header, footer;
-  let filteredChildren = [];
-
-  React.Children.forEach(children, child => {
-    if (child.type === DialogHeader) {
-      header = child;
-    } else if (child.type === DialogFooter) {
-      footer = child;
-    } else {
-      filteredChildren.push(child);
-    }
-  });
+function getLayout(children, header, footer) {
+  // let header, footer;
+  // let filteredChildren = [];
+  //
+  // React.Children.forEach(children, child => {
+  //     if (child.type === DialogHeader) {
+  //         header = child;
+  //     } else if (child.type === DialogFooter) {
+  //         footer = child;
+  //     } else {
+  //         filteredChildren.push(child);
+  //     }
+  // });
 
   const containerSx = {
     display: "flex",
@@ -55,7 +55,7 @@ function getLayout(children) {
           overflow: "auto"
         }}
       >
-        {filteredChildren}
+        {children}
       </Box>
 
       {footer && (
@@ -72,7 +72,7 @@ function getLayout(children) {
 }
 
 function Dialog$(props) {
-  const { children, ...restProps } = props;
+  const { children, header, footer, ...restProps } = props;
 
   return (
     <Layer {...restProps}>
@@ -92,7 +92,9 @@ function Dialog$(props) {
           }}
         >
           {getLayout(
-            typeof children === "function" ? children(params) : children
+            typeof children === "function" ? children(params) : children,
+            typeof header === "function" ? header(params) : header,
+            typeof footer === "function" ? footer(params) : footer
           )}
         </FocusLock>
       )}
