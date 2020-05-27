@@ -150,6 +150,28 @@ function useFilters({ data, onChange }) {
       })
     );
 
+    let isEmpty = areEqual(
+      normalizeFilterValue({
+        ...item,
+        value: localValue
+      }),
+      normalizeFilterValue({
+        ...item,
+        value: null
+      })
+    );
+
+    let isCommittedEmpty = areEqual(
+      normalizeFilterValue({
+        ...item,
+        value: commitedValue
+      }),
+      normalizeFilterValue({
+        ...item,
+        value: null
+      })
+    );
+
     if (isDirty) {
       isAnyDirty = true;
     }
@@ -197,7 +219,9 @@ function useFilters({ data, onChange }) {
         rangePickerProps: rangePickerProps(true),
         clearButtonProps: clearButtonProps(true)
       },
-      isDirty
+      isDirty,
+      isEmpty,
+      isCommittedEmpty
     };
   });
 

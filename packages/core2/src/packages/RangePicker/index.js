@@ -122,7 +122,7 @@ export function useRangePicker(props) {
 }
 
 export function useRangePicker_controlled(props) {
-  let { value, onChange, onEveryChange, onChangeTimeout = null } = props;
+  let { value, onChange, onChangeTimeout = null } = props;
   value = normalizeRangePickerValue(props, value);
 
   const [inputValue, setInputValue] = useState({
@@ -172,9 +172,9 @@ export function useRangePicker_controlled(props) {
 
     clearTimeout(timeout.current);
     timeout.current = setTimeout(() => {
-      if (value.from === internalValue.from && value.to === internalValue.to) {
-        return;
-      }
+      // if (value.from === internalValue.from && value.to === internalValue.to) {
+      //   return;
+      // }
 
       if (onChange) {
         onChange(internalValue, true);
