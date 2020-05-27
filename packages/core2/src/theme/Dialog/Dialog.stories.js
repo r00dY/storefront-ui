@@ -162,11 +162,9 @@ export const unstyled = () => (
       root={{
         border: "3px solid blue"
       }}
+      header={<Bar>SIEMA</Bar>}
+      footer={<Bar>NARA</Bar>}
     >
-      <Dialog.Header>
-        <Bar>SIEMA</Bar>
-      </Dialog.Header>
-
       <Box sx={{ border: "1px solid black", bg: "red" }}>
         <button>One</button>
         <br />
@@ -193,10 +191,6 @@ export const unstyled = () => (
         <br />
         <br />
       </Box>
-
-      <Dialog.Footer>
-        <Bar>NARA</Bar>
-      </Dialog.Footer>
     </Dialog>
 
     <p>Header and footer (anchored to window)</p>
@@ -209,11 +203,9 @@ export const unstyled = () => (
         border: "3px solid blue"
       }}
       anchoredTo={"window"}
+      header={<Bar>SIEMA</Bar>}
+      footer={<Bar>NARA</Bar>}
     >
-      <Dialog.Header>
-        <Bar>SIEMA</Bar>
-      </Dialog.Header>
-
       <Box sx={{ border: "1px solid black", bg: "red" }}>
         <button>One</button>
         <br />
@@ -240,9 +232,6 @@ export const unstyled = () => (
         <br />
         <br />
       </Box>
-      <Dialog.Footer>
-        <Bar>NARA</Bar>
-      </Dialog.Footer>
     </Dialog>
 
     <Paragraph />
