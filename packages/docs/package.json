@@ -14,10 +14,10 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "version": "0.10.16",
+  "version": "0.10.17",
   "license": "GPL-3.0",
   "dependencies": {
-    "@commerce-ui/core2": "^0.10.16",
+    "@commerce-ui/core2": "^0.10.17",
     "@mdx-js/loader": "^1.5.5",
     "@mdx-js/react": "^1.5.5",
     "@next/mdx": "^9.2.1",
