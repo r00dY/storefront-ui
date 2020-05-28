@@ -500,6 +500,7 @@ function Layer$$({
   ...restProps
 }) {
   const [isOpen, setOpen] = useState(false);
+
   const buttonRef = useRef(null);
 
   // TODO: Make this not only array

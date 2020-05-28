@@ -93,6 +93,11 @@ function useSelect(props) {
   };
 }
 
+/**
+ * Select can be styled as 'InputContainer' and also as with a separate custom button.
+ * We should clean this up and especially clean up InputContainer concept.
+ *
+ */
 function Select(props) {
   let {
     sx = {},
@@ -100,7 +105,6 @@ function Select(props) {
     placeholder = "Select value",
     onClick,
     controller,
-
     ...restProps
   } = props;
 

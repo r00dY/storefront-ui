@@ -11,5 +11,6 @@ const withTheme = Story => (
 addDecorator(withTheme);
 
 window.__BROWSER__ = true;
+window.__DEV__ = true;
 
 configure(require.context("../src/theme", true, /\.stories\.js$/), module);

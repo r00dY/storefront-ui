@@ -6,6 +6,10 @@ import Box from "@commerce-ui/core/Box";
 
 import Select from "./index";
 import SelectNative from "../SelectNative/SelectNative.stories";
+import Button from "../Button/Button";
+
+import Select2 from "@commerce-ui/core/Select2";
+import ItemRow from "../Selectables/ItemRow";
 
 const options = [
   {
@@ -115,136 +119,33 @@ export const newSelect = () => {
 
       <p>Items disabled</p>
       <Select options={optionsWithDisabled} onChange={val => console.log} />
-
-      {/*<Button>Test</Button>*/}
-      {/*<Button>Test2</Button>*/}
-
-      {/*<Select*/}
-      {/*sx={{*/}
-      {/*$layer: <Layer anchoredTo={["window", null, "trigger"]} />,*/}
-      {/*// $button: <Button />,*/}
-      {/*$selectable: <Color />,*/}
-      {/*$wrapper: <Box sx={{ p: 6 }} />,*/}
-      {/*$separator: <Box sx={{ height: 4 }} />,*/}
-      {/*...formStyles,*/}
-      {/*width: "400px"*/}
-      {/*}}*/}
-      {/*label={"Test select"}*/}
-      {/*options={colors}*/}
-      {/*value={value}*/}
-      {/*onChange={value => setValue(value)}*/}
-      {/*/>*/}
-
-      {/*<Button>Test</Button>*/}
-      {/*<Button>Test2</Button>*/}
-
-      {/*<Select*/}
-      {/*sx={{*/}
-      {/*$layer: <Layer anchoredTo={["window", null, "trigger"]} />,*/}
-      {/*// $button: <Button />,*/}
-      {/*$selectable: <Color />,*/}
-      {/*$wrapper: <Box sx={{ p: 6 }} />,*/}
-      {/*$separator: <Box sx={{ height: 4 }} />,*/}
-      {/*$value: ({ selectedItem, placeholder }) => (*/}
-      {/*<Box*/}
-      {/*sx={{*/}
-      {/*display: "flex",*/}
-      {/*flexDirection: "row",*/}
-      {/*alignItems: "center"*/}
-      {/*}}*/}
-      {/*>*/}
-      {/*{selectedItem && (*/}
-      {/*<Box*/}
-      {/*sx={{*/}
-      {/*width: "14px",*/}
-      {/*height: "14px",*/}
-      {/*borderRadius: "7px",*/}
-      {/*mr: "4px",*/}
-      {/*bg: selectedItem.color*/}
-      {/*}}*/}
-      {/*/>*/}
-      {/*)}*/}
-      {/*{selectedItem ? selectedItem.value : placeholder}*/}
-      {/*</Box>*/}
-      {/*),*/}
-      {/*...formStyles,*/}
-      {/*width: "400px"*/}
-      {/*}}*/}
-      {/*label={"Color"}*/}
-      {/*placeholder={"Pick a color"}*/}
-      {/*options={colors}*/}
-      {/*value={value}*/}
-      {/*onChange={value => setValue(value)}*/}
-      {/*/>*/}
     </Box>
   );
 };
-//
-// export const unstyled = () => {
-//   const [value, setValue] = useState(colors[2]);
-//
-//   return (
-//     <Box>
-//       <Button>Test</Button>
-//       <Button>Test2</Button>
-//
-//       <Select$
-//         config={{
-//           xs: {
-//             mode: "slide-from-bottom",
-//             height: "auto"
-//           },
-//           md: {
-//             anchored: true
-//           }
-//         }}
-//         button={({ selectedItem }) => (
-//           <Button>{selectedItem ? selectedItem.value : "Pick a color"}</Button>
-//         )}
-//         options={colors}
-//         value={value}
-//         onChange={value => setValue(value)}
-//       >
-//         {({ options }) =>
-//           options.map(option => (
-//             <Color color={option.color} label={option.color} />
-//           ))
-//         }
-//       </Select$>
-//
-//       <Button>Test</Button>
-//       <Button>Test2</Button>
-//     </Box>
-//   );
-// };
-//
-// export const inline = () => {
-//   const { selectProps } = useSelect({ options: colors });
-//
-//   return (
-//     <Box>
-//       <Button>Test</Button>
-//       <Button>Test2</Button>
-//
-//       <br />
-//       <br />
-//
-//       <SelectInline$ {...selectProps}>
-//         {({ options }) =>
-//           options.map(option => (
-//             <Color color={option.color} label={option.color} />
-//           ))
-//         }
-//       </SelectInline$>
-//
-//       <br />
-//       <br />
-//
-//       <Button>Test</Button>
-//       <Button>Test2</Button>
-//     </Box>
-//   );
-// };
+
+export const newSelect2 = () => {
+  return (
+    <Box>
+      <h2>Uncontrolled</h2>
+
+      <p>Standard</p>
+      <Select2
+        options={options}
+        onChange={val => console.log}
+        button={({ value }) => (
+          <Button>{value === null ? "Select" : value.label}</Button>
+        )}
+        width={400}
+        root={{
+          border: "1px solid black",
+          bg: "white"
+        }}
+      >
+        <ItemRow />
+      </Select2>
+    </Box>
+  );
+};
 
 export default {
   title: "Select"
