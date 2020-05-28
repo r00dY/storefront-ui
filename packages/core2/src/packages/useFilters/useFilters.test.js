@@ -379,3 +379,33 @@ test("[changing filters] removing filter with local value from list, and bringin
 
   expect(onChange.mock.calls.length).toBe(2);
 });
+
+test("clearAll and isEmpty work", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  expect(result.current.filters[0].isEmpty).toBe(false);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(false);
+  expect(result.current.filters[3].isEmpty).toBe(true);
+
+  act(() => {
+    result.current.clearAll();
+  });
+
+  expect(result.current.filters[0].isEmpty).toBe(true);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(true);
+  expect(result.current.filters[3].isEmpty).toBe(true);
+});

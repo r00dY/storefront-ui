@@ -143,6 +143,21 @@ export const newSelect2 = () => {
       >
         <ItemRow />
       </Select2>
+
+      <h2>Uncontrolled anchored to window</h2>
+
+      <p>Standard</p>
+      <Select2
+        options={options}
+        onChange={val => console.log}
+        button={({ value }) => (
+          <Button>{value === null ? "Select" : value.label}</Button>
+        )}
+        width={400}
+        anchoredTo={"window"}
+      >
+        <ItemRow />
+      </Select2>
     </Box>
   );
 };

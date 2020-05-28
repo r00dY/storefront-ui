@@ -118,12 +118,13 @@ function Select2(props) {
     backgroundColor,
     root,
     placement,
+    anchoredTo,
 
     // item
     children
   } = props;
 
-  const layerPropsLook = {
+  const layerProps = {
     width,
     height,
     minWidth,
@@ -134,7 +135,8 @@ function Select2(props) {
     animationEase,
     backgroundColor,
     root,
-    placement
+    placement,
+    anchoredTo
   };
 
   if (!controller) {
@@ -143,7 +145,7 @@ function Select2(props) {
 
   let {
     buttonProps,
-    layerProps,
+    // layerProps,
     menuProps,
     anchorRef,
     options,
@@ -164,7 +166,7 @@ function Select2(props) {
   button = typeof button === "function" ? button(controller) : button;
 
   return (
-    <Layer {...layerPropsLook} button={React.cloneElement(button, buttonProps)}>
+    <Layer {...layerProps} button={React.cloneElement(button, buttonProps)}>
       {({ close }) => {
         const items = [];
 

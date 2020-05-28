@@ -51,13 +51,6 @@ const normalizeFilterValue = filter => {
 // for now: enableReinitalize not available, we assume true.
 function useFilters({ data, onChange }) {
   const [counter, setCounter] = useState(0);
-  //
-  // const [internalData_, setInternalData] = useState(data);
-  // const [committedData_, setCommittedData] = useState(data);
-  //
-  // // internalData is normalized internalData_
-  // const internalData = internalData_.map(item => normalizeData(item));
-  // const committedData = committedData_.map(item => normalizeData(item));
 
   const localValues = useRef({});
   const commitedValues = useRef({});
@@ -228,6 +221,11 @@ function useFilters({ data, onChange }) {
   return {
     filters,
     setValue,
+    clearAll: isSoft => {
+      data.forEach(item => {
+        setValue(item.id, null, isSoft);
+      });
+    },
     commit,
     isDirty: isAnyDirty
   };
