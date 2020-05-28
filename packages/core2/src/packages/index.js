@@ -286,6 +286,10 @@ export function responsiveValueToResponsiveSize(resVal) {
 }
 
 export function responsiveValueCurrent(resVal) {
+  if (typeof window !== "object") {
+    return;
+  }
+
   let activeVal;
   responsiveValueForEach(resVal, (val, breakpoint) => {
     if (!breakpoint) {
