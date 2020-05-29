@@ -454,17 +454,31 @@ test("number ids work", () => {
   const { result } = renderHook(() =>
     useSelectState({
       options: animalsWithNumberIds,
-      value: 1,
       onChange
     })
   );
 
-  expect(result.current.value.value).toBe("cat");
+  // expect(result.current.value.value).toBe("cat");
 
   act(() => {
     result.current.setValue("2"); // change nothing
   });
 
-  expect(onChange.mock.calls.length).toBe(1);
-  expect(onChange.mock.results[0].value.id).toBe(2);
+  expect(result.current.value.value).toBe("dog");
+
+  act(() => {
+    result.current.selectValue(animalsWithNumberIds[0]); // change nothing
+  });
+
+  expect(result.current.value.value).toBe("cat");
+
+  // expect(onChange.mock.calls.length).toBe(1);
+  // expect(onChange.mock.results[0].value.id).toBe(2);
+  //
+  // act(() => {
+  //   result.current.setValue(animalsWithNumberIds[0]); // change nothing
+  // });
+  //
+  // expect(onChange.mock.calls.length).toBe(2);
+  // expect(onChange.mock.results[1].value.id).toBe(1);
 });

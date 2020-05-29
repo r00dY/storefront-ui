@@ -89,6 +89,7 @@ function useFilters({ data, onChange }) {
   };
 
   const setValue = (id, newValue, isSoft = false) => {
+    console.log("set value", id, newValue, isSoft);
     // normalize
     let filter = data.find(x => x.id === id);
     newValue = normalizeFilterValue({ ...filter, value: newValue });

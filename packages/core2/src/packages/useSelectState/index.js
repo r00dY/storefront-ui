@@ -28,17 +28,18 @@ export const normalizeSelectOptions = options =>
         return option;
       }
 
-      if (!option.label) {
-        const id = option.id.toString();
-
-        return {
-          ...option,
-          id: id,
-          label: id,
-          __originalOption: option
-        };
+      let label = option.label;
+      let id = option.id.toString();
+      if (!label) {
+        label = option.id.toString();
       }
-      return option;
+
+      return {
+        ...option,
+        id,
+        label,
+        __originalOption: option
+      };
     }
 
     if (option === null || option === undefined) {

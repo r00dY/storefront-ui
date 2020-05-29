@@ -483,3 +483,83 @@ test("number IDs work", () => {
   expect(result.current.filters[2].isEmpty).toBe(true);
   expect(result.current.filters[3].value.label).toBe("aqua");
 });
+
+const testDataDajar = [
+  {
+    id: "dajar_collection",
+    name: "Kolekcja",
+    request_var: "dajar_collection",
+    items: [
+      { id: 365, value_string: "365", amount: 4, name: "Artisan Tornado Matt" }
+    ],
+    unit: "",
+    type: "select",
+    label: "Kolekcja",
+    options: [
+      {
+        id: 365,
+        value_string: "365",
+        amount: 4,
+        name: "Artisan Tornado Matt",
+        label: "Artisan Tornado Matt"
+      }
+    ]
+  },
+  {
+    id: "diameter",
+    name: "Średnica [cm]",
+    request_var: "diameter",
+    unit: "cm",
+    type: "range",
+    min: 17,
+    max: 30,
+    amount: 4,
+    label: "Średnica [cm]"
+  },
+  {
+    id: "material",
+    name: "Materiał",
+    request_var: "material",
+    items: [{ id: 214, value_string: "214", amount: 4, name: "Porcelana" }],
+    unit: "",
+    type: "select",
+    label: "Materiał",
+    options: [
+      {
+        id: 214,
+        value_string: "214",
+        amount: 4,
+        name: "Porcelana",
+        label: "Porcelana"
+      }
+    ]
+  },
+  {
+    id: "price",
+    name: "Cena",
+    request_var: "price",
+    type: "range",
+    unit: "zł",
+    min: 20,
+    max: 60,
+    label: "Cena"
+  },
+  {
+    id: "sort",
+    label: "Sort",
+    type: "select",
+    options: [
+      { id: "position-desc", label: "Polecane" },
+      {
+        id: "price-desc",
+        label: "Cena: od najwyższej"
+      },
+      { id: "price-asc", label: "Cena: od najniższej" },
+      {
+        id: "name-desc",
+        label: "Wg nazwy Z-A"
+      },
+      { id: "name-asc", label: "Wg nazwy A-Z" }
+    ]
+  }
+];
