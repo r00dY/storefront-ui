@@ -90,6 +90,22 @@ const filtersData = [
         data: {
           hex: "#295F9A"
         }
+      },
+      {
+        id: 123, // number ID
+        label: "orange",
+        amount: 0,
+        data: {
+          hex: "#295F9A"
+        }
+      },
+      {
+        id: 124, // number ID
+        label: "aqua",
+        amount: 0,
+        data: {
+          hex: "#295F9A"
+        }
       }
     ]
   },
@@ -437,4 +453,33 @@ test("initial values work", () => {
   expect(result.current.filters[1].isEmpty).toBe(true);
   expect(result.current.filters[2].isEmpty).toBe(false);
   expect(result.current.filters[3].isEmpty).toBe(true);
+});
+
+test("number IDs work", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("color", 123); // setValue as id
+  });
+
+  expect(result.current.filters[0].isEmpty).toBe(true);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(true);
+  expect(result.current.filters[3].value.label).toBe("orange");
+
+  act(() => {
+    result.current.setValue("color", "124"); // setValue as id
+  });
+
+  expect(result.current.filters[0].isEmpty).toBe(true);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(true);
+  expect(result.current.filters[3].value.label).toBe("aqua");
 });
