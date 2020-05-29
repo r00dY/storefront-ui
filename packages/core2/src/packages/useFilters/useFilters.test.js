@@ -409,3 +409,32 @@ test("clearAll and isEmpty work", () => {
   expect(result.current.filters[2].isEmpty).toBe(true);
   expect(result.current.filters[3].isEmpty).toBe(true);
 });
+
+test("initial values work", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData.map(x => {
+        if (x.id === "sort") {
+          return {
+            ...x,
+            value: "price-asc"
+          };
+        } else if (x.id === "color") {
+          return {
+            ...x,
+            value: "grey"
+          };
+        }
+        return x;
+      }),
+      onChange
+    })
+  );
+
+  expect(result.current.filters[0].isEmpty).toBe(false);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(false);
+  expect(result.current.filters[3].isEmpty).toBe(true);
+});

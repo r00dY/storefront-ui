@@ -121,49 +121,61 @@ function useFilters({ data, onChange }) {
   };
 
   const filters = getDataWithCurrentValues().map((item, index) => {
-    let localValue = localValues.current[item.id];
-    if (localValue === undefined) {
-      localValue = null;
-    }
+    const value = item.value;
+    const commitedValue = item.committedValue;
 
-    let commitedValue = commitedValues.current[item.id];
-    if (commitedValue === undefined) {
-      commitedValue = null;
-    }
+    // let localValue = localValues.current[item.id];
+    // if (localValue === undefined) {
+    //   localValue = null;
+    // }
+    //
+    // let commitedValue = commitedValues.current[item.id];
+    // if (commitedValue === undefined) {
+    //   commitedValue = null;
+    // }
 
     // we must compare normalized value. localValue and commitedValue are normalized only after being set, before they're not. And sometimes this makes isDirty=true although it's not true.
-    let isDirty = !areEqual(
-      normalizeFilterValue({
-        ...item,
-        value: localValue
-      }),
-      normalizeFilterValue({
-        ...item,
-        value: commitedValue
-      })
-    );
+    // let isDirty = !areEqual(
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: localValue
+    //   }),
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: commitedValue
+    //   })
+    // );
+    //
+    // let isEmpty = areEqual(
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: localValue
+    //   }),
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: null
+    //   })
+    // );
+    //
+    // let isCommittedEmpty = areEqual(
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: commitedValue
+    //   }),
+    //   normalizeFilterValue({
+    //     ...item,
+    //     value: null
+    //   })
+    // );
 
-    let isEmpty = areEqual(
-      normalizeFilterValue({
-        ...item,
-        value: localValue
-      }),
-      normalizeFilterValue({
-        ...item,
-        value: null
-      })
-    );
+    const nullValue = normalizeFilterValue({
+      ...item,
+      value: null
+    });
 
-    let isCommittedEmpty = areEqual(
-      normalizeFilterValue({
-        ...item,
-        value: commitedValue
-      }),
-      normalizeFilterValue({
-        ...item,
-        value: null
-      })
-    );
+    let isDirty = !areEqual(value, commitedValue);
+    let isEmpty = areEqual(value, nullValue);
+    let isCommittedEmpty = areEqual(commitedValue, nullValue);
 
     if (isDirty) {
       isAnyDirty = true;
@@ -173,7 +185,7 @@ function useFilters({ data, onChange }) {
       (item.type === "select" || item.type === "multiselect") && {
         options: item.options,
         allowEmpty: true,
-        value: localValue,
+        value: value,
         onChange: newVal => setValue(item.id, newVal, soft)
       };
 
@@ -182,7 +194,7 @@ function useFilters({ data, onChange }) {
         min: item.min,
         max: item.max,
         allowEmpty: item.allowEmpty,
-        value: localValue,
+        value: value,
         onChange: (newVal, isCommit) => {
           setValue(item.id, newVal, !isCommit || soft);
         }
