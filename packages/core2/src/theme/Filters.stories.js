@@ -92,7 +92,7 @@ export const basic = () => {
                 button={
                   <Button>
                     {filter.label}
-                    {filter.value.length > 0 ? ": values" : ""}
+                    {filter.value ? ": values" : ""}
                   </Button>
                 }
               >
@@ -118,7 +118,7 @@ export const basic = () => {
                 button={
                   <Button>
                     {filter.label}
-                    {filter.value.length > 0 ? ": values" : ""}
+                    {filter.value ? ": values" : ""}
                   </Button>
                 }
                 onClose={() => {
