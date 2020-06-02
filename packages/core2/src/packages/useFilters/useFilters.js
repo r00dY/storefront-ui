@@ -53,7 +53,7 @@ function useFilters({ data, onChange }) {
   const [counter, setCounter] = useState(0);
 
   const localValues = useRef({});
-  const commitedValues = useRef({});
+  const committedValues = useRef({});
   const previousValues = useRef({});
 
   const values = {}; // normalized values based on current data
@@ -68,13 +68,13 @@ function useFilters({ data, onChange }) {
     // If new value for this filter from props is different from previous value from props (like value from server changed)
     if (!areEqual(values[filterId], previousValues.current[filterId])) {
       delete localValues.current[filterId];
-      delete commitedValues.current[filterId];
+      delete committedValues.current[filterId];
     }
 
     // If this filterId is not in the list anymore
     if (!values.hasOwnProperty(filterId)) {
       delete localValues.current[filterId];
-      delete commitedValues.current[filterId];
+      delete committedValues.current[filterId];
     }
   }
 
@@ -84,7 +84,7 @@ function useFilters({ data, onChange }) {
     return data.map(item => ({
       ...item,
       value: localValues.current[item.id] || values[item.id],
-      committedValue: commitedValues.current[item.id] || values[item.id]
+      committedValue: committedValues.current[item.id] || values[item.id]
     }));
   };
 
@@ -96,7 +96,7 @@ function useFilters({ data, onChange }) {
     localValues.current[id] = newValue;
 
     if (!isSoft) {
-      commitedValues.current[id] = newValue;
+      committedValues.current[id] = newValue;
 
       const newData = getDataWithCurrentValues();
 
@@ -111,7 +111,7 @@ function useFilters({ data, onChange }) {
   let isAnyDirty = false;
 
   const commit = () => {
-    commitedValues.current = { ...localValues.current };
+    committedValues.current = { ...localValues.current };
     const newData = getDataWithCurrentValues();
 
     if (onChange) {
@@ -121,61 +121,20 @@ function useFilters({ data, onChange }) {
   };
 
   const filters = getDataWithCurrentValues().map((item, index) => {
-    const value = item.value;
-    const commitedValue = item.committedValue;
-
-    // let localValue = localValues.current[item.id];
-    // if (localValue === undefined) {
-    //   localValue = null;
-    // }
-    //
-    // let commitedValue = commitedValues.current[item.id];
-    // if (commitedValue === undefined) {
-    //   commitedValue = null;
-    // }
-
-    // we must compare normalized value. localValue and commitedValue are normalized only after being set, before they're not. And sometimes this makes isDirty=true although it's not true.
-    // let isDirty = !areEqual(
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: localValue
-    //   }),
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: commitedValue
-    //   })
-    // );
-    //
-    // let isEmpty = areEqual(
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: localValue
-    //   }),
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: null
-    //   })
-    // );
-    //
-    // let isCommittedEmpty = areEqual(
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: commitedValue
-    //   }),
-    //   normalizeFilterValue({
-    //     ...item,
-    //     value: null
-    //   })
-    // );
+    let value = item.value;
+    let committedValue = item.committedValue;
 
     const nullValue = normalizeFilterValue({
       ...item,
       value: null
     });
 
-    let isDirty = !areEqual(value, commitedValue);
+    let isDirty = !areEqual(value, committedValue);
     let isEmpty = areEqual(value, nullValue);
-    let isCommittedEmpty = areEqual(commitedValue, nullValue);
+    let isCommittedEmpty = areEqual(committedValue, nullValue);
+
+    value = isEmpty ? null : value;
+    committedValue = isCommittedEmpty ? null : committedValue;
 
     if (isDirty) {
       isAnyDirty = true;
@@ -226,7 +185,9 @@ function useFilters({ data, onChange }) {
       },
       isDirty,
       isEmpty,
-      isCommittedEmpty
+      isCommittedEmpty,
+      value,
+      committedValue
     };
   });
 
