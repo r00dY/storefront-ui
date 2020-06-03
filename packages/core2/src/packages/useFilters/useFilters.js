@@ -81,11 +81,31 @@ function useFilters({ data, onChange }) {
   previousValues.current = { ...values };
 
   const getDataWithCurrentValues = () => {
-    return data.map(item => ({
-      ...item,
-      value: localValues.current[item.id] || values[item.id],
-      committedValue: committedValues.current[item.id] || values[item.id]
-    }));
+    return data.map(item => {
+      let value = localValues.current[item.id] || values[item.id];
+      let committedValue = committedValues.current[item.id] || values[item.id];
+
+      const nullValue = normalizeFilterValue({
+        ...item,
+        value: null
+      });
+
+      let isDirty = !areEqual(value, committedValue);
+      let isEmpty = areEqual(value, nullValue);
+      let isCommittedEmpty = areEqual(committedValue, nullValue);
+
+      value = isEmpty ? null : value;
+      committedValue = isCommittedEmpty ? null : committedValue;
+
+      return {
+        ...item,
+        value,
+        committedValue,
+        isDirty,
+        isEmpty,
+        isCommittedEmpty
+      };
+    });
   };
 
   const setValue = (id, newValue, isSoft = false) => {
@@ -121,22 +141,7 @@ function useFilters({ data, onChange }) {
   };
 
   const filters = getDataWithCurrentValues().map((item, index) => {
-    let value = item.value;
-    let committedValue = item.committedValue;
-
-    const nullValue = normalizeFilterValue({
-      ...item,
-      value: null
-    });
-
-    let isDirty = !areEqual(value, committedValue);
-    let isEmpty = areEqual(value, nullValue);
-    let isCommittedEmpty = areEqual(committedValue, nullValue);
-
-    value = isEmpty ? null : value;
-    committedValue = isCommittedEmpty ? null : committedValue;
-
-    if (isDirty) {
+    if (item.isDirty) {
       isAnyDirty = true;
     }
 
@@ -144,7 +149,7 @@ function useFilters({ data, onChange }) {
       (item.type === "select" || item.type === "multiselect") && {
         options: item.options,
         allowEmpty: true,
-        value: value,
+        value: item.value,
         onChange: newVal => setValue(item.id, newVal, soft)
       };
 
@@ -153,7 +158,7 @@ function useFilters({ data, onChange }) {
         min: item.min,
         max: item.max,
         allowEmpty: item.allowEmpty,
-        value: value,
+        value: item.value,
         onChange: (newVal, isCommit) => {
           setValue(item.id, newVal, !isCommit || soft);
         }
@@ -169,7 +174,7 @@ function useFilters({ data, onChange }) {
       onClick: () => {
         commit();
       },
-      disabled: !isDirty
+      disabled: !item.isDirty
     });
 
     return {
@@ -182,12 +187,7 @@ function useFilters({ data, onChange }) {
         selectProps: selectProps(true),
         rangePickerProps: rangePickerProps(true),
         clearButtonProps: clearButtonProps(true)
-      },
-      isDirty,
-      isEmpty,
-      isCommittedEmpty,
-      value,
-      committedValue
+      }
     };
   });
 

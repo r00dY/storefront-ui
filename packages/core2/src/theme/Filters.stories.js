@@ -21,8 +21,8 @@ import Button from "./Button/Button";
 export const basic = () => {
   const { filters, commit } = useFilters({
     data: filtersData,
-    onChange: () => {
-      console.log("changed!");
+    onChange: vals => {
+      vals.forEach(val => console.log(val.id, val.value));
     }
   });
 
