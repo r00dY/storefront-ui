@@ -231,16 +231,20 @@ function Layer$(props) {
     [isOpen]
   );
 
-  useOnClickOutside([popperRef.current, arrowRef.current], () => {
-    if (!isOpen) {
-      return;
-    }
-    if (current.isAnchored) {
-      if (onClose) {
-        onClose();
+  useOnClickOutside(
+    [popperRef.current, arrowRef.current, anchoredTo.current],
+    () => {
+      if (!isOpen) {
+        return;
+      }
+
+      if (current.isAnchored) {
+        if (onClose) {
+          onClose();
+        }
       }
     }
-  });
+  );
 
   useEffect(() => {
     setMounted(true);
@@ -492,13 +496,14 @@ function useOnClickOutside(nodes, callback) {
 }
 
 // Layer with Button
-function Layer$$({
-  button,
-  anchoredTo = "button",
-  closeOnEsc = true,
-  onClose,
-  ...restProps
-}) {
+function Layer$$({ button, ...layerProps }) {
+  let {
+    anchoredTo = "button",
+    closeOnEsc = true,
+    onClose,
+    ...restProps
+  } = layerProps;
+
   const [isOpen, setOpen] = useState(false);
 
   const buttonRef = useRef(null);
@@ -540,7 +545,7 @@ function Layer$$({
   });
 
   if (!button) {
-    return <Layer$ {...restProps} anchoredTo={anchoredTo} />;
+    return <Layer$ {...layerProps} />;
   }
 
   return React.cloneElement(button, {
