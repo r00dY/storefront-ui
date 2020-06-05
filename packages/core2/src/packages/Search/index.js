@@ -85,11 +85,13 @@ function Search(props) {
 
   const { inputProps, close, formProps, isOpen } = useSearch(props);
 
+  const anchorRef = useRef(null);
+
   children = typeof children === "function" ? children({ close }) : children;
 
   layer = React.cloneElement(layer, {
     isOpen: children && isOpen,
-    anchoredTo: inputProps.controlRef,
+    anchoredTo: anchorRef,
     onClose: params => {
       if (params && params.type === "esc") {
         // esc by default comes from "input type=search".
@@ -108,7 +110,9 @@ function Search(props) {
         }
       }}
     >
-      <Box {...formProps}>{React.cloneElement(input, inputProps)}</Box>
+      <Box {...formProps}>
+        {React.cloneElement(input, { ...inputProps, _ref: anchorRef })}
+      </Box>
       {layer}
     </Box>
   );
@@ -181,6 +185,16 @@ export function SearchInline(props) {
     }
   }, []);
 
+  input = React.cloneElement(input, inputProps);
+
+  let content;
+
+  if (typeof inputContainer === "function") {
+    content = inputContainer({ input });
+  } else {
+    content = <Box sx={inputContainer}>{input}</Box>;
+  }
+
   return (
     <Box
       sx={{
@@ -209,7 +223,7 @@ export function SearchInline(props) {
         {...formProps}
         ref={inputContainerRef}
       >
-        {React.cloneElement(input, inputProps)}
+        {content}
       </Box>
 
       {children && isOpen && (

@@ -14,7 +14,12 @@ export const basic = () => {
   return (
     <Box sx={{ p: 50, maxWidth: 800 }}>
       <Search
-        input={<Input placeholder={"Collection, product, etc..."} />}
+        input={
+          <Input
+            placeholder={"Collection, product, etc..."}
+            leftEnhancer={"(enhancer)"}
+          />
+        }
         layer={
           <Layer
             root={{ boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)", bg: "white" }}
@@ -174,6 +179,9 @@ export const inlineStaticAbsolute = () => {
       >
         <SearchInline
           input={<Input placeholder={"Collection, product, etc..."} />}
+          inputContainer={{
+            p: 10
+          }}
           defaultValue={"test"}
           onChange={newVal => {
             setSearchPhrase(newVal);
@@ -222,7 +230,7 @@ export const inlineStaticFixed = () => {
 
   return (
     <SearchInline
-      input={<Input placeholder={"Collection, product, etc..."} />}
+      input={<Input placeholder={"Collection, product, etc..."} autoFocus />}
       defaultValue={"test"}
       onChange={newVal => {
         setSearchPhrase(newVal);

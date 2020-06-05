@@ -87,7 +87,7 @@ function InputContainer$(props) {
     onFocus,
     onBlur,
     onClick,
-    autoFocus,
+    // autoFocus,
     controlRef,
     invalid,
     disabled,
@@ -98,6 +98,7 @@ function InputContainer$(props) {
     children,
     forceFocused = false,
     rootRef,
+    _ref,
     cursor = "default",
     empty = true,
     showArrow = false,
@@ -247,7 +248,7 @@ function InputContainer$(props) {
   return (
     <Box
       sx={[defaults.rootCss(state), { cursor }, rootCss, css]}
-      _ref={rootRef}
+      _ref={_ref || rootRef} // TODO: rootRef is legacy, can be removed later
       onClick={(...args) => {
         if (onClick) {
           onClick(...args);
