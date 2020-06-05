@@ -3,7 +3,7 @@ import { jsx, rs } from "@commerce-ui/core";
 
 import Box from "@commerce-ui/core/Box";
 
-import Search from "@commerce-ui/core/Search";
+import Search, { SearchInline } from "@commerce-ui/core/Search";
 import Layer from "@commerce-ui/core/Layer";
 
 import Input from "./Input";
@@ -32,6 +32,7 @@ export const basic = () => {
             setContent(null);
           }
         }}
+        onSubmit={val => console.log("on submit!", val)}
       >
         {content && (
           <Box>
@@ -82,11 +83,13 @@ export const callback = () => {
             setContent(null);
           }
         }}
+        onSubmit={val => console.log("on submit!", val)}
       >
         {({ close }) =>
           content && (
             <Box>
-              {content} <button onClick={close}>close</button>
+              {content}
+              <button onClick={close}>close</button>
               <a
                 href={"#"}
                 onClick={e => {
@@ -100,6 +103,154 @@ export const callback = () => {
         }
       </Search>
     </Box>
+  );
+};
+
+export const inlineStatic = () => {
+  const [content, setContent] = useState("dupa");
+
+  return (
+    <Box sx={{ p: 50, maxWidth: 800 }}>
+      <SearchInline
+        input={<Input placeholder={"Collection, product, etc..."} />}
+        defaultValue={"test"}
+        onChange={newVal => {
+          if (typeof newVal === "string" && newVal.startsWith("a")) {
+            setContent("starts with a!");
+          } else if (newVal === "") {
+            setContent("--- placeholder ---");
+          } else {
+            setContent(null);
+          }
+        }}
+        onSubmit={val => console.log("on submit!", val)}
+      >
+        {content && (
+          <Box>
+            {content}{" "}
+            <button
+              onClick={() => {
+                console.log("click");
+              }}
+            >
+              Some button
+            </button>
+            <a
+              href={"#"}
+              onClick={e => {
+                e.preventDefault();
+              }}
+            >
+              Dupa
+            </a>
+          </Box>
+        )}
+      </SearchInline>
+    </Box>
+  );
+};
+
+export const inlineStaticAbsolute = () => {
+  const [searchPhrase, setSearchPhrase] = useState("dupa");
+
+  let content;
+
+  if (typeof searchPhrase === "string" && searchPhrase.startsWith("a")) {
+    content = "starts with a!";
+  } else if (searchPhrase === "") {
+    content = "--- placeholder ---";
+  } else {
+    content = null;
+  }
+
+  return (
+    <Box sx={{ p: 50, maxWidth: 800 }}>
+      <Box
+        sx={{
+          position: "relative",
+          maxHeight: 600,
+          border: "1px dotted black"
+        }}
+      >
+        <SearchInline
+          input={<Input placeholder={"Collection, product, etc..."} />}
+          defaultValue={"test"}
+          onChange={newVal => {
+            setSearchPhrase(newVal);
+          }}
+          mode={"absolute"}
+          onSubmit={val => console.log("on submit!", val)}
+        >
+          {content &&
+            [...Array(Math.max(1, searchPhrase.length))].map((e, i) => (
+              <Box>
+                <button
+                  onClick={() => {
+                    console.log("click");
+                  }}
+                >
+                  Some button
+                </button>
+                <a
+                  href={"#"}
+                  onClick={e => {
+                    e.preventDefault();
+                  }}
+                >
+                  Dupa
+                </a>
+              </Box>
+            ))}
+        </SearchInline>
+      </Box>
+    </Box>
+  );
+};
+
+export const inlineStaticFixed = () => {
+  const [searchPhrase, setSearchPhrase] = useState("dupa");
+
+  let content;
+
+  if (typeof searchPhrase === "string" && searchPhrase.startsWith("a")) {
+    content = "starts with a!";
+  } else if (searchPhrase === "") {
+    content = "--- placeholder ---";
+  } else {
+    content = null;
+  }
+
+  return (
+    <SearchInline
+      input={<Input placeholder={"Collection, product, etc..."} />}
+      defaultValue={"test"}
+      onChange={newVal => {
+        setSearchPhrase(newVal);
+      }}
+      mode={"fixed"}
+      onSubmit={val => console.log("on submit!", val)}
+    >
+      {content &&
+        [...Array(searchPhrase.length)].map((e, i) => (
+          <Box>
+            <button
+              onClick={() => {
+                console.log("click");
+              }}
+            >
+              Some button
+            </button>
+            <a
+              href={"#"}
+              onClick={e => {
+                e.preventDefault();
+              }}
+            >
+              Dupa
+            </a>
+          </Box>
+        ))}
+    </SearchInline>
   );
 };
 

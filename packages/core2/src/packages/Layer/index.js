@@ -533,7 +533,7 @@ function Layer$$({ button, ...layerProps }) {
       setOpen(false);
 
       if (onClose) {
-        onClose();
+        onClose({ type: "esc" });
       }
     };
 
