@@ -34,6 +34,20 @@ export const basic = () => (
           component: (
             <LinkCustom href={"#"}>Lorem ipsum dolor sit amet</LinkCustom>
           )
+        },
+        {
+          name: "Compound component inside (with callbacks)",
+          component: (
+            <Link href={"#"}>
+              {({ hovered }) => (
+                <Box
+                  sx={{ bg: hovered ? "red" : "coral", color: "white", p: 16 }}
+                >
+                  Content
+                </Box>
+              )}
+            </Link>
+          )
         }
       ]}
     />
