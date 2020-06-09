@@ -81,7 +81,11 @@ const theme = {
     }
   },
   space,
-  breakpoints
+  breakpoints,
+  imageAspectRatios: {
+    portrait: 0.7,
+    landscape: 1.3
+  }
 };
 
 export default theme;

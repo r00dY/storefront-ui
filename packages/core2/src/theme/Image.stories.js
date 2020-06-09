@@ -1,7 +1,6 @@
 import React from "react";
-import { jsx, rs } from "@commerce-ui/core";
 
-import Image from "@commerce-ui/core/Image";
+import Image from "@commerce-ui/core/Image2";
 import Box from "@commerce-ui/core/Box";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
@@ -18,37 +17,21 @@ export const basic = () => (
         },
         {
           name: "Alternative variant portrait",
-          component: (
-            <Image
-              image={catImage}
-              sx={{
-                variant: "portrait"
-              }}
-            />
-          )
+          component: <Image image={catImage} aspectRatio={"portrait"} />
         },
         {
           name: "Image with size set explicitly (objectFit: cover (default))",
           component: (
-            <Image
-              image={catImage}
-              sx={{
-                height: "200px"
-              }}
-            />
+            <Box sx={{ height: 200 }} fitW fitH>
+              <Image image={catImage} />
+            </Box>
           )
         },
         {
           name: "Image with size set explicitly (objectFit: contain)",
           component: (
-            <Box sx={{ border: "1px solid black" }}>
-              <Image
-                image={catImage}
-                sx={{
-                  height: "800px",
-                  objectFit: "contain"
-                }}
-              />
+            <Box sx={{ border: "1px solid black", height: 800 }} fitW fitH>
+              <Image image={catImage} objectFit={"contain"} />
             </Box>
           )
         },
@@ -56,14 +39,11 @@ export const basic = () => (
           name:
             "Image with size set explicitly (objectFit: contain + objectPosition)",
           component: (
-            <Box sx={{ border: "1px solid black" }}>
+            <Box sx={{ border: "1px solid black", height: 800 }} fitW fitH>
               <Image
                 image={catImage}
-                sx={{
-                  height: "800px",
-                  objectFit: "contain",
-                  objectPosition: "left top"
-                }}
+                objectFit={"contain"}
+                objectPosition={"left top"}
               />
             </Box>
           )
@@ -73,55 +53,23 @@ export const basic = () => (
           component: (
             <Image
               image={catImage}
-              sx={{
-                variant: {
-                  _: "portrait",
-                  md: "natural"
-                }
-              }}
+              aspectRatio={["portrait", null, "natural"]}
             />
           )
         },
         {
           name: "Responsive variant mode and position",
           component: (
-            <Box sx={{ border: "1px solid black" }}>
+            <Box
+              sx={{ border: "1px solid black", height: [400, null, 800] }}
+              fitW
+              fitH
+            >
               <Image
                 image={catImage}
-                sx={{
-                  height: ["400px", null, "800px"],
-                  variant: ["portrait", null, "natural"],
-                  objectFit: ["cover", null, "contain"],
-                  objectPosition: ["top left", null, "bottom right"]
-                }}
-              />
-            </Box>
-          )
-        },
-        {
-          name: "Responsive variant mode and position (with object syntax)",
-          component: (
-            <Box sx={{ border: "1px solid black" }}>
-              <Image
-                image={catImage}
-                sx={{
-                  height: {
-                    _: "400px",
-                    lg: "800px"
-                  },
-                  variant: {
-                    _: "portrait",
-                    lg: "natural"
-                  },
-                  objectFit: {
-                    _: "cover",
-                    lg: "contain"
-                  },
-                  objectPosition: {
-                    _: "top left",
-                    lg: "bottom right"
-                  }
-                }}
+                aspectRatio={["portrait", null, "natural"]}
+                objectFit={["cover", null, "contain"]}
+                objectPosition={["top left", null, "bottom right"]}
               />
             </Box>
           )
@@ -146,12 +94,7 @@ export const basic = () => (
         {
           name: "Explicit aspect ratio",
           component: (
-            <Image
-              image={catImage}
-              sx={{
-                aspectRatio: [0.3, null, 0.2, null, 0.1]
-              }}
-            />
+            <Image image={catImage} aspectRatio={[5, null, 4, null, 3]} />
           )
         }
       ]}
@@ -160,5 +103,5 @@ export const basic = () => (
 );
 
 export default {
-  title: "Image"
+  title: "approved.Image"
 };
