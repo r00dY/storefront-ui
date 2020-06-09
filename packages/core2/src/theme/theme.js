@@ -12,40 +12,6 @@ breakpoints.md = breakpoints[1];
 breakpoints.lg = breakpoints[2];
 breakpoints.xl = breakpoints[3];
 
-// let space = [
-//   0,
-//   1,
-//   2,
-//   4,
-//   6,
-//   8,
-//   10,
-//   12,
-//   14,
-//   16,
-//   20,
-//   24,
-//   28,
-//   32,
-//   40,
-//   48,
-//   56,
-//   64,
-//   80,
-//   96,
-//   112,
-//   128,
-//   160,
-//   192,
-//   224,
-//   256,
-//   320,
-//   384,
-//   448,
-//   512,
-//   640
-// ];
-
 const space = [];
 
 space.s0 = 0;
@@ -72,9 +38,14 @@ space.containerMargin = [
   "7.5vw",
   "calc(50vw - 800px)"
 ];
+
 space.gridGap = [10, null, null, 15, 25];
 
 space.containerMarginSecondary = "30vw";
+
+space.notificationSystemOffset = 16;
+space.notificationSystemSeparator = 16;
+space.notificationSystemWidth = 300;
 
 const theme = {
   colors: {

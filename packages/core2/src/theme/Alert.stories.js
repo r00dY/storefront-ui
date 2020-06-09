@@ -145,6 +145,8 @@ export const basic = () => {
       >
         Show
       </button>
+
+      <br />
     </Box>
   );
 };

@@ -191,8 +191,12 @@ function splitSx(sx) {
 //   }
 // }
 
-function responsiveValueForEach(resVal, callback) {
-  const { breakpoints } = useTheme();
+function responsiveValueForEach(resVal, callback, theme) {
+  if (!theme) {
+    theme = useTheme();
+  }
+
+  const { breakpoints } = theme;
 
   if (Array.isArray(resVal)) {
     resVal.forEach((val, index) => {
@@ -220,8 +224,11 @@ function responsiveValueForEach(resVal, callback) {
   callback(resVal, null);
 }
 
-function responsiveValueMap(resVal, mapper) {
-  const { breakpoints } = useTheme();
+function responsiveValueMap(resVal, mapper, theme) {
+  if (!theme) {
+    theme = useTheme();
+  }
+  const { breakpoints } = theme;
 
   if (Array.isArray(resVal)) {
     const newResVal = [];
@@ -285,23 +292,37 @@ export function responsiveValueToResponsiveSize(resVal) {
   return castResponsiveValue(resVal, ResponsiveSize, "space");
 }
 
-export function responsiveValueCurrent(resVal) {
+export function responsiveValueCurrent(resVal, theme) {
   if (typeof window !== "object") {
     return;
   }
 
   let activeVal;
-  responsiveValueForEach(resVal, (val, breakpoint) => {
-    if (!breakpoint) {
-      activeVal = val;
-      return;
-    }
-    if (window.matchMedia(`screen and (min-width: ${breakpoint})`).matches) {
-      activeVal = val;
-    }
-  });
+  responsiveValueForEach(
+    resVal,
+    (val, breakpoint) => {
+      if (!breakpoint) {
+        activeVal = val;
+        return;
+      }
+      if (window.matchMedia(`screen and (min-width: ${breakpoint})`).matches) {
+        activeVal = val;
+      }
+    },
+    theme
+  );
 
   return activeVal;
+}
+
+export function useResponsiveHelpers() {
+  const theme = useTheme();
+
+  return {
+    currentValue: resVal => {
+      responsiveValueCurrent(resVal, theme);
+    }
+  };
 }
 
 // Helper for quick creating of components
