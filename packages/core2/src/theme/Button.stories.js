@@ -1,24 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import Box from "@commerce-ui/core/Box";
 import Button from "@commerce-ui/core/Button";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
-const ButtonCustom = props => (
-  <Button
-    {...props}
-    sx={({ hovered, selected }) => ({
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      p: 6,
-      bg: hovered ? "yellow" : "antiquewhite",
-      border: selected ? "1px solid black" : "none",
-      color: "black"
-    })}
-  />
-);
+const ButtonCustom = props => {
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOn(!on);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
+  return (
+    <Button
+      {...props}
+      sx={({ hovered, selected, loading }) => ({
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        p: 6,
+        bg: hovered ? "yellow" : "antiquewhite",
+        border: selected ? "1px solid black" : "none",
+        color: "black"
+      })}
+    >
+      {({ loading }) => (
+        <>
+          {props.children} {on && loading && "(loading...)"}
+        </>
+      )}
+    </Button>
+  );
+};
 
 export const basic = () => (
   <Box sx={{ maxWidth: "800px" }}>
@@ -56,6 +76,14 @@ export const basic = () => (
           name: "Selected",
           component: (
             <ButtonCustom onClick={() => alert("clicked!")} selected>
+              Lorem ipsum dolor sit amet
+            </ButtonCustom>
+          )
+        },
+        {
+          name: "Loading",
+          component: (
+            <ButtonCustom onClick={() => alert("clicked!")} isLoading>
               Lorem ipsum dolor sit amet
             </ButtonCustom>
           )
