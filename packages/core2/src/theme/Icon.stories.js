@@ -125,5 +125,5 @@ export const basic = () => (
 );
 
 export default {
-  title: "Icon"
+  title: "approved.Icon"
 };

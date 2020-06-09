@@ -127,7 +127,6 @@ function Image$(props) {
 }
 
 Image$.defaultProps = {
-  variant: "natural",
   objectFit: "cover",
   objectPosition: "center center",
   loading: "lazy",
