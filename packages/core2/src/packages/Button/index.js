@@ -29,7 +29,9 @@ export default props => {
     selected,
     disabled,
     isHovered,
-    isLoading
+    isLoading,
+    loading: isLoading,
+    hovered: isHovered
   };
 
   sx = typeof sx === "function" ? sx(state) : sx;

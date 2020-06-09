@@ -113,9 +113,9 @@ export const basic = () => (
           )
         },
         {
-          name: "fitChild",
+          name: "fitW",
           component: (
-            <Box fitChild={true} sx={{ width: "300px", height: "300px" }}>
+            <Box fitW sx={{ width: "300px", height: "300px" }}>
               <Button
                 sx={{ p: 2, bg: "mono300", width: "100px", height: "50px" }}
                 href={"https://wikipedia.org"}
@@ -127,13 +127,9 @@ export const basic = () => (
           )
         },
         {
-          name: "fitChild + fitChildHeight",
+          name: "fitW + fitH",
           component: (
-            <Box
-              fitChild={true}
-              fitChildHeight={true}
-              sx={{ width: "300px", height: "300px" }}
-            >
+            <Box fitW fitH sx={{ width: "300px", height: "300px" }}>
               <Button
                 sx={{ p: 2, bg: "mono300", width: "100px", height: "50px" }}
                 href={"https://wikipedia.org"}
@@ -150,5 +146,5 @@ export const basic = () => (
 );
 
 export default {
-  title: "Box"
+  title: "approved.Box"
 };

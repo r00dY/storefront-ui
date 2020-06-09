@@ -41,5 +41,5 @@ export const basic = () => (
 );
 
 export default {
-  title: "Link"
+  title: "approved.Link"
 };

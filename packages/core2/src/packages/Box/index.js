@@ -37,18 +37,28 @@ const fitChildHeightStyles = {
 };
 
 function Box_(props) {
-  const {
+  let {
     sx,
     as,
     _ref,
     noFocus = false,
     fitChild = false,
     fitChildHeight = false,
+    fitW,
+    fitH,
     __portals__,
     ...restProps
   } = props;
 
   const [css, customSx] = splitSx(sx);
+
+  if (fitW === true) {
+    fitChild = true;
+  }
+
+  if (fitH === true) {
+    fitChildHeight = true;
+  }
 
   const ret = jsx(as, {
     sx: [
