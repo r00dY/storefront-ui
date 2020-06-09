@@ -12,11 +12,12 @@ export const basic = () => (
     <StoryWrapper
       stories={[
         {
-          name: "Standard, variant natural",
+          name: "Standard, natural aspect ratio (default)",
           component: <Image image={catImage} />
         },
         {
-          name: "Alternative variant portrait",
+          name:
+            "Alternative alternative aspectRatio (portrait), defined in theme",
           component: <Image image={catImage} aspectRatio={"portrait"} />
         },
         {
@@ -49,7 +50,7 @@ export const basic = () => (
           )
         },
         {
-          name: "Responsive variant (portrait for xs, natural for lg)",
+          name: "Responsive aspectRatio (portrait for xs, natural for lg)",
           component: (
             <Image
               image={catImage}
@@ -58,7 +59,7 @@ export const basic = () => (
           )
         },
         {
-          name: "Responsive variant mode and position",
+          name: "Responsive aspectRatio mode and position",
           component: (
             <Box
               sx={{ border: "1px solid black", height: [400, null, 800] }}

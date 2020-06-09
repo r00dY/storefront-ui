@@ -97,8 +97,6 @@ function Image$(props) {
       ratio = src.variants.find(x => x.name === "natural").aspectRatio;
     }
 
-    console.log("ratio", ratio);
-
     return `${(1 / ratio) * 100}%`;
   });
 

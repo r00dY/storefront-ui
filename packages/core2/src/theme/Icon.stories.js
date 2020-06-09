@@ -81,18 +81,22 @@ export const basic = () => (
           )
         },
         {
-          name: "fit width",
+          name: "fit width + height",
           component: (
-            <Box sx={{ border: "1px dotted black", width: 300 }}>
-              <IconWrench size={"100%"} />
+            <Box sx={{ border: "1px dotted black", width: 300 }} fitW fitH>
+              <IconWrench />
             </Box>
           )
         },
         {
           name: "fit width + height",
           component: (
-            <Box sx={{ border: "1px dotted black", width: 300, height: 150 }}>
-              <IconWrench size={"100%"} />
+            <Box
+              sx={{ border: "1px dotted black", width: 300, height: 150 }}
+              fitW
+              fitH
+            >
+              <IconWrench />
             </Box>
           )
         },
@@ -108,7 +112,7 @@ export const basic = () => (
               }}
             >
               Lorem ipsum dolro sit amet{" "}
-              <Box sx={{ display: "inline-block" }}>
+              <Box sx={{ display: "inline-block" }} as={"span"}>
                 <IconWrench size={24} />
               </Box>{" "}
               lorem ipsum dolro sit amet.
