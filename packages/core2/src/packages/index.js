@@ -320,7 +320,7 @@ export function useResponsiveHelpers() {
 
   return {
     currentValue: resVal => {
-      responsiveValueCurrent(resVal, theme);
+      return responsiveValueCurrent(resVal, theme);
     }
   };
 }

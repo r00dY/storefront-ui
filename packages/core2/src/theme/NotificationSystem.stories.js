@@ -4,9 +4,10 @@ import Box from "@commerce-ui/core/Box";
 import { useNotificationSystem } from "@commerce-ui/core/NotificationSystem";
 
 import React, { useRef, useState } from "react";
+import Grid from "@commerce-ui/core/Grid";
 
 const TestAlert = ({ bg, onClose, children }) => (
-  <Box sx={{ p: "s5", bg: bg || "antiquewhite", height: 100 }}>
+  <Box sx={{ p: "s5", bg: bg || "antiquewhite" }}>
     <button onClick={onClose}>close</button> {children}
   </Box>
 );
@@ -15,6 +16,8 @@ export const basic = () => {
   const notificationSystem = useNotificationSystem();
 
   const [counter, setCounter] = useState(0);
+
+  const containerRef = useRef(null);
 
   return (
     <Box>
@@ -81,6 +84,73 @@ export const basic = () => {
       >
         Show always the same
       </button>
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          notificationSystem.show({
+            content: ({ close }) => <TestAlert bg={"aqua"} onClose={close} />,
+            placement: "bottomLeft"
+          });
+        }}
+      >
+        Show on bottom left
+      </button>
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          notificationSystem.show({
+            content: ({ close }) => <TestAlert bg={"coral"} onClose={close} />,
+            placement: "bottomRight"
+          });
+        }}
+      >
+        Show on bottom right
+      </button>
+
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          notificationSystem.show({
+            content: ({ close }) => <TestAlert bg={"coral"} onClose={close} />,
+            placement: ["bottomLeft", null, "topRight"]
+          });
+        }}
+      >
+        Show topRight desktop, bottomLeft mobile
+      </button>
+
+      <br />
+      <br />
+
+      <button
+        onClick={() => {
+          notificationSystem.show({
+            content: ({ close }) => <TestAlert bg={"coral"} onClose={close} />,
+            placement: containerRef
+          });
+        }}
+      >
+        Show topRight desktop, bottomLeft mobile
+      </button>
+
+      <br />
+
+      <Grid
+        cols={1}
+        gap={10}
+        _ref={containerRef}
+        sx={{
+          width: 500,
+          height: 200,
+          border: "1px dotted black"
+        }}
+      />
     </Box>
   );
 };

@@ -2,6 +2,7 @@ import React, { useState, useRef, useContext, useEffect } from "react";
 import ReactDOM from "react-dom";
 import Box from "../Box";
 import { useResponsiveHelpers } from "../index";
+import useWindowSize from "../useWindowSize";
 
 const NotificationsContext = React.createContext({});
 
@@ -55,16 +56,22 @@ export function NotificationSystemProvider({ children }) {
     setMounted(true);
   }, []);
 
+  const _ = useWindowSize(); // unused but rerenders on resize
+
   let portals;
   if (mounted) {
     let topLeft = [];
     let topRight = [];
     let topMobile = [];
 
+    let bottomLeft = [];
+    let bottomRight = [];
+    let bottomMobile = [];
+
+    const refs = new Map();
+
     notifications.forEach(notification => {
       const placement = currentValue(notification.placement); // TODO: this function can't use hook!!!
-
-      console.log(placement);
 
       let content =
         typeof notification.content === "function"
@@ -74,18 +81,47 @@ export function NotificationSystemProvider({ children }) {
               }
             })
           : notification.content;
+
+      // TODO: accessibility!!
       content = (
-        <Box sx={{}} role={"alert"}>
+        <Box sx={{ display: "contents" }} role={"alert"}>
           {content}
         </Box>
       );
 
-      if (placement === "topLeft") {
-        topLeft.push(content);
-        topMobile.push(content);
-      } else if (placement === "topRight") {
-        topRight.push(content);
-        topMobile.push(content);
+      if (typeof placement === "string") {
+        if (placement === "topLeft") {
+          topLeft.push(content);
+          topMobile.push(content);
+        } else if (placement === "topRight") {
+          topRight.push(content);
+          topMobile.push(content);
+        } else if (placement === "bottomLeft") {
+          bottomLeft.push(content);
+          bottomMobile.push(content);
+        } else if (placement === "bottomRight") {
+          bottomRight.push(content);
+          bottomMobile.push(content);
+        } else {
+          throw new Error(
+            "unknown position " + placement + " for notification"
+          );
+        }
+      } else {
+        if (!placement.current) {
+          throw new Error(
+            "placement for notification can be either string with position (topLeft, topRight, etc...) or ref"
+          );
+        }
+
+        if (refs.has(placement.current)) {
+          refs.set(placement.current, [
+            ...refs.get(placement.current),
+            content
+          ]);
+        } else {
+          refs.set(placement.current, [content]);
+        }
       }
     });
 
@@ -101,8 +137,24 @@ export function NotificationSystemProvider({ children }) {
       ReactDOM.createPortal(
         topMobile,
         document.getElementById("__notifications-topMobile__")
+      ),
+      ReactDOM.createPortal(
+        bottomLeft,
+        document.getElementById("__notifications-bottomLeft__")
+      ),
+      ReactDOM.createPortal(
+        bottomRight,
+        document.getElementById("__notifications-bottomRight__")
+      ),
+      ReactDOM.createPortal(
+        bottomMobile,
+        document.getElementById("__notifications-bottomMobile__")
       )
     ];
+
+    refs.forEach((value, keyRef) => {
+      portals.push(ReactDOM.createPortal(value, keyRef));
+    });
   }
 
   return (

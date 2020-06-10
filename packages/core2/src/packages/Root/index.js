@@ -62,10 +62,7 @@ export default ({ theme, children }) => {
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topLeft__"}
-            >
-              {/*<Box sx={{bg: "green", height: 100, position: "relative"}}/>*/}
-              {/*<Box sx={{bg: "red", height: 100, position: "relative"}}/>*/}
-            </Grid>
+            />
           </Box>
 
           <Box
@@ -81,10 +78,7 @@ export default ({ theme, children }) => {
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topRight__"}
-            >
-              {/*<Box sx={{bg: "blue", height: 100, position: "relative"}}/>*/}
-              {/*<Box sx={{bg: "yellow", height: 100, position: "relative"}}/>*/}
-            </Grid>
+            />
           </Box>
 
           <Box
@@ -100,12 +94,55 @@ export default ({ theme, children }) => {
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topMobile__"}
-            >
-              {/*<Box sx={{bg: "green", height: 30, position: "relative"}}/>*/}
-              {/*<Box sx={{bg: "red", height: 30, position: "relative"}}/>*/}
-              {/*<Box sx={{bg: "blue", height: 30, position: "relative"}}/>*/}
-              {/*<Box sx={{bg: "yellow", height: 30, position: "relative"}}/>*/}
-            </Grid>
+            />
+          </Box>
+
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: "notificationSystemOffset",
+              left: "notificationSystemOffset",
+              width: theme.space.notificationSystemWidth,
+              display: ["none", null, "block"]
+            }}
+          >
+            <Grid
+              cols={1}
+              gap={"notificationSystemSeparator"}
+              id={"__notifications-bottomLeft__"}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: "notificationSystemOffset",
+              right: "notificationSystemOffset",
+              width: theme.space.notificationSystemWidth,
+              display: ["none", null, "block"]
+            }}
+          >
+            <Grid
+              cols={1}
+              gap={"notificationSystemSeparator"}
+              id={"__notifications-bottomRight__"}
+            />
+          </Box>
+
+          <Box
+            sx={{
+              position: "fixed",
+              bottom: "notificationSystemOffset",
+              right: "notificationSystemOffset",
+              left: "notificationSystemOffset",
+              display: ["block", null, "none"]
+            }}
+          >
+            <Grid
+              cols={1}
+              gap={"notificationSystemSeparator"}
+              id={"__notifications-bottomMobile__"}
+            />
           </Box>
         </div>
       </NotificationSystemProvider>
