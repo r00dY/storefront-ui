@@ -28,7 +28,8 @@ export const basic = () => (
                 display: "flex",
                 alignItems: "center",
                 p: 10,
-                border: "1px dotted black"
+                border: "1px dotted black",
+                color: "blue"
               }}
             >
               Lorem ipsum <IconWrench />

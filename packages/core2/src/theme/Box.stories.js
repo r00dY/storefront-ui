@@ -14,7 +14,9 @@ export const basic = () => (
         {
           name: "Standard",
           component: (
-            <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
+            <Box sx={{ p: ["s5", null, null, "s11"], bg: "mono300" }}>
+              Lorem ipsum dolor sit amet
+            </Box>
           )
         },
         {
@@ -22,6 +24,7 @@ export const basic = () => (
           component: (
             <Box as={"section"} sx={{ p: 2, bg: "mono300" }}>
               Lorem ipsum dolor sit amet
+              <Box className={"dupa"}>dupa</Box>
             </Box>
           )
         },

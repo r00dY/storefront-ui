@@ -197,5 +197,5 @@ export const basic = () => {
 };
 
 export default {
-  title: "Layout"
+  title: "approved.Layout"
 };

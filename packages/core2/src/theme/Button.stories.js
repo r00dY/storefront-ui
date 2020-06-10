@@ -47,7 +47,10 @@ export const basic = () => (
         {
           name: "Standard",
           component: (
-            <Button sx={{ color: "red" }} onClick={() => alert("clicked!")}>
+            <Button
+              sx={{ color: "red", font: "body2" }}
+              onClick={() => alert("clicked!")}
+            >
               Lorem ipsum dolor sit amet
             </Button>
           )
