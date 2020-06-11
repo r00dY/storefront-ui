@@ -4,6 +4,8 @@ import Box from "../Box";
 import { useResponsiveHelpers } from "../index";
 import useWindowSize from "../useWindowSize";
 
+import uniqueId from "../uniqueId";
+
 const NotificationsContext = React.createContext({});
 
 // TODO: make alerts visually-hidden instead of removing from DOM
@@ -14,6 +16,7 @@ export function NotificationSystemProvider({ children }) {
   const { currentValue } = useResponsiveHelpers();
 
   const [notifications, setNotifications] = useState([]);
+  const [isLayerOpen, setLayerOpen] = useState(false);
 
   const close = notification => {
     setNotifications(notifications =>
@@ -21,9 +24,15 @@ export function NotificationSystemProvider({ children }) {
     );
   };
 
-  const show = config => {
-    const id = config.id || generateID();
+  useEffect(() => {
+    window.window.__cui_notificationSystemSetLayerOpen = isOpen => {
+      // We do it this way so that Layer doesn't have to import MenuLayout if not needed (code split!)
+      setLayerOpen(isOpen);
+    };
+  }, []);
 
+  const show = config => {
+    const id = config.id || uniqueId();
     const index = notifications.findIndex(x => x.id === id);
 
     if (index > -1) {
@@ -84,7 +93,7 @@ export function NotificationSystemProvider({ children }) {
 
       // TODO: accessibility!!
       content = (
-        <Box sx={{ display: "contents" }} role={"alert"}>
+        <Box sx={{ display: "contents" }} role={"alert"} key={notification.id}>
           {content}
         </Box>
       );
@@ -128,15 +137,27 @@ export function NotificationSystemProvider({ children }) {
     portals = [
       ReactDOM.createPortal(
         topLeft,
-        document.getElementById("__notifications-topLeft__")
+        document.getElementById(
+          isLayerOpen
+            ? "__notifications-topLeft__"
+            : "__notifications-menu-topLeft__"
+        ) || document.getElementById("__notifications-topLeft__") // if there's no menu we must default
       ),
       ReactDOM.createPortal(
         topRight,
-        document.getElementById("__notifications-topRight__")
+        document.getElementById(
+          isLayerOpen
+            ? "__notifications-topRight__"
+            : "__notifications-menu-topRight__"
+        ) || document.getElementById("__notifications-topRight__")
       ),
       ReactDOM.createPortal(
         topMobile,
-        document.getElementById("__notifications-topMobile__")
+        document.getElementById(
+          isLayerOpen
+            ? "__notifications-topMobile__"
+            : "__notifications-menu-topMobile__"
+        ) || document.getElementById("__notifications-topMobile__")
       ),
       ReactDOM.createPortal(
         bottomLeft,
@@ -164,7 +185,6 @@ export function NotificationSystemProvider({ children }) {
       }}
     >
       {children}
-
       {portals}
     </NotificationsContext.Provider>
   );
@@ -174,16 +194,4 @@ export function NotificationSystemProvider({ children }) {
 
 export function useNotificationSystem() {
   return useContext(NotificationsContext);
-}
-
-function generateID() {
-  // Math.random should be unique because of its seeding algorithm.
-  // Convert it to base 36 (numbers + letters), and grab the first 9 characters
-  // after the decimal.
-  return (
-    "_" +
-    Math.random()
-      .toString(36)
-      .substr(2, 9)
-  );
 }

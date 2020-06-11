@@ -11,6 +11,9 @@ import Button$ from "@commerce-ui/core/Button";
 import Container from "@commerce-ui/core/Container";
 import Grid from "@commerce-ui/core/Grid";
 
+import { useNotificationSystem } from "@commerce-ui/core/NotificationSystem";
+import Dialog from "@commerce-ui/core/Dialog";
+
 const LOREM =
   "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.";
 const VeryLongContent = props => (
@@ -109,6 +112,8 @@ export const basic = () => {
   const [menu3Open, setMenu3Open] = useState(true);
   const [menu4Open, setMenu4Open] = useState(true);
 
+  const notificationSystem = useNotificationSystem();
+
   const contentWithButtons = (
     <VeryLongContent>
       <button onClick={() => setMenu1Open(!menu1Open)}>Menu 1 toggle</button>
@@ -127,6 +132,42 @@ export const basic = () => {
       >
         Toggle 2 & 3
       </button>
+      &nbsp;
+      <button
+        onClick={() => {
+          notificationSystem.show({
+            content: (
+              <Box sx={{ bg: "white", border: "1px solid black" }}>Dupa</Box>
+            ),
+            placement: "topRight"
+          });
+        }}
+      >
+        Show notification top left
+      </button>
+      &nbsp;
+      <Dialog
+        minWidth={["90vw", null, null, "300px"]}
+        button={<Button>Open</Button>}
+        anchoredTo={"window"}
+        root={{
+          border: "1px solid black",
+          bg: "red"
+        }}
+      >
+        <Button>One</Button>
+        <br />
+        <br />
+        <Button>Two</Button>
+        <br />
+        <br />
+        <Button>Three</Button>
+        <br />
+        <br />
+        <Button>Four</Button>
+        <br />
+        <br />
+      </Dialog>
     </VeryLongContent>
   );
 

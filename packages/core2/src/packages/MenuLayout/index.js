@@ -8,9 +8,10 @@ import React, {
 import Box from "../Box";
 import ReactDOM from "react-dom";
 
-import { useDebounce } from "use-debounce";
+import { useTheme } from "../Theme";
 
 import ShowHide from "../ShowHide";
+import Grid from "../Grid";
 
 const MenuLayoutContext = React.createContext({});
 
@@ -180,8 +181,60 @@ const isBarOpen = bar => {
  * Version with recursion and with ShowHide
  */
 const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
+  const theme = useTheme();
+
   if (!bars || bars.length === 0) {
-    return <Box id={"__menubottom__"} />;
+    return (
+      <Box id={"__menubottom__"} sx={{ position: "relative" }}>
+        <Box
+          sx={{
+            position: "absolute",
+            top: "notificationSystemOffset",
+            left: "notificationSystemOffset",
+            width: theme.space.notificationSystemWidth,
+            display: ["none", null, "block"]
+          }}
+        >
+          <Grid
+            cols={1}
+            gap={"notificationSystemSeparator"}
+            id={"__notifications-menu-topLeft__"}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            position: "absolute",
+            top: "notificationSystemOffset",
+            right: "notificationSystemOffset",
+            width: theme.space.notificationSystemWidth,
+            display: ["none", null, "block"]
+          }}
+        >
+          <Grid
+            cols={1}
+            gap={"notificationSystemSeparator"}
+            id={"__notifications-menu-topRight__"}
+          />
+        </Box>
+
+        <Box
+          sx={{
+            position: "absolute",
+            top: "notificationSystemOffset",
+            right: "notificationSystemOffset",
+            left: "notificationSystemOffset",
+            display: ["block", null, "none"]
+          }}
+        >
+          <Grid
+            cols={1}
+            gap={"notificationSystemSeparator"}
+            id={"__notifications-menu-topMobile__"}
+          />
+        </Box>
+      </Box>
+    );
   }
 
   const bar = bars[0];

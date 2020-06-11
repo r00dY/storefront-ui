@@ -15,6 +15,8 @@ import {
 } from "../index";
 import Box from "../Box";
 
+import uniqueId from "../uniqueId";
+
 const mountNode = () => {
   if (typeof document !== "undefined") {
     return document.getElementById("__layers__");
@@ -129,6 +131,27 @@ const popoverRootDefault = ({
   __children: children
 });
 
+function layerAdded() {
+  const prevCount = window.__cui_layerCounter || 0;
+  window.__cui_layerCounter = prevCount + 1;
+
+  if (prevCount === 0) {
+    if (window.__cui_notificationSystemSetLayerOpen) {
+      window.__cui_notificationSystemSetLayerOpen(true);
+    }
+  }
+}
+
+function layerRemoved() {
+  window.__cui_layerCounter--;
+
+  if (window.__cui_layerCounter === 0) {
+    if (window.__cui_notificationSystemSetLayerOpen) {
+      window.__cui_notificationSystemSetLayerOpen(false);
+    }
+  }
+}
+
 function Layer$(props) {
   const [isMounted, setMounted] = useState(false);
   const [isVisible, setVisible] = useState(false);
@@ -161,6 +184,9 @@ function Layer$(props) {
   const [arrowOffset, setArrowOffset] = useState({ left: 0, top: 0 });
   const [popoverPlacement, setPopoverPlacement] = useState("bottomLeft");
   const [popoverOffset, setPopoverOffset] = useState({ left: 0, top: 0 });
+
+  // ID (to count number of open layers)
+  const id = useRef(uniqueId());
 
   const clearTimers = () => {
     clearTimeout(animateOutTimer.current);
@@ -217,6 +243,38 @@ function Layer$(props) {
     backgroundColor: backgroundColor || "rgba(0,0,0,0.3)",
     shouldShow
   };
+
+  // Following 2 useEffects are responsible for counting open non-anchored layers
+  useEffect(
+    () => {
+      if (current.isAnchored) {
+        // we count only non-anchored layers
+        return;
+      }
+
+      if (isOpen) {
+        layerAdded();
+      } else {
+        layerRemoved();
+      }
+    },
+    [isOpen]
+  );
+
+  useEffect(
+    () => {
+      if (!isOpen) {
+        return;
+      }
+
+      if (!current.isAnchored) {
+        layerAdded();
+      } else {
+        layerRemoved();
+      }
+    },
+    [current.isAnchored]
+  );
 
   useEffect(
     () => {
@@ -312,6 +370,7 @@ function Layer$(props) {
             justifyContent: "center",
             alignItems: "center"
           }}
+          className={"__layer-window__"}
         >
           <Box
             sx={{

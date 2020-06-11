@@ -144,12 +144,12 @@ export const basic = () => {
       <Grid
         cols={1}
         gap={10}
-        _ref={containerRef}
         sx={{
           width: 500,
           height: 200,
           border: "1px dotted black"
         }}
+        _ref={containerRef}
       />
     </Box>
   );
