@@ -1,5 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import { getElementSpec, createElement, splitSx } from "..";
+import {
+  getElementSpec,
+  createElement,
+  splitSx,
+  useResponsiveHelpers
+} from "..";
 import Box from "../Box";
 
 import {
@@ -11,28 +16,79 @@ import {
 import { rs } from "responsive-helpers";
 
 import useHover from "../useHover";
+import animateScrollTo from "animated-scroll-to";
+
+function easeOutExpo(x) {
+  return x === 1 ? 1 : 1 - Math.pow(2, -10 * x);
+}
+
+function getNextPos(
+  scrollableContainerRef,
+  spacerRef,
+  itemRefs,
+  direction = 1
+) {
+  const spacerWidth = spacerRef.current.getBoundingClientRect().width;
+  const containerWidth =
+    scrollableContainerRef.current.getBoundingClientRect().width -
+    spacerWidth * 2;
+
+  let closestItem;
+  let closestDiff = 999999;
+  for (let i = 0; i < itemRefs.current.length; i++) {
+    const item = itemRefs.current[i];
+
+    const left = item.current.getBoundingClientRect().left;
+    const diff = Math.abs(left + containerWidth * direction - spacerWidth);
+
+    if (diff < closestDiff) {
+      closestItem = item.current;
+      closestDiff = diff;
+    }
+  }
+
+  return (
+    scrollableContainerRef.current.scrollLeft +
+    (closestItem.getBoundingClientRect().left - spacerWidth)
+  );
+}
+
+function scrollTo(container, pos) {
+  container.style.willChange = "scroll-position";
+
+  animateScrollTo([pos, null], {
+    elementToScroll: container,
+    easing: easeOutExpo,
+    minDuration: 500,
+    maxDuration: 500
+  }).then(() => {
+    container.style.willChange = "auto";
+  });
+}
 
 /**
  * Helper component placing components next to each other with gutter.
  *
  * Gutter can be responsive but items layout can not. So it's usable ONLY if on all resolutions items will be next to each other and won't wrap.
  */
-
 export function useScrollableStack(props) {
   const scrollableContainerRef = useRef(null);
   const floatingElementRef = useRef(null);
-
-  const scrollTo = x => {
-    scrollableContainerRef.current.scroll({
-      left: x,
-      behavior: "smooth"
-    });
-  };
+  const { currentValue } = useResponsiveHelpers();
+  //
+  // const scrollTo = x => {
+  //   scrollableContainerRef.current.scroll({
+  //     left: x,
+  //     behavior: "smooth"
+  //   });
+  // };
 
   const [isAtStart, setIsAtStart] = useState(true);
   const [isAtEnd, setIsAtEnd] = useState(true);
 
   const itemRefs = useRef(null);
+
+  const spacerRef = useRef(null);
 
   if (!itemRefs.current) {
     itemRefs.current = [];
@@ -102,26 +158,35 @@ export function useScrollableStack(props) {
   }, []);
 
   const ret = {
-    scrollTo,
+    scrollTo: pos => {
+      scrollTo(scrollableContainerRef.current, pos);
+    },
     isAtStart,
     isAtEnd
   };
 
+  // const currentContainerWidth = currentValue(padding) * 2;
   const previousButtonProps = {
     onClick: () => {
-      scrollableContainerRef.current.scroll({
-        left: 0
-        // behavior: "smooth"
-      });
+      const newLeftPos = getNextPos(
+        scrollableContainerRef,
+        spacerRef,
+        itemRefs,
+        1
+      );
+      scrollTo(scrollableContainerRef.current, newLeftPos);
     }
   };
 
   const nextButtonProps = {
     onClick: () => {
-      scrollableContainerRef.current.scroll({
-        left: 10000
-        // behavior: "smooth"
-      });
+      const newLeftPos = getNextPos(
+        scrollableContainerRef,
+        spacerRef,
+        itemRefs,
+        -1
+      );
+      scrollTo(scrollableContainerRef.current, newLeftPos);
     }
   };
 
@@ -130,6 +195,7 @@ export function useScrollableStack(props) {
     scrollableContainerRef,
     itemRefs: itemRefs.current,
     floatingElementRef,
+    spacerRef,
     setFloatingElementIndex,
     previousButtonProps,
     nextButtonProps
@@ -151,16 +217,16 @@ function ScrollableStack(props) {
   const rootRef = useRef(null);
   const isRootHovered = useHover(rootRef);
 
+  const gap = customSx.$gap || 0;
+  let align = customSx.$align || "left";
+  const padding = customSx.$innerMargin || 0;
+
   if (!controller) {
     controller = useScrollableStack({
       ...props,
       length: props.children.length
     });
   }
-
-  const gap = customSx.$gap || 0;
-  let align = customSx.$align || "left";
-  const padding = customSx.$innerMargin || 0;
 
   let itemProps;
 
@@ -310,6 +376,7 @@ function ScrollableStack(props) {
               flexBasis: padding,
               zIndex: 0
             }}
+            ref={controller.spacerRef}
           />
           {childrenArray.map((child, index) => {
             return (

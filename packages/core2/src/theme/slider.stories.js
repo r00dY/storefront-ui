@@ -36,6 +36,22 @@ const boxes = [
   <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Blue</Box>
 ];
 
+const boxes2 = [
+  <Box sx={{ height: "200px", bg: "coral", p: 10 }}>1</Box>,
+  <Box sx={{ height: "200px", bg: "lightblue", p: 10 }}>2</Box>,
+  <Box sx={{ height: "200px", bg: "antiquewhite", p: 10 }}>3</Box>,
+  <Box sx={{ height: "200px", bg: "aqua", p: 10 }}>4</Box>,
+  <Box sx={{ height: "200px", bg: "green", p: 10 }}>5</Box>,
+  <Box sx={{ height: "200px", bg: "blue", p: 10 }}>6</Box>,
+  <Box sx={{ height: "200px", bg: "yellow", p: 10 }}>7</Box>,
+  <Box sx={{ height: "200px", bg: "grey", p: 10 }}>8</Box>,
+  <Box sx={{ height: "200px", bg: "black", p: 10 }}>9</Box>,
+  <Box sx={{ height: "200px", bg: "magenta", p: 10 }}>10</Box>,
+  <Box sx={{ height: "200px", bg: "cyan", p: 10 }}>11</Box>,
+  <Box sx={{ height: "200px", bg: "red", p: 10 }}>12</Box>,
+  <Box sx={{ height: "200px", bg: "orange", p: 10 }}>13</Box>
+];
+
 const horizontalStackStory = (name, props, wrap, smallQuantity = false) => {
   const body = (
     <ScrollableStack
@@ -230,7 +246,24 @@ export const basic = () => {
                 previousButton={<ButtonRaw>Previous</ButtonRaw>}
                 nextButton={<ButtonRaw>Next</ButtonRaw>}
               >
-                {boxes}
+                {boxes2}
+              </ScrollableStack>
+            </Box>
+          )
+        },
+        {
+          name: "arrows - full width items",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  $innerMargin: 100,
+                  $itemsVisible: 1
+                }}
+                previousButton={<ButtonRaw>Previous</ButtonRaw>}
+                nextButton={<ButtonRaw>Next</ButtonRaw>}
+              >
+                {boxes2}
               </ScrollableStack>
             </Box>
           )
