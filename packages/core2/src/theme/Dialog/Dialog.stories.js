@@ -41,14 +41,14 @@ export const standardDialogWithButton = () => {
           bg: "mono100"
         }}
       >
-        <Box sx={{ p: "s8" }}>
-          <Paragraph />
-          <br />
-          <Button>Test button 1</Button>
-          <br />
-          <br />
-          <Button>Test button 2</Button>
-        </Box>
+        {/*<Box sx={{p: "s8"}}>*/}
+        <Paragraph />
+        <br />
+        <Button>Test button 1</Button>
+        <br />
+        <br />
+        <Button>Test button 2</Button>
+        {/*</Box>*/}
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
@@ -65,22 +65,21 @@ export const standardDialogWithButton = () => {
         placement={["bottom", null, null, "bottomLeft"]}
         anchoredTo={["window", null, null, "button"]}
         height={["90vh", null, null, "auto"]}
-        maxHeight={["auto", null, null, 500]}
+        maxHeight={["auto", null, null, 400]}
         width={["100vw", null, null, 400]}
         button={<Button>Open</Button>}
         root={{
           boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
           bg: "mono100"
         }}
+        container={{ p: "s8" }}
       >
-        <Box sx={{ p: "s8" }}>
-          <Paragraph />
-          <br />
-          <Button>Test button 1</Button>
-          <br />
-          <br />
-          <Button>Test button 2</Button>
-        </Box>
+        <Paragraph />
+        <br />
+        <Button>Test button 1</Button>
+        <br />
+        <br />
+        <Button>Test button 2</Button>
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
@@ -95,15 +94,16 @@ export const standardDialogWithButton = () => {
           boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
           bg: "mono100"
         }}
+        container={{ p: "s8" }}
         header={<Bar isTop={true}>Hello</Bar>}
         footer={<Bar isTop={false}>This goes to the bottom</Bar>}
       >
         {({ close }) => (
-          <Box sx={{ p: "s8" }}>
+          <>
             <Paragraph />
             <br />
             <Button onClick={close}>Close modal</Button>
-          </Box>
+          </>
         )}
       </Dialog>
 
@@ -118,17 +118,16 @@ export const standardDialogWithButton = () => {
           boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
           bg: "mono100"
         }}
+        container={{ p: "s8" }}
         header={<Bar isTop={true}>Hello</Bar>}
         footer={<Bar isTop={false}>This goes to the bottom</Bar>}
       >
-        <Box sx={{ p: "s8" }}>
-          <Paragraph />
-          <br />
-          <Button>Test button 1</Button>
-          <br />
-          <br />
-          <Button>Test button 2</Button>
-        </Box>
+        <Paragraph />
+        <br />
+        <Button>Test button 1</Button>
+        <br />
+        <br />
+        <Button>Test button 2</Button>
       </Dialog>
 
       <p>Below we show how to create dialog with the width of the button</p>
@@ -143,17 +142,16 @@ export const standardDialogWithButton = () => {
             boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
             bg: "mono100"
           }}
+          container={{ p: "s8" }}
           header={<Bar isTop={true}>Hello</Bar>}
           footer={<Bar isTop={false}>This goes to the bottom</Bar>}
         >
-          <Box sx={{ p: "s8" }}>
-            <Paragraph />
-            <br />
-            <Button>Test button 1</Button>
-            <br />
-            <br />
-            <Button>Test button 2</Button>
-          </Box>
+          <Paragraph />
+          <br />
+          <Button>Test button 1</Button>
+          <br />
+          <br />
+          <Button>Test button 2</Button>
         </Dialog>
       </Box>
 
@@ -170,17 +168,16 @@ export const standardDialogWithButton = () => {
               boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
               bg: "mono100"
             }}
+            container={{ p: "s8" }}
             header={<Bar isTop={true}>Hello</Bar>}
             footer={<Bar isTop={false}>This goes to the bottom</Bar>}
           >
-            <Box sx={{ p: "s8" }}>
-              <Paragraph />
-              <br />
-              <Button>Test button 1</Button>
-              <br />
-              <br />
-              <Button>Test button 2</Button>
-            </Box>
+            <Paragraph />
+            <br />
+            <Button>Test button 1</Button>
+            <br />
+            <br />
+            <Button>Test button 2</Button>
           </Dialog>
         </Box>
       </Box>

@@ -72,7 +72,7 @@ function getLayout(children, header, footer) {
 }
 
 function Dialog$(props) {
-  const { children, header, footer, ...restProps } = props;
+  const { children, header, footer, container, ...restProps } = props;
 
   return (
     <Layer {...restProps}>
@@ -92,7 +92,9 @@ function Dialog$(props) {
           }}
         >
           {getLayout(
-            typeof children === "function" ? children(params) : children,
+            <Box sx={container}>
+              {typeof children === "function" ? children(params) : children}
+            </Box>,
             typeof header === "function" ? header(params) : header,
             typeof footer === "function" ? footer(params) : footer
           )}

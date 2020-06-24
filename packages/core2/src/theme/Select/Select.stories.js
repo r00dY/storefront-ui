@@ -124,6 +124,8 @@ export const newSelect = () => {
 };
 
 export const newSelect2 = () => {
+  const [value, setValue] = useState(null);
+
   return (
     <Box>
       <h2>Uncontrolled</h2>
@@ -163,5 +165,5 @@ export const newSelect2 = () => {
 };
 
 export default {
-  title: "Select"
+  title: "Select-old"
 };

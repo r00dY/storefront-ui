@@ -128,6 +128,8 @@ const popoverRootDefault = ({
   minHeight,
   maxWidth,
   maxHeight,
+
+  overflowY: "auto",
   __children: children
 });
 
@@ -170,6 +172,7 @@ function Layer$(props) {
     animationEase,
     backgroundColor,
     root = {},
+    container = {},
     placement
   } = Object.assign({ ...sx }, props); // backward compatibility. Now props are recommended.
 
@@ -400,10 +403,12 @@ function Layer$(props) {
                 minWidth: "inherit",
                 maxHeight: "inherit",
                 maxWidth: "inherit",
+                overflowY: "auto",
                 ...styles.content,
                 ...root
               }}
             >
+              {/*<Box sx={{...container}}>*/}
               {typeof props.children === "function"
                 ? props.children({
                     anchored: current.isAnchored,
@@ -414,6 +419,7 @@ function Layer$(props) {
                     }
                   })
                 : props.children}
+              {/*</Box>*/}
             </Box>
           </Box>
         </Box>
@@ -469,6 +475,12 @@ function Layer$(props) {
         }
       }
     };
+
+    // const children = <Box sx={{...container}}>{
+    //     typeof props.children === "function"
+    //         ? props.children(state)
+    //         : props.children
+    // }</Box>;
 
     const children =
       typeof props.children === "function"

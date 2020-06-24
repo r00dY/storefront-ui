@@ -105,6 +105,7 @@ function Select2(props) {
     controller,
     button,
     separator,
+    selectable,
 
     // layer props
     width,
@@ -117,6 +118,7 @@ function Select2(props) {
     animationEase,
     backgroundColor,
     root,
+    container,
     placement,
     anchoredTo,
 
@@ -135,6 +137,7 @@ function Select2(props) {
     animationEase,
     backgroundColor,
     root,
+    container,
     placement,
     anchoredTo
   };
@@ -169,12 +172,16 @@ function Select2(props) {
     <Layer {...layerProps} button={React.cloneElement(button, buttonProps)}>
       {({ close }) => {
         const items = [];
-
         const selectableProps = getSelectableProps(controller, props);
 
         options.forEach((option, i) => {
+          const item =
+            typeof selectable === "function"
+              ? selectable({ option })
+              : selectable;
+
           items.push(
-            React.cloneElement(children, {
+            React.cloneElement(item, {
               ...selectableProps[i],
               onClick: (...args) => {
                 selectableProps[i].onClick(...args);
@@ -182,6 +189,7 @@ function Select2(props) {
               }
             })
           ); // TODO: we need more flexibility with item look
+
           if (separator && i < options.length - 1) {
             items.push(
               React.cloneElement(separator, {
