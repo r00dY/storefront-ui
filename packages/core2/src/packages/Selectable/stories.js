@@ -1,5 +1,11 @@
 import React from "react";
 
+function getComponent(selectable, props) {
+  return typeof selectable === "function"
+    ? selectable(props)
+    : React.cloneElement(selectable, props);
+}
+
 function selectableStories(selectable, options = {}) {
   const { disabled, loading } = options;
 
@@ -7,22 +13,22 @@ function selectableStories(selectable, options = {}) {
 
   stories.push({
     name: "Standard",
-    component: React.cloneElement(selectable, {})
+    component: getComponent(selectable, {})
   });
 
   stories.push({
     name: "Highlighted",
-    component: React.cloneElement(selectable, { highlighted: true })
+    component: getComponent(selectable, { highlighted: true }) //React.cloneElement(selectable, { highlighted: true })
   });
 
   stories.push({
     name: "Selected",
-    component: React.cloneElement(selectable, { selected: true })
+    component: getComponent(selectable, { selected: true }) //React.cloneElement(selectable, { selected: true })
   });
 
   stories.push({
     name: "Highlighted & Selected",
-    component: React.cloneElement(selectable, {
+    component: getComponent(selectable, {
       selected: true,
       highlighted: true
     })
@@ -30,12 +36,12 @@ function selectableStories(selectable, options = {}) {
 
   stories.push({
     name: "Disabled standard",
-    component: React.cloneElement(selectable, { disabled: true })
+    component: getComponent(selectable, { disabled: true })
   });
 
   stories.push({
     name: "Disabled selected",
-    component: React.cloneElement(selectable, {
+    component: getComponent(selectable, {
       disabled: true,
       selected: true
     })

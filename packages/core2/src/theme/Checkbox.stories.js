@@ -1,5 +1,3 @@
-/** @jsx jsx */
-import { jsx } from "@commerce-ui/core";
 import { useToggle } from "@commerce-ui/core/Toggle";
 import React, { useRef, useState } from "react";
 

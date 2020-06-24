@@ -18,6 +18,7 @@ function Selectable$(props) {
     onFocus,
     onBlur,
     onSelect,
+    ignoreLabel = false,
     id,
     ...restProps
   } = props;
@@ -26,6 +27,12 @@ function Selectable$(props) {
 
   const [css, customSx] = splitSx(sx);
 
+  if (!label && ignoreLabel === false) {
+    console.warn(
+      "You didn't pass label prop to the Selectable. This will affect accessibility negatively."
+    );
+  }
+
   const state = {
     ...props
   };
@@ -33,12 +40,6 @@ function Selectable$(props) {
   const content = children(state);
 
   const radioRef = useRef(null);
-  //
-  // if (!label) {
-  //   console.error(
-  //     "Warning: Selectable doesn't have 'label' parameter provided, this breaks accessibility."
-  //   );
-  // }
 
   if (as === "link") {
     return (

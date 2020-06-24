@@ -1,12 +1,10 @@
-/** @jsx jsx */
 import React from "react";
-import { jsx } from "@commerce-ui/core";
 import Selectable from "@commerce-ui/core/Selectable";
 import Box from "@commerce-ui/core/Box";
 
-function Color(props) {
+function Color({ color, ...restProps }) {
   return (
-    <Selectable {...props}>
+    <Selectable {...restProps}>
       {({ disabled, highlighted, selected }) => (
         <Box
           sx={{
@@ -36,7 +34,7 @@ function Color(props) {
               justifyContent: "center",
               pointerEvents: "none",
               lineHeight: 1,
-              bg: props.option.color,
+              bg: color,
               font: "body",
               opacity: disabled ? 0.5 : 1
             }}

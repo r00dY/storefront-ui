@@ -1,87 +1,12 @@
-/** @jsx jsx */
 import React, { useState, useRef } from "react";
-import { jsx, rs } from "@commerce-ui/core";
 import Dialog from "@commerce-ui/core/Dialog";
 import Box from "@commerce-ui/core/Box";
 
 import Button from "../Button/Button";
 
-const Paragraph = () => (
-  <p sx={{ maxWidth: "500px" }}>
-    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium
-    doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-    veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim
-    ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia
-    consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque
-    porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur,
-    adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et
-    dolore magnam aliquam quaerat voluptatem. Ut enim ad minima veniam, quis
-    nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid
-    ex ea commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea
-    voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem
-    eum fugiat quo voluptas nulla pariatur?
-  </p>
-);
+import Paragraph from "../Paragraph";
 
-const DialogWithButton = ({ children, ...restProps }) => {
-  const [isOpen, setOpen] = useState(false);
-  const buttonRef = useRef(null);
-
-  return (
-    <div>
-      <Button
-        buttonRef={buttonRef}
-        onClick={() => {
-          setOpen(true);
-        }}
-      >
-        open
-      </Button>
-
-      <Button
-        onClick={() => {
-          setOpen(false);
-        }}
-      >
-        close
-      </Button>
-
-      <Dialog
-        isOpen={isOpen}
-        onRequestClose={() => setOpen(false)}
-        anchoredTo={["window", null, null, buttonRef]}
-        {...restProps}
-      >
-        {/*{({anchored}) => (*/}
-        <div
-          sx={{
-            border: "1px solid black",
-            height: "100%",
-            bg: "red",
-            p: 2
-          }}
-        >
-          {children}
-        </div>
-        {/*)}*/}
-      </Dialog>
-    </div>
-  );
-};
-
-const SomeContent = ({ children }) => (
-  <div
-    sx={{
-      border: "1px solid black",
-      height: "100%",
-      bg: "red"
-    }}
-  >
-    {children}
-  </div>
-);
-
-const Bar = props => (
+const Bar = ({ isTop, children }) => (
   <Box
     sx={{
       height: 50,
@@ -89,157 +14,232 @@ const Bar = props => (
       bg: "white",
       display: "flex",
       justifyContent: "center",
-      alignItems: "center"
+      alignItems: "center",
+      borderBottom: isTop ? t => `1px solid ${t.colors.mono200}` : "none",
+      borderTop: !isTop ? t => `1px solid ${t.colors.mono200}` : "none"
     }}
   >
-    {props.children}
+    {children}
   </Box>
 );
 
-export const unstyled = () => (
-  <div>
-    <Paragraph />
+export const standardDialogWithButton = () => {
+  const containerRef = useRef(null);
 
-    <Dialog
-      placement={["right", null, null, "bottomLeft"]}
-      minWidth={["90vw", null, null, "300px"]}
-      button={<Button>Open</Button>}
-      root={{
-        border: "1px solid black",
-        bg: "red"
-      }}
-    >
-      <Button>One</Button>
-      <br />
-      <br />
-      <Button>Two</Button>
-      <br />
-      <br />
-      <Button>Three</Button>
-      <br />
-      <br />
-      <Button>Four</Button>
-      <br />
-      <br />
-    </Dialog>
-
-    <Paragraph />
-    <Paragraph />
-
-    <Dialog
-      width={["90vw", null, "50vw", null, "33vw"]}
-      placement={"right"}
-      anchoredTo={"window"}
-      button={<Button>Open</Button>}
-      root={{
-        border: "1px solid black",
-        bg: "red"
-      }}
-    >
-      <Button>One</Button>
-      <br />
-      <br />
-      <Button>Two</Button>
-      <br />
-      <br />
-      <Button>Three</Button>
-      <br />
-      <br />
-      <Button>Four</Button>
-      <br />
-      <br />
-    </Dialog>
-
-    <Paragraph />
-    <Paragraph />
-
-    <p>Header and footer</p>
-
-    <Dialog
-      width={200}
-      height={200}
-      button={<Button>Open</Button>}
-      root={{
-        border: "3px solid blue"
-      }}
-      header={<Bar>SIEMA</Bar>}
-      footer={<Bar>NARA</Bar>}
-    >
-      <Box sx={{ border: "1px solid black", bg: "red" }}>
-        <button>One</button>
-        <br />
-        <br />
-        <button>Two</button>
-        <br />
-        <br />
-        <button>Three</button>
-        <br />
-        <br />
-        <button>Four</button>
-        <br />
-        <br />
-        <button>Five</button>
-        <br />
-        <br />
-        <button>Six</button>
-        <br />
-        <br />
-        <button>seven</button>
-        <br />
-        <br />
-        <button>Eight</button>
-        <br />
-        <br />
+  return (
+    <Box sx={{ maxWidth: 600, p: "s9" }}>
+      <Box as={"p"} sx={{ mb: "s9" }}>
+        Standard centered dialog
       </Box>
-    </Dialog>
 
-    <p>Header and footer (anchored to window)</p>
+      <Dialog
+        width={["90vw", null, null, "50vw"]}
+        anchoredTo={"window"}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+      >
+        <Box sx={{ p: "s8" }}>
+          <Paragraph />
+          <br />
+          <Button>Test button 1</Button>
+          <br />
+          <br />
+          <Button>Test button 2</Button>
+        </Box>
+      </Dialog>
 
-    <Dialog
-      width={400}
-      height={200}
-      button={<Button>Open</Button>}
-      root={{
-        border: "3px solid blue"
-      }}
-      anchoredTo={"window"}
-      header={<Bar>SIEMA</Bar>}
-      footer={<Bar>NARA</Bar>}
-    >
-      <Box sx={{ border: "1px solid black", bg: "red" }}>
-        <button>One</button>
-        <br />
-        <br />
-        <button>Two</button>
-        <br />
-        <br />
-        <button>Three</button>
-        <br />
-        <br />
-        <button>Four</button>
-        <br />
-        <br />
-        <button>Five</button>
-        <br />
-        <br />
-        <button>Six</button>
-        <br />
-        <br />
-        <button>seven</button>
-        <br />
-        <br />
-        <button>Eight</button>
-        <br />
-        <br />
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+
+      <Box as={"p"} sx={{ my: "s9" }}>
+        Below we show responsive dialog. On desktop it's anchored to the button
+        (bottom left), on mobile it's anchored to the window (slide from
+        bottom).
       </Box>
-    </Dialog>
 
-    <Paragraph />
-    <Paragraph />
-    <Paragraph />
-  </div>
-);
+      <Dialog
+        placement={["bottom", null, null, "bottomLeft"]}
+        anchoredTo={["window", null, null, "button"]}
+        height={["90vh", null, null, "auto"]}
+        maxHeight={["auto", null, null, 500]}
+        width={["100vw", null, null, 400]}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+      >
+        <Box sx={{ p: "s8" }}>
+          <Paragraph />
+          <br />
+          <Button>Test button 1</Button>
+          <br />
+          <br />
+          <Button>Test button 2</Button>
+        </Box>
+      </Dialog>
+
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+
+      <p>Header and footer + close callback</p>
+
+      <Dialog
+        width={350}
+        height={450}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+        header={<Bar isTop={true}>Hello</Bar>}
+        footer={<Bar isTop={false}>This goes to the bottom</Bar>}
+      >
+        {({ close }) => (
+          <Box sx={{ p: "s8" }}>
+            <Paragraph />
+            <br />
+            <Button onClick={close}>Close modal</Button>
+          </Box>
+        )}
+      </Dialog>
+
+      <p>Header and footer (anchored to window)</p>
+
+      <Dialog
+        width={350}
+        height={450}
+        anchoredTo={"window"}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+        header={<Bar isTop={true}>Hello</Bar>}
+        footer={<Bar isTop={false}>This goes to the bottom</Bar>}
+      >
+        <Box sx={{ p: "s8" }}>
+          <Paragraph />
+          <br />
+          <Button>Test button 1</Button>
+          <br />
+          <br />
+          <Button>Test button 2</Button>
+        </Box>
+      </Dialog>
+
+      <p>Below we show how to create dialog with the width of the button</p>
+
+      <Box fitW>
+        <Dialog
+          width={({ anchorRect }) => anchorRect.width}
+          height={450}
+          anchoredTo={"button"}
+          button={<Button>Open</Button>}
+          root={{
+            boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+            bg: "mono100"
+          }}
+          header={<Bar isTop={true}>Hello</Bar>}
+          footer={<Bar isTop={false}>This goes to the bottom</Bar>}
+        >
+          <Box sx={{ p: "s8" }}>
+            <Paragraph />
+            <br />
+            <Button>Test button 1</Button>
+            <br />
+            <br />
+            <Button>Test button 2</Button>
+          </Box>
+        </Dialog>
+      </Box>
+
+      <p>Dialog anchored to other component</p>
+
+      <Box sx={{ border: "1px dotted black", p: "s9" }} _ref={containerRef}>
+        <Box fitW>
+          <Dialog
+            width={({ anchorRect }) => anchorRect.width}
+            height={450}
+            anchoredTo={containerRef}
+            button={<Button>Open</Button>}
+            root={{
+              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+              bg: "mono100"
+            }}
+            header={<Bar isTop={true}>Hello</Bar>}
+            footer={<Bar isTop={false}>This goes to the bottom</Bar>}
+          >
+            <Box sx={{ p: "s8" }}>
+              <Paragraph />
+              <br />
+              <Button>Test button 1</Button>
+              <br />
+              <br />
+              <Button>Test button 2</Button>
+            </Box>
+          </Dialog>
+        </Box>
+      </Box>
+
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+    </Box>
+  );
+};
+
+export const dialogWithoutButtonManagedFromParentComponent = () => {
+  const [isOpen, setOpen] = useState(false);
+
+  return (
+    <Box sx={{ maxWidth: 600, p: "s9" }}>
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Open dialog button 1
+      </Button>
+      <br />
+      <br />
+      <Button
+        onClick={() => {
+          setOpen(true);
+        }}
+      >
+        Open dialog button 2
+      </Button>
+
+      <Dialog
+        width={["90vw", null, null, "50vw"]}
+        anchoredTo={"window"}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+        isOpen={isOpen}
+        onClose={() => {
+          setOpen(false);
+        }}
+      >
+        <Box sx={{ p: "s8" }}>
+          <Paragraph />
+          <br />
+          <Button>Test button 1</Button>
+          <br />
+          <br />
+          <Button>Test button 2</Button>
+        </Box>
+      </Dialog>
+
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+    </Box>
+  );
+};
 
 export default {
-  title: "Dialog"
+  title: "approved.Dialog"
 };
