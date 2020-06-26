@@ -23,6 +23,8 @@ const mountNode = () => {
   }
 };
 
+import FocusLock from "react-focus-lock";
+
 const centered = ({
   width,
   height,
@@ -566,6 +568,102 @@ function useOnClickOutside(nodes, callback) {
   });
 }
 
+function getLayout(children, header, footer) {
+  const containerSx = {
+    display: "flex",
+    flexDirection: "column",
+    overflow: "hidden",
+    height: "100%",
+    maxWidth: "inherit",
+    maxHeight: "inherit",
+    minWidth: "inherit",
+    minHeight: "inherit"
+  };
+
+  return (
+    <Box sx={containerSx}>
+      {header && (
+        <Box
+          sx={{
+            flex: "0 0 auto"
+          }}
+        >
+          {header}
+        </Box>
+      )}
+
+      <Box
+        sx={{
+          flex: "1 1 auto",
+          overflow: "auto"
+        }}
+      >
+        {children}
+      </Box>
+
+      {footer && (
+        <Box
+          sx={{
+            flex: "0 0 auto"
+          }}
+        >
+          {footer}
+        </Box>
+      )}
+    </Box>
+  );
+}
+
+// Temporary wrapper around layer solving 2 tasks: header, footer and focus lock
+function LayerWithHeaderAndFooter(props) {
+  const {
+    children,
+    header,
+    footer,
+    container,
+    focusLock = false,
+    ...restProps
+  } = props;
+
+  console.log("HEADER", header);
+
+  const content = params =>
+    getLayout(
+      <Box sx={container}>
+        {typeof children === "function" ? children(params) : children}
+      </Box>,
+      typeof header === "function" ? header(params) : header,
+      typeof footer === "function" ? footer(params) : footer
+    );
+
+  let output;
+
+  if (focusLock) {
+    output = params => (
+      <FocusLock
+        returnFocus
+        lockProps={{
+          style: {
+            width: "100%",
+            height: "100%",
+            maxWidth: "inherit",
+            maxHeight: "inherit",
+            minWidth: "inherit",
+            minHeight: "inherit"
+          },
+          role: "dialog"
+        }}
+      >
+        {content(params)}
+      </FocusLock>
+    );
+  } else {
+    output = params => content(params);
+  }
+
+  return <Layer$ {...restProps}>{output}</Layer$>;
+}
+
 // Layer with Button
 function Layer$$({ button, ...layerProps }) {
   let {
@@ -616,7 +714,7 @@ function Layer$$({ button, ...layerProps }) {
   });
 
   if (!button) {
-    return <Layer$ {...layerProps} />;
+    return <LayerWithHeaderAndFooter {...layerProps} />;
   }
 
   return React.cloneElement(button, {
@@ -626,7 +724,7 @@ function Layer$$({ button, ...layerProps }) {
     buttonRef,
     selected: isOpen,
     __portals__: (
-      <Layer$
+      <LayerWithHeaderAndFooter
         {...restProps}
         anchoredTo={anchoredTo}
         isOpen={isOpen}

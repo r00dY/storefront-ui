@@ -128,6 +128,63 @@ export const variantPicker = () => {
                 {value === null ? "Select type" : value.name}
               </ButtonSelect>
             )}
+            header={
+              <Box
+                sx={{
+                  height: 50,
+                  borderBottom: t => `1px solid ${t.colors.neutral}`,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  font: "body2",
+                  color: "main"
+                }}
+              >
+                Select type{" "}
+              </Box>
+            }
+          >
+            {({ options }) => (
+              <Grid minItemWidth={100} sx={{ p: "s7" }}>
+                {options.map(option => (
+                  <Pill {...option.selectableProps} />
+                ))}
+              </Grid>
+            )}
+          </Select>
+        </Box>
+
+        <Box sx={{ mb: "s7" }}>
+          <Box sx={{ mb: "s5" }}>{options[2].name}</Box>
+          <Select
+            {...options[2].selectProps}
+            width={"30vw"}
+            anchoredTo={"window"}
+            placement={"right"}
+            root={{
+              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+              bg: "white"
+            }}
+            button={({ value }) => (
+              <ButtonSelect isPlaceholder={value === null}>
+                {value === null ? "Select type" : value.name}
+              </ButtonSelect>
+            )}
+            header={
+              <Box
+                sx={{
+                  height: 50,
+                  borderBottom: t => `1px solid ${t.colors.neutral}`,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  font: "body2",
+                  color: "main"
+                }}
+              >
+                Select style
+              </Box>
+            }
           >
             {({ options }) => (
               <Grid minItemWidth={100} sx={{ p: "s7" }}>

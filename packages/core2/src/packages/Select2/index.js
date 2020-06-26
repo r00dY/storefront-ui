@@ -3,7 +3,6 @@ import ButtonRaw from "../ButtonRaw";
 
 import { useSelect as useSelectDownshift } from "downshift";
 
-import { jsx, responsiveValueMap } from "../index";
 import Box from "../Box";
 
 import Layer from "../Layer";
@@ -121,6 +120,8 @@ function Select2(props) {
     container,
     placement,
     anchoredTo,
+    header,
+    footer,
 
     // item
     children
@@ -139,7 +140,9 @@ function Select2(props) {
     root,
     container,
     placement,
-    anchoredTo
+    anchoredTo,
+    header,
+    footer
   };
 
   if (!controller) {
