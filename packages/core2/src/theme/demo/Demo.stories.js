@@ -112,6 +112,32 @@ export const variantPicker = () => {
             )}
           </Select>
         </Box>
+
+        <Box sx={{ mb: "s7" }}>
+          <Box sx={{ mb: "s5" }}>{options[2].name}</Box>
+          <Select
+            {...options[2].selectProps}
+            width={"50vw"}
+            anchoredTo={"window"}
+            root={{
+              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+              bg: "white"
+            }}
+            button={({ value }) => (
+              <ButtonSelect isPlaceholder={value === null}>
+                {value === null ? "Select type" : value.name}
+              </ButtonSelect>
+            )}
+          >
+            {({ options }) => (
+              <Grid minItemWidth={100} sx={{ p: "s7" }}>
+                {options.map(option => (
+                  <Pill {...option.selectableProps} />
+                ))}
+              </Grid>
+            )}
+          </Select>
+        </Box>
       </Container>
     </Box>
   );
