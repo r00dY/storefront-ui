@@ -171,107 +171,48 @@ function Select2(props) {
   return (
     <Layer {...layerProps} button={React.cloneElement(button, buttonProps)}>
       {({ close }) => {
-        const items = [];
-        const selectableProps = getSelectableProps(controller, props);
+        let items = [];
+        let selectableProps = getSelectableProps(controller, props);
 
-        options.forEach((option, i) => {
-          const item =
-            typeof selectable === "function"
-              ? selectable({ option })
-              : selectable;
-
-          items.push(
-            React.cloneElement(item, {
-              ...selectableProps[i],
-              onClick: (...args) => {
-                selectableProps[i].onClick(...args);
-                close();
-              }
-            })
-          ); // TODO: we need more flexibility with item look
-
-          if (separator && i < options.length - 1) {
-            items.push(
-              React.cloneElement(separator, {
-                role: "separator",
-                key: "separator-" + i
-              })
-            );
+        selectableProps = selectableProps.map(props => ({
+          ...props,
+          onClick: (...args) => {
+            props.onClick(...args);
+            close();
           }
-        });
+        }));
+
+        if (typeof children === "function") {
+          let optionsArg = options.map((option, index) => ({
+            ...option,
+            selectableProps: selectableProps[index]
+          }));
+
+          items = children({ options: optionsArg });
+        } else {
+          options.forEach((option, i) => {
+            const item =
+              typeof selectable === "function"
+                ? selectable({ option })
+                : selectable;
+
+            items.push(React.cloneElement(item, selectableProps[i])); // TODO: we need more flexibility with item look
+
+            if (separator && i < options.length - 1) {
+              items.push(
+                React.cloneElement(separator, {
+                  role: "separator",
+                  key: "separator-" + i
+                })
+              );
+            }
+          });
+        }
 
         return <Box>{items}</Box>;
       }}
     </Layer>
   );
-
-  //
-  //
-  // const rootRef = useRef(null);
-  //
-  // // Calculate button content
-  // let buttonLabel = value ? value.label : placeholder;
-  //
-  // if ($value) {
-  //     buttonLabel = $value({value, placeholder});
-  // }
-  //
-  // const button = (
-  //     <InputContainer
-  //         sx={restSx}
-  //         forceFocused={isOpen}
-  //         rootRef={rootRef}
-  //         empty={value === null}
-  //         label={label || placeholder}
-  //         showArrow={"enhancer"}
-  //         cursor={"pointer"}
-  //         onClick={(...args) => {
-  //             openMenu();
-  //
-  //             if (onClick) {
-  //                 onClick(...args);
-  //             }
-  //         }}
-  //         {...restProps}
-  //     >
-  //         <ButtonRaw {...buttonProps} sx={{cursor: "pointer"}}>
-  //             {buttonLabel}
-  //         </ButtonRaw>
-  //     </InputContainer>
-  // );
-  //
-  // const layer = React.cloneElement(
-  //     $layer,
-  //     {
-  //         ...layerProps,
-  //         anchoredTo: responsiveValueMap($layer.props.anchoredTo || "trigger", x =>
-  //             x === "trigger" ? rootRef : x
-  //         )
-  //     },
-  //     params => {
-  //         const children = [];
-  //         options.forEach((option, i) => {
-  //             children.push(React.cloneElement($selectable, option.selectableProps));
-  //             if ($separator && i < options.length - 1) {
-  //                 children.push(
-  //                     React.cloneElement($separator, {
-  //                         role: "separator",
-  //                         key: "separator-" + i
-  //                     })
-  //                 );
-  //             }
-  //         });
-  //
-  //         return React.cloneElement($wrapper, menuProps, children);
-  //     }
-  // );
-  //
-  // return (
-  //     <>
-  //         {button}
-  //         {layer}
-  //     </>
-  // );
 }
 
 export { useSelect };

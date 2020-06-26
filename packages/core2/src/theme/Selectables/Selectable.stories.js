@@ -7,7 +7,7 @@ import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 import Color from "./Color";
 import ItemRow from "./ItemRow";
 import ColorRow from "./ColorRow";
-import Pill from "./Pill";
+import Pill from "../demo/selectables/Pill";
 
 import { selectableStories } from "@commerce-ui/core/Selectable/stories";
 

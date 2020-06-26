@@ -15,14 +15,13 @@ import {
 import SelectInline from "@commerce-ui/core/SelectInline";
 import Grid from "@commerce-ui/core/Grid";
 
-import Pill from "../Selectables/Pill";
+import Pill from "./selectables/Pill";
+import ItemRow from "./selectables/ItemRow";
 import Color from "../Selectables/Color";
 
 import SelectNative from "../SelectNative";
 
 import Select from "@commerce-ui/core/Select2";
-
-import Input from "./formControls/input/Input";
 
 import ButtonSelect from "./ButtonSelect";
 
@@ -83,9 +82,35 @@ export const variantPicker = () => {
                 {value === null ? "Select type" : value.name}
               </ButtonSelect>
             )}
-            selectable={<Pill />}
-            separator={<Box sx={{ height: 20 }} />}
+            selectable={<ItemRow />}
           />
+        </Box>
+
+        <Box sx={{ mb: "s7" }}>
+          <Box sx={{ mb: "s5" }}>{options[2].name}</Box>
+          <Select
+            {...options[2].selectProps}
+            width={["100vw", null, 400]}
+            anchoredTo={["window", null, "button"]}
+            placement={["bottom", null, "bottomLeft"]}
+            root={{
+              boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+              bg: "white"
+            }}
+            button={({ value }) => (
+              <ButtonSelect isPlaceholder={value === null}>
+                {value === null ? "Select type" : value.name}
+              </ButtonSelect>
+            )}
+          >
+            {({ options }) => (
+              <Grid minItemWidth={100} sx={{ p: "s7" }}>
+                {options.map(option => (
+                  <Pill {...option.selectableProps} />
+                ))}
+              </Grid>
+            )}
+          </Select>
         </Box>
       </Container>
     </Box>
