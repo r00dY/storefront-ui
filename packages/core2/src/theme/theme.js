@@ -52,9 +52,13 @@ const theme = {
     black: "#2E4557",
     white: "#fff",
 
+    main: "#2E4557",
+    active: "#B05781",
+
     ...generateColorPalette("error", "#C94E2C"),
     ...generateColorPalette("success", "#6CAD85"),
     ...generateColorPalette("primary", "#004175"),
+    ...generateColorPalette("neutral", "#EEECE5"),
     ...generateMonoPalette()
   },
   typography: {

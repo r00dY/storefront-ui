@@ -1,6 +1,4 @@
-/** @jsx jsx */
 import React, { useState, useLayoutEffect, useRef } from "react";
-import { jsx, createElement, getElementSpec, splitSx } from "..";
 import ButtonRaw from "../ButtonRaw";
 
 import InputContainer from "../InputContainer";

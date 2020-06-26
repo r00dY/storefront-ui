@@ -7,6 +7,7 @@ import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 import Color from "./Color";
 import ItemRow from "./ItemRow";
 import ColorRow from "./ColorRow";
+import Pill from "./Pill";
 
 import { selectableStories } from "@commerce-ui/core/Selectable/stories";
 
@@ -37,6 +38,12 @@ export const example3ColorRow = () => (
         <ColorRow label={"Test item"} color={"royalblue"} />
       )}
     />
+  </Box>
+);
+
+export const example4Pill = () => (
+  <Box sx={{ p: 20, maxWidth: 400 }}>
+    <StoryWrapper stories={selectableStories(<Pill label={"Test item"} />)} />
   </Box>
 );
 

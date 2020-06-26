@@ -34,10 +34,20 @@ export function getChildren(controller, props) {
   let children = props.children;
 
   try {
-    const itemElement = React.Children.only(children);
+    let item;
+
+    if (props.selectable) {
+      item = props.selectable;
+    } else {
+      item = React.Children.only(children);
+    }
+
     children = ({ selectableProps }) =>
       selectableProps.map(props => {
-        return React.cloneElement(itemElement, props);
+        return React.cloneElement(
+          typeof item === "function" ? item({ option: props.option }) : item,
+          props
+        );
       });
   } catch (error) {}
 
