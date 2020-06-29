@@ -62,17 +62,19 @@ export const variantPicker = () => {
     <Box sx={{ mt: "s12" }}>
       <Container>
         <Grid cols={[1, null, 2]}>
-          <Grid gap={"s8"} cols={1}>
-            {product.images.map((image, index) => (
-              <Box
-                sx={{
-                  display: index === 0 ? "block" : ["none", null, "block"]
-                }}
-              >
-                <Image src={image} />
-              </Box>
-            ))}
-          </Grid>
+          <Box>
+            <Grid gap={"s7"} cols={1}>
+              {product.images.map((image, index) => (
+                <Box
+                  sx={{
+                    display: index === 0 ? "block" : ["none", null, "block"]
+                  }}
+                >
+                  <Image src={image} />
+                </Box>
+              ))}
+            </Grid>
+          </Box>
 
           <Box>
             <Box sx={{ py: "s10", font: "heading", height: 170 }}>

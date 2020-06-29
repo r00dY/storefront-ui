@@ -27,29 +27,33 @@ function Pill({ product, ...props }) {
             textAlign: "center"
           }}
         >
-          <Box
-            sx={{
-              opacity: disabled ? 0.5 : 1
-            }}
-          >
-            <Image src={product.images[0]} />
-          </Box>
-          <br />
-          <br />
-          <Box
-            sx={{
-              textAlign: "center",
-              font: "body",
-              WebkitLineClamp: 2,
-              overflow: "hidden",
-              display: "-webkit-box",
-              WebkitBoxOrient: "vertical"
-            }}
-          >
-            {product.title}
-          </Box>
-          <br />
-          <Price product={product} />
+          {product && (
+            <>
+              <Box
+                sx={{
+                  opacity: disabled ? 0.5 : 1
+                }}
+              >
+                <Image src={product.images[0]} />
+              </Box>
+              <br />
+              <br />
+              <Box
+                sx={{
+                  textAlign: "center",
+                  font: "body",
+                  WebkitLineClamp: 2,
+                  overflow: "hidden",
+                  display: "-webkit-box",
+                  WebkitBoxOrient: "vertical"
+                }}
+              >
+                {product.title}
+              </Box>
+              <br />
+              <Price product={product} />
+            </>
+          )}
         </Box>
       )}
     </Selectable>
