@@ -118,6 +118,15 @@ import { getElementSpec, jsx, createElement, splitSx } from "..";
 // }
 
 function getMatcherFromOption(option) {
+  if (option.value) {
+    return (p, valId) => {
+      const val = option.value(p);
+      let pValId = typeof val === "string" ? val : val.id;
+
+      return valId === pValId;
+    };
+  }
+
   return (
     option.matcher || ((p, valId) => p.selectedOptions[option.id] === valId)
   );

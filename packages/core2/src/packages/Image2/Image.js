@@ -57,6 +57,7 @@ function Image$(props) {
   };
 
   src = src || image;
+  image = src;
 
   const theme = useTheme();
 
