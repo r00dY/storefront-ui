@@ -18,6 +18,7 @@ import Grid from "@commerce-ui/core/Grid";
 import Pill from "./selectables/Pill";
 import ItemRow from "./selectables/ItemRow";
 import Color from "../Selectables/Color";
+import ProductSelectable from "./selectables/ProductSelectable";
 
 import SelectNative from "../SelectNative";
 
@@ -29,24 +30,7 @@ import Image from "@commerce-ui/core/Image2";
 
 import { products } from "./products";
 
-const Price = ({ product }) => {
-  return (
-    <Box>
-      <Box sx={{ color: "neutral900" }} as={"span"}>
-        {product.price}
-      </Box>
-      &nbsp;
-      {product.price !== product.compareAtPrice && (
-        <Box
-          as={"span"}
-          sx={{ color: "error", textDecoration: "line-through" }}
-        >
-          {product.compareAtPrice}
-        </Box>
-      )}
-    </Box>
-  );
-};
+import Price from "./Price";
 
 export const variantPicker = () => {
   const { product, options } = useOptionPicker({
@@ -56,15 +40,17 @@ export const variantPicker = () => {
         id: "color",
         value: p => ({
           id: p.color,
-          hex: p.hex
-        }),
-        missingProductStrategy: "alternative"
+          hex: p.hex,
+          product: p
+        })
+        // missingProductStrategy: "alternative"
       },
       {
         id: "size",
         value: p => ({
           id: p.size,
-          image: p.images[0]
+          image: p.images[0],
+          product: p
         })
       }
     ],
@@ -75,10 +61,16 @@ export const variantPicker = () => {
   return (
     <Box sx={{ mt: "s12" }}>
       <Container>
-        <Grid cols={2}>
+        <Grid cols={[1, null, 2]}>
           <Grid gap={"s8"} cols={1}>
-            {product.images.map(image => (
-              <Image src={image} />
+            {product.images.map((image, index) => (
+              <Box
+                sx={{
+                  display: index === 0 ? "block" : ["none", null, "block"]
+                }}
+              >
+                <Image src={image} />
+              </Box>
             ))}
           </Grid>
 
@@ -109,13 +101,6 @@ export const variantPicker = () => {
                 />
               </Grid>
             </Box>
-
-            {/*<Box sx={{mb: "s7"}}>*/}
-            {/*<Box sx={{mb: "s5"}}>{options[2].name}</Box>*/}
-            {/*<Grid minItemWidth={300}>*/}
-            {/*<SelectInline selectable={<Pill/>} {...options[2].selectProps} />*/}
-            {/*</Grid>*/}
-            {/*</Box>*/}
 
             <Box sx={{ mb: "s7" }}>
               <Box sx={{ mb: "s5" }}>Size</Box>
@@ -215,7 +200,7 @@ export const variantPicker = () => {
               <Box sx={{ mb: "s5" }}>Size</Box>
               <Select
                 {...options[1].selectProps}
-                width={"30vw"}
+                width={["90vw", null, "30vw"]}
                 anchoredTo={"window"}
                 placement={"right"}
                 root={{
@@ -251,6 +236,75 @@ export const variantPicker = () => {
                   </Grid>
                 )}
               </Select>
+            </Box>
+
+            <Box sx={{ mb: "s7" }}>
+              <Box sx={{ mb: "s5" }}>Size</Box>
+              <Grid minItemWidth={300}>
+                <SelectInline
+                  selectable={({ option }) => (
+                    <ProductSelectable product={option.product} />
+                  )}
+                  {...options[1].selectProps}
+                />
+              </Grid>
+            </Box>
+
+            <Box sx={{ mb: "s7" }}>
+              <Box sx={{ mb: "s5" }}>Size</Box>
+              <Select
+                {...options[1].selectProps}
+                width={["90vw", null, "30vw"]}
+                anchoredTo={"window"}
+                placement={"right"}
+                root={{
+                  boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+                  bg: "white"
+                }}
+                button={({ value }) => (
+                  <ButtonSelect isPlaceholder={value === null}>
+                    {value === null ? "Select type" : value.id}
+                  </ButtonSelect>
+                )}
+                header={
+                  <Box
+                    sx={{
+                      height: 50,
+                      borderBottom: t => `1px solid ${t.colors.neutral}`,
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      font: "body2",
+                      color: "main"
+                    }}
+                  >
+                    Select style
+                  </Box>
+                }
+              >
+                {({ options }) => (
+                  <Grid minItemWidth={200} sx={{ p: "s7" }}>
+                    {options.map(option => (
+                      <ProductSelectable
+                        product={option.product}
+                        {...option.selectableProps}
+                      />
+                    ))}
+                  </Grid>
+                )}
+              </Select>
+            </Box>
+
+            <Box sx={{ mb: "s7" }}>
+              <Box sx={{ mb: "s5" }}>Color</Box>
+              <Grid minItemWidth={200}>
+                <SelectInline
+                  selectable={({ option }) => (
+                    <ProductSelectable product={option.product} />
+                  )}
+                  {...options[0].selectProps}
+                />
+              </Grid>
             </Box>
           </Box>
         </Grid>
