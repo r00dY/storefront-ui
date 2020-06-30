@@ -510,8 +510,8 @@ export const buttons = () => {
 
       <UnicornButton
         price={"$30.00"}
-        isLoading={isLoading}
         onClick={() => setLoading(!isLoading)}
+        isLoading={isLoading}
       >
         Add to cart
       </UnicornButton>
