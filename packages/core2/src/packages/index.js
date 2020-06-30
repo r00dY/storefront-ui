@@ -375,6 +375,27 @@ export function responsiveValueTransformScales(value, theme, scale, mainScale) {
   return value;
 }
 
+export function buildComponent(component, arg) {
+  if (React.isValidElement(arg)) {
+    return React.cloneElement(arg, {
+      ...component.props,
+      ...arg.props,
+      sx: {
+        ...component.props.sx,
+        ...arg.props.sx
+      }
+    });
+  } else if (typeof arg === "object") {
+    return React.cloneElement(component, {
+      sx: { ...component.props.sx, ...arg }
+    });
+  } else if (!arg) {
+    return component;
+  }
+
+  throw new Error("Bad input for createBox");
+}
+
 //
 // function superResponsive(val, dict = {}) {
 //   return responsiveValueMap(val, (x, breakpoint) => {
