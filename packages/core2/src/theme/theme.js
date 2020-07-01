@@ -88,7 +88,9 @@ const theme = {
   breakpoints,
   imageAspectRatios: {
     portrait: 0.7,
-    landscape: 1.3
+    landscape: 1.3,
+    panoramic: 2,
+    superpanoramic: 3
   }
 };
 

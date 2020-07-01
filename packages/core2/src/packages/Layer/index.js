@@ -625,8 +625,6 @@ function LayerWithHeaderAndFooter(props) {
     ...restProps
   } = props;
 
-  console.log("HEADER", header);
-
   const content = params =>
     getLayout(
       <Box sx={container}>

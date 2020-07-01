@@ -102,4 +102,45 @@ const pan2 = {
   ]
 };
 
-export { catImage, pan1, pan2 };
+const glasses = {
+  id: "glasses-3333",
+  altText: "Glasses",
+  originalSrc: "/images/glasses-landscape.jpg",
+  variants: [
+    {
+      name: "natural",
+      aspectRatio: 2,
+      srcset: [
+        {
+          url: "/images/glasses-landscape.jpg",
+          w: 750,
+          h: 376
+        }
+      ]
+    },
+    {
+      name: "panoramic",
+      aspectRatio: 2,
+      srcset: [
+        {
+          url: "/images/glasses-landscape.jpg",
+          w: 750,
+          h: 376
+        }
+      ]
+    },
+    {
+      name: "superpanoramic",
+      aspectRatio: 3,
+      srcset: [
+        {
+          url: "/images/glasses-panoramic.jpg",
+          w: 1440,
+          h: 480
+        }
+      ]
+    }
+  ]
+};
+
+export { catImage, pan1, pan2, glasses };

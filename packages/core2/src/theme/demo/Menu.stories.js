@@ -24,6 +24,10 @@ import Dialog from "@commerce-ui/core/Dialog";
 
 import ProductCard from "./ProductCard";
 
+import { glasses } from "../images";
+
+import Image from "@commerce-ui/core/Image2";
+
 import ScrollableStack, {
   useScrollableStack
 } from "@commerce-ui/core/ScrollableStack";
@@ -253,6 +257,30 @@ function ProductsGrid(props) {
   );
 }
 
+function HeroSection({ image, children }) {
+  return (
+    <Box sx={{ position: "relative" }}>
+      <Image src={image} aspectRatio={["panoramic", null, "superpanoramic"]} />
+      <Box
+        sx={{
+          position: ["relative", null, "absolute"],
+          top: 0,
+          left: "containerMargin",
+          width: "100%",
+          height: "100%",
+          display: "flex",
+          maxWidth: 400,
+          font: "heading",
+          alignItems: "center",
+          mt: ["s8", null, 0]
+        }}
+      >
+        {children}
+      </Box>
+    </Box>
+  );
+}
+
 export const mango = () => {
   const direction = useScrollDirection();
   const isNotAtTop = useScrollSegment({
@@ -330,6 +358,12 @@ export const mango = () => {
           <ProductCard />
         </ScrollableStack>
       </Container>
+
+      <Box sx={{ my: "s13" }}>
+        <HeroSection image={glasses}>
+          Shop frames below or pick five pairs to try for free
+        </HeroSection>
+      </Box>
     </MenuLayout>
   );
 };
