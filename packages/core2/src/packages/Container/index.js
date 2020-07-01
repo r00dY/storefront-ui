@@ -18,8 +18,9 @@ export default ({ sx = {}, margin = "containerMargin", ...restProps }) => {
     <Box
       sx={{
         ...sx,
-        ml: margin,
-        mr: margin
+        position: "relative",
+        pl: margin,
+        pr: margin
       }}
       {...restProps}
     />

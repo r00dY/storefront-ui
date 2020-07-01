@@ -8,10 +8,10 @@ import Box from "../Box";
  *
  * Gutter can be responsive but items layout can not. So it's usable ONLY if on all resolutions items will be next to each other and won't wrap.
  */
-function HorizontalStack({ sx, ...restProps }) {
+function HorizontalStack({ sx, gap, ...restProps }) {
   const [css, customSx] = splitSx(sx);
 
-  const gutter = customSx.$gutter || 0;
+  const gutter = gap || (customSx.$gutter || 0);
 
   return (
     <Box

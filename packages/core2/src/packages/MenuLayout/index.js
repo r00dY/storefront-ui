@@ -19,7 +19,7 @@ const MenuBar = ({ open, takesSpace, ...props }) => {
   return <Box {...props} />;
 };
 
-function MenuBarSticky(props) {
+function MenuBarSticky({ open = true, ...props }) {
   const [height, setHeight] = useState("auto");
   const [sticky, setSticky] = useState(false);
 
@@ -47,7 +47,7 @@ function MenuBarSticky(props) {
          * There's assymetry here. Depending on open / not open state of bar, we differently pick the moment it becomes sticky. if not opened it becomes sticky "behind the curtains" (when totally covered by menu). If opened, then standard sticky.
          */
         if (!sticky) {
-          if (props.open) {
+          if (open) {
             // if sticky and open
             if (rect.top < menuBottomY) {
               setHeight(rect.height);
@@ -74,14 +74,14 @@ function MenuBarSticky(props) {
         window.removeEventListener("scroll", onScrollListener);
       };
     },
-    [sticky, props.open]
+    [sticky, open]
   );
 
   useEffect(
     () => {
-      context.setStickyOpen(props.open);
+      context.setStickyOpen(open);
     },
-    [props.open]
+    [open]
   );
 
   const isDisplayedInPortal = sticky && container;
