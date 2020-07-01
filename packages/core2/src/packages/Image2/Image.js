@@ -71,10 +71,14 @@ function Image$(props) {
 
   let sources = [];
 
-  let variant = "natural";
+  let variant = aspectRatio || "natural";
 
   responsiveValueForEach(variant, (val, breakpoint) => {
-    const variant = findVariant(image, val);
+    let variant = findVariant(image, val);
+
+    if (!variant) {
+      variant = findVariant(image, "natural");
+    }
 
     sources.unshift({
       srcSet: getSrcset(image, variant.name),

@@ -22,6 +22,12 @@ import useScrollDirection from "@commerce-ui/core/useScrollDirection";
 import { useNotificationSystem } from "@commerce-ui/core/NotificationSystem";
 import Dialog from "@commerce-ui/core/Dialog";
 
+import ProductCard from "./ProductCard";
+
+import ScrollableStack, {
+  useScrollableStack
+} from "@commerce-ui/core/ScrollableStack";
+
 function Announcemenet(props) {
   return (
     <Box
@@ -40,24 +46,7 @@ function Announcemenet(props) {
   );
 }
 
-function ProductCard(props) {
-  return (
-    <Box sx={{}}>
-      <Box
-        sx={{
-          bg: "neutral400",
-          pb: "130%"
-        }}
-      />
-      <Box sx={{ mt: "s5", font: "body" }}>Product name $50</Box>
-      <Box sx={{ mt: "s2", font: "body", color: "neutral800" }}>
-        Short product description
-      </Box>
-    </Box>
-  );
-}
-
-function MenuButton(props) {
+function MyButton(props) {
   return (
     <ButtonText
       sx={{
@@ -72,7 +61,7 @@ function MenuButton(props) {
 }
 
 function SelectButton(props) {
-  return <MenuButton rightIcon={<IconArrowDown />} {...props} />;
+  return <MyButton rightIcon={<IconArrowDown />} {...props} />;
 }
 
 function FiltersBar({ isStuck }) {
@@ -166,7 +155,7 @@ function Notification({ width, height, onClose }) {
         height
       }}
     >
-      Notification | <MenuButton onClick={onClose}>Close</MenuButton>
+      Notification | <MyButton onClick={onClose}>Close</MyButton>
     </Box>
   );
 }
@@ -205,28 +194,28 @@ function MenuBar(props) {
             }}
           >
             <MenuLayout.Dialog
-              button={<MenuButton>Link 1</MenuButton>}
+              button={<MyButton>Link 1</MyButton>}
               offsetY={10}
             >
               <SmallMenu />
             </MenuLayout.Dialog>
             <Box sx={{ width: 16 }} />
             <MenuLayout.Dialog
-              button={<MenuButton>Link 2</MenuButton>}
+              button={<MyButton>Link 2</MyButton>}
               offsetY={10}
             >
               <SmallMenu />
             </MenuLayout.Dialog>
             <Box sx={{ width: 16 }} />
             <MenuLayout.Dialog
-              button={<MenuButton>Link 3</MenuButton>}
+              button={<MyButton>Link 3</MyButton>}
               anchoredTo={"window"}
             >
               <SmallMenu width={"100vw"} />
             </MenuLayout.Dialog>
             <Box sx={{ width: 16 }} />
             <MenuLayout.Dialog
-              button={<MenuButton>Link 4</MenuButton>}
+              button={<MyButton>Link 4</MyButton>}
               anchoredTo={"window"}
             >
               <SmallMenu width={"100vw"} wrapWithContainer={true} />
@@ -272,6 +261,8 @@ export const mango = () => {
 
   const menuOpen = !isNotAtTop || (isNotAtTop && !direction);
 
+  const scrollableStack = useScrollableStack({ length: 8 });
+
   return (
     <MenuLayout
       contentAbove={<Announcemenet>Some example announcement</Announcemenet>}
@@ -288,6 +279,57 @@ export const mango = () => {
       </MenuLayout.MenuBarSticky>
 
       <ProductsGrid />
+
+      <TitleSection>Slider</TitleSection>
+
+      <Container margin={[0, 0, "containerMargin"]}>
+        <ScrollableStack
+          itemsVisible={[1.5, 2.5, 4]}
+          gap={30}
+          previousButton={{
+            hideOnTouch: true,
+            button: <MyButton>Previous</MyButton>,
+            offset: -30
+          }}
+          nextButton={<MyButton>Next</MyButton>}
+          innerMargin={["5vw", null, 0]}
+        >
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </ScrollableStack>
+      </Container>
+
+      <TitleSection>Slider with custom arrows</TitleSection>
+
+      <Container margin={[0, 0, "containerMargin"]}>
+        <Box sx={{ mb: "s5" }}>
+          <MyButton {...scrollableStack.previousButtonProps}>Previous</MyButton>{" "}
+          &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;{" "}
+          <MyButton {...scrollableStack.nextButtonProps}>Next</MyButton>
+        </Box>
+
+        <ScrollableStack
+          itemsVisible={[1.5, 2.5, 4]}
+          gap={30}
+          innerMargin={["5vw", null, 0]}
+          controller={scrollableStack}
+        >
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+          <ProductCard />
+        </ScrollableStack>
+      </Container>
     </MenuLayout>
   );
 };

@@ -209,6 +209,12 @@ function ScrollableStack(props) {
     controller,
     previousButton,
     nextButton,
+    gap,
+    align,
+    innerMargin,
+    itemSize,
+    itemsVisible,
+
     ...restProps
   } = props;
 
@@ -217,9 +223,9 @@ function ScrollableStack(props) {
   const rootRef = useRef(null);
   const isRootHovered = useHover(rootRef);
 
-  const gap = customSx.$gap || 0;
-  let align = customSx.$align || "left";
-  const padding = customSx.$innerMargin || 0;
+  gap = gap || (customSx.$gap || 0);
+  align = align || (customSx.$align || "left");
+  const padding = innerMargin || (customSx.$innerMargin || 0);
 
   if (!controller) {
     controller = useScrollableStack({
@@ -230,9 +236,12 @@ function ScrollableStack(props) {
 
   let itemProps;
 
-  if (customSx.$itemSize) {
-    itemProps = { width: customSx.$itemSize };
-  } else if (customSx.$itemsVisible) {
+  itemSize = itemSize || customSx.$itemSize;
+  itemsVisible = itemsVisible || customSx.$itemsVisible;
+
+  if (itemSize) {
+    itemProps = { width: itemSize };
+  } else if (itemsVisible) {
     // TODO: unify responsive values arithmetics
 
     responsiveValueForEach(align, val => {
@@ -244,7 +253,7 @@ function ScrollableStack(props) {
     });
     align = "left";
 
-    let itemsVisibleMap = responsiveValueToRangeMap(customSx.$itemsVisible);
+    let itemsVisibleMap = responsiveValueToRangeMap(itemsVisible);
     let paddingRs = responsiveValueToResponsiveSize(padding);
     let gapRs = responsiveValueToResponsiveSize(gap);
 
