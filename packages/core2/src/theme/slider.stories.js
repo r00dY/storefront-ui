@@ -241,7 +241,8 @@ export const basic = () => {
               <ScrollableStack
                 sx={{
                   $itemsVisible: 4,
-                  $innerMargin: 100
+                  $innerMargin: 100,
+                  $gap: 30
                 }}
                 previousButton={<ButtonRaw>Previous</ButtonRaw>}
                 nextButton={<ButtonRaw>Next</ButtonRaw>}
@@ -249,6 +250,23 @@ export const basic = () => {
                 {boxes2}
               </ScrollableStack>
             </Box>
+          )
+        },
+        {
+          name: "arrows outer container",
+          component: (
+            <Container>
+              <ScrollableStack
+                sx={{
+                  $itemsVisible: 4,
+                  $gap: 30
+                }}
+                previousButton={<ButtonRaw>Previous</ButtonRaw>}
+                nextButton={<ButtonRaw>Next</ButtonRaw>}
+              >
+                {boxes2}
+              </ScrollableStack>
+            </Container>
           )
         },
         {
@@ -287,6 +305,7 @@ export const basic = () => {
                   offset: -10
                 }}
               >
+                {boxes}
                 {boxes}
               </ScrollableStack>
             </Box>

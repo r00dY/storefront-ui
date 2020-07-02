@@ -29,16 +29,16 @@ function getNextPos(
   direction = 1
 ) {
   const spacerWidth = spacerRef.current.getBoundingClientRect().width;
-  const containerWidth =
-    scrollableContainerRef.current.getBoundingClientRect().width -
-    spacerWidth * 2;
+
+  const containerRect = scrollableContainerRef.current.getBoundingClientRect();
+  const containerWidth = containerRect.width - spacerWidth * 2;
 
   let closestItem;
   let closestDiff = 999999;
   for (let i = 0; i < itemRefs.current.length; i++) {
     const item = itemRefs.current[i];
 
-    const left = item.current.getBoundingClientRect().left;
+    const left = item.current.getBoundingClientRect().left - containerRect.left;
     const diff = Math.abs(left + containerWidth * direction - spacerWidth);
 
     if (diff < closestDiff) {
@@ -49,7 +49,9 @@ function getNextPos(
 
   return (
     scrollableContainerRef.current.scrollLeft +
-    (closestItem.getBoundingClientRect().left - spacerWidth)
+    (closestItem.getBoundingClientRect().left -
+      containerRect.left -
+      spacerWidth)
   );
 }
 
