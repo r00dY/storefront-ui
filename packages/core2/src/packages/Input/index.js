@@ -20,7 +20,7 @@ function Input$(props) {
 
   return (
     <InputContainer
-      {...props}
+      {...restProps}
       empty={isEmpty}
       label={props.label || props.placeholder}
       cursor={"text"}

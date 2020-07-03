@@ -142,6 +142,26 @@ export const basic = () => (
               </Button>
             </Box>
           )
+        },
+        {
+          name: "layout ternary",
+          component: (
+            <Box
+              sx={{
+                display: "grid",
+                gridTemplateColumns: "1fr 1fr 1fr",
+                border: "1px dotted black"
+              }}
+            >
+              <Box sx={{ width: 100, height: 100, bg: "red" }} />
+
+              <Box sx={{ bg: "yellow", justifySelf: "center" }}>Logo</Box>
+
+              <Box
+                sx={{ width: 500, height: 100, bg: "blue", justifySelf: "end" }}
+              />
+            </Box>
+          )
         }
       ]}
     />
