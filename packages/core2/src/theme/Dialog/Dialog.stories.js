@@ -23,6 +23,20 @@ const Bar = ({ isTop, children }) => (
   </Box>
 );
 
+function Content(props) {
+  console.log("render content");
+  return (
+    <Box>
+      <Paragraph />
+      <br />
+      <Button>Test button 1</Button>
+      <br />
+      <br />
+      <Button>Test button 2</Button>
+    </Box>
+  );
+}
+
 export const standardDialogWithButton = () => {
   const containerRef = useRef(null);
 
@@ -41,14 +55,7 @@ export const standardDialogWithButton = () => {
           bg: "mono100"
         }}
       >
-        {/*<Box sx={{p: "s8"}}>*/}
-        <Paragraph />
-        <br />
-        <Button>Test button 1</Button>
-        <br />
-        <br />
-        <Button>Test button 2</Button>
-        {/*</Box>*/}
+        <Content />
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
@@ -99,12 +106,7 @@ export const standardDialogWithButton = () => {
         }}
         container={{ p: "s8" }}
       >
-        <Paragraph />
-        <br />
-        <Button>Test button 1</Button>
-        <br />
-        <br />
-        <Button>Test button 2</Button>
+        <Content />
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
