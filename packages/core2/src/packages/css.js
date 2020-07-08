@@ -197,6 +197,18 @@ export const responsive = styles => theme => {
     ...breakpoints.map(n => `@media screen and (min-width: ${n})`)
   ];
 
+  // MODIFICATION: let's add all media in a good order so that this order is kept later
+  for (let k = 1; k < mediaQueries.length; k++) {
+    next[mediaQueries[k]] = null;
+  }
+
+  // console.log('next', next);
+  // mediaQueries.forEach(query => {
+  //     if (query) {
+  //         next[query] = {};
+  //     }
+  // });
+
   for (const key in styles) {
     const value =
       typeof styles[key] === "function" ? styles[key](theme) : styles[key];
@@ -247,15 +259,17 @@ export const responsive = styles => theme => {
     }
 
     if (!Array.isArray(value)) {
+      next[key] = value;
+
       /** MODIFICATION: it's required for cssSingle(cssSingle(...)) recursion to work. We don't want old media queries to override new ones. **/
-      if (isStylesObject(next[key])) {
-        next[key] = {
-          ...next[key],
-          ...value
-        };
-      } else {
-        next[key] = value;
-      }
+      // if (isStylesObject(next[key])) {
+      //     next[key] = {
+      //         ...next[key],
+      //         ...value
+      //     };
+      // } else {
+      //     next[key] = value;
+      // }
 
       continue;
     }
@@ -277,34 +291,81 @@ export const responsive = styles => theme => {
     }
   }
 
+  // MODIFICATION: let's clean up empty media queries
+  for (let key in next) {
+    if (next[key] === null) {
+      delete next[key];
+    }
+  }
+
   return next;
 };
 
-export const cssSingle = args => (props = {}) => {
+function getValue(val, key, theme) {
+  const prop = get(aliases, key, key);
+  const scaleName = get(scales, prop);
+  const scale = get(theme, scaleName, get(theme, prop, {}));
+  const transform = get(transforms, prop, get);
+  let value = transform(scale, val, val);
+
+  if (!Array.isArray(value)) {
+    // non-array values can easily pass
+    return value;
+  }
+
+  let lastBreakpointArray;
+
+  for (let i = 0; i < value.length; i++) {
+    let breakpointVal = getValue(value[i], key, theme, i);
+
+    if (breakpointVal === null || breakpointVal === undefined) {
+      if (lastBreakpointArray) {
+        value[i] = lastBreakpointArray[i];
+      } else {
+        value[i] = null;
+      }
+    } else if (Array.isArray(breakpointVal)) {
+      value[i] = breakpointVal[i];
+      lastBreakpointArray = breakpointVal;
+    } else {
+      value[i] = breakpointVal;
+    }
+  }
+
+  return value;
+}
+
+export const css = args => (props = {}) => {
   const theme = { ...defaultTheme, ...(props.theme || props) };
   let result = {};
-  const obj = typeof args === "function" ? args(theme) : args;
+  const obj = { ...(typeof args === "function" ? args(theme) : args) };
+
+  // Pre-iteration flattening arrays with values from theme
+  for (const key in obj) {
+    obj[key] = getValue(obj[key], key, theme);
+  }
+
   const styles = responsive(obj)(theme);
 
   for (const key in styles) {
     const x = styles[key];
-    const val = typeof x === "function" ? x(theme) : x;
+    let val = typeof x === "function" ? x(theme) : x;
 
     if (key === "variant") {
-      const variant = cssSingle(get(theme, val))(theme);
+      const variant = css(get(theme, val))(theme);
       result = { ...result, ...variant };
       continue;
     }
 
     /** MODIFICATION 1, special value font **/
     if (key === "font") {
-      const variant = cssSingle(get(theme, "typography." + val))(theme);
+      const variant = css(get(theme, "typography." + val))(theme);
       result = { ...result, ...variant };
       continue;
     }
 
     if (val && typeof val === "object") {
-      result[key] = cssSingle(val)(theme); // TODO: bug, second iteration overrides first one (or other way round), media queries are not merged in a smart way
+      result[key] = css(val)(theme); // TODO: bug, second iteration overrides first one (or other way round), media queries are not merged in a smart way
       continue;
     }
 
@@ -312,7 +373,7 @@ export const cssSingle = args => (props = {}) => {
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
     const transform = get(transforms, prop, get);
-    const value = transform(scale, val, val);
+    let value = transform(scale, val, val);
 
     if (multiples[prop]) {
       const dirs = multiples[prop];
@@ -326,15 +387,6 @@ export const cssSingle = args => (props = {}) => {
   }
 
   return result;
-};
-
-/**
- * MODIFICATION 4
- *
- * Calling this double time allows for stuff like margin: [0, 0, "main"], where "main" is a RESPONSIVE value already in a scale.
- */
-export const css = (...args) => {
-  return cssSingle(cssSingle(...args));
 };
 
 export default css;

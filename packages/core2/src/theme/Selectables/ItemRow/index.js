@@ -8,8 +8,6 @@ function ItemRow(props) {
       {({ disabled, highlighted, selected, label, invalid }) => (
         <Box
           sx={{
-            width: "100%",
-            minWidth: "250px",
             height: "44px",
             display: "flex",
             padding: "12px",

@@ -52,6 +52,31 @@ export const standardDialogWithButton = () => {
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
+
+      <Box as={"p"} sx={{ my: "s9" }}>
+        Anchored to right
+      </Box>
+
+      <Dialog
+        width={["90vw", null, null, "50vw"]}
+        anchoredTo={"window"}
+        placement={"right"}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+      >
+        {/*<Box sx={{p: "s8"}}>*/}
+        <Paragraph />
+        <br />
+        <Button>Test button 1</Button>
+        <br />
+        <br />
+        <Button>Test button 2</Button>
+        {/*</Box>*/}
+      </Dialog>
+
       <Paragraph sx={{ my: 36, color: "mono300" }} />
       <Paragraph sx={{ my: 36, color: "mono300" }} />
 
