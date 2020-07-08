@@ -625,6 +625,22 @@ function LayerWithHeaderAndFooter(props) {
     ...restProps
   } = props;
 
+  const [focusLockDisabled, setFocusLockDisabled] = useState(true);
+
+  // We must enabled focus lock AFTER its mounted. For popups its mounted top: 0, left: 0 in the first place and then its position changes. Focus too early and you'll cause unwanted "scroll to top" effect.
+  useEffect(
+    () => {
+      if (props.isOpen) {
+        setTimeout(() => {
+          setFocusLockDisabled(false);
+        }, 0);
+      } else {
+        setFocusLockDisabled(true);
+      }
+    },
+    [props.isOpen]
+  );
+
   const content = params =>
     getLayout(
       <Box sx={container}>
@@ -651,6 +667,7 @@ function LayerWithHeaderAndFooter(props) {
           },
           role: "dialog"
         }}
+        disabled={focusLockDisabled}
       >
         {content(params)}
       </FocusLock>
