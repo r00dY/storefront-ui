@@ -25,6 +25,33 @@ const mountNode = () => {
 
 import FocusLock from "react-focus-lock";
 
+let scrollbarWidth;
+
+function getScrollbarWidth() {
+  if (typeof scrollbarWidth === "number") {
+    return scrollbarWidth;
+  }
+
+  // Creating invisible container
+  const outer = document.createElement("div");
+  outer.style.visibility = "hidden";
+  outer.style.overflow = "scroll"; // forcing scrollbar to appear
+  outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+  document.body.appendChild(outer);
+
+  // Creating inner element and placing it in the container
+  const inner = document.createElement("div");
+  outer.appendChild(inner);
+
+  // Calculating difference between container's full width and the child width
+  scrollbarWidth = outer.offsetWidth - inner.offsetWidth;
+
+  // Removing temporary elements from the DOM
+  outer.parentNode.removeChild(outer);
+
+  return scrollbarWidth;
+}
+
 const centered = ({
   width,
   height,
@@ -135,25 +162,95 @@ const popoverRootDefault = ({
   __children: children
 });
 
-function layerAdded() {
-  const prevCount = window.__cui_layerCounter || 0;
-  window.__cui_layerCounter = prevCount + 1;
+function layerAdded(isAnchoredToWindow) {
+  window.__cui_layerCounter = window.__cui_layerCounter || {
+    window: 0,
+    element: 0,
+    all: 0
+  };
 
-  if (prevCount === 0) {
-    if (window.__cui_notificationSystemSetLayerOpen) {
+  if (isAnchoredToWindow) {
+    if (
+      window.__cui_layerCounter.window === 0 &&
+      window.__cui_notificationSystemSetLayerOpen
+    ) {
       window.__cui_notificationSystemSetLayerOpen(true);
     }
+    window.__cui_layerCounter.window++;
+  } else {
+    window.__cui_layerCounter.element++;
   }
+
+  window.__cui_layerCounter.all =
+    window.__cui_layerCounter.window + window.__cui_layerCounter.element;
 }
 
-function layerRemoved() {
-  window.__cui_layerCounter--;
+function layerRemoved(isAnchoredToWindow) {
+  window.__cui_layerCounter = window.__cui_layerCounter || {
+    window: 0,
+    element: 0,
+    all: 0
+  };
 
-  if (window.__cui_layerCounter === 0) {
-    if (window.__cui_notificationSystemSetLayerOpen) {
+  if (isAnchoredToWindow) {
+    window.__cui_layerCounter.window = Math.max(
+      0,
+      window.__cui_layerCounter.window - 1
+    );
+
+    if (
+      window.__cui_layerCounter.window === 0 &&
+      window.__cui_notificationSystemSetLayerOpen
+    ) {
+      window.__cui_notificationSystemSetLayerOpen(false);
+    }
+  } else {
+    window.__cui_layerCounter.element = Math.max(
+      0,
+      window.__cui_layerCounter.element - 1
+    );
+  }
+
+  window.__cui_layerCounter.all =
+    window.__cui_layerCounter.window + window.__cui_layerCounter.element;
+}
+
+function layerChanged(isAnchoredToWindow) {
+  window.__cui_layerCounter = window.__cui_layerCounter || {
+    window: 0,
+    element: 0,
+    all: 0
+  };
+
+  if (isAnchoredToWindow) {
+    if (
+      window.__cui_layerCounter.window === 0 &&
+      window.__cui_notificationSystemSetLayerOpen
+    ) {
+      window.__cui_notificationSystemSetLayerOpen(true);
+    }
+    window.__cui_layerCounter.window++;
+    window.__cui_layerCounter.element = Math.max(
+      0,
+      window.__cui_layerCounter.element - 1
+    );
+  } else {
+    window.__cui_layerCounter.element++;
+    window.__cui_layerCounter.window = Math.max(
+      0,
+      window.__cui_layerCounter.window - 1
+    );
+
+    if (
+      window.__cui_layerCounter.window === 0 &&
+      window.__cui_notificationSystemSetLayerOpen
+    ) {
       window.__cui_notificationSystemSetLayerOpen(false);
     }
   }
+
+  window.__cui_layerCounter.all =
+    window.__cui_layerCounter.window + window.__cui_layerCounter.element;
 }
 
 function Layer$(props) {
@@ -252,15 +349,21 @@ function Layer$(props) {
   // Following 2 useEffects are responsible for counting open non-anchored layers
   useEffect(
     () => {
-      if (current.isAnchored) {
-        // we count only non-anchored layers
-        return;
+      const body = document.querySelector("body");
+      const scrollbarWidth = getScrollbarWidth();
+
+      if (isOpen === true) {
+        layerAdded(!current.isAnchored);
+      } else {
+        layerRemoved(!current.isAnchored);
       }
 
-      if (isOpen) {
-        layerAdded();
-      } else {
-        layerRemoved();
+      if (isOpen && window.__cui_layerCounter.all === 1) {
+        body.style["padding-right"] = scrollbarWidth + "px";
+        body.style["overflow-y"] = "hidden";
+      } else if (!isOpen && window.__cui_layerCounter.all == 0) {
+        body.style.removeProperty("overflow-y");
+        body.style.removeProperty("padding-right");
       }
     },
     [isOpen]
@@ -272,11 +375,7 @@ function Layer$(props) {
         return;
       }
 
-      if (!current.isAnchored) {
-        layerAdded();
-      } else {
-        layerRemoved();
-      }
+      layerChanged(!current.isAnchored);
     },
     [current.isAnchored]
   );

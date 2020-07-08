@@ -37,11 +37,11 @@ export default createComponent(
   ButtonText$,
   ({ $size = "standard" }) => ({ disabled, isHovered, selected }) => ({
     ...styles[$size].$css,
-    border: selected ? "2px solid black" : "none",
     $body: {
       ...styles[$size].$body,
       color: disabled ? "mono500" : "black",
-      textAlign: "center"
+      textAlign: "center",
+      textDecoration: selected ? "underline" : "none"
     },
     $background: {
       bg: disabled ? "mono300" : "mono200",
