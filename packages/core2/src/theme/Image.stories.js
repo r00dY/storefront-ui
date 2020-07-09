@@ -38,6 +38,15 @@ export const basic = () => (
         },
         {
           name:
+            "Image with size set explicitly very vertical (objectFit: contain)",
+          component: (
+            <Box sx={{ border: "1px solid black", height: 200 }} fitW fitH>
+              <Image image={catImage} objectFit={"contain"} />
+            </Box>
+          )
+        },
+        {
+          name:
             "Image with size set explicitly (objectFit: contain + objectPosition)",
           component: (
             <Box sx={{ border: "1px solid black", height: 800 }} fitW fitH>
