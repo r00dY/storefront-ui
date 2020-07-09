@@ -1,6 +1,6 @@
 import React, {
   useEffect,
-  useLayoutEffect,
+  useLayoutEffect as useLayoutEffect_,
   useState,
   useRef,
   useContext
@@ -12,6 +12,9 @@ import { useTheme } from "../Theme";
 
 import ShowHide from "../ShowHide";
 import Grid from "../Grid";
+
+const useLayoutEffect =
+  typeof window === "object" ? useLayoutEffect_ : useEffect;
 
 const MenuLayoutContext = React.createContext({});
 

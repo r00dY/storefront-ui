@@ -1,5 +1,10 @@
 /** @jsx jsx */
-import React, { useState, useRef, useLayoutEffect } from "react";
+import React, {
+  useState,
+  useRef,
+  useLayoutEffect as useLayoutEffect_,
+  useEffect
+} from "react";
 import { getElementSpec, jsx, createElement, splitSx } from "..";
 
 import ButtonRaw2 from "../ButtonRaw";
@@ -8,6 +13,9 @@ import Box from "../Box";
 
 import SelectNative from "../SelectNative";
 import InputRaw from "../InputRaw";
+
+const useLayoutEffect =
+  typeof window === "object" ? useLayoutEffect_ : useEffect;
 
 const defaults = {
   $buttonDecrease: {
