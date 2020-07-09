@@ -30,14 +30,21 @@ const media = [
 
 // Tests if object keys iterate with keeping media queries order correct.
 function testOrder(styles) {
-  let currentIndex = 0;
+  let lastIndex = null;
 
   for (let key in styles) {
     if (key.startsWith("@")) {
-      if (key !== media[currentIndex]) {
+      const index = media.indexOf(key);
+
+      if (index === -1) {
+        continue;
+      }
+
+      if (lastIndex !== null && index < lastIndex) {
         return false;
       }
-      currentIndex++;
+
+      lastIndex = index;
     }
   }
 
@@ -151,7 +158,7 @@ test("responsive styles with responsive values from theme", () => {
   expect(testOrder(styles)).toBe(true);
 });
 
-test("responsive styles with responsive values from theme", () => {
+test("responsive styles with responsive values from theme - ver 2", () => {
   const styles = css({
     m: ["containerMargin", null, null, "s4", "s5"],
     p: ["t1", 2, "t3", 4, "t5"]
@@ -175,13 +182,11 @@ test("responsive styles with responsive values from theme", () => {
   expect(testOrder(styles)).toBe(true);
 });
 
-test("responsive styles with responsive values from theme - ver 2", () => {
+test("responsive styles with responsive values from theme - ver 3", () => {
   const styles = css({
     p: ["t1", 2, "t3", 4, "t5"],
     m: ["containerMargin", null, null, "s4", "s5"]
   })(theme);
-
-  console.log(styles);
 
   expect(styles.margin).toBe(5);
   expect(styles.padding).toBe(1);
@@ -201,7 +206,7 @@ test("responsive styles with responsive values from theme - ver 2", () => {
   expect(testOrder(styles)).toBe(true);
 });
 
-test("responsive styles with responsive values from theme - ver 3", () => {
+test("responsive styles with responsive values from theme - ver 4", () => {
   const styles = css({
     gridTemplateColumns: ["unset", null, "repeat(2, 1fr)"],
     p: ["containerMargin", "20px", 0]
@@ -223,8 +228,20 @@ test("responsive styles with responsive values from theme - ver 3", () => {
   expect(styles[media[3]]).toBe(undefined);
 
   expect(testOrder(styles)).toBe(true);
+});
 
-  console.log(styles);
+test("responsive styles with responsive values from theme - ver 5 (array shorter than number of breakpoints ending with array value from theme)", () => {
+  const styles = css({
+    m: [0, null, "containerMargin"]
+  })(theme);
+
+  expect(styles.margin).toBe(0);
+  expect(styles[media[0]]).toBe(undefined);
+  expect(styles[media[1]].margin).toBe(25);
+  expect(styles[media[2]].margin).toBe(35);
+  expect(styles[media[3]].margin).toBe(45);
+
+  expect(testOrder(styles)).toBe(true);
 });
 
 /**

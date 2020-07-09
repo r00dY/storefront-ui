@@ -315,6 +315,11 @@ function getValue(val, key, theme) {
 
   let lastBreakpointArray;
 
+  // null-padding of array shorter than num of breakpoints + 1 (this is required because [0, null, "containerMargin"] should actually affect 3th and 4th index
+  for (let i = value.length; i < theme.breakpoints.length + 1; i++) {
+    value[i] = null;
+  }
+
   for (let i = 0; i < value.length; i++) {
     let breakpointVal = getValue(value[i], key, theme, i);
 
@@ -328,6 +333,7 @@ function getValue(val, key, theme) {
       value[i] = breakpointVal[i];
       lastBreakpointArray = breakpointVal;
     } else {
+      lastBreakpointArray = null;
       value[i] = breakpointVal;
     }
   }

@@ -321,19 +321,33 @@ function Layer$(props) {
     width:
       typeof width === "function"
         ? width({
-            anchorRect:
-              (anchoredTo.current &&
-                anchoredTo.current.getBoundingClientRect()) ||
-              new DOMRect()
+            anchorRect: (anchoredTo.current &&
+              anchoredTo.current.getBoundingClientRect()) || {
+              x: 0,
+              y: 0,
+              width: 0,
+              height: 0,
+              right: 0,
+              left: 0,
+              top: 0,
+              bottom: 0
+            }
           })
         : width || "auto",
     height:
       typeof height === "function"
         ? height({
-            anchorRect:
-              (anchoredTo.current &&
-                anchoredTo.current.getBoundingClientRect()) ||
-              new DOMRect()
+            anchorRect: (anchoredTo.current &&
+              anchoredTo.current.getBoundingClientRect()) || {
+              x: 0,
+              y: 0,
+              width: 0,
+              height: 0,
+              right: 0,
+              left: 0,
+              top: 0,
+              bottom: 0
+            }
           })
         : height || "auto",
     minWidth: minWidth || 0,
