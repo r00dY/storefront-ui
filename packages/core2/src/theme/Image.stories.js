@@ -37,8 +37,9 @@ export const basic = () => (
           )
         },
         {
+          // IMPORTANT!!! Even low images have this inside-element that makes padding-bottom and height. It allows for image to show up even without explicitly setting height. HOWEVER, in flex containers it  might make troubles. There should be a flag to explicitly remove this element (for contain / cover modes)
           name:
-            "Image with size set explicitly very vertical (objectFit: contain)",
+            "Image with size set explicitly very vertical (objectFit: contain), low image",
           component: (
             <Box sx={{ border: "1px solid black", height: 200 }} fitW fitH>
               <Image image={catImage} objectFit={"contain"} />
