@@ -3,8 +3,14 @@ import React, { useState, useRef, useEffect, useLayoutEffect } from "react";
 import Box from "@commerce-ui/core/Box";
 import { useTheme } from "@commerce-ui/core/Theme";
 
+import useWindowSize from "@commerce-ui/core/useWindowSize";
+
 const Test1 = ({ children }) => {
   console.log("Test1 render: ", children);
+
+  const size = useWindowSize();
+
+  console.log(size);
 
   return <div>Test1: {children}</div>;
 };

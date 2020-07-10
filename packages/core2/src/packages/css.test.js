@@ -1,4 +1,5 @@
 import { css } from "./css";
+import { lin } from "./index";
 
 const theme = {
   space: {
@@ -7,12 +8,19 @@ const theme = {
     s3: 30,
     s4: 40,
     s5: 50,
+    s6: 60,
+    s7: 70,
+    s8: 80,
+    s9: 90,
+    s10: 100,
     t1: 1,
     t2: 2,
     t3: 3,
     t4: 4,
     t5: 5,
-    containerMargin: [5, 15, 25, 35, 45]
+    containerMargin: [5, 15, 25, 35, 45],
+    gridGap: [9, 19, 29, 39, 49],
+    linS1: lin(100, 200)
   },
   colors: {
     primary: "red",
@@ -228,6 +236,35 @@ test("responsive styles with responsive values from theme - ver 4", () => {
   expect(styles[media[3]]).toBe(undefined);
 
   expect(testOrder(styles)).toBe(true);
+});
+
+test("linear sizing", () => {
+  const styles = css({
+    m: lin(10, 30)
+  })(theme);
+
+  console.log(styles);
+});
+
+test("linear sizing - in responsive array", () => {
+  const styles = css({
+    m: [0, null, lin(10, 30)]
+  })(theme);
+  console.log(styles);
+});
+
+test("linear sizing - in responsive array taken from theme", () => {
+  const styles = css({
+    m: [0, null, "linS1"]
+  })(theme);
+  console.log(styles);
+});
+
+test("linear sizing - in responsive array taken from theme - ver2", () => {
+  const styles = css({
+    m: ["linS1", null, 99]
+  })(theme);
+  console.log(styles);
 });
 
 test("responsive styles with responsive values from theme - ver 5 (array shorter than number of breakpoints ending with array value from theme)", () => {

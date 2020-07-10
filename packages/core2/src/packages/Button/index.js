@@ -2,8 +2,8 @@
 import React, { useRef, useState } from "react";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
 import useHover from "../useHover";
-import ButtonRaw$ from "../ButtonRaw";
-import LinkRaw$ from "../LinkRaw";
+import ButtonRaw from "../ButtonRaw";
+import Link from "../Link";
 
 export default props => {
   // look
@@ -38,8 +38,6 @@ export default props => {
 
   const [css, customSx] = splitSx(sx);
 
-  const Component = href ? LinkRaw$ : ButtonRaw$;
-
   const componentProps = {
     ...restProps,
     sx: {
@@ -54,6 +52,8 @@ export default props => {
     },
     ref: buttonRef
   };
+
+  const Component = href ? Link : ButtonRaw;
 
   if (!href) {
     componentProps.disabled = disabled;

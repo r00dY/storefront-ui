@@ -2,6 +2,7 @@
 
 import React from "react";
 import { jsx, splitSx } from "..";
+import { useTheme } from "../Theme";
 
 const boxStyles = {
   boxSizing: "border-box",
@@ -51,6 +52,7 @@ function Box_(props) {
   } = props;
 
   const [css, customSx] = splitSx(sx);
+  const t = useTheme();
 
   if (fitW === true) {
     fitChild = true;
@@ -63,7 +65,7 @@ function Box_(props) {
   const ret = jsx(as, {
     sx: [
       boxStyles,
-      noFocus && focusReset,
+      (t.hideFocus || noFocus) && focusReset,
       fitChild && fitChildStyles,
       fitChildHeight && fitChildHeightStyles,
       css

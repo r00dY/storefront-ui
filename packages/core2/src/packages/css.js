@@ -308,6 +308,32 @@ function getValue(val, key, theme) {
   const transform = get(transforms, prop, get);
   let value = transform(scale, val, val);
 
+  // RESPONSIVE SIZE
+  if (typeof value === "object" && value !== null && value.__isLinear) {
+    const css = rslin(
+      theme.space[value.from] || value.from,
+      theme.space[value.to] || value.to,
+      value.isInf
+    ).cssObject("xxx");
+
+    const css_ = Object.values(css);
+    let array = [];
+
+    for (let i = 0; i < theme.breakpoints.length + 1; i++) {
+      array[i] = null;
+
+      if (i === 0) {
+        array[i] = css_[0].xxx;
+      } else if (i === theme.breakpoints.length) {
+        array[i] = css_[2].xxx;
+      } else {
+        array[i] = css_[1].xxx;
+      }
+    }
+
+    return array;
+  }
+
   if (!Array.isArray(value)) {
     // non-array values can easily pass
     return value;
