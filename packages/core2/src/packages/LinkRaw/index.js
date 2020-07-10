@@ -1,22 +1,11 @@
-/** @jsx jsx */
-
 import React from "react";
-import { jsx, splitSx } from "..";
+import { splitSx } from "..";
+import Box from "../Box";
 
-const resetStyles = ({ resetFocus = false }) => {
-  const ret = {
-    color: "inherit",
-    textDecoration: "none",
-    boxSizing: "border-box"
-  };
-
-  if (resetFocus) {
-    ret[":focus"] = {
-      outline: "none"
-    };
-  }
-
-  return ret;
+const resetStyles = {
+  color: "inherit",
+  textDecoration: "none",
+  boxSizing: "border-box"
 };
 
 function LinkRaw_(props) {
@@ -25,11 +14,7 @@ function LinkRaw_(props) {
   const [css, customSx] = splitSx(sx);
 
   return (
-    <a
-      sx={[resetStyles({ resetFocus: customSx.$resetFocus }), css]}
-      {...restProps}
-      ref={innerRef}
-    />
+    <Box {...restProps} _ref={innerRef} as={"a"} sx={[resetStyles, css]} />
   );
 }
 
