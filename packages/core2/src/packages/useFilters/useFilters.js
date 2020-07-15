@@ -82,8 +82,14 @@ function useFilters({ data, onChange }) {
 
   const getDataWithCurrentValues = () => {
     return data.map(item => {
-      let value = localValues.current[item.id] || values[item.id];
-      let committedValue = committedValues.current[item.id] || values[item.id];
+      let value =
+        localValues.current[item.id] === undefined
+          ? values[item.id]
+          : localValues.current[item.id]; // null means that it was set by clear
+      let committedValue =
+        committedValues.current[item.id] === undefined
+          ? values[item.id]
+          : committedValues.current[item.id];
 
       const nullValue = normalizeFilterValue({
         ...item,
@@ -108,7 +114,7 @@ function useFilters({ data, onChange }) {
     });
   };
 
-  const setValue = (id, newValue, isSoft = false) => {
+  const setValue = (id, newValue, isSoft = false, runOnChange = true) => {
     // normalize
     let filter = data.find(x => x.id === id);
     newValue = normalizeFilterValue({ ...filter, value: newValue });
@@ -120,7 +126,7 @@ function useFilters({ data, onChange }) {
 
       const newData = getDataWithCurrentValues();
 
-      if (onChange) {
+      if (onChange && runOnChange) {
         onChange(newData);
       }
     }
@@ -129,6 +135,7 @@ function useFilters({ data, onChange }) {
   };
 
   let isAnyDirty = false;
+  let areAllEmpty = true;
 
   const commit = () => {
     committedValues.current = { ...localValues.current };
@@ -143,6 +150,10 @@ function useFilters({ data, onChange }) {
   const filters = getDataWithCurrentValues().map((item, index) => {
     if (item.isDirty) {
       isAnyDirty = true;
+    }
+
+    if (!item.isEmpty) {
+      areAllEmpty = false;
     }
 
     const selectProps = soft =>
@@ -195,12 +206,13 @@ function useFilters({ data, onChange }) {
     filters,
     setValue,
     clearAll: isSoft => {
-      data.forEach(item => {
-        setValue(item.id, null, isSoft);
+      data.forEach((item, index) => {
+        setValue(item.id, null, isSoft, index === data.length - 1); // only last iteration should run onChange!
       });
     },
     commit,
-    isDirty: isAnyDirty
+    isDirty: isAnyDirty,
+    isEmpty: areAllEmpty
   };
 }
 

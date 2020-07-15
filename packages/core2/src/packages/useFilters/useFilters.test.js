@@ -151,6 +151,19 @@ const filtersData = [
   }
 ];
 
+// this wrapper mocks changing props for hook useFilters
+function useFiltersWrapper(props) {
+  const [data, setData] = useState(props.data);
+
+  return {
+    ...useFilters({
+      ...props,
+      data
+    }),
+    setData
+  };
+}
+
 test("setting select values (standard + soft)", () => {
   const onChange = jest.fn(val => val);
 
@@ -301,19 +314,6 @@ test("setting select values (standard + soft)", () => {
   expect(onChange.mock.calls.length).toBe(4);
 });
 
-// this wrapper mocks changing props for hook useFilters
-function useFiltersWrapper(props) {
-  const [data, setData] = useState(props.data);
-
-  return {
-    ...useFilters({
-      ...props,
-      data
-    }),
-    setData
-  };
-}
-
 test("[changing filters] changing filters values from props changes internal state", () => {
   const onChange = jest.fn(val => val);
 
@@ -445,6 +445,8 @@ test("clearAll and isEmpty work", () => {
     result.current.setValue("color", "white"); // setValue as id
   });
 
+  expect(onChange.mock.calls.length).toBe(2);
+
   expect(result.current.filters[0].isEmpty).toBe(false);
   expect(result.current.filters[1].isEmpty).toBe(true);
   expect(result.current.filters[2].isEmpty).toBe(false);
@@ -453,6 +455,8 @@ test("clearAll and isEmpty work", () => {
   act(() => {
     result.current.clearAll();
   });
+
+  expect(onChange.mock.calls.length).toBe(3);
 
   expect(result.current.filters[0].isEmpty).toBe(true);
   expect(result.current.filters[1].isEmpty).toBe(true);
@@ -559,4 +563,44 @@ test("if filter is empty its value is always null no matter of type (not [] for 
   expect(result.current.filters[3].value).toBe(null);
   expect(result.current.filters[4].value).toBe(null);
   expect(result.current.filters[5].value).toBe(null);
+});
+
+test("clearAll works with default values", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData.map(x => {
+        if (x.id === "sort") {
+          return {
+            ...x,
+            value: "price-asc"
+          };
+        } else if (x.id === "color") {
+          return {
+            ...x,
+            value: "grey"
+          };
+        }
+        return x;
+      }),
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-desc"); // setValue as id
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  act(() => {
+    result.current.clearAll();
+  });
+
+  expect(onChange.mock.calls.length).toBe(3);
+
+  expect(result.current.filters[0].isEmpty).toBe(true);
+  expect(result.current.filters[1].isEmpty).toBe(true);
+  expect(result.current.filters[2].isEmpty).toBe(true);
+  expect(result.current.filters[3].isEmpty).toBe(true);
 });
