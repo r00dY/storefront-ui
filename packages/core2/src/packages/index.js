@@ -30,7 +30,7 @@ const lin = rslin;
  * - extension that allows to add
  */
 
-function css(styles) {
+export function css(styles) {
   styles = Array.isArray(styles) ? styles : [styles]; // we can have multiple styles
 
   // console.log('before css flattened styles', styles);
@@ -45,6 +45,8 @@ function css(styles) {
       return styledSystemCss(stylesSet)(theme);
     });
 }
+
+export const css2 = styledSystemCss;
 
 function jsx(type, props, ...children) {
   let newProps = { ...props };

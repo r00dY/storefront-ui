@@ -1,14 +1,12 @@
-/** @jsx jsx */
-
 import React from "react";
-import { jsx, splitSx } from "..";
+import { jsx, splitSx, css, css2 } from "..";
 import { useTheme } from "../Theme";
 
 const boxStyles = {
   boxSizing: "border-box",
   minWidth: "0px",
-  m: 0,
-  p: 0,
+  margin: 0,
+  padding: 0,
   border: 0,
   listStyle: "none"
 };
@@ -36,6 +34,98 @@ const fitChildHeightStyles = {
     height: "100% !important"
   }
 };
+
+import styled from "styled-components";
+
+export const styledProvider = theme => {
+  return (...args) => {
+    let as = "div";
+    let obj = args[0];
+    let extraProps = args[1];
+
+    if (typeof args[0] === "string") {
+      as = args[0];
+      obj = args[1];
+      extraProps = args[2];
+    }
+
+    return styledBox(as, obj, extraProps, theme);
+  };
+};
+
+export function styledBox(as, obj, extraProps = {}, theme) {
+  if (typeof obj !== "object") {
+    throw new Error("Dupa, can't use function");
+  }
+
+  const { fitW, fitH, noFocus, ...restProps } = extraProps;
+
+  const rootStyles = {
+    ...boxStyles,
+    ...(fitW && fitChildStyles),
+    ...(fitH && fitChildHeightStyles),
+    ...((theme.hideFocus || noFocus) && focusReset)
+  };
+
+  let hasFunctions = false;
+
+  // static styles calculated only once in styledBox function. dynamicStyles must be recalculated at runtime
+  let staticStyles = {};
+
+  for (let key in obj) {
+    if (typeof obj[key] === "function") {
+      hasFunctions = true;
+    } else {
+      staticStyles[key] = obj[key];
+    }
+  }
+
+  staticStyles = css(staticStyles)(theme); // compile static styles
+
+  let dynamicStyles;
+
+  if (hasFunctions) {
+    dynamicStyles = props => {
+      let dynamicStyles = {};
+
+      for (let key in obj) {
+        if (typeof obj[key] === "function") {
+          dynamicStyles[key] = obj[key](props);
+        } else {
+          // newObj[key] = obj[key];
+        }
+      }
+
+      dynamicStyles = css(dynamicStyles)(theme); // compile static styles
+
+      return dynamicStyles;
+    };
+  }
+
+  const result = [rootStyles, staticStyles];
+  if (dynamicStyles) {
+    result.push(dynamicStyles);
+  }
+
+  console.log(result);
+
+  const RawDiv = styled(as)(...result);
+
+  // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
+  const Component = props => {
+    if (props.__portals__) {
+      return (
+        <>
+          {props.__portals__}
+          <RawDiv {...restProps} {...props} />
+        </>
+      );
+    }
+    return React.createElement(RawDiv, props);
+  };
+
+  return Component;
+}
 
 function Box_(props) {
   let {

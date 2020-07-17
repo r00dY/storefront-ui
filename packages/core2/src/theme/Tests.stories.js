@@ -59,14 +59,59 @@ const RenderTest = () => {
 };
 export const renders = () => <RenderTest />;
 
-/** @jsx jsx */
-import { css, jsx } from "@emotion/core";
-import styled from "@emotion/styled";
+// import {css, jsx} from "@emotion/core";
+// import styled from "@emotion/styled";
+import styled from "styled-components";
+import theme from "./theme";
 
-const CustomBox = styled.div(props => ({
-  padding: "10px",
-  color: props.on ? "red" : "black"
-}));
+import { styledProvider } from "@commerce-ui/core/Box";
+
+const styledBox = styledProvider(theme);
+
+// const CustomBox = styled.div(props => ({
+//     padding: "10px",
+//     color: props.on ? "red" : "black"
+// }), theme);
+
+const MyBox = styledBox(
+  {
+    p: [10, 20, 30, 40, 50],
+    color: "red"
+  },
+  undefined,
+  theme
+);
+
+const MyBoxWrapper = styledBox(
+  {
+    color: "red",
+    bg: "antiquewhite",
+    width: 500,
+    height: 500,
+    marginBottom: 32
+  },
+  { fitW: true, fitH: true },
+  theme
+);
+
+// const Wrapper = styledBox({
+//     width: 200,
+//     height: 200
+// }, theme);
+//
+const MyBoxDynamic = styledBox(
+  {
+    p: [10, 20, 30, 40, 50],
+    color: props => (props.x ? "red" : "blue")
+  },
+  undefined,
+  theme
+);
+
+const TestBox = styled.div({
+  padding: 10,
+  color: "blue"
+});
 
 export const emotion = () => {
   const [x, setX] = useState(false);
@@ -77,27 +122,41 @@ export const emotion = () => {
   //     color: ${x ? "red" : "black"}
   // `;
 
-  const sth = css([
-    {
-      padding: "10px",
-      backgroundColor: "yellow"
-    },
-    {
-      color: x ? "red" : "black"
-    }
-  ]);
+  // const sth = css([
+  //     {
+  //         padding: "10px",
+  //         backgroundColor: "yellow"
+  //     },
+  //     {
+  //         color: x ? "red" : "black"
+  //     }
+  // ]);
 
   const items = [];
   for (let i = 0; i < 1000; i++) {
+    // items.push(
+    //   <Box
+    //     sx={{
+    //       p: [10, 20, 30, 40, 50]
+    //     }}
+    //   >
+    //     Dupa
+    //   </Box>
+    // );
+
+    items.push(<MyBox>Dupa</MyBox>); // ultra fast!
     items.push(
-      <Box
-        sx={{
-          p: [10, 20, 30, 40, 50]
-        }}
-      >
+      <MyBox data-dupa={"test"} x={x}>
         Dupa
-      </Box>
-    );
+      </MyBox>
+    ); // quite fast (especially on prod)
+    items.push(
+      <MyBoxDynamic data-dupa={"test"} x={x}>
+        Dupa
+      </MyBoxDynamic>
+    ); // a lot of one-time optimisations, not bad
+
+    // items.push(<TestBox x={x}>test</TestBox>)
 
     // items.push(<CustomBox>Dupa</CustomBox>)
 
@@ -111,16 +170,16 @@ export const emotion = () => {
   }
 
   return (
-    <Box
-      sx={{
-        p: [10, 20, 30, 40, 50]
-      }}
-    >
-      <div css={sth}>test</div>
+    <div style={{ padding: 50 }}>
+      {/*<MyBoxWrapper fitW fitH>*/}
+      {/*<div style={{border: "1px solid black"}}>Dupa</div>*/}
+      {/*</MyBoxWrapper>*/}
+
+      {/*<div css={sth}>test</div>*/}
       <button onClick={() => setX(!x)}>change</button>
 
       {items}
-    </Box>
+    </div>
   );
 };
 
