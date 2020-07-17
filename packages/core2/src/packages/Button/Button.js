@@ -4,7 +4,7 @@ import useHover from "../useHover";
 import ButtonRaw from "../ButtonRaw";
 
 function ButtonProvider(LinkType) {
-  return props => {
+  return React.forwardRef((props, ref) => {
     // look
     let {
       disabled,
@@ -20,7 +20,7 @@ function ButtonProvider(LinkType) {
     } = props;
 
     let buttonRefInternal = useRef(null);
-    buttonRef = buttonRef || buttonRefInternal;
+    buttonRef = buttonRef || ref || buttonRefInternal;
 
     const isHovered = useHover(buttonRef);
 
@@ -72,7 +72,7 @@ function ButtonProvider(LinkType) {
         {typeof children === "function" ? children(state) : children}
       </Component>
     );
-  };
+  });
 }
 
 export default ButtonProvider;

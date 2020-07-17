@@ -107,8 +107,6 @@ export function styledBox(as, obj, extraProps = {}, theme) {
     result.push(dynamicStyles);
   }
 
-  console.log(result);
-
   const RawDiv = styled(as)(...result);
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.

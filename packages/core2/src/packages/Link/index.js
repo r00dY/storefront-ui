@@ -26,4 +26,4 @@ function Link(props) {
   );
 }
 
-export default Link;
+export default React.forwardRef((props, ref) => <Link {...props} _ref={ref} />);

@@ -11,6 +11,7 @@ function NewLink(props) {
     replace,
     scroll,
     shallow,
+    _ref,
     ...restProps
   } = props;
 
@@ -18,9 +19,11 @@ function NewLink(props) {
 
   return (
     <LinkNext {...nextLinkProps} passHref>
-      <Link {...restProps} href={href} />
+      <Link {...restProps} href={href} ref={_ref} />
     </LinkNext>
   );
 }
 
-export default NewLink;
+export default React.forwardRef((props, ref) => (
+  <NewLink {...props} _ref={ref} />
+));
