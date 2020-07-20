@@ -9,9 +9,9 @@ import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 const LinkCustom = props => (
   <Link
     {...props}
-    sx={({ hovered }) => ({
+    sx={({ isHovered }) => ({
       p: 6,
-      bg: hovered ? "yellow" : "antiquewhite",
+      bg: isHovered ? "yellow" : "antiquewhite",
       color: "black"
     })}
   />

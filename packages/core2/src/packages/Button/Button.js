@@ -2,77 +2,94 @@ import React, { useRef, useState } from "react";
 import { createElement, getElementSpec, splitSx } from "..";
 import useHover from "../useHover";
 import ButtonRaw from "../ButtonRaw";
+import Box from "../Box";
 
-function ButtonProvider(LinkType) {
-  return React.forwardRef((props, ref) => {
-    // look
-    let {
-      disabled,
-      children,
-      label,
-      selected,
-      buttonRef,
-      isLoading,
-      href,
-      sx,
-      onClick,
-      ...restProps
-    } = props;
+const commonResetStyles = {
+  position: "relative",
+  display: "inline-block",
+  verticalAlign: "top"
+};
 
-    let buttonRefInternal = useRef(null);
-    buttonRef = buttonRef || ref || buttonRefInternal;
+const buttonResetStyles = {
+  border: "none",
+  margin: 0,
+  padding: 0,
+  width: "auto",
+  overflow: "visible",
+  background: "transparent",
+  color: "inherit",
+  font: "inherit",
+  lineHeight: "normal",
+  fontSmooth: "inherit",
+  appearance: "none",
+  ":not(:disabled)": {
+    cursor: "pointer"
+  },
+  textAlign: "left"
+};
 
-    const isHovered = useHover(buttonRef);
+const linkResetStyles = {
+  color: "inherit",
+  textDecoration: "none",
+  boxSizing: "border-box"
+};
 
-    const state = {
-      selected,
-      disabled,
-      isHovered,
-      isLoading,
-      loading: isLoading,
-      hovered: isHovered
+const Button = React.forwardRef((props, ref) => {
+  // look
+  let {
+    disabled,
+    children,
+    label,
+    selected,
+    buttonRef,
+    isLoading,
+    href,
+    forceLink = false,
+    sx,
+    __minimalLinkStyling = false, // this is only for the purpose of Link component (which can't be button).
+    ...restProps
+  } = props;
+
+  let buttonRefInternal = useRef(null);
+  buttonRef = buttonRef || ref || buttonRefInternal;
+
+  const isHovered = useHover(buttonRef);
+
+  const state = {
+    selected,
+    disabled,
+    isHovered,
+    isLoading,
+    loading: isLoading,
+    hovered: isHovered
+  };
+
+  sx = typeof sx === "function" ? sx(state) : sx;
+
+  const [css, customSx] = splitSx(sx);
+
+  const mainProps = {
+    ref: buttonRef
+  };
+
+  if (href || forceLink) {
+    mainProps.sx = {
+      ...(!__minimalLinkStyling && commonResetStyles),
+      ...linkResetStyles,
+      ...sx
     };
+    mainProps.as = "a";
+    mainProps.href = href;
+  } else {
+    mainProps.sx = { ...commonResetStyles, ...buttonResetStyles, ...sx };
+    mainProps.as = "button";
+  }
 
-    sx = typeof sx === "function" ? sx(state) : sx;
+  return (
+    <Box {...restProps} {...mainProps}>
+      {typeof children === "function" ? children(state) : children}
+    </Box>
+  );
+});
 
-    const [css, customSx] = splitSx(sx);
-
-    const componentProps = {
-      ...restProps,
-      sx: {
-        $css: [
-          {
-            position: "relative",
-            display: "inline-block",
-            verticalAlign: "top"
-          },
-          css
-        ]
-      },
-      ref: buttonRef
-    };
-
-    const Component = href ? LinkType : ButtonRaw;
-
-    if (!href) {
-      componentProps.disabled = disabled;
-    } else {
-      componentProps.href = href;
-    }
-
-    return (
-      <Component
-        {...componentProps}
-        onClick={(...args) => {
-          if (onClick) {
-            onClick(...args);
-          }
-        }}
-      >
-        {typeof children === "function" ? children(state) : children}
-      </Component>
-    );
-  });
-}
-
-export default ButtonProvider;
+export default Button;
