@@ -3,9 +3,9 @@ import Button from "../Button";
 import NextLink from "next/link";
 
 const NextButton = React.forwardRef((props, ref) => {
-  const {
+  let {
     href,
-    external = false,
+    external,
     forceLink = false,
     as,
     passHref,
@@ -17,6 +17,18 @@ const NextButton = React.forwardRef((props, ref) => {
   } = props;
 
   const nextLinkProps = { href, as, prefetch, replace, scroll, shallow };
+
+  if (external === undefined) {
+    // if not given, default is based on href
+    if (
+      typeof href === "string" &&
+      (href.startsWith("http://") || href.startsWith("https://"))
+    ) {
+      external = true;
+    } else {
+      external = false;
+    }
+  }
 
   if ((href || forceLink) && !external) {
     return (
