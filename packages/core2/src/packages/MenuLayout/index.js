@@ -254,16 +254,53 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
       }}
     >
       <Box
-        sx={
-          takesSpace
+        sx={{
+          position: "relative",
+          zIndex: 0,
+
+          ...(takesSpace
             ? {}
             : {
                 transform: !open ? "translateY(-100%)" : "none",
                 transition: "transform .35s cubic-bezier(0.19, 1, 0.22, 1)"
-              }
-        }
+              })
+        }}
         className={"__menubar__"}
       >
+        <Box
+          sx={{
+            position: "absolute",
+            zIndex: -1,
+            width: "100%",
+            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            pointerEvents: "none", // VERY IMPORTANT!!!!
+            display: "flex",
+            justifyContent: "center",
+            opacity: 0
+          }}
+          className={"__menubarshade__"}
+        />
+
+        <Box
+          sx={{
+            position: "absolute",
+            zIndex: 0,
+            width: "100%",
+            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            overflow: "hidden",
+            pointerEvents: "none", // VERY IMPORTANT!!!!
+            display: "flex",
+            justifyContent: "center"
+          }}
+        >
+          <Box
+            sx={{
+              pointerEvents: "auto"
+            }}
+            className={"__menulayerstop__"}
+          />
+        </Box>
+
         {takesSpace && (
           <ShowHide isOpen={open} stickToBottom={true}>
             {bar}
@@ -533,11 +570,22 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
 /**
  * For now only uncontrolled (button + layer)
  */
+
+const defaultBackgroundOverlay = {
+  color: "black",
+  opacity: 0.5,
+  animationTime: 0.3,
+  animationEase: "linear"
+};
+
 function useDialogs({
   items,
   openOnHover = true,
   backgroundStyles = ({ isVisible }) => ({ opacity: isVisible ? 1 : 0 }),
-  animationTimeout = 0
+  animationTimeout = 0,
+  onChange,
+  positionedRelativeToTop = false,
+  backgroundOverlay = null
 }) {
   const layers = items;
 
@@ -586,6 +634,21 @@ function useDialogs({
       activeKey = key;
     }
   });
+
+  const cachedNodes = useRef(null);
+
+  if (mounted && !cachedNodes.current) {
+    const menuBar = Object.values(state)[0].buttonRef.current.closest(
+      ".__menubar__"
+    );
+
+    cachedNodes.current = {
+      portal: menuBar.querySelector(
+        positionedRelativeToTop ? ".__menulayerstop__" : ".__menulayers__"
+      ), // TODO: could be done better
+      shade: menuBar.querySelector(".__menubarshade__")
+    };
+  }
 
   const getPosition = key => {
     if (key === null) {
@@ -695,6 +758,7 @@ function useDialogs({
         isVisible: false,
         noTransition: true
       });
+
       // backgroundRef.current.style.width = "100%";
       // backgroundRef.current.style.height = "100%";
       //
@@ -773,6 +837,13 @@ function useDialogs({
     });
 
     setSwitchingState(true);
+
+    if (onChange) {
+      onChange({
+        oldKey: activeKey,
+        newKey: key
+      });
+    }
   };
 
   useLayoutEffect(
@@ -807,6 +878,18 @@ function useDialogs({
         // containerRef.current.style.left = `${50 * index}px`;
         containerRef.current.style.transition =
           "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+
+        if (backgroundOverlay) {
+          const config = Object.assign(
+            defaultBackgroundOverlay,
+            backgroundOverlay
+          );
+          cachedNodes.current.shade.style.transition = `opacity ${
+            config.animationTime
+          }s ${config.animationEase}`;
+          cachedNodes.current.shade.style.backgroundColor = "black";
+          cachedNodes.current.shade.style.opacity = config.opacity;
+        }
       } else {
         // backgroundRef.current.style.width = "100%";
         // backgroundRef.current.style.height = 0;
@@ -821,6 +904,8 @@ function useDialogs({
         applyBackgroundStyles({
           isVisible: false
         });
+
+        cachedNodes.current.shade.style.opacity = 0;
 
         // const bs = backgroundStyles({ isVisible: false });
         // for (let x in bs) {
@@ -984,9 +1069,7 @@ function useDialogs({
 
         {contents}
       </Box>,
-      Object.values(state)[0]
-        .buttonRef.current.closest(".__menubar__")
-        .querySelector(".__menulayers__") // TODO: could be done better
+      cachedNodes.current.portal
     );
 
   buttons[0] = React.cloneElement(buttons[0], { __portals__: portal });
@@ -995,7 +1078,8 @@ function useDialogs({
     buttons,
     hide: () => {
       switchLayer(null);
-    }
+    },
+    isOpen: isAnyActive
   };
 }
 
@@ -1005,7 +1089,9 @@ function Dialog(props) {
     children,
     openOnHover,
     backgroundStyles,
-    animationTimeout
+    animationTimeout,
+    positionedRelativeToTop,
+    onChange
   } = props;
 
   const { buttons, layers } = useDialogs({
@@ -1018,7 +1104,9 @@ function Dialog(props) {
     ],
     openOnHover,
     backgroundStyles,
-    animationTimeout
+    animationTimeout,
+    positionedRelativeToTop,
+    onChange
   });
 
   return buttons[0];

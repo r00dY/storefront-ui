@@ -117,20 +117,30 @@ function FiltersBar({ isStuck }) {
   );
 }
 
-function SmallMenu({ width = "auto", wrapWithContainer = false, ...props }) {
+function SmallMenu({
+  width = "auto",
+  bg = "white",
+  wrapWithContainer = false,
+  items = [
+    "First item",
+    "Second item",
+    "Third item",
+    "Lorem ipsum dolor sit amet"
+  ],
+  ...props
+}) {
   const content = (
     <Box
       sx={{
         p: "s9",
-        backgroundColor: "white",
+        backgroundColor: bg,
         boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
       }}
     >
       <Grid cols={1} rowGap={"s5"}>
-        <Box sx={{ font: "body" }}>First item</Box>
-        <Box sx={{ font: "body" }}>Second item</Box>
-        <Box sx={{ font: "body" }}>Third item</Box>
-        <Box sx={{ font: "body" }}>Lorem ipsum dolor sit amet</Box>
+        {items.map(x => (
+          <Box sx={{ font: "body" }}>{x}</Box>
+        ))}
       </Grid>
     </Box>
   );
@@ -164,12 +174,17 @@ function Notification({ width, height, onClose }) {
   );
 }
 
-function MenuBar(props) {
+function MenuBar({
+  hasBorder = true,
+  bg = "white",
+  logoColor = "black",
+  children
+}) {
   return (
     <Box
       sx={{
         borderBottomColor: "neutral",
-        borderBottomWidth: 1,
+        borderBottomWidth: hasBorder ? 1 : 0,
         borderBottomStyle: "solid"
       }}
     >
@@ -181,11 +196,13 @@ function MenuBar(props) {
             justifyContent: "center",
             alignItems: "center",
             height: 70,
-            bg: "white",
+            bg: bg,
             position: "relative"
           }}
         >
-          <Box sx={{ width: 160, height: 16, border: "1px dotted black" }} />
+          <Box
+            sx={{ width: 160, height: 16, border: `1px dotted ${logoColor}` }}
+          />
 
           <Box
             sx={{
@@ -197,33 +214,7 @@ function MenuBar(props) {
               alignItems: "center"
             }}
           >
-            <MenuLayout.Dialog
-              button={<MyButton>Link 1</MyButton>}
-              offsetY={10}
-            >
-              <SmallMenu />
-            </MenuLayout.Dialog>
-            <Box sx={{ width: 16 }} />
-            <MenuLayout.Dialog
-              button={<MyButton>Link 2</MyButton>}
-              offsetY={10}
-            >
-              <SmallMenu />
-            </MenuLayout.Dialog>
-            <Box sx={{ width: 16 }} />
-            <MenuLayout.Dialog
-              button={<MyButton>Link 3</MyButton>}
-              anchoredTo={"window"}
-            >
-              <SmallMenu width={"100vw"} />
-            </MenuLayout.Dialog>
-            <Box sx={{ width: 16 }} />
-            <MenuLayout.Dialog
-              button={<MyButton>Link 4</MyButton>}
-              anchoredTo={"window"}
-            >
-              <SmallMenu width={"100vw"} wrapWithContainer={true} />
-            </MenuLayout.Dialog>
+            {children}
           </Box>
         </Box>
       </Container>
@@ -297,7 +288,29 @@ export const mango = () => {
       offset={70}
     >
       <MenuLayout.MenuBar takesSpace={false} open={menuOpen}>
-        <MenuBar />
+        <MenuBar>
+          <MenuLayout.Dialog button={<MyButton>Link 1</MyButton>} offsetY={10}>
+            <SmallMenu />
+          </MenuLayout.Dialog>
+          <Box sx={{ width: 16 }} />
+          <MenuLayout.Dialog button={<MyButton>Link 2</MyButton>} offsetY={10}>
+            <SmallMenu />
+          </MenuLayout.Dialog>
+          <Box sx={{ width: 16 }} />
+          <MenuLayout.Dialog
+            button={<MyButton>Link 3</MyButton>}
+            anchoredTo={"window"}
+          >
+            <SmallMenu width={"100vw"} />
+          </MenuLayout.Dialog>
+          <Box sx={{ width: 16 }} />
+          <MenuLayout.Dialog
+            button={<MyButton>Link 4</MyButton>}
+            anchoredTo={"window"}
+          >
+            <SmallMenu width={"100vw"} wrapWithContainer={true} />
+          </MenuLayout.Dialog>
+        </MenuBar>
       </MenuLayout.MenuBar>
 
       <TitleSection>PLP Name</TitleSection>
@@ -364,6 +377,146 @@ export const mango = () => {
           Shop frames below or pick five pairs to try for free
         </HeroSection>
       </Box>
+    </MenuLayout>
+  );
+};
+
+export const transparent = () => {
+  const direction = useScrollDirection();
+  const isNotAtTop = useScrollSegment({
+    from: 700
+  });
+
+  return (
+    <MenuLayout
+      contentAbove={<Announcemenet>Some example announcement</Announcemenet>}
+    >
+      <MenuLayout.MenuBar takesSpace={true}>
+        <MenuBar hasBorder={false} bg={"transparent"}>
+          <MenuLayout.Dialog
+            button={<MyButton>Link 1</MyButton>}
+            anchoredTo={"window"}
+            positionedRelativeToTop={true}
+            animationTimeout={250}
+            onChange={x => {
+              console.log("change", x);
+            }}
+          >
+            {({ isVisible }) => (
+              <Box
+                sx={{
+                  transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
+                  opacity: isVisible ? 1 : 0
+                }}
+              >
+                <SmallMenu bg={"lavender"} width={"100vw"} />
+              </Box>
+            )}
+          </MenuLayout.Dialog>
+
+          <Box sx={{ width: 16 }} />
+
+          <MenuLayout.Dialog
+            button={<MyButton>Link 2</MyButton>}
+            anchoredTo={"window"}
+            positionedRelativeToTop={true}
+            animationTimeout={250}
+            onChange={x => {
+              console.log("change", x);
+            }}
+          >
+            {({ isVisible }) => (
+              <Box
+                sx={{
+                  transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
+                  opacity: isVisible ? 1 : 0
+                }}
+              >
+                <SmallMenu
+                  bg={"antiquewhite"}
+                  width={"100vw"}
+                  items={["one", "two", "three", "four", "five"]}
+                />
+              </Box>
+            )}
+          </MenuLayout.Dialog>
+        </MenuBar>
+      </MenuLayout.MenuBar>
+
+      <TitleSection>PLP Name</TitleSection>
+
+      <ProductsGrid />
+    </MenuLayout>
+  );
+};
+
+export const transparentTest = () => {
+  const direction = useScrollDirection();
+  const isNotAtTop = useScrollSegment({
+    from: 700
+  });
+
+  const menu = MenuLayout.useDialogs({
+    animationTimeout: 400,
+    positionedRelativeToTop: true,
+    backgroundOverlay: {
+      opacity: 0.3
+    },
+    items: [
+      {
+        button: <MyButton>Link 1</MyButton>,
+        content: ({ isVisible }) => (
+          <Box
+            sx={{
+              transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
+              opacity: isVisible ? 1 : 0
+            }}
+          >
+            <SmallMenu bg={"lavender"} width={"100vw"} />
+          </Box>
+        ),
+        anchoredTo: "window"
+      },
+      {
+        button: <MyButton>Link 2</MyButton>,
+        content: ({ isVisible }) => (
+          <Box
+            sx={{
+              transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
+              opacity: isVisible ? 1 : 0
+            }}
+          >
+            <SmallMenu
+              bg={"antiquewhite"}
+              width={"100vw"}
+              items={["one", "two", "three", "four", "five"]}
+            />
+          </Box>
+        ),
+        anchoredTo: "window"
+      }
+    ]
+  });
+
+  return (
+    <MenuLayout
+      contentAbove={<Announcemenet>Some example announcement</Announcemenet>}
+    >
+      <MenuLayout.MenuBar takesSpace={true}>
+        <MenuBar
+          hasBorder={false}
+          bg={"transparent"}
+          logoColor={menu.isOpen ? "red" : "black"}
+        >
+          {menu.buttons[0]}
+          <Box sx={{ width: 16 }} />
+          {menu.buttons[1]}
+        </MenuBar>
+      </MenuLayout.MenuBar>
+
+      <TitleSection>PLP Name</TitleSection>
+
+      <ProductsGrid />
     </MenuLayout>
   );
 };
