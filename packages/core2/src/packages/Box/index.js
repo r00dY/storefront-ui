@@ -35,7 +35,7 @@ const fitChildHeightStyles = {
   }
 };
 
-import styled from "styled-components";
+import styled from "@emotion/styled";
 
 export const styledProvider = theme => {
   return (...args) => {
@@ -110,17 +110,17 @@ export function styledBox(as, obj, extraProps = {}, theme) {
   const RawDiv = styled(as)(...result);
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
-  const Component = props => {
+  const Component = React.forwardRef((props, ref) => {
     if (props.__portals__) {
       return (
         <>
           {props.__portals__}
-          <RawDiv {...restProps} {...props} />
+          <RawDiv {...restProps} {...props} ref={ref} />
         </>
       );
     }
-    return React.createElement(RawDiv, props);
-  };
+    return React.createElement(RawDiv, { ...props, ref });
+  });
 
   return Component;
 }
