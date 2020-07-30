@@ -391,7 +391,8 @@ class Image extends React.Component {
       loading,
       specialStyles,
       sx,
-      draggable
+      draggable,
+      ignoreBottomPadding
     } = convertProps(this.props);
 
     const shouldReveal = this.state.fadeIn === false || this.state.imgLoaded;
@@ -448,7 +449,8 @@ class Image extends React.Component {
           <Tag
             sx={{
               width: "100%",
-              paddingBottom: specialStyles.paddingBottom
+              paddingBottom: specialStyles.paddingBottom,
+              display: ignoreBottomPadding ? "none" : "block"
             }}
           />
 

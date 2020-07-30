@@ -1,6 +1,7 @@
 import React from "react";
 // import { RangeMap } from "responsive-helpers";
 import GatsbyImage from "./gatsby-image";
+import Box from "../Box";
 
 import { responsiveValueForEach, responsiveValueMap, splitSx } from "../index";
 
@@ -38,6 +39,7 @@ function Image$(props) {
     objectFit,
     objectPosition,
     style,
+    ignoreBottomPadding = false,
     children
   } = props;
 
@@ -53,7 +55,8 @@ function Image$(props) {
     draggable,
     children,
     className,
-    style
+    style,
+    ignoreBottomPadding
   };
 
   src = src || image;
@@ -73,21 +76,33 @@ function Image$(props) {
 
   let variant = aspectRatio || "natural";
 
-  responsiveValueForEach(variant, (val, breakpoint) => {
-    let variant = findVariant(image, val);
+  if (!image || !Array.isArray(image.variants)) {
+    // If no variants / no image
+    console.warn("Image is empty or doesn't have 'variants' field");
+  } else {
+    responsiveValueForEach(variant, (val, breakpoint) => {
+      let variant = findVariant(image, val);
 
-    if (!variant) {
-      variant = findVariant(image, "natural");
-    }
+      if (!variant) {
+        variant = findVariant(image, "natural");
+      }
 
-    sources.unshift({
-      srcSet: getSrcset(image, variant.name),
-      src: variant.srcset[0].url,
-      sizes: sizes,
-      media: breakpoint ? `(min-width: ${breakpoint})` : `(min-width: 0px)`,
-      aspectRatio: variant.aspectRatio
+      if (!variant) {
+        // If variant not found
+        console.warn("Image doesn't have natural variant");
+      }
+
+      sources.unshift({
+        srcSet: getSrcset(image, variant.name),
+        src: variant.srcset[0].url,
+        sizes: sizes,
+        media: breakpoint ? `(min-width: ${breakpoint})` : `(min-width: 0px)`,
+        aspectRatio: variant.aspectRatio
+      });
     });
-  });
+  }
+
+  const noImage = sources.length === 0;
 
   const paddingBottom = responsiveValueMap(aspectRatio, x => {
     let ratio;
@@ -99,11 +114,26 @@ function Image$(props) {
     }
 
     if (!ratio) {
-      ratio = src.variants.find(x => x.name === "natural").aspectRatio;
+      if (noImage) {
+        return 0;
+      } else {
+        ratio = src.variants.find(x => x.name === "natural").aspectRatio;
+      }
     }
 
     return `${(1 / ratio) * 100}%`;
   });
+
+  if (noImage) {
+    return (
+      <Box
+        sx={{
+          pb: paddingBottom,
+          bg: backgroundColor
+        }}
+      />
+    );
+  }
 
   // const paddingBottom = aspectRatio
   //     ? responsiveValueMap($aspectRatio, x => `${x * 100}%`)

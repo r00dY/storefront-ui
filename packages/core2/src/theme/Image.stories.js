@@ -107,6 +107,32 @@ export const basic = () => (
           component: (
             <Image image={catImage} aspectRatio={[5, null, 4, null, 3]} />
           )
+        },
+        {
+          name: "Empty image",
+          component: <Image image={{}} backgroundColor={"antiquewhite"} />
+        },
+        {
+          name: "Empty image (with aspect ratio)",
+          component: (
+            <Image
+              image={{}}
+              aspectRatio={[5, null, 4, null, 3]}
+              backgroundColor={"antiquewhite"}
+            />
+          )
+        },
+        {
+          name: "No padding-bottom",
+          component: (
+            <Box sx={{ border: "1px solid black", height: 800 }} fitW fitH>
+              <Image
+                image={catImage}
+                objectFit={"contain"}
+                ignoreBottomPadding
+              />
+            </Box>
+          )
         }
       ]}
     />
