@@ -5,7 +5,7 @@ import Button from "@commerce-ui/core/Button";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
-const ButtonCustom = props => {
+const ButtonCustom = React.forwardRef((props, ref) => {
   const [on, setOn] = useState(false);
 
   useEffect(() => {
@@ -30,6 +30,7 @@ const ButtonCustom = props => {
         border: selected ? "1px solid black" : "none",
         color: "black"
       })}
+      ref={ref}
     >
       {({ loading }) => (
         <>
@@ -38,10 +39,11 @@ const ButtonCustom = props => {
       )}
     </Button>
   );
-};
+});
 
 export const basic = () => {
   const exampleRef = useRef(null);
+  const testRef = useRef(null);
 
   useEffect(() => {
     console.log("### BUTTON EXAMPLE REF ###", exampleRef);
@@ -76,9 +78,14 @@ export const basic = () => {
             )
           },
           {
-            name: "Component",
+            name: "Component (+ callback ref)",
             component: (
-              <ButtonCustom onClick={() => alert("clicked!")}>
+              <ButtonCustom
+                onClick={() => alert("clicked!")}
+                ref={element => {
+                  console.log("callback ref", element);
+                }}
+              >
                 Lorem ipsum dolor sit amet
               </ButtonCustom>
             )

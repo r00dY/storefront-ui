@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import Dialog from "@commerce-ui/core/Dialog";
 import Box from "@commerce-ui/core/Box";
+import Link from "@commerce-ui/core/Link";
 
 import Button from "../Button/Button";
 
@@ -242,6 +243,39 @@ export const standardDialogWithButton = () => {
         container={{ p: "s8" }}
       >
         <Content />
+      </Dialog>
+
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+      <Paragraph sx={{ my: 36, color: "mono300" }} />
+
+      <Box as={"p"} sx={{ mb: "s9" }}>
+        Link inside dialog -> automatic hide.
+      </Box>
+
+      <Dialog
+        placement={["bottom", null, null, "bottomLeft"]}
+        anchoredTo={["window", null, null, "button"]}
+        height={["90vh", null, null, "auto"]}
+        maxHeight={["auto", null, null, 400]}
+        width={["100vw", null, null, 400]}
+        button={<Button>Open</Button>}
+        root={{
+          boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)",
+          bg: "mono100"
+        }}
+        container={{ p: "s8" }}
+        hideOnLinkClick={true}
+      >
+        <Box sx={{ p: 20 }}>
+          <Link
+            href={"#"}
+            onClick={e => {
+              e.preventDefault();
+            }}
+          >
+            Click me!
+          </Link>
+        </Box>
       </Dialog>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />

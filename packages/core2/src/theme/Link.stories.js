@@ -6,7 +6,7 @@ import Link from "@commerce-ui/core/Link";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
 
-const LinkCustom = props => (
+const LinkCustom = React.forwardRef((props, ref) => (
   <Link
     {...props}
     sx={({ isHovered }) => ({
@@ -15,7 +15,7 @@ const LinkCustom = props => (
       color: "black"
     })}
   />
-);
+));
 
 export const basic = () => {
   const exampleRef = useRef(null);
@@ -37,9 +37,16 @@ export const basic = () => {
             )
           },
           {
-            name: "Component",
+            name: "Component (callback ref)",
             component: (
-              <LinkCustom href={"#"}>Lorem ipsum dolor sit amet</LinkCustom>
+              <LinkCustom
+                href={"#"}
+                ref={element => {
+                  console.log("callback ref", element);
+                }}
+              >
+                Lorem ipsum dolor sit amet
+              </LinkCustom>
             )
           },
           {

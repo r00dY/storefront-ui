@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { createElement, getElementSpec, splitSx } from "..";
 import useHover from "../useHover";
 import ButtonRaw from "../ButtonRaw";
@@ -50,10 +50,11 @@ const Button = React.forwardRef((props, ref) => {
     ...restProps
   } = props;
 
-  let buttonRefInternal = useRef(null);
-  buttonRef = buttonRef || ref || buttonRefInternal;
+  ref = buttonRef || ref; // buttonRef is legacy, backward compatibility
 
-  const isHovered = useHover(buttonRef);
+  const hoverRef = useRef(null);
+
+  const isHovered = useHover(hoverRef);
 
   const state = {
     selected,
@@ -69,7 +70,17 @@ const Button = React.forwardRef((props, ref) => {
   const [css, customSx] = splitSx(sx);
 
   const mainProps = {
-    ref: buttonRef
+    ref: element => {
+      hoverRef.current = element;
+
+      // We must remember that ref that is passed here can be function or object! However, for internal use (useHover) we need object.
+
+      if (typeof ref === "function") {
+        ref(element);
+      } else if (buttonRef) {
+        ref.current = element;
+      }
+    }
   };
 
   if (href || forceLink) {

@@ -5,6 +5,7 @@ import Box from "@commerce-ui/core/Box";
 import { useTheme } from "@commerce-ui/core/Theme";
 import MenuLayout from "@commerce-ui/core/MenuLayout";
 import Button from "./Button/Button";
+import Link from "@commerce-ui/core/Link";
 
 import Button$ from "@commerce-ui/core/Button";
 
@@ -13,6 +14,8 @@ import Grid from "@commerce-ui/core/Grid";
 
 import { useNotificationSystem } from "@commerce-ui/core/NotificationSystem";
 import Dialog from "@commerce-ui/core/Dialog";
+
+import runOnRouteChange from "@commerce-ui/core/runOnRouteChange";
 
 import useScrollDirection from "@commerce-ui/core/useScrollDirection";
 
@@ -86,6 +89,13 @@ const MenuContent = ({
         {items.map((item, index) => (
           <Box key={index}>{item}</Box>
         ))}
+        <Button
+          onClick={() => {
+            runOnRouteChange();
+          }}
+        >
+          Mock route change
+        </Button>
       </Grid>
 
       {rightBox && (
@@ -193,7 +203,8 @@ export const basic = () => {
         button: <MenuButton>Lorem</MenuButton>,
         content: ({ isVisible }) => (
           <MenuContent items={ITEMS1} isVisible={isVisible} />
-        )
+        ),
+        hideOnLinkClick: true
       },
       {
         button: <MenuButton>Ipsum</MenuButton>,

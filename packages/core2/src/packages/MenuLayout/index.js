@@ -12,6 +12,7 @@ import { useTheme } from "../Theme";
 
 import ShowHide from "../ShowHide";
 import Grid from "../Grid";
+import { jsx } from "../index";
 
 const useLayoutEffect =
   typeof window === "object" ? useLayoutEffect_ : useEffect;
@@ -957,6 +958,28 @@ function useDialogs({
     }
   };
 
+  // on route change!
+  useEffect(
+    () => {
+      const onRouteChange = () => {
+        onHover(null, 0);
+      };
+
+      if (!window.__cui_onRouteChange) {
+        window.__cui_onRouteChange = [];
+      }
+
+      window.__cui_onRouteChange.push(onRouteChange);
+
+      return () => {
+        window.__cui_onRouteChange = window.__cui_onRouteChange.filter(
+          x => x !== onRouteChange
+        );
+      };
+    },
+    [activeKey]
+  );
+
   layers.forEach((layer, index) => {
     const key = (layer.key || index).toString();
 
@@ -1090,6 +1113,7 @@ function Dialog(props) {
     openOnHover,
     backgroundStyles,
     animationTimeout,
+    hideOnLinkClick,
     positionedRelativeToTop,
     onChange
   } = props;

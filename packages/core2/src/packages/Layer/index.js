@@ -681,7 +681,7 @@ function useOnClickOutside(nodes, callback) {
   });
 }
 
-function getLayout(children, header, footer) {
+function getLayout(children, header, footer, onLinkClick) {
   const containerSx = {
     display: "flex",
     flexDirection: "column",
@@ -694,7 +694,14 @@ function getLayout(children, header, footer) {
   };
 
   return (
-    <Box sx={containerSx}>
+    <Box
+      sx={containerSx}
+      onClick={e => {
+        if (e.target && e.target.tagName === "A") {
+          onLinkClick();
+        }
+      }}
+    >
       {header && (
         <Box
           sx={{
@@ -735,6 +742,7 @@ function LayerWithHeaderAndFooter(props) {
     footer,
     container,
     focusLock = false,
+    hideOnLinkClick = false,
     ...restProps
   } = props;
 
@@ -760,7 +768,12 @@ function LayerWithHeaderAndFooter(props) {
         {typeof children === "function" ? children(params) : children}
       </Box>,
       typeof header === "function" ? header(params) : header,
-      typeof footer === "function" ? footer(params) : footer
+      typeof footer === "function" ? footer(params) : footer,
+      () => {
+        if (hideOnLinkClick) {
+          params.close();
+        }
+      }
     );
 
   let output;
