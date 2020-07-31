@@ -120,6 +120,19 @@ export const uncontrolled = () => {
         )}
         selectable={<ItemRow />}
       />
+
+      <Box as={"p"} sx={{ my: "s9" }}>
+        disabled (disabled value as defaultValue), allowEmpty = false
+      </Box>
+
+      <MySelect
+        options={optionsWithDisabled}
+        defaultValue={optionsWithDisabled[0]}
+        button={({ value }) => (
+          <Button>{value === null ? "Select" : value.label}</Button>
+        )}
+        selectable={<ItemRow />}
+      />
     </Box>
   );
 };

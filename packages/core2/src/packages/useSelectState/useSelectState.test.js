@@ -38,6 +38,23 @@ const animalsWithNumberIds = [
   }
 ];
 
+const animalsWithDisabledOptions = [
+  {
+    id: "cat",
+    disabled: true
+  },
+  {
+    id: "dog",
+    disabled: true
+  },
+  {
+    id: "hog"
+  },
+  {
+    id: "cow"
+  }
+];
+
 test("works in uncontrolled state / allowEmpty=true / no default", () => {
   const onChange = jest.fn(val => val);
 
@@ -481,4 +498,94 @@ test("number ids work", () => {
   //
   // expect(onChange.mock.calls.length).toBe(2);
   // expect(onChange.mock.results[1].value.id).toBe(1);
+});
+
+test("uncontrolled, allowEmpty=true, disabled options", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsWithDisabledOptions,
+      onChange,
+      allowEmpty: true
+    })
+  );
+
+  expect(result.current.value).toBe(null);
+
+  act(() => {
+    result.current.setValue("cat"); // select disabled option
+  });
+
+  expect(onChange.mock.calls.length).toBe(0);
+  expect(result.current.value).toBe(null);
+
+  act(() => {
+    result.current.setValue("cow"); // select enabled option
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(result.current.value.id).toBe("cow");
+
+  act(() => {
+    result.current.setValue("dog"); // select disabled option
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(result.current.value.id).toBe("cow");
+});
+
+test("uncontrolled, allowEmpty=true, disabled options, defaultValue set as disabled", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsWithDisabledOptions,
+      onChange,
+      allowEmpty: true,
+      defaultValue: "cat"
+    })
+  );
+
+  expect(result.current.value).toBe(null);
+});
+
+test("controlled state: disabled options, allowEmpty=true", () => {
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsWithDisabledOptions,
+      value: "cat"
+    })
+  );
+
+  expect(result.current.value).toBeNull();
+});
+
+/**
+ * TODO: fix that if allowEmpty=false and defaultOption is disabled then we must select first possible option.
+ */
+test("uncontrolled, allowEmpty=false, disabled options, defaultValue set as disabled (first non-disabled option should be turned on)", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsWithDisabledOptions,
+      onChange,
+      allowEmpty: false,
+      defaultValue: "cat"
+    })
+  );
+
+  expect(result.current.value.id).toBe("hog");
+});
+
+test("controlled state: disabled options, allowEmpty=false (first non-disabled option should be turned on)", () => {
+  const { result } = renderHook(() =>
+    useSelectState({
+      options: animalsWithDisabledOptions,
+      value: "cat"
+    })
+  );
+
+  expect(result.current.value.id).toBe("hog");
 });

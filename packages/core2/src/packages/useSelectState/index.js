@@ -73,6 +73,7 @@ export const normalizeSelectValue = (options, val, allowEmpty) => {
       : val.toString();
   let valueObject = options.find(o => o.id === valueId);
   val = valueObject || (allowEmpty ? null : options[0]);
+
   return val;
 };
 
@@ -99,8 +100,13 @@ function useSelectState(props) {
   // UNCONTROLLED ONLY IF: value === "undefined"
   const isControlled = typeof value !== "undefined";
 
+  const normalizedValue = normalizeSelectValue(
+    options,
+    defaultValue,
+    allowEmpty
+  );
   let [internalValue, setInternalValue] = useState(
-    normalizeSelectValue(options, defaultValue, allowEmpty)
+    normalizedValue && normalizedValue.disabled ? null : normalizedValue
   );
 
   const currentValue = isControlled ? value : internalValue;
@@ -133,7 +139,8 @@ export function useSelectState_controlled(props) {
 
   // Let's see if value or defaultValue is one from the options list or not
 
-  const currentValue = normalizeSelectValue(options, value, allowEmpty);
+  let currentValue = normalizeSelectValue(options, value, allowEmpty);
+  currentValue = currentValue && currentValue.disabled ? null : currentValue;
 
   const setValue = newVal => {
     newVal = normalizeSelectValue(options, newVal, allowEmpty);
@@ -142,6 +149,9 @@ export function useSelectState_controlled(props) {
       return;
     }
     if (newVal && currentValue && newVal.id === currentValue.id) {
+      return;
+    }
+    if (newVal && newVal.disabled) {
       return;
     }
 
