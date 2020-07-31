@@ -5,7 +5,7 @@ import useSelectState from "../useSelectState";
 export function getSelectableProps(controller, props, config = {}) {
   const { value, options, setValue, multi, isSelected } = controller;
 
-  const { allowUnselect = true } = config;
+  const { allowUnselect = true } = config; // this flag is important. In dropdown select even if we have allowEmpty=true, clicking on selected option doesn't unselect it. It does for SelectInline however.
 
   const selectableProps = options.map(option => {
     return {
