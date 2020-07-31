@@ -2,8 +2,10 @@ import React from "react";
 
 import useSelectState from "../useSelectState";
 
-export function getSelectableProps(controller, props) {
+export function getSelectableProps(controller, props, config = {}) {
   const { value, options, setValue, multi, isSelected } = controller;
+
+  const { allowUnselect = true } = config;
 
   const selectableProps = options.map(option => {
     return {
@@ -16,8 +18,11 @@ export function getSelectableProps(controller, props) {
       key: option.id,
       label: option.label,
       onClick: () => {
+        if (option.disabled) {
+          return;
+        }
         if (controller.isSelected(option)) {
-          if (multi || props.allowEmpty !== false) {
+          if (multi || (props.allowEmpty !== false && allowUnselect)) {
             controller.unselectValue(option);
           }
         } else {

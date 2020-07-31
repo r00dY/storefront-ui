@@ -175,7 +175,9 @@ function Select2(props) {
     <Layer {...layerProps} button={React.cloneElement(button, buttonProps)}>
       {({ close }) => {
         let items = [];
-        let selectableProps = getSelectableProps(controller, props);
+        let selectableProps = getSelectableProps(controller, props, {
+          allowUnselect: false
+        });
 
         selectableProps = selectableProps.map(props => ({
           ...props,

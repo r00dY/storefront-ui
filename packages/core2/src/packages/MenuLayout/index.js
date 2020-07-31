@@ -302,13 +302,15 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
           />
         </Box>
 
-        {takesSpace && (
-          <ShowHide isOpen={open} stickToBottom={true}>
-            {bar}
-          </ShowHide>
-        )}
+        <Box className={"__menubarcontent__"}>
+          {takesSpace && (
+            <ShowHide isOpen={open} stickToBottom={true}>
+              {bar}
+            </ShowHide>
+          )}
 
-        {!takesSpace && bar}
+          {!takesSpace && bar}
+        </Box>
 
         <Box
           sx={{
@@ -605,6 +607,8 @@ function useDialogs({
     };
   });
 
+  console.log(initState);
+
   const anchorRects = useRef({}); // we cache anchor rects for now, not to call getBoundingClientRect every render
 
   const containerRef = useRef(null);
@@ -644,6 +648,7 @@ function useDialogs({
     );
 
     cachedNodes.current = {
+      content: menuBar.querySelector(".__menubarcontent__"),
       portal: menuBar.querySelector(
         positionedRelativeToTop ? ".__menulayerstop__" : ".__menulayers__"
       ), // TODO: could be done better
@@ -957,6 +962,46 @@ function useDialogs({
       }, timeout);
     }
   };
+
+  console.log("active key", activeKey);
+  // on menu hover!!!
+
+  useEffect(
+    () => {
+      if (!mounted) {
+        return;
+      }
+
+      if (!positionedRelativeToTop) {
+        return;
+      }
+
+      const onMouseOver = () => {
+        // onHover(activeKey);
+      };
+
+      const onMouseOut = () => {
+        // onHover(null);
+      };
+
+      cachedNodes.current.content.addEventListener("mouseover", onMouseOver);
+      cachedNodes.current.content.addEventListener("mouseout", onMouseOut);
+
+      return () => {
+        cachedNodes.current.content.removeEventListener(
+          "mouseover",
+          onMouseOver
+        );
+        cachedNodes.current.content.removeEventListener(
+          "mouseover",
+          onMouseOut
+        );
+      };
+    },
+    [mounted, activeKey]
+  );
+
+  console.log(activeKey);
 
   // on route change!
   useEffect(
