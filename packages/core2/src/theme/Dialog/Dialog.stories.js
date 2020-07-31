@@ -7,6 +7,8 @@ import Button from "../Button/Button";
 
 import Paragraph from "../Paragraph";
 
+import runOnRouteChange from "@commerce-ui/core/runOnRouteChange";
+
 const generateParagraphs = n => {
   let items = [];
   for (let i = 0; i < n; i++) {
@@ -249,7 +251,7 @@ export const standardDialogWithButton = () => {
       <Paragraph sx={{ my: 36, color: "mono300" }} />
 
       <Box as={"p"} sx={{ mb: "s9" }}>
-        Link inside dialog -> automatic hide.
+        On route change -> automatic close
       </Box>
 
       <Dialog
@@ -264,17 +266,15 @@ export const standardDialogWithButton = () => {
           bg: "mono100"
         }}
         container={{ p: "s8" }}
-        hideOnLinkClick={true}
       >
         <Box sx={{ p: 20 }}>
-          <Link
-            href={"#"}
-            onClick={e => {
-              e.preventDefault();
+          <Button
+            onClick={() => {
+              runOnRouteChange();
             }}
           >
-            Click me!
-          </Link>
+            Mock route change
+          </Button>
         </Box>
       </Dialog>
 

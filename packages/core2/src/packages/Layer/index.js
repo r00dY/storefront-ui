@@ -384,6 +384,27 @@ function Layer$(props) {
     [isOpen]
   );
 
+  // on route change!
+  useEffect(() => {
+    const onRouteChange = () => {
+      if (onClose) {
+        onClose();
+      }
+    };
+
+    if (!window.__cui_onRouteChange) {
+      window.__cui_onRouteChange = [];
+    }
+
+    window.__cui_onRouteChange.push(onRouteChange);
+
+    return () => {
+      window.__cui_onRouteChange = window.__cui_onRouteChange.filter(
+        x => x !== onRouteChange
+      );
+    };
+  }, []);
+
   useEffect(
     () => {
       if (!isOpen) {
@@ -856,7 +877,7 @@ function Layer$$({ button, ...layerProps }) {
   });
 
   if (!button) {
-    return <LayerWithHeaderAndFooter {...layerProps} />;
+    return <LayerWithHeaderAndFooter {...layerProps} onClose={onClose} />;
   }
 
   return React.cloneElement(button, {
