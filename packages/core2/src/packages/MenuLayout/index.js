@@ -152,6 +152,7 @@ function MenuLayout(props) {
             width: "100%",
             zIndex: 100
           }}
+          id={"__menubarsticky__"}
         >
           {/*<Box sx={{position: "absolute", top: 0, width: "100%"}}>*/}
           <MenuBarsContainer bars={fixedBars} />
@@ -607,8 +608,6 @@ function useDialogs({
     };
   });
 
-  console.log(initState);
-
   const anchorRects = useRef({}); // we cache anchor rects for now, not to call getBoundingClientRect every render
 
   const containerRef = useRef(null);
@@ -963,7 +962,6 @@ function useDialogs({
     }
   };
 
-  console.log("active key", activeKey);
   // on menu hover!!!
 
   useEffect(
@@ -1000,8 +998,6 @@ function useDialogs({
     },
     [mounted, activeKey]
   );
-
-  console.log(activeKey);
 
   // on route change!
   useEffect(
