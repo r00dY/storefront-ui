@@ -119,6 +119,11 @@ function useFilters({ data, onChange }) {
     let filter = data.find(x => x.id === id);
     newValue = normalizeFilterValue({ ...filter, value: newValue });
 
+    if (areEqual(newValue, localValues.current[id])) {
+      // don't run onChange when requesting same change
+      return;
+    }
+
     localValues.current[id] = newValue;
 
     if (!isSoft) {
@@ -157,23 +162,27 @@ function useFilters({ data, onChange }) {
     }
 
     const selectProps = soft =>
-      (item.type === "select" || item.type === "multiselect") && {
-        options: item.options,
-        allowEmpty: true,
-        value: item.value,
-        onChange: newVal => setValue(item.id, newVal, soft)
-      };
+      item.type === "select" || item.type === "multiselect"
+        ? {
+            options: item.options,
+            allowEmpty: true,
+            value: item.value,
+            onChange: newVal => setValue(item.id, newVal, soft)
+          }
+        : undefined;
 
     const rangePickerProps = soft =>
-      item.type === "range" && {
-        min: item.min,
-        max: item.max,
-        allowEmpty: item.allowEmpty,
-        value: item.value,
-        onChange: (newVal, isCommit) => {
-          setValue(item.id, newVal, !isCommit || soft);
-        }
-      };
+      item.type === "range"
+        ? {
+            min: item.min,
+            max: item.max,
+            allowEmpty: item.allowEmpty,
+            value: item.value,
+            onChange: (newVal, isCommit) => {
+              setValue(item.id, newVal, !isCommit || soft);
+            }
+          }
+        : undefined;
 
     const clearButtonProps = soft => ({
       onClick: () => {

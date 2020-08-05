@@ -480,6 +480,11 @@ test("initial values work", () => {
             ...x,
             value: "grey"
           };
+        } else if (x.id === "price") {
+          return {
+            ...x,
+            value: { from: 15, to: 1000 }
+          };
         }
         return x;
       }),
@@ -491,6 +496,10 @@ test("initial values work", () => {
   expect(result.current.filters[1].isEmpty).toBe(true);
   expect(result.current.filters[2].isEmpty).toBe(false);
   expect(result.current.filters[3].isEmpty).toBe(true);
+  expect(result.current.filters[4].isEmpty).toBe(true);
+  expect(result.current.filters[5].isEmpty).toBe(false);
+
+  console.log(result.current.filters[5]);
 });
 
 test("number IDs work", () => {
@@ -603,4 +612,27 @@ test("clearAll works with default values", () => {
   expect(result.current.filters[1].isEmpty).toBe(true);
   expect(result.current.filters[2].isEmpty).toBe(true);
   expect(result.current.filters[3].isEmpty).toBe(true);
+});
+
+test("onChange doesnt run when filter state didn't change", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
 });
