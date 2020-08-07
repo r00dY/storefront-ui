@@ -43,9 +43,13 @@ space.gridGap = [10, 20, 30, 30, 30];
 
 space.containerMarginSecondary = "30vw";
 
-space.notificationSystemOffset = 16;
+// space.notificationSystemOffset = 16;
 space.notificationSystemSeparator = 16;
 space.notificationSystemWidth = 300;
+
+space.notificationSystemOffsetX = [0, null, null, "containerMargin"];
+
+space.notificationSystemOffsetY = [0, null, null, 10];
 
 const theme = {
   colors: {

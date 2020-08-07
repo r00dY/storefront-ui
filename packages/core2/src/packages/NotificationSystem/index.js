@@ -11,6 +11,58 @@ const NotificationsContext = React.createContext({});
 // TODO: make alerts visually-hidden instead of removing from DOM
 // TODO: make it possible to show notification into ref
 
+// notificationSystemOffset
+// notificationSystemOffsetX notificationSystemOffsetY, notificationSystemMenuOffsetY notificationSystemMenuOffsetX
+
+export function getNotificationOffset(theme) {
+  const s = theme.space;
+
+  const top = {
+    x: s.notificationSystemOffsetX || s.notificationSystemOffset || 0,
+    y: s.notificationSystemOffsetY || s.notificationSystemOffset || 0
+  };
+
+  const bottom = {
+    x: s.notificationSystemOffsetX || s.notificationSystemOffset || 0,
+    y: s.notificationSystemOffsetY || s.notificationSystemOffset || 0
+  };
+
+  const topMenu = {
+    x:
+      s.notificationSystemOffsetMenuX ||
+      s.notificationSystemOffsetMenu ||
+      s.notificationSystemOffsetX ||
+      s.notificationSystemOffset ||
+      0,
+    y:
+      s.notificationSystemOffsetMenuY ||
+      s.notificationSystemOffsetMenu ||
+      s.notificationSystemOffsetY ||
+      s.notificationSystemOffset ||
+      0
+  };
+
+  return {
+    top,
+    bottom,
+    topMenu
+  };
+
+  // if (placement === "topLeft") {
+  //   topLeft.push(content);
+  //   topMobile.push(content);
+  // } else if (placement === "topRight") {
+  //   topRight.push(content);
+  //   topMobile.push(content);
+  // } else if (placement === "bottomLeft") {
+  //   bottomLeft.push(content);
+  //   bottomMobile.push(content);
+  // } else if (placement === "bottomRight") {
+  //
+  //
+  // }
+}
+
 export function NotificationSystemProvider({ children }) {
   const [mounted, setMounted] = useState(false);
   const { currentValue } = useResponsiveHelpers();
@@ -73,6 +125,10 @@ export function NotificationSystemProvider({ children }) {
     let topRight = [];
     let topMobile = [];
 
+    let topLeftMenu = [];
+    let topRightMenu = [];
+    let topMobileMenu = [];
+
     let bottomLeft = [];
     let bottomRight = [];
     let bottomMobile = [];
@@ -80,7 +136,7 @@ export function NotificationSystemProvider({ children }) {
     const refs = new Map();
 
     notifications.forEach(notification => {
-      const placement = currentValue(notification.placement); // TODO: this function can't use hook!!!
+      let placement = currentValue(notification.placement); // TODO: this function can't use hook!!!
 
       let content =
         typeof notification.content === "function"
@@ -99,6 +155,13 @@ export function NotificationSystemProvider({ children }) {
       );
 
       if (typeof placement === "string") {
+        // Menu placement is replaced by standard placement when dialogs are open
+        if (placement === "topLeftMenu" && isLayerOpen) {
+          placement = "topLeft";
+        } else if (placement === "topRightMenu" && isLayerOpen) {
+          placement = "topRight";
+        }
+
         if (placement === "topLeft") {
           topLeft.push(content);
           topMobile.push(content);
@@ -111,6 +174,12 @@ export function NotificationSystemProvider({ children }) {
         } else if (placement === "bottomRight") {
           bottomRight.push(content);
           bottomMobile.push(content);
+        } else if (placement === "topLeftMenu") {
+          topLeftMenu.push(content);
+          topMobileMenu.push(content);
+        } else if (placement === "topRightMenu") {
+          topRightMenu.push(content);
+          topMobileMenu.push(content);
         } else {
           throw new Error(
             "unknown position " + placement + " for notification"
@@ -135,29 +204,60 @@ export function NotificationSystemProvider({ children }) {
     });
 
     portals = [
+      // ReactDOM.createPortal(
+      //   topLeft,
+      //   document.getElementById(
+      //     isLayerOpen
+      //       ? "__notifications-topLeft__"
+      //       : "__notifications-menu-topLeft__"
+      //   ) || document.getElementById("__notifications-topLeft__") // if there's no menu we must default
+      // ),
+      // ReactDOM.createPortal(
+      //   topRight,
+      //   document.getElementById(
+      //     isLayerOpen
+      //       ? "__notifications-topRight__"
+      //       : "__notifications-menu-topRight__"
+      //   ) || document.getElementById("__notifications-topRight__")
+      // ),
+      // ReactDOM.createPortal(
+      //   topMobile,
+      //   document.getElementById(
+      //     isLayerOpen
+      //       ? "__notifications-topMobile__"
+      //       : "__notifications-menu-topMobile__"
+      //   ) || document.getElementById("__notifications-topMobile__")
+      // ),
+
+      ReactDOM.createPortal(
+        topLeftMenu,
+        document.getElementById("__notifications-menu-topLeft__") ||
+          document.getElementById("__notifications-topLeft__")
+      ),
+
+      ReactDOM.createPortal(
+        topRightMenu,
+        document.getElementById("__notifications-menu-topRight__") ||
+          document.getElementById("__notifications-topRight__")
+      ),
+
+      ReactDOM.createPortal(
+        topMobileMenu,
+        document.getElementById("__notifications-menu-topMobile__") ||
+          document.getElementById("__notifications-topMobile__")
+      ),
+
       ReactDOM.createPortal(
         topLeft,
-        document.getElementById(
-          isLayerOpen
-            ? "__notifications-topLeft__"
-            : "__notifications-menu-topLeft__"
-        ) || document.getElementById("__notifications-topLeft__") // if there's no menu we must default
+        document.getElementById("__notifications-topLeft__")
       ),
       ReactDOM.createPortal(
         topRight,
-        document.getElementById(
-          isLayerOpen
-            ? "__notifications-topRight__"
-            : "__notifications-menu-topRight__"
-        ) || document.getElementById("__notifications-topRight__")
+        document.getElementById("__notifications-topRight__")
       ),
       ReactDOM.createPortal(
         topMobile,
-        document.getElementById(
-          isLayerOpen
-            ? "__notifications-topMobile__"
-            : "__notifications-menu-topMobile__"
-        ) || document.getElementById("__notifications-topMobile__")
+        document.getElementById("__notifications-topMobile__")
       ),
       ReactDOM.createPortal(
         bottomLeft,

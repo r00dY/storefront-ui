@@ -7,9 +7,14 @@ import Grid from "../Grid";
 import { css, Global, jsx } from "@emotion/core";
 
 import GridDebugger from "../GridDebugger";
-import { NotificationSystemProvider } from "../NotificationSystem";
+import {
+  NotificationSystemProvider,
+  getNotificationOffset
+} from "../NotificationSystem";
 
 export default ({ theme, children }) => {
+  const offset = getNotificationOffset(theme);
+
   return (
     <ThemeProvider theme={theme}>
       <NotificationSystemProvider>
@@ -52,8 +57,8 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              top: "notificationSystemOffset",
-              left: "notificationSystemOffset",
+              top: offset.top.y,
+              left: offset.top.x,
               width: theme.space.notificationSystemWidth,
               display: ["none", null, "block"]
             }}
@@ -68,8 +73,8 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              top: "notificationSystemOffset",
-              right: "notificationSystemOffset",
+              top: offset.top.y,
+              right: offset.top.x,
               width: theme.space.notificationSystemWidth,
               display: ["none", null, "block"]
             }}
@@ -84,9 +89,9 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              top: "notificationSystemOffset",
-              right: "notificationSystemOffset",
-              left: "notificationSystemOffset",
+              top: offset.top.y,
+              right: offset.top.x,
+              left: offset.top.x,
               display: ["block", null, "none"]
             }}
           >
@@ -100,8 +105,8 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              bottom: "notificationSystemOffset",
-              left: "notificationSystemOffset",
+              bottom: offset.top.y,
+              left: offset.top.x,
               width: theme.space.notificationSystemWidth,
               display: ["none", null, "block"]
             }}
@@ -116,8 +121,8 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              bottom: "notificationSystemOffset",
-              right: "notificationSystemOffset",
+              bottom: offset.top.y,
+              right: offset.top.x,
               width: theme.space.notificationSystemWidth,
               display: ["none", null, "block"]
             }}
@@ -132,9 +137,9 @@ export default ({ theme, children }) => {
           <Box
             sx={{
               position: "fixed",
-              bottom: "notificationSystemOffset",
-              right: "notificationSystemOffset",
-              left: "notificationSystemOffset",
+              bottom: offset.top.y,
+              right: offset.top.x,
+              left: offset.top.x,
               display: ["block", null, "none"]
             }}
           >
