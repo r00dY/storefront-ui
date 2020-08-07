@@ -11,7 +11,7 @@ const commonResetStyles = {
 };
 
 const buttonResetStyles = {
-  border: "none",
+  border: 0,
   margin: 0,
   padding: 0,
   width: "auto",
@@ -92,7 +92,7 @@ const Button = React.forwardRef((props, ref) => {
     mainProps.as = "a";
     mainProps.href = href;
   } else {
-    mainProps.sx = { ...commonResetStyles, ...buttonResetStyles, ...sx };
+    mainProps.sx = [{ ...commonResetStyles, ...buttonResetStyles }, sx];
     mainProps.as = "button";
   }
 

@@ -142,17 +142,29 @@ function useFilters({ data, onChange }) {
   let isAnyDirty = false;
   let areAllEmpty = true;
 
+  const currentData = getDataWithCurrentValues();
+
+  currentData.forEach(item => {
+    if (item.isDirty) {
+      isAnyDirty = true;
+    }
+
+    if (!item.isEmpty) {
+      areAllEmpty = false;
+    }
+  });
+
   const commit = () => {
     committedValues.current = { ...localValues.current };
     const newData = getDataWithCurrentValues();
 
-    if (onChange) {
+    if (onChange && isAnyDirty) {
       onChange(newData);
     }
     setCounter(counter + 1);
   };
 
-  const filters = getDataWithCurrentValues().map((item, index) => {
+  const filters = currentData.map((item, index) => {
     if (item.isDirty) {
       isAnyDirty = true;
     }

@@ -53,84 +53,99 @@ export const basic = () => {
     <Box sx={{ maxWidth: "800px" }}>
       <StoryWrapper
         stories={[
+          // {
+          //     name: "Standard",
+          //     component: (
+          //         <Button
+          //             sx={{color: "red", font: "body2"}}
+          //             onClick={() => alert("clicked!")}
+          //             ref={exampleRef}
+          //         >
+          //             Lorem ipsum dolor sit amet
+          //         </Button>
+          //     )
+          // },
+          // {
+          //     name: "Standard as href",
+          //     component: (
+          //         <Button
+          //             href={"#"}
+          //             sx={{color: "red"}}
+          //             onClick={() => alert("clicked!")}
+          //         >
+          //             Lorem ipsum dolor sit amet
+          //         </Button>
+          //     )
+          // },
+          // {
+          //     name: "Component (+ callback ref)",
+          //     component: (
+          //         <ButtonCustom
+          //             onClick={() => alert("clicked!")}
+          //             ref={element => {
+          //                 console.log("callback ref", element);
+          //             }}
+          //         >
+          //             Lorem ipsum dolor sit amet
+          //         </ButtonCustom>
+          //     )
+          // },
+          // {
+          //     name: "Selected",
+          //     component: (
+          //         <ButtonCustom onClick={() => alert("clicked!")} selected>
+          //             Lorem ipsum dolor sit amet
+          //         </ButtonCustom>
+          //     )
+          // },
+          // {
+          //     name: "Loading",
+          //     component: (
+          //         <ButtonCustom onClick={() => alert("clicked!")} isLoading>
+          //             Lorem ipsum dolor sit amet
+          //         </ButtonCustom>
+          //     )
+          // },
+          // {
+          //     name: "fitW + fitH",
+          //     component: (
+          //         <Box sx={{width: 300, height: 300}} fitW fitH>
+          //             <ButtonCustom onClick={() => alert("clicked!")}>
+          //                 Lorem ipsum dolor sit amet
+          //             </ButtonCustom>
+          //         </Box>
+          //     )
+          // },
+          // {
+          //     name: "Compound component inside (with callbacks)",
+          //     component: (
+          //         <Button onClick={() => alert("clicked!")}>
+          //             {({hovered}) => (
+          //                 <Box
+          //                     sx={{
+          //                         bg: hovered ? "red" : "coral",
+          //                         color: "white",
+          //                         p: 16
+          //                     }}
+          //                 >
+          //                     Content
+          //                 </Box>
+          //             )}
+          //         </Button>
+          //     )
+          // },
           {
-            name: "Standard",
+            name: "Button with border (reset shouldn't override it)",
             component: (
               <Button
-                sx={{ color: "red", font: "body2" }}
-                onClick={() => alert("clicked!")}
-                ref={exampleRef}
-              >
-                Lorem ipsum dolor sit amet
-              </Button>
-            )
-          },
-          {
-            name: "Standard as href",
-            component: (
-              <Button
-                href={"#"}
-                sx={{ color: "red" }}
-                onClick={() => alert("clicked!")}
-              >
-                Lorem ipsum dolor sit amet
-              </Button>
-            )
-          },
-          {
-            name: "Component (+ callback ref)",
-            component: (
-              <ButtonCustom
-                onClick={() => alert("clicked!")}
-                ref={element => {
-                  console.log("callback ref", element);
+                sx={{
+                  borderWidth: "1px",
+                  borderColor: "red",
+                  borderStyle: "solid"
                 }}
+                onClick={() => alert("clicked!")}
               >
                 Lorem ipsum dolor sit amet
-              </ButtonCustom>
-            )
-          },
-          {
-            name: "Selected",
-            component: (
-              <ButtonCustom onClick={() => alert("clicked!")} selected>
-                Lorem ipsum dolor sit amet
-              </ButtonCustom>
-            )
-          },
-          {
-            name: "Loading",
-            component: (
-              <ButtonCustom onClick={() => alert("clicked!")} isLoading>
-                Lorem ipsum dolor sit amet
-              </ButtonCustom>
-            )
-          },
-          {
-            name: "fitW + fitH",
-            component: (
-              <Box sx={{ width: 300, height: 300 }} fitW fitH>
-                <ButtonCustom onClick={() => alert("clicked!")}>
-                  Lorem ipsum dolor sit amet
-                </ButtonCustom>
-              </Box>
-            )
-          },
-          {
-            name: "Compound component inside (with callbacks)",
-            component: (
-              <Button onClick={() => alert("clicked!")}>
-                {({ hovered }) => (
-                  <Box
-                    sx={{
-                      bg: hovered ? "red" : "coral",
-                      color: "white",
-                      p: 16
-                    }}
-                  >
-                    Content
-                  </Box>
-                )}
               </Button>
             )
           }
