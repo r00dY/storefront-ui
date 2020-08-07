@@ -290,25 +290,27 @@ export const mango = () => {
       <MenuLayout.MenuBar takesSpace={false} open={menuOpen}>
         <MenuBar>
           <MenuLayout.Dialog button={<MyButton>Link 1</MyButton>} offsetY={10}>
-            <SmallMenu />
+            <SmallMenu width={400} />
           </MenuLayout.Dialog>
           <Box sx={{ width: 16 }} />
           <MenuLayout.Dialog button={<MyButton>Link 2</MyButton>} offsetY={10}>
-            <SmallMenu />
+            <SmallMenu width={400} />
           </MenuLayout.Dialog>
           <Box sx={{ width: 16 }} />
           <MenuLayout.Dialog
             button={<MyButton>Link 3</MyButton>}
             anchoredTo={"window"}
+            width={"100%"}
           >
-            <SmallMenu width={"100vw"} />
+            <SmallMenu width={"100%"} />
           </MenuLayout.Dialog>
           <Box sx={{ width: 16 }} />
           <MenuLayout.Dialog
             button={<MyButton>Link 4</MyButton>}
             anchoredTo={"window"}
+            width={"100%"}
           >
-            <SmallMenu width={"100vw"} wrapWithContainer={true} />
+            <SmallMenu wrapWithContainer={true} />
           </MenuLayout.Dialog>
         </MenuBar>
       </MenuLayout.MenuBar>
@@ -469,13 +471,15 @@ export const transparentTest = () => {
           <Box
             sx={{
               transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
-              opacity: isVisible ? 1 : 0
+              opacity: isVisible ? 1 : 0,
+              width: "100%"
             }}
           >
-            <SmallMenu bg={"lavender"} width={"100vw"} />
+            <SmallMenu bg={"lavender"} />
           </Box>
         ),
-        anchoredTo: "window"
+        anchoredTo: "window",
+        width: "100%"
       },
       {
         button: <MyButton>Link 2</MyButton>,
@@ -483,17 +487,19 @@ export const transparentTest = () => {
           <Box
             sx={{
               transition: `opacity .15s linear ${!isVisible ? ".1s" : ""}`,
-              opacity: isVisible ? 1 : 0
+              opacity: isVisible ? 1 : 0,
+              width: "100%"
             }}
           >
             <SmallMenu
               bg={"antiquewhite"}
-              width={"100vw"}
+              width={"100%"}
               items={["one", "two", "three", "four", "five"]}
             />
           </Box>
         ),
-        anchoredTo: "window"
+        anchoredTo: "window",
+        width: "100%"
       }
     ]
   });

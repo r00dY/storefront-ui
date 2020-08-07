@@ -259,6 +259,7 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
         sx={{
           position: "relative",
           zIndex: 0,
+          width: "100%",
 
           ...(takesSpace
             ? {}
@@ -271,10 +272,12 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
       >
         <Box
           sx={{
-            position: "absolute",
+            position: "fixed",
+            top: 0,
+            left: 0,
             zIndex: -1,
             width: "100%",
-            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            height: "100%", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
             pointerEvents: "none", // VERY IMPORTANT!!!!
             display: "flex",
             justifyContent: "center",
@@ -288,8 +291,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             position: "absolute",
             zIndex: 0,
             width: "100%",
-            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
-            overflow: "hidden",
+            // height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            // overflow: "hidden",
             pointerEvents: "none", // VERY IMPORTANT!!!!
             display: "flex",
             justifyContent: "center"
@@ -297,13 +300,14 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
         >
           <Box
             sx={{
+              width: "100%",
               pointerEvents: "auto"
             }}
             className={"__menulayerstop__"}
           />
         </Box>
 
-        <Box className={"__menubarcontent__"}>
+        <Box className={"__menubarcontent__"} sx={{ width: "100%" }}>
           {takesSpace && (
             <ShowHide isOpen={open} stickToBottom={true}>
               {bar}
@@ -318,8 +322,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             position: "absolute",
             zIndex: 1,
             width: "100%",
-            height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
-            overflow: "hidden",
+            // height: "100vh", // VERY IMPORTANT!!!! Makes entire container overflow: hidden so that flying content doesn't create horizontal scroll.
+            // overflow: "hidden",
             pointerEvents: "none", // VERY IMPORTANT!!!!
             display: "flex",
             justifyContent: "center"
@@ -327,7 +331,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
         >
           <Box
             sx={{
-              pointerEvents: "auto"
+              pointerEvents: "auto",
+              width: "100%"
             }}
             className={"__menulayers__"}
           />
@@ -759,10 +764,10 @@ function useDialogs({
     if (isAtInitState) {
       // if coming from empty, we set init state for animation
 
-      applyBackgroundStyles({
-        isVisible: false,
-        noTransition: true
-      });
+      // applyBackgroundStyles({
+      //   isVisible: false,
+      //   noTransition: true
+      // });
 
       // backgroundRef.current.style.width = "100%";
       // backgroundRef.current.style.height = "100%";
@@ -776,10 +781,10 @@ function useDialogs({
 
       const pos = getPosition(key);
 
-      containerRef.current.style.left = `${pos.left}px`;
-      containerRef.current.style.right = `${pos.right}px`;
-      containerRef.current.style.top = `${pos.top}px`;
-      containerRef.current.style.transition = "none";
+      // containerRef.current.style.left = `${pos.left}px`;
+      // containerRef.current.style.right = `${pos.right}px`;
+      // containerRef.current.style.top = `${pos.top}px`;
+      // containerRef.current.style.transition = "none";
     } else {
       // const backgroundRect = backgroundRef.current.getBoundingClientRect();
       // applyBackgroundStyles({
@@ -868,21 +873,21 @@ function useDialogs({
 
         const containerRect = containerRef.current.getBoundingClientRect();
 
-        applyBackgroundStyles({
-          isVisible: true,
-          width: containerRect.width + "px", //"100%",
-          height: containerRect.height + "px" //"100%"
-        });
+        // applyBackgroundStyles({
+        //   isVisible: true,
+        //   width: containerRect.width + "px", //"100%",
+        //   height: containerRect.height + "px" //"100%"
+        // });
 
         const pos = getPosition(activeKey);
 
-        containerRef.current.style.left = `${pos.left}px`;
-        containerRef.current.style.right = `${pos.right}px`;
-        containerRef.current.style.top = `${pos.top}px`;
-
-        // containerRef.current.style.left = `${50 * index}px`;
-        containerRef.current.style.transition =
-          "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
+        // containerRef.current.style.left = `${pos.left}px`;
+        // containerRef.current.style.right = `${pos.right}px`;
+        // containerRef.current.style.top = `${pos.top}px`;
+        //
+        // // containerRef.current.style.left = `${50 * index}px`;
+        // containerRef.current.style.transition =
+        //   "all .35s cubic-bezier(0.19, 1, 0.22, 1)";
 
         if (backgroundOverlay) {
           const config = Object.assign(
@@ -906,9 +911,9 @@ function useDialogs({
         // backgroundRef.current.style.height = "100%";
         // backgroundRef.current.style.transition = "all 2s linear";// cubic-bezier(0.19, 1, 0.22, 1)";
 
-        applyBackgroundStyles({
-          isVisible: false
-        });
+        // applyBackgroundStyles({
+        //   isVisible: false
+        // });
 
         cachedNodes.current.shade.style.opacity = 0;
 
@@ -1060,23 +1065,29 @@ function useDialogs({
           ? layer.content({ isVisible: isActive && !isSwitchingState })
           : layer.content;
 
+      const pos = getPosition(key) || {};
+
       contents.push(
         <Box
           sx={{
-            position:
-              isActive || (activeKey === null && visible)
-                ? "relative"
-                : "absolute",
-            top: 0,
-            left: 0,
+            position: "absolute",
+            // isActive || (activeKey === null && visible)
+            //   ? "relative"
+            //   : "absolute",
+            top: pos.top,
+            left: pos.left,
+            right: pos.right,
+            width: pos.width,
+            // left: 0,
             zIndex: isActive ? 1 : 0,
-            pointerEvents: isActive ? "default" : "none",
-            opacity: visible ? 1 : 0,
+            pointerEvents: isActive ? "auto" : "none",
+            opacity: visible ? 1 : 0
             // left: position.left,
             // right: position.right,
             // top: offsetY,
             // width: "max-content"
-            width: "max-content"
+            // width: "max-content",
+            // width: "100%"
             // width
           }}
           onMouseEnter={() => {
@@ -1113,7 +1124,8 @@ function useDialogs({
           position: "absolute",
           top: 0,
           left: 0,
-          pointerEvents: isAnyActive ? "auto" : "none"
+          pointerEvents: isAnyActive ? "auto" : "none",
+          width: "100%"
         }}
         key={"portal"}
         _ref={containerRef}
@@ -1124,7 +1136,8 @@ function useDialogs({
             top: 0,
             left: 0,
             transformOrigin: "0 0",
-            zIndex: -1
+            zIndex: -1,
+            width: "100%"
             // bg: "white",
             // boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
           }}
