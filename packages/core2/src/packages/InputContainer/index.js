@@ -1,5 +1,5 @@
 /** @jsx jsx */
-import React, { useState, useLayoutEffect, useRef } from "react";
+import React, { useState, useLayoutEffect, useEffect, useRef } from "react";
 import Box from "../Box";
 import HorizontalStack from "../HorizontalStack";
 import { jsx, createElement, getElementSpec, splitSx } from "..";
@@ -87,7 +87,7 @@ function InputContainer$(props) {
     onFocus,
     onBlur,
     onClick,
-    // autoFocus,
+    autoFocus,
     controlRef,
     invalid,
     disabled,
@@ -144,6 +144,12 @@ function InputContainer$(props) {
     typeof customSx.$control === "function"
       ? customSx.$control(state)
       : customSx.$control;
+
+  useEffect(() => {
+    if (autoFocus && controlRef.current.focus) {
+      controlRef.current.focus();
+    }
+  }, []);
 
   const control = React.cloneElement(controlRaw, {
     onFocus: e => {

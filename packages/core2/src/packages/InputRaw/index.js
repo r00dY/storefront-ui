@@ -13,9 +13,10 @@ const inputResetStyles = {
     outline: "none"
   },
 
-  "::-webkit-outer-spin-button, ::-webkit-inner-spin-button": {
+  "::-webkit-outer-spin-button, ::-webkit-inner-spin-button, ::-webkit-search-decoration, ::-webkit-search-cancel-button, ::-webkit-search-results-button, ::-webkit-search-results-decoration": {
     WebkitAppearance: "none"
   },
+  WebkitAppearance: "none",
   MozAppearance: "textfield"
 };
 
