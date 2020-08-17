@@ -226,7 +226,8 @@ export const standardDialogWithButton = () => {
       </Box>
 
       <Box as={"p"} sx={{ mb: "s9" }}>
-        Full width text before dialog -> let's see scroll lock behaviour.
+        Full width text before dialog -> let's see scroll lock behaviour. This
+        demo also has sticky element inside content.
       </Box>
 
       <Paragraph sx={{ my: 36, color: "mono300" }} />
@@ -244,6 +245,21 @@ export const standardDialogWithButton = () => {
         }}
         container={{ p: "s8" }}
       >
+        <Content />
+
+        <Box
+          sx={{
+            position: "sticky",
+            zIndex: 1,
+            top: 0,
+            height: 50,
+            width: "100%",
+            bg: "red"
+          }}
+        />
+
+        <Content />
+
         <Content />
       </Dialog>
 

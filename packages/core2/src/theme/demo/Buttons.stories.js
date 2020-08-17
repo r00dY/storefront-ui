@@ -19,9 +19,9 @@ function Button1(props) {
         height: 48,
         minWidth: 200,
         bg: "antiquewhite",
-        px: "s7"
+        px: ["s2", null, null, "s7"]
       }}
-      gap={"s5"}
+      gap={["s2", null, null, "s7"]}
       iconSize={24}
       {...props}
     />
