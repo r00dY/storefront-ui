@@ -12,6 +12,12 @@ import ButtonRaw from "@commerce-ui/core/ButtonRaw";
 
 const container = ["5vw", null, null, "10vw"];
 
+import Button from "@commerce-ui/core/Button";
+
+import Image from "@commerce-ui/core/Image2";
+
+import { catImage } from "./images";
+
 const boxes = [
   <Box sx={{ height: "200px", bg: "coral", p: 10 }}>Coral</Box>,
   <Box
@@ -348,6 +354,111 @@ export const basic = () => {
                 })}
               >
                 {boxes}
+              </ScrollableStack>
+            </Box>
+          )
+        }
+      ]}
+    />
+  );
+};
+
+export const photoSlider = () => {
+  return (
+    <StoryWrapper
+      stories={[
+        {
+          name: "Dajar",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  width: 600,
+                  $itemsVisible: 1
+                }}
+                previousButton={({ isAtStart }) => ({
+                  button: (
+                    <Button
+                      sx={{
+                        display: isAtStart ? "none" : "block",
+                        color: "white"
+                      }}
+                    >
+                      prev
+                    </Button>
+                  ),
+                  offset: 20
+                })}
+                nextButton={({ isAtEnd }) => ({
+                  button: (
+                    <Button
+                      sx={{
+                        display: isAtEnd ? "none" : "block",
+                        color: "white"
+                      }}
+                    >
+                      next
+                    </Button>
+                  ),
+                  offset: 20
+                })}
+              >
+                <Image aspectRatio={1} objectFit={"cover"} src={catImage} />
+                <Image aspectRatio={1} objectFit={"cover"} src={catImage} />
+              </ScrollableStack>
+            </Box>
+          )
+        },
+        {
+          name: "Dajar - buttons with wrappers",
+          component: (
+            <Box>
+              <ScrollableStack
+                sx={{
+                  width: 600,
+                  $itemsVisible: 1
+                }}
+                previousButton={({ isAtStart }) => ({
+                  button: ({ buttonProps }) => (
+                    <Box
+                      sx={{
+                        width: 50,
+                        height: 50,
+                        bg: "red",
+                        display: isAtStart ? "none" : "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Button sx={{ color: "white" }} {...buttonProps}>
+                        prev
+                      </Button>
+                    </Box>
+                  ),
+                  offset: 20
+                })}
+                nextButton={({ isAtEnd }) => ({
+                  button: ({ buttonProps }) => (
+                    <Box
+                      sx={{
+                        width: 50,
+                        height: 50,
+                        bg: "red",
+                        display: isAtEnd ? "none" : "flex",
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Button sx={{ color: "white" }} {...buttonProps}>
+                        next
+                      </Button>
+                    </Box>
+                  ),
+                  offset: 20
+                })}
+              >
+                <Image aspectRatio={1} objectFit={"cover"} src={catImage} />
+                <Image aspectRatio={1} objectFit={"cover"} src={catImage} />
               </ScrollableStack>
             </Box>
           )

@@ -41,6 +41,23 @@ export const unstyled = () => {
         <p>Placeholder</p>
         <Input type={"text"} placeholder={"Placeholder..."} />
 
+        <p>Clearable</p>
+        <Input
+          type={"text"}
+          placeholder={"First name"}
+          onChange={console.log}
+          clearable={true}
+        />
+
+        <p>Clearable search (with right enhancer)</p>
+        <Input
+          type={"search"}
+          placeholder={"Search phrase"}
+          onChange={console.log}
+          clearable={true}
+          rightEnhancer={"[sth]"}
+        />
+
         <p>ref</p>
 
         <HorizontalStack sx={{ $gutter: "8px" }}>

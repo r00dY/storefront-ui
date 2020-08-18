@@ -47,12 +47,20 @@ function getNextPos(
     }
   }
 
-  return (
+  let pos =
     scrollableContainerRef.current.scrollLeft +
     (closestItem.getBoundingClientRect().left -
       containerRect.left -
-      spacerWidth)
-  );
+      spacerWidth);
+
+  // snap to boundaries (1px problem)
+  pos = Math.ceil(pos);
+
+  if (Math.abs(pos) < 3) {
+    pos = 0;
+  }
+
+  return pos;
 }
 
 function scrollTo(container, pos) {
@@ -333,6 +341,12 @@ function ScrollableStack(props) {
 
     previousButton.offset = previousButton.offset || 0;
     previousButton.hideOnTouch = previousButton.hideOnTouch || true;
+
+    if (typeof previousButton.button === "function") {
+      previousButton.button = previousButton.button({
+        buttonProps: controller.previousButtonProps
+      });
+    }
   }
 
   if (nextButton) {
@@ -350,6 +364,12 @@ function ScrollableStack(props) {
 
     nextButton.offset = nextButton.offset || 0;
     nextButton.hideOnTouch = nextButton.hideOnTouch || true;
+
+    if (typeof nextButton.button === "function") {
+      nextButton.button = nextButton.button({
+        buttonProps: controller.nextButtonProps
+      });
+    }
   }
 
   return (

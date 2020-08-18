@@ -9,7 +9,7 @@ import theme from "./theme";
 
 const styledBox = styledProvider(theme);
 
-console.log("####### START");
+import { styledTest } from "@commerce-ui/core/InputContainer2";
 
 const BoxStandard = styledBox({
   p: ["s5", null, null, "s11"],
@@ -21,7 +21,35 @@ const BoxAsSection = styledBox("section", {
   bg: "mono300"
 });
 
-console.log("####### END");
+const TestComponent = styledTest(
+  {
+    label: {}
+  },
+  styledBox
+);
+
+const TestComponentStyled = styledTest(
+  {
+    label: {
+      p: 30,
+      color: "white",
+      bg: "black"
+    }
+  },
+  styledBox
+);
+
+const TestComponentStyledWithChildren = styledTest(
+  {
+    label: {
+      p: 30,
+      color: "white",
+      bg: "black",
+      __children__: (p, s) => "**** " + s.label + " *****"
+    }
+  },
+  styledBox
+);
 
 export const basic = () => {
   const testRef = useRef(null);
@@ -163,6 +191,23 @@ export const basic = () => {
                 >
                   Click me!
                 </Button>
+              </Box>
+            )
+          },
+          {
+            name: "test1",
+            component: (
+              <Box>
+                <TestComponent>Dupa</TestComponent>
+                <br />
+                <TestComponent isBlue={true}>Dupa</TestComponent>
+                <br />
+                <TestComponentStyled>Dupa</TestComponentStyled>
+                <br />
+                <TestComponentStyledWithChildren>
+                  Dupa
+                </TestComponentStyledWithChildren>
+                <br />
               </Box>
             )
           }

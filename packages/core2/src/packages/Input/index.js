@@ -8,10 +8,12 @@ function isValueEmpty(val) {
 function Input$(props) {
   let { onChange, ...restProps } = props;
 
-  let [isEmpty, setEmpty] = useState(isValueEmpty(props.value));
+  let [value, setValue] = useState(props.value);
+  const isEmpty = isValueEmpty(value);
+  // let [isEmpty, setEmpty] = useState(isValueEmpty(props.value));
 
   const onChangeEvent = (val, e) => {
-    setEmpty(isValueEmpty(val));
+    setValue(val);
 
     if (onChange) {
       onChange(val, e);
@@ -22,12 +24,16 @@ function Input$(props) {
     <InputContainer
       {...restProps}
       empty={isEmpty}
+      onClear={() => {
+        onChangeEvent("", null);
+      }}
       label={props.label || props.placeholder}
       cursor={"text"}
     >
       <InputRaw$
         sx={{ width: "100%", height: "100%" }}
         onChange={onChangeEvent}
+        value={value}
       />
     </InputContainer>
   );
