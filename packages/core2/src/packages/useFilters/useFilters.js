@@ -228,8 +228,12 @@ function useFilters({ data, onChange }) {
     setValue,
     clearAll: isSoft => {
       data.forEach((item, index) => {
-        setValue(item.id, null, isSoft, index === data.length - 1); // only last iteration should run onChange!
+        setValue(item.id, null, isSoft, false); // only last iteration should run onChange!
       });
+
+      if (!isSoft && !areAllEmpty && onChange) {
+        onChange(getDataWithCurrentValues());
+      }
     },
     commit,
     isDirty: isAnyDirty,

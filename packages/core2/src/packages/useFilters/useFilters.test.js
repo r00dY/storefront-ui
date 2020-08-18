@@ -464,6 +464,45 @@ test("clearAll and isEmpty work", () => {
   expect(result.current.filters[3].isEmpty).toBe(true);
 });
 
+test("clearAll works multiple times (between setting values)", () => {
+  const onChange = jest.fn(val => val);
+
+  const { result } = renderHook(() =>
+    useFiltersWrapper({
+      data: filtersData,
+      onChange
+    })
+  );
+
+  act(() => {
+    result.current.setValue("color", "white"); // setValue as id
+  });
+
+  expect(onChange.mock.calls.length).toBe(1);
+  expect(result.current.isEmpty).toBe(false);
+
+  act(() => {
+    result.current.clearAll();
+  });
+
+  expect(result.current.isEmpty).toBe(true);
+  expect(onChange.mock.calls.length).toBe(2);
+
+  act(() => {
+    result.current.setValue("sort", "price-asc"); // setValue as id
+  });
+
+  expect(result.current.isEmpty).toBe(false);
+  expect(onChange.mock.calls.length).toBe(3);
+
+  act(() => {
+    result.current.clearAll();
+  });
+
+  expect(result.current.isEmpty).toBe(true);
+  expect(onChange.mock.calls.length).toBe(4);
+});
+
 test("initial values work", () => {
   const onChange = jest.fn(val => val);
 
