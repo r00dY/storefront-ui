@@ -36,6 +36,8 @@
 //   $labelInside: true
 // };
 
+import Box from "@commerce-ui/core/Box";
+
 const formStyles = {
   $root: ({ focused, disabled, invalid }) => ({
     height: "48px",
@@ -57,7 +59,7 @@ const formStyles = {
     font: "body2"
   },
   $rightEnhancersContainer: {
-    $gutter: "8px",
+    $gutter: "16px",
     pr: "16px",
     font: "body2"
   },
@@ -74,7 +76,8 @@ const formStyles = {
     fontSize: "13px",
     color: "mono700"
   }),
-  $labelInside: true
+  $labelInside: true,
+  $clearElement: <Box sx={{ width: 16, height: 16, bg: "main" }} />
 };
 
 export default formStyles;

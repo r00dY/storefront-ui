@@ -72,10 +72,20 @@ function useSearch(props) {
     }
   };
 
+  const resultsProps = {
+    "aria-hidden": true
+  };
+
+  const submitButtonProps = {
+    type: "submit"
+  };
+
   return {
     inputProps,
     close,
     formProps,
+    resultsProps,
+    submitButtonProps,
     isOpen
   };
 }
@@ -163,13 +173,21 @@ function Search(props) {
 
 export function SearchInline(props) {
   let {
-    input,
-    inputContainer,
+    input, // deprecated
+    inputContainer, // deprecated
+    searchForm,
     children,
     mode = "static" // static / absolute / fixed,
   } = props;
 
-  const { inputProps, close, formProps, isOpen } = useSearch({
+  const {
+    inputProps,
+    submitButtonProps,
+    resultsProps,
+    close,
+    formProps,
+    isOpen
+  } = useSearch({
     ...props,
     closeOnSubmit: false,
     blurOnSubmit: false
@@ -193,6 +211,11 @@ export function SearchInline(props) {
     content = inputContainer({ input });
   } else {
     content = <Box sx={inputContainer}>{input}</Box>;
+  }
+
+  // searchForm overrides old mechanism
+  if (searchForm) {
+    content = searchForm({ inputProps, submitButtonProps });
   }
 
   return (

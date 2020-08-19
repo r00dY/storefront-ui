@@ -81,6 +81,111 @@ const defaults = {
   }
 };
 
+function buildBox(config, override, styledBox) {
+  config = { ...config }; // copy
+  override = { ...override }; // copy
+
+  let configAs = config.__as__;
+  let configChildren = config.__children__;
+  let configProps = config.__props__;
+  delete config.__as__;
+  delete config.__children__;
+  delete config.__props__;
+
+  let overrideAs = override.__as__;
+  let overrideChildren = override.__children__;
+  let overrideProps = override.__props__;
+  delete override.__as__;
+  delete override.__children__;
+  delete override.__props__;
+
+  const as = overrideAs || configAs;
+  const children = overrideChildren || configChildren;
+  const props = overrideProps || configProps;
+
+  const Box__ = styledBox(as, {
+    ...config,
+    ...override
+  });
+
+  return ({ __state__, ...restProps }) => (
+    <Box__ {...restProps} __state__={__state__}>
+      {typeof children === "function"
+        ? children(restProps, __state__)
+        : children}
+    </Box__>
+  );
+}
+
+export function styledTest(config, styledBox) {
+  let {
+    sx,
+    labelInside,
+    label,
+    controlContainer,
+    control,
+    leftEnhancersContainer,
+    leftEnhancersGap,
+    rightEnhancersContainer,
+    rightEnhancersGap,
+    leftIcon,
+    rightIcon
+  } = config;
+
+  // Let's build label
+  const Label = buildBox(
+    {
+      color: (p, s) => (p.isBlue ? "blue" : "red"),
+      bg: "yellow",
+      p: 20,
+      __children__: (p, s) => s.label,
+      __props__: {},
+      __as__: "section"
+    },
+    label,
+    styledBox
+  );
+
+  return props => {
+    return <Label {...props} __state__={{ label: props.children }} />;
+  };
+}
+
+export function styledInputContainer(config, styledBox) {
+  let {
+    sx,
+    labelInside,
+    label,
+    controlContainer,
+    control,
+    leftEnhancersContainer,
+    leftEnhancersGap,
+    rightEnhancersContainer,
+    rightEnhancersGap,
+    leftIcon,
+    rightIcon
+  } = config;
+
+  // Let's build label
+  const Label = buildBox(
+    {
+      position: "absolute",
+      pointerEvents: "none",
+      top: 0,
+      left: 0,
+      opacity: (p, s) => (s.empty ? 0 : 1),
+      __children__: (p, s) => s.label,
+      __props__: {},
+      __as__: "label"
+    },
+    label
+  );
+
+  return props => {
+    return <Label {...props} __state__={state} />;
+  };
+}
+
 function InputContainer$(props) {
   let {
     sx,
@@ -102,8 +207,6 @@ function InputContainer$(props) {
     cursor = "default",
     empty = true,
     showArrow = false,
-    clearable = false,
-    onClear,
     ...inputProps
   } = props;
 
@@ -243,19 +346,6 @@ function InputContainer$(props) {
 
   if (showArrow === "enhancer") {
     rightEnhancer2.unshift(arrowContainer);
-  }
-
-  if (clearable && !empty) {
-    rightEnhancer2.unshift(
-      <Box
-        sx={{ pointerEvents: "auto", cursor: "pointer" }}
-        onClick={e => {
-          onClear();
-        }}
-      >
-        {customSx.$clearElement || "X"}
-      </Box>
-    );
   }
 
   const rightEnhancersContainerSpec = getElementSpec(
