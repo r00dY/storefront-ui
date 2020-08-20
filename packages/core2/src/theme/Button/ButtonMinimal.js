@@ -1,6 +1,7 @@
 import ButtonText$ from "@commerce-ui/core/ButtonText";
 import { createComponent } from "@commerce-ui/core";
 import Spinner from "../Spinner";
+import React from "react";
 
 export default createComponent(ButtonText$, {
   $body: ({ isHovered, disabled }) => ({

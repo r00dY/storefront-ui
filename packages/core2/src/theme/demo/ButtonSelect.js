@@ -1,3 +1,4 @@
+import React from "react";
 import Button from "@commerce-ui/core/Button";
 import IconArrowDown from "./icons/IconArrowDown";
 import Box from "@commerce-ui/core/Box";

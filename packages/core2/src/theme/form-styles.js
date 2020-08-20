@@ -36,6 +36,7 @@
 //   $labelInside: true
 // };
 
+import React from "react";
 import Box from "@commerce-ui/core/Box";
 
 const formStyles = {

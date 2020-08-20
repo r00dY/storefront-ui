@@ -1,3 +1,4 @@
+import React from "react";
 import storyOfSelectable from "@commerce-ui/core/Selectable/story";
 
 import Color from "./index";

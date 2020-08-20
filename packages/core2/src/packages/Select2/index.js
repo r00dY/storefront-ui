@@ -1,7 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
-import ButtonRaw from "../ButtonRaw";
-
-import { useSelect as useSelectDownshift } from "downshift";
+import React from "react";
 
 import Box from "../Box";
 
@@ -10,86 +7,6 @@ import Layer from "../Layer";
 import { getSelectableProps } from "../SelectInline";
 
 import useSelectState from "../useSelectState";
-
-function useSelect(props) {
-  /**
-   * we keep a bit different naming:
-   * - options
-   * - value
-   * - onChange
-   */
-
-  const selectState = useSelectState(props);
-
-  const { options, value, setValue } = selectState;
-
-  // Stateful / Stateless
-  const downshiftOptions = {
-    items: options,
-    selectedItem: value,
-    onSelectedItemChange: item => {
-      setValue(item.selectedItem);
-    }
-  };
-
-  const downshiftSelect = useSelectDownshift(downshiftOptions);
-
-  const buttonPropsDownshift = downshiftSelect.getToggleButtonProps();
-
-  const anchorRef = useRef(null);
-
-  const buttonRef = element => {
-    buttonPropsDownshift.ref(element);
-    anchorRef.current = element;
-  };
-
-  const buttonProps = {
-    ...buttonPropsDownshift,
-    buttonRef: buttonRef
-  };
-
-  delete buttonProps.ref;
-
-  const newOptions = options.map((option, index) => {
-    const itemDownshiftProps = downshiftSelect.getItemProps({
-      index,
-      item: option
-    });
-    itemDownshiftProps._ref = itemDownshiftProps.ref;
-    delete itemDownshiftProps.ref;
-
-    return {
-      ...option,
-      selectableProps: {
-        selected: value && option.id === value.id,
-        highlighted: downshiftSelect.highlightedIndex === index,
-        disabled: !!option.disabled,
-        option: option,
-        value: option.id,
-        key: option.id,
-        label: option.label,
-        ...itemDownshiftProps
-      }
-    };
-  });
-
-  const layerProps = {
-    isOpen: downshiftSelect.isOpen
-  };
-
-  return {
-    ...downshiftSelect,
-    ...selectState,
-
-    // TODO: open, close functions
-
-    options: newOptions,
-    menuProps: downshiftSelect.getMenuProps(),
-    layerProps,
-    anchorRef,
-    buttonProps
-  };
-}
 
 /**
  * Select can be styled as 'InputContainer' and also as with a separate custom button.
@@ -220,5 +137,4 @@ function Select2(props) {
   );
 }
 
-export { useSelect };
 export default Select2;

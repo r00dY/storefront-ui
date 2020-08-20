@@ -1,5 +1,7 @@
 import storyOfSelectable from "@commerce-ui/core/Selectable/story";
 
+import React from "react";
+
 import Checkbox from "./index";
 
 export const standard = storyOfSelectable(<Checkbox label={"Dupa"} />);

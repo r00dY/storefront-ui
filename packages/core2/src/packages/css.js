@@ -28,12 +28,16 @@ import { rslin as rslin_, rslin } from "responsive-helpers";
  */
 
 // based on https://github.com/developit/dlv
-export const get = (obj, key, def, p, undef) => {
-  key = key && key.split ? key.split(".") : [key];
-  for (p = 0; p < key.length; p++) {
-    obj = obj ? obj[key[p]] : undef;
-  }
-  return obj === undef ? def : obj;
+// export const get = (obj, key, def, p, undef) => {
+//   key = key && key.split ? key.split(".") : [key];
+//   for (p = 0; p < key.length; p++) {
+//     obj = obj ? obj[key[p]] : undef;
+//   }
+//   return obj === undef ? def : obj;
+// };
+
+export const get = (obj, key, def) => {
+  return obj[key] || def;
 };
 
 const defaultBreakpoints = [40, 52, 64].map(n => n + "em");
@@ -218,45 +222,45 @@ export const responsive = styles => theme => {
     if (value == null) continue;
 
     /** MODIFICATION 3, linear spacings **/
-    if (typeof value === "object" && value.__isLinear) {
-      const css = rslin(
-        theme.space[value.from] || value.from,
-        theme.space[value.to] || value.to,
-        value.isInf
-      ).cssObject(key);
-
-      for (let media in css) {
-        next[media] = next[media] || {};
-        next[media][key] = css[media][key];
-      }
-
-      continue;
-    }
-
-    /** MODIFICATION 2, check if this is responsive object **/
-    if (typeof value === "object" && typeof value._ !== "undefined") {
-      for (let breakpoint in value) {
-        if (breakpoint !== "_" && !breakpoints[breakpoint]) {
-          throw new Error(
-            `Wrong breakpoint name in your rs styles: "${breakpoint}"`
-          );
-        }
-
-        let media = `@media screen and (min-width: ${breakpoints[breakpoint]})`;
-        if (breakpoint === "_") {
-          media = undefined;
-        }
-
-        if (!media) {
-          next[key] = value[breakpoint];
-          continue;
-        }
-
-        next[media] = next[media] || {};
-        next[media][key] = value[breakpoint];
-      }
-      continue;
-    }
+    // if (typeof value === "object" && value.__isLinear) {
+    //   const css = rslin(
+    //     theme.space[value.from] || value.from,
+    //     theme.space[value.to] || value.to,
+    //     value.isInf
+    //   ).cssObject(key);
+    //
+    //   for (let media in css) {
+    //     next[media] = next[media] || {};
+    //     next[media][key] = css[media][key];
+    //   }
+    //
+    //   continue;
+    // }
+    //
+    // /** MODIFICATION 2, check if this is responsive object **/
+    // if (typeof value === "object" && typeof value._ !== "undefined") {
+    //   for (let breakpoint in value) {
+    //     if (breakpoint !== "_" && !breakpoints[breakpoint]) {
+    //       throw new Error(
+    //         `Wrong breakpoint name in your rs styles: "${breakpoint}"`
+    //       );
+    //     }
+    //
+    //     let media = `@media screen and (min-width: ${breakpoints[breakpoint]})`;
+    //     if (breakpoint === "_") {
+    //       media = undefined;
+    //     }
+    //
+    //     if (!media) {
+    //       next[key] = value[breakpoint];
+    //       continue;
+    //     }
+    //
+    //     next[media] = next[media] || {};
+    //     next[media][key] = value[breakpoint];
+    //   }
+    //   continue;
+    // }
 
     if (!Array.isArray(value)) {
       next[key] = value;
@@ -301,12 +305,11 @@ export const responsive = styles => theme => {
   return next;
 };
 
-function getValue(val, key, theme) {
-  const prop = get(aliases, key, key);
-  const scaleName = get(scales, prop);
-  const scale = get(theme, scaleName, get(theme, prop, {}));
-  const transform = get(transforms, prop, get);
-  let value = transform(scale, val, val);
+function getValue(val, key, theme, scale) {
+  // __PERF__
+  // const transform = get(transforms, prop, get);
+  // let value = transform(scale, val, val);
+  let value = get(scale, val, val);
 
   // RESPONSIVE SIZE
   if (typeof value === "object" && value !== null && value.__isLinear) {
@@ -347,7 +350,7 @@ function getValue(val, key, theme) {
   }
 
   for (let i = 0; i < value.length; i++) {
-    let breakpointVal = getValue(value[i], key, theme, i);
+    let breakpointVal = getValue(value[i], key, theme, scale); // we pass scale not to recalculate it on later stages
 
     if (breakpointVal === null || breakpointVal === undefined) {
       if (lastBreakpointArray) {
@@ -369,56 +372,77 @@ function getValue(val, key, theme) {
 
 export const css = args => (props = {}) => {
   const theme = { ...defaultTheme, ...(props.theme || props) };
-  let result = {};
   const obj = { ...(typeof args === "function" ? args(theme) : args) };
+
+  let newObj = {};
 
   // Pre-iteration flattening arrays with values from theme
   for (const key in obj) {
-    obj[key] = getValue(obj[key], key, theme);
-  }
-
-  const styles = responsive(obj)(theme);
-
-  for (const key in styles) {
-    const x = styles[key];
-    let val = typeof x === "function" ? x(theme) : x;
-
-    if (key === "variant") {
-      const variant = css(get(theme, val))(theme);
-      result = { ...result, ...variant };
-      continue;
-    }
-
-    /** MODIFICATION 1, special value font **/
-    if (key === "font") {
-      const variant = css(get(theme, "typography." + val))(theme);
-      result = { ...result, ...variant };
-      continue;
-    }
-
-    if (val && typeof val === "object") {
-      result[key] = css(val)(theme); // TODO: bug, second iteration overrides first one (or other way round), media queries are not merged in a smart way
-      continue;
-    }
-
     const prop = get(aliases, key, key);
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
-    const transform = get(transforms, prop, get);
-    let value = transform(scale, val, val);
+    const value = getValue(obj[key], key, theme, scale);
 
     if (multiples[prop]) {
       const dirs = multiples[prop];
 
       for (let i = 0; i < dirs.length; i++) {
-        result[dirs[i]] = value;
+        newObj[dirs[i]] = value;
       }
     } else {
-      result[prop] = value;
+      newObj[prop] = value;
     }
   }
 
-  return result;
+  const styles = responsive(newObj)(theme);
+
+  return styles;
+  //
+  // console.log('####', styles);
+  //
+  // for (const key in styles) {
+  //   const x = styles[key];
+  //   let val = typeof x === "function" ? x(theme) : x;
+  //
+  //   if (key === "variant") {
+  //     const variant = css(get(theme, val))(theme);
+  //     result = { ...result, ...variant };
+  //     continue;
+  //   }
+  //
+  //   /** MODIFICATION 1, special value font **/
+  //   if (key === "font") {
+  //     const variant = css(get(theme, "typography." + val))(theme);
+  //     result = { ...result, ...variant };
+  //     continue;
+  //   }
+  //
+  //   if (val && typeof val === "object") {
+  //     result[key] = css(val)(theme); // TODO: bug, second iteration overrides first one (or other way round), media queries are not merged in a smart way
+  //     continue;
+  //   }
+  //
+  //   const prop = get(aliases, key, key);
+  //   const scaleName = get(scales, prop);
+  //   const scale = get(theme, scaleName, get(theme, prop, {}));
+  //
+  //   // __PERF__
+  //   // const transform = get(transforms, prop, get);
+  //   // let value = transform(scale, val, val);
+  //   let value = get(scale, val, val);
+  //
+  //   if (multiples[prop]) {
+  //     const dirs = multiples[prop];
+  //
+  //     for (let i = 0; i < dirs.length; i++) {
+  //       result[dirs[i]] = value;
+  //     }
+  //   } else {
+  //     result[prop] = value;
+  //   }
+  // }
+  //
+  // return result;
 };
 
 export default css;
