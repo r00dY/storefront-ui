@@ -3,6 +3,11 @@ import { jsx, splitSx, css, css2 } from "..";
 import { useTheme } from "../Theme";
 import CSSContext from "../CSSContext";
 
+// import styled from "styled-components";
+import styled from "@emotion/styled";
+
+import { useUID } from "react-uid";
+
 const boxStyles = {
   boxSizing: "border-box",
   minWidth: "0px",
@@ -36,8 +41,6 @@ const fitChildHeightStyles = {
   }
 };
 
-import styled from "@emotion/styled";
-
 export const styledProvider = theme => {
   return (...args) => {
     let as = "div";
@@ -59,61 +62,70 @@ export function styledBox(as, obj, extraProps = {}, theme) {
     throw new Error("Dupa, can't use function");
   }
 
-  const { fitW, fitH, noFocus, ...restProps } = extraProps;
+  function createComponent() {
+    const { fitW, fitH, noFocus, ...restProps } = extraProps;
 
-  const rootStyles = {
-    ...boxStyles,
-    ...(fitW && fitChildStyles),
-    ...(fitH && fitChildHeightStyles),
-    ...((theme.hideFocus || noFocus) && focusReset)
-  };
-
-  let hasFunctions = false;
-
-  // static styles calculated only once in styledBox function. dynamicStyles must be recalculated at runtime
-  let staticStyles = {};
-
-  for (let key in obj) {
-    if (typeof obj[key] === "function") {
-      hasFunctions = true;
-    } else {
-      staticStyles[key] = obj[key];
-    }
-  }
-
-  staticStyles = css(staticStyles)(theme); // compile static styles
-
-  let dynamicStyles;
-
-  if (hasFunctions) {
-    dynamicStyles = props => {
-      let dynamicStyles = {};
-
-      for (let key in obj) {
-        if (typeof obj[key] === "function") {
-          dynamicStyles[key] = obj[key](props);
-        } else {
-          // newObj[key] = obj[key];
-        }
-      }
-
-      dynamicStyles = css(dynamicStyles)(theme); // compile static styles
-
-      return dynamicStyles;
+    const rootStyles = {
+      ...boxStyles,
+      ...(fitW && fitChildStyles),
+      ...(fitH && fitChildHeightStyles),
+      ...((theme.hideFocus || noFocus) && focusReset)
     };
+
+    let hasFunctions = false;
+
+    // static styles calculated only once in styledBox function. dynamicStyles must be recalculated at runtime
+    let staticStyles = {};
+
+    for (let key in obj) {
+      if (typeof obj[key] === "function") {
+        hasFunctions = true;
+      } else {
+        staticStyles[key] = obj[key];
+      }
+    }
+
+    staticStyles = css(staticStyles)(theme); // compile static styles
+
+    let dynamicStyles;
+
+    if (hasFunctions) {
+      dynamicStyles = props => {
+        let dynamicStyles = {};
+
+        for (let key in obj) {
+          if (typeof obj[key] === "function") {
+            dynamicStyles[key] = obj[key](props);
+          } else {
+            // newObj[key] = obj[key];
+          }
+        }
+
+        dynamicStyles = css(dynamicStyles)(theme); // compile static styles
+
+        return dynamicStyles;
+      };
+    }
+
+    const result = [rootStyles, staticStyles];
+    if (dynamicStyles) {
+      result.push(dynamicStyles);
+    }
+
+    return styled(as)(...result);
   }
 
-  const result = [rootStyles, staticStyles];
-  if (dynamicStyles) {
-    result.push(dynamicStyles);
-  }
-
-  const RawDiv = styled(as)(...result);
+  let RawDiv;
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
   const Component = React.forwardRef((props, ref) => {
     // const context = useContext(CSSContext);
     // const theme = useTheme();
+    // const uid = useUID();
+
+    if (!RawDiv) {
+      RawDiv = createComponent();
+    }
 
     if (props.__portals__) {
       return (
