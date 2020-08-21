@@ -1,7 +1,7 @@
 import React from "react";
 
 const CSSContext = React.createContext({
-  context: {}
+  cache: {}
 });
 
 export default CSSContext;

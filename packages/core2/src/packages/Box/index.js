@@ -62,7 +62,7 @@ export function styledBox(as, obj, extraProps = {}, theme) {
     throw new Error("Dupa, can't use function");
   }
 
-  function createComponent() {
+  function createComponent(context, uid) {
     const { fitW, fitH, noFocus, ...restProps } = extraProps;
 
     const rootStyles = {
@@ -85,7 +85,25 @@ export function styledBox(as, obj, extraProps = {}, theme) {
       }
     }
 
-    staticStyles = css(staticStyles)(theme); // compile static styles
+    // let staticStyles;
+
+    // console.log('creating component', uid)
+
+    if (context && context.cache) {
+      let cachedStaticStyles = context.cache[uid];
+
+      if (false) {
+        //cachedStaticStyles) {
+        staticStyles = cachedStaticStyles;
+        // console.log('in cache!!!');
+      } else {
+        // console.log('not in cache');
+        staticStyles = css(staticStyles)(theme);
+        context.cache[uid] = staticStyles;
+      }
+    }
+
+    // staticStyles = css(staticStyles)(theme); // compile static styles
 
     let dynamicStyles;
 
@@ -112,19 +130,26 @@ export function styledBox(as, obj, extraProps = {}, theme) {
       result.push(dynamicStyles);
     }
 
-    return styled(as)(...result);
+    if (context && context.cache) {
+      context.cache[uid] = staticStyles;
+    }
+
+    return {
+      component: styled(as)(...result),
+      staticStyles
+    };
   }
 
   let RawDiv;
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
   const Component = React.forwardRef((props, ref) => {
-    // const context = useContext(CSSContext);
+    const context = useContext(CSSContext);
     // const theme = useTheme();
-    // const uid = useUID();
+    const uid = useUID();
 
     if (!RawDiv) {
-      RawDiv = createComponent();
+      RawDiv = createComponent(context, uid).component;
     }
 
     if (props.__portals__) {
