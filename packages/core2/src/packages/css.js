@@ -193,13 +193,25 @@ function isStylesObject(obj) {
   return true;
 }
 
+let mediaQueries;
+
 export const responsive = styles => theme => {
   const next = {};
-  const breakpoints = get(theme, "breakpoints", defaultBreakpoints);
-  const mediaQueries = [
-    null,
-    ...breakpoints.map(n => `@media screen and (min-width: ${n})`)
-  ];
+
+  // run this only once
+  if (!mediaQueries) {
+    const breakpoints = get(theme, "breakpoints", defaultBreakpoints);
+    mediaQueries = [
+      null,
+      ...breakpoints.map(n => `@media screen and (min-width: ${n})`)
+    ];
+  }
+
+  // const breakpoints = get(theme, "breakpoints", defaultBreakpoints);
+  // const mediaQueries = [
+  //   null,
+  //   ...breakpoints.map(n => `@media screen and (min-width: ${n})`)
+  // ];
 
   // MODIFICATION: let's add all media in a good order so that this order is kept later
   for (let k = 1; k < mediaQueries.length; k++) {
@@ -281,7 +293,7 @@ export const responsive = styles => theme => {
     /**
      * IF ARRAY
      */
-    for (let i = 0; i < value.slice(0, mediaQueries.length).length; i++) {
+    for (let i = 0; i < mediaQueries.length; i++) {
       const media = mediaQueries[i];
       if (value[i] == null) continue;
 

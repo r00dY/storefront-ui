@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useContext } from "react";
 import { jsx, splitSx, css, css2 } from "..";
 import { useTheme } from "../Theme";
+import CSSContext from "../CSSContext";
 
 const boxStyles = {
   boxSizing: "border-box",
@@ -111,6 +112,9 @@ export function styledBox(as, obj, extraProps = {}, theme) {
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
   const Component = React.forwardRef((props, ref) => {
+    // const context = useContext(CSSContext);
+    // const theme = useTheme();
+
     if (props.__portals__) {
       return (
         <>
@@ -124,6 +128,78 @@ export function styledBox(as, obj, extraProps = {}, theme) {
 
   return Component;
 }
+
+// export function styledBox(as, obj, extraProps = {}, theme) {
+//   if (typeof obj !== "object") {
+//     throw new Error("Dupa, can't use function");
+//   }
+//
+//   const { fitW, fitH, noFocus, ...restProps } = extraProps;
+//
+//   const rootStyles = {
+//     ...boxStyles,
+//     ...(fitW && fitChildStyles),
+//     ...(fitH && fitChildHeightStyles),
+//     ...((theme.hideFocus || noFocus) && focusReset)
+//   };
+//
+//   let hasFunctions = false;
+//
+//   // static styles calculated only once in styledBox function. dynamicStyles must be recalculated at runtime
+//   let staticStyles = {};
+//
+//   for (let key in obj) {
+//     if (typeof obj[key] === "function") {
+//       hasFunctions = true;
+//     } else {
+//       staticStyles[key] = obj[key];
+//     }
+//   }
+//
+//   staticStyles = css(staticStyles)(theme); // compile static styles
+//
+//   let dynamicStyles;
+//
+//   if (hasFunctions) {
+//     dynamicStyles = props => {
+//       let dynamicStyles = {};
+//
+//       for (let key in obj) {
+//         if (typeof obj[key] === "function") {
+//           dynamicStyles[key] = obj[key](props);
+//         } else {
+//           // newObj[key] = obj[key];
+//         }
+//       }
+//
+//       dynamicStyles = css(dynamicStyles)(theme); // compile static styles
+//
+//       return dynamicStyles;
+//     };
+//   }
+//
+//   const result = [rootStyles, staticStyles];
+//   if (dynamicStyles) {
+//     result.push(dynamicStyles);
+//   }
+//
+//   const RawDiv = styled(as)(...result);
+//
+//   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
+//   const Component = React.forwardRef((props, ref) => {
+//     if (props.__portals__) {
+//       return (
+//         <>
+//           {props.__portals__}
+//           <RawDiv {...restProps} {...props} ref={ref} />
+//         </>
+//       );
+//     }
+//     return React.createElement(RawDiv, { ...props, ref });
+//   });
+//
+//   return Component;
+// }
 
 function Box_(props) {
   let {
