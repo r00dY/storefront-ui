@@ -134,14 +134,14 @@ const scales = {
   boxShadow: "shadows",
   textShadow: "shadows",
   zIndex: "zIndices",
-  width: "sizes",
-  minWidth: "sizes",
-  maxWidth: "sizes",
-  height: "sizes",
-  minHeight: "sizes",
-  maxHeight: "sizes",
-  flexBasis: "sizes",
-  size: "sizes",
+  width: "space",
+  minWidth: "space",
+  maxWidth: "space",
+  height: "space",
+  minHeight: "space",
+  maxHeight: "space",
+  flexBasis: "space",
+  size: "space",
   // svg
   fill: "colors",
   stroke: "colors"
@@ -275,7 +275,11 @@ export const responsive = styles => theme => {
     // }
 
     if (!Array.isArray(value)) {
-      next[key] = value;
+      if (typeof value === "object") {
+        next[key] = responsive(value)(theme);
+      } else {
+        next[key] = value;
+      }
 
       /** MODIFICATION: it's required for cssSingle(cssSingle(...)) recursion to work. We don't want old media queries to override new ones. **/
       // if (isStylesObject(next[key])) {
@@ -382,18 +386,35 @@ function getValue(val, key, theme, scale) {
   return value;
 }
 
-export const css = args => (props = {}) => {
-  const theme = { ...defaultTheme, ...(props.theme || props) };
-  const obj = { ...(typeof args === "function" ? args(theme) : args) };
-
+// Flattens complex array objects (arrays in arrays, arrays with theme values that are arrays etc.) and theme values into real values. Output is just single array easily transformable into media queries and no theme values.
+export const transformThemeValuesAndFlattenArrays = (obj, theme) => {
   let newObj = {};
 
   // Pre-iteration flattening arrays with values from theme
   for (const key in obj) {
+    const val = obj[key];
+
+    if (key === "font") {
+      const fontStyles = theme.typography[val];
+      if (fontStyles) {
+        const vals = css(fontStyles)(theme);
+        newObj = {
+          ...newObj,
+          ...transformThemeValuesAndFlattenArrays(vals, theme)
+        };
+      }
+      continue;
+    }
+
+    if (typeof val === "object" && !Array.isArray(val)) {
+      newObj[key] = transformThemeValuesAndFlattenArrays(val, theme);
+      continue;
+    }
+
     const prop = get(aliases, key, key);
     const scaleName = get(scales, prop);
     const scale = get(theme, scaleName, get(theme, prop, {}));
-    const value = getValue(obj[key], key, theme, scale);
+    const value = getValue(val, key, theme, scale);
 
     if (multiples[prop]) {
       const dirs = multiples[prop];
@@ -406,6 +427,14 @@ export const css = args => (props = {}) => {
     }
   }
 
+  return newObj;
+};
+
+export const css = args => (props = {}) => {
+  const theme = { ...defaultTheme, ...(props.theme || props) };
+  const obj = { ...(typeof args === "function" ? args(theme) : args) };
+
+  const newObj = transformThemeValuesAndFlattenArrays(obj, theme);
   const styles = responsive(newObj)(theme);
 
   return styles;

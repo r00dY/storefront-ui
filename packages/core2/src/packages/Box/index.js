@@ -3,8 +3,9 @@ import { jsx, splitSx, css, css2 } from "..";
 import { useTheme } from "../Theme";
 import CSSContext from "../CSSContext";
 
-// import styled from "styled-components";
-import styled from "@emotion/styled";
+import styled from "styled-components";
+
+// import styled from "@emotion/styled";
 
 import { useUID } from "react-uid";
 
@@ -57,12 +58,25 @@ export const styledProvider = theme => {
   };
 };
 
-export function styledBox(as, obj, extraProps = {}, theme) {
+export function styledBox(...args) {
+  let as = "div";
+  let obj;
+  let extraProps;
+
+  if (typeof args[0] === "string") {
+    as = args[0];
+    obj = args[1] || {};
+    extraProps = args[2] || {};
+  } else {
+    obj = args[0] || {};
+    extraProps = args[1] || {};
+  }
+
   if (typeof obj !== "object") {
     throw new Error("Dupa, can't use function");
   }
 
-  function createComponent(context, uid) {
+  function createComponent(theme) {
     const { fitW, fitH, noFocus, ...restProps } = extraProps;
 
     const rootStyles = {
@@ -85,25 +99,7 @@ export function styledBox(as, obj, extraProps = {}, theme) {
       }
     }
 
-    // let staticStyles;
-
-    // console.log('creating component', uid)
-
-    if (context && context.cache) {
-      let cachedStaticStyles = context.cache[uid];
-
-      if (false) {
-        //cachedStaticStyles) {
-        staticStyles = cachedStaticStyles;
-        // console.log('in cache!!!');
-      } else {
-        // console.log('not in cache');
-        staticStyles = css(staticStyles)(theme);
-        context.cache[uid] = staticStyles;
-      }
-    }
-
-    // staticStyles = css(staticStyles)(theme); // compile static styles
+    staticStyles = css(staticStyles)(theme); // compile static styles
 
     let dynamicStyles;
 
@@ -125,17 +121,12 @@ export function styledBox(as, obj, extraProps = {}, theme) {
       };
     }
 
-    const result = [rootStyles, staticStyles];
-    if (dynamicStyles) {
-      result.push(dynamicStyles);
-    }
-
-    if (context && context.cache) {
-      context.cache[uid] = staticStyles;
-    }
-
     return {
-      component: styled(as)(...result),
+      component: styled(as)`
+        ${rootStyles}
+        ${staticStyles}
+        ${dynamicStyles}
+      `,
       staticStyles
     };
   }
@@ -144,12 +135,10 @@ export function styledBox(as, obj, extraProps = {}, theme) {
 
   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
   const Component = React.forwardRef((props, ref) => {
-    const context = useContext(CSSContext);
-    // const theme = useTheme();
-    const uid = useUID();
+    const theme = useTheme();
 
     if (!RawDiv) {
-      RawDiv = createComponent(context, uid).component;
+      RawDiv = createComponent(theme).component;
     }
 
     if (props.__portals__) {
@@ -166,6 +155,7 @@ export function styledBox(as, obj, extraProps = {}, theme) {
   return Component;
 }
 
+//
 // export function styledBox(as, obj, extraProps = {}, theme) {
 //   if (typeof obj !== "object") {
 //     throw new Error("Dupa, can't use function");
@@ -215,12 +205,17 @@ export function styledBox(as, obj, extraProps = {}, theme) {
 //     };
 //   }
 //
-//   const result = [rootStyles, staticStyles];
-//   if (dynamicStyles) {
-//     result.push(dynamicStyles);
-//   }
+//   // const result = [rootStyles, staticStyles];
+//   // if (dynamicStyles) {
+//   //   result.push(dynamicStyles);
+//   // }
 //
-//   const RawDiv = styled(as)(...result);
+//   const RawDiv = styled(as)`
+//     ${rootStyles}
+//     ${staticStyles}
+//     ${dynamicStyles}
+//   `;
+//
 //
 //   // This below takes some performance hit, don't know why. Maybe it's just the issue of number of components and dev mode.
 //   const Component = React.forwardRef((props, ref) => {

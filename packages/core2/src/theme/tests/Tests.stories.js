@@ -62,7 +62,7 @@ export const renders = () => <RenderTest />;
 // import {css, jsx} from "@emotion/core";
 // import styled from "@emotion/styled";
 import styled from "styled-components";
-import theme from "./theme";
+import theme from "../theme";
 
 import { styledProvider } from "@commerce-ui/core/Box";
 
@@ -179,6 +179,20 @@ export const emotion = () => {
       <button onClick={() => setX(!x)}>change</button>
 
       {items}
+    </div>
+  );
+};
+
+const Comp = styled.div`
+  padding: 20px;
+  background: red;
+  color: white;
+`;
+
+export const testSC = () => {
+  return (
+    <div>
+      <Comp>cze</Comp>
     </div>
   );
 };

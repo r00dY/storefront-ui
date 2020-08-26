@@ -5,7 +5,7 @@ import React, {
   useRef,
   useContext
 } from "react";
-import Box from "../Box";
+import Box, { styledBox } from "../Box";
 import ReactDOM from "react-dom";
 
 import { useTheme } from "../Theme";
@@ -54,13 +54,13 @@ function MenuBarSticky({ open = true, ...props }) {
           if (open) {
             // if sticky and open
             if (rect.top < menuBottomY) {
-              setHeight(rect.height);
+              setHeight(rect.height + "px");
               setSticky(true);
             }
           } else {
             // if sticky but NOT open, let it flow behind menu (like it's normally in body content) and THEN fix.
             if (rect.bottom < menuBottomY) {
-              setHeight(rect.height);
+              setHeight(rect.height + "px");
               setSticky(true);
             }
           }
@@ -100,12 +100,18 @@ function MenuBarSticky({ open = true, ...props }) {
       : props.children;
 
   return (
-    <Box _ref={ref} sx={{ height }}>
+    <div ref={ref} style={{ height }}>
       {isDisplayedInPortal && ReactDOM.createPortal(children, container)}
       {!isDisplayedInPortal && children}
-    </Box>
+    </div>
   );
 }
+
+const MainContainer = styledBox({
+  position: "relative",
+  zIndex: 0,
+  pt: p => p.offset
+});
 
 function MenuLayout(props) {
   let { offset = 0, contentAbove } = props;
@@ -135,17 +141,17 @@ function MenuLayout(props) {
         }
       }}
     >
-      <Box sx={{ position: "relative" }}>
-        <Box
-          sx={{
+      <div style={{ position: "relative" }}>
+        <div
+          style={{
             position: "relative",
             zIndex: 200
           }}
         >
           {contentAbove}
-        </Box>
-        <Box
-          sx={{
+        </div>
+        <div
+          style={{
             position: "sticky",
             top: 0,
             left: 0,
@@ -157,11 +163,9 @@ function MenuLayout(props) {
           {/*<Box sx={{position: "absolute", top: 0, width: "100%"}}>*/}
           <MenuBarsContainer bars={fixedBars} />
           {/*</Box>*/}
-        </Box>
-        <Box sx={{ pt: offset, position: "relative", zIndex: 0 }}>
-          {children}
-        </Box>
-      </Box>
+        </div>
+        <MainContainer offset={offset}>{children}</MainContainer>
+      </div>
     </MenuLayoutContext.Provider>
   );
 }
@@ -185,60 +189,62 @@ const isBarOpen = bar => {
 /**
  * Version with recursion and with ShowHide
  */
+
+const NotificationsContainerTopLeft = styledBox({
+  position: "absolute",
+  top: "notificationSystemOffset",
+  left: "notificationSystemOffset",
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationsContainerTopRight = styledBox({
+  position: "absolute",
+  top: "notificationSystemOffset",
+  right: "notificationSystemOffset",
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationsContainerTopMobile = styledBox({
+  position: "absolute",
+  top: "notificationSystemOffset",
+  right: "notificationSystemOffset",
+  left: "notificationSystemOffset",
+  width: "notificationSystemWidth",
+  display: ["block", null, "none"]
+});
+
 const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   const theme = useTheme();
 
   if (!bars || bars.length === 0) {
     return (
-      <Box id={"__menubottom__"} sx={{ position: "relative" }}>
-        <Box
-          sx={{
-            position: "absolute",
-            top: "notificationSystemOffset",
-            left: "notificationSystemOffset",
-            width: theme.space.notificationSystemWidth,
-            display: ["none", null, "block"]
-          }}
-        >
+      <div id={"__menubottom__"} style={{ position: "relative" }}>
+        <NotificationsContainerTopLeft>
           <Grid
             cols={1}
             gap={"notificationSystemSeparator"}
             id={"__notifications-menu-topLeft__"}
           />
-        </Box>
+        </NotificationsContainerTopLeft>
 
-        <Box
-          sx={{
-            position: "absolute",
-            top: "notificationSystemOffset",
-            right: "notificationSystemOffset",
-            width: theme.space.notificationSystemWidth,
-            display: ["none", null, "block"]
-          }}
-        >
+        <NotificationsContainerTopRight>
           <Grid
             cols={1}
             gap={"notificationSystemSeparator"}
             id={"__notifications-menu-topRight__"}
           />
-        </Box>
+        </NotificationsContainerTopRight>
 
-        <Box
-          sx={{
-            position: "absolute",
-            top: "notificationSystemOffset",
-            right: "notificationSystemOffset",
-            left: "notificationSystemOffset",
-            display: ["block", null, "none"]
-          }}
-        >
+        <NotificationsContainerTopMobile>
           <Grid
             cols={1}
             gap={"notificationSystemSeparator"}
             id={"__notifications-menu-topMobile__"}
           />
-        </Box>
-      </Box>
+        </NotificationsContainerTopMobile>
+      </div>
     );
   }
 
@@ -247,16 +253,16 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
   const takesSpace = !!bar.props.takesSpace && previousBarTakesSpace;
 
   return (
-    <Box
-      sx={{
+    <div
+      style={{
         position: takesSpace ? "relative" : "absolute",
         top: takesSpace ? 0 : "100%",
         width: "100%",
         zIndex: -1
       }}
     >
-      <Box
-        sx={{
+      <div
+        style={{
           position: "relative",
           zIndex: 0,
           width: "100%",
@@ -270,8 +276,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
         }}
         className={"__menubar__"}
       >
-        <Box
-          sx={{
+        <div
+          style={{
             position: "fixed",
             top: 0,
             left: 0,
@@ -286,8 +292,8 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
           className={"__menubarshade__"}
         />
 
-        <Box
-          sx={{
+        <div
+          style={{
             position: "absolute",
             zIndex: 0,
             width: "100%",
@@ -298,16 +304,16 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             justifyContent: "center"
           }}
         >
-          <Box
-            sx={{
+          <div
+            style={{
               width: "100%",
               pointerEvents: "auto"
             }}
             className={"__menulayerstop__"}
           />
-        </Box>
+        </div>
 
-        <Box className={"__menubarcontent__"} sx={{ width: "100%" }}>
+        <div className={"__menubarcontent__"} style={{ width: "100%" }}>
           {takesSpace && (
             <ShowHide isOpen={open} stickToBottom={true}>
               {bar}
@@ -315,10 +321,10 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
           )}
 
           {!takesSpace && bar}
-        </Box>
+        </div>
 
-        <Box
-          sx={{
+        <div
+          style={{
             position: "absolute",
             zIndex: 1,
             width: "100%",
@@ -329,21 +335,21 @@ const MenuBarsContainer = ({ bars, previousBarTakesSpace = true }) => {
             justifyContent: "center"
           }}
         >
-          <Box
-            sx={{
+          <div
+            style={{
               pointerEvents: "auto",
               width: "100%"
             }}
             className={"__menulayers__"}
           />
-        </Box>
+        </div>
 
         <MenuBarsContainer
           bars={bars.slice(1)}
           previousBarTakesSpace={takesSpace}
         />
-      </Box>
-    </Box>
+      </div>
+    </div>
   );
 };
 
@@ -1068,8 +1074,8 @@ function useDialogs({
       const pos = getPosition(key) || {};
 
       contents.push(
-        <Box
-          sx={{
+        <div
+          style={{
             position: "absolute",
             // isActive || (activeKey === null && visible)
             //   ? "relative"
@@ -1105,7 +1111,7 @@ function useDialogs({
           key={"portal-" + key}
         >
           {content}
-        </Box>
+        </div>
       );
     }
 
@@ -1119,8 +1125,8 @@ function useDialogs({
   const portal =
     mounted &&
     ReactDOM.createPortal(
-      <Box
-        sx={{
+      <div
+        style={{
           position: "absolute",
           top: 0,
           left: 0,
@@ -1128,10 +1134,10 @@ function useDialogs({
           width: "100%"
         }}
         key={"portal"}
-        _ref={containerRef}
+        ref={containerRef}
       >
-        <Box
-          sx={{
+        <div
+          style={{
             position: "absolute",
             top: 0,
             left: 0,
@@ -1141,11 +1147,11 @@ function useDialogs({
             // bg: "white",
             // boxShadow: "0 0px 14px rgba(0, 0, 0, 0.15)"
           }}
-          _ref={backgroundRef}
+          ref={backgroundRef}
         />
 
         {contents}
-      </Box>,
+      </div>,
       cachedNodes.current.portal
     );
 

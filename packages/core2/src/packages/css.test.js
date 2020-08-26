@@ -26,7 +26,14 @@ const theme = {
     primary: "red",
     secondary: "blue"
   },
-  breakpoints: ["100px", "200px", "300px", "400px"]
+  breakpoints: ["100px", "200px", "300px", "400px"],
+  typography: {
+    body: {
+      fontFamily: "sans-serif",
+      fontSize: 12,
+      textDecoration: "underline"
+    }
+  }
 };
 
 const media = [
@@ -279,6 +286,38 @@ test("responsive styles with responsive values from theme - ver 5 (array shorter
   expect(styles[media[3]].margin).toBe(45);
 
   expect(testOrder(styles)).toBe(true);
+});
+
+test("font work", () => {
+  const styles = css({
+    m: 10,
+    font: "body"
+  })(theme);
+
+  expect(styles.margin).toBe(10);
+  expect(styles.fontFamily).toBe("sans-serif");
+  expect(styles.fontSize).toBe(12);
+  expect(styles.textDecoration).toBe("underline");
+});
+
+test("inline objects work", () => {
+  const styles = css({
+    m: 10,
+    font: "body",
+    ":hover": {
+      m: "s2",
+      fontFamily: "serif",
+      p: "containerMargin"
+    }
+  })(theme);
+
+  expect(styles.margin).toBe(10);
+  expect(styles.fontFamily).toBe("sans-serif");
+  expect(styles[":hover"].margin).toBe(20);
+  expect(styles[":hover"].fontFamily).toBe("serif");
+  expect(styles[":hover"][media[0]].padding).toBe(15);
+
+  console.log(styles);
 });
 
 /**
