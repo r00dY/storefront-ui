@@ -118,21 +118,21 @@ function Search(props) {
   }
 
   return (
-    <Box
+    <div
       onClick={e => {
         if (hideOnLinkClick && e.target && e.target.tagName === "A") {
           close();
         }
       }}
     >
-      <Box {...formProps}>
+      <div {...formProps}>
         {form({
           inputProps: { ...inputProps, _ref: anchorRef },
           submitButtonProps
         })}
-      </Box>
+      </div>
       {layer}
-    </Box>
+    </div>
   );
 }
 

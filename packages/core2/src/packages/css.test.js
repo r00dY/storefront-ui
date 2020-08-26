@@ -250,6 +250,7 @@ test("linear sizing", () => {
     m: lin(10, 30)
   })(theme);
 
+  console.log("linear sizing");
   console.log(styles);
 });
 
@@ -257,6 +258,16 @@ test("linear sizing - in responsive array", () => {
   const styles = css({
     m: [0, null, lin(10, 30)]
   })(theme);
+  console.log("linear sizing - in responsive array");
+  console.log(styles);
+});
+
+test("linear sizing - values from theme", () => {
+  const styles = css({
+    m: lin("s5", "s10")
+  })(theme);
+
+  console.log("linear sizing - values from theme");
   console.log(styles);
 });
 
@@ -264,6 +275,7 @@ test("linear sizing - in responsive array taken from theme", () => {
   const styles = css({
     m: [0, null, "linS1"]
   })(theme);
+  console.log("linear sizing - in responsive array taken from theme");
   console.log(styles);
 });
 
@@ -271,6 +283,8 @@ test("linear sizing - in responsive array taken from theme - ver2", () => {
   const styles = css({
     m: ["linS1", null, 99]
   })(theme);
+
+  console.log("linear sizing - in responsive array taken from theme - ver2");
   console.log(styles);
 });
 
@@ -316,8 +330,6 @@ test("inline objects work", () => {
   expect(styles[":hover"].margin).toBe(20);
   expect(styles[":hover"].fontFamily).toBe("serif");
   expect(styles[":hover"][media[0]].padding).toBe(15);
-
-  console.log(styles);
 });
 
 /**

@@ -270,7 +270,7 @@ function Box_(props) {
     ...restProps
   } = props;
 
-  console.log("render box", sx, as);
+  // console.log("render box", sx, as);
 
   const [css, customSx] = splitSx(sx);
   const t = useTheme();
@@ -306,11 +306,13 @@ function Box_(props) {
   return ret;
 }
 
-const Box = React.forwardRef((props, ref) => <Box_ _ref={ref} {...props} />);
+let Box = React.forwardRef((props, ref) => <Box_ _ref={ref} {...props} />);
 
 Box.defaultProps = {
   as: "div"
 };
+
+Box.styled = styledBox;
 
 export default Box;
 

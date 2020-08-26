@@ -111,7 +111,7 @@ function styledButton(config) {
   });
 }
 
-const Button = React.forwardRef((props, ref) => {
+let Button = React.forwardRef((props, ref) => {
   // look
   let {
     disabled,

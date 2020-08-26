@@ -395,6 +395,10 @@ export const transformThemeValuesAndFlattenArrays = (obj, theme) => {
     const val = obj[key];
 
     if (key === "font") {
+      if (!theme.typography) {
+        continue;
+      }
+
       const fontStyles = theme.typography[val];
       if (fontStyles) {
         const vals = css(fontStyles)(theme);
@@ -406,7 +410,15 @@ export const transformThemeValuesAndFlattenArrays = (obj, theme) => {
       continue;
     }
 
-    if (typeof val === "object" && !Array.isArray(val)) {
+    if (val === null || val === undefined) {
+      continue;
+    }
+
+    if (
+      typeof val === "object" &&
+      !Array.isArray(val) &&
+      val.__isLinear !== true
+    ) {
       newObj[key] = transformThemeValuesAndFlattenArrays(val, theme);
       continue;
     }
