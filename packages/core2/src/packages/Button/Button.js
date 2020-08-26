@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { createElement, getElementSpec, splitSx } from "..";
 import useHover from "../useHover";
-import ButtonRaw from "../ButtonRaw";
-import Box from "../Box";
+import Box, { styledBox } from "../Box";
 
 const commonResetStyles = {
   position: "relative",
@@ -33,6 +32,84 @@ const linkResetStyles = {
   textDecoration: "none",
   boxSizing: "border-box"
 };
+
+function styledButton(config) {
+  let {
+    sx,
+    __minimalLinkStyling = false, // this is only for the purpose of Link component (which can't be button).
+    children = p => p.children
+  } = config;
+
+  const ButtonRoot = styledBox("button", {
+    ...commonResetStyles,
+    ...buttonResetStyles,
+    ...sx
+  });
+
+  const LinkRoot = styledBox("a", {
+    ...(!__minimalLinkStyling && commonResetStyles),
+    ...linkResetStyles,
+    ...sx
+  });
+
+  return React.forwardRef((props, ref) => {
+    // look
+    let {
+      disabled,
+      label,
+      selected,
+      buttonRef,
+      isLoading,
+      href,
+      forceLink = false,
+      ...restProps
+    } = props;
+
+    ref = buttonRef || ref; // buttonRef is legacy, backward compatibility
+
+    const hoverRef = useRef(null);
+
+    const isHovered = useHover(hoverRef);
+
+    const state = {
+      selected,
+      disabled,
+      isHovered,
+      isLoading,
+      loading: isLoading,
+      hovered: isHovered
+    };
+
+    const internalRef = element => {
+      hoverRef.current = element;
+
+      // We must remember that ref that is passed here can be function or object! However, for internal use (useHover) we need object.
+
+      if (typeof ref === "function") {
+        ref(element);
+      } else if (ref) {
+        ref.current = element;
+      }
+    };
+
+    const mainProps = {
+      ref: internalRef,
+      __state__: state
+    };
+
+    let Component = ButtonRoot;
+    if (href || forceLink) {
+      Component = LinkRoot;
+      mainProps.href = href;
+    }
+
+    return (
+      <Component {...restProps} {...mainProps}>
+        {children(props, state)}
+      </Component>
+    );
+  });
+}
 
 const Button = React.forwardRef((props, ref) => {
   // look
@@ -102,5 +179,7 @@ const Button = React.forwardRef((props, ref) => {
     </Box>
   );
 });
+
+Button.styled = styledButton;
 
 export default Button;

@@ -112,7 +112,7 @@ export function styledBox(...args) {
 
         for (let key in obj) {
           if (typeof obj[key] === "function") {
-            dynamicStyles[key] = obj[key](props);
+            dynamicStyles[key] = obj[key](props, props.__state__);
           } else {
             // newObj[key] = obj[key];
           }

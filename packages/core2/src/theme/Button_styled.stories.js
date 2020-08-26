@@ -41,6 +41,54 @@ const ButtonCustom = React.forwardRef((props, ref) => {
   );
 });
 
+const ButtonVeryCustom$ = Button.styled({
+  sx: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    p: 6,
+    bg: (p, s) => (s.hovered ? "yellow" : "antiquewhite"),
+    border: (p, s) => (s.selected ? "1px solid black" : "none"),
+    color: "black"
+  },
+  children: (p, s) => (
+    <>
+      {p.children} {p.on && s.loading && "(loading...)"}
+    </>
+  )
+});
+
+const ButtonVeryCustom = React.forwardRef((props, ref) => {
+  const [on, setOn] = useState(false);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setOn(!on);
+    }, 1000);
+
+    return () => {
+      clearInterval(interval);
+    };
+  });
+
+  return <ButtonVeryCustom$ {...props} on={on} ref={ref} />;
+});
+
+const ButtonStandard = Button.styled({
+  sx: {
+    color: "red",
+    font: "body2"
+  }
+});
+
+const ButtonWithBorder = Button.styled({
+  sx: {
+    borderWidth: "1px",
+    borderColor: "red",
+    borderStyle: "solid"
+  }
+});
+
 export const basic = () => {
   const exampleRef = useRef(null);
   const testRef = useRef(null);
@@ -56,54 +104,49 @@ export const basic = () => {
           {
             name: "Standard",
             component: (
-              <Button
-                sx={{ color: "red", font: "body2" }}
+              <ButtonStandard
                 onClick={() => alert("clicked!")}
                 ref={exampleRef}
               >
                 Lorem ipsum dolor sit amet
-              </Button>
+              </ButtonStandard>
             )
           },
           {
             name: "Standard as href",
             component: (
-              <Button
-                href={"#"}
-                sx={{ color: "red" }}
-                onClick={() => alert("clicked!")}
-              >
+              <ButtonStandard href={"#"} onClick={() => alert("clicked!")}>
                 Lorem ipsum dolor sit amet
-              </Button>
+              </ButtonStandard>
             )
           },
           {
             name: "Component (+ callback ref)",
             component: (
-              <ButtonCustom
+              <ButtonVeryCustom
                 onClick={() => alert("clicked!")}
                 ref={element => {
                   console.log("callback ref", element);
                 }}
               >
                 Lorem ipsum dolor sit amet
-              </ButtonCustom>
+              </ButtonVeryCustom>
             )
           },
           {
             name: "Selected",
             component: (
-              <ButtonCustom onClick={() => alert("clicked!")} selected>
+              <ButtonVeryCustom onClick={() => alert("clicked!")} selected>
                 Lorem ipsum dolor sit amet
-              </ButtonCustom>
+              </ButtonVeryCustom>
             )
           },
           {
             name: "Loading",
             component: (
-              <ButtonCustom onClick={() => alert("clicked!")} isLoading>
+              <ButtonVeryCustom onClick={() => alert("clicked!")} isLoading>
                 Lorem ipsum dolor sit amet
-              </ButtonCustom>
+              </ButtonVeryCustom>
             )
           },
           {
@@ -116,37 +159,30 @@ export const basic = () => {
               </Box>
             )
           },
-          {
-            name: "Compound component inside (with callbacks)",
-            component: (
-              <Button onClick={() => alert("clicked!")}>
-                {({ hovered }) => (
-                  <Box
-                    sx={{
-                      bg: hovered ? "red" : "coral",
-                      color: "white",
-                      p: 16
-                    }}
-                  >
-                    Content
-                  </Box>
-                )}
-              </Button>
-            )
-          },
+          // {
+          //     name: "Compound component inside (with callbacks)",
+          //     component: (
+          //         <Button onClick={() => alert("clicked!")}>
+          //             {({hovered}) => (
+          //                 <Box
+          //                     sx={{
+          //                         bg: hovered ? "red" : "coral",
+          //                         color: "white",
+          //                         p: 16
+          //                     }}
+          //                 >
+          //                     Content
+          //                 </Box>
+          //             )}
+          //         </Button>
+          //     )
+          // },
           {
             name: "Button with border (reset shouldn't override it)",
             component: (
-              <Button
-                sx={{
-                  borderWidth: "1px",
-                  borderColor: "red",
-                  borderStyle: "solid"
-                }}
-                onClick={() => alert("clicked!")}
-              >
+              <ButtonWithBorder onClick={() => alert("clicked!")}>
                 Lorem ipsum dolor sit amet
-              </Button>
+              </ButtonWithBorder>
             )
           }
         ]}
@@ -156,5 +192,5 @@ export const basic = () => {
 };
 
 export default {
-  title: "approved.Button"
+  title: "approved.Button_styled"
 };
