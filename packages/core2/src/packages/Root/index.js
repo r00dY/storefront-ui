@@ -59,6 +59,11 @@ const NotificationContainerBottomMobile = styledBox({
   display: ["block", null, "none"]
 });
 
+const NotificationsGrid = Grid.styled({
+  cols: 1,
+  gap: "notificationSystemSeparator"
+});
+
 export default ({ theme, children }) => {
   const offset = getNotificationOffset(theme);
 
@@ -95,51 +100,27 @@ export default ({ theme, children }) => {
           id={"__notifications__"}
         >
           <NotificationContainerTopLeft offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-topLeft__"}
-            />
+            <NotificationsGrid id={"__notifications-topLeft__"} />
           </NotificationContainerTopLeft>
 
           <NotificationContainerTopRight offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-topRight__"}
-            />
+            <NotificationsGrid id={"__notifications-topRight__"} />
           </NotificationContainerTopRight>
 
           <NotificationContainerTopMobile offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-topMobile__"}
-            />
+            <NotificationsGrid id={"__notifications-topMobile__"} />
           </NotificationContainerTopMobile>
 
           <NotificationContainerBottomLeft offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-bottomLeft__"}
-            />
+            <NotificationsGrid id={"__notifications-bottomLeft__"} />
           </NotificationContainerBottomLeft>
 
           <NotificationContainerBottomRight offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-bottomRight__"}
-            />
+            <NotificationsGrid id={"__notifications-bottomRight__"} />
           </NotificationContainerBottomRight>
 
           <NotificationContainerBottomMobile offset={offset}>
-            <Grid
-              cols={1}
-              gap={"notificationSystemSeparator"}
-              id={"__notifications-bottomMobile__"}
-            />
+            <NotificationsGrid id={"__notifications-bottomMobile__"} />
           </NotificationContainerBottomMobile>
         </div>
       </NotificationSystemProvider>

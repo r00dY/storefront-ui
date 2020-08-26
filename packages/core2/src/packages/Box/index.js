@@ -75,12 +75,12 @@ export function styledBox(...args) {
     extraProps = args[1] || {};
   }
 
-  if (typeof obj !== "object") {
-    throw new Error("Dupa, can't use function");
-  }
-
   function createComponent(theme) {
     const { fitW, fitH, noFocus, ...restProps } = extraProps;
+
+    if (typeof obj === "function") {
+      obj = obj(theme);
+    }
 
     const rootStyles = {
       ...boxStyles,
@@ -270,7 +270,7 @@ function Box_(props) {
     ...restProps
   } = props;
 
-  // console.log('render box', sx, as);
+  console.log("render box", sx, as);
 
   const [css, customSx] = splitSx(sx);
   const t = useTheme();
