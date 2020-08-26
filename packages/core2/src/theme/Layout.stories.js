@@ -1,12 +1,16 @@
 import React from "react";
 import { jsx, rs } from "@commerce-ui/core";
 
-import Container from "@commerce-ui/core/Container";
+import Container, { ContainerDynamic } from "@commerce-ui/core/Container";
 import Grid from "@commerce-ui/core/Grid";
-import Box from "@commerce-ui/core/Box";
+import Box, { styledBox } from "@commerce-ui/core/Box";
 import { useTheme } from "@commerce-ui/core/Theme";
 
 import StoryWrapper from "@commerce-ui/core/StoryWrapper";
+
+const ContainerSecondary = Container.styled({
+  margin: "containerMarginSecondary"
+});
 
 export const basic = () => {
   const theme = useTheme();
@@ -25,33 +29,25 @@ export const basic = () => {
         {
           name: "Container secondary",
           component: (
-            <Container margin={"containerMarginSecondary"}>
+            <ContainerSecondary>
               <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
-            </Container>
+            </ContainerSecondary>
           )
         },
         {
           name: "Container inline margin",
           component: (
-            <Container margin={[10, 20, 30, 40, 50]}>
+            <ContainerDynamic margin={[10, 20, 30, 40, 50]}>
               <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
-            </Container>
+            </ContainerDynamic>
           )
         },
         {
           name: "Container 0 on mobile, main on rest",
           component: (
-            <Container margin={[0, null, "containerMargin"]}>
+            <ContainerDynamic margin={[0, null, "containerMargin"]}>
               <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
-            </Container>
-          )
-        },
-        {
-          name: "Container default, extra styles",
-          component: (
-            <Container sx={{ pt: 3, pb: 3, bg: "green" }}>
-              <Box sx={{ p: 2, bg: "mono300" }}>Lorem ipsum dolor sit amet</Box>
-            </Container>
+            </ContainerDynamic>
           )
         },
         {

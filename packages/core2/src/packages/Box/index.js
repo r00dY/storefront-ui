@@ -1,11 +1,14 @@
 import React, { useContext } from "react";
-import { jsx, splitSx, css, css2 } from "..";
+import { jsx, splitSx, css } from "..";
 import { useTheme } from "../Theme";
 import CSSContext from "../CSSContext";
 
 import styled from "styled-components";
 
 // import styled from "@emotion/styled";
+
+import { css as cssEmotion } from "@emotion/core";
+import styledEmotion from "@emotion/styled";
 
 import { useUID } from "react-uid";
 
@@ -121,12 +124,17 @@ export function styledBox(...args) {
       };
     }
 
+    // const test = cssEmotion(rootStyles, staticStyles, dynamicStyles);
+    // console.log('--------',test);
+    // console.log(rootStyles, staticStyles, dynamicStyles);
+
     return {
-      component: styled(as)`
-        ${rootStyles}
-        ${staticStyles}
-        ${dynamicStyles}
-      `,
+      component: styledEmotion(as)(rootStyles, staticStyles, dynamicStyles),
+      // component: styled(as)`
+      //   ${rootStyles}
+      //   ${staticStyles}
+      //   ${dynamicStyles}
+      // `,
       staticStyles
     };
   }
@@ -154,9 +162,24 @@ export function styledBox(...args) {
 
   return Component;
 }
-
 //
-// export function styledBox(as, obj, extraProps = {}, theme) {
+// import { theme2 } from "../../../theme";
+// const theme = theme2;
+//
+// export function styledBox(...args) {
+//   let as = "div";
+//   let obj;
+//   let extraProps;
+//
+//   if (typeof args[0] === "string") {
+//     as = args[0];
+//     obj = args[1] || {};
+//     extraProps = args[2] || {};
+//   } else {
+//     obj = args[0] || {};
+//     extraProps = args[1] || {};
+//   }
+//
 //   if (typeof obj !== "object") {
 //     throw new Error("Dupa, can't use function");
 //   }
@@ -246,6 +269,8 @@ function Box_(props) {
     __portals__,
     ...restProps
   } = props;
+
+  // console.log('render box', sx, as);
 
   const [css, customSx] = splitSx(sx);
   const t = useTheme();
