@@ -1,9 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import Box from "../Box";
-
-/** @jsx jsx */
-import { jsx } from "../index";
+import { styledBox } from "../Box";
 
 const logDeprecationNotice = (prop, replacement) => {
   if (process.env.NODE_ENV === `production`) {
@@ -237,51 +234,67 @@ const Placeholder = ({ src, imageVariants, generateSources, spreadProps }) => {
   );
 };
 
-const Img = React.forwardRef((props, ref) => {
-  const {
-    sizes,
-    srcSet,
-    className,
-    src,
-    style,
-    onLoad,
-    onError,
-    loading,
-    draggable,
-    ...otherProps
-  } = props;
-
-  return (
-    <img
-      sizes={sizes}
-      srcSet={srcSet}
-      className={className}
-      src={src}
-      {...otherProps}
-      onLoad={onLoad}
-      onError={onError}
-      ref={ref}
-      loading={loading}
-      draggable={draggable}
-      style={{
-        position: `absolute`,
-        top: 0,
-        left: 0,
-        width: `100%`,
-        height: `100%`,
-        // objectFit: `cover`,
-        // objectPosition: `center`,
-        ...style
-      }}
-    />
-  );
+const Img = styledBox("img", {
+  position: "absolute",
+  top: 0,
+  left: 0,
+  width: "100%",
+  height: "100%",
+  objectFit: p => p.specialStyles.objectFit || "cover",
+  objectPosition: p => p.specialStyles.objectPosition || "center center"
 });
+
+// const Img = React.forwardRef((props, ref) => {
+//   const {
+//     sizes,
+//     srcSet,
+//     className,
+//     src,
+//     style,
+//     onLoad,
+//     onError,
+//     loading,
+//     draggable,
+//     ...otherProps
+//   } = props;
+//
+//   return (
+//     <img
+//       sizes={sizes}
+//       srcSet={srcSet}
+//       className={className}
+//       src={src}
+//       {...otherProps}
+//       onLoad={onLoad}
+//       onError={onError}
+//       ref={ref}
+//       loading={loading}
+//       draggable={draggable}
+//       style={{
+//         position: `absolute`,
+//         top: 0,
+//         left: 0,
+//         width: `100%`,
+//         height: `100%`,
+//         // objectFit: `cover`,
+//         // objectPosition: `center`,
+//         ...style
+//       }}
+//     />
+//   );
+// });
 
 Img.propTypes = {
   style: PropTypes.object,
   onError: PropTypes.func,
   onLoad: PropTypes.func
 };
+
+const PaddingBottomBox = styledBox({
+  width: "100%",
+  paddingBottom: p => p.paddingBottom,
+  display: p => (p.ignoreBottomPadding ? "none" : "block")
+});
 
 class Image extends React.Component {
   constructor(props) {
@@ -431,28 +444,31 @@ class Image extends React.Component {
       const image = imageVariants[0];
 
       return (
-        <Box
+        <div
           // className={`${className ? className : ``} gatsby-image-wrapper`}
           // style={{
           //   position: `relative`,
           //   // overflow: `hidden`,
           //   ...style
           // }}
-          sx={{
-            position: "relative",
-            ...sx
+          style={{
+            position: "relative"
           }}
           ref={this.handleRef}
           key={`fluid-${JSON.stringify(image.srcSet)}`}
         >
           {/* Preserve the aspect ratio. */}
-          <Tag
-            sx={{
-              width: "100%",
-              paddingBottom: specialStyles.paddingBottom,
-              display: ignoreBottomPadding ? "none" : "block"
-            }}
+          <PaddingBottomBox
+            paddingBottom={specialStyles.paddingBottom}
+            ignoreBottomPadding={ignoreBottomPadding}
           />
+          {/*<Tag*/}
+          {/*sx={{*/}
+          {/*width: "100%",*/}
+          {/*paddingBottom: specialStyles.paddingBottom,*/}
+          {/*display: ignoreBottomPadding ? "none" : "block"*/}
+          {/*}}*/}
+          {/*/>*/}
 
           {/* Show a solid background color. */}
           {bgColor && (
@@ -502,11 +518,6 @@ class Image extends React.Component {
                 src={image.src}
                 crossOrigin={this.props.crossOrigin}
                 srcSet={image.srcSet}
-                sx={{
-                  objectFit: specialStyles.objectFit || "cover",
-                  objectPosition:
-                    specialStyles.objectPosition || "center center"
-                }}
                 // css={css`
                 //   ${imageStyle} ${this.props._emotionStyles.img}
                 // `}
@@ -516,6 +527,7 @@ class Image extends React.Component {
                 itemProp={itemProp}
                 loading={loading}
                 draggable={draggable}
+                specialStyles={specialStyles}
               />
             </picture>
           )}
@@ -535,7 +547,7 @@ class Image extends React.Component {
             />
           )}
           {this.props.children}
-        </Box>
+        </div>
       );
     }
 

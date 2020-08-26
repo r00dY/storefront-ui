@@ -1,7 +1,7 @@
 import React from "react";
 // import { RangeMap } from "responsive-helpers";
 import GatsbyImage from "./gatsby-image";
-import Box from "../Box";
+import Box, { styledBox } from "../Box";
 
 import { responsiveValueForEach, responsiveValueMap, splitSx } from "../index";
 
@@ -19,6 +19,11 @@ function getSrcset(image, variant) {
   });
   return result;
 }
+
+const EmptyImage = styledBox({
+  pb: p => p.paddingBottom,
+  bg: p => p.backgroundColor
+});
 
 function Image$(props) {
   let {
@@ -126,22 +131,12 @@ function Image$(props) {
 
   if (noImage) {
     return (
-      <Box
-        sx={{
-          pb: paddingBottom,
-          bg: backgroundColor
-        }}
+      <EmptyImage
+        paddingBottom={paddingBottom}
+        backgroundColor={backgroundColor}
       />
     );
   }
-
-  // const paddingBottom = aspectRatio
-  //     ? responsiveValueMap($aspectRatio, x => `${x * 100}%`)
-  //     : responsiveValueMap(
-  //         sxVariant,
-  //         variantName =>
-  //             `${(1 / findVariant(image, variantName).aspectRatio) * 100}%`
-  //     );
 
   const specialStyles = {
     objectFit,
