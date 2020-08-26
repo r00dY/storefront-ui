@@ -1,16 +1,63 @@
 import React, { useEffect } from "react";
 import { ThemeProvider } from "../Theme";
-import Box from "../Box";
+import Box, { styledBox } from "../Box";
 import Grid from "../Grid";
-
-/** @jsx jsx */
-import { css, Global, jsx } from "@emotion/core";
 
 import GridDebugger from "../GridDebugger";
 import {
   NotificationSystemProvider,
   getNotificationOffset
 } from "../NotificationSystem";
+
+const NotificationContainerTopLeft = styledBox({
+  position: "fixed",
+  top: p => p.offset.top.y,
+  left: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationContainerTopRight = styledBox({
+  position: "fixed",
+  top: p => p.offset.top.y,
+  right: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationContainerTopMobile = styledBox({
+  position: "fixed",
+  top: p => p.offset.top.y,
+  right: p => p.offset.top.x,
+  left: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["block", null, "none"]
+});
+
+const NotificationContainerBottomLeft = styledBox({
+  position: "fixed",
+  bottom: p => p.offset.top.y,
+  left: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationContainerBottomRight = styledBox({
+  position: "fixed",
+  bottom: p => p.offset.top.y,
+  right: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["none", null, "block"]
+});
+
+const NotificationContainerBottomMobile = styledBox({
+  position: "fixed",
+  bottom: p => p.offset.top.y,
+  right: p => p.offset.top.x,
+  left: p => p.offset.top.x,
+  width: "notificationSystemWidth",
+  display: ["block", null, "none"]
+});
 
 export default ({ theme, children }) => {
   const offset = getNotificationOffset(theme);
@@ -19,136 +66,81 @@ export default ({ theme, children }) => {
     <ThemeProvider theme={theme}>
       <NotificationSystemProvider>
         <GridDebugger />
-        <Global
-          styles={css`
-            body.ReactModal__Body--open {
-              overflow-y: hidden;
-            }
-          `}
-        />
 
         <div
-          css={css`
-            position: relative;
-            z-index: 0;
-          `}
+          style={{
+            position: "relative",
+            zIndex: 0
+          }}
           id={"__app__"}
         >
           {children}
         </div>
 
         <div
-          css={css`
-            position: absolute;
-            top: 0;
-            left: 0;
-            z-index: 10000;
-          `}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            zIndex: 10000
+          }}
           id={"__layers__"}
         />
 
         <div
-          css={css`
-            position: absolute;
-            z-index: 10001;
-          `}
+          style={{
+            position: "absolute",
+            zIndex: 10001
+          }}
           id={"__notifications__"}
         >
-          <Box
-            sx={{
-              position: "fixed",
-              top: offset.top.y,
-              left: offset.top.x,
-              width: theme.space.notificationSystemWidth,
-              display: ["none", null, "block"]
-            }}
-          >
+          <NotificationContainerTopLeft offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topLeft__"}
             />
-          </Box>
+          </NotificationContainerTopLeft>
 
-          <Box
-            sx={{
-              position: "fixed",
-              top: offset.top.y,
-              right: offset.top.x,
-              width: theme.space.notificationSystemWidth,
-              display: ["none", null, "block"]
-            }}
-          >
+          <NotificationContainerTopRight offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topRight__"}
             />
-          </Box>
+          </NotificationContainerTopRight>
 
-          <Box
-            sx={{
-              position: "fixed",
-              top: offset.top.y,
-              right: offset.top.x,
-              left: offset.top.x,
-              display: ["block", null, "none"]
-            }}
-          >
+          <NotificationContainerTopMobile offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-topMobile__"}
             />
-          </Box>
+          </NotificationContainerTopMobile>
 
-          <Box
-            sx={{
-              position: "fixed",
-              bottom: offset.top.y,
-              left: offset.top.x,
-              width: theme.space.notificationSystemWidth,
-              display: ["none", null, "block"]
-            }}
-          >
+          <NotificationContainerBottomLeft offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-bottomLeft__"}
             />
-          </Box>
+          </NotificationContainerBottomLeft>
 
-          <Box
-            sx={{
-              position: "fixed",
-              bottom: offset.top.y,
-              right: offset.top.x,
-              width: theme.space.notificationSystemWidth,
-              display: ["none", null, "block"]
-            }}
-          >
+          <NotificationContainerBottomRight offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-bottomRight__"}
             />
-          </Box>
+          </NotificationContainerBottomRight>
 
-          <Box
-            sx={{
-              position: "fixed",
-              bottom: offset.top.y,
-              right: offset.top.x,
-              left: offset.top.x,
-              display: ["block", null, "none"]
-            }}
-          >
+          <NotificationContainerBottomMobile offset={offset}>
             <Grid
               cols={1}
               gap={"notificationSystemSeparator"}
               id={"__notifications-bottomMobile__"}
             />
-          </Box>
+          </NotificationContainerBottomMobile>
         </div>
       </NotificationSystemProvider>
     </ThemeProvider>
