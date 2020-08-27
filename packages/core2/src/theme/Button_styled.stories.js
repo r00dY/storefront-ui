@@ -106,6 +106,8 @@ export const basic = () => {
             component: (
               <ButtonStandard
                 onClick={() => alert("clicked!")}
+                onMouseEnter={() => console.log("on mouse over")}
+                onMouseLeave={() => console.log("on mouse leave")}
                 ref={exampleRef}
               >
                 Lorem ipsum dolor sit amet

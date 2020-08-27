@@ -58,17 +58,17 @@ function styledButton(config) {
       disabled,
       label,
       selected,
-      buttonRef,
+      // buttonRef,
+      //   _ref,
       isLoading,
       href,
       forceLink = false,
       ...restProps
     } = props;
 
-    ref = buttonRef || ref; // buttonRef is legacy, backward compatibility
+    // ref = buttonRef || _ref || ref; // buttonRef is legacy, backward compatibility
 
     const hoverRef = useRef(null);
-
     const isHovered = useHover(hoverRef);
 
     const state = {
@@ -118,7 +118,8 @@ let Button = React.forwardRef((props, ref) => {
     children,
     label,
     selected,
-    buttonRef,
+    // buttonRef,
+    // _ref,
     isLoading,
     href,
     forceLink = false,
@@ -127,7 +128,9 @@ let Button = React.forwardRef((props, ref) => {
     ...restProps
   } = props;
 
-  ref = buttonRef || ref; // buttonRef is legacy, backward compatibility
+  // console.log('button ref', children, _ref, buttonRef, ref);
+
+  // ref = buttonRef || _ref || ref; // buttonRef is legacy, backward compatibility
 
   const hoverRef = useRef(null);
 
@@ -154,7 +157,7 @@ let Button = React.forwardRef((props, ref) => {
 
       if (typeof ref === "function") {
         ref(element);
-      } else if (buttonRef) {
+      } else if (ref) {
         ref.current = element;
       }
     }

@@ -153,7 +153,7 @@ export function styledBox(...args) {
       return (
         <>
           {props.__portals__}
-          <RawDiv {...restProps} {...props} ref={ref} />
+          <RawDiv {...props} ref={ref} />
         </>
       );
     }
@@ -270,7 +270,7 @@ function Box_(props) {
     ...restProps
   } = props;
 
-  // console.log("render box", sx, as);
+  console.log("render box", sx, as);
 
   const [css, customSx] = splitSx(sx);
   const t = useTheme();

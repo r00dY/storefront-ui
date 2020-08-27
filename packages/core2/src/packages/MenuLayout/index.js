@@ -1060,7 +1060,7 @@ function useDialogs({
 
         onHover(null, 100);
       },
-      _ref: state[key].buttonRef,
+      ref: state[key].buttonRef,
       selected: isActive,
       key: "button-" + key
     });
