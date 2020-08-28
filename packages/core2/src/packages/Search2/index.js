@@ -1,39 +1,58 @@
 import React, { useState, useRef, useEffect } from "react";
 import Box from "../Box";
 
-function useSearch(props) {
+function useSearchControlled(props) {
   let {
-    defaultValue = "",
+    value = "",
     onChange,
     debounceTime = 300,
     closeOnSubmit = true,
     blurOnSubmit = true,
     onSubmit
+    // controller
   } = props;
 
-  const [inputValue, setInputValue] = useState(defaultValue);
+  // if (!controller) {
+  //   controller = useSearch(props);
+  // }
+
+  const [inputValue, setInputValue] = useState(value); // internal temporary state
+
   const inputRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
 
   const debounceTimeout = useRef(null);
 
-  const changeValue = val => {
+  // On value change (from external)
+  useEffect(
+    () => {
+      setInputValue(value);
+    },
+    [value]
+  );
+
+  const changeValue = (val, immediately = false) => {
     clearTimeout(debounceTimeout.current);
 
-    if (val === "") {
+    if (val === "" || immediately) {
       // no debounce for empty
       if (onChange) {
+        // setInputValue(value); // set input back to the value from props
         onChange(val);
       }
     } else {
       debounceTimeout.current = setTimeout(() => {
         if (onChange) {
+          // setInputValue(value); // set input back to the value from props
           onChange(val);
         }
       }, debounceTime);
     }
 
-    setOpen(true);
+    // When value changed, we want to open
+    if (inputRef.current === document.activeElement) {
+      setOpen(true);
+    }
   };
 
   const inputProps = {
@@ -72,6 +91,39 @@ function useSearch(props) {
     }
   };
 
+  useEffect(() => {
+    const onDocumentKeyPress = evt => {
+      if (evt.key !== "Escape") {
+        return;
+      }
+
+      // Don't propagate ESC event (to prevent closing modals etc)
+      // Do not prevent default! Default action is to close search
+      evt.stopPropagation();
+
+      // Ignore events that have been `event.preventDefault()` marked.
+      // if (event.defaultPrevented) {
+      //   return;
+      // }
+      //
+      // setOpen(false);
+      //
+      // if (onClose) {
+      //   onClose({ type: "esc" });
+      // }
+    };
+
+    if (inputRef.current) {
+      inputRef.current.addEventListener("keyup", onDocumentKeyPress);
+    }
+
+    return () => {
+      if (inputRef.current) {
+        inputRef.current.removeEventListener("keyup", onDocumentKeyPress);
+      }
+    };
+  });
+
   const resultsProps = {
     "aria-hidden": true
   };
@@ -87,16 +139,51 @@ function useSearch(props) {
     formProps,
     resultsProps,
     submitButtonProps,
-    isOpen
+    isOpen,
+    setValue: val => {
+      setInputValue(val);
+      changeValue(val, true);
+    }
   };
+}
+
+function useSearch(props) {
+  const { defaultValue, value, onChange } = props;
+
+  let isControlled = typeof value !== "undefined";
+
+  const [internalValue, setInternalValue] = useState(defaultValue);
+
+  return useSearchControlled({
+    ...props,
+    value: isControlled ? value : internalValue,
+    onChange: newVal => {
+      if (isControlled) {
+        if (onChange) {
+          onChange(newVal);
+        }
+      } else {
+        setInternalValue(newVal);
+        if (onChange(newVal)) {
+          onChange(newVal);
+        }
+      }
+    }
+  });
 }
 
 function Search(props) {
   let { form, layer, children, hideOnLinkClick = true } = props;
 
-  const { inputProps, close, formProps, isOpen, submitButtonProps } = useSearch(
-    props
-  );
+  const controller = useSearch(props);
+
+  const {
+    inputProps,
+    close,
+    formProps,
+    isOpen,
+    submitButtonProps
+  } = controller;
 
   const anchorRef = useRef(null);
 
@@ -125,12 +212,12 @@ function Search(props) {
         }
       }}
     >
-      <div {...formProps}>
+      <form {...formProps}>
         {form({
           inputProps: { ...inputProps, _ref: anchorRef },
           submitButtonProps
         })}
-      </div>
+      </form>
       {layer}
     </div>
   );
@@ -163,3 +250,4 @@ export function SearchInline(props) {
  */
 
 export default Search;
+export { useSearch };

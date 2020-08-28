@@ -67,7 +67,7 @@ function Select2(props) {
   }
 
   let {
-    buttonProps,
+    // buttonProps,
     // layerProps,
     menuProps,
     anchorRef,
@@ -89,7 +89,7 @@ function Select2(props) {
   button = typeof button === "function" ? button(controller) : button;
 
   return (
-    <Layer {...layerProps} button={React.cloneElement(button, buttonProps)}>
+    <Layer {...layerProps} button={React.cloneElement(button)}>
       {({ close }) => {
         let items = [];
         let selectableProps = getSelectableProps(controller, props, {

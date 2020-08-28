@@ -884,7 +884,7 @@ function Layer$$({ button, ...layerProps }) {
     onClick: () => {
       setOpen(true);
     },
-    buttonRef,
+    _ref: buttonRef,
     selected: isOpen,
     __portals__: (
       <LayerWithHeaderAndFooter
