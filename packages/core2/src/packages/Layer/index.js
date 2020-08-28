@@ -407,7 +407,7 @@ function Layer$(props) {
 
   useEffect(
     () => {
-      if (!isOpen) {
+      if (!isOpen || !isMounted) {
         return;
       }
 
