@@ -121,6 +121,10 @@ export function useRangePicker(props) {
   };
 }
 
+function parseValue(val) {
+  return parseFloat(parseFloat(val).toFixed(2));
+}
+
 export function useRangePicker_controlled(props) {
   let { value, onChange, onChangeTimeout = null } = props;
   value = normalizeRangePickerValue(props, value);
@@ -136,7 +140,10 @@ export function useRangePicker_controlled(props) {
   const internalValue = normalizeRangePickerValue(
     {
       ...props,
-      value: { from: parseInt(inputValue.from), to: parseInt(inputValue.to) }
+      value: {
+        from: parseValue(inputValue.from),
+        to: parseValue(inputValue.to)
+      }
     },
     inputValue.lastEdited === "from"
   );
@@ -201,8 +208,8 @@ export function useRangePicker_controlled(props) {
           {
             ...props,
             value: {
-              from: parseInt(newVal.from),
-              to: parseInt(newVal.to)
+              from: parseValue(newVal.from),
+              to: parseValue(newVal.to)
             }
           },
           lastEdited
@@ -216,7 +223,7 @@ export function useRangePicker_controlled(props) {
     value:
       inputValue.from === null || inputValue.from === undefined
         ? ""
-        : inputValue.from,
+        : inputValue.from.toString(),
     onChange: newVal => {
       change(
         {
@@ -235,7 +242,7 @@ export function useRangePicker_controlled(props) {
     value:
       inputValue.to === null || inputValue.to === undefined
         ? ""
-        : inputValue.to,
+        : inputValue.to.toString(),
     onChange: newVal => {
       change(
         {

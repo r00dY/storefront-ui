@@ -284,4 +284,12 @@ test("[normalizeRangePickerValue] allowEmpty=true ", () => {
   );
   expect(value.from).toBe(null);
   expect(value.to).toBe(30);
+
+  value = normalizeRangePickerValue({
+    min: 0,
+    max: 100,
+    value: { from: 1.234, to: 99.4321 }
+  });
+  expect(value.from).toBe(1.234);
+  expect(value.to).toBe(99.4321);
 });

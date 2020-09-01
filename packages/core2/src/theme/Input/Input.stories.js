@@ -24,7 +24,7 @@ export const unstyled = () => {
         <Input type={"password"} placeholder={"Placeholder..."} />
 
         <p>Type = number</p>
-        <Input type={"number"} placeholder={"Placeholder..."} />
+        <Input type={"number"} placeholder={"Placeholder..."} step={"any"} />
 
         <p>Type = email</p>
         <Input type={"email"} name={"email"} placeholder={"E-mail"} required />
