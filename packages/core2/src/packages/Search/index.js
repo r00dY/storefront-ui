@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import Box from "../Box";
 
-function useSearch(props) {
+export function useSearch(props) {
   let {
     defaultValue = "",
     onChange,
@@ -80,9 +80,14 @@ function useSearch(props) {
     type: "submit"
   };
 
+  const clear = () => {
+    setInputValue("");
+  };
+
   return {
     inputProps,
     close,
+    clear,
     formProps,
     resultsProps,
     submitButtonProps,
@@ -91,9 +96,13 @@ function useSearch(props) {
 }
 
 function Search(props) {
+  let controller = props.controller;
+  if (!controller) {
+    controller = useSearch(props);
+  }
   let { input, layer, children, hideOnLinkClick = true } = props;
 
-  const { inputProps, close, formProps, isOpen } = useSearch(props);
+  const { inputProps, close, formProps, isOpen } = controller;
 
   const anchorRef = useRef(null);
 

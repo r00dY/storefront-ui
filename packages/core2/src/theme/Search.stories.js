@@ -3,7 +3,7 @@ import { jsx, rs } from "@commerce-ui/core";
 
 import Box from "@commerce-ui/core/Box";
 
-import Search, { SearchInline } from "@commerce-ui/core/Search";
+import Search, { SearchInline, useSearch } from "@commerce-ui/core/Search";
 import Layer from "@commerce-ui/core/Layer";
 
 import Input from "./Input";
@@ -11,8 +11,30 @@ import Input from "./Input";
 export const basic = () => {
   const [content, setContent] = useState(null);
 
+  const controller = useSearch({
+    defaultValue: "test",
+    onChange: newVal => {
+      if (typeof newVal === "string" && newVal.startsWith("a")) {
+        setContent("starts with a!");
+      } else if (newVal === "") {
+        setContent("--- placeholder ---");
+      } else {
+        setContent(null);
+      }
+    },
+    onSubmit: val => console.log("on submit!", val)
+  });
+
   return (
     <Box sx={{ p: 50, maxWidth: 800 }}>
+      <button
+        onClick={() => {
+          controller.clear();
+        }}
+      >
+        Clear
+      </button>
+
       <Search
         input={
           <Input
@@ -27,17 +49,18 @@ export const basic = () => {
             height={400}
           />
         }
-        defaultValue={"test"}
-        onChange={newVal => {
-          if (typeof newVal === "string" && newVal.startsWith("a")) {
-            setContent("starts with a!");
-          } else if (newVal === "") {
-            setContent("--- placeholder ---");
-          } else {
-            setContent(null);
-          }
-        }}
-        onSubmit={val => console.log("on submit!", val)}
+        controller={controller}
+        // defaultValue={"test"}
+        // onChange={newVal => {
+        //   if (typeof newVal === "string" && newVal.startsWith("a")) {
+        //     setContent("starts with a!");
+        //   } else if (newVal === "") {
+        //     setContent("--- placeholder ---");
+        //   } else {
+        //     setContent(null);
+        //   }
+        // }}
+        // onSubmit={val => console.log("on submit!", val)}
       >
         {content && (
           <Box>
