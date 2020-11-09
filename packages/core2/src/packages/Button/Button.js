@@ -80,7 +80,8 @@ const Button = React.forwardRef((props, ref) => {
       } else if (buttonRef) {
         ref.current = element;
       }
-    }
+    },
+    disabled
   };
 
   if (href || forceLink) {
