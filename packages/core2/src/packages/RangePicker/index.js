@@ -121,12 +121,12 @@ export function useRangePicker(props) {
   };
 }
 
-function parseValue(val) {
-  return parseFloat(parseFloat(val).toFixed(2));
+function parseValue(val, fractionDigits) {
+  return parseFloat(parseFloat(val).toFixed(fractionDigits));
 }
 
 export function useRangePicker_controlled(props) {
-  let { value, onChange, onChangeTimeout = null } = props;
+  let { value, onChange, onChangeTimeout = null, fractionDigits = 0 } = props;
   value = normalizeRangePickerValue(props, value);
 
   const [inputValue, setInputValue] = useState({
@@ -141,8 +141,8 @@ export function useRangePicker_controlled(props) {
     {
       ...props,
       value: {
-        from: parseValue(inputValue.from),
-        to: parseValue(inputValue.to)
+        from: parseValue(inputValue.from, fractionDigits),
+        to: parseValue(inputValue.to, fractionDigits)
       }
     },
     inputValue.lastEdited === "from"
@@ -208,8 +208,8 @@ export function useRangePicker_controlled(props) {
           {
             ...props,
             value: {
-              from: parseValue(newVal.from),
-              to: parseValue(newVal.to)
+              from: parseValue(newVal.from, fractionDigits),
+              to: parseValue(newVal.to, fractionDigits)
             }
           },
           lastEdited
