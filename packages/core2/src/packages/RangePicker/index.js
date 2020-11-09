@@ -31,7 +31,7 @@ function snapToMinMax(props, value) {
 }
 
 export function normalizeRangePickerValue(props, keepMin = true) {
-  const { value, min, max, allowEmpty = false } = props;
+  const { value, min, max, allowEmpty = false, fractionDigits = 0 } = props;
 
   if (!allowEmpty && (typeof min !== "number" || typeof max !== "number")) {
     throw new Error(
@@ -88,6 +88,13 @@ export function normalizeRangePickerValue(props, keepMin = true) {
     }
   }
 
+  if (typeof ret.from === "number") {
+    ret.from = parseFloat(ret.from.toFixed(fractionDigits));
+  }
+  if (typeof ret.to === "number") {
+    ret.to = parseFloat(ret.to.toFixed(fractionDigits));
+  }
+
   return ret;
 }
 
@@ -121,12 +128,12 @@ export function useRangePicker(props) {
   };
 }
 
-function parseValue(val, fractionDigits) {
-  return parseFloat(parseFloat(val).toFixed(fractionDigits));
+function parseValue(val) {
+  return parseFloat(val);
 }
 
 export function useRangePicker_controlled(props) {
-  let { value, onChange, onChangeTimeout = null, fractionDigits = 0 } = props;
+  let { value, onChange, onChangeTimeout = null } = props;
   value = normalizeRangePickerValue(props, value);
 
   const [inputValue, setInputValue] = useState({
@@ -141,8 +148,8 @@ export function useRangePicker_controlled(props) {
     {
       ...props,
       value: {
-        from: parseValue(inputValue.from, fractionDigits),
-        to: parseValue(inputValue.to, fractionDigits)
+        from: parseValue(inputValue.from),
+        to: parseValue(inputValue.to)
       }
     },
     inputValue.lastEdited === "from"
@@ -208,8 +215,8 @@ export function useRangePicker_controlled(props) {
           {
             ...props,
             value: {
-              from: parseValue(newVal.from, fractionDigits),
-              to: parseValue(newVal.to, fractionDigits)
+              from: parseValue(newVal.from),
+              to: parseValue(newVal.to)
             }
           },
           lastEdited

@@ -263,7 +263,8 @@ const filters = [
     label: "Price",
     type: "range",
     min: 0,
-    max: 1999
+    max: 1999,
+    fractionDigits: 2
   },
   {
     id: "radius",

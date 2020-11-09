@@ -192,7 +192,8 @@ function useFilters({ data, onChange }) {
             value: item.value,
             onChange: (newVal, isCommit) => {
               setValue(item.id, newVal, !isCommit || soft);
-            }
+            },
+            fractionDigits: item.fractionDigits
           }
         : undefined;
 
