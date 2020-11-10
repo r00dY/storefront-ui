@@ -129,6 +129,11 @@ export function useRangePicker(props) {
 }
 
 function parseValue(val) {
+  if (typeof val === "string") {
+    val = val.replace(/ /g, ""); // remove whitespace
+    val = val.replace(/\,/g, "."); // change comma to
+  }
+
   return parseFloat(val);
 }
 
@@ -242,7 +247,8 @@ export function useRangePicker_controlled(props) {
     onBlur,
     onFocus,
     label: "From",
-    type: "number"
+    type: "text",
+    inputmode: "numeric"
   };
 
   const inputToProps = {
@@ -261,7 +267,8 @@ export function useRangePicker_controlled(props) {
     onBlur,
     onFocus,
     label: "To",
-    type: "number"
+    type: "text",
+    inputmode: "numeric"
   };
 
   return {
